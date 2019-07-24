@@ -481,7 +481,7 @@ vector<contactRecord> readBlock(ifstream& fin, int blockNumber) {
       }
     }
   }
-  delete uncompressedBytes; // don't forget to delete your heap arrays in C++!
+  delete[] uncompressedBytes; // don't forget to delete your heap arrays in C++!
   return v;
 }
 
