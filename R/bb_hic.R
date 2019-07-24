@@ -251,7 +251,7 @@ bb_hic <- function(hic, chrom, chromstart, chromend, palette = 'reds', zrange = 
       legend_height <- 1/4 * height
       legend_xcoord <- x + width + legendoffset
       legend_ycoord <- y
-      gridaddLegend(color_vector = sorted_colors, min_label = min_z, max_label = max_z, height= legend_height,
+      bb_legend(color_vector = sorted_colors, min_label = min_z, max_label = max_z, height= legend_height,
                     width = legend_width, x = legend_xcoord, y = legend_ycoord, orientation = "vertical", pageheight = pageheight)
 
     }
@@ -262,7 +262,7 @@ bb_hic <- function(hic, chrom, chromstart, chromend, palette = 'reds', zrange = 
       legend_xcoord <- x - legendoffset
       print(legend_xcoord)
       legend_ycoord <- y
-      gridaddLegend(color_vector = sorted_colors, min_label = min_z, max_label = max_z, height= legend_height,
+      bb_legend(color_vector = sorted_colors, min_label = min_z, max_label = max_z, height= legend_height,
                     width = legend_width, x = legend_xcoord, y = legend_ycoord, orientation = "vertical", pageheight = pageheight)
     }
 
@@ -272,7 +272,7 @@ bb_hic <- function(hic, chrom, chromstart, chromend, palette = 'reds', zrange = 
       legend_xcoord <- x + (width - legend_width)/2
       legend_ycoord <- y + legendoffset + legend_height
 
-      gridaddLegend(color_vector = sorted_colors, min_label = min_z, max_label = max_z, height= legend_height,
+      bb_legend(color_vector = sorted_colors, min_label = min_z, max_label = max_z, height= legend_height,
                     width = legend_width, x = legend_xcoord, y = legend_ycoord, orientation = "horizontal", pageheight = pageheight)
     }
 
@@ -282,7 +282,7 @@ bb_hic <- function(hic, chrom, chromstart, chromend, palette = 'reds', zrange = 
       legend_xcoord <- x + (width - legend_width)/2
       legend_ycoord <- y + legendoffset + height
 
-      gridaddLegend(color_vector = sorted_colors, min_label = min_z, max_label = max_z, height= legend_height,
+      bb_legend(color_vector = sorted_colors, min_label = min_z, max_label = max_z, height= legend_height,
                     width = legend_width, x = legend_xcoord, y = legend_ycoord, orientation = "horizontal", pageheight = pageheight)
     }
 
