@@ -34,7 +34,6 @@ bb_hic <- function(hic, chrom, chromstart, chromend, palette = 'reds', zrange = 
   if (chromend < chromstart){
     stop("Incorrect \"chromstart\" and \"chromend\".  \"chromstart\" cannot be larger than \"chromend\".")
   }
-  # ======================================================================================================================================================================================
 
   # DEFINE A FUNCTION TO PLOT SQUARES
   # ======================================================================================================================================================================================
@@ -59,7 +58,7 @@ bb_hic <- function(hic, chrom, chromstart, chromend, palette = 'reds', zrange = 
     grid.polygon(x = c(xleft.normalized, xleft.normalized, xright.normalized, xright.normalized),
                  y = c(ybottom.normalized, ytop.normalized, ytop.normalized, ybottom.normalized), gp = gpar(col = col, fill = col))
   }
-  # ======================================================================================================================================================================================
+
 
   # CHECK FOR DATA TYPE, EXTRACT FROM .HIC FILE IF NECESSARY, SUBSET DATAFRAME/ADJUST DATAFRAME
   # ======================================================================================================================================================================================
@@ -133,7 +132,6 @@ bb_hic <- function(hic, chrom, chromstart, chromend, palette = 'reds', zrange = 
   } else {
     stop("Incorrect input. Input a .hic file or a dataframe.")
   }
-  # ======================================================================================================================================================================================
 
   # VIEWPORTS
   # ======================================================================================================================================================================================
@@ -146,7 +144,7 @@ bb_hic <- function(hic, chrom, chromstart, chromend, palette = 'reds', zrange = 
   converted_coords = convert_coordinates(height = height, width = width, x = x, y = y, pageheight = pageheight)
   vp <- viewport(height = unit(height, "in"), width = unit(width, "in"), x = unit(converted_coords[1], "in"), y = unit(converted_coords[2], "in"))
   pushViewport(vp)
-  # ======================================================================================================================================================================================
+
 
   # CONVERT NUMBERS TO COLORS
   # ======================================================================================================================================================================================
@@ -156,7 +154,7 @@ bb_hic <- function(hic, chrom, chromstart, chromend, palette = 'reds', zrange = 
   # Sorted color vector for use in legend and get lowest color to fill in for triangular plot
   sorted_color_vector <- colour_values(sort(hicregion[ ,3]), palette = palette)
   sorted_colors <- unique(sorted_color_vector)
-  # ======================================================================================================================================================================================
+
 
   # RASTERIZED PLOT
   # ======================================================================================================================================================================================
@@ -203,9 +201,11 @@ bb_hic <- function(hic, chrom, chromstart, chromend, palette = 'reds', zrange = 
       stop("Incorrect \"plottype\" argument.  Options are \"square\" or \"triangle\".")
     }
     grid.raster(reshapen)
+
+    ## Go back to root viewport
     upViewport()
   }
-  # ======================================================================================================================================================================================
+
 
   # NON-RASTERIZED PLOT #
   # ======================================================================================================================================================================================
@@ -228,10 +228,11 @@ bb_hic <- function(hic, chrom, chromstart, chromend, palette = 'reds', zrange = 
 
     ## Plot squares with drawpoly function defined above
     invisible(apply(hicregion, 1, drawpoly, resolution = resolution, chromstart = chromstart, chromend = chromend))
+
+    ## Go back to root viewport
     upViewport()
 
   }
-  # ======================================================================================================================================================================================
 
   # LEGEND
   # ======================================================================================================================================================================================
@@ -286,7 +287,7 @@ bb_hic <- function(hic, chrom, chromstart, chromend, palette = 'reds', zrange = 
     }
 
   }
-  # ======================================================================================================================================================================================
+
 
   #return sorted_color vector and zrange if choosing to add legend later
   return(list(c(zrange[1], zrange[2]), sorted_colors))

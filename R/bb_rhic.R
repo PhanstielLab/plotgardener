@@ -17,7 +17,7 @@
 #'
 #' @export
 
-extractHiC <- function(hic, format, chrom, chromstart = NULL, chromend = NULL, resolution, zrange = NULL, norm = "NONE", res_scale = "BP", altchrom = NULL, altchromstart = NULL, altchromend = NULL){
+bb_rhic <- function(hic, format, chrom, chromstart = NULL, chromend = NULL, resolution, zrange = NULL, norm = "NONE", res_scale = "BP", altchrom = NULL, altchromstart = NULL, altchromend = NULL){
 
   # Parse chromosome and region in format for Straw
   if ((is.null(chromstart) & !is.null(chromend)) | (is.null(chromend) & !is.null(chromstart))){
