@@ -5,7 +5,7 @@
 \title{extracts HiC data from .hic file using Straw}
 \usage{
 extractHiC(hic, format, chrom, chromstart = NULL, chromend = NULL,
-  resolution, zrange = NULL, norm = "NONE", resscale = "BP",
+  resolution, zrange = NULL, norm = "NONE", res_scale = "BP",
   altchrom = NULL, altchromstart = NULL, altchromend = NULL)
 }
 \arguments{
@@ -25,7 +25,7 @@ extractHiC(hic, format, chrom, chromstart = NULL, chromend = NULL,
 
 \item{norm}{hic data normalization; options are "NONE", "VC", "VC_SQRT", and "KR"}
 
-\item{resscale}{scale of normalization; options are "BP" and "FRAG"}
+\item{res_scale}{scale of normalization; options are "BP" and "FRAG"}
 
 \item{altchrom}{if looking at region between two different chromosomes, this is the specified alternative chromsome}
 

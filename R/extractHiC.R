@@ -9,7 +9,7 @@
 #' @param resolution the width in bp of each pixel
 #' @param zrange the range of interaction scores to plot, where extreme values will be set to the max or min
 #' @param norm hic data normalization; options are "NONE", "VC", "VC_SQRT", and "KR"
-#' @param resscale scale of normalization; options are "BP" and "FRAG"
+#' @param res_scale scale of normalization; options are "BP" and "FRAG"
 #' @param altchrom if looking at region between two different chromosomes, this is the specified alternative chromsome
 #' @param altchromstart if looking at region between two different chromosomes, start position of altchrom
 #' @param altchromend if looking at region between two different chromsomes, end position of altchrom
@@ -17,32 +17,32 @@
 #'
 #' @export
 
-extractHiC <- function(hic, format, chrom, chromstart = NULL, chromend = NULL, resolution, zrange = NULL, norm = "NONE", resscale = "BP", altchrom = NULL, altchromstart = NULL, altchromend = NULL){
+extractHiC <- function(hic, format, chrom, chromstart = NULL, chromend = NULL, resolution, zrange = NULL, norm = "NONE", res_scale = "BP", altchrom = NULL, altchromstart = NULL, altchromend = NULL){
 
   # Parse chromosome and region in format for Straw
   if ((is.null(chromstart) & !is.null(chromend)) | (is.null(chromend) & !is.null(chromstart))){
     stop("Cannot have one \'NULL\' chromstart or chromend.")
   } else if (is.null(chromstart) & is.null(chromend)){
-    regionStraw <- gsub(pattern = "chr", replacement = "", x = chrom)
+    regionStraw <- gsub(pattern = "chr|chrom|CHR|CHROM", replacement = "", x = chrom)
   } else {
-    regionChrom <- gsub(pattern = "chr", replacement = "", x = chrom)
+    regionChrom <- gsub(pattern = "chr|chrom|CHR|CHROM", replacement = "", x = chrom)
     regionStraw <- paste(regionChrom, chromstart, chromend, sep = ":")
   }
 
   # Extract upper triangular using straw, depending on one chromsome interaction or multiple chromosome interactions
   if(is.null(altchrom)){
-    upper <- straw_R(sprintf("%s %s %s %s %s %i", norm, hic, regionStraw, regionStraw, resscale, resolution))
+    upper <- straw_R(sprintf("%s %s %s %s %s %i", norm, hic, regionStraw, regionStraw, res_scale, resolution))
   } else {
     if ((is.null(altchromstart) & !is.null(altchromend)) | (is.null(altchromend) & !is.null(altchromstart))){
       stop("Cannot have one \'NULL\' altchromstart or altchromend.")
     } else if (is.null(altchromstart) & is.null(altchromend)){
-      regionStraw2 <- gsub(pattern = "chr", replacement = "", x = altchrom)
+      regionStraw2 <- gsub(pattern = "chr|chrom|CHR|CHROM", replacement = "", x = altchrom)
     } else {
-      regionChrom2 <- gsub(pattern = "chr", replacement = "", x = altchrom)
+      regionChrom2 <- gsub(pattern = "chr|chrom|CHR|CHROM", replacement = "", x = altchrom)
       regionStraw2 <- paste(regionChrom2, altchromstart, altchromend, sep = ":" )
     }
 
-    upper <- straw_R(sprintf("%s %s %s %s %s %i", norm, hic, regionStraw, regionStraw2, resscale, resolution))
+    upper <- straw_R(sprintf("%s %s %s %s %s %i", norm, hic, regionStraw, regionStraw2, res_scale, resolution))
   }
 
   # Full format: get symmetric data, complete missing values, replace NA's with 0's

@@ -1,10 +1,10 @@
-#' plots HiC interaction plot
+#' plots HiC interaction matrix
 #'
 #' @param hic path to .hic file or 3 column dataframe of counts
-#' @param chrom chromosome of region to be plotted; format "chrX"
+#' @param chrom chromosome of region to be plotted
 #' @param chromstart chromosome start of region to be plotted
 #' @param chromend chromosome end of region to be plotted
-#' @param color palette to use for representing interaction scores
+#' @param palette palette to use for representing interaction scores
 #' @param zrange the range of interaction scores to plot, where extreme values will be set to the max or min
 #' @param resolution the width in bp of each pixel
 #' @param norm hic data normalization; options are "NONE", "VC", "VC_SQRT", and "KR"
@@ -12,17 +12,22 @@
 #' @param half option for when plottype is "triangle"; options are "top" or "bottom"
 #' @param raster allows for rasterization of plot, which results in quicker plotting
 #' @param addlegend add legend representing scores for color range
-#' @param legendlocation if addlegend == TRUE, where relative to plot to place legend; options are "right" and "top"
+#' @param legendlocation if addlegend == TRUE, where relative to plot to place legend; options are "right", "left", top", or "bottom"
+#' @param legendoffset if addlegend == TRUE, how much to offset the legend relative to the plot in inches
 #' @param height height of plot in inches
 #' @param width width of plot in inches
 #' @param x x-coordinate of where to place plot relative to top left of plot
 #' @param y y-coordinate of where to place plot relative to top left of plot
+#' @param pageheight height of page on which plot will be placed
 #'
+#' @return Function will plot a HiC interaction matrix and return a list of the zrange min, zrange max, and sequential color palette
 #'
+#' @author Nicole Kramer
 #' @export
 
-gridplotHic <- function(hic, chrom, chromstart, chromend, palette = 'reds', zrange = NULL, resolution, norm = "NONE", plottype = "square", half = NULL, raster = TRUE, addlegend = FALSE,
-                        legendlocation = NULL, height = 3.25, width = 3.25, x = 0.75, y = 0.75, ...){
+bb_hic <- function(hic, chrom, chromstart, chromend, palette = 'reds', zrange = NULL, resolution, norm = "NONE",
+                        plottype = "square", half = NULL, raster = TRUE, addlegend = FALSE, legendlocation = NULL,
+                        legendoffset = 0.25, height = 3.25, width = 3.25, x = 2.625, y = 3.875, pageheight, ...){
 
   # ERRORS
   # ======================================================================================================================================================================================
@@ -95,18 +100,33 @@ gridplotHic <- function(hic, chrom, chromstart, chromend, palette = 'reds', zran
           combinedComplete <- tidyr::complete(combined, x, y)
           combinedComplete$counts[is.na(combinedComplete$counts)] <- 0
           hicregion <- as.data.frame(combinedComplete)
+
           }
       }
     }
   } else if (class(hic) == "character"){
     ## Make sure the inputted file is a .hic file
     if(file_ext(hic) == "hic"){
+
       if(plottype == "square"){
+
         hicregion <- extractHiC(hic = hic, format = "full", chrom = chrom, chromstart = chromstart, chromend = chromend,
                                 resolution = resolution, zrange = zrange, norm = norm)
+        ## extractHiC will do this, but this will give the values for returning later
+        if(is.null(zrange)){
+          zrange <- c(0, max(hicregion$counts))
+          hicregion$counts[hicregion$counts <= zrange[1]] <- zrange[1]
+          hicregion$counts[hicregion$counts >= zrange[2]] <- zrange[2]
+        }
       } else if (plottype == "triangle"){
         hicregion <- extractHiC(hic = hic, format = "sparse", chrom = chrom, chromstart = chromstart, chromend = chromend,
                                 resolution = resolution, zrange = zrange, norm = norm)
+        ## extractHiC will do this, but this will give the values for returning later
+        if(is.null(zrange)){
+          zrange <- c(0, max(hicregion$counts))
+          hicregion$counts[hicregion$counts <= zrange[1]] <- zrange[1]
+          hicregion$counts[hicregion$counts >= zrange[2]] <- zrange[2]
+        }
       } else {
         stop("Incorrect \"plottype\" argument.  Options are \"square\" or \"triangle\".")
       }
@@ -126,7 +146,7 @@ gridplotHic <- function(hic, chrom, chromstart, chromend, palette = 'reds', zran
   }
 
   ## Make viewport of desired size at specified location
-  converted_coords = convert_coordinates(height, width, x, y)
+  converted_coords = convert_coordinates(height = height, width = width, x = x, y = y, pageheight = pageheight)
   vp <- viewport(height = unit(height, "in"), width = unit(width, "in"), x = unit(converted_coords[1], "in"), y = unit(converted_coords[2], "in"))
   pushViewport(vp)
   # ======================================================================================================================================================================================
@@ -151,7 +171,6 @@ gridplotHic <- function(hic, chrom, chromstart, chromend, palette = 'reds', zran
     ## Get the lowest color in the range to fill in matrix for triangle plots
     lowest_color <- sorted_colors[1]
 
-
     ## Remove unnecessary "counts" column
     hicregion = hicregion[ ,c(1, 2, 4)]
 
@@ -162,7 +181,6 @@ gridplotHic <- function(hic, chrom, chromstart, chromend, palette = 'reds', zran
 
       ## Fill in all NA's with the lowest color in the range (essentially a 0)
       reshapen[is.na(reshapen)] <- lowest_color
-
 
       ## Replace the lower triangular part of the matrix with NA's to not have anything plot there
       reshapen[lower.tri(reshapen)] <- NA
@@ -220,33 +238,55 @@ gridplotHic <- function(hic, chrom, chromstart, chromend, palette = 'reds', zran
   # ======================================================================================================================================================================================
   if (addlegend == TRUE){
 
+    ## Get max and min labels based on zrange
     min_z <- zrange[1]
     max_z <- zrange[2]
 
     if(legendlocation == "right"){
       legend_width <- 1/32 * width
       legend_height <- 1/4 * height
-      legend_xcoord <- x + width + 0.25
+      legend_xcoord <- x + width + legendoffset
       legend_ycoord <- y
-
-      gridaddLegend(color_vector = sorted_colors, min_label = min_z, max_label = max_z, height= legend_height, width = legend_width, x = legend_xcoord, y = legend_ycoord, location = "right")
+      gridaddLegend(color_vector = sorted_colors, min_label = min_z, max_label = max_z, height= legend_height,
+                    width = legend_width, x = legend_xcoord, y = legend_ycoord, orientation = "vertical", pageheight = pageheight)
 
     }
 
-    if(legendlocation == "top"){
+    else if(legendlocation == "left"){
+      legend_width <- 1/32 * width
+      legend_height <- 1/4 * height
+      legend_xcoord <- x - legendoffset
+      print(legend_xcoord)
+      legend_ycoord <- y
+      gridaddLegend(color_vector = sorted_colors, min_label = min_z, max_label = max_z, height= legend_height,
+                    width = legend_width, x = legend_xcoord, y = legend_ycoord, orientation = "vertical", pageheight = pageheight)
+    }
+
+    else if(legendlocation == "top"){
       legend_width <- 1/4 * height
       legend_height <- 1/32 * width
       legend_xcoord <- x + (width - legend_width)/2
-      legend_ycoord <- y - 0.25 - legend_height
+      legend_ycoord <- y + legendoffset + legend_height
 
-      gridaddLegend(color_vector = sorted_colors, min_label = min_z, max_label = max_z, height= legend_height, width = legend_width, x = legend_xcoord, y = legend_ycoord, location = "top")
+      gridaddLegend(color_vector = sorted_colors, min_label = min_z, max_label = max_z, height= legend_height,
+                    width = legend_width, x = legend_xcoord, y = legend_ycoord, orientation = "horizontal", pageheight = pageheight)
+    }
+
+    else if(legendlocation == "bottom"){
+      legend_width <- 1/4 * height
+      legend_height <- 1/32 * width
+      legend_xcoord <- x + (width - legend_width)/2
+      legend_ycoord <- y + legendoffset + height
+
+      gridaddLegend(color_vector = sorted_colors, min_label = min_z, max_label = max_z, height= legend_height,
+                    width = legend_width, x = legend_xcoord, y = legend_ycoord, orientation = "horizontal", pageheight = pageheight)
     }
 
   }
+  # ======================================================================================================================================================================================
 
-
-  #return sorted_color vector if choosing to add legend later
-  return(sorted_colors)
+  #return sorted_color vector and zrange if choosing to add legend later
+  return(list(c(zrange[1], zrange[2]), sorted_colors))
 }
 
 
