@@ -69,10 +69,7 @@ bb_hic <- function(hic, chrom, chromstart, chromend, palette = 'reds', zrange = 
     if(ncol(hic) > 3 | ncol(hic) < 3){
       stop("Incorrect dataframe format.  Input a dataframe with 3 columns: x, y, counts.")
     } else {
-      ## Make sure dataframe is within bounds of chromstart and chromend
-      if(!all(hic[ ,1] >= chromstart & hic[ ,1] <= chromend & hic[ ,2] >= chromstart & hic[ ,2] <= chromend)){
-        stop("Data not within bounds of \"chromstart\" and \"chromend\".")
-      } else {
+
         ## Make sure dataframe is subsetted and has correct header names
         hicregion <- hic[which(hic[ ,1] >= chromstart & hic[ ,1] <= chromend &
                                hic[ ,2] >= chromstart & hic[ ,2] <= chromend), ]
@@ -102,7 +99,7 @@ bb_hic <- function(hic, chrom, chromstart, chromend, palette = 'reds', zrange = 
           hicregion <- as.data.frame(combinedComplete)
 
           }
-      }
+
     }
   } else if (class(hic) == "character"){
     ## Make sure the inputted file is a .hic file
@@ -154,7 +151,7 @@ bb_hic <- function(hic, chrom, chromstart, chromend, palette = 'reds', zrange = 
   # CONVERT NUMBERS TO COLORS
   # ======================================================================================================================================================================================
   ## Use colour_values function from "colourvalues" package to convert numbers to colors
-  color_vector <- colour_values(hicregion[ ,3], palette = palette)
+  color_vector <- colourvalues::colour_values(hicregion[ ,3], palette = palette)
 
   # Sorted color vector for use in legend and get lowest color to fill in for triangular plot
   sorted_color_vector <- colour_values(sort(hicregion[ ,3]), palette = palette)
@@ -206,6 +203,7 @@ bb_hic <- function(hic, chrom, chromstart, chromend, palette = 'reds', zrange = 
       stop("Incorrect \"plottype\" argument.  Options are \"square\" or \"triangle\".")
     }
     grid.raster(reshapen)
+    upViewport()
   }
   # ======================================================================================================================================================================================
 
@@ -230,6 +228,7 @@ bb_hic <- function(hic, chrom, chromstart, chromend, palette = 'reds', zrange = 
 
     ## Plot squares with drawpoly function defined above
     invisible(apply(hicregion, 1, drawpoly, resolution = resolution, chromstart = chromstart, chromend = chromend))
+    upViewport()
 
   }
   # ======================================================================================================================================================================================
@@ -237,6 +236,10 @@ bb_hic <- function(hic, chrom, chromstart, chromend, palette = 'reds', zrange = 
   # LEGEND
   # ======================================================================================================================================================================================
   if (addlegend == TRUE){
+
+    if (is.null(legendlocation)){
+      stop("Cannot add legend. Please specify a legend location.")
+    }
 
     ## Get max and min labels based on zrange
     min_z <- zrange[1]
