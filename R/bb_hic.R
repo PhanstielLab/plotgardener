@@ -76,9 +76,14 @@ bb_hic <- function(hic, chrom, chromstart, chromend, palette = 'reds', zrange = 
 
         ## Scale lower and upper bounds using zrange
         if(is.null(zrange)){
-          zrange <- c(0, max(hicregion$counts))
-          hicregion$counts[hicregion$counts <= zrange[1]] <- zrange[1]
-          hicregion$counts[hicregion$counts >= zrange[2]] <- zrange[2]
+          ## If counts vector only has one value, keep everything as is and zrange min = zrange max
+          if(length(unique(hicregion$counts)) == 1){
+            zrange <- c(unique(hicregion$counts), unique(hicregion$counts))
+          } else {
+            zrange <- c(min(hicregion$counts), max(hicregion$counts))
+            hicregion$counts[hicregion$counts <= zrange[1]] <- zrange[1]
+            hicregion$counts[hicregion$counts >= zrange[2]] <- zrange[2]
+            }
         } else {
           stopifnot(is.vector(zrange), length(zrange) == 2, zrange[2] > zrange[1])
           hicregion$counts[hicregion$counts <= zrange[1]] <- zrange[1]
@@ -108,9 +113,9 @@ bb_hic <- function(hic, chrom, chromstart, chromend, palette = 'reds', zrange = 
 
         hicregion <- extractHiC(hic = hic, format = "full", chrom = chrom, chromstart = chromstart, chromend = chromend,
                                 resolution = resolution, zrange = zrange, norm = norm)
-        ## extractHiC will do this, but this will give the values for returning later
+        ## bb_rhic will do this, but this will give the values for returning later
         if(is.null(zrange)){
-          zrange <- c(0, max(hicregion$counts))
+          zrange <- c(min(hicregion$counts), max(hicregion$counts))
           hicregion$counts[hicregion$counts <= zrange[1]] <- zrange[1]
           hicregion$counts[hicregion$counts >= zrange[2]] <- zrange[2]
         }
