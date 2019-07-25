@@ -111,7 +111,7 @@ bb_hic <- function(hic, chrom, chromstart, chromend, palette = 'reds', zrange = 
 
       if(plottype == "square"){
 
-        hicregion <- extractHiC(hic = hic, format = "full", chrom = chrom, chromstart = chromstart, chromend = chromend,
+        hicregion <- bb_rhic(hic = hic, format = "full", chrom = chrom, chromstart = chromstart, chromend = chromend,
                                 resolution = resolution, zrange = zrange, norm = norm)
         ## bb_rhic will do this, but this will give the values for returning later
         if(is.null(zrange)){
@@ -120,7 +120,7 @@ bb_hic <- function(hic, chrom, chromstart, chromend, palette = 'reds', zrange = 
           hicregion$counts[hicregion$counts >= zrange[2]] <- zrange[2]
         }
       } else if (plottype == "triangle"){
-        hicregion <- extractHiC(hic = hic, format = "sparse", chrom = chrom, chromstart = chromstart, chromend = chromend,
+        hicregion <- bb_rhic(hic = hic, format = "sparse", chrom = chrom, chromstart = chromstart, chromend = chromend,
                                 resolution = resolution, zrange = zrange, norm = norm)
         ## extractHiC will do this, but this will give the values for returning later
         if(is.null(zrange)){
