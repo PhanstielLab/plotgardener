@@ -7,8 +7,8 @@
 bb_hic(hic, chrom, chromstart, chromend, palette = "reds",
   zrange = NULL, resolution, norm = "NONE", plottype = "square",
   half = NULL, raster = TRUE, addlegend = FALSE,
-  legendlocation = NULL, legendoffset = 0.25, height = 3.25,
-  width = 3.25, x = 2.625, y = 3.875, pageheight, ...)
+  legendlocation = NULL, legendoffset = 0.25, height = NULL,
+  width = NULL, x = 2.625, y = 3.875, pageheight, ...)
 }
 \arguments{
 \item{hic}{path to .hic file or 3 column dataframe of counts}

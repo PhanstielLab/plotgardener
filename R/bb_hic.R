@@ -27,7 +27,7 @@
 
 bb_hic <- function(hic, chrom, chromstart, chromend, palette = 'reds', zrange = NULL, resolution, norm = "NONE",
                         plottype = "square", half = NULL, raster = TRUE, addlegend = FALSE, legendlocation = NULL,
-                        legendoffset = 0.25, height = 3.25, width = 3.25, x = 2.625, y = 3.875, pageheight, ...){
+                        legendoffset = 0.25, height = NULL, width = NULL, x = 2.625, y = 3.875, pageheight, ...){
 
   # ERRORS
   # ======================================================================================================================================================================================
@@ -145,10 +145,20 @@ bb_hic <- function(hic, chrom, chromstart, chromend, palette = 'reds', zrange = 
     upViewport()
   }
 
-  ## Make viewport of desired size at specified location
-  converted_coords = convert_coordinates(height = height, width = width, x = x, y = y, pageheight = pageheight)
-  vp <- viewport(height = unit(height, "in"), width = unit(width, "in"), x = unit(converted_coords[1], "in"), y = unit(converted_coords[2], "in"))
-  pushViewport(vp)
+
+  ## default is to have a viewport the size of the device
+  if((is.null(height) & !is.null(width)) | (is.null(width) & !is.null(height))){
+    stop("Please specify both height and width.")
+  } else if (is.null(height) & is.null(width)){
+    vp <- viewport(height = unit(1, "npc"), width = unit(1, "npc"), x = unit(0.5, "npc"), y = unit(0.5, "npc"))
+    pushViewport(vp)
+  } else {
+    ## Make viewport of desired size at specified location
+    converted_coords = convert_coordinates(height = height, width = width, x = x, y = y, pageheight = pageheight)
+    vp <- viewport(height = unit(height, "in"), width = unit(width, "in"), x = unit(converted_coords[1], "in"), y = unit(converted_coords[2], "in"))
+    pushViewport(vp)
+  }
+
 
 
   # CONVERT NUMBERS TO COLORS
@@ -205,6 +215,7 @@ bb_hic <- function(hic, chrom, chromstart, chromend, palette = 'reds', zrange = 
     } else {
       stop("Incorrect \"plottype\" argument.  Options are \"square\" or \"triangle\".")
     }
+    assign("reshapen", reshapen, envir = globalenv())
     grid.raster(reshapen)
 
     ## Go back to root viewport
