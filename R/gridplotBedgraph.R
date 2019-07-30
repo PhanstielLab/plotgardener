@@ -1,6 +1,6 @@
 #' @export
 
-gridplotBedgraph <- function(signal, chrom, chromstart, chromend, range=NULL, color, transparency = 1.0, lwd =1, linecolor = NA, binSize = NA, addscale = FALSE, overlay =FALSE, binCap = TRUE, flip = FALSE, ymax = 1.04, width = 3.25, height = .625, x=4.25, y =5.5, ...  ){
+gridplotBedgraph <- function(signal, chrom, chromstart, chromend, range=NULL, color, transparency = 1.0, lwd =1, linecolor = NA, binSize = NA, addscale = FALSE, overlay =FALSE, binCap = TRUE, flip = FALSE, ymax = 1.04, width = 3.25, height = .625, x=4.25, y =5.5, pageheight, ...  ){
 
   if(is.na(binSize) == TRUE){
     binSize = (chromend - chromstart)/2000
@@ -138,7 +138,7 @@ gridplotBedgraph <- function(signal, chrom, chromstart, chromend, range=NULL, co
     if (is.null(current.vpPath()) == FALSE){
       upViewport()
     }
-    converted_coords = convert_coordinates(height, width, x, y)
+    converted_coords = convert_coordinates(height, width, x, y, pageheight = pageheight)
     vp <- viewport(width = unit(width,"in"), height = unit(height, "in"), x = unit(converted_coords[1],"in"), y=unit(converted_coords[2],"in"))
     pushViewport(vp)
   }
