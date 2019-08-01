@@ -156,8 +156,8 @@ bb_hic <- function(hic, chrom, chromstart, chromend, resolution = 10000, zrange 
   left_margin <- get("left_margin", envir = bbEnv)
 
   ## Start x and y based on given margins
-  x = x + left_margin
-  y = y + top_margin
+  x <- x + left_margin
+  y <- y + top_margin
 
   ## Make viewport of desired size at specified location
   converted_coords = convert_coordinates(height = height, width = width, x = x, y = y, pageheight = page_height)
@@ -252,8 +252,8 @@ bb_hic <- function(hic, chrom, chromstart, chromend, resolution = 10000, zrange 
     if(legendlocation == "right"){
       legend_width <- 1/32 * width
       legend_height <- 1/4 * height
-      legend_xcoord <- x + width + legendoffset
-      legend_ycoord <- y
+      legend_xcoord <- x + width + legendoffset - left_margin
+      legend_ycoord <- y - top_margin
       bb_legend(color_vector = sorted_colors, min_label = min_z, max_label = max_z, height= legend_height,
                     width = legend_width, x = legend_xcoord, y = legend_ycoord, orientation = "vertical")
 
@@ -262,9 +262,8 @@ bb_hic <- function(hic, chrom, chromstart, chromend, resolution = 10000, zrange 
     else if(legendlocation == "left"){
       legend_width <- 1/32 * width
       legend_height <- 1/4 * height
-      legend_xcoord <- x - legendoffset
-      print(legend_xcoord)
-      legend_ycoord <- y
+      legend_xcoord <- x - legendoffset - left_margin - legend_width
+      legend_ycoord <- y - top_margin
       bb_legend(color_vector = sorted_colors, min_label = min_z, max_label = max_z, height= legend_height,
                     width = legend_width, x = legend_xcoord, y = legend_ycoord, orientation = "vertical")
     }
@@ -272,8 +271,8 @@ bb_hic <- function(hic, chrom, chromstart, chromend, resolution = 10000, zrange 
     else if(legendlocation == "top"){
       legend_width <- 1/4 * height
       legend_height <- 1/32 * width
-      legend_xcoord <- x + (width - legend_width)/2
-      legend_ycoord <- y + legendoffset + legend_height
+      legend_xcoord <- x + (width - legend_width)/2 - left_margin
+      legend_ycoord <- y - legendoffset - legend_height - top_margin
 
       bb_legend(color_vector = sorted_colors, min_label = min_z, max_label = max_z, height= legend_height,
                     width = legend_width, x = legend_xcoord, y = legend_ycoord, orientation = "horizontal")
@@ -282,8 +281,8 @@ bb_hic <- function(hic, chrom, chromstart, chromend, resolution = 10000, zrange 
     else if(legendlocation == "bottom"){
       legend_width <- 1/4 * height
       legend_height <- 1/32 * width
-      legend_xcoord <- x + (width - legend_width)/2
-      legend_ycoord <- y + legendoffset + height
+      legend_xcoord <- x + (width - legend_width)/2 - left_margin
+      legend_ycoord <- y + legendoffset + height - top_margin
 
       bb_legend(color_vector = sorted_colors, min_label = min_z, max_label = max_z, height= legend_height,
                     width = legend_width, x = legend_xcoord, y = legend_ycoord, orientation = "horizontal")
