@@ -4,14 +4,13 @@
 \alias{bb_rhic}
 \title{extracts HiC data from .hic file using Straw}
 \usage{
-bb_rhic(hic, format, chrom, chromstart = NULL, chromend = NULL,
-  resolution, zrange = NULL, norm = "NONE", res_scale = "BP",
-  altchrom = NULL, altchromstart = NULL, altchromend = NULL)
+bb_rhic(hic, chrom, chromstart = NULL, chromend = NULL,
+  resolution = 10000, zrange = NULL, format = "sparse",
+  norm = "KR", res_scale = "BP", altchrom = NULL,
+  altchromstart = NULL, altchromend = NULL)
 }
 \arguments{
 \item{hic}{path to .hic file}
-
-\item{format}{format of data wanted, which will depend on what kind of plot is ultimately desired; options are "sparse" and "full"}
 
 \item{chrom}{if not alternative chromosome, chromosome of desired region}
 
@@ -22,6 +21,8 @@ bb_rhic(hic, format, chrom, chromstart = NULL, chromend = NULL,
 \item{resolution}{the width in bp of each pixel}
 
 \item{zrange}{the range of interaction scores to plot, where extreme values will be set to the max or min}
+
+\item{format}{format of data wanted, which will depend on what kind of plot is ultimately desired; options are "sparse" and "full"}
 
 \item{norm}{hic data normalization; options are "NONE", "VC", "VC_SQRT", and "KR"}
 

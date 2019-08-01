@@ -4,30 +4,29 @@
 #' @param chrom chromosome of region to be plotted
 #' @param chromstart chromosome start of region to be plotted
 #' @param chromend chromosome end of region to be plotted
-#' @param palette palette to use for representing interaction scores
-#' @param zrange the range of interaction scores to plot, where extreme values will be set to the max or min
 #' @param resolution the width in bp of each pixel
-#' @param norm hic data normalization; options are "NONE", "VC", "VC_SQRT", and "KR"
-#' @param plottype options are "square" or "triangle"
-#' @param half option for when plottype is "triangle"; options are "top" or "bottom"
-#' @param raster allows for rasterization of plot, which results in quicker plotting
-#' @param addlegend add legend representing scores for color range
-#' @param legendlocation if addlegend == TRUE, where relative to plot to place legend; options are "right", "left", top", or "bottom"
-#' @param legendoffset if addlegend == TRUE, how much to offset the legend relative to the plot in inches
+#' @param zrange the range of interaction scores to plot, where extreme values will be set to the max or min
 #' @param height height of plot in inches
 #' @param width width of plot in inches
 #' @param x x-coordinate of where to place plot relative to top left of plot
 #' @param y y-coordinate of where to place plot relative to top left of plot
-#' @param pageheight height of page on which plot will be placed
+#' @param palette palette to use for representing interaction scores
+#' @param norm if giving .hic file, hic data normalization; options are "NONE", "VC", "VC_SQRT", and "KR"
+#' @param half what sides of square plot; options are "both", top", or "bottom"
+#' @param raster allows for rasterization of plot, which results in quicker plotting
+#' @param addlegend add legend representing scores for color range
+#' @param legendlocation if addlegend == TRUE, where relative to plot to place legend; options are "right", "left", top", or "bottom"
+#' @param legendoffset if addlegend == TRUE, how much to offset the legend relative to the plot in inches
 #'
 #' @return Function will plot a HiC interaction matrix and return a list of the zrange min, zrange max, and sequential color palette
 #'
 #' @author Nicole Kramer
 #' @export
 
-bb_hic <- function(hic, chrom, chromstart, chromend, palette = 'reds', zrange = NULL, resolution, norm = "NONE",
-                        plottype = "square", half = NULL, raster = TRUE, addlegend = FALSE, legendlocation = NULL,
-                        legendoffset = 0.25, height = NULL, width = NULL, x = 2.625, y = 3.875, pageheight, ...){
+bb_hic <- function(hic, chrom, chromstart, chromend, resolution = 10000, zrange = NULL, height = 3, width = 3, x = 1.75, y = 3,
+                   palette = 'reds', norm = "KR", half = "both", raster = TRUE,
+                   addlegend = FALSE, legendlocation = "right", legendoffset = 0.25, ...){
+
 
   # ERRORS
   # ======================================================================================================================================================================================
@@ -94,7 +93,7 @@ bb_hic <- function(hic, chrom, chromstart, chromend, palette = 'reds', zrange = 
         data_matrix <- as.matrix(reshape::cast(hicregion, formula = x ~ y, value = "counts"))
 
         ## If data is sparse but we want a square plot, we need to make the data symmetric
-        if(all(is.na(data_matrix[lower.tri(data_matrix)])) & plottype == "square"){
+        if(all(is.na(data_matrix[lower.tri(data_matrix)])) & half == "both"){
           lower <- hicregion[ ,c(2,1,3)]
           colnames(lower) <- c("x", "y", "counts")
           combined <- unique(rbind(hicregion, lower))
@@ -109,7 +108,7 @@ bb_hic <- function(hic, chrom, chromstart, chromend, palette = 'reds', zrange = 
     ## Make sure the inputted file is a .hic file
     if(file_ext(hic) == "hic"){
 
-      if(plottype == "square"){
+      if(half == "both"){
 
         hicregion <- bb_rhic(hic = hic, format = "full", chrom = chrom, chromstart = chromstart, chromend = chromend,
                                 resolution = resolution, zrange = zrange, norm = norm)
@@ -119,7 +118,7 @@ bb_hic <- function(hic, chrom, chromstart, chromend, palette = 'reds', zrange = 
           hicregion$counts[hicregion$counts <= zrange[1]] <- zrange[1]
           hicregion$counts[hicregion$counts >= zrange[2]] <- zrange[2]
         }
-      } else if (plottype == "triangle"){
+      } else if (half == "bottom" | half == "top"){
         hicregion <- bb_rhic(hic = hic, format = "sparse", chrom = chrom, chromstart = chromstart, chromend = chromend,
                                 resolution = resolution, zrange = zrange, norm = norm)
         ## extractHiC will do this, but this will give the values for returning later
@@ -129,7 +128,7 @@ bb_hic <- function(hic, chrom, chromstart, chromend, palette = 'reds', zrange = 
           hicregion$counts[hicregion$counts >= zrange[2]] <- zrange[2]
         }
       } else {
-        stop("Incorrect \"plottype\" argument.  Options are \"square\" or \"triangle\".")
+        stop("Incorrect \"half\" argument.  Options are \"both\", \"top\", or \"bottom\".")
       }
     } else {
       stop("Incorrect input. Input a .hic file or a dataframe.")
@@ -141,25 +140,25 @@ bb_hic <- function(hic, chrom, chromstart, chromend, palette = 'reds', zrange = 
   # VIEWPORTS
   # ======================================================================================================================================================================================
   ## Go up a viewport if not at the root of all viewports
+
+
   if(is.null(current.vpPath()) == FALSE){
     upViewport()
   }
 
+  ## Get page_height and margins from bbEnv
+  page_height <- get("height", envir = bbEnv)
+  top_margin <- get("top_margin", envir = bbEnv)
+  left_margin <- get("left_margin", envir = bbEnv)
 
-  ## default is to have a viewport the size of the device
-  if((is.null(height) & !is.null(width)) | (is.null(width) & !is.null(height))){
-    stop("Please specify both height and width.")
-  } else if (is.null(height) & is.null(width)){
-    vp <- viewport(height = unit(1, "npc"), width = unit(1, "npc"), x = unit(0.5, "npc"), y = unit(0.5, "npc"))
-    pushViewport(vp)
-  } else {
-    ## Make viewport of desired size at specified location
-    converted_coords = convert_coordinates(height = height, width = width, x = x, y = y, pageheight = pageheight)
-    vp <- viewport(height = unit(height, "in"), width = unit(width, "in"), x = unit(converted_coords[1], "in"), y = unit(converted_coords[2], "in"))
-    pushViewport(vp)
-  }
+  ## Start x and y based on given margins
+  x = x + left_margin
+  y = y + top_margin
 
-
+  ## Make viewport of desired size at specified location
+  converted_coords = convert_coordinates(height = height, width = width, x = x, y = y, pageheight = page_height)
+  vp <- viewport(height = unit(height, "in"), width = unit(width, "in"), x = unit(converted_coords[1], "in"), y = unit(converted_coords[2], "in"))
+  pushViewport(vp)
 
   # CONVERT NUMBERS TO COLORS
   # ======================================================================================================================================================================================
@@ -187,41 +186,30 @@ bb_hic <- function(hic, chrom, chromstart, chromend, palette = 'reds', zrange = 
     ## Cast dataframe into a matrix
     reshapen <- as.matrix(reshape::cast(hicregion, formula = x ~ y, value = "color_vector"))
 
-    if(plottype == "triangle"){
 
+    if(half == "bottom" | half == "top"){
       ## Fill in all NA's with the lowest color in the range (essentially a 0)
       reshapen[is.na(reshapen)] <- lowest_color
 
       ## Replace the lower triangular part of the matrix with NA's to not have anything plot there
       reshapen[lower.tri(reshapen)] <- NA
-
-      if (is.null(half)){
-        stop("Argument \"half\" is required for argument \"plottype = triangle\". ")
-      } else {
-
-      ## Reverse orientation of matrix based on columns for bottom triangle and rows for top triangle
       if (half == "bottom"){
         reshapen <- apply(reshapen, 2, rev)
       } else if (half == "top"){
         reshapen <- apply(reshapen, 1, rev)
-      } else {
-        stop("Invalid \"half\" argument. Options are \"top\" or \"bottom\".")
       }
-    }
-  }
-    ## Matrix already complete from extraction, reverse orientation based on columns
-    else if(plottype == "square"){
+    } else if (half == "both"){
+      ## Matrix already complete from extraction, reverse orientation based on columns
       reshapen <- apply(reshapen, 2, rev)
     } else {
-      stop("Incorrect \"plottype\" argument.  Options are \"square\" or \"triangle\".")
+      stop("Invalid plot type.")
     }
-    assign("reshapen", reshapen, envir = globalenv())
+
     grid.raster(reshapen)
 
     ## Go back to root viewport
     upViewport()
   }
-
 
   # NON-RASTERIZED PLOT #
   # ======================================================================================================================================================================================
@@ -230,16 +218,11 @@ bb_hic <- function(hic, chrom, chromstart, chromend, palette = 'reds', zrange = 
     ## Append colors to hicdata and convert to rgb
     hicregion <- cbind(hicregion, t(col2rgb(color_vector)))
 
-    if(plottype == "triangle"){
-
-
-      ## Need to get lower part of dataframe to plot bottom triangle
-      if(half == "bottom"){
-
-        lower <- hicregion[ , c(2, 1, 3, 4, 5, 6)]
-        colnames(lower) <- c("x", "y", "counts", "red", "green", "blue")
-        hicregion <- lower
-      }
+    ## Need to get lower part of dataframe to plot bottom triangle
+    if(half == "bottom"){
+      lower <- hicregion[ , c(2, 1, 3, 4, 5, 6)]
+      colnames(lower) <- c("x", "y", "counts", "red", "green", "blue")
+      hicregion <- lower
     }
 
     ## Plot squares with drawpoly function defined above
@@ -268,7 +251,7 @@ bb_hic <- function(hic, chrom, chromstart, chromend, palette = 'reds', zrange = 
       legend_xcoord <- x + width + legendoffset
       legend_ycoord <- y
       bb_legend(color_vector = sorted_colors, min_label = min_z, max_label = max_z, height= legend_height,
-                    width = legend_width, x = legend_xcoord, y = legend_ycoord, orientation = "vertical", pageheight = pageheight)
+                    width = legend_width, x = legend_xcoord, y = legend_ycoord, orientation = "vertical")
 
     }
 
@@ -279,7 +262,7 @@ bb_hic <- function(hic, chrom, chromstart, chromend, palette = 'reds', zrange = 
       print(legend_xcoord)
       legend_ycoord <- y
       bb_legend(color_vector = sorted_colors, min_label = min_z, max_label = max_z, height= legend_height,
-                    width = legend_width, x = legend_xcoord, y = legend_ycoord, orientation = "vertical", pageheight = pageheight)
+                    width = legend_width, x = legend_xcoord, y = legend_ycoord, orientation = "vertical")
     }
 
     else if(legendlocation == "top"){
@@ -289,7 +272,7 @@ bb_hic <- function(hic, chrom, chromstart, chromend, palette = 'reds', zrange = 
       legend_ycoord <- y + legendoffset + legend_height
 
       bb_legend(color_vector = sorted_colors, min_label = min_z, max_label = max_z, height= legend_height,
-                    width = legend_width, x = legend_xcoord, y = legend_ycoord, orientation = "horizontal", pageheight = pageheight)
+                    width = legend_width, x = legend_xcoord, y = legend_ycoord, orientation = "horizontal")
     }
 
     else if(legendlocation == "bottom"){
@@ -299,7 +282,7 @@ bb_hic <- function(hic, chrom, chromstart, chromend, palette = 'reds', zrange = 
       legend_ycoord <- y + legendoffset + height
 
       bb_legend(color_vector = sorted_colors, min_label = min_z, max_label = max_z, height= legend_height,
-                    width = legend_width, x = legend_xcoord, y = legend_ycoord, orientation = "horizontal", pageheight = pageheight)
+                    width = legend_width, x = legend_xcoord, y = legend_ycoord, orientation = "horizontal")
     }
 
   }

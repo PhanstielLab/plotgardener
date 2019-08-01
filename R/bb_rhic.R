@@ -2,12 +2,12 @@
 #'
 #'
 #' @param hic path to .hic file
-#' @param format format of data wanted, which will depend on what kind of plot is ultimately desired; options are "sparse" and "full"
 #' @param chrom if not alternative chromosome, chromosome of desired region
 #' @param chromstart chromosome start position of chrom, in bp
 #' @param chromend chromosome end position of chrom, in bp
 #' @param resolution the width in bp of each pixel
 #' @param zrange the range of interaction scores to plot, where extreme values will be set to the max or min
+#' @param format format of data wanted, which will depend on what kind of plot is ultimately desired; options are "sparse" and "full"
 #' @param norm hic data normalization; options are "NONE", "VC", "VC_SQRT", and "KR"
 #' @param res_scale scale of normalization; options are "BP" and "FRAG"
 #' @param altchrom if looking at region between two different chromosomes, this is the specified alternative chromsome
@@ -17,15 +17,16 @@
 #'
 #' @export
 
-bb_rhic <- function(hic, format, chrom, chromstart = NULL, chromend = NULL, resolution, zrange = NULL,
-                    norm = "NONE", res_scale = "BP", altchrom = NULL, altchromstart = NULL, altchromend = NULL){
+bb_rhic <- function(hic, chrom, chromstart = NULL, chromend = NULL, resolution = 10000, zrange = NULL, format = "sparse",
+                    norm = "KR", res_scale = "BP", altchrom = NULL, altchromstart = NULL, altchromend = NULL){
 
   # Parse chromosome and region in format for Straw
   # ======================================================================================================================================================================================
   if ((is.null(chromstart) & !is.null(chromend)) | (is.null(chromend) & !is.null(chromstart))){
     stop("Cannot have one \'NULL\' chromstart or chromend.")
   } else if (is.null(chromstart) & is.null(chromend)){
-    regionStraw <- gsub(pattern = "chr|chrom|CHR|CHROM", replacement = "", x = chrom)
+    regionChrom <- gsub(pattern = "chr|chrom|CHR|CHROM", replacement = "", x = chrom)
+    regionStraw <- regionChrom
   } else {
     regionChrom <- gsub(pattern = "chr|chrom|CHR|CHROM", replacement = "", x = chrom)
 
@@ -39,11 +40,14 @@ bb_rhic <- function(hic, format, chrom, chromstart = NULL, chromend = NULL, reso
   # ======================================================================================================================================================================================
   if(is.null(altchrom)){
     upper <- straw_R(sprintf("%s %s %s %s %s %i", norm, hic, regionStraw, regionStraw, res_scale, resolution))
+    colnames(upper)[colnames(upper) == "x"] <- paste0("chr",regionChrom)
+    colnames(upper)[colnames(upper) == "y"] <- paste0("chr",regionChrom)
   } else {
     if ((is.null(altchromstart) & !is.null(altchromend)) | (is.null(altchromend) & !is.null(altchromstart))){
       stop("Cannot have one \'NULL\' altchromstart or altchromend.")
     } else if (is.null(altchromstart) & is.null(altchromend)){
-      regionStraw2 <- gsub(pattern = "chr|chrom|CHR|CHROM", replacement = "", x = altchrom)
+      regionChrom2 <- gsub(pattern = "chr|chrom|CHR|CHROM", replacement = "", x = altchrom)
+      regionStraw2 <- regionChrom2
     } else {
       regionChrom2 <- gsub(pattern = "chr|chrom|CHR|CHROM", replacement = "", x = altchrom)
 
@@ -54,6 +58,8 @@ bb_rhic <- function(hic, format, chrom, chromstart = NULL, chromend = NULL, reso
     }
 
     upper <- straw_R(sprintf("%s %s %s %s %s %i", norm, hic, regionStraw, regionStraw2, res_scale, resolution))
+    colnames(upper)[colnames(upper) == "x"] <- paste0("chr", min(as.numeric(regionChrom), as.numeric(regionChrom2)))
+    colnames(upper)[colnames(upper) == "y"] <- paste0("chr", max(as.numeric(regionChrom), as.numeric(regionChrom2)))
   }
 
   # Full format: get symmetric data, complete missing values, replace NA's with 0's

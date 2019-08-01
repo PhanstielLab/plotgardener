@@ -16,9 +16,16 @@
 #' @export
 
 bb_legend <- function(color_vector, min_label, max_label, height, width, x, y, pageheight, orientation = "vertical", fontsize = 8, fontcolor = "grey", ...){
+  ## Get page_height and margins from bbEnv
+  page_height <- get("height", envir = bbEnv)
+  top_margin <- get("top_margin", envir = bbEnv)
+  left_margin <- get("left_margin", envir = bbEnv)
+
+  x = x + left_margin
+  y = y + top_margin
 
   ## Convert user-inputted coordinates
-  legend_coordinates <- convert_coordinates(height = height, width = width, x = x, y = y, pageheight)
+  legend_coordinates <- convert_coordinates(height = height, width = width, x = x, y = y, pageheight = page_height)
 
   # VIEWPORTS
   # ======================================================================================================================================================================================
@@ -26,6 +33,7 @@ bb_legend <- function(color_vector, min_label, max_label, height, width, x, y, p
   if(is.null(current.vpPath()) == FALSE){
     upViewport()
   }
+
   vp <- viewport(height = unit(height, "in"), width = unit(width, "in"), x = unit(legend_coordinates[1], "in"), y = unit(legend_coordinates[2], "in"))
   pushViewport(vp)
   # ======================================================================================================================================================================================

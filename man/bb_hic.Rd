@@ -4,11 +4,11 @@
 \alias{bb_hic}
 \title{plots HiC interaction matrix}
 \usage{
-bb_hic(hic, chrom, chromstart, chromend, palette = "reds",
-  zrange = NULL, resolution, norm = "NONE", plottype = "square",
-  half = NULL, raster = TRUE, addlegend = FALSE,
-  legendlocation = NULL, legendoffset = 0.25, height = NULL,
-  width = NULL, x = 2.625, y = 3.875, pageheight, ...)
+bb_hic(hic, chrom, chromstart, chromend, resolution = 10000,
+  zrange = NULL, height = 3, width = 3, x = 1.75, y = 3,
+  palette = "reds", norm = "KR", half = "both", raster = TRUE,
+  addlegend = FALSE, legendlocation = "right", legendoffset = 0.25,
+  ...)
 }
 \arguments{
 \item{hic}{path to .hic file or 3 column dataframe of counts}
@@ -19,25 +19,9 @@ bb_hic(hic, chrom, chromstart, chromend, palette = "reds",
 
 \item{chromend}{chromosome end of region to be plotted}
 
-\item{palette}{palette to use for representing interaction scores}
-
-\item{zrange}{the range of interaction scores to plot, where extreme values will be set to the max or min}
-
 \item{resolution}{the width in bp of each pixel}
 
-\item{norm}{hic data normalization; options are "NONE", "VC", "VC_SQRT", and "KR"}
-
-\item{plottype}{options are "square" or "triangle"}
-
-\item{half}{option for when plottype is "triangle"; options are "top" or "bottom"}
-
-\item{raster}{allows for rasterization of plot, which results in quicker plotting}
-
-\item{addlegend}{add legend representing scores for color range}
-
-\item{legendlocation}{if addlegend == TRUE, where relative to plot to place legend; options are "right", "left", top", or "bottom"}
-
-\item{legendoffset}{if addlegend == TRUE, how much to offset the legend relative to the plot in inches}
+\item{zrange}{the range of interaction scores to plot, where extreme values will be set to the max or min}
 
 \item{height}{height of plot in inches}
 
@@ -47,7 +31,19 @@ bb_hic(hic, chrom, chromstart, chromend, palette = "reds",
 
 \item{y}{y-coordinate of where to place plot relative to top left of plot}
 
-\item{pageheight}{height of page on which plot will be placed}
+\item{palette}{palette to use for representing interaction scores}
+
+\item{norm}{if giving .hic file, hic data normalization; options are "NONE", "VC", "VC_SQRT", and "KR"}
+
+\item{half}{what sides of square plot; options are "both", top", or "bottom"}
+
+\item{raster}{allows for rasterization of plot, which results in quicker plotting}
+
+\item{addlegend}{add legend representing scores for color range}
+
+\item{legendlocation}{if addlegend == TRUE, where relative to plot to place legend; options are "right", "left", top", or "bottom"}
+
+\item{legendoffset}{if addlegend == TRUE, how much to offset the legend relative to the plot in inches}
 }
 \value{
 Function will plot a HiC interaction matrix and return a list of the zrange min, zrange max, and sequential color palette
