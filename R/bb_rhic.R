@@ -40,8 +40,10 @@ bb_rhic <- function(hic, chrom, chromstart = NULL, chromend = NULL, resolution =
   # ======================================================================================================================================================================================
   if(is.null(altchrom)){
     upper <- straw_R(sprintf("%s %s %s %s %s %i", norm, hic, regionStraw, regionStraw, res_scale, resolution))
-    colnames(upper)[colnames(upper) == "x"] <- paste0("chr",regionChrom)
-    colnames(upper)[colnames(upper) == "y"] <- paste0("chr",regionChrom)
+
+    # Rename "x" and "y" with chromosome
+    colnames(upper)[colnames(upper) == "x"] <- paste0("chr", regionChrom)
+    colnames(upper)[colnames(upper) == "y"] <- paste0("chr" ,regionChrom)
   } else {
     if ((is.null(altchromstart) & !is.null(altchromend)) | (is.null(altchromend) & !is.null(altchromstart))){
       stop("Cannot have one \'NULL\' altchromstart or altchromend.")
@@ -58,6 +60,7 @@ bb_rhic <- function(hic, chrom, chromstart = NULL, chromend = NULL, resolution =
     }
 
     upper <- straw_R(sprintf("%s %s %s %s %s %i", norm, hic, regionStraw, regionStraw2, res_scale, resolution))
+    # Rename "x" and "y" with chromosomes
     colnames(upper)[colnames(upper) == "x"] <- paste0("chr", min(as.numeric(regionChrom), as.numeric(regionChrom2)))
     colnames(upper)[colnames(upper) == "y"] <- paste0("chr", max(as.numeric(regionChrom), as.numeric(regionChrom2)))
   }
@@ -65,11 +68,22 @@ bb_rhic <- function(hic, chrom, chromstart = NULL, chromend = NULL, resolution =
   # Full format: get symmetric data, complete missing values, replace NA's with 0's
   # ======================================================================================================================================================================================
   if(format == "full"){
+    ## "complete" function cannot have duplicate column names, so temporarily rename columns back to x and y
+    colnames(upper) <- c("x", "y", "counts")
     lower <- upper[ ,c(2,1,3)]
     colnames(lower) <- c("x", "y", "counts")
     combined <- unique(rbind(upper, lower))
     combinedComplete <- tidyr::complete(combined, x, y)
     combinedComplete$counts[is.na(combinedComplete$counts)] <- 0
+
+    ## Rename "x" and "y" columns with chromosome(s) again
+    if(is.null(altchrom)){
+      colnames(combinedComplete)[colnames(combinedComplete) == "x"] <- paste0("chr", regionChrom)
+      colnames(combinedComplete)[colnames(combinedComplete) == "y"] <- paste0("chr" ,regionChrom)
+    } else {
+      colnames(combinedComplete)[colnames(combinedComplete) == "x"] <- paste0("chr", min(as.numeric(regionChrom), as.numeric(regionChrom2)))
+      colnames(combinedComplete)[colnames(combinedComplete) == "y"] <- paste0("chr", max(as.numeric(regionChrom), as.numeric(regionChrom2)))
+    }
 
     # Scale lower and upper bounds using zrange
     if(is.null(zrange)){
@@ -82,6 +96,11 @@ bb_rhic <- function(hic, chrom, chromstart = NULL, chromend = NULL, resolution =
       combinedComplete$counts[combinedComplete$counts <= zrange[1]] <- zrange[1]
       combinedComplete$counts[combinedComplete$counts >= zrange[2]] <- zrange[2]
     }
+
+    if (nrow(combinedComplete) == 0){
+      warning("Warning: no data found in region.  Suggestions: check chromosome, check region")
+    }
+
     return(as.data.frame(combinedComplete))
   }
 
@@ -100,6 +119,11 @@ bb_rhic <- function(hic, chrom, chromstart = NULL, chromend = NULL, resolution =
       upper$counts[upper$counts <= zrange[1]] <- zrange[1]
       upper$counts[upper$counts >= zrange[2]] <- zrange[2]
     }
+
+    if (nrow(upper) == 0){
+      warning("Warning: no data found in region.  Suggestions: check chromosome, check region")
+    }
+
     return(as.data.frame(upper))
   }
 }
