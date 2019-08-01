@@ -125,6 +125,10 @@ bb_hic <- function(hic, chrom, chromstart, chromend, resolution = 10000, zrange 
       } else if (half == "bottom" | half == "top"){
         hicregion <- bb_rhic(hic = hic, format = "sparse", chrom = chrom, chromstart = chromstart, chromend = chromend,
                                 resolution = resolution, zrange = zrange, norm = norm)
+
+        ## Change correct header names for processing
+        colnames(hicregion) <- c("x", "y", "counts")
+
         ## extractHiC will do this, but this will give the values for returning later
         if(is.null(zrange)){
           zrange <- c(0, max(hicregion$counts))
