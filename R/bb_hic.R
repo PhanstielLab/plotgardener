@@ -68,7 +68,7 @@ bb_hic <- function(hic, chrom, chromstart, chromend, resolution = 10000, zrange 
       stop("Incorrect dataframe format.  Input a dataframe with 3 columns: x, y, counts.")
     } else {
 
-        ## Make sure dataframe is subsetted and has correct header names
+        ## Make sure dataframe is subsetted and has correct header names for processing
         hicregion <- hic[which(hic[ ,1] >= chromstart & hic[ ,1] <= chromend &
                                hic[ ,2] >= chromstart & hic[ ,2] <= chromend), ]
         colnames(hicregion) <- c("x", "y", "counts")
@@ -112,6 +112,10 @@ bb_hic <- function(hic, chrom, chromstart, chromend, resolution = 10000, zrange 
 
         hicregion <- bb_rhic(hic = hic, format = "full", chrom = chrom, chromstart = chromstart, chromend = chromend,
                                 resolution = resolution, zrange = zrange, norm = norm)
+
+        ## Change correct header names for processing
+        colnames(hicregion) <- c("x", "y", "counts")
+
         ## bb_rhic will do this, but this will give the values for returning later
         if(is.null(zrange)){
           zrange <- c(min(hicregion$counts), max(hicregion$counts))
