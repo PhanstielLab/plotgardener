@@ -213,7 +213,7 @@ bb_hic <- function(hic, chrom, chromstart, chromend, resolution = 10000, zrange 
       stop("Invalid plot type.")
     }
 
-    grid.raster(reshapen)
+    grid.raster(reshapen, interpolate = FALSE)
 
     ## Go back to root viewport
     upViewport()
