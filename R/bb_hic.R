@@ -36,14 +36,14 @@ bb_hic <- function(hic, chrom, chromstart, chromend, resolution = 10000, zrange 
 
   # DEFINE A FUNCTION TO PLOT SQUARES
   # ======================================================================================================================================================================================
-  drawpoly <- function(df, resolution, chromstart, chromend){
+  drawpoly <- function(df, resolution, chromstart, chromend, half){
 
     ## Define the color
     col = rgb(df[4], df[5], df[6], maxColorValue = 255)
     x = df[1]
     y = df[2]
 
-    ## Get coordinates for the points of the square, normalized to 0 to 1 based on chromstart and chromend
+    ## Get coordinates for the points of the square/triangle, normalized to 0 to 1 based on chromstart and chromend
     xleft = x - .5 * resolution
     xleft.normalized = normalize(xleft, chromstart, chromend)
     xright = x + .5 * resolution
@@ -53,9 +53,32 @@ bb_hic <- function(hic, chrom, chromstart, chromend, resolution = 10000, zrange 
     ybottom = y - .5 * resolution
     ybottom.normalized = normalize(ybottom, chromstart, chromend)
 
-    ## Plot all the squares
-    grid.polygon(x = c(xleft.normalized, xleft.normalized, xright.normalized, xright.normalized),
-                 y = c(ybottom.normalized, ytop.normalized, ytop.normalized, ybottom.normalized), gp = gpar(col = col, fill = col))
+    if (half == "both"){
+
+      ## Plot all squares
+      grid.polygon(x = c(xleft.normalized, xleft.normalized, xright.normalized, xright.normalized),
+                   y = c(ybottom.normalized, ytop.normalized, ytop.normalized, ybottom.normalized), gp = gpar(col = col, fill = col))
+    } else if (half == "top"){
+
+      ## Plot triangles along diagonal and squares above
+      if (y > x){
+        grid.polygon(x = c(xleft.normalized, xleft.normalized, xright.normalized, xright.normalized),
+                     y = c(ybottom.normalized, ytop.normalized, ytop.normalized, ybottom.normalized), gp = gpar(col = col, fill = col))
+      } else if (y == x) {
+        grid.polygon(x = c(xleft.normalized, xleft.normalized, xright.normalized),
+                     y = c(ybottom.normalized, ytop.normalized, ytop.normalized), gp = gpar(col = col, fill = col))
+      }
+
+    } else if (half == "bottom"){
+      ## Plot triangles along diagonal and squares below
+      if (y < x){
+        grid.polygon(x = c(xleft.normalized, xleft.normalized, xright.normalized, xright.normalized),
+                     y = c(ybottom.normalized, ytop.normalized, ytop.normalized, ybottom.normalized), gp = gpar(col = col, fill = col))
+      } else if (y == x) {
+        grid.polygon(x = c(xleft.normalized, xright.normalized, xright.normalized),
+                     y = c(ybottom.normalized, ybottom.normalized, ytop.normalized), gp = gpar(col = col, fill = col))
+      }
+    }
   }
 
 
@@ -234,7 +257,7 @@ bb_hic <- function(hic, chrom, chromstart, chromend, resolution = 10000, zrange 
     }
 
     ## Plot squares with drawpoly function defined above
-    invisible(apply(hicregion, 1, drawpoly, resolution = resolution, chromstart = chromstart, chromend = chromend))
+    invisible(apply(hicregion, 1, drawpoly, resolution = resolution, chromstart = chromstart, chromend = chromend, half = half))
 
     ## Go back to root viewport
     upViewport()
