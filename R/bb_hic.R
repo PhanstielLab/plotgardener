@@ -57,26 +57,55 @@ bb_hic <- function(hic, chrom, chromstart, chromend, resolution = 10000, zrange 
 
       ## Plot all squares
       grid.polygon(x = c(xleft.normalized, xleft.normalized, xright.normalized, xright.normalized),
-                   y = c(ybottom.normalized, ytop.normalized, ytop.normalized, ybottom.normalized), gp = gpar(col = col, fill = col))
+                   y = c(ybottom.normalized, ytop.normalized, ytop.normalized, ybottom.normalized), gp = gpar(col = NA, fill = col))
     } else if (half == "top"){
 
       ## Plot triangles along diagonal and squares above
       if (y > x){
         grid.polygon(x = c(xleft.normalized, xleft.normalized, xright.normalized, xright.normalized),
-                     y = c(ybottom.normalized, ytop.normalized, ytop.normalized, ybottom.normalized), gp = gpar(col = col, fill = col))
+                     y = c(ybottom.normalized, ytop.normalized, ytop.normalized, ybottom.normalized), gp = gpar(col = NA, fill = col))
       } else if (y == x) {
         grid.polygon(x = c(xleft.normalized, xleft.normalized, xright.normalized),
-                     y = c(ybottom.normalized, ytop.normalized, ytop.normalized), gp = gpar(col = col, fill = col))
+                     y = c(ybottom.normalized, ytop.normalized, ytop.normalized), gp = gpar(col = NA, fill = col))
       }
 
     } else if (half == "bottom"){
       ## Plot triangles along diagonal and squares below
       if (y < x){
         grid.polygon(x = c(xleft.normalized, xleft.normalized, xright.normalized, xright.normalized),
-                     y = c(ybottom.normalized, ytop.normalized, ytop.normalized, ybottom.normalized), gp = gpar(col = col, fill = col))
+                     y = c(ybottom.normalized, ytop.normalized, ytop.normalized, ybottom.normalized), gp = gpar(col = NA, fill = col))
       } else if (y == x) {
         grid.polygon(x = c(xleft.normalized, xright.normalized, xright.normalized),
-                     y = c(ybottom.normalized, ybottom.normalized, ytop.normalized), gp = gpar(col = col, fill = col))
+                     y = c(ybottom.normalized, ybottom.normalized, ytop.normalized), gp = gpar(col = NA, fill = col))
+      }
+    }
+  }
+
+  drawpoly_diagonal <- function(df, resolution, chromstart, chromend, half){
+
+    col = rgb(df[4], df[5], df[6], maxColorValue = 255)
+    x = df[1]
+    y = df[2]
+
+    xleft = x - .5 * resolution
+    xleft.normalized = normalize(xleft, chromstart, chromend)
+    xright = x + resolution + .5 * resolution
+    xright.normalized = normalize(xright, chromstart, chromend)
+    ytop = y + resolution + .5 * resolution
+    ytop.normalized = normalize(ytop, chromstart, chromend)
+    ybottom = y - .5 * resolution
+    ybottom.normalized = normalize(ybottom, chromstart, chromend)
+
+    if (half == "top"){
+      if (y == x){
+        grid.polygon(x = c(xleft.normalized, xleft.normalized, xright.normalized),
+                     y = c(ybottom.normalized, ytop.normalized, ytop.normalized), gp = gpar(col = NA, fill = col))
+      }
+
+    } else if (half == "bottom"){
+      if (y == x){
+        grid.polygon(x = c(xleft.normalized, xright.normalized, xright.normalized),
+                     y = c(ybottom.normalized, ybottom.normalized, ytop.normalized), gp = gpar(col= NA,fill = col))
       }
     }
   }
@@ -168,28 +197,20 @@ bb_hic <- function(hic, chrom, chromstart, chromend, resolution = 10000, zrange 
     stop("Incorrect input. Input a .hic file or a dataframe.")
   }
 
-  # VIEWPORTS
+  # VIEWPORT NAVIGATION
   # ======================================================================================================================================================================================
   ## Go up a viewport if not at the root of all viewports
-
 
   if(is.null(current.vpPath()) == FALSE){
     upViewport()
   }
 
   ## Get page_height and margins from bbEnv
-  page_height <- get("height", envir = bbEnv)
-  top_margin <- get("top_margin", envir = bbEnv)
-  left_margin <- get("left_margin", envir = bbEnv)
+  page_height <- get("page_height", envir = bbEnv)
 
-  ## Start x and y based on given margins
-  x <- x + left_margin
-  y <- y + top_margin
 
-  ## Make viewport of desired size at specified location
+  ## Convert coordinated for viewport
   converted_coords = convert_coordinates(height = height, width = width, x = x, y = y, pageheight = page_height)
-  vp <- viewport(height = unit(height, "in"), width = unit(width, "in"), x = unit(converted_coords[1], "in"), y = unit(converted_coords[2], "in"))
-  pushViewport(vp)
 
   # CONVERT NUMBERS TO COLORS
   # ======================================================================================================================================================================================
@@ -205,18 +226,22 @@ bb_hic <- function(hic, chrom, chromstart, chromend, resolution = 10000, zrange 
   # ======================================================================================================================================================================================
   if(raster == TRUE){
 
-    ## Add color vector to hicregion dataframe
-    hicregion <- cbind(hicregion, color_vector)
+    ## Make clipped viewport
+    vp <- viewport(height = unit(height, "in"), width = unit(width, "in"), x = unit(converted_coords[1], "in"), y = unit(converted_coords[2], "in"), clip = "on")
+    pushViewport(vp)
 
-    ## Get the lowest color in the range to fill in matrix for triangle plots
+    ## Add color vector to hicregion dataframe
+    hicregion1 <- cbind(hicregion, color_vector)
+    hicregion2 <- cbind(hicregion, t(col2rgb(color_vector)))
+
+    ## Get the lowest color in the range to fill in matrix for triangular plots
     lowest_color <- sorted_colors[1]
 
     ## Remove unnecessary "counts" column
-    hicregion = hicregion[ ,c(1, 2, 4)]
+    hicregion1 = hicregion1[ ,c(1, 2, 4)]
 
     ## Cast dataframe into a matrix
-    reshapen <- as.matrix(reshape::cast(hicregion, formula = x ~ y, value = "color_vector"))
-
+    reshapen <- as.matrix(reshape::cast(hicregion1, formula = x ~ y, value = "color_vector"))
 
     if(half == "bottom" | half == "top"){
       ## Fill in all NA's with the lowest color in the range (essentially a 0)
@@ -224,9 +249,14 @@ bb_hic <- function(hic, chrom, chromstart, chromend, resolution = 10000, zrange 
 
       ## Replace the lower triangular part of the matrix with NA's to not have anything plot there
       reshapen[lower.tri(reshapen)] <- NA
+
       if (half == "bottom"){
+        ## Skip diagonal
+        diag(reshapen) <- NA
         reshapen <- apply(reshapen, 2, rev)
       } else if (half == "top"){
+        ## Skip diagonal
+        diag(reshapen) <- NA
         reshapen <- apply(reshapen, 1, rev)
       }
     } else if (half == "both"){
@@ -236,7 +266,14 @@ bb_hic <- function(hic, chrom, chromstart, chromend, resolution = 10000, zrange 
       stop("Invalid plot type.")
     }
 
-    grid.raster(reshapen, interpolate = FALSE)
+    ## Plot rasterized version of everything (if "half" plot, not plotting diagonal)
+    grid.raster(reshapen, interpolate = FALSE, height = unit(height, "in"), width = unit(width, "in"))
+
+    ## Go back and plot triangles along diagonal for "half" plots
+    if (half == "bottom" | half == "top"){
+      invisible(apply(hicregion2, 1, drawpoly_diagonal, resolution = resolution, chromstart = chromstart, chromend = chromend, half = half))
+    }
+
 
     ## Go back to root viewport
     upViewport()
@@ -245,6 +282,10 @@ bb_hic <- function(hic, chrom, chromstart, chromend, resolution = 10000, zrange 
   # NON-RASTERIZED PLOT #
   # ======================================================================================================================================================================================
   if (raster == "FALSE") {
+
+    ## Create unclipped viewport
+    vp <- viewport(height = unit(height, "in"), width = unit(width, "in"), x = unit(converted_coords[1], "in"), y = unit(converted_coords[2], "in"))
+    pushViewport(vp)
 
     ## Append colors to hicdata and convert to rgb
     hicregion <- cbind(hicregion, t(col2rgb(color_vector)))
@@ -279,8 +320,8 @@ bb_hic <- function(hic, chrom, chromstart, chromend, resolution = 10000, zrange 
     if(legendlocation == "right"){
       legend_width <- 1/32 * width
       legend_height <- 1/4 * height
-      legend_xcoord <- x + width + legendoffset - left_margin
-      legend_ycoord <- y - top_margin
+      legend_xcoord <- x + width + legendoffset
+      legend_ycoord <- y
       bb_legend(color_vector = sorted_colors, min_label = min_z, max_label = max_z, height= legend_height,
                     width = legend_width, x = legend_xcoord, y = legend_ycoord, orientation = "vertical")
 
@@ -289,8 +330,8 @@ bb_hic <- function(hic, chrom, chromstart, chromend, resolution = 10000, zrange 
     else if(legendlocation == "left"){
       legend_width <- 1/32 * width
       legend_height <- 1/4 * height
-      legend_xcoord <- x - legendoffset - left_margin - legend_width
-      legend_ycoord <- y - top_margin
+      legend_xcoord <- x - legendoffset - legend_width
+      legend_ycoord <- y
       bb_legend(color_vector = sorted_colors, min_label = min_z, max_label = max_z, height= legend_height,
                     width = legend_width, x = legend_xcoord, y = legend_ycoord, orientation = "vertical")
     }
@@ -298,8 +339,8 @@ bb_hic <- function(hic, chrom, chromstart, chromend, resolution = 10000, zrange 
     else if(legendlocation == "top"){
       legend_width <- 1/4 * height
       legend_height <- 1/32 * width
-      legend_xcoord <- x + (width - legend_width)/2 - left_margin
-      legend_ycoord <- y - legendoffset - legend_height - top_margin
+      legend_xcoord <- x + (width - legend_width)/2
+      legend_ycoord <- y - legendoffset - legend_height
 
       bb_legend(color_vector = sorted_colors, min_label = min_z, max_label = max_z, height= legend_height,
                     width = legend_width, x = legend_xcoord, y = legend_ycoord, orientation = "horizontal")
@@ -308,8 +349,8 @@ bb_hic <- function(hic, chrom, chromstart, chromend, resolution = 10000, zrange 
     else if(legendlocation == "bottom"){
       legend_width <- 1/4 * height
       legend_height <- 1/32 * width
-      legend_xcoord <- x + (width - legend_width)/2 - left_margin
-      legend_ycoord <- y + legendoffset + height - top_margin
+      legend_xcoord <- x + (width - legend_width)/2
+      legend_ycoord <- y + legendoffset + height
 
       bb_legend(color_vector = sorted_colors, min_label = min_z, max_label = max_z, height= legend_height,
                     width = legend_width, x = legend_xcoord, y = legend_ycoord, orientation = "horizontal")
