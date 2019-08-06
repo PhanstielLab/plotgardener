@@ -1,6 +1,6 @@
 #' @export
 
-gridplotBedgraph <- function(signal, chrom, chromstart, chromend, range=NULL, color, transparency = 1.0, lwd =1, linecolor = NA, binSize = NA, addscale = FALSE, overlay =FALSE, binCap = TRUE, flip = FALSE, ymax = 1.04, width = 3.25, height = .625, x=4.25, y =5.5, pageheight, ...  ){
+gridplotBedgraph <- function(signal, chrom, chromstart, chromend, range=NULL, color, transparency = 1.0, lwd =1, linecolor = NA, binSize = NA, addscale = FALSE, overlay =FALSE, binCap = TRUE, flip = FALSE, ymax = 1.04, width = 3.25, height = .625, x=4.25, y =5.5, ...  ){
 
   if(is.na(binSize) == TRUE){
     binSize = (chromend - chromstart)/2000
@@ -134,11 +134,15 @@ gridplotBedgraph <- function(signal, chrom, chromstart, chromend, range=NULL, co
   finalcolor = rgb(rgbcol[1],rgbcol[2],rgbcol[3],alpha=transparency * 255,maxColorValue = 255)
 
   ###PLOT THE SIGNAL TRACK###
+
+  ## Get page_height and margins from bbEnv
+  page_height <- get("page_height", envir = bbEnv)
+
   if (overlay == FALSE){
     if (is.null(current.vpPath()) == FALSE){
       upViewport()
     }
-    converted_coords = convert_coordinates(height, width, x, y, pageheight = pageheight)
+    converted_coords = convert_coordinates(height = height, width = width, x = x, y = y, pageheight = page_height)
     vp <- viewport(width = unit(width,"in"), height = unit(height, "in"), x = unit(converted_coords[1],"in"), y=unit(converted_coords[2],"in"))
     pushViewport(vp)
   }

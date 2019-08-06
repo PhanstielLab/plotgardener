@@ -17,12 +17,7 @@
 
 bb_legend <- function(color_vector, min_label, max_label, height, width, x, y, pageheight, orientation = "vertical", fontsize = 8, fontcolor = "grey", ...){
   ## Get page_height and margins from bbEnv
-  page_height <- get("height", envir = bbEnv)
-  top_margin <- get("top_margin", envir = bbEnv)
-  left_margin <- get("left_margin", envir = bbEnv)
-
-  x = x + left_margin
-  y = y + top_margin
+  page_height <- get("page_height", envir = bbEnv)
 
   ## Convert user-inputted coordinates
   legend_coordinates <- convert_coordinates(height = height, width = width, x = x, y = y, pageheight = page_height)

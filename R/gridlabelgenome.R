@@ -1,6 +1,6 @@
 #' @export
 
-gridlabelgenome <- function(chrom, chromstart, chromend, scale = "bp", width = 3.25, x = 0.75, y = 4, fontsize = 10, pageheight){
+gridlabelgenome <- function(chrom, chromstart, chromend, scale = "bp", width = 3.25, x = 0.75, y = 4, fontsize = 10){
 
   if (scale == "bp"){
     fact = 1
@@ -23,7 +23,10 @@ gridlabelgenome <- function(chrom, chromstart, chromend, scale = "bp", width = 3
     upViewport()
   }
 
-  converted_coords = convert_coordinates(height=0.125, width, x, y, pageheight = pageheight)
+  ## Get page_height and margins from bbEnv
+  page_height <- get("page_height", envir = bbEnv)
+
+  converted_coords = convert_coordinates(height = 0.125, width = width, x = x, y = y, pageheight = page_height)
 
   vp <- viewport(width=unit(width,"in"),height = unit(.125,"in"),x=unit(converted_coords[1],"in"),y=unit(converted_coords[2],"in"))
   pushViewport(vp)
