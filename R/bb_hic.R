@@ -18,13 +18,31 @@
 #' @param legendlocation if addlegend == TRUE, where relative to plot to place legend; options are "right", "left", top", or "bottom"
 #' @param legendoffset if addlegend == TRUE, how much to offset the legend relative to the plot in inches
 #'
+#' @details macOS Preview anti-aliases images and will make rasterized plot appear blurry.
+#'
 #' @return Function will plot a HiC interaction matrix and return a list of the zrange min, zrange max, and sequential color palette
 #'
 #' @author Nicole Kramer
+#'
+#' @examples
+#' data(bb_hic_data)
+#' # Full Rasterized Plot
+#' grid.newpage()
+#' bb_hic_plot <- bb_hic(bb_hic_data)
+#' #' # Full Rasterized Plot with Legend
+#' grid.newpage()
+#' bb_hic_plot <- bb_hic(bb_hic_data, addlegend = TRUE)
+#' # Half Rasterized Plot
+#' grid.newpage()
+#' bb_hic_plot <- bb_hic(bb_hic_data, half = "top")
+#' # Non-rasterized Plot
+#' grid.newpage()
+#' bb_hic_plot <- bb_hic(bb_hic_data, raster = FALSE)
+#'
 #' @export
 
-bb_hic <- function(hic, chrom, chromstart, chromend, resolution = 10000, zrange = NULL, height = 3, width = 3, x = 1.75, y = 3,
-                   palette = 'reds', norm = "KR", half = "both", raster = TRUE,
+bb_hic <- function(hic, chrom = "chr8", chromstart = 133600000, chromend = 134800000, resolution = 10000, zrange = NULL, height = 3, width = 3, x = 1.75, y = 3,
+                   palette = colorRampPalette(c("#FFF5F0FF", "#67000DFF")), norm = "KR", half = "both", raster = TRUE,
                    addlegend = FALSE, legendlocation = "right", legendoffset = 0.25, ...){
 
 
@@ -214,11 +232,12 @@ bb_hic <- function(hic, chrom, chromstart, chromend, resolution = 10000, zrange 
 
   # CONVERT NUMBERS TO COLORS
   # ======================================================================================================================================================================================
-  ## Use colour_values function from "colourvalues" package to convert numbers to colors
-  color_vector <- colourvalues::colour_values(hicregion[ ,3], palette = palette)
+  ## Use bb_maptocolors to convert numbers to colors
 
-  # Sorted color vector for use in legend and get lowest color to fill in for triangular plot
-  sorted_color_vector <- colour_values(sort(hicregion[ ,3]), palette = palette)
+  color_vector <- bb_maptocolors(hicregion[ ,3], col = palette)
+
+  # Sorted color vector for use in legend and for getting lowest color to fill in for triangular plot
+  sorted_color_vector <- bb_maptocolors(sort(hicregion[ ,3]), col = palette)
   sorted_colors <- unique(sorted_color_vector)
 
 
