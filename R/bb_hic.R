@@ -29,7 +29,7 @@
 #' # Full Rasterized Plot
 #' grid.newpage()
 #' bb_hic_plot <- bb_hic(bb_hic_data)
-#' #' # Full Rasterized Plot with Legend
+#' # Full Rasterized Plot with Legend
 #' grid.newpage()
 #' bb_hic_plot <- bb_hic(bb_hic_data, addlegend = TRUE)
 #' # Half Rasterized Plot
@@ -41,8 +41,10 @@
 #'
 #' @export
 
-bb_hic <- function(hic, chrom = "chr8", chromstart = 133600000, chromend = 134800000, resolution = 10000, zrange = NULL, height = 3, width = 3, x = 1.75, y = 3,
-                   palette = colorRampPalette(c("#FFF5F0FF", "#67000DFF")), norm = "KR", half = "both", raster = TRUE,
+bb_hic <- function(hic, chrom = "chr8", chromstart = 133600000, chromend = 134800000,
+                   altchrom = NULL, altchromstart = NULL, altchromend = NULL, althalf = "bottom",
+                   resolution = 10000, zrange = NULL, height = 3, width = 3, x = 1.75, y = 3,
+                   palette = colorRampPalette(c("white", "dark red")), norm = "KR", half = "both", raster = TRUE,
                    addlegend = FALSE, legendlocation = "right", legendoffset = 0.25, ...){
 
 
@@ -54,49 +56,93 @@ bb_hic <- function(hic, chrom = "chr8", chromstart = 133600000, chromend = 13480
 
   # DEFINE A FUNCTION TO PLOT SQUARES
   # ======================================================================================================================================================================================
-  drawpoly <- function(df, resolution, chromstart, chromend, half){
+  drawpoly <- function(df, resolution, chromstart, chromend, half, altchrom = NULL, altchromstart = NULL, altchromend = NULL, althalf = NULL){
 
     ## Define the color
     col = rgb(df[4], df[5], df[6], maxColorValue = 255)
     x = df[1]
     y = df[2]
 
-    ## Get coordinates for the points of the square/triangle, normalized to 0 to 1 based on chromstart and chromend
-    xleft = x - .5 * resolution
-    xleft.normalized = normalize(xleft, chromstart, chromend)
-    xright = x + .5 * resolution
-    xright.normalized = normalize(xright, chromstart, chromend)
-    ytop = y + .5 * resolution
-    ytop.normalized = normalize(ytop, chromstart, chromend)
-    ybottom = y - .5 * resolution
-    ybottom.normalized = normalize(ybottom, chromstart, chromend)
+    ## If altchrom, normalize x and y scales differently
+    if (!is.null(altchrom)){
 
-    if (half == "both"){
+      ## If chrom == altchrom, we subsetted the first column with the lower range and the second column with the higher range
+      if(chrom == altchrom){
 
-      ## Plot all squares
+        if(althalf == "top"){
+
+          x.min <- min(chromstart, altchromstart)
+          x.max <- min(chromend, altchromend)
+          y.min <- max(chromstart, altchromstart)
+          y.max <- max(chromend, altchromend)
+
+
+        } else if (althalf == "bottom"){
+
+          x.min <- max(chromstart, altchromstart)
+          x.max <- max(chromend, altchromend)
+          y.min <- min(chromstart, altchromstart)
+          y.max <- min(chromend, altchromend)
+
+        }
+
+      } else {
+
+        print("still need this part.")
+      }
+
+      xleft = x - .5 * resolution
+      xleft.normalized = normalize(xleft, x.min, x.max)
+      xright = x + .5 * resolution
+      xright.normalized = normalize(xright, x.min, x.max)
+      ytop = y + .5 * resolution
+      ytop.normalized = normalize(ytop, y.min, y.max)
+      ybottom = y - .5 * resolution
+      ybottom.normalized = normalize(ybottom, y.min, y.max)
       grid.polygon(x = c(xleft.normalized, xleft.normalized, xright.normalized, xright.normalized),
                    y = c(ybottom.normalized, ytop.normalized, ytop.normalized, ybottom.normalized), gp = gpar(col = NA, fill = col))
-    } else if (half == "top"){
 
-      ## Plot triangles along diagonal and squares above
-      if (y > x){
+    } else {
+
+      ## Get coordinates for the points of the square/triangle, normalized to 0 to 1 based on chromstart and chromend
+      xleft = x - .5 * resolution
+      xleft.normalized = normalize(xleft, chromstart, chromend)
+      xright = x + .5 * resolution
+      xright.normalized = normalize(xright, chromstart, chromend)
+      ytop = y + .5 * resolution
+      ytop.normalized = normalize(ytop, chromstart, chromend)
+      ybottom = y - .5 * resolution
+      ybottom.normalized = normalize(ybottom, chromstart, chromend)
+
+      if (half == "both"){
+
+        ## Plot all squares
         grid.polygon(x = c(xleft.normalized, xleft.normalized, xright.normalized, xright.normalized),
                      y = c(ybottom.normalized, ytop.normalized, ytop.normalized, ybottom.normalized), gp = gpar(col = NA, fill = col))
-      } else if (y == x) {
-        grid.polygon(x = c(xleft.normalized, xleft.normalized, xright.normalized),
-                     y = c(ybottom.normalized, ytop.normalized, ytop.normalized), gp = gpar(col = NA, fill = col))
+      } else if (half == "top"){
+
+        ## Plot triangles along diagonal and squares above
+        if (y > x){
+          grid.polygon(x = c(xleft.normalized, xleft.normalized, xright.normalized, xright.normalized),
+                       y = c(ybottom.normalized, ytop.normalized, ytop.normalized, ybottom.normalized), gp = gpar(col = NA, fill = col))
+        } else if (y == x) {
+          grid.polygon(x = c(xleft.normalized, xleft.normalized, xright.normalized),
+                       y = c(ybottom.normalized, ytop.normalized, ytop.normalized), gp = gpar(col = NA, fill = col))
+        }
+
+      } else if (half == "bottom"){
+        ## Plot triangles along diagonal and squares below
+        if (y < x){
+          grid.polygon(x = c(xleft.normalized, xleft.normalized, xright.normalized, xright.normalized),
+                       y = c(ybottom.normalized, ytop.normalized, ytop.normalized, ybottom.normalized), gp = gpar(col = NA, fill = col))
+        } else if (y == x) {
+          grid.polygon(x = c(xleft.normalized, xright.normalized, xright.normalized),
+                       y = c(ybottom.normalized, ybottom.normalized, ytop.normalized), gp = gpar(col = NA, fill = col))
+        }
       }
 
-    } else if (half == "bottom"){
-      ## Plot triangles along diagonal and squares below
-      if (y < x){
-        grid.polygon(x = c(xleft.normalized, xleft.normalized, xright.normalized, xright.normalized),
-                     y = c(ybottom.normalized, ytop.normalized, ytop.normalized, ybottom.normalized), gp = gpar(col = NA, fill = col))
-      } else if (y == x) {
-        grid.polygon(x = c(xleft.normalized, xright.normalized, xright.normalized),
-                     y = c(ybottom.normalized, ybottom.normalized, ytop.normalized), gp = gpar(col = NA, fill = col))
-      }
     }
+
   }
 
   drawpoly_diagonal <- function(df, resolution, chromstart, chromend, half){
@@ -138,32 +184,54 @@ bb_hic <- function(hic, chrom = "chr8", chromstart = 133600000, chromend = 13480
       stop("Incorrect dataframe format.  Input a dataframe with 3 columns: x, y, counts.")
     } else {
 
-        ## Make sure dataframe is subsetted and has correct header names for processing
-        hicregion <- hic[which(hic[ ,1] >= chromstart & hic[ ,1] <= chromend &
-                               hic[ ,2] >= chromstart & hic[ ,2] <= chromend), ]
-        colnames(hicregion) <- c("x", "y", "counts")
+        ## If we have an altchrom, need to subset columns separately based on that
+        if(!is.null(altchrom)){
 
-        ## Scale lower and upper bounds using zrange
-        if(is.null(zrange)){
-          ## If counts vector only has one value, keep everything as is and zrange min = zrange max
-          if(length(unique(hicregion$counts)) == 1){
-            zrange <- c(unique(hicregion$counts), unique(hicregion$counts))
+          if(is.null(altchromstart) | is.null(altchromend)){
+            stop("If specifying alternate chromosome, need to give altchromstart and altchromend.")
+          }
+
+          ## Check if altchrom is same as chrom (plotting off the diagonal)
+          if(chrom == altchrom){
+
+            ## Compare chromstarts of chrom and altchrom to scale first column with lower chromstart and second column with higher chromstart
+            if (chromstart > altchromstart){
+              hicregion <- hic[which(hic[,1] >= altchromstart & hic[,1] <= altchromend &
+                                       hic[,2] >= chromstart & hic[,2] <= chromend), ]
+            } else if (altchromstart > chromstart){
+              hicregion <- hic[which(hic[,1] >= chromstart & hic[,1] <= chromend &
+                                       hic[,2] >= altchromstart & hic[,2] <= altchromend), ]
+            } else {
+              ## If they don't have the same start, but have different ending, subset first column based on chrom and second column based on altchrom
+              hicregion <- hic[which(hic[,1] >= chromstart & hic[,1] <= chromend &
+                                       hic[,2] >= altchromstart & hic[,2] <= altchromend), ]
+            }
+
           } else {
-            zrange <- c(min(hicregion$counts), max(hicregion$counts))
+            print("Still need to figure this out.")
+            hicregion <- hic[which(hic$chrom >= chromstart & hic$chrom <= chromend &
+                                     hic$altchrom >= altchromstart & hic$altchrom <= altchromend), ]
+          }
+
+          colnames(hicregion) <- c("x", "y", "counts")
+
+          ## Scale lower and upper bounds using zrange
+          if(is.null(zrange)){
+            ## If counts vector only has one value, keep everything as is and zrange min = zrange max
+            if(length(unique(hicregion$counts)) == 1){
+              zrange <- c(unique(hicregion$counts), unique(hicregion$counts))
+            } else {
+              zrange <- c(min(hicregion$counts), max(hicregion$counts))
+              hicregion$counts[hicregion$counts <= zrange[1]] <- zrange[1]
+              hicregion$counts[hicregion$counts >= zrange[2]] <- zrange[2]
+            }
+          } else {
+            stopifnot(is.vector(zrange), length(zrange) == 2, zrange[2] > zrange[1])
             hicregion$counts[hicregion$counts <= zrange[1]] <- zrange[1]
             hicregion$counts[hicregion$counts >= zrange[2]] <- zrange[2]
-            }
-        } else {
-          stopifnot(is.vector(zrange), length(zrange) == 2, zrange[2] > zrange[1])
-          hicregion$counts[hicregion$counts <= zrange[1]] <- zrange[1]
-          hicregion$counts[hicregion$counts >= zrange[2]] <- zrange[2]
-        }
+          }
 
-        ## Detect what format of data we have and adjust if necessary based on plottype
-        data_matrix <- as.matrix(reshape::cast(hicregion, formula = x ~ y, value = "counts"))
-
-        ## If data is sparse but we want a square plot, we need to make the data symmetric
-        if(all(is.na(data_matrix[lower.tri(data_matrix)])) & half == "both"){
+          ## Make sure data is symmetric
           lower <- hicregion[ ,c(2,1,3)]
           colnames(lower) <- c("x", "y", "counts")
           combined <- unique(rbind(hicregion, lower))
@@ -171,19 +239,70 @@ bb_hic <- function(hic, chrom = "chr8", chromstart = 133600000, chromend = 13480
           combinedComplete$counts[is.na(combinedComplete$counts)] <- 0
           hicregion <- as.data.frame(combinedComplete)
 
+
+        } else {
+
+          ## Make sure dataframe is subsetted and has correct header names for processing
+          hicregion <- hic[which(hic[ ,1] >= chromstart & hic[ ,1] <= chromend &
+                                   hic[ ,2] >= chromstart & hic[ ,2] <= chromend), ]
+          colnames(hicregion) <- c("x", "y", "counts")
+
+          ## Scale lower and upper bounds using zrange
+          if(is.null(zrange)){
+            ## If counts vector only has one value, keep everything as is and zrange min = zrange max
+            if(length(unique(hicregion$counts)) == 1){
+              zrange <- c(unique(hicregion$counts), unique(hicregion$counts))
+            } else {
+              zrange <- c(min(hicregion$counts), max(hicregion$counts))
+              hicregion$counts[hicregion$counts <= zrange[1]] <- zrange[1]
+              hicregion$counts[hicregion$counts >= zrange[2]] <- zrange[2]
+            }
+          } else {
+            stopifnot(is.vector(zrange), length(zrange) == 2, zrange[2] > zrange[1])
+            hicregion$counts[hicregion$counts <= zrange[1]] <- zrange[1]
+            hicregion$counts[hicregion$counts >= zrange[2]] <- zrange[2]
           }
 
-    }
+          ## Detect what format of data we have and adjust if necessary based on half
+          data_matrix <- as.matrix(reshape::cast(hicregion, formula = x ~ y, value = "counts"))
+
+          ## If data is sparse but we want a half = "both" plot, we need to make the data symmetric
+          if(all(is.na(data_matrix[lower.tri(data_matrix)])) & half == "both"){
+            lower <- hicregion[ ,c(2,1,3)]
+            colnames(lower) <- c("x", "y", "counts")
+            combined <- unique(rbind(hicregion, lower))
+            combinedComplete <- tidyr::complete(combined, x, y)
+            combinedComplete$counts[is.na(combinedComplete$counts)] <- 0
+            hicregion <- as.data.frame(combinedComplete)
+
+          }
+
+        }
+        }
+
+
   } else if (class(hic) == "character"){
+
     ## Make sure the inputted file is a .hic file
     if(file_ext(hic) == "hic"){
 
-      if(half == "both"){
+      ## Straw is going to give output in sequential order, no matter how you order chrom and altchrom
+      if(!is.null(altchrom)){
 
-        hicregion <- bb_rhic(hic = hic, format = "full", chrom = chrom, chromstart = chromstart, chromend = chromend,
-                                resolution = resolution, zrange = zrange, norm = norm)
+        if (chrom == altchrom){
 
-        ## Change correct header names for processing
+          ## Get symmetric region in case capturing section that includes diagonal for same chromosome
+          hicregion <- bb_rhic(hic = hic, format = "full", chrom = chrom, chromstart = chromstart, chromend = chromend,
+                               resolution = resolution, zrange = zrange, norm = norm, altchrom = altchrom, altchromstart = altchromstart, altchromend = altchromend)
+
+        } else {
+
+          hicregion <- bb_rhic(hic = hic, format = "sparse", chrom = chrom, chromstart = chromstart, chromend = chromend,
+                               resolution = resolution, zrange = zrange, norm = norm, altchrom = altchrom, altchromstart = altchromstart, altchromend = altchromend)
+
+        }
+
+        ## Change header names for processing
         colnames(hicregion) <- c("x", "y", "counts")
 
         ## bb_rhic will do this, but this will give the values for returning later
@@ -192,21 +311,38 @@ bb_hic <- function(hic, chrom = "chr8", chromstart = 133600000, chromend = 13480
           hicregion$counts[hicregion$counts <= zrange[1]] <- zrange[1]
           hicregion$counts[hicregion$counts >= zrange[2]] <- zrange[2]
         }
-      } else if (half == "bottom" | half == "top"){
-        hicregion <- bb_rhic(hic = hic, format = "sparse", chrom = chrom, chromstart = chromstart, chromend = chromend,
-                                resolution = resolution, zrange = zrange, norm = norm)
 
-        ## Change correct header names for processing
-        colnames(hicregion) <- c("x", "y", "counts")
-
-        ## extractHiC will do this, but this will give the values for returning later
-        if(is.null(zrange)){
-          zrange <- c(0, max(hicregion$counts))
-          hicregion$counts[hicregion$counts <= zrange[1]] <- zrange[1]
-          hicregion$counts[hicregion$counts >= zrange[2]] <- zrange[2]
-        }
       } else {
-        stop("Incorrect \"half\" argument.  Options are \"both\", \"top\", or \"bottom\".")
+        if(half == "both"){
+
+          hicregion <- bb_rhic(hic = hic, format = "full", chrom = chrom, chromstart = chromstart, chromend = chromend,
+                               resolution = resolution, zrange = zrange, norm = norm)
+
+          ## Change correct header names for processing
+          colnames(hicregion) <- c("x", "y", "counts")
+
+          ## bb_rhic will do this, but this will give the values for returning later
+          if(is.null(zrange)){
+            zrange <- c(min(hicregion$counts), max(hicregion$counts))
+            hicregion$counts[hicregion$counts <= zrange[1]] <- zrange[1]
+            hicregion$counts[hicregion$counts >= zrange[2]] <- zrange[2]
+          }
+        } else if (half == "bottom" | half == "top"){
+          hicregion <- bb_rhic(hic = hic, format = "sparse", chrom = chrom, chromstart = chromstart, chromend = chromend,
+                               resolution = resolution, zrange = zrange, norm = norm)
+
+          ## Change correct header names for processing
+          colnames(hicregion) <- c("x", "y", "counts")
+
+          ## bb_rhic will do this, but this will give the values for returning later
+          if(is.null(zrange)){
+            zrange <- c(0, max(hicregion$counts))
+            hicregion$counts[hicregion$counts <= zrange[1]] <- zrange[1]
+            hicregion$counts[hicregion$counts >= zrange[2]] <- zrange[2]
+          }
+        } else {
+          stop("Invalid \"half\" argument. Options are \"both\", \"top\", or \"bottom\".")
+        }
       }
     } else {
       stop("Incorrect input. Input a .hic file or a dataframe.")
@@ -234,11 +370,17 @@ bb_hic <- function(hic, chrom = "chr8", chromstart = 133600000, chromend = 13480
   # ======================================================================================================================================================================================
   ## Use bb_maptocolors to convert numbers to colors
 
-  color_vector <- bb_maptocolors(hicregion[ ,3], col = palette)
+  color_vector <- bb_maptocolors(hicregion[ ,3], col = palette, num = 100, range = zrange)
 
   # Sorted color vector for use in legend and for getting lowest color to fill in for triangular plot
-  sorted_color_vector <- bb_maptocolors(sort(hicregion[ ,3]), col = palette)
+  sorted_color_vector <- bb_maptocolors(sort(hicregion[ ,3]), col = palette, num = 100, range = zrange)
   sorted_colors <- unique(sorted_color_vector)
+
+  if (0 %in% hicregion[ ,3] == FALSE){
+    lowest_color <- "white"
+  } else {
+    lowest_color <- sorted_colors[1]
+  }
 
 
   # RASTERIZED PLOT
@@ -253,46 +395,106 @@ bb_hic <- function(hic, chrom = "chr8", chromstart = 133600000, chromend = 13480
     hicregion1 <- cbind(hicregion, color_vector)
     hicregion2 <- cbind(hicregion, t(col2rgb(color_vector)))
 
-    ## Get the lowest color in the range to fill in matrix for triangular plots
-    lowest_color <- sorted_colors[1]
-
     ## Remove unnecessary "counts" column
     hicregion1 = hicregion1[ ,c(1, 2, 4)]
+    #assign("hicregion1", hicregion1, envir = globalenv())
 
-    ## Cast dataframe into a matrix
-    reshapen <- as.matrix(reshape::cast(hicregion1, formula = x ~ y, value = "color_vector"))
+    ## Plotting altchromosome
+    if(!is.null(altchrom)){
 
-    if(half == "bottom" | half == "top"){
-      ## Fill in all NA's with the lowest color in the range (essentially a 0)
+      ## Off digonal plotting
+      if (chrom == altchrom){
+
+        ## Need to subset for bottom or top
+        if (althalf == "bottom"){
+
+          ## Cast dataframe into a matrix with x vs y
+          reshapen <- as.matrix(reshape::cast(hicregion1, formula = y ~ x, value = "color_vector"))
+
+
+          ## Subset data for bottom side
+          reshapen <- reshapen[which(rownames(reshapen) >= min(chromstart, altchromstart)  & rownames(reshapen) <= min(chromend, altchromend)),
+                               which(colnames(reshapen) >= max(chromstart, altchromstart) & colnames(reshapen) <= max(chromend, altchromend))]
+
+
+        } else if (althalf == "top"){
+
+          ## Cast dataframe into a matrix with y vs x
+          reshapen <- as.matrix(reshape::cast(hicregion1, formula = y ~ x, value = "color_vector"))
+
+          ## Subset data for top side
+          reshapen <- reshapen[which(rownames(reshapen) >= max(chromstart, altchromstart) & rownames(reshapen) <= max(chromend, altchromend)),
+                               which(colnames(reshapen) >= min(chromstart, altchromstart) & colnames(reshapen) <= min(chromend, altchromend))]
+
+        } else{
+          stop("Invalid \"althalf\" argument. Options are \"top\" or \"bottom\".")
+        }
+
+
+      } else {
+        ## Interactions between different chromosomes
+        if (althalf == "top"){
+
+          ## Cast dataframe into a matrix with x vs y
+          reshapen <- as.matrix(reshape::cast(hicregion1, formula = y ~ x, value = "color_vector"))
+
+        } else if (althalf == "bottom"){
+
+          ## Cast dataframe into a matrix with y vs x
+          reshapen <- as.matrix(reshape::cast(hicregion1, formula = x ~ y, value = "color_vector"))
+
+        } else {
+          stop ("Invalid \"althalf\" argument. Options are \"top\" or \"bottom\".")
+        }
+      }
+
+      ## Fill in NA's with lowest color
       reshapen[is.na(reshapen)] <- lowest_color
 
-      ## Replace the lower triangular part of the matrix with NA's to not have anything plot there
-      reshapen[lower.tri(reshapen)] <- NA
-
-      if (half == "bottom"){
-        ## Skip diagonal
-        diag(reshapen) <- NA
-        reshapen <- apply(reshapen, 2, rev)
-      } else if (half == "top"){
-        ## Skip diagonal
-        diag(reshapen) <- NA
-        reshapen <- apply(reshapen, 1, rev)
-      }
-    } else if (half == "both"){
-      ## Matrix already complete from extraction, reverse orientation based on columns
+      ## Get data in proper orientation
       reshapen <- apply(reshapen, 2, rev)
+
+      ## Plot matrix of colors
+      grid.raster(reshapen, interpolate = FALSE)
+
     } else {
-      stop("Invalid plot type.")
+
+      reshapen <- as.matrix(reshape::cast(hicregion1, formula = x ~ y, value = "color_vector"))
+      if(half == "bottom" | half == "top"){
+
+        ## Fill in all NA's with lowest color
+        reshapen[is.na(reshapen)] <- lowest_color
+
+        ## Replace the lower triangular part of the matrix with NA's to not have anything plot there
+        reshapen[lower.tri(reshapen)] <- NA
+
+        if (half == "bottom"){
+          ## Skip diagonal
+          diag(reshapen) <- NA
+          reshapen <- apply(reshapen, 2, rev)
+        } else if (half == "top"){
+          ## Skip diagonal
+          diag(reshapen) <- NA
+          reshapen <- apply(reshapen, 1, rev)
+        }
+      } else if (half == "both"){
+        ## Fill in all NA's with lowest color
+        reshapen[is.na(reshapen)] <- lowest_color
+        ## Matrix already complete from extraction, reverse orientation based on columns
+        reshapen <- apply(reshapen, 2, rev)
+      } else {
+        stop("Invalid plot type.")
+      }
+
+      ## Plot rasterized version of everything (if "half" plot, not plotting diagonal)
+      grid.raster(reshapen, interpolate = FALSE)
+
+      ## Go back and plot triangles along diagonal for "half" plots
+      if (half == "bottom" | half == "top"){
+        invisible(apply(hicregion2, 1, drawpoly_diagonal, resolution = resolution, chromstart = chromstart, chromend = chromend, half = half))
+      }
+
     }
-
-    ## Plot rasterized version of everything (if "half" plot, not plotting diagonal)
-    grid.raster(reshapen, interpolate = FALSE, height = unit(height, "in"), width = unit(width, "in"))
-
-    ## Go back and plot triangles along diagonal for "half" plots
-    if (half == "bottom" | half == "top"){
-      invisible(apply(hicregion2, 1, drawpoly_diagonal, resolution = resolution, chromstart = chromstart, chromend = chromend, half = half))
-    }
-
 
     ## Go back to root viewport
     upViewport()
@@ -309,15 +511,39 @@ bb_hic <- function(hic, chrom = "chr8", chromstart = 133600000, chromend = 13480
     ## Append colors to hicdata and convert to rgb
     hicregion <- cbind(hicregion, t(col2rgb(color_vector)))
 
-    ## Need to get lower part of dataframe to plot bottom triangle
-    if(half == "bottom"){
-      lower <- hicregion[ , c(2, 1, 3, 4, 5, 6)]
-      colnames(lower) <- c("x", "y", "counts", "red", "green", "blue")
-      hicregion <- lower
+    ## Plotting altchrom
+    if(!is.null(altchrom)){
+
+      ## Have to subset data again
+      if (althalf == "bottom"){
+        hicregion <- hicregion[which(hicregion[,1] >= max(chromstart, altchromstart) & hicregion[,1] <= max(chromend, altchromend)
+                               & hicregion[,2] >= min(chromstart, altchromstart) & hicregion[,2] <= min(chromend, altchromend)),]
+
+      } else if (althalf == "top"){
+        hicregion <- hicregion[which(hicregion[,1] >= min(chromstart, altchromstart) & hicregion[,1] <= min(chromend, altchromend)
+                               & hicregion[,2] >= max(chromstart, altchromstart) & hicregion[,2] <= max(chromend, altchromend)),]
+
+      }else{
+        stop("Invalid \"althalf\" argument. Options are \"top\" or \"bottom\".")
+      }
+
+
+      ## Plot squares with drawpoly function defined above
+      invisible(apply(hicregion, 1, drawpoly, resolution = resolution, chromstart = chromstart, chromend = chromend, half = half, altchrom = altchrom, altchromstart = altchromstart, altchromend = altchromend, althalf = althalf))
+
+    } else {
+
+      ## Need to get lower part of dataframe to plot bottom triangle
+      if(half == "bottom"){
+        lower <- hicregion[ , c(2, 1, 3, 4, 5, 6)]
+        colnames(lower) <- c("x", "y", "counts", "red", "green", "blue")
+        hicregion <- lower
+      }
+
+      ## Plot squares with drawpoly function defined above
+      invisible(apply(hicregion, 1, drawpoly, resolution = resolution, chromstart = chromstart, chromend = chromend, half = half))
     }
 
-    ## Plot squares with drawpoly function defined above
-    invisible(apply(hicregion, 1, drawpoly, resolution = resolution, chromstart = chromstart, chromend = chromend, half = half))
 
     ## Go back to root viewport
     upViewport()
