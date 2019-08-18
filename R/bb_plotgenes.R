@@ -25,22 +25,27 @@ bb_plotgenes <- function(gtf, chrom = "chr8", chromstart = 133600000, chromend =
   ## Plot long line through entire strand
   grid.segments(x0 = unit(0, "npc"), y0 = unit(0.5, "npc"), x1 = unit(1, "npc"), y1 = unit(0.5, "npc"))
 
-  ## Plot boxes where exons are
+  ## Function to plot boxes where exons are
   draw_exon <- function(df, chromstart, chromend){
-    start <- df$start
+
+    gene_name <- df[14]
+    start <- as.numeric(df[2])
     start.normalized <- normalize(start, chromstart, chromend)
-    stop <- df$stop
+    stop <- as.numeric(df[3])
     stop.normalized <- normalize(stop, chromstart, chromend)
     ybottom <- 0.25
     ytop <- 0.75
+    name_location <- mean(c(start.normalized, stop.normalized))
 
-    grid.polygon(x = c(start.normalized, start.normalized, stop.normalized, stop.normalized), y = c())
-
+    grid.polygon(x = c(start.normalized, start.normalized, stop.normalized, stop.normalized), y = c(ybottom, ytop, ytop, ybottom),
+                 gp = gpar(col = "black"))
+    grid.text(gene_name, x = unit(name_location, "npc"), y = unit(0.5, "npc"))
 
   }
 
+  invisible(apply(gtf_subset, 1, draw_exon, chromstart = chromstart, chromend = chromend))
 
-
+  ## Label
 
 
 }
