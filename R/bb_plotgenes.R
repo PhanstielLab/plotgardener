@@ -1,7 +1,7 @@
 #' @export
 #'
 bb_plotgenes <- function(gtf, chrom = "chr8", chromstart = 133600000, chromend = 134800000, strand = "+", col = "black",
-                         height = 1, width = 3, x, y, fill = NA, gene_height = 0.5){
+                         height = 1, width = 3, x = 1, y = 1, fill = NA, gene_height = 0.5){
 
   gtf <- rtracklayer::import(gtf)
   gtf_df <- as.data.frame(gtf)
@@ -10,7 +10,7 @@ bb_plotgenes <- function(gtf, chrom = "chr8", chromstart = 133600000, chromend =
   gtf_subset <- gtf_df[which(gtf_df$seqnames == chrom & gtf_df$start >= chromstart & gtf_df$end <= chromend & gtf_df$type == "exon" & gtf_df$strand == strand),]
 
   ## Get data in correct format
-  gtf_subset <- c(gtf_subset$start, gtf_subset$stop, gtf_subset$gene_name)
+  gtf_subset <- data.frame(gtf_subset$start, gtf_subset$end, gtf_subset$gene_name)
 
   ## Viewport navigation
   if(is.null(current.vpPath()) == FALSE){
