@@ -120,15 +120,6 @@ gridplotBedgraph <- function(signal, chrom, chromstart, chromend, range=NULL, co
   y1 = range[2]
 
 
-
-  ##normalize x from 0 to 1 based on chromstart/chromend
-  signaltrack[,1] = (signaltrack[,1]-chromstart)/(chromend-chromstart)
-  ##normalize y from 0 to 1 based on min/max
-  maxsignal = max(signaltrack[,2])
-  minsignal = min(signaltrack[,2])
-  signaltrack[,2] = (signaltrack[,2]-minsignal)/(maxsignal-minsignal)
-
-
   #set the transparency
   rgbcol = col2rgb(color)
   finalcolor = rgb(rgbcol[1],rgbcol[2],rgbcol[3],alpha=transparency * 255,maxColorValue = 255)
@@ -145,10 +136,25 @@ gridplotBedgraph <- function(signal, chrom, chromstart, chromend, range=NULL, co
     converted_coords = convert_coordinates(height = height, width = width, x = x, y = y, pageheight = page_height)
     vp <- viewport(width = unit(width,"in"), height = unit(height, "in"), x = unit(converted_coords[1],"in"), y=unit(converted_coords[2],"in"))
     pushViewport(vp)
+    #grid.rect()
   }
   if (overlay == TRUE){
     vp <- current.vpPath()
   }
+
+  ##normalize x from 0 to 1 based on chromstart/chromend
+  signaltrack[,1] = (signaltrack[,1]-chromstart)/(chromend-chromstart)
+  ##normalize y from 0 to 1 based on range
+
+  #maxsignal = max(signaltrack[,2])
+  #minsignal = min(signaltrack[,2])
+
+  maxsignal = range[2]
+  minsignal = range[1]
+
+
+  signaltrack[,2] = (signaltrack[,2]-minsignal)/(maxsignal-minsignal)
+
 
     #grid.polygon(x=signaltrack[,1],y=signaltrack[,2],gp=gpar(fill=NA,lwd=lwd, col=linecolor))
     grid.segments(x0=signaltrack[c(1:1-length(signaltrack[,1])),1],y0=signaltrack[c(1:1-length(signaltrack[,2])),2],x1=signaltrack[c(2:length(signaltrack[,1])),1],y1 = signaltrack[c(2:length(signaltrack[,2])),2],gp=gpar(col=linecolor,lwd=lwd),name="plotBedgraph track")
