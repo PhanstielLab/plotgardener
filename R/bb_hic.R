@@ -10,6 +10,7 @@
 #' @param width width of plot in inches
 #' @param x x-coordinate of where to place plot relative to top left of plot
 #' @param y y-coordinate of where to place plot relative to top left of plot
+#' @param units units of height, width, and x and y location of the plot
 #' @param palette palette to use for representing interaction scores
 #' @param norm if giving .hic file, hic data normalization; options are "NONE", "VC", "VC_SQRT", and "KR"
 #' @param half what sides of square plot; options are "both", top", or "bottom"
@@ -27,23 +28,23 @@
 #' @examples
 #' data(bb_hic_data)
 #' # Full Rasterized Plot
-#' grid.newpage()
+#' bb_makepage()
 #' bb_hic_plot <- bb_hic(bb_hic_data)
 #' # Full Rasterized Plot with Legend
-#' grid.newpage()
+#' bb_makepage()
 #' bb_hic_plot <- bb_hic(bb_hic_data, addlegend = TRUE)
 #' # Half Rasterized Plot
-#' grid.newpage()
+#' bb_makepage()()
 #' bb_hic_plot <- bb_hic(bb_hic_data, half = "top")
 #' # Non-rasterized Plot
-#' grid.newpage()
+#' bb_makepage()
 #' bb_hic_plot <- bb_hic(bb_hic_data, raster = FALSE)
 #'
 #' @export
 
 bb_hic <- function(hic, chrom = "chr8", chromstart = 133600000, chromend = 134800000,
                    altchrom = NULL, altchromstart = NULL, altchromend = NULL, althalf = "bottom",
-                   resolution = 10000, zrange = NULL, height = 3, width = 3, x = 1.75, y = 3,
+                   resolution = 10000, zrange = NULL, height = 3, width = 3, x = 1.75, y = 3, units = "inches",
                    palette = colorRampPalette(c("white", "dark red")), norm = "KR", half = "both", raster = TRUE,
                    addlegend = FALSE, legendlocation = "right", legendoffset = 0.25, ...){
 
@@ -353,18 +354,24 @@ bb_hic <- function(hic, chrom = "chr8", chromstart = 133600000, chromend = 13480
 
   # VIEWPORT NAVIGATION
   # ======================================================================================================================================================================================
-  ## Go up a viewport if not at the root of all viewports
 
-  if(is.null(current.vpPath()) == FALSE){
-    upViewport()
-  }
-
-  ## Get page_height and margins from bbEnv
+  ## Get page_height and its units from bbEnv through bb_makepage
   page_height <- get("page_height", envir = bbEnv)
+  page_units <- get("page_units", envir = bbEnv)
 
 
-  ## Convert coordinated for viewport
-  converted_coords = convert_coordinates(height = height, width = width, x = x, y = y, pageheight = page_height)
+  ## Convert x and y coordinates and height and width to same page_units
+  old_x <- unit(x, units = units)
+  old_y <- unit(y, units = units)
+  old_height <- unit(height, units = units)
+  old_width <- unit(width, units = units)
+  new_x <- convertX(old_x, unitTo = page_units, valueOnly = TRUE)
+  new_y <- convertY(old_y, unitTo = page_units, valueOnly = TRUE)
+  new_height <- convertHeight(old_height, unitTo = page_units, valueOnly = TRUE)
+  new_width <- convertWidth(old_width, unitTo = page_units, valueOnly = TRUE)
+
+  ## Convert coordinates for viewport
+  converted_coords = convert_coordinates(height = new_height, width = new_width, x = new_x, y = new_y, pageheight = page_height)
 
   # CONVERT NUMBERS TO COLORS
   # ======================================================================================================================================================================================
@@ -388,8 +395,9 @@ bb_hic <- function(hic, chrom = "chr8", chromstart = 133600000, chromend = 13480
   if(raster == TRUE){
 
     ## Make clipped viewport
-    vp <- viewport(height = unit(height, "in"), width = unit(width, "in"), x = unit(converted_coords[1], "in"), y = unit(converted_coords[2], "in"), clip = "on")
+    vp <- viewport(height = unit(new_height, page_units), width = unit(new_width, page_units), x = unit(converted_coords[1], units = page_units), y = unit(converted_coords[2], units = page_units), clip = "on")
     pushViewport(vp)
+
 
     ## Add color vector to hicregion dataframe
     hicregion1 <- cbind(hicregion, color_vector)
@@ -505,7 +513,7 @@ bb_hic <- function(hic, chrom = "chr8", chromstart = 133600000, chromend = 13480
   if (raster == "FALSE") {
 
     ## Create unclipped viewport
-    vp <- viewport(height = unit(height, "in"), width = unit(width, "in"), x = unit(converted_coords[1], "in"), y = unit(converted_coords[2], "in"))
+    vp <- viewport(height = unit(new_height, page_units), width = unit(new_width, page_units), x = unit(converted_coords[1], units = page_units), y = unit(converted_coords[2], units = page_units))
     pushViewport(vp)
 
     ## Append colors to hicdata and convert to rgb
