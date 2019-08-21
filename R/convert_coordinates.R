@@ -1,6 +1,5 @@
 convert_coordinates <- function(height, width, x, y, pageheight){
 
-  #standardized to 8 1/2 by 11 inch piece of paper
   #given x and y coordinates in the top left
   #y coordinate based as if going from  of page
 
