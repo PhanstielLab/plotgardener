@@ -35,7 +35,7 @@ bb_hic(hic, chrom = "chr8", chromstart = 133600000,
 
 \item{units}{units of height, width, and x and y location of the plot}
 
-\item{palette}{palette to use for representing interaction scores}
+\item{palette}{ColorRamp palette to use for representing interaction scores}
 
 \item{norm}{if giving .hic file, hic data normalization; options are "NONE", "VC", "VC_SQRT", and "KR"}
 

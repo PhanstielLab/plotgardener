@@ -11,7 +11,7 @@
 #' @param x x-coordinate of where to place plot relative to top left of plot
 #' @param y y-coordinate of where to place plot relative to top left of plot
 #' @param units units of height, width, and x and y location of the plot
-#' @param palette palette to use for representing interaction scores
+#' @param palette ColorRamp palette to use for representing interaction scores
 #' @param norm if giving .hic file, hic data normalization; options are "NONE", "VC", "VC_SQRT", and "KR"
 #' @param half what sides of square plot; options are "both", top", or "bottom"
 #' @param raster allows for rasterization of plot, which results in quicker plotting
@@ -383,11 +383,13 @@ bb_hic <- function(hic, chrom = "chr8", chromstart = 133600000, chromend = 13480
   sorted_color_vector <- bb_maptocolors(sort(hicregion[ ,3]), col = palette, num = 100, range = zrange)
   sorted_colors <- unique(sorted_color_vector)
 
-  if (0 %in% hicregion[ ,3] == FALSE){
-    lowest_color <- "white"
-  } else {
-    lowest_color <- sorted_colors[1]
-  }
+  lowest_color <- sorted_colors[1]
+
+  # if (0 %in% hicregion[ ,3] == FALSE){
+  #   lowest_color <- "white"
+  # } else {
+  #   lowest_color <- sorted_colors[1]
+  # }
 
 
   # RASTERIZED PLOT
