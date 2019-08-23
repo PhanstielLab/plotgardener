@@ -4,13 +4,13 @@
 \alias{bb_makepage}
 \title{generates new page for plotting}
 \usage{
-bb_makepage(height = 11, width = 8.5, units = "inches",
+bb_makepage(width = 8.5, height = 11, units = "inches",
   showOutline = FALSE)
 }
 \arguments{
-\item{height}{height of page}
-
 \item{width}{width of page}
+
+\item{height}{height of page}
 
 \item{units}{units for height and width; options are same as grid options: "inches", "cm", "mm", and "npc"}
 

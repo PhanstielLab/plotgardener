@@ -10,7 +10,7 @@
 #'
 #'
 #'
-bb_makepage <- function(height = 11, width = 8.5, units = "inches", showOutline = FALSE){
+bb_makepage <- function(width = 8.5, height = 11, units = "inches", showOutline = FALSE){
 
   grid.newpage()
 
