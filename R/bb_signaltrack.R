@@ -1,6 +1,8 @@
 #' @export
 
-gridplotBedgraph <- function(signal, chrom, chromstart, chromend, range=NULL, color, transparency = 1.0, lwd =1, linecolor = NA, binSize = NA, addscale = FALSE, overlay =FALSE, binCap = TRUE, flip = FALSE, ymax = 1.04, width = 3.25, height = .625, x=4.25, y =5.5, ...  ){
+bb_signaltrack <- function(signal, chrom, chromstart, chromend, range = NULL, linecolor = "grey", lwd = 1,
+                             binSize = NA, addscale = FALSE, binCap = TRUE, flip = FALSE,
+                             ymax = 1.04, width = 3.25, height = .625, x = 4.25, y = 5.5, units = "inches", ...  ){
 
   if(is.na(binSize) == TRUE){
     binSize = (chromend - chromstart)/2000
@@ -8,11 +10,6 @@ gridplotBedgraph <- function(signal, chrom, chromstart, chromend, range=NULL, co
 
   if (is.na(linecolor) == TRUE){
     linecolor = color
-  }
-
-  #define function to normalize data to 0 - 1 scale
-  normalize <- function(val, minval, maxval){
-    return((val-minval)/(maxval-minval))
   }
 
   #ensure that the chromosome is a character
@@ -24,10 +21,10 @@ gridplotBedgraph <- function(signal, chrom, chromstart, chromend, range=NULL, co
   #remove any duplicate rows
   signaltrack = signaltrack[!duplicated(signaltrack),]
 
-  #exit if overlay is TRUE and there isn't enough data
-  if(overlay == TRUE && nrow(signaltrack) < 2){
-    return ("not enough data within range to plot")
-  }
+  # #exit if overlay is TRUE and there isn't enough data
+  # if(overlay == TRUE && nrow(signaltrack) < 2){
+  #   return ("not enough data within range to plot")
+  # }
 
   #exit if overlay is FALSE and there isn't enough data
   if (nrow(signaltrack) < 2){
@@ -114,36 +111,53 @@ gridplotBedgraph <- function(signal, chrom, chromstart, chromend, range=NULL, co
 
   }
 
-
   #original range before normalization
   y0 = range[1]
   y1 = range[2]
 
 
   #set the transparency
-  rgbcol = col2rgb(color)
-  finalcolor = rgb(rgbcol[1],rgbcol[2],rgbcol[3],alpha=transparency * 255,maxColorValue = 255)
+  #rgbcol = col2rgb(linecolor)
+  #finalcolor = rgb(rgbcol[1],rgbcol[2],rgbcol[3],alpha=transparency * 255,maxColorValue = 255)
 
   ###PLOT THE SIGNAL TRACK###
 
-  ## Get page_height and margins from bbEnv
+  ## Get page_height and its units from bbEnv through bb_makepage
   page_height <- get("page_height", envir = bbEnv)
+  page_units <- get("page_units", envir = bbEnv)
 
-  if (overlay == FALSE){
-    if (is.null(current.vpPath()) == FALSE){
-      upViewport()
-    }
-    converted_coords = convert_coordinates(height = height, width = width, x = x, y = y, pageheight = page_height)
-    vp <- viewport(width = unit(width,"in"), height = unit(height, "in"), x = unit(converted_coords[1],"in"), y=unit(converted_coords[2],"in"))
-    pushViewport(vp)
-    #grid.rect()
-  }
-  if (overlay == TRUE){
-    vp <- current.vpPath()
-  }
+
+  ## Convert x and y coordinates and height and width to same page_units
+  old_x <- unit(x, units = units)
+  old_y <- unit(y, units = units)
+  old_height <- unit(height, units = units)
+  old_width <- unit(width, units = units)
+  new_x <- convertX(old_x, unitTo = page_units, valueOnly = TRUE)
+  new_y <- convertY(old_y, unitTo = page_units, valueOnly = TRUE)
+  new_height <- convertHeight(old_height, unitTo = page_units, valueOnly = TRUE)
+  new_width <- convertWidth(old_width, unitTo = page_units, valueOnly = TRUE)
+
+  ## Convert coordinates for viewport
+  converted_coords = convert_coordinates(height = new_height, width = new_width, x = new_x, y = new_y, pageheight = page_height)
+
+  vp <- viewport(width = unit(new_width, page_units), height = unit(new_height, page_units), x = unit(converted_coords[1], units = page_units),
+                 y = unit(converted_coords[2], units = page_units))
+  pushViewport(vp)
+
+  # if (overlay == FALSE){
+  #
+  #   converted_coords = convert_coordinates(height = height, width = width, x = x, y = y, pageheight = page_height)
+  #   vp <- viewport(width = unit(width,"in"), height = unit(height, "in"), x = unit(converted_coords[1],"in"), y=unit(converted_coords[2],"in"))
+  #   pushViewport(vp)
+  #   #grid.rect()
+  # }
+  # if (overlay == TRUE){
+  #   vp <- current.vpPath()
+  # }
 
   ##normalize x from 0 to 1 based on chromstart/chromend
   signaltrack[,1] = (signaltrack[,1]-chromstart)/(chromend-chromstart)
+
   ##normalize y from 0 to 1 based on range
 
   #maxsignal = max(signaltrack[,2])
@@ -155,25 +169,28 @@ gridplotBedgraph <- function(signal, chrom, chromstart, chromend, range=NULL, co
 
   signaltrack[,2] = (signaltrack[,2]-minsignal)/(maxsignal-minsignal)
 
-
     #grid.polygon(x=signaltrack[,1],y=signaltrack[,2],gp=gpar(fill=NA,lwd=lwd, col=linecolor))
-    grid.segments(x0=signaltrack[c(1:1-length(signaltrack[,1])),1],y0=signaltrack[c(1:1-length(signaltrack[,2])),2],x1=signaltrack[c(2:length(signaltrack[,1])),1],y1 = signaltrack[c(2:length(signaltrack[,2])),2],gp=gpar(col=linecolor,lwd=lwd),name="plotBedgraph track")
-
+  grid.segments(x0 = signaltrack[c(1:1-length(signaltrack[,1])),1], y0 = signaltrack[c(1:1-length(signaltrack[,2])), 2],
+                x1 = signaltrack[c(2:length(signaltrack[,1])),1], y1 = signaltrack[c(2:length(signaltrack[,2])), 2],gp = gpar(col = linecolor, lwd = lwd))
 
   #add scale to upper right corner or bottom right corner
   if (addscale == TRUE){
 
     if (flip == FALSE){
-      grid.text(paste(y0,y1,sep="-"),x=max(signaltrack[,1]),y=max(signaltrack[,2]), gp=gpar(col="grey"),name="bedgraph scale")
+      grid.text(paste(y0,y1,sep="-"),x=max(signaltrack[,1]),y=max(signaltrack[,2]), gp=gpar(col="grey"))
+
     }
     if (flip == TRUE){
-      grid.text(paste(y1,y0*-1,sep="-"),x=max(signaltrack[,1]),y=min(signaltrack[,2]),gp=gpar(col="grey"),name=" bedgraph scale")
+      grid.text(paste(y1,y0*-1,sep="-"),x=max(signaltrack[,1]),y=min(signaltrack[,2]),gp=gpar(col="grey"))
     }
   }
 
+  ## Go back up a viewport
+  upViewport()
+
     return(list("viewport" = vp, "maxsignal" = maxsignal, "minsignal"= minsignal,"flip" = flip))
 }
-#gridplotBedgraph(Sushi_ChIPSeq_CTCF.bedgraph,chr="chr11",chromstart = 1955000,chromend = 1965000,color="blue", x=6.125, y =7.3687,transparency = 0.5)
+#gridplotBedgraph(Sushi_ChIPSeq_CTCF.bedgraph,chr="chr11",chromstart = 1955000,chromend = 1965000,linecolor="blue", x=6.125, y =7.3687)
 
 
 

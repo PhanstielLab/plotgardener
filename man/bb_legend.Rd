@@ -5,7 +5,7 @@
 \title{adds legend to HiC interaction matrix}
 \usage{
 bb_legend(color_vector, min_label, max_label, height, width, x, y,
-  pageheight, orientation = "vertical", fontsize = 8,
+  units = "inches", orientation = "vertical", fontsize = 8,
   fontcolor = "grey", ...)
 }
 \arguments{
@@ -23,7 +23,7 @@ bb_legend(color_vector, min_label, max_label, height, width, x, y,
 
 \item{y}{legend y-coordinate}
 
-\item{pageheight}{height of page on which plot will be placed}
+\item{units}{units of height, width, and x and y coordinates}
 
 \item{orientation}{"vertical" or "horizontal" orientation}
 

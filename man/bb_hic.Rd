@@ -5,10 +5,11 @@
 \title{plots HiC interaction matrix}
 \usage{
 bb_hic(hic, chrom = "chr8", chromstart = 133600000,
-  chromend = 134800000, resolution = 10000, zrange = NULL,
-  height = 3, width = 3, x = 1.75, y = 3,
-  palette = colorRampPalette(c("#FFF5F0FF", "#67000DFF")), norm = "KR",
-  half = "both", raster = TRUE, addlegend = FALSE,
+  chromend = 134800000, altchrom = NULL, altchromstart = NULL,
+  altchromend = NULL, althalf = "bottom", resolution = 10000,
+  zrange = NULL, height = 3, width = 3, x = 1.75, y = 3,
+  units = "inches", palette = colorRampPalette(c("white", "dark red")),
+  norm = "KR", half = "both", raster = TRUE, addlegend = FALSE,
   legendlocation = "right", legendoffset = 0.25, ...)
 }
 \arguments{
@@ -31,6 +32,8 @@ bb_hic(hic, chrom = "chr8", chromstart = 133600000,
 \item{x}{x-coordinate of where to place plot relative to top left of plot}
 
 \item{y}{y-coordinate of where to place plot relative to top left of plot}
+
+\item{units}{units of height, width, and x and y location of the plot}
 
 \item{palette}{palette to use for representing interaction scores}
 
@@ -58,16 +61,16 @@ macOS Preview anti-aliases images and will make rasterized plot appear blurry.
 \examples{
 data(bb_hic_data)
 # Full Rasterized Plot
-grid.newpage()
+bb_makepage()
 bb_hic_plot <- bb_hic(bb_hic_data)
-#' # Full Rasterized Plot with Legend
-grid.newpage()
+# Full Rasterized Plot with Legend
+bb_makepage()
 bb_hic_plot <- bb_hic(bb_hic_data, addlegend = TRUE)
 # Half Rasterized Plot
-grid.newpage()
+bb_makepage()()
 bb_hic_plot <- bb_hic(bb_hic_data, half = "top")
 # Non-rasterized Plot
-grid.newpage()
+bb_makepage()
 bb_hic_plot <- bb_hic(bb_hic_data, raster = FALSE)
 
 }

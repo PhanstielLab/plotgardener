@@ -7,7 +7,7 @@
 #' @param width legend width, in inches
 #' @param x legend x-coordinate
 #' @param y legend y-coordinate
-#' @param pageheight height of page on which plot will be placed
+#' @param units units of height, width, and x and y coordinates
 #' @param orientation "vertical" or "horizontal" orientation
 #' @param fontsize fontsize for text
 #' @param fontcolor fontcolor for test
@@ -15,21 +15,29 @@
 #' @author Nicole Kramer
 #' @export
 
-bb_legend <- function(color_vector, min_label, max_label, height, width, x, y, pageheight, orientation = "vertical", fontsize = 8, fontcolor = "grey", ...){
-  ## Get page_height and margins from bbEnv
+bb_legend <- function(color_vector, min_label, max_label, height, width, x, y, units = "inches", orientation = "vertical", fontsize = 8, fontcolor = "grey", ...){
+
+  ## Get page_height from bbEnv
   page_height <- get("page_height", envir = bbEnv)
+  page_units <- get("page_units", envir = bbEnv)
+
+  ## Convert x and y coordinates and height and width to same page_units
+  old_x <- unit(x, units = units)
+  old_y <- unit(y, units = units)
+  old_width <- unit(width, units = units)
+  old_height <- unit(height, units = units)
+  new_x <- convertX(old_x, unitTo = page_units, valueOnly = TRUE)
+  new_y <- convertY(old_y, unitTo = page_units, valueOnly = TRUE)
+  new_height <- convertHeight(old_height, unitTo = page_units, valueOnly = TRUE)
+  new_width <- convertWidth(old_width, unitTo = page_units, valueOnly = TRUE)
 
   ## Convert user-inputted coordinates
-  legend_coordinates <- convert_coordinates(height = height, width = width, x = x, y = y, pageheight = page_height)
+  legend_coordinates <- convert_coordinates(height = new_height, width = new_width, x = new_x, y = new_y, pageheight = page_height)
 
   # VIEWPORTS
   # ======================================================================================================================================================================================
-  ## Go up a viewport if not at the root of all viewports
-  if(is.null(current.vpPath()) == FALSE){
-    upViewport()
-  }
 
-  vp <- viewport(height = unit(height, "in"), width = unit(width, "in"), x = unit(legend_coordinates[1], "in"), y = unit(legend_coordinates[2], "in"))
+  vp <- viewport(height = unit(height, page_units), width = unit(width, page_units), x = unit(legend_coordinates[1], page_units), y = unit(legend_coordinates[2], page_units))
   pushViewport(vp)
   # ======================================================================================================================================================================================
 

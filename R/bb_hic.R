@@ -395,7 +395,8 @@ bb_hic <- function(hic, chrom = "chr8", chromstart = 133600000, chromend = 13480
   if(raster == TRUE){
 
     ## Make clipped viewport
-    vp <- viewport(height = unit(new_height, page_units), width = unit(new_width, page_units), x = unit(converted_coords[1], units = page_units), y = unit(converted_coords[2], units = page_units), clip = "on")
+    vp <- viewport(height = unit(new_height, page_units), width = unit(new_width, page_units), x = unit(converted_coords[1], units = page_units),
+                   y = unit(converted_coords[2], units = page_units), clip = "on")
     pushViewport(vp)
 
 
@@ -571,42 +572,42 @@ bb_hic <- function(hic, chrom = "chr8", chromstart = 133600000, chromend = 13480
     max_z <- zrange[2]
 
     if(legendlocation == "right"){
-      legend_width <- 1/32 * width
-      legend_height <- 1/4 * height
-      legend_xcoord <- x + width + legendoffset
-      legend_ycoord <- y
+      legend_width <- 1/32 * new_width
+      legend_height <- 1/4 * new_height
+      legend_xcoord <- new_x + new_width + legendoffset
+      legend_ycoord <- new_y
       bb_legend(color_vector = sorted_colors, min_label = min_z, max_label = max_z, height= legend_height,
-                    width = legend_width, x = legend_xcoord, y = legend_ycoord, orientation = "vertical")
+                    width = legend_width, x = legend_xcoord, y = legend_ycoord, units = page_units, orientation = "vertical")
 
     }
 
     else if(legendlocation == "left"){
-      legend_width <- 1/32 * width
-      legend_height <- 1/4 * height
-      legend_xcoord <- x - legendoffset - legend_width
-      legend_ycoord <- y
+      legend_width <- 1/32 * new_width
+      legend_height <- 1/4 * new_height
+      legend_xcoord <- new_x - legendoffset - legend_width
+      legend_ycoord <- new_y
       bb_legend(color_vector = sorted_colors, min_label = min_z, max_label = max_z, height= legend_height,
-                    width = legend_width, x = legend_xcoord, y = legend_ycoord, orientation = "vertical")
+                    width = legend_width, x = legend_xcoord, y = legend_ycoord, units = page_units, orientation = "vertical")
     }
 
     else if(legendlocation == "top"){
-      legend_width <- 1/4 * height
-      legend_height <- 1/32 * width
-      legend_xcoord <- x + (width - legend_width)/2
-      legend_ycoord <- y - legendoffset - legend_height
+      legend_width <- 1/4 * new_height
+      legend_height <- 1/32 * new_width
+      legend_xcoord <- new_x + (new_width - legend_width)/2
+      legend_ycoord <- new_y - legendoffset - legend_height
 
       bb_legend(color_vector = sorted_colors, min_label = min_z, max_label = max_z, height= legend_height,
-                    width = legend_width, x = legend_xcoord, y = legend_ycoord, orientation = "horizontal")
+                    width = legend_width, x = legend_xcoord, y = legend_ycoord, units = page_units, orientation = "horizontal")
     }
 
     else if(legendlocation == "bottom"){
-      legend_width <- 1/4 * height
-      legend_height <- 1/32 * width
-      legend_xcoord <- x + (width - legend_width)/2
-      legend_ycoord <- y + legendoffset + height
+      legend_width <- 1/4 * new_height
+      legend_height <- 1/32 * new_width
+      legend_xcoord <- new_x + (new_width - legend_width)/2
+      legend_ycoord <- new_y + legendoffset + new_height
 
       bb_legend(color_vector = sorted_colors, min_label = min_z, max_label = max_z, height= legend_height,
-                    width = legend_width, x = legend_xcoord, y = legend_ycoord, orientation = "horizontal")
+                    width = legend_width, x = legend_xcoord, y = legend_ycoord, units = page_units, orientation = "horizontal")
     }
 
   }
