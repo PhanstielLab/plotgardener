@@ -87,4 +87,7 @@ bb_plotgenes <- function(gtf, chrom = "chr8", chromstart = 133600000, chromend =
   ## Plot and label genes
   invisible(apply(gtf_genes, 1, draw_gene, chromstart = chromstart, chromend = chromend, col = color, fontsize = fontsize))
 
+  ## Go back up viewport
+  upViewport()
+
 }
