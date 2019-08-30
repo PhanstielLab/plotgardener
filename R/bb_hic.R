@@ -6,8 +6,8 @@
 #' @param chromend chromosome end of region to be plotted
 #' @param resolution the width in bp of each pixel
 #' @param zrange the range of interaction scores to plot, where extreme values will be set to the max or min
-#' @param height height of plot in inches
 #' @param width width of plot in inches
+#' @param height height of plot in inches
 #' @param x x-coordinate of where to place plot relative to top left of plot
 #' @param y y-coordinate of where to place plot relative to top left of plot
 #' @param units units of height, width, and x and y location of the plot
@@ -15,9 +15,6 @@
 #' @param norm if giving .hic file, hic data normalization; options are "NONE", "VC", "VC_SQRT", and "KR"
 #' @param half what sides of square plot; options are "both", top", or "bottom"
 #' @param raster allows for rasterization of plot, which results in quicker plotting
-#' @param addlegend add legend representing scores for color range
-#' @param legendlocation if addlegend == TRUE, where relative to plot to place legend; options are "right", "left", top", or "bottom"
-#' @param legendoffset if addlegend == TRUE, how much to offset the legend relative to the plot in inches
 #'
 #' @details macOS Preview anti-aliases images and will make rasterized plot appear blurry.
 #'
@@ -30,11 +27,8 @@
 #' # Full Rasterized Plot
 #' bb_makepage()
 #' bb_hic_plot <- bb_hic(bb_hic_data)
-#' # Full Rasterized Plot with Legend
-#' bb_makepage()
-#' bb_hic_plot <- bb_hic(bb_hic_data, addlegend = TRUE)
 #' # Half Rasterized Plot
-#' bb_makepage()()
+#' bb_makepage()
 #' bb_hic_plot <- bb_hic(bb_hic_data, half = "top")
 #' # Non-rasterized Plot
 #' bb_makepage()
@@ -44,9 +38,8 @@
 
 bb_hic <- function(hic, chrom = "chr8", chromstart = 133600000, chromend = 134800000,
                    altchrom = NULL, altchromstart = NULL, altchromend = NULL, althalf = "bottom",
-                   resolution = 10000, zrange = NULL, height = 3, width = 3, x = 1.75, y = 3, units = "inches",
-                   palette = colorRampPalette(c("white", "dark red")), norm = "KR", half = "both", raster = TRUE,
-                   addlegend = FALSE, legendlocation = "right", legendoffset = 0.25, ...){
+                   resolution = 10000, zrange = NULL, width = 3, height = 3, x = 1, y = 1, units = "inches",
+                   palette = colorRampPalette(c("white", "dark red")), norm = "KR", half = "both", raster = TRUE, ...){
 
 
   # ERRORS
@@ -57,7 +50,7 @@ bb_hic <- function(hic, chrom = "chr8", chromstart = 133600000, chromend = 13480
 
   # DEFINE A FUNCTION TO PLOT SQUARES
   # ======================================================================================================================================================================================
-  drawpoly <- function(df, resolution, chromstart, chromend, half, altchrom = NULL, altchromstart = NULL, altchromend = NULL, althalf = NULL){
+  drawpoly <- function(df, resolution, chrom = NULL, chromstart, chromend, half, altchrom = NULL, altchromstart = NULL, altchromend = NULL, althalf = NULL){
 
     ## Define the color
     col = rgb(df[4], df[5], df[6], maxColorValue = 255)
@@ -89,7 +82,44 @@ bb_hic <- function(hic, chrom = "chr8", chromstart = 133600000, chromend = 13480
 
       } else {
 
-        print("still need this part.")
+        ## Separate altchrom/chrom to just get number and determine which is larger
+        chrom <- as.numeric(gsub(pattern = "chr", replacement = "", x = chrom))
+        altchrom <- as.numeric(gsub(pattern = "chr", replacement = "", x = altchrom))
+
+        ## "TOP": smaller chrom on x and larger chrom on y
+        if (althalf == "top"){
+
+          if (chrom > altchrom){
+            x.min <- altchromstart
+            x.max <- altchromend
+            y.min <- chromstart
+            y.max <- chromend
+          } else {
+            x.min <- chromstart
+            x.max <- chromend
+            y.min <- altchromstart
+            y.max <- altchromend
+          }
+          ## "BOTTOM": larger chrom on x and smaller chrom on y
+        } else if (althalf == "bottom"){
+
+          if (chrom > altchrom){
+            x.min <- chromstart
+            x.max <- chromend
+            y.min <- altchromstart
+            y.max <- altchromend
+
+          } else {
+
+            x.min <- altchromstart
+            x.max <- altchromend
+            y.min <- chromstart
+            y.max <- chromend
+
+          }
+
+        }
+
       }
 
       xleft = x - .5 * resolution
@@ -209,9 +239,11 @@ bb_hic <- function(hic, chrom = "chr8", chromstart = 133600000, chromend = 13480
             }
 
           } else {
-            print("Still need to figure this out.")
+            ## Subset region
             hicregion <- hic[which(hic$chrom >= chromstart & hic$chrom <= chromend &
                                      hic$altchrom >= altchromstart & hic$altchrom <= altchromend), ]
+
+            ##
           }
 
           colnames(hicregion) <- c("x", "y", "counts")
@@ -385,13 +417,6 @@ bb_hic <- function(hic, chrom = "chr8", chromstart = 133600000, chromend = 13480
 
   lowest_color <- sorted_colors[1]
 
-  # if (0 %in% hicregion[ ,3] == FALSE){
-  #   lowest_color <- "white"
-  # } else {
-  #   lowest_color <- sorted_colors[1]
-  # }
-
-
   # RASTERIZED PLOT
   # ======================================================================================================================================================================================
   if(raster == TRUE){
@@ -400,6 +425,7 @@ bb_hic <- function(hic, chrom = "chr8", chromstart = 133600000, chromend = 13480
     vp <- viewport(height = unit(new_height, page_units), width = unit(new_width, page_units), x = unit(converted_coords[1], units = page_units),
                    y = unit(converted_coords[2], units = page_units), clip = "on")
     pushViewport(vp)
+    grid.rect()
 
 
     ## Add color vector to hicregion dataframe
@@ -408,7 +434,7 @@ bb_hic <- function(hic, chrom = "chr8", chromstart = 133600000, chromend = 13480
 
     ## Remove unnecessary "counts" column
     hicregion1 = hicregion1[ ,c(1, 2, 4)]
-    #assign("hicregion1", hicregion1, envir = globalenv())
+
 
     ## Plotting altchromosome
     if(!is.null(altchrom)){
@@ -443,15 +469,16 @@ bb_hic <- function(hic, chrom = "chr8", chromstart = 133600000, chromend = 13480
 
 
       } else {
+
         ## Interactions between different chromosomes
         if (althalf == "top"){
 
-          ## Cast dataframe into a matrix with x vs y
+          ## Cast dataframe into a matrix with x vs y (lower chrom on x and higher chrom on y)
           reshapen <- as.matrix(reshape::cast(hicregion1, formula = y ~ x, value = "color_vector"))
 
         } else if (althalf == "bottom"){
 
-          ## Cast dataframe into a matrix with y vs x
+          ## Cast dataframe into a matrix with y vs x (higher chrom on x and lower chrom on x)
           reshapen <- as.matrix(reshape::cast(hicregion1, formula = x ~ y, value = "color_vector"))
 
         } else {
@@ -525,22 +552,37 @@ bb_hic <- function(hic, chrom = "chr8", chromstart = 133600000, chromend = 13480
     ## Plotting altchrom
     if(!is.null(altchrom)){
 
-      ## Have to subset data again
-      if (althalf == "bottom"){
-        hicregion <- hicregion[which(hicregion[,1] >= max(chromstart, altchromstart) & hicregion[,1] <= max(chromend, altchromend)
-                               & hicregion[,2] >= min(chromstart, altchromstart) & hicregion[,2] <= min(chromend, altchromend)),]
+      if (chrom == altchrom){
 
-      } else if (althalf == "top"){
-        hicregion <- hicregion[which(hicregion[,1] >= min(chromstart, altchromstart) & hicregion[,1] <= min(chromend, altchromend)
-                               & hicregion[,2] >= max(chromstart, altchromstart) & hicregion[,2] <= max(chromend, altchromend)),]
+        ## Have to subset data again since we grabbed stuff beyond the diagonal
+        if (althalf == "bottom"){
+          hicregion <- hicregion[which(hicregion[,1] >= max(chromstart, altchromstart) & hicregion[,1] <= max(chromend, altchromend)
+                                       & hicregion[,2] >= min(chromstart, altchromstart) & hicregion[,2] <= min(chromend, altchromend)),]
 
-      }else{
-        stop("Invalid \"althalf\" argument. Options are \"top\" or \"bottom\".")
+        } else if (althalf == "top"){
+          hicregion <- hicregion[which(hicregion[,1] >= min(chromstart, altchromstart) & hicregion[,1] <= min(chromend, altchromend)
+                                       & hicregion[,2] >= max(chromstart, altchromstart) & hicregion[,2] <= max(chromend, altchromend)),]
+
+        }else{
+          stop("Invalid \"althalf\" argument. Options are \"top\" or \"bottom\".")
+        }
+
+      } else {
+
+        if (althalf == "bottom"){
+
+          reverse <- hicregion[, c(2, 1, 3, 4, 5, 6)]
+          colnames(reverse) <- c("x", "y", "counts", "red", "green", "blue")
+          hicregion <- reverse
+
+        }
+
       }
 
 
       ## Plot squares with drawpoly function defined above
-      invisible(apply(hicregion, 1, drawpoly, resolution = resolution, chromstart = chromstart, chromend = chromend, half = half, altchrom = altchrom, altchromstart = altchromstart, altchromend = altchromend, althalf = althalf))
+      invisible(apply(hicregion, 1, drawpoly, resolution = resolution, chrom = chrom, chromstart = chromstart,
+                      chromend = chromend, half = half, altchrom = altchrom, altchromstart = altchromstart, altchromend = altchromend, althalf = althalf))
 
     } else {
 
@@ -555,68 +597,13 @@ bb_hic <- function(hic, chrom = "chr8", chromstart = 133600000, chromend = 13480
       invisible(apply(hicregion, 1, drawpoly, resolution = resolution, chromstart = chromstart, chromend = chromend, half = half))
     }
 
-
-    ## Go back to root viewport
+    ## Go back up a viewport
     upViewport()
 
   }
 
-  # LEGEND
-  # ======================================================================================================================================================================================
-  if (addlegend == TRUE){
-
-    if (is.null(legendlocation)){
-      stop("Cannot add legend. Please specify a legend location.")
-    }
-
-    ## Get max and min labels based on zrange
-    min_z <- zrange[1]
-    max_z <- zrange[2]
-
-    if(legendlocation == "right"){
-      legend_width <- 1/32 * new_width
-      legend_height <- 1/4 * new_height
-      legend_xcoord <- new_x + new_width + legendoffset
-      legend_ycoord <- new_y
-      bb_legend(color_vector = sorted_colors, min_label = min_z, max_label = max_z, height= legend_height,
-                    width = legend_width, x = legend_xcoord, y = legend_ycoord, units = page_units, orientation = "vertical")
-
-    }
-
-    else if(legendlocation == "left"){
-      legend_width <- 1/32 * new_width
-      legend_height <- 1/4 * new_height
-      legend_xcoord <- new_x - legendoffset - legend_width
-      legend_ycoord <- new_y
-      bb_legend(color_vector = sorted_colors, min_label = min_z, max_label = max_z, height= legend_height,
-                    width = legend_width, x = legend_xcoord, y = legend_ycoord, units = page_units, orientation = "vertical")
-    }
-
-    else if(legendlocation == "top"){
-      legend_width <- 1/4 * new_height
-      legend_height <- 1/32 * new_width
-      legend_xcoord <- new_x + (new_width - legend_width)/2
-      legend_ycoord <- new_y - legendoffset - legend_height
-
-      bb_legend(color_vector = sorted_colors, min_label = min_z, max_label = max_z, height= legend_height,
-                    width = legend_width, x = legend_xcoord, y = legend_ycoord, units = page_units, orientation = "horizontal")
-    }
-
-    else if(legendlocation == "bottom"){
-      legend_width <- 1/4 * new_height
-      legend_height <- 1/32 * new_width
-      legend_xcoord <- new_x + (new_width - legend_width)/2
-      legend_ycoord <- new_y + legendoffset + new_height
-
-      bb_legend(color_vector = sorted_colors, min_label = min_z, max_label = max_z, height= legend_height,
-                    width = legend_width, x = legend_xcoord, y = legend_ycoord, units = page_units, orientation = "horizontal")
-    }
-
-  }
-
-
-  #return sorted_color vector and zrange if choosing to add legend later
-  return(list(c(zrange[1], zrange[2]), sorted_colors))
+  return(list("chrom" = chrom, "chromstart" = chromstart, "chromend" = chromend, "x" = x, "y" = y,
+              "height" = height, "width" = width, "units" = units, "color_palette" = sorted_colors, "zrange" = c(zrange[1], zrange[2])))
 }
 
 
