@@ -425,7 +425,7 @@ bb_hic <- function(hic, chrom = "chr8", chromstart = 133600000, chromend = 13480
     vp <- viewport(height = unit(new_height, page_units), width = unit(new_width, page_units), x = unit(converted_coords[1], units = page_units),
                    y = unit(converted_coords[2], units = page_units), clip = "on")
     pushViewport(vp)
-    grid.rect()
+    #grid.rect()
 
 
     ## Add color vector to hicregion dataframe
@@ -604,6 +604,8 @@ bb_hic <- function(hic, chrom = "chr8", chromstart = 133600000, chromend = 13480
 
   return(list("chrom" = chrom, "chromstart" = chromstart, "chromend" = chromend, "x" = x, "y" = y,
               "height" = height, "width" = width, "units" = units, "color_palette" = sorted_colors, "zrange" = c(zrange[1], zrange[2])))
+
+  #class(list) <- "hic"
 }
 
 
