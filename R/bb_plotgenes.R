@@ -51,8 +51,13 @@ bb_plotgenes <- function(gtf, chrom = "chr8", chromstart = 133600000, chromend =
 
   }
 
-  gtf <- rtracklayer::import(gtf)
-  gtf_df <- as.data.frame(gtf)
+  if (class(gtf) %in% "data.frame"){
+    gtf_df = gtf
+  } else {
+    gtf <- rtracklayer::import(gtf)
+    gtf_df <- as.data.frame(gtf)
+  }
+
 
   ## Subset for region
   gtf_subset <- gtf_df[which(gtf_df$seqnames == chrom & gtf_df$start >= chromstart & gtf_df$end <= chromend ), ]
