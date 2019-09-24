@@ -75,8 +75,8 @@ bb_plothic <- function(hic, chrom = "chr8", chromstart = 133600000, chromend = 1
   drawpoly <- function(df, resolution, chrom = NULL, half, altchrom = NULL, althalf = NULL){
 
     col = df[3]
-    x = df[1]
-    y = df[2]
+    x = as.numeric(df[1])
+    y = as.numeric(df[2])
 
     xleft = x - .5 * resolution
     xright = x + .5 * resolution
@@ -126,8 +126,8 @@ bb_plothic <- function(hic, chrom = "chr8", chromstart = 133600000, chromend = 1
   drawpoly_diagonal <- function(df, resolution, half){
 
     col = df[3]
-    x = df[1]
-    y = df[2]
+    x = as.numeric(df[1])
+    y = as.numeric(df[2])
 
     xleft = x - .5 * resolution
     xright = x + resolution + .5 * resolution
@@ -508,6 +508,7 @@ bb_plothic <- function(hic, chrom = "chr8", chromstart = 133600000, chromend = 1
 
       }
 
+      assign("hicregion", hicregion, envir = globalenv())
       ## Plot squares with drawpoly function defined above
       invisible(apply(hicregion, 1, drawpoly, resolution = resolution, half = half))
 
