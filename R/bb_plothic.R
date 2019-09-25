@@ -78,10 +78,10 @@ bb_plothic <- function(hic, chrom = "chr8", chromstart = 133600000, chromend = 1
     x = as.numeric(df[1])
     y = as.numeric(df[2])
 
-    xleft = x - .5 * resolution
-    xright = x + .5 * resolution
-    ytop = y + .5 * resolution
-    ybottom = y - .5 * resolution
+    xleft = x
+    xright = x + resolution
+    ybottom = y
+    ytop = y + resolution
 
     if (!is.null(altchrom)){
 
@@ -143,7 +143,9 @@ bb_plothic <- function(hic, chrom = "chr8", chromstart = 133600000, chromend = 1
       }
 
     } else if (half == "bottom"){
+
       if (y == x){
+
         grid.polygon(x = c(xleft, xright, xright),
                      y = c(ybottom, ybottom, ytop), gp = gpar(col= NA, fill = col), default.units = "native")
       }
@@ -159,7 +161,7 @@ bb_plothic <- function(hic, chrom = "chr8", chromstart = 133600000, chromend = 1
   if (!is.null(altchrom)){
 
     # Numeric altchromosome
-    altchromNumber <- as.numeric(gsub(pattern = "chr", replacement = "", x = chrom))
+    altchromNumber <- as.numeric(gsub(pattern = "chr", replacement = "", x = altchrom))
 
     # Name of larger chromosome
     max_chrom <- paste0("chr", max(as.numeric(gsub(pattern = "chr", replacement = "", x = chrom)),
@@ -373,28 +375,30 @@ bb_plothic <- function(hic, chrom = "chr8", chromstart = 133600000, chromend = 1
 
       if (althalf == "bottom"){
 
-        xscale = c(maxchromstart, maxchromend)
-        yscale = c(minchromstart, minchromend)
+        xscale = c(maxchromstart, maxchromend + resolution)
+        yscale = c(minchromstart, minchromend + resolution)
 
       } else if (althalf == "top"){
 
-        xscale = c(minchromstart, minchromend)
-        yscale = c(maxchromstart, maxchromend)
+        xscale = c(minchromstart, minchromend + resolution)
+        yscale = c(maxchromstart, maxchromend + resolution)
 
       }
 
 
     } else if (chromNumber > altchromNumber){
 
+      print("in here")
+
       if (althalf == "bottom"){
 
-        xscale = c(chromstart, chromend)
-        yscale = c(altchromstart, altchromend)
+        xscale = c(chromstart, chromend + resolution)
+        yscale = c(altchromstart, altchromend + resolution)
 
       } else if (althalf == "top"){
 
-        xscale = c(altchromstart, altchromend)
-        yscale = c(chromstart, chromend)
+        xscale = c(altchromstart, altchromend + resolution)
+        yscale = c(chromstart, chromend + resolution)
 
       }
 
@@ -402,13 +406,13 @@ bb_plothic <- function(hic, chrom = "chr8", chromstart = 133600000, chromend = 1
 
       if (althalf == "bottom"){
 
-        xscale = c(altchromstart, altchromend)
-        yscale = c(chromstart, chromend)
+        xscale = c(altchromstart, altchromend + resolution)
+        yscale = c(chromstart, chromend + resolution)
 
       } else if (althalf == "top"){
 
-        xscale = c(chromstart, chromend)
-        yscale = c(altchromstart, altchromend)
+        xscale = c(chromstart, chromend + resolution)
+        yscale = c(altchromstart, altchromend + resolution)
 
       }
 
@@ -416,8 +420,8 @@ bb_plothic <- function(hic, chrom = "chr8", chromstart = 133600000, chromend = 1
 
   } else {
 
-    xscale = c(chromstart, chromend)
-    yscale = c(chromstart, chromend)
+    xscale = c(chromstart, chromend + resolution)
+    yscale = c(chromstart, chromend + resolution)
 
   }
 
@@ -458,10 +462,6 @@ bb_plothic <- function(hic, chrom = "chr8", chromstart = 133600000, chromend = 1
         ## Skip diagonal
         diag(reshapen) <- NA
 
-        ## Plot diagonal with triangles
-        invisible(apply(hicregion, 1, drawpoly_diagonal, resolution = resolution, half = half))
-
-
       } else if (half == "bottom"){
 
         reshapen <- as.matrix(reshape::cast(hicregion, formula = x ~ y, value = "color_vector"))
@@ -469,10 +469,7 @@ bb_plothic <- function(hic, chrom = "chr8", chromstart = 133600000, chromend = 1
         ## Skip diagonal
         diag(reshapen) <- NA
 
-        ## Plot diagonal with triangles
-        invisible(apply(hicregion, 1, drawpoly_diagonal, resolution = resolution, half = half))
       }
-
 
     }
 
@@ -481,6 +478,13 @@ bb_plothic <- function(hic, chrom = "chr8", chromstart = 133600000, chromend = 1
 
     ## Plot matrix of colors
     grid.raster(reshapen, interpolate = FALSE)
+
+    if (half == "bottom" | half == "top"){
+
+      ## Plot diagonal with triangles
+      invisible(apply(hicregion, 1, drawpoly_diagonal, resolution = resolution, half = half))
+
+    }
 
   } else {
     ## NO RASTER
@@ -508,7 +512,6 @@ bb_plothic <- function(hic, chrom = "chr8", chromstart = 133600000, chromend = 1
 
       }
 
-      assign("hicregion", hicregion, envir = globalenv())
       ## Plot squares with drawpoly function defined above
       invisible(apply(hicregion, 1, drawpoly, resolution = resolution, half = half))
 
