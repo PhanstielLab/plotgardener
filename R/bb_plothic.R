@@ -388,7 +388,6 @@ bb_plothic <- function(hic, chrom = "chr8", chromstart = 133600000, chromend = 1
 
     } else if (chromNumber > altchromNumber){
 
-      print("in here")
 
       if (althalf == "bottom"){
 
