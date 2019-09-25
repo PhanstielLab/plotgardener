@@ -61,6 +61,14 @@ bb_plothic <- function(hic, chrom = "chr8", chromstart = 133600000, chromend = 1
 
     }
 
+    chromdiff <- chromstart - chromend
+    altchromdiff <- altchromstart- altchromend
+
+    if(chromdiff != altchromdiff){
+      warning("Trying to plot non-square region.")
+    }
+
+
     if (altchromend < altchromstart){
 
       stop("Invalid \"altchromstart\" and \"altchromend\".  \"altchromstart\" cannot be larger than \"altchromend\".")
@@ -446,6 +454,7 @@ bb_plothic <- function(hic, chrom = "chr8", chromstart = 133600000, chromend = 1
       } else if (althalf == "bottom"){
 
         reshapen <- as.matrix(reshape::cast(hicregion, formula = x ~ y, value = "color_vector"))
+
       }
 
     } else {
