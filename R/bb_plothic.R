@@ -1,6 +1,6 @@
 #' plots HiC interaction matrix
 #'
-#' @param hic path to .hic file or 3 column dataframe of counts
+#' @param hic either a path to .hic file or an R object in 3 column format (loc1, loc2, counts)
 #' @param chrom chromosome of region to be plotted
 #' @param chromstart chromosome start of region to be plotted
 #' @param chromend chromosome end of region to be plotted
@@ -8,7 +8,7 @@
 #' @param resolution the width in bp of each pixel
 #' @param zrange the range of interaction scores to plot, where extreme values will be set to the max or min
 #' @param palette ColorRamp palette to use for representing interaction scores
-#' @param raster allows for rasterization of plot, which results in quicker plotting
+#' @param raster T/F allows for rasterization of plot, which results in quicker plotting (default = T)
 #' @param width width of plot in inches
 #' @param height height of plot in inches
 #' @param x x-coordinate of where to place plot relative to top left of plot
