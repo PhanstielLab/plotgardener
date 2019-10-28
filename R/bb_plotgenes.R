@@ -1,8 +1,23 @@
 #' @export
 #'
+<<<<<<< Updated upstream
 bb_plotgenes <- function(gtf, chrom = "chr8", chromstart = 133600000, chromend = 134800000, fontcolors = c("#ff3434", "#2929ff"),
                          strandcolors = c("#ff7e7e", "#8a8aff"), width = 3, height = 1, x = 1, y = 1, just = c("left", "top"),
                          units = "inches", fontsize = 12, exclude = ""){
+=======
+<<<<<<< Updated upstream
+bb_plotgenes <- function(gtf, chrom = "chr8", chromstart = 133600000, chromend = 134800000, color = "black",
+                        width = 3, height = 1, x = 1, y = 1, units = "inches", fontsize = 12){
+=======
+bb_plotgenes <- function(gtf, chrom = "chr8", chromstart = 133600000, chromend = 134800000, strand = "+", col = "black",
+<<<<<<< Updated upstream
+                         height = 1, width = 3, x = 1, y = 1, fill = NA, gene_height = 0.5, label = TRUE,
+                         fontsize = 5, fontfamily = "", fontface = "plain"){
+=======
+                         height = 1, width = 3, x = 1, y =1, fill = NA, gene_height = 0.5){
+>>>>>>> Stashed changes
+>>>>>>> Stashed changes
+>>>>>>> Stashed changes
 
   # ======================================================================================================================================================================================
   # FUNCTIONS
