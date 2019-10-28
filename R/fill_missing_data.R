@@ -1,232 +1,278 @@
-fill_missing_data <- function(dataframe, chrom, chromstart, chromend, altchrom = NULL, altchromstart = NULL, altchromend = NULL, resolution){
+## Function to fill the missing gaps of data
+fill_missing_data <- function(dataframe, chrom, chromstart, chromend, altchrom, altchromstart, altchromend, resolution, fill_missing){
 
-  if (!is.null(altchrom)){
+  # ======================================================================================================================================================================================
+  # FUNCTIONS
+  # ======================================================================================================================================================================================
 
-    if (chrom == altchrom){
+  check_coords_chrom <- function(chromstart, chromend){
 
-      ## SAME CHROM, OFF DIAGONAL ##
+    if (is.null(chromstart) | is.null(chromend)){
 
-      if (!is.null(chromstart) & !is.null(chromend) & is.null(altchromstart) & is.null(altchromend)){
+      return(TRUE)
 
-        ## dataframe[,1] is whole chrom/altchrom
-        ## dataframe[,2] is chromstart to chromend
+    }
 
-        minchromstart <- min(dataframe[,1])
-        minchromend <- max(dataframe[,1])
-        maxchromstart <- chromstart
-        maxchromend <- chromend
+    return(FALSE)
+  }
 
-      } else if (is.null(chromstart) & is.null(chromend) & !is.null(altchromstart) & !is.null(altchromend)){
+  check_coords_altchrom <- function(chromstart, chromend, altchromstart, altchromend){
 
-        ## dataframe[,1] is whole chrom/altchrom
-        ## dataframe[,2] is altchromstart to altchromend
+    if (is.null(chromstart) | is.null(chromend) | is.null(altchromstart) | is.null(altchromend)){
 
-        minchromstart <- min(dataframe[,1])
-        minchromend <- max(dataframe[,1])
-        maxchromstart <- altchromstart
-        maxchromend <- altchromend
+      return(TRUE)
 
-      } else if (is.null(chromstart) & is.null(chromend) & is.null(altchromstart) & is.null(altchromend)){
+    }
 
-        ## dataframe[,1] is whole chrom/altchrom
-        ## dataframe[,2] is whole chrom/altchrom
+    return(FALSE)
+  }
 
-        minchromstart <- min(dataframe[,1])
-        minchromend <- max(dataframe[,1])
-        maxchromstart <- min(dataframe[,2])
-        maxchromend <- max(dataframe[,2])
+  get_chromstart_chromend <- function(dataframe, chrom, altchrom){
 
-      } else {
+    if (is.null(altchrom)){
 
-        ## dataframe[,1] is min(chromstart, altchromstart) to min(chromend, altchromend)
-        ## dataframe[,2] is max(chromstart, altchromstart) to max(chromend, altchromend)
+      new_chromstart <- min(dataframe[,1], dataframe[,2])
+      new_chromend <- max(dataframe[,1], dataframe[,2])
 
-        minchromstart <- min(chromstart, altchromstart)
-        minchromend <- min(chromend, altchromend)
-        maxchromstart <- max(chromstart, altchromstart)
-        maxchromend <- max(chromend, altchromend)
-
-      }
-
-      ## Get necessary sequence of coordinates for col1 and col2 based on resolution spacing
-      col1_coords <- seq(minchromstart, minchromend, resolution)
-      col2_coords <- seq(maxchromstart, maxchromend, resolution)
-
-      ## Get what is missing
-      col1_missing <- setdiff(col1_coords, unique(dataframe[,1]))
-      col2_missing <- setdiff(col2_coords, unique(dataframe[,2]))
-
-      ## Get a complement coordinate for missing coordinate
-      col1_missing_comp <- rep(dataframe[,2][1], length(col1_missing))
-      col2_missing_comp <- rep(dataframe[,1][1], length(col2_missing))
-
-      ## Add 0's for these new complementary pairs
-      add_col1 <- data.frame(chrom = col1_missing, altchrom = col1_missing_comp, "counts" = rep(0, length(col1_missing)))
-      add_col2 <- data.frame(chrom = col2_missing_comp, altchrom = col2_missing, "counts" = rep(0, length(col2_missing)))
-
-      ## Rename columns to combine dataframes
-      colnames(add_col1) <- c("x", "y", "counts")
-      colnames(add_col2) <- c("x", "y", "counts")
-
-      ## Combine dataframes
-      added_dataframe <- rbind(dataframe, add_col1, add_col2)
-
-      ## Make data symmetric just in case need to include diagonal
-      symmetric_dataframe <- added_dataframe[,c(2, 1, 3)]
-      colnames(symmetric_dataframe) <- c("x", "y", "counts")
-
-      complete_dataframe <- unique(rbind(added_dataframe, symmetric_dataframe))
-
-      ## Subset again
-      complete_dataframe <- complete_dataframe[which(complete_dataframe[,1] >= minchromstart & complete_dataframe[,1] <= minchromend
-                                   & complete_dataframe[,2] >= maxchromstart & complete_dataframe[,2] <= maxchromend),]
-
-      ## Cast into matrix and complete upper values
-      matrix <- as.matrix(reshape::cast(complete_dataframe, formula = x ~ y, value = "counts"))
-      matrix[is.na(matrix)] <- 0
-
-      ## Get back into dataframe format
-      added_dataframe_complete <- data.frame(x = as.numeric(rownames(matrix)[row(matrix)]), y = as.numeric(colnames(matrix)[col(matrix)]), counts = as.numeric(c(matrix)))
-
+      return(list("new_chromstart" = new_chromstart, "new_chromend" = new_chromend))
 
     } else {
 
-      ## Separate altchrom/chrom to just get number and determine which is larger
-      chrom <- as.numeric(gsub(pattern = "chr", replacement = "", x = chrom))
-      altchrom <- as.numeric(gsub(pattern = "chr", replacement = "", x = altchrom))
-
-      if (chrom > altchrom){
-
-        ## ALTCHROM IS DATAFRAME[,1] AND CHROM IS DATAFRAME[,2]
-
         if (is.null(chromstart) & is.null(chromend) & !is.null(altchromstart) & !is.null(altchromend)){
 
-          chromstart <- min(dataframe[,2])
-          chromend <- max(dataframe[,2])
+          new_chromstart <- min(dataframe[,1])
+          new_chromend <- max(dataframe[,1])
+          new_altchromstart <- altchromstart
+          new_altchromend <- altchromend
 
         } else if (!is.null(chromstart) & !is.null(chromend) & is.null(altchromstart) & is.null(altchromstart)){
 
-          altchromstart <- min(dataframe[,1])
-          altchromend <- max(dataframe[,1])
+          new_chromstart <- chromstart
+          new_chromend <- chromend
+          new_altchromstart <- min(dataframe[,2])
+          new_altchromend <- max(dataframe[,2])
 
         } else if (is.null(chromstart) & is.null(chromend) & is.null(altchromstart) & is.null(altchromend)){
 
-          chromstart <- min(dataframe[,2])
-          chromend <- max(dataframe[,2])
-          altchromstart <- min(dataframe[,1])
-          altchromend <- max(dataframe[,1])
+          new_chromstart <- min(dataframe[,1])
+          new_chromend <- max(dataframe[,1])
+          new_altchromstart <- min(dataframe[,2])
+          new_altchromend <- max(dataframe[,2])
 
         }
 
-        ## Get necessary sequence of coordinates for chrom and altchrom based on resolution spacing
+      return(list("new_chromstart" = new_chromstart, "new_chromend" = new_chromend, "new_altchromstart" = new_altchromstart,
+                  "new_altchromend" = new_altchromend))
+    }
+
+  }
+
+  fill_gaps <- function(dataframe, chrom, chromstart, chromend, altchrom, altchromstart, altchromend, resolution, fill_missing){
+
+    ## Get necessary sequence of coordinates for chrom and altchrom based on resolution spacing
+    if (is.null(altchrom)){
+
+      chrom_coords <- seq(chromstart, chromend, resolution)
+      altchrom_coords <- chrom_coords
+
+    } else {
+
+      if (chrom == altchrom){
+
+        min_chromstart <- min(chromstart, altchromstart)
+        max_chromend <- max(chromend, altchromend)
+
+        chrom_coords <- seq(min_chromstart, max_chromend, resolution)
+        altchrom_coords <- chrom_coords
+
+      } else {
+
         chrom_coords <- seq(chromstart, chromend, resolution)
         altchrom_coords <- seq(altchromstart, altchromend, resolution)
-
-        ## Get what is missing
-        chrom_missing <- setdiff(chrom_coords, unique(dataframe[,2]))
-        altchrom_missing <- setdiff(altchrom_coords, unique(dataframe[,1]))
-
-        ## Get a complement coordinate for missing coordinate
-        chrom_missing_comp <- rep(dataframe[,1][1], length(chrom_missing))
-        altchrom_missing_comp <- rep(dataframe[,2][1], length(altchrom_missing))
-
-        ## Add 0's for these new complementary pairs
-        add_chrom <- data.frame(altchrom = chrom_missing_comp, chrom = chrom_missing, "counts" = rep(0, length(chrom_missing)))
-        add_altchrom <- data.frame(altchrom = altchrom_missing, chrom = altchrom_missing_comp, "counts" = rep(0, length(altchrom_missing)))
-
-
-      } else if (altchrom > chrom){
-
-        ## CHROM IS DATAFRAME[,1] AND ALTCHROM IS DATAFRAME[,2]
-
-        if (is.null(chromstart) & is.null(chromend) & !is.null(altchromstart) & !is.null(altchromend)){
-
-          chromstart <- min(dataframe[,1])
-          chromend <- max(dataframe[,1])
-
-        } else if (!is.null(chromstart) & !is.null(chromend) & is.null(altchromstart) & is.null(altchromstart)){
-
-          altchromstart <- min(dataframe[,2])
-          altchromend <- max(dataframe[,2])
-
-        } else if (is.null(chromstart) & is.null(chromend) & is.null(altchromstart) & is.null(altchromend)){
-
-          chromstart <- min(dataframe[,1])
-          chromend <- max(dataframe[,1])
-          altchromstart <- min(dataframe[,2])
-          altchromend <- max(dataframe[,2])
-
-        }
-
-        ## Get necessary sequence of coordinates for chrom and altchrom based on resolution spacing
-        chrom_coords <- seq(chromstart, chromend, resolution)
-        altchrom_coords <- seq(altchromstart, altchromend, resolution)
-
-        ## Get what is missing
-        chrom_missing <- setdiff(chrom_coords, unique(dataframe[,1]))
-        altchrom_missing <- setdiff(altchrom_coords, unique(dataframe[,2]))
-
-        ## Get a complement coordinate for missing coordinate
-        chrom_missing_comp <- rep(dataframe[,2][1], length(chrom_missing))
-        altchrom_missing_comp <- rep(dataframe[,1][1], length(altchrom_missing))
-
-        ## Add 0's for these new complementary pairs
-        add_chrom <- data.frame(chrom = chrom_missing, altchrom = chrom_missing_comp, "counts" = rep(0, length(chrom_missing)))
-        add_altchrom <- data.frame(chrom = altchrom_missing_comp, altchrom = altchrom_missing, "counts" = rep(0, length(altchrom_missing)))
 
       }
 
-      ## Rename columns to combine dataframes
-      colnames(add_chrom) <- c("x", "y", "counts")
-      colnames(add_altchrom) <- c("x", "y", "counts")
+    }
 
-      ## Combine and complete dataframes
-      added_dataframe <- rbind(dataframe, add_chrom, add_altchrom)
-      added_dataframe_complete <- tidyr::complete(added_dataframe, x, y)
-      added_dataframe_complete$counts[is.na(added_dataframe_complete$counts)] <- 0
+    ## Get what is missing
+    chrom_missing <- setdiff(chrom_coords, unique(dataframe[,1]))
+    altchrom_missing <- setdiff(altchrom_coords, unique(dataframe[,2]))
+
+    ## Get a complement coordinate for missing coordinates
+    chrom_missing_comp <- rep(dataframe[,2][1], length(chrom_missing))
+    altchrom_missing_comp <- rep(dataframe[,1][1], length(altchrom_missing))
+
+    ## Add 0's for these new complementary pairs
+    if (fill_missing == T){
+
+      add_chrom <- data.frame(chrom = chrom_missing, altchrom = chrom_missing_comp, "counts" = rep(0, length(chrom_missing)))
+      add_altchrom <- data.frame(chrom = altchrom_missing_comp, altchrom = altchrom_missing, "counts" = rep(0, length(altchrom_missing)))
+
+    } else if (fill_missing == F){
+
+      add_chrom <- data.frame(chrom = chrom_missing, altchrom = chrom_missing_comp, "counts" = rep(NA, length(chrom_missing)))
+      add_altchrom <- data.frame(chrom = altchrom_missing_comp, altchrom = altchrom_missing, "counts" = rep(NA, length(altchrom_missing)))
+
+    }
+
+
+    ## Rename columns to combine dataframes
+    colnames(add_chrom) <- c("x", "y", "counts")
+    colnames(add_altchrom) <- c("x", "y", "counts")
+
+    ## Combine dataframes
+    added_dataframe <- rbind(dataframe, add_chrom, add_altchrom)
+
+    return(added_dataframe)
+
+  }
+
+  upper_matrix_complete <- function(dataframe){
+
+    ## Cast into matrix, filling NA values with 0's
+    data.table::setDT(dataframe)
+    matrix <- as.data.frame(data.table::dcast(dataframe, x ~ y, value.var = "counts", fill = 0))
+
+    ## First column is rownames
+    rownames(matrix) <- matrix[,1]
+    matrix <- matrix[,-1]
+
+    ## Fill lower triangulars with NA's again
+    matrix <- data.matrix(matrix)
+    matrix[lower.tri(matrix)] <- NA
+
+    ## Put matrix back into dataframe format
+    complete_dataframe <- setNames(melt(matrix), c("x", "y", "counts"))
+
+    ## Remove NA values
+    data.table::setDT(complete_dataframe)
+    subset_dataframe <- subset(complete_dataframe, !is.na(counts))
+
+    return(as.data.frame(subset_dataframe))
+
+  }
+
+  upper_matrix_incomplete <- function(dataframe){
+
+    ## Cast into matrix, filling NA values
+    data.table::setDT(dataframe)
+    matrix <- as.data.frame(data.table::dcast(dataframe, x ~ y, value.var = "counts"))
+
+    ## First column is rownames
+    rownames(matrix) <- matrix[,1]
+    matrix <- matrix[,-1]
+
+    ## Fill lower triangulars with 'remove' tag
+    matrix <- data.matrix(matrix)
+    matrix[lower.tri(matrix)] <- "remove"
+
+    ## Put matrix back into dataframe format
+    complete_dataframe <- setNames(melt(matrix), c("x", "y", "counts"))
+
+    ## Remove 'remove' values
+    data.table::setDT(complete_dataframe)
+    subset_dataframe <- subset(complete_dataframe, counts != "remove" | is.na(counts))
+
+    return(as.data.frame(subset_dataframe))
+
+  }
+
+  # ======================================================================================================================================================================================
+  # SET MISSING CHROMSTART/CHROMEND AND/OR ALTCHROMSTART/ALTCHROMEND
+  # ======================================================================================================================================================================================
+
+  if (is.null(altchrom)){
+
+    missing <- check_coords_chrom(chromstart = chromstart, chromend = chromend)
+
+    if (missing == T){
+
+      new_coords <- get_chromstart_chromend(dataframe = dataframe, chrom = chrom, altchrom = altchrom)
+      chromstart <- new_coords$new_chromstart
+      chromend <- new_coords$new_chromend
 
     }
 
   } else {
 
-    if (is.null(chromstart) & is.null(chromend)){
+    missing <- check_coords_altchrom(chromstart = chromstart, chromend = chromend, altchromstart = altchromstart, altchromend = altchromend)
 
-      chromstart <- min(dataframe[,1])
-      chromend <- max(dataframe[,1])
+    if (missing == T){
 
+      new_coords <- get_chromstart_chromend(dataframe = dataframe, chrom = chrom, altchrom = altchrom)
+      chromstart <- new_coords$new_chromstart
+      chromend <- new_coords$new_chromend
+      altchromstart <- new_coords$new_altchromstart
+      altchromend <- new_coords$new_altchromend
 
     }
 
-    ## Get necessary sequence of coordinates based on resolution spacing
-    chrom_coords <- seq(chromstart, chromend, resolution)
-
-    ## Get what is missing
-    chrom_missing <- setdiff(chrom_coords, unique(dataframe[,1]))
-
-    ## Get a complement coordinate for missing coordinate
-    chrom_missing_comp <- rep(dataframe[,2][1], length(chrom_missing))
-
-    ## Add 0's for these new complementary pairs
-    add_chrom <- data.frame(chrom = chrom_missing, chrom = chrom_missing_comp, "counts" = rep(0, length(chrom_missing)))
-
-    ## Rename columns to combine dataframes
-    colnames(add_chrom) <- c("x", "y", "counts")
-
-    ## Combine dataframes
-    added_dataframe <- rbind(dataframe, add_chrom)
-
-    ## Cast into matrix and complete upper values
-    matrix <- as.matrix(reshape::cast(added_dataframe, formula = x ~ y, value = "counts"))
-    matrix[is.na(matrix)] <- 0
-    matrix[lower.tri(matrix)] <- NA
-
-    ## Get back into dataframe format
-    added_dataframe_complete <- data.frame(x = rownames(matrix)[row(matrix)], y = colnames(matrix)[col(matrix)], counts = c(matrix))
-
-    ## Remove NA values
-    added_dataframe_complete <- added_dataframe_complete[complete.cases(added_dataframe_complete),]
-
   }
 
-  return(as.data.frame(added_dataframe_complete))
+  # ======================================================================================================================================================================================
+  # GET A DATAFRAME WITH LARGE GAPS FILLED
+  # ======================================================================================================================================================================================
+
+    filled_gaps <- fill_gaps(dataframe = dataframe, chrom = chrom, chromstart = chromstart, chromend = chromend, altchrom = altchrom,
+                             altchromstart = altchromstart, altchromend = altchromend, resolution = resolution, fill_missing = fill_missing)
+
+
+  # ======================================================================================================================================================================================
+  # MAKE FURTHER COMPLETIONS TO DATA BASED ON CHROM/ALTCHROM INTERACTION
+  # ======================================================================================================================================================================================
+
+    if (is.null(altchrom)){
+    ## No altchrom, just need to cast into matrix and complete upper triangular values
+
+      if (fill_missing == T){
+
+        filled_data <- upper_matrix_complete(filled_gaps)
+
+      } else if (fill_missing == F){
+
+        filled_data <- upper_matrix_incomplete(filled_gaps)
+      }
+
+
+    } else {
+
+      if (chrom == altchrom){
+
+        ## Cast into matrix and complete upper triangular values
+        if (fill_missing == T){
+
+          filled_data <- upper_matrix_complete(filled_gaps)
+
+        } else if (fill_missing == F){
+
+          filled_data <- upper_matrix_incomplete(filled_gaps)
+
+        }
+
+        ## Make symmetric
+        lower_dataframe <- filled_data[,c(2, 1, 3)]
+        colnames(lower_dataframe) <- c("x", "y", "counts")
+        symmetric_dataframe <- unique(rbind(filled_data, lower_dataframe))
+
+        ## Subset data for chromstart/chromend in column 1 and altchromstart/altchromend in column 2
+        filled_data <- symmetric_dataframe[which(symmetric_dataframe[,1] >= chromstart & symmetric_dataframe[,1] <= chromend
+                                               & symmetric_dataframe[,2] >= altchromstart & symmetric_dataframe[,2] <= altchromend),]
+
+      } else {
+        ## different chrom and altchrom, need to complete data
+        filled_data <- tidyr::complete(filled_gaps, x, y)
+
+        ## if fill_missing == T, fill NA's with 0's
+        if (fill_missing == T){
+
+          filled_data$counts[is.na(filled_data$counts)] <- 0
+
+        }
+
+      }
+
+    }
+
+    return(filled_data)
+
 }
