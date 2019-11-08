@@ -19,7 +19,6 @@
 #' @param altchromend alternate chromosome end for off-diagonal plotting or interchromosomal plotting
 #' @param althalf if plotting altchrom region, which side off diagonal to plot; options are "top" or "bottom"
 #' @param norm if giving .hic file, hic data normalization; options are "NONE", "VC", "VC_SQRT", and "KR"
-#' @param fill_missing option to fill missing gaps of data with 0's (TRUE) or NA's (FALSE)
 #'
 #' @details macOS Preview anti-aliases images and will make rasterized plot appear blurry.
 #'
@@ -35,7 +34,7 @@
 bb_plothic <- function(hic, chrom = 8, chromstart = 133600000, chromend = 134800000, half = "both", resolution = 10000, zrange = NULL,
                        palette = colorRampPalette(c("white", "dark red")), width = 3, height = 3, x = 1, y = 1,
                        just = c("left", "top"), units = "inches", altchrom = NULL, altchromstart = NULL, altchromend = NULL, althalf = NULL,
-                       norm = "KR", fill_missing = T, ...){
+                       norm = "KR", ...){
 
   # ======================================================================================================================================================================================
   # FUNCTIONS
@@ -221,7 +220,7 @@ bb_plothic <- function(hic, chrom = 8, chromstart = 133600000, chromend = 134800
     ## if .hic file, read in with bb_rhic
     if (!(class(hic) %in% "data.frame")){
 
-      message(paste("Reading in hic file with", norm, "normalization and fill_missing =", fill_missing))
+      message(paste("Reading in hic file with", norm, "normalization."))
 
       readchromstart <- hic_plot$chromstart - hic_plot$additional_parameters$resolution
       readchromend <- hic_plot$chromend + hic_plot$additional_parameters$resolution
@@ -231,7 +230,7 @@ bb_plothic <- function(hic, chrom = 8, chromstart = 133600000, chromend = 134800
       hic <- bb_rhic(hic = hic, chrom = hic_plot$chrom, chromstart = readchromstart, chromend = readchromend,
                      resolution = hic_plot$additional_parameters$resolution, zrange = hic_plot$zrange,norm = hic_plot$additional_parameters$norm,
                      altchrom = hic_plot$altchrom, altchromstart = readaltchromstart,
-                     altchromend = readaltchromend, fill_missing = hic_plot$additional_parameters$fill_missing)
+                     altchromend = readaltchromend)
 
     } else {
 
@@ -384,7 +383,7 @@ bb_plothic <- function(hic, chrom = 8, chromstart = 133600000, chromend = 134800
                              altchromend = altchromend, zrange = zrange, color_palette = NULL, just = just,
                              additional_parameters = list(half = half,
                                                           resolution = resolution, palette = palette, althalf = althalf,
-                                                          norm = norm, fill_missing = fill_missing)), class = "hic_plot")
+                                                          norm = norm)), class = "hic_plot")
 
   # ======================================================================================================================================================================================
   # CATCH ERRORS
@@ -454,7 +453,7 @@ bb_plothic <- function(hic, chrom = 8, chromstart = 133600000, chromend = 134800
   ## Make viewport
   vp <- viewport(height = unit(page_coords[[1]]$height, page_coords[[3]]), width = unit(page_coords[[1]]$width, page_coords[[3]]),
                  x = unit(page_coords[[1]]$x, page_coords[[3]]), y = unit((page_coords[[2]]-page_coords[[1]]$y), page_coords[[3]]),
-                 clip = "on", xscale = scale[[1]], yscale = scale[[2]], just = just)
+                 clip = "on", xscale = scale[[1]], yscale = scale[[2]], just = just, name = "bb_hic")
 
   pushViewport(vp)
 

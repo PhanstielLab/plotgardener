@@ -7,10 +7,9 @@
 bb_hic(hic, chrom = "chr8", chromstart = 133600000,
   chromend = 134800000, altchrom = NULL, altchromstart = NULL,
   altchromend = NULL, althalf = "bottom", resolution = 10000,
-  zrange = NULL, height = 3, width = 3, x = 1.75, y = 3,
+  zrange = NULL, width = 3, height = 3, x = 1, y = 1,
   units = "inches", palette = colorRampPalette(c("white", "dark red")),
-  norm = "KR", half = "both", raster = TRUE, addlegend = FALSE,
-  legendlocation = "right", legendoffset = 0.25, ...)
+  norm = "KR", half = "both", raster = TRUE, ...)
 }
 \arguments{
 \item{hic}{path to .hic file or 3 column dataframe of counts}
@@ -25,9 +24,9 @@ bb_hic(hic, chrom = "chr8", chromstart = 133600000,
 
 \item{zrange}{the range of interaction scores to plot, where extreme values will be set to the max or min}
 
-\item{height}{height of plot in inches}
-
 \item{width}{width of plot in inches}
+
+\item{height}{height of plot in inches}
 
 \item{x}{x-coordinate of where to place plot relative to top left of plot}
 
@@ -42,12 +41,6 @@ bb_hic(hic, chrom = "chr8", chromstart = 133600000,
 \item{half}{what sides of square plot; options are "both", top", or "bottom"}
 
 \item{raster}{allows for rasterization of plot, which results in quicker plotting}
-
-\item{addlegend}{add legend representing scores for color range}
-
-\item{legendlocation}{if addlegend == TRUE, where relative to plot to place legend; options are "right", "left", top", or "bottom"}
-
-\item{legendoffset}{if addlegend == TRUE, how much to offset the legend relative to the plot in inches}
 }
 \value{
 Function will plot a HiC interaction matrix and return a list of the zrange min, zrange max, and sequential color palette
@@ -63,11 +56,8 @@ data(bb_hic_data)
 # Full Rasterized Plot
 bb_makepage()
 bb_hic_plot <- bb_hic(bb_hic_data)
-# Full Rasterized Plot with Legend
-bb_makepage()
-bb_hic_plot <- bb_hic(bb_hic_data, addlegend = TRUE)
 # Half Rasterized Plot
-bb_makepage()()
+bb_makepage()
 bb_hic_plot <- bb_hic(bb_hic_data, half = "top")
 # Non-rasterized Plot
 bb_makepage()

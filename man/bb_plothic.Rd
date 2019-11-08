@@ -4,12 +4,12 @@
 \alias{bb_plothic}
 \title{plots HiC interaction matrix}
 \usage{
-bb_plothic(hic, chrom = "chr8", chromstart = 133600000,
+bb_plothic(hic, chrom = 8, chromstart = 133600000,
   chromend = 134800000, half = "both", resolution = 10000,
   zrange = NULL, palette = colorRampPalette(c("white", "dark red")),
-  raster = TRUE, width = 3, height = 3, x = 1, y = 1,
+  width = 3, height = 3, x = 1, y = 1, just = c("left", "top"),
   units = "inches", altchrom = NULL, altchromstart = NULL,
-  altchromend = NULL, althalf = "bottom", norm = "KR", ...)
+  altchromend = NULL, althalf = NULL, norm = "KR", ...)
 }
 \arguments{
 \item{hic}{path to .hic file or 3 column dataframe of counts}
@@ -28,8 +28,6 @@ bb_plothic(hic, chrom = "chr8", chromstart = 133600000,
 
 \item{palette}{ColorRamp palette to use for representing interaction scores}
 
-\item{raster}{allows for rasterization of plot, which results in quicker plotting}
-
 \item{width}{width of plot in inches}
 
 \item{height}{height of plot in inches}
@@ -37,6 +35,8 @@ bb_plothic(hic, chrom = "chr8", chromstart = 133600000,
 \item{x}{x-coordinate of where to place plot relative to top left of plot}
 
 \item{y}{y-coordinate of where to place plot relative to top left of plot}
+
+\item{just}{a string or numeric vector specifying the justification of the viewport relative to its (x, y) location: "left", "right", "centre", "center", "bottom", "top"}
 
 \item{units}{units of height, width, and x and y location of the plot}
 
@@ -46,7 +46,7 @@ bb_plothic(hic, chrom = "chr8", chromstart = 133600000,
 
 \item{altchromend}{alternate chromosome end for off-diagonal plotting or interchromosomal plotting}
 
-\item{althalf}{if plotting altchrom region, which side off diagonal to plot; options are "both", "top", or "bottom"}
+\item{althalf}{if plotting altchrom region, which side off diagonal to plot; options are "top" or "bottom"}
 
 \item{norm}{if giving .hic file, hic data normalization; options are "NONE", "VC", "VC_SQRT", and "KR"}
 }
@@ -60,16 +60,6 @@ plots HiC interaction matrix
 macOS Preview anti-aliases images and will make rasterized plot appear blurry.
 }
 \examples{
-data(bb_hic_data)
-# Full Rasterized Plot
-bb_makepage()
-bb_hic_plot <- bb_hic(bb_hic_data)
-# Half Rasterized Plot
-bb_makepage()
-bb_hic_plot <- bb_hic(bb_hic_data, half = "top")
-# Non-rasterized Plot
-bb_makepage()
-bb_hic_plot <- bb_hic(bb_hic_data, raster = FALSE)
 
 }
 \author{
