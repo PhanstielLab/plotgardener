@@ -12,13 +12,12 @@
 #' @param altchrom if looking at region between two different chromosomes, this is the specified alternative chromosome
 #' @param altchromstart if looking at region between two different chromosomes, start position of altchrom
 #' @param altchromend if looking at region between two different chromsomes, end position of altchrom
-#' @param fill_missing option to fill missing gaps of data with 0's (TRUE) or NA's (FALSE)
 #'
 #'
 #' @export
 
 bb_rhic <- function(hic, chrom, chromstart = NULL, chromend = NULL, resolution = 10000, zrange = NULL,
-                    norm = "KR", res_scale = "BP", altchrom = NULL, altchromstart = NULL, altchromend = NULL, fill_missing = T){
+                    norm = "KR", res_scale = "BP", altchrom = NULL, altchromstart = NULL, altchromend = NULL){
 
 
   # ======================================================================================================================================================================================
@@ -289,14 +288,15 @@ bb_rhic <- function(hic, chrom, chromstart = NULL, chromend = NULL, resolution =
   # FILL IN MISSING GAPS OF DATA
   # ======================================================================================================================================================================================
 
-  complete_data <- fill_missing_data(dataframe = scaled_data, chrom = chrom, chromstart = chromstart, chromend = chromend, altchrom = altchrom,
-                               altchromstart = altchromstart, altchromend = altchromend, resolution = resolution, fill_missing = fill_missing)
+  # complete_data <- fill_missing_data(dataframe = scaled_data, chrom = chrom, chromstart = chromstart, chromend = chromend, altchrom = altchrom,
+  #                              altchromstart = altchromstart, altchromend = altchromend, resolution = resolution, fill_missing = fill_missing)
 
   # ======================================================================================================================================================================================
   # FORMAT DATA IN PROPER ORDER AND WITH LABELS
   # ======================================================================================================================================================================================
 
-  renamed_data <- rename_columns(upper = complete_data, chrom = chrom, altchrom = altchrom)
+  #renamed_data <- rename_columns(upper = complete_data, chrom = chrom, altchrom = altchrom)
+  renamed_data <- rename_columns(upper = scaled_data, chrom = chrom, altchrom = altchrom)
 
   # ======================================================================================================================================================================================
   # RETURN DATAFRAME

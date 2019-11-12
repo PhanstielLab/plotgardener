@@ -13,19 +13,19 @@ bb_rhic(hic, chrom, chromstart = NULL, chromend = NULL,
 
 \item{chrom}{if not alternative chromosome, chromosome of desired region}
 
-\item{chromstart}{chromosome start position of chrom, in bp}
+\item{chromstart}{chromosome start position of chrom}
 
-\item{chromend}{chromosome end position of chrom, in bp}
+\item{chromend}{chromosome end position of chrom}
 
-\item{resolution}{the width in bp of each pixel}
+\item{resolution}{the width of each pixel}
 
-\item{zrange}{the range of interaction scores to plot, where extreme values will be set to the max or min}
+\item{zrange}{the range of interaction scores to plot, where extreme values will be set to the max or min; if null, zrange will be set to (0, max(data))}
 
 \item{norm}{hic data normalization; options are "NONE", "VC", "VC_SQRT", and "KR"}
 
-\item{res_scale}{scale of normalization; options are "BP" and "FRAG"}
+\item{res_scale}{resolution scale; options are "BP" and "FRAG"}
 
-\item{altchrom}{if looking at region between two different chromosomes, this is the specified alternative chromsome}
+\item{altchrom}{if looking at region between two different chromosomes, this is the specified alternative chromosome}
 
 \item{altchromstart}{if looking at region between two different chromosomes, start position of altchrom}
 
