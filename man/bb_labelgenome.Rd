@@ -4,7 +4,9 @@
 \alias{bb_labelgenome}
 \title{Adds genome coordinates to the axis of a plot}
 \usage{
-bb_labelgenome(plot, scale = "bp", side = "bottom", fontsize = 10,
+bb_labelgenome(plot = NULL, chrom = NULL, chromstart = NULL,
+  chromend = NULL, width = NULL, x = NULL, y = NULL,
+  units = "inches", scale = "bp", side = "bottom", fontsize = 10,
   color = "grey")
 }
 \arguments{
