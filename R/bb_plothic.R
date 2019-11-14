@@ -260,12 +260,17 @@ bb_plothic <- function(hic, chrom = 8, chromstart = 133600000, chromend = 134800
 
     } else {
 
-      hic <- hic[which(hic[,1] >= hic_plot$chromstart - hic_plot$additional_parameters$resolution &
-                         hic[,1] <= hic_plot$chromend + hic_plot$additional_parameters$resolution &
-                         hic[,2] >= hic_plot$altchromstart - hic_plot$additional_parameters$resolution &
-                         hic[,2] <= hic_plot$altchromend + hic_plot$additional_parameters$resolution),]
-    }
+      if (chrom != altchrom){
 
+        hic <- hic[which(hic[,1] >= hic_plot$chromstart - hic_plot$additional_parameters$resolution &
+                           hic[,1] <= hic_plot$chromend + hic_plot$additional_parameters$resolution &
+                           hic[,2] >= hic_plot$altchromstart - hic_plot$additional_parameters$resolution &
+                           hic[,2] <= hic_plot$altchromend + hic_plot$additional_parameters$resolution),]
+
+      }
+
+
+    }
 
     return(hic)
   }
