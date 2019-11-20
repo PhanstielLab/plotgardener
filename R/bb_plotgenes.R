@@ -64,7 +64,7 @@ bb_plotgenes <- function(gtf, chrom = "chr8", chromstart = 133600000, chromend =
 
       yBottom <- 0.375
       yTop <- 0.425
-      yText <- 0.3
+      yText <- 0.15
       fill <- strandcolors[2]
       grid.text(geneName, x = xText, y = yText, just = c("center", "top"),
                 gp = gpar(fontsize = fontsize, col = fontcolors[2]), default.units = "native")
