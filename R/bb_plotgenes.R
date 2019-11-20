@@ -12,7 +12,7 @@ bb_plotgenes <- function(gtf, chrom = "chr8", chromstart = 133600000, chromend =
 
     start <- as.numeric(df[2])
     stop <- as.numeric(df[3])
-    strand <- df[5]
+    strand <- df[4]
 
     ## Separate plus and minus strand
     if (strand == "+"){
@@ -39,8 +39,8 @@ bb_plotgenes <- function(gtf, chrom = "chr8", chromstart = 133600000, chromend =
 
     start <- as.numeric(df[2])
     stop <- as.numeric(df[3])
-    strand <- df[5]
-    geneName <- df[14]
+    strand <- df[4]
+    geneName <- df[6]
 
     ## Get center of gene
     xText <- mean(c(start, stop))
@@ -89,10 +89,14 @@ bb_plotgenes <- function(gtf, chrom = "chr8", chromstart = 133600000, chromend =
 
   if (class(gtf) %in% "data.frame"){
     gtf_df = gtf
+
   } else {
     gtf <- rtracklayer::import(gtf)
     gtf_df <- as.data.frame(gtf)
   }
+
+  gtf_df <- data.frame(gtf_df$seqnames, gtf_df$start, gtf_df$end, gtf_df$strand, gtf_df$type, gtf_df$gene_name)
+  colnames(gtf_df) <- c("seqnames", "start", "end", "strand", "type", "gene_name")
 
   # ======================================================================================================================================================================================
   # SUBSET GTF
