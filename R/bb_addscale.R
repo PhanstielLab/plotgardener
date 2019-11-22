@@ -71,7 +71,7 @@ bb_addscale <- function(color_vector, min_val, max_val, border = FALSE, height, 
   pushViewport(vp)
 
   # ======================================================================================================================================================================================
-  # GROBS
+  # INITIALIZE GTREE
   # ======================================================================================================================================================================================
 
   assign("scale_grobs", gTree(name = "scale_grobs"), envir = bbEnv)
@@ -100,16 +100,11 @@ bb_addscale <- function(color_vector, min_val, max_val, border = FALSE, height, 
     grid.draw(highLab)
     grid.draw(color_scale)
 
-    assign("scale_grobs", addGrob(gTree = get("scale_grobs", envir = bbEnv), child = lowLab), envir = bbEnv)
-    assign("scale_grobs", addGrob(gTree = get("scale_grobs", envir = bbEnv), child = highLab), envir = bbEnv)
-    assign("scale_grobs", addGrob(gTree = get("scale_grobs", envir = bbEnv), child = color_scale), envir = bbEnv)
-
     if (border == T){
 
       borderGrob <- rectGrob(y = 1 - (hH + (0.5 * dH)), just = "top", width = unit(page_coords[[1]]$width, page_coords[[3]]), height = unit(new_height, "npc"),
                 gp = gpar(col = "black", fill = NA) )
       grid.draw(borderGrob)
-      assign("scale_grobs", addGrob(gTree = get("scale_grobs", envir = bbEnv), child = borderGrob), envir = bbEnv)
 
     }
 
@@ -140,26 +135,34 @@ bb_addscale <- function(color_vector, min_val, max_val, border = FALSE, height, 
     grid.draw(highLab)
     grid.draw(color_scale)
 
-    assign("scale_grobs", addGrob(gTree = get("scale_grobs", envir = bbEnv), child = lowLab), envir = bbEnv)
-    assign("scale_grobs", addGrob(gTree = get("scale_grobs", envir = bbEnv), child = highLab), envir = bbEnv)
-    assign("scale_grobs", addGrob(gTree = get("scale_grobs", envir = bbEnv), child = color_scale), envir = bbEnv)
-
     if (border == T){
 
       borderGrob <- rectGrob(x = lW + (0.5 * dW), just = "left", width = unit(new_width, "npc"), height = unit(page_coords[[1]]$height, page_coords[[3]]),
                 gp = gpar(col = "black", fill = NA) )
       grid.draw(borderGrob)
-      assign("scale_grobs", addGrob(gTree = get("scale_grobs", envir = bbEnv), child = borderGrob), envir = bbEnv)
 
     }
 
   }
 
-  grob_list <- lapply(get("scale_grobs", envir = bbEnv)$children, convert_gpath)
-  bb_scale$grobs = grob_list
-
   ## Go back to root viewport
   upViewport()
+
+  # ======================================================================================================================================================================================
+  # ADD GROBS TO GTREE AND ASSIGN TO SCALE OBJECT
+  # ======================================================================================================================================================================================
+
+  ## Add grobs to gTree
+  assign("scale_grobs", setChildren(get("scale_grobs", envir = bbEnv), children = gList(lowLab, highLab, color_scale)), envir = bbEnv)
+  if (border == T){
+    assign("scale_grobs", addGrob(gTree = get("scale_grobs", envir = bbEnv), child = borderGrob), envir = bbEnv)
+  }
+
+  ## Convert grob list to list of gpaths
+  grob_list <- lapply(get("scale_grobs", envir = bbEnv)$children, convert_gpath)
+
+  ## Add grobs to scale object
+  bb_scale$grobs = grob_list
 
   # ======================================================================================================================================================================================
   # RETURN OBJECT
