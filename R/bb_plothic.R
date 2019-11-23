@@ -260,12 +260,17 @@ bb_plothic <- function(hic, chrom = 8, chromstart = 133600000, chromend = 134800
 
     } else {
 
-      hic <- hic[which(hic[,1] >= hic_plot$chromstart - hic_plot$additional_parameters$resolution &
-                         hic[,1] <= hic_plot$chromend + hic_plot$additional_parameters$resolution &
-                         hic[,2] >= hic_plot$altchromstart - hic_plot$additional_parameters$resolution &
-                         hic[,2] <= hic_plot$altchromend + hic_plot$additional_parameters$resolution),]
-    }
+      if (chrom != altchrom){
 
+        hic <- hic[which(hic[,1] >= hic_plot$chromstart - hic_plot$additional_parameters$resolution &
+                           hic[,1] <= hic_plot$chromend + hic_plot$additional_parameters$resolution &
+                           hic[,2] >= hic_plot$altchromstart - hic_plot$additional_parameters$resolution &
+                           hic[,2] <= hic_plot$altchromend + hic_plot$additional_parameters$resolution),]
+
+      }
+
+
+    }
 
     return(hic)
   }
@@ -323,8 +328,8 @@ bb_plothic <- function(hic, chrom = 8, chromstart = 133600000, chromend = 134800
     return(list(xscale, yscale))
   }
 
-  ## Define a function that plots squares and triangles on hic plot
-  drawpoly <- function(df, hic_plot){
+  ## Define a function that makes grobs for the squares and triangles of hic plot
+  drawpoly <- function(df, hic_plot, grobs_name){
 
     col = df[4]
     x = as.numeric(df[1])
@@ -337,40 +342,41 @@ bb_plothic <- function(hic, chrom = 8, chromstart = 133600000, chromend = 134800
 
     if (!is.null(hic_plot$altchrom)){
 
-
-      grid.polygon(x = c(xleft, xleft, xright, xright),
+      polygon <- polygonGrob(x = c(xleft, xleft, xright, xright),
                    y = c(ybottom, ytop, ytop, ybottom), gp = gpar(col = NA, fill = col), default.units = "native")
-
     } else {
 
       if (hic_plot$additional_parameters$half == "both"){
 
         ## Plot all squares
-        grid.polygon(x = c(xleft, xleft, xright, xright),
+        polygon <- polygonGrob(x = c(xleft, xleft, xright, xright),
                      y = c(ybottom, ytop, ytop, ybottom), gp = gpar(col = NA, fill = col), default.units = "native")
+
       } else if (hic_plot$additional_parameters$half == "top"){
 
         ## Plot triangles along diagonal and squares above
         if (y > x){
-          grid.polygon(x = c(xleft, xleft, xright, xright),
+          polygon <- polygonGrob(x = c(xleft, xleft, xright, xright),
                        y = c(ybottom, ytop, ytop, ybottom), gp = gpar(col = NA, fill = col), default.units = "native")
         } else if (y == x) {
-          grid.polygon(x = c(xleft, xleft, xright),
+          polygon <- polygonGrob(x = c(xleft, xleft, xright),
                        y = c(ybottom, ytop, ytop), gp = gpar(col = NA, fill = col), default.units = "native")
         }
 
       } else if (hic_plot$additional_parameters$half == "bottom"){
         ## Plot triangles along diagonal and squares below
         if (y < x){
-          grid.polygon(x = c(xleft, xleft, xright, xright),
+          polygon <- polygonGrob(x = c(xleft, xleft, xright, xright),
                        y = c(ybottom, ytop, ytop, ybottom), gp = gpar(col = NA, fill = col), default.units = "native")
         } else if (y == x) {
-          grid.polygon(x = c(xleft, xright, xright),
+          polygon <- polygonGrob(x = c(xleft, xright, xright),
                        y = c(ybottom, ybottom, ytop), gp = gpar(col = NA, fill = col), default.units = "native")
         }
       }
 
     }
+
+    assign(grobs_name, addGrob(gTree = get(grobs_name, envir = bbEnv), child = polygon), envir = bbEnv)
 
   }
 
@@ -380,7 +386,7 @@ bb_plothic <- function(hic, chrom = 8, chromstart = 133600000, chromend = 134800
 
   hic_plot <- structure(list(chrom = chrom, chromstart = chromstart, chromend = chromend, x = x, y = y, height = height,
                              width = width, units = units, altchrom = altchrom, altchromstart = altchromstart,
-                             altchromend = altchromend, zrange = zrange, color_palette = NULL, just = just,
+                             altchromend = altchromend, zrange = zrange, color_palette = NULL, just = just, grobs = NULL,
                              additional_parameters = list(half = half,
                                                           resolution = resolution, palette = palette, althalf = althalf,
                                                           norm = norm)), class = "hic_plot")
@@ -461,7 +467,19 @@ bb_plothic <- function(hic, chrom = 8, chromstart = 133600000, chromend = 134800
   # PLOT
   # ======================================================================================================================================================================================
 
-  invisible(apply(hic, 1, drawpoly, hic_plot = hic_plot))
+  #grobs_name <- paste0("hic_grobs", (length(grep(pattern = "hic_grobs", x = ls(envir = bbEnv))) + 1))
+  grobs_name <- "hic_grobs"
+
+  assign(grobs_name, gTree(name = "hic_grobs"), envir = bbEnv)
+
+  invisible(apply(hic, 1, drawpoly, hic_plot = hic_plot, grobs_name = grobs_name))
+
+  message("Plotting...")
+  grid.draw(get(grobs_name, envir = bbEnv))
+
+  grob_list <- lapply(get(grobs_name, envir = bbEnv)$children, convert_gpath)
+
+  hic_plot$grobs = grob_list
 
   ## Go back up a viewport
   upViewport()

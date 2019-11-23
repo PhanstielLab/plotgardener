@@ -9,134 +9,290 @@
 
 #' @export
 
-bb_labelgenome <- function(plot, scale = "bp", side = "bottom", fontsize = 10, color = "grey"){
+bb_labelgenome <- function(plot = NULL, chrom, chromstart, chromend, width, x, y, just = c("left", "top"), rotation = 0,
+                           units = "inches", scale = "bp", fontsize = 10, fontcolor = "black", lineAbove = T, linecolor = "black", lwd = 1){
 
+  # ======================================================================================================================================================================================
+  # FUNCTIONS
+  # ======================================================================================================================================================================================
 
-  #chrom
-  #chromstart
-  #chromend
-  #width
-  #height
-  #x
-  #y
-  #units
+  ## Define a function that catches errors for bb_labelgenome
+  # errorcheck_bb_labelgenome <- function()
 
-  ## Grab information from input plot
-  chrom <- plot$chrom
-  chromstart <- plot$chromstart
-  chromend <- plot$chromend
-  plot_height <- plot$height
-  plot_width <- plot$width
-  plot_x <- plot$x
-  plot_y <- plot$y
-  plot_units <- plot$units
+  ## Define a function to convert plot x and y into center of plot based on justification
+  adjust_coords <- function(plot, page_units, page_height){
 
+    plot_y <- convertY(unit(plot$y, units = plot$units), unitTo = page_units, valueOnly = TRUE)
+    plot_y <- page_height - plot_y
+    plot_y <- convertY(unit(plot_y, units = page_units), unitTo = plot$units, valueOnly = TRUE)
 
-  ## Determine scale of labels
-  if (scale == "bp"){
-    fact = 1
+    if (length(plot$just == 2)){
+
+      if ("left" %in% plot$just & "center" %in% plot$just){
+        ## convert the x-coordinate only
+        plot_x <- plot$x + (0.5 * plot$width)
+      } else if ("right" %in% plot$just & "center" %in% plot$just){
+        ## convert the x-coordinate only
+        plot_x <- plot$x - (0.5 * plot$width)
+      } else if ("center" %in% plot$just & "bottom" %in% plot$just){
+        ## convert the y-coordinate only
+        plot_x <- plot$x
+        plot_y <- plot_y + (0.5 * plot$height)
+      } else if ("center" %in% plot$just & "top" %in% plot$just){
+        ## convert the y-coordinate only
+        plot_x <- plot$x
+        plot_y <- plot_y - (0.5 * plot$height)
+      } else if ("left" %in% plot$just & "top" %in% plot$just){
+        ## convert x-coordinate and y-coordinate
+        plot_x <- plot$x + (0.5 * plot$width)
+        plot_y <- plot_y - (0.5 * plot$height)
+      } else if ("right" %in% plot$just & "top" %in% plot$just){
+        ## convert x-coordinate and y-coordinate
+        plot_x <- plot$x - (0.5 * plot$width)
+        plot_y <- plot_y - (0.5 * plot$height)
+      } else if ("left" %in% plot$just & "bottom" %in% plot$just){
+        ## convert x-coordinate and y-coordinate
+        plot_x <- plot$x + (0.5 * plot$width)
+        plot_y <- plot_y + (0.5 * plot$height)
+      } else if ("right" %in% plot$just & "bottom" %in% plot$just){
+        ## convert x-coordinate and y-coordinate
+        plot_x <- plot$x - (0.5 * plot$width)
+        plot_y <- plot_y + (0.5 * plot$height)
+      } else {
+        ## no conversion
+        plot_x <- plot$x
+      }
+
+    } else if (length(plot$just == 1)){
+
+      if (plot$just == "left"){
+        ## convert the x-coordinate only
+        plot_x <- plot$x + (0.5 * plot$width)
+      } else if (plot$just == "right"){
+        ## convert the x-coordinate only
+        plot_x <- plot$x - (0.5 * plot$width)
+      } else if (plot$just == "bottom"){
+        ## convert the y-coordinate only
+        plot_x <- plot$x
+        plot_y <- plot_y + (0.5 * plot$height)
+      } else if (plot$just == "top"){
+        ## convert the y-coordinate only
+        plot_x <- plot$x
+        plot_y <- plot_y - (0.5 * plot$height)
+      } else {
+        ## no conversion
+        plot_x <- plot$x
+      }
+
+    }
+
+    return(list(plot_x, plot_y))
+
   }
 
-  if (scale == "Mb"){
-    fact = 1000000
+  ## Define a function to get label x and y based on plot input coordinates
+  label_coords <- function(plot, xCoord, yCoord, side, genome_label){
+
+    if (side == "bottom"){
+
+      label_x <- xCoord - (0.5 * plot$width)
+      label_y <- yCoord - (0.5 * plot$height)
+      justification <- c("left", "top")
+
+    } else if (side == "top"){
+
+      label_x <- xCoord - (0.5 * plot$width)
+      label_y <- yCoord + (0.5 * plot$height)
+      justification <- c("left", "bottom")
+
+    } else if (side == "left"){
+
+      label_x <- xCoord - (0.5 * plot$width)
+      label_y <- yCoord + (0.5 * plot$height)
+      justification <- c("right", "top")
+
+    } else if (side == "right"){
+
+      label_x <- xCoord + (0.5 * plot$width)
+      label_y <- yCoord + (0.5 * plot$height)
+      justification <- c("left", "top")
+
+    }
+
+    genome_label[["x"]] = label_x
+    genome_label[["y"]] = label_y
+    genome_label[["units"]] = plot$units
+    genome_label[["just"]] = justification
+
+    return(genome_label)
+
   }
 
-  if (scale == "Kb"){
-    fact = 1000
+  ## Define a function to get label width and height based on side
+  label_dims <- function(plot, side, text, page_units, genome_label){
+
+    if (side == "bottom" | side == "top"){
+
+      label_width <- plot$width
+      label_height <- convertHeight(heightDetails(text), unitTo = plot$units, valueOnly = TRUE)
+
+    } else if (side == "left" | side == "right"){
+
+      label_width <- convertWidth(heightDetails(text), unitTo = plot$units, valueOnly = TRUE)
+      label_height <- plot$height
+
+    }
+
+    genome_label[["width"]] = label_width
+    genome_label[["height"]] = label_height
+
+    return(genome_label)
+
   }
 
-  chromstartlabel = chromstart/fact
-  chromendlabel = chromend/fact
+  ## Define a function to plot automatic label
+  plot_label <- function(side, genome_label){
+
+    if (side == "bottom"){
+
+      grid.segments(x0 = 0, x1 = 1, y0 = 1, y1 = 1, gp = gpar(col = genome_label$linecolor, lwd = genome_label$lwd))
+      grid.text(label = genome_label$chromlabel, x = 0.5, y = 0.85, gp = gpar(fontface = "bold", fontsize = genome_label$fontsize, col = genome_label$fontcolor), just = c("center", "top"))
+      grid.text(label = paste(round(genome_label$chromstartlabel, 1), scale, sep = " "), x = 0, y = 0.85, just = c("left", "top"), gp = gpar(fontsize = genome_label$fontsize, col = genome_label$fontcolor))
+      grid.text(label = paste(round(genome_label$chromendlabel, 1), scale, sep = " "), x = 1, y = 0.85, just = c("right","top"), gp = gpar(fontsize = genome_label$fontsize, col = genome_label$fontcolor))
+
+    } else if (side == "top"){
+
+      grid.segments(x0 = 0, x1 = 1, y0 = 0, y1 = 0, gp = gpar(col = genome_label$linecolor, lwd = genome_label$lwd))
+      grid.text(label = genome_label$chromlabel, x = 0.5, y = 0.15, gp = gpar(fontface = "bold", fontsize = genome_label$fontsize, col = genome_label$fontcolor), just = c("center", "bottom"))
+      grid.text(label = paste(round(genome_label$chromstartlabel, 1), scale, sep = " "), x = 0, y = 0.15, just = c("left", "bottom"), gp = gpar(fontsize = genome_label$fontsize, col = genome_label$fontcolor))
+      grid.text(label = paste(round(genome_label$chromendlabel, 1), scale, sep = " "), x = 1, y = 0.15, just = c("right", "bottom"), gp = gpar(fontsize = genome_label$fontsize, col = genome_label$fontcolor))
+
+    } else if (side == "left"){
+
+      grid.segments(x0 = 1, x1 = 1, y0 = 0, y1 = 1, gp = gpar(col = genome_label$linecolor, lwd = genome_label$lwd))
+      grid.text(label = genome_label$chromlabel, x = 0.85, y = 0.5, gp = gpar(fontface = "bold", fontsize = genome_label$fontsize, col = genome_label$fontcolor), just = c("center", "bottom"), rot = 90)
+      grid.text(label = paste(round(genome_label$chromstartlabel, 1), scale, sep = " "), x = 0.85, y = 0, just = c("left", "bottom"), gp = gpar(fontsize = genome_label$fontsize, col = genome_label$fontcolor), rot = 90)
+      grid.text(label = paste(round(genome_label$chromendlabel, 1), scale, sep = " "), x = 0.85, y = 1, just = c("right", "bottom"), gp = gpar(fontsize = genome_label$fontsize, col = genome_label$fontcolor), rot = 90)
+
+
+    } else if (side == "right"){
+
+      grid.segments(x0 = 0, x1 = 0, y0 = 0, y1 = 1, gp = gpar(col = genome_label$linecolor, lwd = genome_label$lwd))
+      grid.text(label = genome_label$chromlabel, x = 0.15, y = 0.5, gp = gpar(fontface = "bold", fontsize = genome_label$fontsize, col = genome_label$fontcolor), just = c("center", "top"), rot = 90)
+      grid.text(label = paste(round(genome_label$chromstartlabel, 1), scale, sep = " "), x = 0.15, y = 0, just = c("left", "top"), gp = gpar(fontsize = genome_label$fontsize, col = genome_label$fontcolor), rot = 90)
+      grid.text(label = paste(round(genome_label$chromendlabel, 1), scale, sep = " "), x = 0.15, y = 1, just = c("right", "top"), gp = gpar(fontsize = genome_label$fontsize, col = genome_label$fontcolor), rot = 90)
+
+    }
+
+  }
+
+  # ======================================================================================================================================================================================
+  # INITIALIZE OBJECT
+  # ======================================================================================================================================================================================
+
+  genome_label <- structure(list(scale = scale, fontsize = fontsize, fontcolor = fontcolor, linecolor = linecolor, lwd = lwd), class = "genome_label")
+
+  # ======================================================================================================================================================================================
+  # SET UP PAGE/SCALE
+  # ======================================================================================================================================================================================
 
   ## Get page_height and its units from bbEnv through bb_makepage
   page_height <- get("page_height", envir = bbEnv)
   page_units <- get("page_units", envir = bbEnv)
 
-  ## Make and place viewport based on input plot
+  ## Determine scale of labels
+  if (scale == "bp"){
+    fact = 1
+  }
+  if (scale == "Mb"){
+    fact = 1000000
+  }
+  if (scale == "Kb"){
+    fact = 1000
+  }
 
-  if (side == "bottom"){
+  tg <- textGrob(label = scale, x = 0.5, y = 0.5, default.units = "npc", gp = gpar(fontsize = fontsize))
 
-    label_width <- convertWidth(unit(plot_width, units = plot_units), unitTo = page_units, valueOnly = TRUE)
-    label_height <- convertHeight(unit(fontsize/72, units = "inches"), unitTo = page_units, valueOnly = TRUE)
+  # ======================================================================================================================================================================================
+  # INPUT PLOT
+  # ======================================================================================================================================================================================
 
-    label_y <- convertY(unit((plot_y + plot_height), units = plot_units), unitTo = page_units, valueOnly = TRUE)
-    label_x <- convertX(unit(plot_x, units = plot_units), unitTo = page_units, valueOnly = TRUE)
+  if (!is.null(plot)){
 
-    converted_coords = convert_coordinates(height = label_height, width = label_width, x = label_x, y = label_y, pageheight = page_height)
-    vp <- viewport(width = unit(label_width, page_units), height = unit(label_height, page_units), x = unit(converted_coords[1], units = page_units),
-                   y = unit(converted_coords[2], units = page_units))
+    chrom <- paste0("chr", plot$chrom)
+    chromstartlabel <- plot$chromstart/fact
+    chromendlabel <- plot$chromend/fact
+
+    genome_label[["chromlabel"]] = chrom
+    genome_label[["chromstartlabel"]] = chromstartlabel
+    genome_label[["chromendlabel"]] = chromendlabel
+
+    adjusted_coords <- adjust_coords(plot = plot, page_units = page_units, page_height = page_height)
+
+    message(paste("Plot to label detected."))
+
+    side <- readline(prompt = "Enter side to add genome label. Options are 'bottom', 'top', 'left', or 'right': ")
+
+    genome_label <- label_coords(plot = plot, xCoord = adjusted_coords[[1]], yCoord = adjusted_coords[[2]], side = side, genome_label = genome_label)
+
+    genome_label <- label_dims(plot = plot, side = side, text = tg, genome_label = genome_label)
+
+    vp <- viewport(width = convertWidth(unit(genome_label$width, units = genome_label$units), unitTo = page_units),
+                   height = convertHeight(unit(genome_label$height, units = genome_label$units), unitTo = page_units),
+                   x = convertX(unit(genome_label$x, units = genome_label$units), unitTo = page_units),
+                   y = convertY(unit(genome_label$y, units = genome_label$units), unitTo = page_units), just = genome_label$just)
     pushViewport(vp)
 
-    grid.segments(x0 = 0, x1 = 1, y0 = 1, y1 = 1, gp = gpar(col = color))
-    grid.text(chrom, x = 0.5, y = 0.25, gp = gpar(fontface = "bold", fontsize = fontsize, col = color))
-    grid.text(paste(chromstartlabel, scale, sep = " "), x = 0, y = 0.25, just = "left", gp = gpar(fontsize = fontsize, col = color))
-    grid.text(paste(chromendlabel, scale, sep = " "), x = 1, y = 0.25, just = "right", gp = gpar(fontsize = fontsize, col = color))
+    plot_label(side = side, genome_label = genome_label)
 
-  } else if (side == "top"){
+  # ======================================================================================================================================================================================
+  # CUSTOMIZED PLOT
+  # ======================================================================================================================================================================================
 
-    label_width <- convertWidth(unit(plot_width, units = plot_units), unitTo = page_units, valueOnly = TRUE)
-    label_height <- convertHeight(unit(fontsize/72, units = "inches"), unitTo = page_units, valueOnly = TRUE)
-    label_height2 <- convertHeight(unit(label_height, units = page_units), unitTo = plot_units, valueOnly = TRUE)
+  } else {
 
-    label_y <- convertY(unit((plot_y - label_height2), units = plot_units), unitTo = page_units, valueOnly = TRUE)
-    label_x <- convertX(unit(plot_x, units = plot_units), unitTo = page_units, valueOnly = TRUE)
+    chromstartlabel = chromstart/fact
+    chromendlabel = chromend/fact
 
-    converted_coords = convert_coordinates(height = label_height, width = label_width, x = label_x, y = label_y, pageheight = page_height)
-    vp <- viewport(width = unit(label_width, page_units), height = unit(label_height, page_units), x = unit(converted_coords[1], units = page_units),
-                   y = unit(converted_coords[2], units = page_units))
+    label_width <- convertWidth(unit(width, units = units), unitTo = page_units, valueOnly = TRUE)
+    label_height <- convertHeight(heightDetails(tg), unitTo = page_units, valueOnly = TRUE)
+    new_x <- convertX(unit(x, unit = units), unitTo = page_units, valueOnly = TRUE)
+    new_y <- convertY(unit(y, unit = units), unitTo = page_units, valueOnly = TRUE)
+
+    genome_label[["chromlabel"]] = chrom
+    genome_label[["chromstartlabel"]] = chromstartlabel
+    genome_label[["chromendlabel"]] = chromendlabel
+    genome_label[["x"]] = x
+    genome_label[["y"]] = y
+    genome_label[["units"]] = units
+    genome_label[["just"]] = just
+    genome_label[["width"]] = width
+    genome_label[["height"]] = convertHeight(heightDetails(tg), unitTo = units, valueOnly = TRUE)
+
+    vp <- viewport(width = unit(label_width, page_units), height = unit(label_height, page_units),
+                   x = unit(new_x, page_units), y = unit(page_height - new_y, page_units), just = just, angle = rotation)
     pushViewport(vp)
 
-    grid.segments(x0 = 0, x1 = 1, y0 = 0, y1 = 0, gp = gpar(col = color))
-    grid.text(chrom, x = 0.5, y = 0.75, gp = gpar(fontface = "bold", fontsize = fontsize, col = color))
-    grid.text(paste(chromstartlabel, scale, sep = " "), x = 0, y = 0.75, just = "left", gp = gpar(fontsize = fontsize, col = color))
-    grid.text(paste(chromendlabel, scale, sep = " "), x = 1, y = 0.75, just = "right", gp = gpar(fontsize = fontsize, col = color))
 
-  } else if (side == "left"){
+    if (lineAbove == T){
 
-    label_height <- convertHeight(unit(plot_width, units = plot_units), unitTo = page_units, valueOnly = TRUE)
-    label_width <- convertWidth(unit(fontsize/72, units = "inches"), unitTo = page_units, valueOnly = TRUE)
-    label_width2 <- convertWidth(unit(label_width, units = page_units), unitTo = plot_units, valueOnly = TRUE)
+      grid.segments(x0 = 0, x1 = 1, y0 = 1, y1 = 1, gp = gpar(col = linecolor, lwd = lwd))
+      grid.text(label = chrom, x = 0.5, y = 0.85, gp = gpar(fontface = "bold", fontsize = fontsize, col = fontcolor), just = c("center", "top"))
+      grid.text(label = paste(round(chromstartlabel, 1), scale, sep = " "), x = 0, y = 0.85, just = c("left", "top"), gp = gpar(fontsize = fontsize, col = linecolor))
+      grid.text(label = paste(round(chromendlabel, 1), scale, sep = " "), x = 1, y = 0.85, just = c("right","top"), gp = gpar(fontsize = fontsize, col = linecolor))
 
-    label_y <- convertY(unit(plot_y, units = plot_units), unitTo = page_units, valueOnly = TRUE)
-    label_x <- convertX(unit((plot_x - label_width2), units = plot_units), unitTo = page_units, valueOnly = TRUE)
+    } else if (lineAbove == F){
 
-    converted_coords = convert_coordinates(height = label_height, width = label_width, x = label_x, y = label_y, pageheight = page_height)
-    vp <- viewport(width = unit(label_width, page_units), height = unit(label_height, page_units), x = unit(converted_coords[1], units = page_units),
-                   y = unit(converted_coords[2], units = page_units))
-    pushViewport(vp)
+      grid.segments(x0 = 0, x1 = 1, y0 = 0, y1 = 0, gp = gpar(col = linecolor, lwd = lwd))
+      grid.text(label = chrom, x = 0.5, y = 0.15, gp = gpar(fontface = "bold", fontsize = fontsize, col = fontcolor), just = c("center", "bottom"))
+      grid.text(label = paste(round(chromstartlabel, 1), scale, sep = " "), x = 0, y = 0.15, just = c("left", "bottom"), gp = gpar(fontsize = fontsize, col = linecolor))
+      grid.text(label = paste(round(chromendlabel, 1), scale, sep = " "), x = 1, y = 0.15, just = c("right", "bottom"), gp = gpar(fontsize = fontsize, col = linecolor))
 
-    grid.segments(x0 = 1, x1 = 1, y0 = 0, y1 = 1, gp = gpar(col = color))
-    grid.text(chrom, x = 0.25, y = 0.5, gp = gpar(fontface = "bold", fontsize = fontsize, col = color), rot = 90)
-    grid.text(paste(chromstartlabel, scale, sep = " "), x = 0.25, y = 0, just = "left", gp = gpar(fontsize = fontsize, col = color), rot = 90)
-    grid.text(paste(chromendlabel, scale, sep = " "), x = 0.25, y = 1, just = "right", gp = gpar(fontsize = fontsize, col = color), rot = 90)
+    }
 
-  } else if (side == "right"){
-
-    label_height <- convertHeight(unit(plot_width, units = plot_units), unitTo = page_units, valueOnly = TRUE)
-    label_width <- convertWidth(unit(fontsize/72, units = "inches"), unitTo = page_units, valueOnly = TRUE)
-
-    label_y <- convertY(unit(plot_y , units = plot_units), unitTo = page_units, valueOnly = TRUE)
-    label_x <- convertX(unit((plot_x + plot_width), units = plot_units), unitTo = page_units, valueOnly = TRUE)
-
-    converted_coords = convert_coordinates(height = label_height, width = label_width, x = label_x, y = label_y, pageheight = page_height)
-    vp <- viewport(width = unit(label_width, page_units), height = unit(label_height, page_units), x = unit(converted_coords[1], units = page_units),
-                   y = unit(converted_coords[2], units = page_units))
-    pushViewport(vp)
-
-    grid.segments(x0 = 0, x1 = 0, y0 = 0, y1 = 1, gp = gpar(col = color))
-    grid.text(chrom, x = 0.75, y = 0.5, gp = gpar(fontface = "bold", fontsize = fontsize, col = color), rot = 90)
-    grid.text(paste(chromstartlabel, scale, sep = " "), x = 0.75, y = 0, just = "left", gp = gpar(fontsize = fontsize, col = color), rot = 90)
-    grid.text(paste(chromendlabel, scale, sep = " "), x = 0.75, y = 1, just = "right", gp = gpar(fontsize = fontsize, col = color), rot = 90)
 
   }
 
   ## Go back up a viewport
   upViewport()
-
-
 }
-
-
-
-
-
