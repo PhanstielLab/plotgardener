@@ -11,16 +11,7 @@ convert_gpath <- function(grob){
 
 }
 
-<<<<<<< HEAD
 viewport_name <- function(viewport){
-=======
-## Define a function that adds grobs to a gTree in bbEnv and draws them
-appendGrob <- function(grob, gtree){
-  assign(gtree, addGrob(gTree = get(gtree, envir = bbEnv), child = grob), envir = bbEnv)
-  grid.draw(grob)
-}
-
->>>>>>> master
 
   return(viewport$name)
 
