@@ -11,23 +11,163 @@ convert_gpath <- function(grob){
 
 }
 
+viewport_name <- function(viewport){
 
-
-
-## Define a function to convert based on top of page
-convert_coordinates <- function(height, width, x, y, pageheight){
-
-  #given x and y coordinates in the top left
-  #y coordinate based as if going from  of page
-
-  ybottom = pageheight - y
-
-  x1 = x + (0.5*width)
-  y1 = ybottom - (0.5*height)
-
-  return(list(x1, y1))
+  return(viewport$name)
 
 }
+
+## Define a function to convert plot x and y into center of plot based on justification
+adjust_coords <- function(plot, page_units, page_height){
+
+  plot_y <- convertY(unit(plot$y, units = plot$units), unitTo = page_units, valueOnly = TRUE)
+  plot_y <- page_height - plot_y
+  plot_y <- convertY(unit(plot_y, units = page_units), unitTo = plot$units, valueOnly = TRUE)
+
+  if (length(plot$just == 2)){
+
+    if ("left" %in% plot$just & "center" %in% plot$just){
+      ## convert the x-coordinate only
+      plot_x <- plot$x + (0.5 * plot$width)
+    } else if ("right" %in% plot$just & "center" %in% plot$just){
+      ## convert the x-coordinate only
+      plot_x <- plot$x - (0.5 * plot$width)
+    } else if ("center" %in% plot$just & "bottom" %in% plot$just){
+      ## convert the y-coordinate only
+      plot_x <- plot$x
+      plot_y <- plot_y + (0.5 * plot$height)
+    } else if ("center" %in% plot$just & "top" %in% plot$just){
+      ## convert the y-coordinate only
+      plot_x <- plot$x
+      plot_y <- plot_y - (0.5 * plot$height)
+    } else if ("left" %in% plot$just & "top" %in% plot$just){
+      ## convert x-coordinate and y-coordinate
+      plot_x <- plot$x + (0.5 * plot$width)
+      plot_y <- plot_y - (0.5 * plot$height)
+    } else if ("right" %in% plot$just & "top" %in% plot$just){
+      ## convert x-coordinate and y-coordinate
+      plot_x <- plot$x - (0.5 * plot$width)
+      plot_y <- plot_y - (0.5 * plot$height)
+    } else if ("left" %in% plot$just & "bottom" %in% plot$just){
+      ## convert x-coordinate and y-coordinate
+      plot_x <- plot$x + (0.5 * plot$width)
+      plot_y <- plot_y + (0.5 * plot$height)
+    } else if ("right" %in% plot$just & "bottom" %in% plot$just){
+      ## convert x-coordinate and y-coordinate
+      plot_x <- plot$x - (0.5 * plot$width)
+      plot_y <- plot_y + (0.5 * plot$height)
+    } else {
+      ## no conversion
+      plot_x <- plot$x
+    }
+
+  } else if (length(plot$just == 1)){
+
+    if (plot$just == "left"){
+      ## convert the x-coordinate only
+      plot_x <- plot$x + (0.5 * plot$width)
+    } else if (plot$just == "right"){
+      ## convert the x-coordinate only
+      plot_x <- plot$x - (0.5 * plot$width)
+    } else if (plot$just == "bottom"){
+      ## convert the y-coordinate only
+      plot_x <- plot$x
+      plot_y <- plot_y + (0.5 * plot$height)
+    } else if (plot$just == "top"){
+      ## convert the y-coordinate only
+      plot_x <- plot$x
+      plot_y <- plot_y - (0.5 * plot$height)
+    } else {
+      ## no conversion
+      plot_x <- plot$x
+    }
+
+  }
+
+  return(list(plot_x, plot_y))
+
+}
+
+## Define a function to convert annotation viewport x and y into center of annotation based on justification
+adjust_vpCoords <- function(plot, viewport, page_units, page_height){
+  #
+  # plot_y <- convertY(unit(plot$y, units = plot$units), unitTo = page_units, valueOnly = TRUE)
+  # plot_y <- page_height - plot_y
+  # plot_y <- convertY(unit(plot_y, units = page_units), unitTo = plot$units, valueOnly = TRUE)
+
+  vp_y <- viewport$y
+
+  if (length(viewport$justification == 2)){
+
+    if ("left" %in% viewport$justification & "center" %in% viewport$justification){
+
+      ## convert the x-coordinate only
+      vp_x <- viewport$x + (0.5 * viewport$width)
+    } else if ("right" %in% viewport$justification & "center" %in% viewport$justification){
+      ## convert the x-coordinate only
+      vp_x <- viewport$x - (0.5 * viewport$width)
+    } else if ("center" %in% viewport$justification & "bottom" %in% viewport$justification){
+      ## convert the y-coordinate only
+      vp_x <- viewport$x
+      vp_y <- vp_y + (0.5 * viewport$height)
+    } else if ("center" %in% viewport$justification & "top" %in% viewport$justification){
+      ## convert the y-coordinate only
+      vp_x <- viewport$x
+      vp_y <- vp_y - (0.5 * viewport$height)
+    } else if ("left" %in% viewport$justification & "top" %in% viewport$justification){
+      ## convert x-coordinate and y-coordinate
+      vp_x <- viewport$x + (0.5 * viewport$width)
+      vp_y <- vp_y - (0.5 * viewport$height)
+    } else if ("right" %in% viewport$justification & "top" %in% viewport$justification){
+      ## convert x-coordinate and y-coordinate
+      vp_x <- viewport$x - (0.5 * viewport$width)
+      vp_y <- vp_y - (0.5 * viewport$height)
+    } else if ("left" %in% pviewport$justification & "bottom" %in% viewport$justification){
+      ## convert x-coordinate and y-coordinate
+      vp_x <- viewport$x + (0.5 * viewport$width)
+      vp_y <- vp_y + (0.5 * viewport$height)
+    } else if ("right" %in% viewport$justification & "bottom" %in% viewport$justification){
+      ## convert x-coordinate and y-coordinate
+      vp_x <- viewport$x - (0.5 * viewport$width)
+      vp_y <- vp_y + (0.5 * viewport$height)
+    } else {
+      ## no conversion
+      vp_x <- viewport$x
+    }
+
+  } else if (length(viewport$justification == 1)){
+
+    if (viewport$justification == "left"){
+      ## convert the x-coordinate only
+      vp_x <- viewport$x + (0.5 * viewport$width)
+    } else if (viewport$justification == "right"){
+      ## convert the x-coordinate only
+      vp_x <- viewport$x - (0.5 * viewport$width)
+    } else if (viewport$justification == "bottom"){
+      ## convert the y-coordinate only
+      vp_x <- viewport$x
+      vp_y <- vp_y + (0.5 * viewport$height)
+    } else if (viewport$justification == "top"){
+      ## convert the y-coordinate only
+      vp_x <- viewport$x
+      vp_y <- vp_y - (0.5 * viewport$height)
+    } else {
+      ## no conversion
+      vp_x <- viewport$x
+    }
+
+  }
+
+  return(list(vp_x, vp_y))
+
+}
+
+# vp_topLeft <- function(viewport, page_units, page_height){
+#
+#
+#
+# }
+
 
 
 ## Define a function to convert to page units
@@ -57,7 +197,19 @@ convert_page <- function(object){
 
 }
 
+## Define a function to make sure a bb_page viewport exists
+check_bbpage <- function(){
 
+  ## Get the names of the current viewports
+  current_viewports <- lapply(current.vpTree()$children, viewport_name)
+
+  if (!"bb_page" %in% current_viewports){
+
+    stop("Must make a BentoBox page with bb_makePage() before plotting.")
+
+  }
+
+}
 
 
 

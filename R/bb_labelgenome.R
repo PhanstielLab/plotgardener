@@ -1,15 +1,26 @@
 #' Adds genome coordinates to the axis of a plot
 #'
 #' @param plot plot to annotate (saved as output from BentoBox plotting function)
+#' @param chrom if not inputting plot, chromosome of region to plot
+#' @param chromstart if not inputting plot, chromstart of region to plot
+#' @param chromend if not inputting plot, chromend of region to plot
+#' @param width if not inputting plot, width of label
+#' @param x if not inputting plot, x-coordinate of label
+#' @param y if not inputting plot, y-coordinate of label
+#' @param just justification
+#' @param units units of inputted x and y
 #' @param scale scale of the plot; options are "bp", "Kb", or "Mb"
 #' @param side side of the plot to annotate, options are "bottom", "top", "right", or "left"
 #' @param fontsize fontsize for labels (in points)
-#' @param color color for all text/lines
+#' @param fontcolor color for all text/lines
+#' @param lineAbove TRUE/FALSE indicating if line should be above or below text
+#' @param linecolor linecolor
+#' @param lwd linewidth
 
 
 #' @export
 
-bb_labelgenome <- function(plot = NULL, chrom, chromstart, chromend, width, x, y, just = c("left", "top"), rotation = 0,
+bb_labelGenome <- function(plot = NULL, chrom, chromstart, chromend, width, x, y, just = c("left", "top"), rotation = 0,
                            units = "inches", scale = "bp", fontsize = 10, fontcolor = "black", lineAbove = T, linecolor = "black", lwd = 1){
 
   # ======================================================================================================================================================================================
@@ -19,76 +30,7 @@ bb_labelgenome <- function(plot = NULL, chrom, chromstart, chromend, width, x, y
   ## Define a function that catches errors for bb_labelgenome
   # errorcheck_bb_labelgenome <- function()
 
-  ## Define a function to convert plot x and y into center of plot based on justification
-  adjust_coords <- function(plot, page_units, page_height){
 
-    plot_y <- convertY(unit(plot$y, units = plot$units), unitTo = page_units, valueOnly = TRUE)
-    plot_y <- page_height - plot_y
-    plot_y <- convertY(unit(plot_y, units = page_units), unitTo = plot$units, valueOnly = TRUE)
-
-    if (length(plot$just == 2)){
-
-      if ("left" %in% plot$just & "center" %in% plot$just){
-        ## convert the x-coordinate only
-        plot_x <- plot$x + (0.5 * plot$width)
-      } else if ("right" %in% plot$just & "center" %in% plot$just){
-        ## convert the x-coordinate only
-        plot_x <- plot$x - (0.5 * plot$width)
-      } else if ("center" %in% plot$just & "bottom" %in% plot$just){
-        ## convert the y-coordinate only
-        plot_x <- plot$x
-        plot_y <- plot_y + (0.5 * plot$height)
-      } else if ("center" %in% plot$just & "top" %in% plot$just){
-        ## convert the y-coordinate only
-        plot_x <- plot$x
-        plot_y <- plot_y - (0.5 * plot$height)
-      } else if ("left" %in% plot$just & "top" %in% plot$just){
-        ## convert x-coordinate and y-coordinate
-        plot_x <- plot$x + (0.5 * plot$width)
-        plot_y <- plot_y - (0.5 * plot$height)
-      } else if ("right" %in% plot$just & "top" %in% plot$just){
-        ## convert x-coordinate and y-coordinate
-        plot_x <- plot$x - (0.5 * plot$width)
-        plot_y <- plot_y - (0.5 * plot$height)
-      } else if ("left" %in% plot$just & "bottom" %in% plot$just){
-        ## convert x-coordinate and y-coordinate
-        plot_x <- plot$x + (0.5 * plot$width)
-        plot_y <- plot_y + (0.5 * plot$height)
-      } else if ("right" %in% plot$just & "bottom" %in% plot$just){
-        ## convert x-coordinate and y-coordinate
-        plot_x <- plot$x - (0.5 * plot$width)
-        plot_y <- plot_y + (0.5 * plot$height)
-      } else {
-        ## no conversion
-        plot_x <- plot$x
-      }
-
-    } else if (length(plot$just == 1)){
-
-      if (plot$just == "left"){
-        ## convert the x-coordinate only
-        plot_x <- plot$x + (0.5 * plot$width)
-      } else if (plot$just == "right"){
-        ## convert the x-coordinate only
-        plot_x <- plot$x - (0.5 * plot$width)
-      } else if (plot$just == "bottom"){
-        ## convert the y-coordinate only
-        plot_x <- plot$x
-        plot_y <- plot_y + (0.5 * plot$height)
-      } else if (plot$just == "top"){
-        ## convert the y-coordinate only
-        plot_x <- plot$x
-        plot_y <- plot_y - (0.5 * plot$height)
-      } else {
-        ## no conversion
-        plot_x <- plot$x
-      }
-
-    }
-
-    return(list(plot_x, plot_y))
-
-  }
 
   ## Define a function to get label x and y based on plot input coordinates
   label_coords <- function(plot, xCoord, yCoord, side, genome_label){
@@ -155,34 +97,35 @@ bb_labelgenome <- function(plot = NULL, chrom, chromstart, chromend, width, x, y
 
     if (side == "bottom"){
 
-      grid.segments(x0 = 0, x1 = 1, y0 = 1, y1 = 1, gp = gpar(col = genome_label$linecolor, lwd = genome_label$lwd))
-      grid.text(label = genome_label$chromlabel, x = 0.5, y = 0.85, gp = gpar(fontface = "bold", fontsize = genome_label$fontsize, col = genome_label$fontcolor), just = c("center", "top"))
-      grid.text(label = paste(round(genome_label$chromstartlabel, 1), scale, sep = " "), x = 0, y = 0.85, just = c("left", "top"), gp = gpar(fontsize = genome_label$fontsize, col = genome_label$fontcolor))
-      grid.text(label = paste(round(genome_label$chromendlabel, 1), scale, sep = " "), x = 1, y = 0.85, just = c("right","top"), gp = gpar(fontsize = genome_label$fontsize, col = genome_label$fontcolor))
+      line <- grid.segments(x0 = 0, x1 = 1, y0 = 1, y1 = 1, gp = gpar(col = genome_label$linecolor, lwd = genome_label$lwd))
+      chromLab <- grid.text(label = genome_label$chromlabel, x = 0.5, y = 0.85, gp = gpar(fontface = "bold", fontsize = genome_label$fontsize, col = genome_label$fontcolor), just = c("center", "top"))
+      startLab <- grid.text(label = paste(round(genome_label$chromstartlabel, 1), scale, sep = " "), x = 0, y = 0.85, just = c("left", "top"), gp = gpar(fontsize = genome_label$fontsize, col = genome_label$fontcolor))
+      endLab <- grid.text(label = paste(round(genome_label$chromendlabel, 1), scale, sep = " "), x = 1, y = 0.85, just = c("right","top"), gp = gpar(fontsize = genome_label$fontsize, col = genome_label$fontcolor))
 
     } else if (side == "top"){
 
-      grid.segments(x0 = 0, x1 = 1, y0 = 0, y1 = 0, gp = gpar(col = genome_label$linecolor, lwd = genome_label$lwd))
-      grid.text(label = genome_label$chromlabel, x = 0.5, y = 0.15, gp = gpar(fontface = "bold", fontsize = genome_label$fontsize, col = genome_label$fontcolor), just = c("center", "bottom"))
-      grid.text(label = paste(round(genome_label$chromstartlabel, 1), scale, sep = " "), x = 0, y = 0.15, just = c("left", "bottom"), gp = gpar(fontsize = genome_label$fontsize, col = genome_label$fontcolor))
-      grid.text(label = paste(round(genome_label$chromendlabel, 1), scale, sep = " "), x = 1, y = 0.15, just = c("right", "bottom"), gp = gpar(fontsize = genome_label$fontsize, col = genome_label$fontcolor))
+      line <- grid.segments(x0 = 0, x1 = 1, y0 = 0, y1 = 0, gp = gpar(col = genome_label$linecolor, lwd = genome_label$lwd))
+      chromLab <- grid.text(label = genome_label$chromlabel, x = 0.5, y = 0.15, gp = gpar(fontface = "bold", fontsize = genome_label$fontsize, col = genome_label$fontcolor), just = c("center", "bottom"))
+      startLab <- grid.text(label = paste(round(genome_label$chromstartlabel, 1), scale, sep = " "), x = 0, y = 0.15, just = c("left", "bottom"), gp = gpar(fontsize = genome_label$fontsize, col = genome_label$fontcolor))
+      endLab <- grid.text(label = paste(round(genome_label$chromendlabel, 1), scale, sep = " "), x = 1, y = 0.15, just = c("right", "bottom"), gp = gpar(fontsize = genome_label$fontsize, col = genome_label$fontcolor))
 
     } else if (side == "left"){
 
-      grid.segments(x0 = 1, x1 = 1, y0 = 0, y1 = 1, gp = gpar(col = genome_label$linecolor, lwd = genome_label$lwd))
-      grid.text(label = genome_label$chromlabel, x = 0.85, y = 0.5, gp = gpar(fontface = "bold", fontsize = genome_label$fontsize, col = genome_label$fontcolor), just = c("center", "bottom"), rot = 90)
-      grid.text(label = paste(round(genome_label$chromstartlabel, 1), scale, sep = " "), x = 0.85, y = 0, just = c("left", "bottom"), gp = gpar(fontsize = genome_label$fontsize, col = genome_label$fontcolor), rot = 90)
-      grid.text(label = paste(round(genome_label$chromendlabel, 1), scale, sep = " "), x = 0.85, y = 1, just = c("right", "bottom"), gp = gpar(fontsize = genome_label$fontsize, col = genome_label$fontcolor), rot = 90)
-
+      line <- grid.segments(x0 = 1, x1 = 1, y0 = 0, y1 = 1, gp = gpar(col = genome_label$linecolor, lwd = genome_label$lwd))
+      chromLab <- grid.text(label = genome_label$chromlabel, x = 0.85, y = 0.5, gp = gpar(fontface = "bold", fontsize = genome_label$fontsize, col = genome_label$fontcolor), just = c("center", "bottom"), rot = 90)
+      startLab <- grid.text(label = paste(round(genome_label$chromstartlabel, 1), scale, sep = " "), x = 0.85, y = 0, just = c("left", "bottom"), gp = gpar(fontsize = genome_label$fontsize, col = genome_label$fontcolor), rot = 90)
+      endLab <- grid.text(label = paste(round(genome_label$chromendlabel, 1), scale, sep = " "), x = 0.85, y = 1, just = c("right", "bottom"), gp = gpar(fontsize = genome_label$fontsize, col = genome_label$fontcolor), rot = 90)
 
     } else if (side == "right"){
 
-      grid.segments(x0 = 0, x1 = 0, y0 = 0, y1 = 1, gp = gpar(col = genome_label$linecolor, lwd = genome_label$lwd))
-      grid.text(label = genome_label$chromlabel, x = 0.15, y = 0.5, gp = gpar(fontface = "bold", fontsize = genome_label$fontsize, col = genome_label$fontcolor), just = c("center", "top"), rot = 90)
-      grid.text(label = paste(round(genome_label$chromstartlabel, 1), scale, sep = " "), x = 0.15, y = 0, just = c("left", "top"), gp = gpar(fontsize = genome_label$fontsize, col = genome_label$fontcolor), rot = 90)
-      grid.text(label = paste(round(genome_label$chromendlabel, 1), scale, sep = " "), x = 0.15, y = 1, just = c("right", "top"), gp = gpar(fontsize = genome_label$fontsize, col = genome_label$fontcolor), rot = 90)
+      line <- grid.segments(x0 = 0, x1 = 0, y0 = 0, y1 = 1, gp = gpar(col = genome_label$linecolor, lwd = genome_label$lwd))
+      chromLab <- grid.text(label = genome_label$chromlabel, x = 0.15, y = 0.5, gp = gpar(fontface = "bold", fontsize = genome_label$fontsize, col = genome_label$fontcolor), just = c("center", "top"), rot = 90)
+      startLab <- grid.text(label = paste(round(genome_label$chromstartlabel, 1), scale, sep = " "), x = 0.15, y = 0, just = c("left", "top"), gp = gpar(fontsize = genome_label$fontsize, col = genome_label$fontcolor), rot = 90)
+      endLab <- grid.text(label = paste(round(genome_label$chromendlabel, 1), scale, sep = " "), x = 0.15, y = 1, just = c("right", "top"), gp = gpar(fontsize = genome_label$fontsize, col = genome_label$fontcolor), rot = 90)
 
     }
+
+    assign("label_grobs", setChildren(get("label_grobs", envir = bbEnv), children = gList(line, chromLab, startLab, endLab)), envir = bbEnv)
 
   }
 
@@ -190,7 +133,14 @@ bb_labelgenome <- function(plot = NULL, chrom, chromstart, chromend, width, x, y
   # INITIALIZE OBJECT
   # ======================================================================================================================================================================================
 
-  genome_label <- structure(list(scale = scale, fontsize = fontsize, fontcolor = fontcolor, linecolor = linecolor, lwd = lwd), class = "genome_label")
+  bb_genome_label <- structure(list(scale = scale, grobs = NULL, viewport = NULL,
+                                    gpar = list(fontsize = fontsize, fontcolor = fontcolor, linecolor = linecolor, lwd = lwd)), class = "genome_label")
+
+  # ======================================================================================================================================================================================
+  # CATCH ERRORS
+  # ======================================================================================================================================================================================
+
+  check_bbpage()
 
   # ======================================================================================================================================================================================
   # SET UP PAGE/SCALE
@@ -214,6 +164,12 @@ bb_labelgenome <- function(plot = NULL, chrom, chromstart, chromend, width, x, y
   tg <- textGrob(label = scale, x = 0.5, y = 0.5, default.units = "npc", gp = gpar(fontsize = fontsize))
 
   # ======================================================================================================================================================================================
+  # INITIALIZE GTREE
+  # ======================================================================================================================================================================================
+
+  assign("label_grobs", gTree(name = "label_grobs"), envir = bbEnv)
+
+  # ======================================================================================================================================================================================
   # INPUT PLOT
   # ======================================================================================================================================================================================
 
@@ -223,27 +179,32 @@ bb_labelgenome <- function(plot = NULL, chrom, chromstart, chromend, width, x, y
     chromstartlabel <- plot$chromstart/fact
     chromendlabel <- plot$chromend/fact
 
-    genome_label[["chromlabel"]] = chrom
-    genome_label[["chromstartlabel"]] = chromstartlabel
-    genome_label[["chromendlabel"]] = chromendlabel
+    bb_genome_label[["chromlabel"]] = chrom
+    bb_genome_label[["chromstartlabel"]] = chromstartlabel
+    bb_genome_label[["chromendlabel"]] = chromendlabel
 
     adjusted_coords <- adjust_coords(plot = plot, page_units = page_units, page_height = page_height)
 
-    message(paste("Plot to label detected."))
+    message(paste(class(plot), "plot to label detected."))
 
     side <- readline(prompt = "Enter side to add genome label. Options are 'bottom', 'top', 'left', or 'right': ")
 
-    genome_label <- label_coords(plot = plot, xCoord = adjusted_coords[[1]], yCoord = adjusted_coords[[2]], side = side, genome_label = genome_label)
+    bb_genome_label <- label_coords(plot = plot, xCoord = adjusted_coords[[1]], yCoord = adjusted_coords[[2]], side = side, genome_label = bb_genome_label)
 
-    genome_label <- label_dims(plot = plot, side = side, text = tg, genome_label = genome_label)
+    bb_genome_label <- label_dims(plot = plot, side = side, text = tg, genome_label = bb_genome_label)
 
-    vp <- viewport(width = convertWidth(unit(genome_label$width, units = genome_label$units), unitTo = page_units),
-                   height = convertHeight(unit(genome_label$height, units = genome_label$units), unitTo = page_units),
-                   x = convertX(unit(genome_label$x, units = genome_label$units), unitTo = page_units),
-                   y = convertY(unit(genome_label$y, units = genome_label$units), unitTo = page_units), just = genome_label$just)
+    ## Name viewport
+    current_viewports <- lapply(current.vpTree()$children$bb_page$children, viewport_name)
+    vp_name <- paste0("bb_genomeLabel", length(grep(pattern = "bb_genomeLabel", x = current_viewports)) + 1)
+
+    vp <- viewport(width = convertWidth(unit(bb_genome_label$width, units = bb_genome_label$units), unitTo = page_units),
+                   height = convertHeight(unit(bb_genome_label$height, units = bb_genome_label$units), unitTo = page_units),
+                   x = convertX(unit(bb_genome_label$x, units = bb_genome_label$units), unitTo = page_units),
+                   y = convertY(unit(bb_genome_label$y, units = bb_genome_label$units), unitTo = page_units), just = bb_genome_label$just, name = vp_name)
+    bb_genome_label$viewport <- vp
     pushViewport(vp)
 
-    plot_label(side = side, genome_label = genome_label)
+    plot_label(side = side, genome_label = bb_genome_label)
 
   # ======================================================================================================================================================================================
   # CUSTOMIZED PLOT
@@ -259,40 +220,57 @@ bb_labelgenome <- function(plot = NULL, chrom, chromstart, chromend, width, x, y
     new_x <- convertX(unit(x, unit = units), unitTo = page_units, valueOnly = TRUE)
     new_y <- convertY(unit(y, unit = units), unitTo = page_units, valueOnly = TRUE)
 
-    genome_label[["chromlabel"]] = chrom
-    genome_label[["chromstartlabel"]] = chromstartlabel
-    genome_label[["chromendlabel"]] = chromendlabel
-    genome_label[["x"]] = x
-    genome_label[["y"]] = y
-    genome_label[["units"]] = units
-    genome_label[["just"]] = just
-    genome_label[["width"]] = width
-    genome_label[["height"]] = convertHeight(heightDetails(tg), unitTo = units, valueOnly = TRUE)
+    bb_genome_label[["chromlabel"]] = chrom
+    bb_genome_label[["chromstartlabel"]] = chromstartlabel
+    bb_genome_label[["chromendlabel"]] = chromendlabel
+    bb_genome_label[["x"]] = x
+    bb_genome_label[["y"]] = y
+    bb_genome_label[["units"]] = units
+    bb_genome_label[["just"]] = just
+    bb_genome_label[["width"]] = width
+    bb_genome_label[["height"]] = convertHeight(heightDetails(tg), unitTo = units, valueOnly = TRUE)
+
+    ## Name viewport
+    current_viewports <- lapply(current.vpTree()$children$bb_page$children, viewport_name)
+    vp_name <- paste0("bb_genomeLabel", length(grep(pattern = "bb_genomeLabel", x = current_viewports)) + 1)
 
     vp <- viewport(width = unit(label_width, page_units), height = unit(label_height, page_units),
-                   x = unit(new_x, page_units), y = unit(page_height - new_y, page_units), just = just, angle = rotation)
+                   x = unit(new_x, page_units), y = unit(page_height - new_y, page_units), just = just, angle = rotation, name = vp_name)
+    bb_genome_label$viewport <- vp
     pushViewport(vp)
-
 
     if (lineAbove == T){
 
-      grid.segments(x0 = 0, x1 = 1, y0 = 1, y1 = 1, gp = gpar(col = linecolor, lwd = lwd))
-      grid.text(label = chrom, x = 0.5, y = 0.85, gp = gpar(fontface = "bold", fontsize = fontsize, col = fontcolor), just = c("center", "top"))
-      grid.text(label = paste(round(chromstartlabel, 1), scale, sep = " "), x = 0, y = 0.85, just = c("left", "top"), gp = gpar(fontsize = fontsize, col = linecolor))
-      grid.text(label = paste(round(chromendlabel, 1), scale, sep = " "), x = 1, y = 0.85, just = c("right","top"), gp = gpar(fontsize = fontsize, col = linecolor))
+      line <- grid.segments(x0 = 0, x1 = 1, y0 = 1, y1 = 1, gp = gpar(col = linecolor, lwd = lwd))
+      chromLab <- grid.text(label = chrom, x = 0.5, y = 0.85, gp = gpar(fontface = "bold", fontsize = fontsize, col = fontcolor), just = c("center", "top"))
+      startLab <- grid.text(label = paste(round(chromstartlabel, 1), scale, sep = " "), x = 0, y = 0.85, just = c("left", "top"), gp = gpar(fontsize = fontsize, col = linecolor))
+      endLab <- grid.text(label = paste(round(chromendlabel, 1), scale, sep = " "), x = 1, y = 0.85, just = c("right","top"), gp = gpar(fontsize = fontsize, col = linecolor))
 
     } else if (lineAbove == F){
 
-      grid.segments(x0 = 0, x1 = 1, y0 = 0, y1 = 0, gp = gpar(col = linecolor, lwd = lwd))
-      grid.text(label = chrom, x = 0.5, y = 0.15, gp = gpar(fontface = "bold", fontsize = fontsize, col = fontcolor), just = c("center", "bottom"))
-      grid.text(label = paste(round(chromstartlabel, 1), scale, sep = " "), x = 0, y = 0.15, just = c("left", "bottom"), gp = gpar(fontsize = fontsize, col = linecolor))
-      grid.text(label = paste(round(chromendlabel, 1), scale, sep = " "), x = 1, y = 0.15, just = c("right", "bottom"), gp = gpar(fontsize = fontsize, col = linecolor))
+      line <- grid.segments(x0 = 0, x1 = 1, y0 = 0, y1 = 0, gp = gpar(col = linecolor, lwd = lwd))
+      chromLab <- grid.text(label = chrom, x = 0.5, y = 0.15, gp = gpar(fontface = "bold", fontsize = fontsize, col = fontcolor), just = c("center", "bottom"))
+      startLab <- grid.text(label = paste(round(chromstartlabel, 1), scale, sep = " "), x = 0, y = 0.15, just = c("left", "bottom"), gp = gpar(fontsize = fontsize, col = linecolor))
+      endLab <- grid.text(label = paste(round(chromendlabel, 1), scale, sep = " "), x = 1, y = 0.15, just = c("right", "bottom"), gp = gpar(fontsize = fontsize, col = linecolor))
 
     }
 
-
+    assign("label_grobs", setChildren(get("label_grobs", envir = bbEnv), children = gList(line, chromLab, startLab, endLab)), envir = bbEnv)
   }
 
   ## Go back up a viewport
   upViewport()
+
+  # ======================================================================================================================================================================================
+  # ASSIGN GROBS TO SCALE OBJECT
+  # ======================================================================================================================================================================================
+
+  ## Add grobs to scale object
+  bb_genome_label$grobs <- get("label_grobs", envir = bbEnv)$children
+
+  # ======================================================================================================================================================================================
+  # RETURN OBJECT
+  # ======================================================================================================================================================================================
+
+  return(bb_genome_label)
 }

@@ -5,13 +5,13 @@
 #' @param chromstart chromosome start of region to be plotted
 #' @param chromend chromosome end of region to be plotted
 #' @param half what sides of square plot; options are "both", top", or "bottom"
-#' @param resolution the width in bp of each pixel
+#' @param resolution the width in bp of each pixel; options are 2500000, 1000000, 500000, 250000, 100000, 50000, 25000, 10000, or 5000
 #' @param zrange the range of interaction scores to plot, where extreme values will be set to the max or min
 #' @param palette ColorRamp palette to use for representing interaction scores
-#' @param width width of plot in inches
-#' @param height height of plot in inches
-#' @param x x-coordinate of where to place plot relative to top left of plot
-#' @param y y-coordinate of where to place plot relative to top left of plot
+#' @param width width of plot in specified units
+#' @param height height of plot in specified units
+#' @param x x-coordinate of where to place plot based on just
+#' @param y y-coordinate of where to place plot based on just
 #' @param just a string or numeric vector specifying the justification of the viewport relative to its (x, y) location: "left", "right", "centre", "center", "bottom", "top"
 #' @param units units of height, width, and x and y location of the plot
 #' @param altchrom alternate chromosome for off-diagonal plotting or interchromosomal plotting
@@ -20,9 +20,7 @@
 #' @param althalf if plotting altchrom region, which side off diagonal to plot; options are "top" or "bottom"
 #' @param norm if giving .hic file, hic data normalization; options are "NONE", "VC", "VC_SQRT", and "KR"
 #'
-#' @details macOS Preview anti-aliases images and will make rasterized plot appear blurry.
-#'
-#' @return Function will plot a HiC interaction matrix and return a list of the zrange min, zrange max, and sequential color palette
+#' @return Function will plot a HiC interaction matrix and return a bb_hicPlot object
 #'
 #' @author Nicole Kramer
 #'
@@ -31,7 +29,7 @@
 #' @export
 #'
 #'
-bb_plothic <- function(hic, chrom = 8, chromstart = 133600000, chromend = 134800000, half = "both", resolution = 10000, zrange = NULL,
+bb_plotHic <- function(hic, chrom = 8, chromstart = 133600000, chromend = 134800000, half = "both", resolution = 10000, zrange = NULL,
                        palette = colorRampPalette(c("white", "dark red")), width = 3, height = 3, x = 1, y = 1,
                        just = c("left", "top"), units = "inches", altchrom = NULL, altchromstart = NULL, altchromend = NULL, althalf = NULL,
                        norm = "KR", ...){
@@ -154,9 +152,10 @@ bb_plothic <- function(hic, chrom = 8, chromstart = 133600000, chromend = 134800
 
     # parameter values
     # ===================================================================================
-    if (class(hic_plot$additional_parameters$palette) != "function"){
 
-      stop("Invalid palette. Please give a palette function.")
+    if (!(hic_plot$additional_parameters$resolution %in% c(2500000, 1000000, 500000, 250000, 100000, 50000, 25000, 10000, 5000))){
+
+      stop("Invalid \'resolution\' value.  Options are 2500000, 1000000, 500000, 250000, 100000, 50000, 25000, 10000, or 5000.")
 
     }
 
@@ -227,7 +226,7 @@ bb_plothic <- function(hic, chrom = 8, chromstart = 133600000, chromend = 134800
       readaltchromstart <- hic_plot$altchromstart - hic_plot$additional_parameters$resolution
       readaltchromend <- hic_plot$altchromend + hic_plot$additional_parameters$resolution
 
-      hic <- bb_rhic(hic = hic, chrom = hic_plot$chrom, chromstart = readchromstart, chromend = readchromend,
+      hic <- bb_readHic(hic = hic, chrom = hic_plot$chrom, chromstart = readchromstart, chromend = readchromend,
                      resolution = hic_plot$additional_parameters$resolution, zrange = hic_plot$zrange,norm = hic_plot$additional_parameters$norm,
                      altchrom = hic_plot$altchrom, altchromstart = readaltchromstart,
                      altchromend = readaltchromend)
@@ -328,55 +327,78 @@ bb_plothic <- function(hic, chrom = 8, chromstart = 133600000, chromend = 134800
     return(list(xscale, yscale))
   }
 
-  ## Define a function that makes grobs for the squares and triangles of hic plot
-  drawpoly <- function(df, hic_plot, grobs_name){
+  ## Define a function that subsets the hic dataframe into which will be squares and which will be triangles
+  hic_shapes <- function(hic, hic_plot){
 
-    col = df[4]
-    x = as.numeric(df[1])
-    y = as.numeric(df[2])
+    if (!is.null(hic_plot$altchrom)){
+
+      ## all squares
+      squares <- hic
+      triangles <- NULL
+
+    } else {
+
+      if (hic_plot$additional_parameters$half == "both"){
+
+        ## all squares
+        squares <- hic
+        triangles <- NULL
+
+      } else if (hic_plot$additional_parameters$half == "top"){
+
+        ## squares for top half
+        ## triangles for diagonal
+
+        squares <- hic[which(hic[,2] > hic[,1]),]
+        triangles <- hic[which(hic[,2] == hic[,1]),]
+
+      } else if (hic_plot$additional_parameters$half == "bottom"){
+
+        ## squares for bottom half
+        ## triangles for diagonal
+
+        squares <- hic[which(hic[,2] < hic[,1]),]
+        triangles <- hic[which(hic[,2] == hic[,1]),]
+
+
+      }
+
+    }
+
+  return(list(squares, triangles))
+
+  }
+
+  ## Define a function that draws the hic diagonal
+  hic_diagonal <- function(hic, hic_plot){
+
+    col <- hic[4]
+    x <- as.numeric(hic[1])
+    y <- as.numeric(hic[2])
 
     xleft = x
     xright = x + hic_plot$additional_parameters$resolution
     ybottom = y
     ytop = y + hic_plot$additional_parameters$resolution
 
-    if (!is.null(hic_plot$altchrom)){
+    if (hic_plot$additional_parameters$half == "top"){
 
-      polygon <- polygonGrob(x = c(xleft, xleft, xright, xright),
-                   y = c(ybottom, ytop, ytop, ybottom), gp = gpar(col = NA, fill = col), default.units = "native")
-    } else {
+      hic_triangle <- grid.polygon(x = c(xleft, xleft, xright),
+                                   y = c(ybottom, ytop, ytop),
+                                   gp = gpar(col = NA, fill = col), default.units = "native")
 
-      if (hic_plot$additional_parameters$half == "both"){
 
-        ## Plot all squares
-        polygon <- polygonGrob(x = c(xleft, xleft, xright, xright),
-                     y = c(ybottom, ytop, ytop, ybottom), gp = gpar(col = NA, fill = col), default.units = "native")
+    } else if (hic_plot$additional_parameters$half == "bottom"){
 
-      } else if (hic_plot$additional_parameters$half == "top"){
 
-        ## Plot triangles along diagonal and squares above
-        if (y > x){
-          polygon <- polygonGrob(x = c(xleft, xleft, xright, xright),
-                       y = c(ybottom, ytop, ytop, ybottom), gp = gpar(col = NA, fill = col), default.units = "native")
-        } else if (y == x) {
-          polygon <- polygonGrob(x = c(xleft, xleft, xright),
-                       y = c(ybottom, ytop, ytop), gp = gpar(col = NA, fill = col), default.units = "native")
-        }
+      hic_triangle <- grid.polygon(x = c(xleft, xright, xright),
+                                   y = c(ybottom, ybottom, ytop),
+                                   gp = gpar(col = NA, fill = col), default.units = "native")
 
-      } else if (hic_plot$additional_parameters$half == "bottom"){
-        ## Plot triangles along diagonal and squares below
-        if (y < x){
-          polygon <- polygonGrob(x = c(xleft, xleft, xright, xright),
-                       y = c(ybottom, ytop, ytop, ybottom), gp = gpar(col = NA, fill = col), default.units = "native")
-        } else if (y == x) {
-          polygon <- polygonGrob(x = c(xleft, xright, xright),
-                       y = c(ybottom, ybottom, ytop), gp = gpar(col = NA, fill = col), default.units = "native")
-        }
+
       }
 
-    }
-
-    assign(grobs_name, addGrob(gTree = get(grobs_name, envir = bbEnv), child = polygon), envir = bbEnv)
+    assign("hic_grobs", addGrob(gTree = get("hic_grobs", envir = bbEnv), child = hic_triangle), envir = bbEnv)
 
   }
 
@@ -384,17 +406,18 @@ bb_plothic <- function(hic, chrom = 8, chromstart = 133600000, chromend = 134800
   # INITIALIZE OBJECT
   # ======================================================================================================================================================================================
 
-  hic_plot <- structure(list(chrom = chrom, chromstart = chromstart, chromend = chromend, x = x, y = y, height = height,
-                             width = width, units = units, altchrom = altchrom, altchromstart = altchromstart,
-                             altchromend = altchromend, zrange = zrange, color_palette = NULL, just = just, grobs = NULL,
+  hic_plot <- structure(list(chrom = chrom, chromstart = chromstart, chromend = chromend, altchrom = altchrom, altchromstart = altchromstart,
+                             altchromend = altchromend, x = x, y = y, width = width, height = height, units = units, justification = just,
+                             zrange = zrange, color_palette = NULL, grobs = NULL, viewport = NULL,
                              additional_parameters = list(half = half,
-                                                          resolution = resolution, palette = palette, althalf = althalf,
+                                                          resolution = resolution, althalf = althalf,
                                                           norm = norm)), class = "hic_plot")
 
   # ======================================================================================================================================================================================
   # CATCH ERRORS
   # ======================================================================================================================================================================================
 
+  check_bbpage()
   errorcheck_bb_plothic(hic = hic, hic_plot = hic_plot)
 
   # ======================================================================================================================================================================================
@@ -456,33 +479,60 @@ bb_plothic <- function(hic, chrom = 8, chromstart = 133600000, chromend = 134800
   ## Get viewport xscale and yscale
   scale <- vp_scale(hic_plot = hic_plot)
 
+  ## Get viewport name
+  current_viewports <- lapply(current.vpTree()$children$bb_page$children, viewport_name)
+  vp_name <- paste0("bb_hic", length(grep(pattern = "bb_hic", x = current_viewports)) + 1)
+
   ## Make viewport
   vp <- viewport(height = unit(page_coords[[1]]$height, page_coords[[3]]), width = unit(page_coords[[1]]$width, page_coords[[3]]),
                  x = unit(page_coords[[1]]$x, page_coords[[3]]), y = unit((page_coords[[2]]-page_coords[[1]]$y), page_coords[[3]]),
-                 clip = "on", xscale = scale[[1]], yscale = scale[[2]], just = just, name = "bb_hic")
+                 clip = "on", xscale = scale[[1]], yscale = scale[[2]], just = just, name = vp_name)
+
+  hic_plot$viewport <- vp
 
   pushViewport(vp)
+
+
+  # ======================================================================================================================================================================================
+  # INITIALIZE GTREE FOR GROBS
+  # ======================================================================================================================================================================================
+
+  assign("hic_grobs", gTree(name = "hic_grobs"), envir = bbEnv)
 
   # ======================================================================================================================================================================================
   # PLOT
   # ======================================================================================================================================================================================
 
-  #grobs_name <- paste0("hic_grobs", (length(grep(pattern = "hic_grobs", x = ls(envir = bbEnv))) + 1))
-  grobs_name <- "hic_grobs"
+  ## Determine which grobs will be squares [[1]] and which will be triangles [[2]]
+  shapes <- hic_shapes(hic = hic, hic_plot = hic_plot)
 
-  assign(grobs_name, gTree(name = "hic_grobs"), envir = bbEnv)
+  ## Plot squares and add to grob gTree
+  hic_squares <- grid.rect(x = shapes[[1]]$x,
+                           y = shapes[[1]]$y,
+                           just = c("left", "bottom"),
+                           width = resolution,
+                           height = resolution,
+                           gp = gpar(col = NA, fill = shapes[[1]]$color),
+                           default.units = "native")
 
-  invisible(apply(hic, 1, drawpoly, hic_plot = hic_plot, grobs_name = grobs_name))
+  assign("hic_grobs", addGrob(gTree = get("hic_grobs", envir = bbEnv), child = hic_squares), envir = bbEnv)
 
-  message("Plotting...")
-  grid.draw(get(grobs_name, envir = bbEnv))
 
-  grob_list <- lapply(get(grobs_name, envir = bbEnv)$children, convert_gpath)
+  ## Plot triangles and add to grob gTree
+  if (!is.null(shapes[[2]])){
 
-  hic_plot$grobs = grob_list
+    invisible(apply(shapes[[2]], 1, hic_diagonal, hic_plot = hic_plot))
+
+  }
 
   ## Go back up a viewport
   upViewport()
+
+  # ======================================================================================================================================================================================
+  # ADD GROBS TO OBJECT
+  # ======================================================================================================================================================================================
+
+  hic_plot$grobs <- get("hic_grobs", envir = bbEnv)$children
 
   # ======================================================================================================================================================================================
   # RETURN OBJECT

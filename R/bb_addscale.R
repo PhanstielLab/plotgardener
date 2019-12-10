@@ -18,7 +18,7 @@
 #' @author Nicole Kramer
 #' @export
 
-bb_addscale <- function(color_vector, min_val, max_val, border = FALSE, height, width, x, y, units = "inches", orientation = "vertical", fontsize = 8,
+bb_addScale <- function(color_vector, min_val, max_val, border = FALSE, height, width, x, y, units = "inches", orientation = "vertical", fontsize = 8,
                       fontcolor = "grey", fontface = "plain", just = c("left", "top"), ...){
 
   # ======================================================================================================================================================================================
@@ -49,12 +49,14 @@ bb_addscale <- function(color_vector, min_val, max_val, border = FALSE, height, 
   # ======================================================================================================================================================================================
 
   bb_scale <- structure(list(color_palette = color_vector, min_val = min_val, max_val = max_val,
-                              orientation = orientation, height = height, width = width, x = x, y = y, units = units, grobs = NULL), class = "bb_scale")
+                              orientation = orientation, height = height, width = width, x = x, y = y, units = units, grobs = NULL, viewport = NULL,
+                             gpar = list(fontsize = fontsize, fontcolor = fontcolor, fontface = fontface)), class = "bb_scale")
 
   # ======================================================================================================================================================================================
   # CALL ERRORS
   # ======================================================================================================================================================================================
 
+  check_bbpage()
   errorcheck_bb_addscale(bb_scale = bb_scale)
 
   # ======================================================================================================================================================================================
@@ -64,9 +66,14 @@ bb_addscale <- function(color_vector, min_val, max_val, border = FALSE, height, 
   ## Convert coordinates into same units as page
   page_coords <- convert_page(object = bb_scale)
 
+  ## Make viewport name
+  current_viewports <- lapply(current.vpTree()$children$bb_page$children, viewport_name)
+  vp_name <- paste0("bb_scale", length(grep(pattern = "bb_scale", x = current_viewports)) + 1)
+
   ## Make viewport
   vp <- viewport(height = unit(page_coords[[1]]$height, page_coords[[3]]), width = unit(page_coords[[1]]$width, page_coords[[3]]),
-                 x = unit(page_coords[[1]]$x, page_coords[[3]]), y = unit((page_coords[[2]]-page_coords[[1]]$y), page_coords[[3]]), just = just, name = "bb_scale")
+                 x = unit(page_coords[[1]]$x, page_coords[[3]]), y = unit((page_coords[[2]]-page_coords[[1]]$y), page_coords[[3]]), just = just, name = vp_name)
+  bb_scale$viewport <- vp
 
   pushViewport(vp)
 
@@ -83,9 +90,9 @@ bb_addscale <- function(color_vector, min_val, max_val, border = FALSE, height, 
 
     digitLab <- textGrob(label = 0, x = 0.5, y = 0, just = c("center", "bottom"), default.units = "npc",
                        gp = gpar(fontsize = fontsize, col = fontcolor, fontface = fontface))
-    lowLab <- textGrob(label = min_val, x = 0.5, y = 0, just = c("center", "bottom"), default.units = "npc",
+    lowLab <- grid.text(label = min_val, x = 0.5, y = 0, just = c("center", "bottom"), default.units = "npc",
                        gp = gpar(fontsize = fontsize, col = fontcolor, fontface = fontface))
-    highLab <- textGrob(label = max_val, x = 0.5, y = 1, just = c("center", "top"), default.units = "npc",
+    highLab <- grid.text(label = max_val, x = 0.5, y = 1, just = c("center", "top"), default.units = "npc",
                         gp = gpar(fontsize = fontsize, col = fontcolor, fontface = fontface))
 
     lH <- convertHeight(x = grobHeight(lowLab), unitTo = "npc", valueOnly = T)
@@ -95,16 +102,13 @@ bb_addscale <- function(color_vector, min_val, max_val, border = FALSE, height, 
     new_height <- 1 - (lH + hH + dH)
 
     color_scale <- rasterGrob(rev(color_vector), width = unit(page_coords[[1]]$width, page_coords[[3]]), height = unit(new_height, "npc"), y = 1 - (hH + (0.5 * dH)), just = "top")
-
-    grid.draw(lowLab)
-    grid.draw(highLab)
     grid.draw(color_scale)
 
     if (border == T){
 
-      borderGrob <- rectGrob(y = 1 - (hH + (0.5 * dH)), just = "top", width = unit(page_coords[[1]]$width, page_coords[[3]]), height = unit(new_height, "npc"),
+      borderGrob <- grid.rect(y = 1 - (hH + (0.5 * dH)), just = "top", width = unit(page_coords[[1]]$width, page_coords[[3]]), height = unit(new_height, "npc"),
                 gp = gpar(col = "black", fill = NA) )
-      grid.draw(borderGrob)
+
 
     }
 
@@ -117,9 +121,9 @@ bb_addscale <- function(color_vector, min_val, max_val, border = FALSE, height, 
 
     digitLab <- textGrob(label = 0, x = 0, y = 0.5, just = c("left", "center"), default.units = "npc",
                          gp = gpar(fontsize = fontsize, col = fontcolor, fontface = fontface))
-    lowLab <- textGrob(label = min_val, x = 0, y = 0.5, just = c("left", "center"), default.units = "npc",
+    lowLab <- grid.text(label = min_val, x = 0, y = 0.5, just = c("left", "center"), default.units = "npc",
                        gp = gpar(fontsize = fontsize, col = fontcolor, fontface = fontface))
-    highLab <- textGrob(label = max_val, x = 1, y = 0.5, just = c("right", "center"), default.units = "npc",
+    highLab <- grid.text(label = max_val, x = 1, y = 0.5, just = c("right", "center"), default.units = "npc",
                         gp = gpar(fontsize = fontsize, col = fontcolor, fontface = fontface))
 
     lW <- convertWidth(x = grobWidth(lowLab), unitTo = "npc", valueOnly = T)
@@ -130,16 +134,12 @@ bb_addscale <- function(color_vector, min_val, max_val, border = FALSE, height, 
 
     color_scale <- rasterGrob(matrix(data = color_vector, nrow = 1, ncol = length(color_vector)), width = unit(new_width, "npc"), height = unit(page_coords[[1]]$height, page_coords[[3]]),
                 x = lW + (0.5 * dW), just = "left")
-
-    grid.draw(lowLab)
-    grid.draw(highLab)
     grid.draw(color_scale)
 
     if (border == T){
 
-      borderGrob <- rectGrob(x = lW + (0.5 * dW), just = "left", width = unit(new_width, "npc"), height = unit(page_coords[[1]]$height, page_coords[[3]]),
+      borderGrob <- grid.rect(x = lW + (0.5 * dW), just = "left", width = unit(new_width, "npc"), height = unit(page_coords[[1]]$height, page_coords[[3]]),
                 gp = gpar(col = "black", fill = NA) )
-      grid.draw(borderGrob)
 
     }
 
@@ -158,11 +158,8 @@ bb_addscale <- function(color_vector, min_val, max_val, border = FALSE, height, 
     assign("scale_grobs", addGrob(gTree = get("scale_grobs", envir = bbEnv), child = borderGrob), envir = bbEnv)
   }
 
-  ## Convert grob list to list of gpaths
-  grob_list <- lapply(get("scale_grobs", envir = bbEnv)$children, convert_gpath)
-
   ## Add grobs to scale object
-  bb_scale$grobs = grob_list
+  bb_scale$grobs = get("scale_grobs", envir = bbEnv)$children
 
   # ======================================================================================================================================================================================
   # RETURN OBJECT
