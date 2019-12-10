@@ -17,6 +17,8 @@ viewport_name <- function(viewport){
 
 }
 
+
+
 ## Define a function to convert plot x and y into center of plot based on justification
 adjust_coords <- function(plot, page_units, page_height){
 
@@ -162,13 +164,65 @@ adjust_vpCoords <- function(plot, viewport, page_units, page_height){
 
 }
 
-# vp_topLeft <- function(viewport, page_units, page_height){
-#
-#
-#
-# }
 
+## Define a function to change viewport x and y-coordinates to top left based on justification
+vp_topLeft <- function(viewport){
 
+  if (length(viewport$justification == 2)){
+
+    if ("left" %in% viewport$justification & "center" %in% viewport$justification){
+      vp_x <- viewport$x
+      vp_y <- viewport$y + (0.5 * viewport$height)
+    } else if ("right" %in% viewport$justification & "center" %in% viewport$justification){
+      vp_x <- viewport$x - (viewport$width)
+      vp_y <- viewport$y + (0.5 * viewport$height)
+    } else if ("center" %in% viewport$justification & "bottom" %in% viewport$justification){
+      vp_x <- viewport$x - (0.5 * viewport$width)
+      vp_y <- viewport$y + (viewport$height)
+    } else if ("center" %in% viewport$justification & "top" %in% viewport$justification){
+      vp_x <- viewport$x - (0.5 * viewport$width)
+      vp_y <- viewport$y
+    } else if ("left" %in% viewport$justification & "top" %in% viewport$justification){
+      vp_x <- viewport$x
+      vp_y <- viewport$y
+    } else if ("right" %in% viewport$justification & "top" %in% viewport$justification){
+      vp_x <- viewport$x - (viewport$width)
+      vp_y <- viewport$y
+    } else if ("left" %in% pviewport$justification & "bottom" %in% viewport$justification){
+      vp_x <- viewport$x
+      vp_y <- viewport$y + (viewport$height)
+    } else if ("right" %in% viewport$justification & "bottom" %in% viewport$justification){
+      vp_x <- viewport$x - (viewport$width)
+      vp_y <- viewport$y + (viewport$height)
+    } else {
+      vp_x <- viewport$x - (0.5 * viewport$width)
+      vp_y <- viewport$y + (0.5 * viewport$height)
+    }
+
+  } else if (length(viewport$justification == 1)){
+
+    if (viewport$justification == "left"){
+      vp_x <- viewport$x
+      vp_y <- viewport$y + (0.5 * viewport$height)
+    } else if (viewport$justification == "right"){
+      vp_x <- viewport$x - (viewport$width)
+      vp_y <- viewport$y + (0.5 * viewport$height)
+    } else if (viewport$justification == "bottom"){
+      vp_x <- viewport$x - (0.5 * viewport$width)
+      vp_y <- viewport$y + (viewport$height)
+    } else if (viewport$justification == "top"){
+      vp_x <- viewport$x - (0.5 * viewport$width)
+      vp_y <- viewport$y
+    } else {
+      vp_x <- viewport$x - (0.5 * viewport$width)
+      vp_y <- viewport$y + (0.5 * viewport$height)
+    }
+
+  }
+
+  return(list(vp_x, vp_y))
+
+}
 
 ## Define a function to convert to page units
 convert_page <- function(object){
@@ -200,10 +254,7 @@ convert_page <- function(object){
 ## Define a function to make sure a bb_page viewport exists
 check_bbpage <- function(){
 
-  ## Get the names of the current viewports
-  current_viewports <- lapply(current.vpTree()$children, viewport_name)
-
-  if (!"bb_page" %in% current_viewports){
+  if (!"bb_page" %in% current.vpPath()){
 
     stop("Must make a BentoBox page with bb_makePage() before plotting.")
 
