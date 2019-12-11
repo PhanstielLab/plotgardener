@@ -15,7 +15,7 @@
 #' @param lineSide side of zoom box from which to draw lines; options are NULL, "right", "left", "top", or "bottom"
 #'
 
-#' @export
+
 bb_zoomHic <- function(hic, chromstart, chromend, altchromstart = NULL, altchromend = NULL, x, y, width, height, units, just, lty = "solid", lwd = 1, col = "black",
                        lineSide = "right"){
 
@@ -63,12 +63,16 @@ bb_zoomHic <- function(hic, chromstart, chromend, altchromstart = NULL, altchrom
   plot_zoomLines <- function(lineSide, object){
 
     ## convert viewport units to center based on justification
-    adjusted_zoomCoords <- adjust_vpCoords(plot = object, viewport = object$viewport[[1]],
-                                           page_height = get("page_height", envir = bbEnv), page_units = get("page_units", envir = bbEnv))
+    # adjusted_zoomCoords <- adjust_vpCoords(plot = object, viewport = object$viewport[[1]],
+    #                                        page_height = get("page_height", envir = bbEnv), page_units = get("page_units", envir = bbEnv))
+    #
+    # adjusted_zoomCoords <- adjust_vpCoords(plot = object, viewport = object$viewport[[2]],
+    #                                        page_height = get("page_height", envir = bbEnv), page_units = get("page_units", envir = bbEnv))
 
-    adjusted_zoomCoords <- adjust_vpCoords(plot = object, viewport = object$viewport[[2]],
-                                           page_height = get("page_height", envir = bbEnv), page_units = get("page_units", envir = bbEnv))
+    ## Convert annotation viewport coordinates to top left based on justification (viewport should already be in page_units)
+    annot_topLeft <- vp_topLeft(viewport = object$viewport[[2]])
 
+    ## Go into annotation viewport to convert those coordinates to be compatible with the page
     downViewport(name = viewport_name(viewport = object$viewport[[2]]))
 
     annot_xCenter <- convertX(unit(0.5 * (object$chromend + object$chromstart), unit = "native"), unitTo = get("page_units", envir = bbEnv))
@@ -76,8 +80,8 @@ bb_zoomHic <- function(hic, chromstart, chromend, altchromstart = NULL, altchrom
 
     upViewport()
 
-    annot_xCenter <- annot_xCenter + adjusted_zoomCoords[[1]]
-    annot_yCenter <- annot_yCenter + adjusted_zoomCoords[[2]]
+    annot_xCenter <- annot_xCenter + annot_topLeft[[1]]
+    annot_yCenter <- annot_yCenter
     print(annot_xCenter)
     print(annot_yCenter)
 
@@ -207,6 +211,7 @@ bb_zoomHic <- function(hic, chromstart, chromend, altchromstart = NULL, altchrom
   ## Change grob names/assignments so they aren't the same as the hic plot itself/other zoom plots and add to gtree
   current_viewports <- lapply(current.vpTree()$children$bb_page$children, viewport_name)
   zoom_grobs <- lapply(zoom_grobs, copy_grobs, gtree = "zoom_grobs", letter = letters[length(grep(pattern = "bb_hicZoom", x = current_viewports)) + 1])
+  assign("ZOOM_GROBS", zoom_grobs, envir = globalenv())
 
   # ======================================================================================================================================================================================
   # ZOOM PLOT VIEWPORT

@@ -90,12 +90,8 @@ adjust_coords <- function(plot, page_units, page_height){
 
 }
 
-## Define a function to convert annotation viewport x and y into center of annotation based on justification
-adjust_vpCoords <- function(plot, viewport, page_units, page_height){
-  #
-  # plot_y <- convertY(unit(plot$y, units = plot$units), unitTo = page_units, valueOnly = TRUE)
-  # plot_y <- page_height - plot_y
-  # plot_y <- convertY(unit(plot_y, units = page_units), unitTo = plot$units, valueOnly = TRUE)
+## Define a function to convert viewport x and y into center based on justification
+adjust_vpCoords <- function(viewport){
 
   vp_y <- viewport$y
 
@@ -124,7 +120,7 @@ adjust_vpCoords <- function(plot, viewport, page_units, page_height){
       ## convert x-coordinate and y-coordinate
       vp_x <- viewport$x - (0.5 * viewport$width)
       vp_y <- vp_y - (0.5 * viewport$height)
-    } else if ("left" %in% pviewport$justification & "bottom" %in% viewport$justification){
+    } else if ("left" %in% viewport$justification & "bottom" %in% viewport$justification){
       ## convert x-coordinate and y-coordinate
       vp_x <- viewport$x + (0.5 * viewport$width)
       vp_y <- vp_y + (0.5 * viewport$height)

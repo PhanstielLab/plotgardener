@@ -67,6 +67,34 @@ bb_annotateLoops <- function(hic, loops, shift = 4, type = "box", lty = "dashed"
 
   }
 
+  ## Define a function that subsets loop data for hic region
+  subset_loops <- function(loops, object){
+
+    if (object$chrom == object$altchrom){
+
+      loops_subset <- loops[which(loops[,1] == object$chrom & loops[,4] == object$chrom & loops[,2] >= object$chromstart & loops[,3] <= object$chromend
+                                  & loops[,5] >= object$chromstart & loops[,6] <= object$chromend),]
+
+    } else {
+
+      if (object$chrom > object$altchrom){
+
+        loops_subset <- loops[which(loops[,1] == object$altchrom & loops[,4] == object$chrom & loops[,2] >= object$altchromstart & loops[,3] <= object$altchromend
+                                    & loops[,5] >= object$chromstart & loops[,6] <= object$chromend),]
+
+      } else if (object$chrom < object$altchrom){
+
+        loops_subset <- loops[which(loops[,1] == object$chrom & loops[,4] == object$altchrom & loops[,2] >= object$chromstart & loops[,3] <= object$chromend
+                                    & loops[,5] >= object$altchromstart & loops[,6] <= object$altchromend),]
+
+      }
+
+    }
+
+    return(loops_subset)
+
+  }
+
   ## Define a function to add box annotation
   boxAnnotation <- function(df, hic, object, shift){
 
@@ -222,7 +250,8 @@ bb_annotateLoops <- function(hic, loops, shift = 4, type = "box", lty = "dashed"
   # INITIALIZE OBJECT: GET REGION/DIMENSIONS FROM HIC PLOT INPUT
   # ======================================================================================================================================================================================
 
-  loop_annot <- structure(list(type = type, chrom = hic$chrom, chromstart = hic$chromstart, chromend = hic$chromend, x = hic$x, y = hic$y, width = hic$width,
+  loop_annot <- structure(list(type = type, chrom = hic$chrom, chromstart = hic$chromstart, chromend = hic$chromend, altchrom = hic$altchrom,
+                               altchromstart = hic$altchromstart, altchromend = hic$altchromend, x = hic$x, y = hic$y, width = hic$width,
                                height = hic$height, units = hic$units, justification = hic$just, grobs = NULL, viewport = NULL,
                              gpar = list(lty = lty, lwd = lwd, col = col)), class = "bb_loopAnnotation")
 
@@ -250,8 +279,7 @@ bb_annotateLoops <- function(hic, loops, shift = 4, type = "box", lty = "dashed"
   ## Make sure region values in bedpe are numeric
   loops[,1:6] <- dplyr::mutate_if(loops[,1:6], is.character, as.numeric)
 
-  loops_subset <- loops[which(loops[,1] == loop_annot$chrom & loops[,4] == loop_annot$chrom & loops[,2] >= loop_annot$chromstart & loops[,3] <= loop_annot$chromend
-                              & loops[,5] >= loop_annot$chromstart & loops[,6] <= loop_annot$chromend),]
+  loops_subset <- subset_loops(loops = loops, object = loop_annot)
 
   # ======================================================================================================================================================================================
   # VIEWPORTS
