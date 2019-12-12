@@ -8,13 +8,13 @@
 bb_hGuide <- function(y, units = "inches", col = "grey55"){
 
   ## Get the names of the current viewports
-  current_viewports <- lapply(current.vpTree()$children, viewport_name)
-
-  if (!"bb_page" %in% current_viewports){
-
-    stop("Must make a BentoBox page with bb_makePage() before adding additional guidelines.")
-
-  }
+  # current_viewports <- lapply(current.vpTree()$children, viewport_name)
+  #
+  # if (!"bb_page" %in% current_viewports){
+  #
+  #   stop("Must make a BentoBox page with bb_makePage() before adding additional guidelines.")
+  #
+  # }
 
   y <- convertY(y, unitTo = get("page_units", envir = bbEnv), valueOnly = TRUE)
 
