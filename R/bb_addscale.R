@@ -1,14 +1,11 @@
 #' adds color scale for heatmap plots
 #'
-#' @param color_vector sequential list of colors used to represent interaction frequency; can be returned from bb_plothic function
-#' @param min_val label for minimum value, i.e first value of zrange
-#' @param max_val label for maximum value, i.e. last value of zrange
+#' @param plot plot to add scale to
 #' @param border option to add border around scale
-#' @param height scale height
-#' @param width scale width
-#' @param x scale x-coordinate
-#' @param y scale y-coordinate
-#' @param units units of height, width, and x and y coordinates
+#' @param height A unit object specifying height
+#' @param width A unit object specifying width
+#' @param x A unit object specifying x-location
+#' @param y A unit object specifying y-location
 #' @param orientation "vertical" or "horizontal" orientation
 #' @param fontsize fontsize for text
 #' @param fontcolor fontcolor for text
@@ -18,7 +15,7 @@
 #' @author Nicole Kramer
 #' @export
 
-bb_addScale <- function(color_vector, min_val, max_val, border = FALSE, height, width, x, y, units = "inches", orientation = "vertical", fontsize = 8,
+bb_addScale <- function(plot, border = FALSE, height, width, x, y, orientation = "vertical", fontsize = 8,
                       fontcolor = "grey", fontface = "plain", just = c("left", "top"), ...){
 
   # ======================================================================================================================================================================================
@@ -48,15 +45,15 @@ bb_addScale <- function(color_vector, min_val, max_val, border = FALSE, height, 
   # INITIALIZE OBJECT
   # ======================================================================================================================================================================================
 
-  bb_scale <- structure(list(color_palette = color_vector, min_val = min_val, max_val = max_val,
-                              orientation = orientation, height = height, width = width, x = x, y = y, units = units, grobs = NULL, viewport = NULL,
+  bb_scale <- structure(list(color_palette = plot$color_palette, min_val = plot$zrange[1], max_val = plot$zrange[2],
+                              orientation = orientation, height = height, width = width, x = x, y = y, grobs = NULL,
                              gpar = list(fontsize = fontsize, fontcolor = fontcolor, fontface = fontface)), class = "bb_scale")
 
   # ======================================================================================================================================================================================
   # CALL ERRORS
   # ======================================================================================================================================================================================
 
-  check_bbpage()
+  check_bbpage(error = "Must have a BentoBox page with a plot before adding a scale.")
   errorcheck_bb_addscale(bb_scale = bb_scale)
 
   # ======================================================================================================================================================================================
@@ -71,9 +68,8 @@ bb_addScale <- function(color_vector, min_val, max_val, border = FALSE, height, 
   vp_name <- paste0("bb_scale", length(grep(pattern = "bb_scale", x = current_viewports)) + 1)
 
   ## Make viewport
-  vp <- viewport(height = unit(page_coords[[1]]$height, page_coords[[3]]), width = unit(page_coords[[1]]$width, page_coords[[3]]),
-                 x = unit(page_coords[[1]]$x, page_coords[[3]]), y = unit((page_coords[[2]]-page_coords[[1]]$y), page_coords[[3]]), just = just, name = vp_name)
-  bb_scale$viewport <- vp
+  vp <- viewport(height = page_coords$height, width = page_coords$width,
+                 x = page_coords$x, y = page_coords$y, just = just, name = vp_name)
 
   pushViewport(vp)
 
@@ -81,7 +77,7 @@ bb_addScale <- function(color_vector, min_val, max_val, border = FALSE, height, 
   # INITIALIZE GTREE
   # ======================================================================================================================================================================================
 
-  assign("scale_grobs", gTree(name = "scale_grobs"), envir = bbEnv)
+  assign("scale_grobs", gTree(vp = vp), envir = bbEnv)
 
   # ======================================================================================================================================================================================
   # VERTICAL ORIENTATION
@@ -159,7 +155,7 @@ bb_addScale <- function(color_vector, min_val, max_val, border = FALSE, height, 
   }
 
   ## Add grobs to scale object
-  bb_scale$grobs = get("scale_grobs", envir = bbEnv)$children
+  bb_scale$grobs = get("scale_grobs", envir = bbEnv)
 
   # ======================================================================================================================================================================================
   # RETURN OBJECT

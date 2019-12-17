@@ -4,29 +4,18 @@
 \alias{bb_labelGenome}
 \title{Adds genome coordinates to the axis of a plot}
 \usage{
-bb_labelGenome(plot = NULL, chrom, chromstart, chromend, width, x, y,
-  just = c("left", "top"), rotation = 0, units = "inches",
+bb_labelGenome(plot, x, y, just = c("left", "top"), rotation = 0,
   scale = "bp", fontsize = 10, fontcolor = "black", lineAbove = T,
   linecolor = "black", lwd = 1)
 }
 \arguments{
-\item{plot}{plot to annotate (saved as output from BentoBox plotting function)}
+\item{plot}{plot to annotate}
 
-\item{chrom}{if not inputting plot, chromosome of region to plot}
+\item{x}{A unit object specifying x-location}
 
-\item{chromstart}{if not inputting plot, chromstart of region to plot}
-
-\item{chromend}{if not inputting plot, chromend of region to plot}
-
-\item{width}{if not inputting plot, width of label}
-
-\item{x}{if not inputting plot, x-coordinate of label}
-
-\item{y}{if not inputting plot, y-coordinate of label}
+\item{y}{A unit object specifying y-location}
 
 \item{just}{justification}
-
-\item{units}{units of inputted x and y}
 
 \item{scale}{scale of the plot; options are "bp", "Kb", or "Mb"}
 
@@ -39,6 +28,8 @@ bb_labelGenome(plot = NULL, chrom, chromstart, chromend, width, x, y,
 \item{linecolor}{linecolor}
 
 \item{lwd}{linewidth}
+
+\item{units}{units of inputted x and y}
 
 \item{side}{side of the plot to annotate, options are "bottom", "top", "right", or "left"}
 }

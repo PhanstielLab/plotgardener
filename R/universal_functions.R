@@ -228,14 +228,14 @@ convert_page <- function(object){
   page_units <- get("page_units", envir = bbEnv)
 
   ## Convert x and y coordinates and height and width to same page_units
-  old_x <- unit(object$x, units = object$units)
-  old_y <- unit(object$y, units = object$units)
-  old_height <- unit(object$height, units = object$units)
-  old_width <- unit(object$width, units = object$units)
-  new_x <- convertX(old_x, unitTo = page_units, valueOnly = TRUE)
-  new_y <- convertY(old_y, unitTo = page_units, valueOnly = TRUE)
-  new_height <- convertHeight(old_height, unitTo = page_units, valueOnly = TRUE)
-  new_width <- convertWidth(old_width, unitTo = page_units, valueOnly = TRUE)
+  old_x <- object$x
+  old_y <- object$y
+  old_height <- object$height
+  old_width <- object$width
+  new_x <- convertX(old_x, unitTo = page_units)
+  new_y <- unit(page_height, units = page_units) - convertY(old_y, unitTo = page_units)
+  new_height <- convertHeight(old_height, unitTo = page_units)
+  new_width <- convertWidth(old_width, unitTo = page_units)
 
   object$x <- new_x
   object$y <- new_y
@@ -243,21 +243,53 @@ convert_page <- function(object){
   object$width <- new_width
 
 
-  return(list(object, page_height, page_units))
+  return(object)
 
 }
 
 ## Define a function to make sure a bb_page viewport exists
-check_bbpage <- function(){
+check_bbpage <- function(error){
 
   if (!"bb_page" %in% current.vpPath()){
 
-    stop("Must make a BentoBox page with bb_makePage() before plotting.")
+    stop(error)
 
   }
 
 }
 
+## Define a function to check dimensions/placing coordinates
+check_placement <- function(object){
 
+  ## If giving placement coordinates
+  if (!is.null(object$x) | !is.null(object$y)){
+
+    ## 1. Need both an x and y coordinate
+    if (!is.null(object$x) & is.null(object$y)){
+
+      stop("If giving placement coordinates, need to specify both x and y.")
+
+    }
+
+    if (!is.null(object$y) & is.null(object$x)){
+
+      stop("If giving placement coordinates, need to specify both x and y.")
+
+    }
+
+    ## 2. Need plot dimensions
+    if (is.null(object$width) | is.null(object$height)){
+
+      stop("If giving placement coordinates, need to specify plot width and plot height.")
+
+    }
+
+    ## 3. Need a bb_page
+    check_bbpage(error = "Must make a BentoBox page with bb_makePage() before placing a plot.")
+
+    }
+
+
+}
 
 

@@ -7,13 +7,13 @@
 bb_plotSignal(signal, chrom, chromstart, chromend, range = NULL,
   linecolor = "grey", lwd = 1, yaxis = FALSE, binSize = NA,
   binCap = TRUE, fill = FALSE, fillcolor = NA, transparency = NA,
-  ymax = 1.04, width = 3.25, height = 0.625, x = 4.25, y = 5.5,
-  units = "inches", just = c("left", "top"), ...)
+  ymax = 1, width = NULL, height = NULL, x = NULL, y = NULL,
+  just = c("left", "top"), plot = TRUE, ...)
 }
 \arguments{
 \item{signal}{signal track data to be plotted (bigwig file, bedgraph format dataframe, or bedgraph)}
 
-\item{chrom}{chromosome of region to be plotted}
+\item{chrom}{chromosome of region to be plotted as a string (i.e. "chr3")}
 
 \item{chromstart}{start position}
 
@@ -31,17 +31,17 @@ bb_plotSignal(signal, chrom, chromstart, chromend, range = NULL,
 
 \item{ymax}{fraction of max y value to set as height of plot}
 
-\item{width}{width of entire plot, in specified units}
+\item{width}{A unit object specifying width}
 
-\item{height}{height of entire plot, in specified units}
+\item{height}{A unit object specifying height}
 
-\item{x}{x-coordinate of where to place plot based on just}
+\item{x}{A unit object specifying x-location}
 
-\item{y}{y-coordinate of where to place plot based on just}
+\item{y}{A unit object specifying y-location}
 
-\item{units}{units of width, height, x, and y of plot}
+\item{just}{a string or numeric vector specifying the justification of the viewport relative to its (x, y) location: "left", "right", "centre", "center", "bottom", "top"}
 
-\item{just}{a string or numeric vector specifying the justification of the viewport relative to its (x, y) location: "left", "right", "centre", "center", "bottom", "top"
+\item{plot}{A logical value indicating whether graphics output should be produced
 
 
 

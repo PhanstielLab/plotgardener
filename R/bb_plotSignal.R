@@ -1,7 +1,7 @@
 #' plots signal track data
 #'
 #' @param signal signal track data to be plotted (bigwig file, bedgraph format dataframe, or bedgraph)
-#' @param chrom chromosome of region to be plotted
+#' @param chrom chromosome of region to be plotted as a string (i.e. "chr3")
 #' @param chromstart start position
 #' @param chromend end position
 #' @param range y-range to plot (c(min, max))
@@ -11,20 +11,20 @@
 #' @param addscale TRUE/FALSE whether to add a y-axis
 #' @param binCap TRUE/FALSE whether the function will limit the number of bins to 8,000
 #' @param ymax fraction of max y value to set as height of plot
-#' @param width width of entire plot, in specified units
-#' @param height height of entire plot, in specified units
-#' @param x x-coordinate of where to place plot based on just
-#' @param y y-coordinate of where to place plot based on just
-#' @param units units of width, height, x, and y of plot
+#' @param width A unit object specifying width
+#' @param height A unit object specifying height
+#' @param x A unit object specifying x-location
+#' @param y A unit object specifying y-location
 #' @param just a string or numeric vector specifying the justification of the viewport relative to its (x, y) location: "left", "right", "centre", "center", "bottom", "top"
+#' @param plot A logical value indicating whether graphics output should be produced
 #'
 #'
 #'
 #' #' @export
 
 bb_plotSignal <- function(signal, chrom, chromstart, chromend, range = NULL, linecolor = "grey", lwd = 1, yaxis = FALSE,
-                           binSize = NA, binCap = TRUE, fill = FALSE, fillcolor = NA, transparency = NA, ymax = 1.04, width = 3.25,
-                           height = .625, x = 4.25, y = 5.5, units = "inches", just = c("left", "top"), ...  ){
+                           binSize = NA, binCap = TRUE, fill = FALSE, fillcolor = NA, transparency = NA, ymax = 1, width = NULL,
+                           height = NULL, x = NULL, y = NULL, just = c("left", "top"), plot = TRUE, ...  ){
 
   # ======================================================================================================================================================================================
   # FUNCTIONS
@@ -106,7 +106,7 @@ bb_plotSignal <- function(signal, chrom, chromstart, chromend, range = NULL, lin
   ## Define a function to check range of data in dataframe
   check_signal_dataframe <- function(signal, signaltrack){
 
-    if (min(signal[,2]) > signaltrack$chromstart | max(signal[,2]) < signaltrack$chromend | min(signal[,3]) > signaltrack$chromstart | max(hic[,3]) < signaltrack$chromend){
+    if (min(signal[,2]) > signaltrack$chromstart | max(signal[,2]) < signaltrack$chromend | min(signal[,3]) > signaltrack$chromstart | max(signal[,3]) < signaltrack$chromend){
 
         warning("Data is incomplete for the specified range.")
 
@@ -225,21 +225,21 @@ bb_plotSignal <- function(signal, chrom, chromstart, chromend, range = NULL, lin
     return(signaltrack)
   }
 
-  ## Define a function that plots the signal
-  plot_signal <- function(signal, signaltrack){
+  ## Define a function that makes the signal grobs
+  signal_grobs <- function(signal, signaltrack){
 
     if (signaltrack$fill == TRUE){
 
       rgbcol = col2rgb(signaltrack$fillcolor)
       finalcolor = rgb(rgbcol[1], rgbcol[2], rgbcol[3], alpha = signaltrack$transparency * 255, maxColorValue = 255)
 
-      signalGrob <- grid.polygon(x = signal[,1], y = signal[,2], gp = gpar(fill = finalcolor, lwd = signaltrack$lwd, col = signaltrack$linecolor), default.units = "native")
+      signalGrob <- polygonGrob(x = signal[,1], y = signal[,2], gp = gpar(fill = finalcolor, lwd = signaltrack$lwd, col = signaltrack$linecolor), default.units = "native")
 
     } else {
 
       #signalGrob <- polygonGrob(x = signal[,1], y = signal[,2], gp = gpar(fill = NA, lwd = signaltrack$lwd, col = signaltrack$linecolor), default.units = "native")
 
-      signalGrob <- grid.segments(x0 = signal[c(1:1-length(signal[,1])), 1], y0 = signal[c(1:1-length(signal[,2])), 2],
+      signalGrob <- segmentsGrob(x0 = signal[c(1:1-length(signal[,1])), 1], y0 = signal[c(1:1-length(signal[,2])), 2],
                     x1 = signal[c(2:length(signal[,1])), 1], y1 = signal[c(2:length(signal[,2])), 2], gp = gpar(col = signaltrack$linecolor, lwd = signaltrack$lwd), default.units = "native")
 
     }
@@ -254,16 +254,16 @@ bb_plotSignal <- function(signal, chrom, chromstart, chromend, range = NULL, lin
   # INITIALIZE OBJECT
   # ======================================================================================================================================================================================
 
-  signal_track <- structure(list(chrom = chrom, chromstart = chromstart, chromend = chromend, range = range,
+  signal_track <- structure(list(chrom = gsub(pattern = "[0-9]|X|Y",replacement = "", x =  chrom), chromstart = chromstart, chromend = chromend, range = range,
                                   linecolor = linecolor, lwd = lwd, fill = fill, fillcolor = fillcolor,
                                   transparency = transparency, binSize = binSize, binNum = NULL, ymax = ymax,
-                                  width = width, height = height, x = x, y = y, units = units, grobs = NULL, viewport = NULL), class = "signal_track")
+                                  width = width, height = height, x = x, y = y, justification = just, grobs = NULL), class = "bb_signal")
 
   # ======================================================================================================================================================================================
   # CATCH ERRORS
   # ======================================================================================================================================================================================
 
-  check_bbpage()
+  check_placement(object = signal_track)
   errorcheck_bb_signaltrack(signal = signal, signaltrack = signal_track)
 
   # ======================================================================================================================================================================================
@@ -354,29 +354,52 @@ bb_plotSignal <- function(signal, chrom, chromstart, chromend, range = NULL, lin
   # VIEWPORTS
   # ======================================================================================================================================================================================
 
-  ## Convert coordinates into same units as page
-  page_coords <- convert_page(object = signal_track)
-
-  ## Make viewport name
+  ## Get viewport name
   current_viewports <- lapply(current.vpTree()$children$bb_page$children, viewport_name)
   vp_name <- paste0("bb_signal", length(grep(pattern = "bb_signal", x = current_viewports)) + 1)
 
-  ## Define viewport
-  vp <- viewport(width = unit(page_coords[[1]]$width, units = page_coords[[3]]), height = unit(page_coords[[1]]$height, units = page_coords[[3]]),
-                 x = unit(page_coords[[1]]$x, units = page_coords[[3]]), y = unit((page_coords[[2]]-page_coords[[1]]$y), page_coords[[3]]), xscale = c(chromstart, chromend),
-                 yscale = c(signal_track$range[1], signal_track$range[2]), just = just, name = vp_name)
+  ## If placing information is provided but plot == TRUE, set up it's own viewport separate from bb_makepage
+  ## Not translating into page_coordinates
+  if (is.null(x) & is.null(y)){
 
-  signal_track$viewport <- vp
-  pushViewport(vp)
+    vp <- viewport(height = unit(0.25, "snpc"), width = unit(1, "snpc"),
+                   x = unit(0.5, "npc"), y = unit(0.5, "npc"),
+                   clip = "on",
+                   xscale = c(chromstart, chromend), yscale = c(signal_track$range[1], signal_track$range[2]),
+                   just = "center",
+                   name = vp_name)
+
+    if (plot == TRUE){
+
+      grid.newpage()
+
+    }
+
+  } else {
+
+    ## Convert coordinates into same units as page
+    page_coords <- convert_page(object = signal_track)
+
+    ## Make viewport
+    vp <- viewport(height = page_coords$height, width = page_coords$width,
+                   x = page_coords$x, y = page_coords$y,
+                   xscale = c(chromstart, chromend), yscale = c(signal_track$range[1], signal_track$range[2]),
+                   just = just,
+                   name = vp_name)
+  }
+
 
   # ======================================================================================================================================================================================
-  # PLOT
+  # INITIALIZE GTREE FOR GROBS
   # ======================================================================================================================================================================================
 
-  ## Define gTree
-  assign("signal_grobs", gTree(name = "signal_grobs"), envir = bbEnv)
+  assign("signal_grobs", gTree(vp = vp), envir = bbEnv)
 
-  plot_signal(signal = signal, signaltrack = signal_track)
+  # ======================================================================================================================================================================================
+  # MAKE GROBS
+  # ======================================================================================================================================================================================
+
+  signal_grobs(signal = signal, signaltrack = signal_track)
 
   # ======================================================================================================================================================================================
   # SCALE
@@ -387,8 +410,8 @@ bb_plotSignal <- function(signal, chrom, chromstart, chromend, range = NULL, lin
 
     # scaleGrob <- textGrob(label = paste(min(signal[,1]), max(signal[,1]), sep = "-"), x = 1, y = 1,
     #                       just = c("right", "top"), gp = gpar(col = "grey"))
-    scaleGrob <- grid.segments(x0 = 0, x1 = 0, y0 = 0, y1 = 1, gp = gpar(col = "grey"))
-    scalelabelGrob <- grid.text(label = signal_track$range[2], just = c("left", "top"), x = 0, y = 1, gp = gpar(col = "grey"))
+    scaleGrob <- segmentsGrob(x0 = 0, x1 = 0, y0 = 0, y1 = 1, gp = gpar(col = "grey"))
+    scalelabelGrob <- textGrob(label = signal_track$range[2], just = c("left", "top"), x = 0, y = 1, gp = gpar(col = "grey"))
 
     ## Add grob to gtree
     assign("signal_grobs", addGrob(gTree = get("signal_grobs", envir = bbEnv), child = scaleGrob), envir = bbEnv)
@@ -396,14 +419,21 @@ bb_plotSignal <- function(signal, chrom, chromstart, chromend, range = NULL, lin
 
   }
 
-  ## Go back up a viewport
-  upViewport()
+  # ======================================================================================================================================================================================
+  # IF PLOT == TRUE, DRAW GROBS
+  # ======================================================================================================================================================================================
+
+  if (plot == TRUE){
+
+    grid.draw(get("signal_grobs", envir = bbEnv))
+
+  }
 
   # ======================================================================================================================================================================================
   # ADD GROBS TO OBJECT
   # ======================================================================================================================================================================================
 
-  signal_track$grobs <-  get("signal_grobs", envir = bbEnv)$children
+  signal_track$grobs <-  get("signal_grobs", envir = bbEnv)
 
   # ======================================================================================================================================================================================
   # RETURN OBJECT

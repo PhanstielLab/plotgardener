@@ -5,7 +5,8 @@
 \title{plots a Manhattan plot}
 \usage{
 bb_plotManhattan(bedfile, chrom, chromstart, chromend, col, ymax = 1,
-  ylim = NULL, x, y, width, height, just, units, ...)
+  ylim = NULL, x = NULL, y = NULL, width = NULL, height = NULL,
+  just = "center", plot = TRUE, ...)
 }
 \arguments{
 \item{bedfile}{bedfile for Manhattan plot}
@@ -22,17 +23,17 @@ bb_plotManhattan(bedfile, chrom, chromstart, chromend, col, ymax = 1,
 
 \item{ylim}{numeric vector of length 2, giving the y coordinates range}
 
-\item{x}{x-coordinate}
+\item{x}{A unit object specifying x-location}
 
-\item{y}{y-coordinate}
+\item{y}{A unit object speicifying y-location}
 
-\item{width}{width of plot}
+\item{width}{A unit object specifying width}
 
-\item{height}{height of plot}
+\item{height}{A unit object specifying height}
 
 \item{just}{justification of plot}
 
-\item{units}{units of width, height, x, and y-coordinates}
+\item{plot}{A logical value indicating whether graphics output should be produced}
 }
 \description{
 plots a Manhattan plot

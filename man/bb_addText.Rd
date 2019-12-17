@@ -5,21 +5,19 @@
 \title{wrapper to draw a textGrob based on bb_makePage coordinates and units}
 \usage{
 bb_addText(label, x, y, just = "center", rotation = 0,
-  units = "inches", fontcolor = "black", transparency = 1,
-  fontsize = 12, cex = 1, fontfamily = "", fontface = "plain")
+  fontcolor = "black", transparency = 1, fontsize = 12, cex = 1,
+  fontfamily = "", fontface = "plain")
 }
 \arguments{
 \item{label}{character or expression}
 
-\item{x}{x-coordinate}
+\item{x}{A unit object specifying x-location}
 
-\item{y}{y-coordinate}
+\item{y}{A unit object specifying y-location}
 
 \item{just}{justification of text relative to its (x, y) location}
 
 \item{rotation}{angle to rotate text}
-
-\item{units}{units of x and y coordinates}
 
 \item{fontcolor}{fontcolor}
 

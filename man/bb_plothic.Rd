@@ -7,9 +7,10 @@
 bb_plotHic(hic, chrom = 8, chromstart = 133600000,
   chromend = 134800000, half = "both", resolution = 10000,
   zrange = NULL, palette = colorRampPalette(c("white", "dark red")),
-  width = 3, height = 3, x = 1, y = 1, just = c("left", "top"),
-  units = "inches", altchrom = NULL, altchromstart = NULL,
-  altchromend = NULL, althalf = NULL, norm = "KR", ...)
+  width = NULL, height = NULL, x = NULL, y = NULL,
+  just = c("left", "top"), plot = TRUE, altchrom = NULL,
+  altchromstart = NULL, altchromend = NULL, althalf = NULL,
+  norm = "KR", ...)
 }
 \arguments{
 \item{hic}{path to .hic file or 3 column dataframe of counts}
@@ -28,17 +29,17 @@ bb_plotHic(hic, chrom = 8, chromstart = 133600000,
 
 \item{palette}{ColorRamp palette to use for representing interaction scores}
 
-\item{width}{width of plot in specified units}
+\item{width}{A unit object specifying width}
 
-\item{height}{height of plot in specified units}
+\item{height}{A unit object specifying height}
 
-\item{x}{x-coordinate of where to place plot based on just}
+\item{x}{A unit object specifying x-location}
 
-\item{y}{y-coordinate of where to place plot based on just}
+\item{y}{A unit object specifying y-location}
 
-\item{just}{a string or numeric vector specifying the justification of the viewport relative to its (x, y) location: "left", "right", "centre", "center", "bottom", "top"}
+\item{just}{a string or numeric vector specifying the justification of the viewport relative to its (x, y) location}
 
-\item{units}{units of height, width, and x and y location of the plot}
+\item{plot}{A logical value indicating whether graphics output should be produced}
 
 \item{altchrom}{alternate chromosome for off-diagonal plotting or interchromosomal plotting}
 

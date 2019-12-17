@@ -5,8 +5,8 @@
 \title{plots an Apa plot}
 \usage{
 bb_plotApa(apa, loopNumber = 1, palette = colorRampPalette(c("white",
-  "dark red")), zrange = NULL, x = 1, y = 1, width = 1,
-  height = 1, just = c("center"), units = "inches")
+  "dark red")), zrange = NULL, x = NULL, y = NULL, width = NULL,
+  height = NULL, just = c("center"), plot = TRUE)
 }
 \arguments{
 \item{apa}{path to APA txt file}
@@ -15,17 +15,17 @@ bb_plotApa(apa, loopNumber = 1, palette = colorRampPalette(c("white",
 
 \item{palette}{ColorRamp palette to use for representing interaction scores}
 
-\item{x}{x-coordinate of plot}
+\item{x}{A unit object specifying x-location}
 
-\item{y}{y-coordinate of plot}
+\item{y}{A unit object specifying y-location}
 
-\item{width}{width of plot}
+\item{width}{A unit object specifying width}
 
-\item{height}{height of plot}
+\item{height}{A unit object specifying height}
 
 \item{just}{justification of x and y-coordinates}
 
-\item{units}{units of width, height, x, and y-coordinates}
+\item{plot}{A logical value indicating whether graphics output should be produced}
 
 \item{zrangethe}{range of interaction scores to plot, where extreme values will be set to the max or min}
 }

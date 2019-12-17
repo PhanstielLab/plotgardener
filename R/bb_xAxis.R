@@ -11,26 +11,33 @@ bb_xAxis <- function(plot, at = NULL, label = TRUE, main = TRUE, gp = gpar()){
   # ======================================================================================================================================================================================
 
   # ======================================================================================================================================================================================
+  # CATCH ERRORS
+  # ======================================================================================================================================================================================
+
+  bb_checkpage(error = "Cannot add an x-axis without a BentoBox page.")
+
+  # ======================================================================================================================================================================================
   # INITIALIZE OBJECT
   # ======================================================================================================================================================================================
 
-  xAxis <- structure(list(grobs = NULL, viewport = NULL), class = "bb_xaxis")
+  xAxis <- structure(list(grobs = NULL), class = "bb_xaxis")
 
   # ======================================================================================================================================================================================
   # CREATE GROB WITHOUT DRAWING
   # ======================================================================================================================================================================================
 
-  xGrob <- xaxisGrob(at = at, label = label, main = main, gp = gp, vp = plot$viewport)
+  xGrob <- xaxisGrob(at = at, label = label, main = main, gp = gp, vp = plot$grobs$vp)
 
   # ======================================================================================================================================================================================
   # GET CENTER OF INPUT PLOT VIEWPORT BASED ON JUSTIFICATION
   # ======================================================================================================================================================================================
 
-  adjusted_vp <- adjust_vpCoords(viewport = plot$viewport)
+  adjusted_vp <- adjust_vpCoords(viewport = plot$grobs$vp)
 
   # ======================================================================================================================================================================================
   # VIEWPORTS
   # ======================================================================================================================================================================================
+
   ## Make viewport name
   current_viewports <- lapply(current.vpTree()$children$bb_page$children, viewport_name)
   vp_name <- paste0("bb_xaxis", length(grep(pattern = "bb_xaxis", x = current_viewports)) + 1)
@@ -38,30 +45,26 @@ bb_xAxis <- function(plot, at = NULL, label = TRUE, main = TRUE, gp = gpar()){
   ## Define viewport
   if (main == TRUE){
 
-    vp <- viewport(width = plot$viewport$width, height = heightDetails(xGrob),
-                   x = adjusted_vp[[1]] - 0.5 * (plot$viewport$width), y = adjusted_vp[[2]] - 0.5 * (plot$viewport$height),
-                   just = c("left", "top"), xscale = plot$viewport$xscale, name = vp_name)
+    vp <- viewport(width = plot$grobs$vp$width, height = heightDetails(xGrob),
+                   x = adjusted_vp[[1]] - 0.5 * (plot$grobs$vp$width), y = adjusted_vp[[2]] - 0.5 * (plot$grobs$vp$height),
+                   just = c("left", "top"), xscale = plot$grobs$vp$xscale, name = vp_name)
 
 
   } else if (main == FALSE){
 
-    vp <- viewport(width = plot$viewport$width, height = heightDetails(xGrob),
-                   x = adjusted_vp[[1]] - 0.5 * (plot$viewport$width), y = adjusted_vp[[2]] + 0.5 * (plot$viewport$height),
-                   just = c("left", "bottom"), xscale = plot$viewport$xscale, name = vp_name)
+    vp <- viewport(width = plot$grobs$vp$width, height = heightDetails(xGrob),
+                   x = adjusted_vp[[1]] - 0.5 * (plot$grobs$vp$width), y = adjusted_vp[[2]] + 0.5 * (plot$grobs$vp$height),
+                   just = c("left", "bottom"), xscale = plot$grobs$vp$xscale, name = vp_name)
 
   }
-
-  xAxis$viewport <- vp
-  pushViewport(vp)
-  upViewport()
 
   # ======================================================================================================================================================================================
   # PLOT
   # ======================================================================================================================================================================================
 
   xGrob <- grid.xaxis(at = at, label = label, main = main, gp = gp, vp = vp_name)
-  xaxis_grobs <- gTree(name = "xaxis_grobs", children = gList(xGrob))
-  xAxis$grobs <- xaxis_grobs$children
+  xaxis_grobs <- gTree(vp = vp, children = gList(xGrob))
+  xAxis$grobs <- xaxis_grobs
 
   # ======================================================================================================================================================================================
   # RETURN OBJECT

@@ -1,18 +1,18 @@
 #' plots an Apa plot
-#' @param apa path to APA txt file
+#' @param apa path to APA txt file or an APA matrix
 #' @param loopNumber number of DNA loops
 #' @param palette ColorRamp palette to use for representing interaction scores
 #' @param zrangethe range of interaction scores to plot, where extreme values will be set to the max or min
-#' @param x x-coordinate of plot
-#' @param y y-coordinate of plot
-#' @param width width of plot
-#' @param height height of plot
+#' @param x A unit object specifying x-location
+#' @param y A unit object specifying y-location
+#' @param width A unit object specifying width
+#' @param height A unit object specifying height
 #' @param just justification of x and y-coordinates
-#' @param units units of width, height, x, and y-coordinates
+#' @param plot A logical value indicating whether graphics output should be produced
 
 #' @export
-bb_plotApa <- function(apa, loopNumber = 1, palette = colorRampPalette(c("white", "dark red")), zrange = NULL, x = 1, y = 1, width = 1, height = 1, just = c("center"),
-                       units = "inches"){
+bb_plotApa <- function(apa, loopNumber = 1, palette = colorRampPalette(c("white", "dark red")), zrange = NULL, x = NULL, y = NULL, width = NULL, height = NULL, just = c("center"),
+                       plot = TRUE){
 
   # ======================================================================================================================================================================================
   # FUNCTIONS
@@ -21,18 +21,17 @@ bb_plotApa <- function(apa, loopNumber = 1, palette = colorRampPalette(c("white"
   ## Define a functino that catches errors for bb_plotApa
   errorcheck_bb_plotApa <- function(apa, apa_plot){
 
-    if (file_ext(apa) != "txt"){
+    if (class(apa) != "matrix"){
 
-      stop("Invalid input. APA file must have a \".txt\" extension.")
+      if (file_ext(apa) != "txt" ){
 
-    }
+        stop("Invalid input. APA file must have a \".txt\" extension or be a matrix.")
 
-
-    if (apa_plot$width != apa_plot$height){
-
-      warning("Width must equal height for a square APA plot.")
+      }
 
     }
+
+
 
     # zrange
     # ===================================================================================
@@ -74,11 +73,15 @@ bb_plotApa <- function(apa, loopNumber = 1, palette = colorRampPalette(c("white"
   ## Define a function that reads in an apa file
   read_apa <- function(apa){
 
-    ## Read in data from apa path
-    data <- data.table::fread(apa)
+    if (class(apa) != "matrix"){
 
-    ## Remove brackets and convert to numeric
-    data <- apply(data, 2, function(x) gsub("\\[|\\]", "", x) %>% as.numeric())
+      ## Read in data from apa path
+      data <- data.table::fread(apa)
+
+      ## Remove brackets and convert to numeric
+      data <- apply(data, 2, function(x) gsub("\\[|\\]", "", x) %>% as.numeric())
+
+    }
 
     return(data)
   }
@@ -110,14 +113,14 @@ bb_plotApa <- function(apa, loopNumber = 1, palette = colorRampPalette(c("white"
   # INITIALIZE OBJECT
   # ======================================================================================================================================================================================
 
-  apa_plot <- structure(list(x = x, y = y, width = width, height = height, units = units, justification = just,
-                             zrange = zrange, color_palette = NULL, grobs = NULL, viewport = NULL), class = "bb_apa")
+  apa_plot <- structure(list(x = x, y = y, width = width, height = height, justification = just,
+                             zrange = zrange, color_palette = NULL, grobs = NULL), class = "bb_apa")
 
   # ======================================================================================================================================================================================
   # CATCH ERRORS
   # ======================================================================================================================================================================================
 
-  check_bbpage()
+  check_placement(object = apa_plot)
   errorcheck_bb_plotApa(apa = apa, apa_plot = apa_plot)
 
   # ======================================================================================================================================================================================
@@ -164,33 +167,60 @@ bb_plotApa <- function(apa, loopNumber = 1, palette = colorRampPalette(c("white"
   # VIEWPORTS
   # ======================================================================================================================================================================================
 
-  ## Convert coordinates into same units as page
-  page_coords <- convert_page(object = apa_plot)
-
-  ## Name viewport
+  ## Get viewport name
   current_viewports <- lapply(current.vpTree()$children$bb_page$children, viewport_name)
   vp_name <- paste0("bb_apa", length(grep(pattern = "bb_apa", x = current_viewports)) + 1)
 
-  ## Make viewport
-  vp <- viewport(height = unit(page_coords[[1]]$height, page_coords[[3]]), width = unit(page_coords[[1]]$width, page_coords[[3]]),
-                  x = unit(page_coords[[1]]$x, page_coords[[3]]), y = unit((page_coords[[2]]-page_coords[[1]]$y), page_coords[[3]]),
-                  just = just, name = vp_name)
-  apa_plot$viewport <- vp
-  pushViewport(vp)
+  ## If placing information is provided but plot == TRUE, set up it's own viewport separate from bb_makepage
+  ## Not translating into page_coordinates
+  if (is.null(x) & is.null(y)){
+
+    vp <- viewport(height = unit(1, "snpc"), width = unit(1, "snpc"),
+                   x = unit(0.5, "npc"), y = unit(0.5, "npc"),
+                   just = "center",
+                   name = vp_name)
+
+    if (plot == TRUE){
+
+      grid.newpage()
+
+    }
+
+  } else {
+
+    ## Convert coordinates into same units as page
+    page_coords <- convert_page(object = apa_plot)
+
+    ## Make viewport
+    vp <- viewport(height = page_coords$height, width = page_coords$width,
+                   x = page_coords$x, y = page_coords$y,
+                   just = just,
+                   name = vp_name)
+  }
 
   # ======================================================================================================================================================================================
-  # PLOT
+  # MAKE GROB
   # ======================================================================================================================================================================================
 
-  ## Make raster plot
+  ## Make raster grob
   apa_grob <- rasterGrob(colors, interpolate = F)
-  grid.draw(apa_grob)
+  apa_grobs <- gTree(vp = vp, children = gList(apa_grob))
 
-  ## Go back to root viewport
-  upViewport()
+  # ======================================================================================================================================================================================
+  # IF PLOT == TRUE, DRAW GROBS
+  # ======================================================================================================================================================================================
 
-  ## Add grob to object
-  apa_plot$grobs <- gList(apa_grob)
+  if (plot == TRUE){
+
+    grid.draw(apa_grobs)
+
+  }
+
+  # ======================================================================================================================================================================================
+  # ADD GROBS TO OBJECT
+  # ======================================================================================================================================================================================
+
+  apa_plot$grobs <- apa_grobs
 
   # ======================================================================================================================================================================================
   # RETURN OBJECT

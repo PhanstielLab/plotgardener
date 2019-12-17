@@ -1,11 +1,10 @@
 #' wrapper to draw a textGrob based on bb_makePage coordinates and units
 #'
 #' @param label character or expression
-#' @param x x-coordinate
-#' @param y y-coordinate
+#' @param x A unit object specifying x-location
+#' @param y A unit object specifying y-location
 #' @param just justification of text relative to its (x, y) location
 #' @param rotation angle to rotate text
-#' @param units units of x and y coordinates
 #' @param fontcolor fontcolor
 #' @param transparency degree of text transparency
 #' @param fontsize the size of text (in points)
@@ -14,20 +13,20 @@
 #' @param fontface the fontface (bold, italic, ...)
 #'
 #' @export
-bb_addText <- function(label, x, y, just = "center", rotation = 0, units = "inches", fontcolor = "black", transparency = 1, fontsize = 12, cex = 1,
+bb_addText <- function(label, x, y, just = "center", rotation = 0, fontcolor = "black", transparency = 1, fontsize = 12, cex = 1,
                     fontfamily = "", fontface = "plain"){
 
   # ======================================================================================================================================================================================
   # CATCH ERRORS
   # ======================================================================================================================================================================================
 
-  check_bbpage()
+  check_bbpage(error = "Cannot add text without a BentoBox page.")
 
   # ======================================================================================================================================================================================
   # INITIALIZE OBJECT
   # ======================================================================================================================================================================================
 
-  bb_text <- structure(list(label = label, x = x, y = y, rotation = rotation, units = units, just = just, grobs = NULL,
+  bb_text <- structure(list(label = label, x = x, y = y, rotation = rotation, just = just, grobs = NULL,
                             gpar = list(fontcolor = fontcolor, transparency = transparency, fontsize = fontsize, cex = cex, fontfamily = fontfamily,
                                         fontface = fontface)), class = "bb_text")
 
