@@ -4,29 +4,22 @@
 \alias{bb_addScale}
 \title{adds color scale for heatmap plots}
 \usage{
-bb_addScale(color_vector, min_val, max_val, border = FALSE, height,
-  width, x, y, units = "inches", orientation = "vertical",
-  fontsize = 8, fontcolor = "grey", fontface = "plain",
-  just = c("left", "top"), ...)
+bb_addScale(plot, border = FALSE, height, width, x, y,
+  orientation = "vertical", fontsize = 8, fontcolor = "grey",
+  fontface = "plain", just = c("left", "top"), ...)
 }
 \arguments{
-\item{color_vector}{sequential list of colors used to represent interaction frequency; can be returned from bb_plothic function}
-
-\item{min_val}{label for minimum value, i.e first value of zrange}
-
-\item{max_val}{label for maximum value, i.e. last value of zrange}
+\item{plot}{plot to add scale to}
 
 \item{border}{option to add border around scale}
 
-\item{height}{scale height}
+\item{height}{A unit object specifying height}
 
-\item{width}{scale width}
+\item{width}{A unit object specifying width}
 
-\item{x}{scale x-coordinate}
+\item{x}{A unit object specifying x-location}
 
-\item{y}{scale y-coordinate}
-
-\item{units}{units of height, width, and x and y coordinates}
+\item{y}{A unit object specifying y-location}
 
 \item{orientation}{"vertical" or "horizontal" orientation}
 

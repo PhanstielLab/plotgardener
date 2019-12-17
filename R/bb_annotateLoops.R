@@ -252,14 +252,14 @@ bb_annotateLoops <- function(hic, loops, shift = 4, type = "box", lty = "dashed"
 
   loop_annot <- structure(list(type = type, chrom = hic$chrom, chromstart = hic$chromstart, chromend = hic$chromend, altchrom = hic$altchrom,
                                altchromstart = hic$altchromstart, altchromend = hic$altchromend, x = hic$x, y = hic$y, width = hic$width,
-                               height = hic$height, units = hic$units, justification = hic$just, grobs = NULL, viewport = NULL,
+                               height = hic$height, justification = hic$just, grobs = NULL,
                              gpar = list(lty = lty, lwd = lwd, col = col)), class = "bb_loopAnnotation")
 
   # ======================================================================================================================================================================================
   # CATCH ERRORS
   # ======================================================================================================================================================================================
 
-  check_bbpage()
+  check_bbpage(error = "Cannot annotate loops without a BentoBox page.")
   errorcheck_bb_annotateLoops(hic = hic, loops = loops, object = loop_annot)
 
   # ======================================================================================================================================================================================
@@ -291,16 +291,15 @@ bb_annotateLoops <- function(hic, loops, shift = 4, type = "box", lty = "dashed"
 
   ## Make viewport based on hic input viewport
   vp <- viewport(height = hic$viewport$height, width = hic$viewport$width,
-                 x = hic$viewport$x, y = hic$viewport$y, clip = "on", xscale = hic$viewport$xscale, yscale = hic$viewport$yscale, just = hic$viewport$justification,
+                 x = hic$viewport$x, y = hic$viewport$y, clip = "on", xscale = hic$grobs$vp$xscale, yscale = hic$grobs$vp$yscale, just = hic$grobs$vp$justification,
                  name = vp_name)
-  loop_annot$viewport <- vp
   pushViewport(vp)
 
   # ======================================================================================================================================================================================
   # INITIALIZE GTREE OF GROBS
   # ======================================================================================================================================================================================
 
-  assign("annotation_grobs", gTree(name = "annotation_grobs"), envir = bbEnv)
+  assign("annotation_grobs", gTree(vp = vp), envir = bbEnv)
 
   # ======================================================================================================================================================================================
   # PLOT
@@ -327,8 +326,7 @@ bb_annotateLoops <- function(hic, loops, shift = 4, type = "box", lty = "dashed"
   # ADD GROBS TO OBJECT
   # ======================================================================================================================================================================================
 
-  loop_annot$grobs <- get("annotation_grobs", envir = bbEnv)$children
-
+  loop_annot$grobs <- get("annotation_grobs", envir = bbEnv)
   # ======================================================================================================================================================================================
   # RETURN OBJECT
   # ======================================================================================================================================================================================

@@ -6,17 +6,10 @@
 #'
 bb_removePlot <- function(plot){
 
-  ## error function: need a plot that's a valid BentoBox plot
+  ## error function: need a plot that's a valid BentoBox plot, make sure the plot is plotted
 
   ## get the grobs of the plot and convert to gpath
-  grob_list <- lapply(plot$grobs, convert_gpath)
-
-  # ## error if plot is plotted
-  # if (any(!grob_list %in% grid.ls(print = FALSE))){
-  #
-  #   stop("Cannot remove plot that is not plotted.")
-  #
-  # }
+  grob_list <- lapply(plot$grobs$children, convert_gpath)
 
   ## get the last grob
   last_grob <- grob_list[length(grob_list)]
@@ -31,7 +24,8 @@ bb_removePlot <- function(plot){
   invisible(lapply(last_grob, grid.remove))
 
   ## remove the viewport
-  seekViewport(name = plot$viewport$name)
+  seekViewport(name = plot$grobs$vp$name)
   popViewport()
+
 
 }

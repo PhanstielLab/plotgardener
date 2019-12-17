@@ -248,16 +248,48 @@ convert_page <- function(object){
 }
 
 ## Define a function to make sure a bb_page viewport exists
-check_bbpage <- function(){
+check_bbpage <- function(error){
 
   if (!"bb_page" %in% current.vpPath()){
 
-    stop("Must make a BentoBox page with bb_makePage() before plotting.")
+    stop(error)
 
   }
 
 }
 
+## Define a function to check dimensions/placing coordinates
+check_placement <- function(object){
 
+  ## If giving placement coordinates
+  if (!is.null(object$x) | !is.null(object$y)){
+
+    ## 1. Need both an x and y coordinate
+    if (!is.null(object$x) & is.null(object$y)){
+
+      stop("If giving placement coordinates, need to specify both x and y.")
+
+    }
+
+    if (!is.null(object$y) & is.null(object$x)){
+
+      stop("If giving placement coordinates, need to specify both x and y.")
+
+    }
+
+    ## 2. Need plot dimensions
+    if (is.null(object$width) | is.null(object$height)){
+
+      stop("If giving placement coordinates, need to specify plot width and plot height.")
+
+    }
+
+    ## 3. Need a bb_page
+    check_bbpage(error = "Must make a BentoBox page with bb_makePage() before placing a plot.")
+
+    }
+
+
+}
 
 

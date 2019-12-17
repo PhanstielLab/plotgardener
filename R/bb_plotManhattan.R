@@ -7,15 +7,15 @@
 #' @param col single colors, vector of colors, or color palette for coloring points
 #' @param ymax fraction of max y value to set as height of plot
 #' @param ylim numeric vector of length 2, giving the y coordinates range
-#' @param x x-coordinate
-#' @param y y-coordinate
-#' @param width width of plot
-#' @param height height of plot
+#' @param x A unit object specifying x-location
+#' @param y A unit object speicifying y-location
+#' @param width A unit object specifying width
+#' @param height A unit object specifying height
 #' @param just justification of plot
-#' @param units units of width, height, x, and y-coordinates
+#' @param plot A logical value indicating whether graphics output should be produced
 #'
 #' @export
-bb_plotManhattan <- function(bedfile, chrom, chromstart, chromend, col, ymax = 1, ylim = NULL, x, y, width, height, just, units,  ... ){
+bb_plotManhattan <- function(bedfile, chrom, chromstart, chromend, col, ymax = 1, ylim = NULL, x = NULL, y = NULL, width = NULL, height = NULL, just = "center", plot = TRUE,  ... ){
 
   # ======================================================================================================================================================================================
   # FUNCTIONS
@@ -38,8 +38,8 @@ bb_plotManhattan <- function(bedfile, chrom, chromstart, chromend, col, ymax = 1
   # INITIALIZE OBJECT
   # ======================================================================================================================================================================================
 
-  man_plot <- structure(list(chrom = chrom, chromstart = chromstart, chromend = chromend, x = x, y = y, width = width, height = height, units = units, justification = just,
-                             colors = col, ylim = ylim, ymax = ymax, grobs = NULL, viewport = NULL), class = "bb_manhattan")
+  man_plot <- structure(list(chrom = chrom, chromstart = chromstart, chromend = chromend, x = x, y = y, width = width, height = height, justification = just,
+                             colors = col, ylim = ylim, ymax = ymax, grobs = NULL), class = "bb_manhattan")
 
   # ======================================================================================================================================================================================
   # SUBSET DATA
@@ -57,36 +57,63 @@ bb_plotManhattan <- function(bedfile, chrom, chromstart, chromend, col, ymax = 1
   # VIEWPORTS
   # ======================================================================================================================================================================================
 
-  ## Convert coordinates into same units as page
-  page_coords <- convert_page(object = man_plot)
-
-  ## Make viewport name
+  ## Get viewport name
   current_viewports <- lapply(current.vpTree()$children$bb_page$children, viewport_name)
   vp_name <- paste0("bb_manhattan", length(grep(pattern = "bb_manhattan", x = current_viewports)) + 1)
 
-  ## Define viewport
-  vp <- viewport(width = unit(page_coords[[1]]$width, units = page_coords[[3]]), height = unit(page_coords[[1]]$height, units = page_coords[[3]]),
-                 x = unit(page_coords[[1]]$x, units = page_coords[[3]]), y = unit((page_coords[[2]]-page_coords[[1]]$y), page_coords[[3]]), xscale = c(chromstart, chromend),
-                 yscale = c(man_plot$ylim[1], man_plot$ylim[2]), just = just, name = vp_name, clip = "on")
+  ## If placing information is provided but plot == TRUE, set up it's own viewport separate from bb_makepage
+  ## Not translating into page_coordinates
+  if (is.null(x) & is.null(y)){
 
-  man_plot$viewport <- vp
-  pushViewport(vp)
+    vp <- viewport(height = unit(0.25, "snpc"), width = unit(1, "snpc"),
+                   x = unit(0.5, "npc"), y = unit(0.5, "npc"),
+                   clip = "on",
+                   xscale = c(chromstart, chromend), yscale = c(man_plot$ylim[1], man_plot$ylim[2]),
+                   just = "center",
+                   name = vp_name)
+
+    if (plot == TRUE){
+
+      grid.newpage()
+
+    }
+
+  } else {
+
+    ## Convert coordinates into same units as page
+    page_coords <- convert_page(object = man_plot)
+
+    ## Make viewport
+    vp <- viewport(height = page_coords$height, width = page_coords$width,
+                   x = page_coords$x, y = page_coords$y,
+                   clip = "on",
+                   xscale = c(chromstart, chromend), yscale = c(man_plot$ylim[1], man_plot$ylim[2]),
+                   just = just,
+                   name = vp_name)
+  }
 
   # ======================================================================================================================================================================================
-  # PLOT
+  # MAKE GROBS
   # ======================================================================================================================================================================================
 
-  points <- grid.points(x = bedfile[,2], y = -log10(bedfile[,5]), pch = 19, gp = gpar(fill = col), default.units = "native")
-  points_grobs <- gTree(name = "points_grobs", children = gList(points))
+  points <- pointsGrob(x = bedfile[,2], y = -log10(bedfile[,5]), pch = 19, gp = gpar(fill = col), default.units = "native")
+  points_grobs <- gTree(vp = vp, children = gList(points))
 
-  ## Go back to root viewport
-  upViewport()
+  # ======================================================================================================================================================================================
+  # IF PLOT == TRUE, DRAW GROBS
+  # ======================================================================================================================================================================================
+
+  if (plot == TRUE){
+
+    grid.draw(points_grobs)
+
+  }
 
   # ======================================================================================================================================================================================
   # ADD GROBS TO OBJECT
   # ======================================================================================================================================================================================
 
-  man_plot$grobs <- points_grobs$children
+  man_plot$grobs <- points_grobs
 
   # ======================================================================================================================================================================================
   # RETURN OBJECT
