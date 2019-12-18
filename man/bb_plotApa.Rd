@@ -6,10 +6,10 @@
 \usage{
 bb_plotApa(apa, loopNumber = 1, palette = colorRampPalette(c("white",
   "dark red")), zrange = NULL, x = NULL, y = NULL, width = NULL,
-  height = NULL, just = c("center"), plot = TRUE)
+  height = NULL, just = c("center"), draw = TRUE)
 }
 \arguments{
-\item{apa}{path to APA txt file}
+\item{apa}{path to APA txt file or an APA matrix}
 
 \item{loopNumber}{number of DNA loops}
 
@@ -25,7 +25,7 @@ bb_plotApa(apa, loopNumber = 1, palette = colorRampPalette(c("white",
 
 \item{just}{justification of x and y-coordinates}
 
-\item{plot}{A logical value indicating whether graphics output should be produced}
+\item{draw}{A logical value indicating whether graphics output should be produced}
 
 \item{zrangethe}{range of interaction scores to plot, where extreme values will be set to the max or min}
 }
