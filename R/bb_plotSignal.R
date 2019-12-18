@@ -16,7 +16,7 @@
 #' @param x A unit object specifying x-location
 #' @param y A unit object specifying y-location
 #' @param just a string or numeric vector specifying the justification of the viewport relative to its (x, y) location: "left", "right", "centre", "center", "bottom", "top"
-#' @param plot A logical value indicating whether graphics output should be produced
+#' @param draw A logical value indicating whether graphics output should be produced
 #'
 #'
 #'
@@ -24,7 +24,7 @@
 
 bb_plotSignal <- function(signal, chrom, chromstart, chromend, range = NULL, linecolor = "grey", lwd = 1, yaxis = FALSE,
                            binSize = NA, binCap = TRUE, fill = FALSE, fillcolor = NA, transparency = NA, ymax = 1, width = NULL,
-                           height = NULL, x = NULL, y = NULL, just = c("left", "top"), plot = TRUE, ...  ){
+                           height = NULL, x = NULL, y = NULL, just = c("left", "top"), draw = TRUE, ...  ){
 
   # ======================================================================================================================================================================================
   # FUNCTIONS
@@ -369,7 +369,7 @@ bb_plotSignal <- function(signal, chrom, chromstart, chromend, range = NULL, lin
                    just = "center",
                    name = vp_name)
 
-    if (plot == TRUE){
+    if (draw == TRUE){
 
       grid.newpage()
 
@@ -423,7 +423,7 @@ bb_plotSignal <- function(signal, chrom, chromstart, chromend, range = NULL, lin
   # IF PLOT == TRUE, DRAW GROBS
   # ======================================================================================================================================================================================
 
-  if (plot == TRUE){
+  if (draw == TRUE){
 
     grid.draw(get("signal_grobs", envir = bbEnv))
 

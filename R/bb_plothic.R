@@ -13,7 +13,7 @@
 #' @param x A unit object specifying x-location
 #' @param y A unit object specifying y-location
 #' @param just a string or numeric vector specifying the justification of the viewport relative to its (x, y) location
-#' @param plot A logical value indicating whether graphics output should be produced
+#' @param draw A logical value indicating whether graphics output should be produced
 #' @param altchrom alternate chromosome for off-diagonal plotting or interchromosomal plotting
 #' @param altchromstart alternate chromosome start for off-diagonal plotting or interchromosomal plotting
 #' @param altchromend alternate chromosome end for off-diagonal plotting or interchromosomal plotting
@@ -31,7 +31,7 @@
 #'
 bb_plotHic <- function(hic, chrom = 8, chromstart = 133600000, chromend = 134800000, half = "both", resolution = 10000, zrange = NULL,
                        palette = colorRampPalette(c("white", "dark red")), width = NULL, height = NULL, x = NULL, y = NULL,
-                       just = c("left", "top"), plot = TRUE, altchrom = NULL, altchromstart = NULL, altchromend = NULL, althalf = NULL,
+                       just = c("left", "top"), draw = TRUE, altchrom = NULL, altchromstart = NULL, altchromend = NULL, althalf = NULL,
                        norm = "KR", ...){
 
   # ======================================================================================================================================================================================
@@ -493,7 +493,7 @@ bb_plotHic <- function(hic, chrom = 8, chromstart = 133600000, chromend = 134800
                    just = "center",
                    name = vp_name)
 
-    if (plot == TRUE){
+    if (draw == TRUE){
 
       grid.newpage()
 
@@ -549,7 +549,7 @@ bb_plotHic <- function(hic, chrom = 8, chromstart = 133600000, chromend = 134800
   # IF PLOT == TRUE, DRAW GROBS
   # ======================================================================================================================================================================================
 
-  if (plot == TRUE){
+  if (draw == TRUE){
 
     grid.draw(get("hic_grobs", envir = bbEnv))
 

@@ -8,11 +8,11 @@
 #' @param width A unit object specifying width
 #' @param height A unit object specifying height
 #' @param just justification of x and y-coordinates
-#' @param plot A logical value indicating whether graphics output should be produced
+#' @param draw A logical value indicating whether graphics output should be produced
 
 #' @export
 bb_plotApa <- function(apa, loopNumber = 1, palette = colorRampPalette(c("white", "dark red")), zrange = NULL, x = NULL, y = NULL, width = NULL, height = NULL, just = c("center"),
-                       plot = TRUE){
+                       draw = TRUE){
 
   # ======================================================================================================================================================================================
   # FUNCTIONS
@@ -180,7 +180,7 @@ bb_plotApa <- function(apa, loopNumber = 1, palette = colorRampPalette(c("white"
                    just = "center",
                    name = vp_name)
 
-    if (plot == TRUE){
+    if (draw == TRUE){
 
       grid.newpage()
 
@@ -210,7 +210,7 @@ bb_plotApa <- function(apa, loopNumber = 1, palette = colorRampPalette(c("white"
   # IF PLOT == TRUE, DRAW GROBS
   # ======================================================================================================================================================================================
 
-  if (plot == TRUE){
+  if (draw == TRUE){
 
     grid.draw(apa_grobs)
 

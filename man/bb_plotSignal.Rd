@@ -8,7 +8,7 @@ bb_plotSignal(signal, chrom, chromstart, chromend, range = NULL,
   linecolor = "grey", lwd = 1, yaxis = FALSE, binSize = NA,
   binCap = TRUE, fill = FALSE, fillcolor = NA, transparency = NA,
   ymax = 1, width = NULL, height = NULL, x = NULL, y = NULL,
-  just = c("left", "top"), plot = TRUE, ...)
+  just = c("left", "top"), draw = TRUE, ...)
 }
 \arguments{
 \item{signal}{signal track data to be plotted (bigwig file, bedgraph format dataframe, or bedgraph)}
@@ -41,7 +41,7 @@ bb_plotSignal(signal, chrom, chromstart, chromend, range = NULL,
 
 \item{just}{a string or numeric vector specifying the justification of the viewport relative to its (x, y) location: "left", "right", "centre", "center", "bottom", "top"}
 
-\item{plot}{A logical value indicating whether graphics output should be produced
+\item{draw}{A logical value indicating whether graphics output should be produced
 
 
 

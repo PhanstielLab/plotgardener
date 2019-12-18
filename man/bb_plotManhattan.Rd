@@ -6,7 +6,7 @@
 \usage{
 bb_plotManhattan(bedfile, chrom, chromstart, chromend, col, ymax = 1,
   ylim = NULL, x = NULL, y = NULL, width = NULL, height = NULL,
-  just = "center", plot = TRUE, ...)
+  just = "center", draw = TRUE, ...)
 }
 \arguments{
 \item{bedfile}{bedfile for Manhattan plot}
@@ -33,7 +33,7 @@ bb_plotManhattan(bedfile, chrom, chromstart, chromend, col, ymax = 1,
 
 \item{just}{justification of plot}
 
-\item{plot}{A logical value indicating whether graphics output should be produced}
+\item{draw}{A logical value indicating whether graphics output should be produced}
 }
 \description{
 plots a Manhattan plot

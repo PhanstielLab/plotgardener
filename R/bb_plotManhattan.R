@@ -12,10 +12,10 @@
 #' @param width A unit object specifying width
 #' @param height A unit object specifying height
 #' @param just justification of plot
-#' @param plot A logical value indicating whether graphics output should be produced
+#' @param draw A logical value indicating whether graphics output should be produced
 #'
 #' @export
-bb_plotManhattan <- function(bedfile, chrom, chromstart, chromend, col, ymax = 1, ylim = NULL, x = NULL, y = NULL, width = NULL, height = NULL, just = "center", plot = TRUE,  ... ){
+bb_plotManhattan <- function(bedfile, chrom, chromstart, chromend, col, ymax = 1, ylim = NULL, x = NULL, y = NULL, width = NULL, height = NULL, just = "center", draw = TRUE,  ... ){
 
   # ======================================================================================================================================================================================
   # FUNCTIONS
@@ -72,7 +72,7 @@ bb_plotManhattan <- function(bedfile, chrom, chromstart, chromend, col, ymax = 1
                    just = "center",
                    name = vp_name)
 
-    if (plot == TRUE){
+    if (draw == TRUE){
 
       grid.newpage()
 
@@ -103,7 +103,7 @@ bb_plotManhattan <- function(bedfile, chrom, chromstart, chromend, col, ymax = 1
   # IF PLOT == TRUE, DRAW GROBS
   # ======================================================================================================================================================================================
 
-  if (plot == TRUE){
+  if (draw == TRUE){
 
     grid.draw(points_grobs)
 
