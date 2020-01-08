@@ -19,14 +19,14 @@ bb_annotateLoops <- function(hic, loops, shift = 4, type = "box", lty = "dashed"
   errorcheck_bb_annotateLoops <- function(hic, loops, object){
 
     ## Check that plot is actually plotted
-    if (length(grep(pattern = hic$viewport$name, x = grid.ls(grobs = FALSE, viewport = TRUE, print = FALSE)$name)) == 0){
+    if (length(grep(pattern = hic$grobs$vp$name, x = grid.ls(grobs = FALSE, viewport = TRUE, print = FALSE)$name)) == 0){
 
       stop("Hi-C plot is not plotted.")
 
     }
 
     ## Check that input plot is a hic plot
-    if (class(hic) != "hic_plot"){
+    if (class(hic) != "bb_hic"){
 
       stop("Input plot is not a Hi-C plot.")
 
@@ -290,8 +290,8 @@ bb_annotateLoops <- function(hic, loops, shift = 4, type = "box", lty = "dashed"
   vp_name <- paste0("bb_loopAnnotation", length(grep(pattern = "bb_loopAnnotation", x = current_viewports)) + 1)
 
   ## Make viewport based on hic input viewport
-  vp <- viewport(height = hic$viewport$height, width = hic$viewport$width,
-                 x = hic$viewport$x, y = hic$viewport$y, clip = "on", xscale = hic$grobs$vp$xscale, yscale = hic$grobs$vp$yscale, just = hic$grobs$vp$justification,
+  vp <- viewport(height = hic$grobs$vp$height, width = hic$grobs$vp$width,
+                 x = hic$grobs$vp$x, y = hic$grobs$vp$y, clip = "on", xscale = hic$grobs$vp$xscale, yscale = hic$grobs$vp$yscale, just = hic$grobs$vp$justification,
                  name = vp_name)
   pushViewport(vp)
 

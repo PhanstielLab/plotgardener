@@ -479,8 +479,8 @@ bb_plotHic <- function(hic, chrom = 8, chromstart = 133600000, chromend = 134800
   scale <- vp_scale(hic_plot = hic_plot)
 
   ## Get viewport name
-  current_viewports <- lapply(current.vpTree()$children$bb_page$children, viewport_name)
-  vp_name <- paste0("bb_hic", length(grep(pattern = "bb_hic", x = current_viewports)) + 1)
+  currentViewports <- current_viewports()
+  vp_name <- paste0("bb_hic", length(grep(pattern = "bb_hic", x = currentViewports)) + 1)
 
   ## If placing information is provided but plot == TRUE, set up it's own viewport separate from bb_makepage
   ## Not translating into page_coordinates

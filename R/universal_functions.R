@@ -11,12 +11,28 @@ convert_gpath <- function(grob){
 
 }
 
+## Define a function to grab the name of a viewport
 viewport_name <- function(viewport){
 
   return(viewport$name)
 
 }
 
+## Define a function to get a list of current viewports
+current_viewports <- function(){
+
+  if (!"bb_page" %in% lapply(current.vpTree()$children, viewport_name)){
+
+    current <- lapply(current.vpTree()$children, viewport_name)
+
+  } else {
+
+    current <- lapply(current.vpTree()$children$bb_page$children, viewport_name)
+
+  }
+
+  return(current)
+}
 
 
 ## Define a function to convert plot x and y into center of plot based on justification
@@ -291,5 +307,11 @@ check_placement <- function(object){
 
 
 }
+
+
+
+
+
+
 
 

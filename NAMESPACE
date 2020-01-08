@@ -3,6 +3,7 @@
 export(bb_addScale)
 export(bb_addText)
 export(bb_annotateLoops)
+export(bb_groupPlots)
 export(bb_hGuide)
 export(bb_hideGuides)
 export(bb_labelGenome)
