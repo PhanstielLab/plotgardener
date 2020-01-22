@@ -293,7 +293,7 @@ bb_annotateLoops <- function(hic, loops, shift = 4, type = "box", lty = "dashed"
   vp <- viewport(height = hic$grobs$vp$height, width = hic$grobs$vp$width,
                  x = hic$grobs$vp$x, y = hic$grobs$vp$y, clip = "on", xscale = hic$grobs$vp$xscale, yscale = hic$grobs$vp$yscale, just = hic$grobs$vp$justification,
                  name = vp_name)
-  pushViewport(vp)
+  #pushViewport(vp)
 
   # ======================================================================================================================================================================================
   # INITIALIZE GTREE OF GROBS
@@ -320,8 +320,13 @@ bb_annotateLoops <- function(hic, loops, shift = 4, type = "box", lty = "dashed"
   }
 
   ## Go back to root viewport
-  upViewport()
+  #upViewport()
 
+<<<<<<< Updated upstream
+=======
+  #seekViewport(name = vp$name)
+  #popViewport()
+>>>>>>> Stashed changes
   # ======================================================================================================================================================================================
   # ADD GROBS TO OBJECT
   # ======================================================================================================================================================================================

@@ -258,6 +258,7 @@ bb_plotSignal <- function(signal, chrom, chromstart, chromend, range = NULL, lin
                                   linecolor = linecolor, lwd = lwd, fill = fill, fillcolor = fillcolor,
                                   transparency = transparency, binSize = binSize, binNum = NULL, ymax = ymax,
                                   width = width, height = height, x = x, y = y, justification = just, grobs = NULL), class = "bb_signal")
+  attr(x = signal_track, which = "plotted") <- draw
 
   # ======================================================================================================================================================================================
   # CATCH ERRORS

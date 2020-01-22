@@ -14,9 +14,8 @@
 #'
 #' @author Nicole Kramer
 #' @export
-
-bb_addScale <- function(plot, border = FALSE, height, width, x, y, orientation = "vertical", fontsize = 8,
-                      fontcolor = "grey", fontface = "plain", just = c("left", "top"), ...){
+bb_addColorScale <- function(plot, border = FALSE, height, width, x, y, orientation = "vertical", fontsize = 8,
+                      fontcolor = "dark grey", fontface = "plain", just = c("left", "top"), ...){
 
   # ======================================================================================================================================================================================
   # FUNCTIONS
@@ -86,9 +85,9 @@ bb_addScale <- function(plot, border = FALSE, height, width, x, y, orientation =
 
     digitLab <- textGrob(label = 0, x = 0.5, y = 0, just = c("center", "bottom"), default.units = "npc",
                        gp = gpar(fontsize = fontsize, col = fontcolor, fontface = fontface))
-    lowLab <- grid.text(label = min_val, x = 0.5, y = 0, just = c("center", "bottom"), default.units = "npc",
+    lowLab <- textGrob(label = bb_scale$min_val, x = 0.5, y = 0, just = c("center", "bottom"), default.units = "npc",
                        gp = gpar(fontsize = fontsize, col = fontcolor, fontface = fontface))
-    highLab <- grid.text(label = max_val, x = 0.5, y = 1, just = c("center", "top"), default.units = "npc",
+    highLab <- textGrob(label = bb_scale$max_val, x = 0.5, y = 1, just = c("center", "top"), default.units = "npc",
                         gp = gpar(fontsize = fontsize, col = fontcolor, fontface = fontface))
 
     lH <- convertHeight(x = grobHeight(lowLab), unitTo = "npc", valueOnly = T)
@@ -97,12 +96,13 @@ bb_addScale <- function(plot, border = FALSE, height, width, x, y, orientation =
 
     new_height <- 1 - (lH + hH + dH)
 
-    color_scale <- rasterGrob(rev(color_vector), width = unit(page_coords[[1]]$width, page_coords[[3]]), height = unit(new_height, "npc"), y = 1 - (hH + (0.5 * dH)), just = "top")
-    grid.draw(color_scale)
+    color_scale <- rasterGrob(rev(bb_scale$color_palette), width = page_coords$width, height = unit(new_height, "npc"),
+                              y = unit(1 - (hH + (0.5 * dH)), "npc"), x = unit(0.5, "npc"), just = "top")
+
 
     if (border == T){
 
-      borderGrob <- grid.rect(y = 1 - (hH + (0.5 * dH)), just = "top", width = unit(page_coords[[1]]$width, page_coords[[3]]), height = unit(new_height, "npc"),
+      borderGrob <- rectGrob(y = unit(1 - (hH + (0.5 * dH)), "npc"), just = "top", width = page_coords$width, height = unit(new_height, "npc"),
                 gp = gpar(col = "black", fill = NA) )
 
 
@@ -117,9 +117,9 @@ bb_addScale <- function(plot, border = FALSE, height, width, x, y, orientation =
 
     digitLab <- textGrob(label = 0, x = 0, y = 0.5, just = c("left", "center"), default.units = "npc",
                          gp = gpar(fontsize = fontsize, col = fontcolor, fontface = fontface))
-    lowLab <- grid.text(label = min_val, x = 0, y = 0.5, just = c("left", "center"), default.units = "npc",
+    lowLab <- textGrob(label = bb_scale$min_val, x = 0, y = 0.5, just = c("left", "center"), default.units = "npc",
                        gp = gpar(fontsize = fontsize, col = fontcolor, fontface = fontface))
-    highLab <- grid.text(label = max_val, x = 1, y = 0.5, just = c("right", "center"), default.units = "npc",
+    highLab <- textGrob(label = bb_scale$max_val, x = 1, y = 0.5, just = c("right", "center"), default.units = "npc",
                         gp = gpar(fontsize = fontsize, col = fontcolor, fontface = fontface))
 
     lW <- convertWidth(x = grobWidth(lowLab), unitTo = "npc", valueOnly = T)
@@ -128,13 +128,12 @@ bb_addScale <- function(plot, border = FALSE, height, width, x, y, orientation =
 
     new_width <- 1 - (hW + lW + dW)
 
-    color_scale <- rasterGrob(matrix(data = color_vector, nrow = 1, ncol = length(color_vector)), width = unit(new_width, "npc"), height = unit(page_coords[[1]]$height, page_coords[[3]]),
-                x = lW + (0.5 * dW), just = "left")
-    grid.draw(color_scale)
+    color_scale <- rasterGrob(matrix(data = bb_scale$color_palette, nrow = 1, ncol = length(color_vector)), width = unit(new_width, "npc"), height = page_coords$height,
+                x = unit(lW + (0.5 * dW), "npc"), just = "left")
 
     if (border == T){
 
-      borderGrob <- grid.rect(x = lW + (0.5 * dW), just = "left", width = unit(new_width, "npc"), height = unit(page_coords[[1]]$height, page_coords[[3]]),
+      borderGrob <- rectGrob(x = unit(lW + (0.5 * dW), "npc"), just = "left", width = unit(new_width, "npc"), height = page_coords$height,
                 gp = gpar(col = "black", fill = NA) )
 
     }
@@ -156,6 +155,7 @@ bb_addScale <- function(plot, border = FALSE, height, width, x, y, orientation =
 
   ## Add grobs to scale object
   bb_scale$grobs = get("scale_grobs", envir = bbEnv)
+  grid.draw(bb_scale$grobs)
 
   # ======================================================================================================================================================================================
   # RETURN OBJECT
