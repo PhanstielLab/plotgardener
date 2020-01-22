@@ -82,7 +82,7 @@ bb_labelGenome <- function(plot, x, y, just = c("left", "top"), rotation = 0,
                  x = page_coords$x, y = page_coords$y,
                  just = just,
                  name = vp_name)
-  pushViewport(vp)
+  #pushViewport(vp)
 
   # ======================================================================================================================================================================================
   # INITIALIZE GTREE
@@ -96,30 +96,31 @@ bb_labelGenome <- function(plot, x, y, just = c("left", "top"), rotation = 0,
 
   if (lineAbove == T){
 
-    line <- grid.segments(x0 = 0, x1 = 1, y0 = 1, y1 = 1, gp = gpar(col = linecolor, lwd = lwd))
-    chromLab <- grid.text(label = chrom, x = 0.5, y = 0.85, gp = gpar(fontface = "bold", fontsize = fontsize, col = fontcolor), just = c("center", "top"))
-    startLab <- grid.text(label = paste(round(chromstartlabel, 1), scale, sep = " "), x = 0, y = 0.85, just = c("left", "top"), gp = gpar(fontsize = fontsize, col = linecolor))
-    endLab <- grid.text(label = paste(round(chromendlabel, 1), scale, sep = " "), x = 1, y = 0.85, just = c("right","top"), gp = gpar(fontsize = fontsize, col = linecolor))
+    line <- segmentsGrob(x0 = 0, x1 = 1, y0 = 1, y1 = 1, gp = gpar(col = linecolor, lwd = lwd))
+    chromLab <- textGrob(label = chrom, x = 0.5, y = 0.85, gp = gpar(fontface = "bold", fontsize = fontsize, col = fontcolor), just = c("center", "top"))
+    startLab <- textGrob(label = paste(round(chromstartlabel, 1), scale, sep = " "), x = 0, y = 0.85, just = c("left", "top"), gp = gpar(fontsize = fontsize, col = linecolor))
+    endLab <- textGrob(label = paste(round(chromendlabel, 1), scale, sep = " "), x = 1, y = 0.85, just = c("right","top"), gp = gpar(fontsize = fontsize, col = linecolor))
 
   } else if (lineAbove == F){
 
-    line <- grid.segments(x0 = 0, x1 = 1, y0 = 0, y1 = 0, gp = gpar(col = linecolor, lwd = lwd))
-    chromLab <- grid.text(label = chrom, x = 0.5, y = 0.15, gp = gpar(fontface = "bold", fontsize = fontsize, col = fontcolor), just = c("center", "bottom"))
-    startLab <- grid.text(label = paste(round(chromstartlabel, 1), scale, sep = " "), x = 0, y = 0.15, just = c("left", "bottom"), gp = gpar(fontsize = fontsize, col = linecolor))
-    endLab <- grid.text(label = paste(round(chromendlabel, 1), scale, sep = " "), x = 1, y = 0.15, just = c("right", "bottom"), gp = gpar(fontsize = fontsize, col = linecolor))
+    line <- segmentsGrob(x0 = 0, x1 = 1, y0 = 0, y1 = 0, gp = gpar(col = linecolor, lwd = lwd))
+    chromLab <- textGrob(label = chrom, x = 0.5, y = 0.15, gp = gpar(fontface = "bold", fontsize = fontsize, col = fontcolor), just = c("center", "bottom"))
+    startLab <- textGrob(label = paste(round(chromstartlabel, 1), scale, sep = " "), x = 0, y = 0.15, just = c("left", "bottom"), gp = gpar(fontsize = fontsize, col = linecolor))
+    endLab <- textGrob(label = paste(round(chromendlabel, 1), scale, sep = " "), x = 1, y = 0.15, just = c("right", "bottom"), gp = gpar(fontsize = fontsize, col = linecolor))
 
   }
 
   assign("label_grobs", setChildren(get("label_grobs", envir = bbEnv), children = gList(line, chromLab, startLab, endLab)), envir = bbEnv)
 
   ## Go back to root viewport
-  upViewport()
+  #upViewport()
 
   # ======================================================================================================================================================================================
   # ASSIGN GROBS TO SCALE OBJECT
   # ======================================================================================================================================================================================
 
   bb_genome_label$grobs <- get("label_grobs", envir = bbEnv)
+  grid.draw(bb_genome_label$grobs)
 
   # ======================================================================================================================================================================================
   # RETURN OBJECT
