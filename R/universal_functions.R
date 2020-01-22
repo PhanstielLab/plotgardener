@@ -18,93 +18,47 @@ viewport_name <- function(viewport){
 
 }
 
+## Define a function that gets the children of a group viewport
+vp_children <- function(group_name){
+
+  children <- unlist(current.vpTree()$children$bb_page$children[group_name], recursive = F)[[2]]
+  return(children)
+
+}
+
 ## Define a function to get a list of current viewports
 current_viewports <- function(){
 
-  if (!"bb_page" %in% lapply(current.vpTree()$children, viewport_name)){
+  if (!"bb_page" %in% names(lapply(current.vpTree()$children, viewport_name))){
 
-    current <- lapply(current.vpTree()$children, viewport_name)
+    current <- as.list(names(lapply(current.vpTree()$children, viewport_name)))
 
   } else {
 
-    current <- lapply(current.vpTree()$children$bb_page$children, viewport_name)
+    ## Check for groups
+    page_children <- names(lapply(current.vpTree()$children$bb_page$children, viewport_name))
+
+    if (length(grep(pattern = "bb_group", x = page_children)) > 0){
+
+      group_vps <- as.list(page_children[grep(pattern = "bb_group", x = page_children)])
+
+      group_children <- unlist(lapply(group_vps, vp_children), recursive = F)
+
+      children_vps <- lapply(group_children, viewport_name)
+
+      current <- c(page_children, children_vps)
+
+    } else {
+
+      current <- as.list(page_children)
+
+    }
 
   }
 
   return(current)
 }
 
-
-## Define a function to convert plot x and y into center of plot based on justification
-adjust_coords <- function(plot, page_units, page_height){
-
-  plot_y <- convertY(unit(plot$y, units = plot$units), unitTo = page_units, valueOnly = TRUE)
-  plot_y <- page_height - plot_y
-  plot_y <- convertY(unit(plot_y, units = page_units), unitTo = plot$units, valueOnly = TRUE)
-
-  if (length(plot$just == 2)){
-
-    if ("left" %in% plot$just & "center" %in% plot$just){
-      ## convert the x-coordinate only
-      plot_x <- plot$x + (0.5 * plot$width)
-    } else if ("right" %in% plot$just & "center" %in% plot$just){
-      ## convert the x-coordinate only
-      plot_x <- plot$x - (0.5 * plot$width)
-    } else if ("center" %in% plot$just & "bottom" %in% plot$just){
-      ## convert the y-coordinate only
-      plot_x <- plot$x
-      plot_y <- plot_y + (0.5 * plot$height)
-    } else if ("center" %in% plot$just & "top" %in% plot$just){
-      ## convert the y-coordinate only
-      plot_x <- plot$x
-      plot_y <- plot_y - (0.5 * plot$height)
-    } else if ("left" %in% plot$just & "top" %in% plot$just){
-      ## convert x-coordinate and y-coordinate
-      plot_x <- plot$x + (0.5 * plot$width)
-      plot_y <- plot_y - (0.5 * plot$height)
-    } else if ("right" %in% plot$just & "top" %in% plot$just){
-      ## convert x-coordinate and y-coordinate
-      plot_x <- plot$x - (0.5 * plot$width)
-      plot_y <- plot_y - (0.5 * plot$height)
-    } else if ("left" %in% plot$just & "bottom" %in% plot$just){
-      ## convert x-coordinate and y-coordinate
-      plot_x <- plot$x + (0.5 * plot$width)
-      plot_y <- plot_y + (0.5 * plot$height)
-    } else if ("right" %in% plot$just & "bottom" %in% plot$just){
-      ## convert x-coordinate and y-coordinate
-      plot_x <- plot$x - (0.5 * plot$width)
-      plot_y <- plot_y + (0.5 * plot$height)
-    } else {
-      ## no conversion
-      plot_x <- plot$x
-    }
-
-  } else if (length(plot$just == 1)){
-
-    if (plot$just == "left"){
-      ## convert the x-coordinate only
-      plot_x <- plot$x + (0.5 * plot$width)
-    } else if (plot$just == "right"){
-      ## convert the x-coordinate only
-      plot_x <- plot$x - (0.5 * plot$width)
-    } else if (plot$just == "bottom"){
-      ## convert the y-coordinate only
-      plot_x <- plot$x
-      plot_y <- plot_y + (0.5 * plot$height)
-    } else if (plot$just == "top"){
-      ## convert the y-coordinate only
-      plot_x <- plot$x
-      plot_y <- plot_y - (0.5 * plot$height)
-    } else {
-      ## no conversion
-      plot_x <- plot$x
-    }
-
-  }
-
-  return(list(plot_x, plot_y))
-
-}
 
 ## Define a function to convert viewport x and y into center based on justification
 adjust_vpCoords <- function(viewport){
@@ -176,7 +130,6 @@ adjust_vpCoords <- function(viewport){
 
 }
 
-
 ## Define a function to change viewport x and y-coordinates to top left based on justification
 vp_topLeft <- function(viewport){
 
@@ -236,6 +189,65 @@ vp_topLeft <- function(viewport){
 
 }
 
+## Define a function to change viewport x and y-coordinates to bottom left based on justification
+vp_bottomLeft <- function(viewport){
+
+  if (length(viewport$justification == 2)){
+
+    if ("left" %in% viewport$justification & "center" %in% viewport$justification){
+      vp_x <- viewport$x
+      vp_y <- viewport$y - (0.5 * viewport$height)
+    } else if ("right" %in% viewport$justification & "center" %in% viewport$justification){
+      vp_x <- viewport$x - (viewport$width)
+      vp_y <- viewport$y - (0.5 * viewport$height)
+    } else if ("center" %in% viewport$justification & "bottom" %in% viewport$justification){
+      vp_x <- viewport$x - (0.5 * viewport$width)
+      vp_y <- viewport$y
+    } else if ("center" %in% viewport$justification & "top" %in% viewport$justification){
+      vp_x <- viewport$x - (0.5 * viewport$width)
+      vp_y <- viewport$y - (viewport$height)
+    } else if ("left" %in% viewport$justification & "top" %in% viewport$justification){
+      vp_x <- viewport$x
+      vp_y <- viewport$y - (viewport$height)
+    } else if ("right" %in% viewport$justification & "top" %in% viewport$justification){
+      vp_x <- viewport$x - (viewport$width)
+      vp_y <- viewport$y - (viewport$height)
+    } else if ("left" %in% pviewport$justification & "bottom" %in% viewport$justification){
+      vp_x <- viewport$x
+      vp_y <- viewport$y
+    } else if ("right" %in% viewport$justification & "bottom" %in% viewport$justification){
+      vp_x <- viewport$x - (viewport$width)
+      vp_y <- viewport$y
+    } else {
+      vp_x <- viewport$x - (0.5 * viewport$width)
+      vp_y <- viewport$y - (0.5 * viewport$height)
+    }
+
+  } else if (length(viewport$justification == 1)){
+
+    if (viewport$justification == "left"){
+      vp_x <- viewport$x
+      vp_y <- viewport$y - (0.5 * viewport$height)
+    } else if (viewport$justification == "right"){
+      vp_x <- viewport$x - (viewport$width)
+      vp_y <- viewport$y - (0.5 * viewport$height)
+    } else if (viewport$justification == "bottom"){
+      vp_x <- viewport$x - (0.5 * viewport$width)
+      vp_y <- viewport$y
+    } else if (viewport$justification == "top"){
+      vp_x <- viewport$x - (0.5 * viewport$width)
+      vp_y <- viewport$y - (viewport$height)
+    } else {
+      vp_x <- viewport$x - (0.5 * viewport$width)
+      vp_y <- viewport$y - (0.5 * viewport$height)
+    }
+
+  }
+
+  return(list(vp_x, vp_y))
+
+}
+
 ## Define a function to convert to page units
 convert_page <- function(object){
 
@@ -277,38 +289,58 @@ check_bbpage <- function(error){
 ## Define a function to check dimensions/placing coordinates
 check_placement <- function(object){
 
-  ## If giving placement coordinates
-  if (!is.null(object$x) | !is.null(object$y)){
+  if (attributes(object)$plotted == T){
 
-    ## 1. Need both an x and y coordinate
-    if (!is.null(object$x) & is.null(object$y)){
+    ## If giving placement coordinates
+    if (!is.null(object$x) | !is.null(object$y)){
 
-      stop("If giving placement coordinates, need to specify both x and y.")
+      ## 1. Need both an x and y coordinate
+      if (!is.null(object$x) & is.null(object$y)){
+
+        stop("If giving placement coordinates, need to specify both x and y.")
+
+      }
+
+      if (!is.null(object$y) & is.null(object$x)){
+
+        stop("If giving placement coordinates, need to specify both x and y.")
+
+      }
+
+      ## 2. Need plot dimensions
+      if (is.null(object$width) | is.null(object$height)){
+
+        stop("If giving placement coordinates, need to specify plot width and plot height.")
+
+      }
+
+      ## 3. Need a bb_page
+      check_bbpage(error = "Must make a BentoBox page with bb_makePage() before placing a plot.")
 
     }
 
-    if (!is.null(object$y) & is.null(object$x)){
-
-      stop("If giving placement coordinates, need to specify both x and y.")
-
-    }
-
-    ## 2. Need plot dimensions
-    if (is.null(object$width) | is.null(object$height)){
-
-      stop("If giving placement coordinates, need to specify plot width and plot height.")
-
-    }
-
-    ## 3. Need a bb_page
-    check_bbpage(error = "Must make a BentoBox page with bb_makePage() before placing a plot.")
-
-    }
-
+  }
 
 }
 
 
+check_group_placement <- function(object){
+
+  if (attributes(object)$plotted == T){
+
+    ## If plotting a group, need to provide placement coordinates
+    if(is.null(object$x) | is.null(object$y)){
+
+      stop("If placing a group, need to specify x and y coordinates.")
+
+    }
+
+    ## Need a bb_page
+    check_bbpage(error = "Must make a BentoBox page with bb_makePage() before placing a plot or group.")
+
+  }
+
+}
 
 
 
