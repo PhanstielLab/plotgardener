@@ -414,6 +414,7 @@ bb_plotHic <- function(hic, chrom = 8, chromstart = 133600000, chromend = 134800
                              additional_parameters = list(half = half,
                                                           resolution = resolution, althalf = althalf,
                                                           norm = norm)), class = "bb_hic")
+  attr(x = hic_plot, which = "plotted") <- draw
 
   # ======================================================================================================================================================================================
   # CATCH ERRORS
