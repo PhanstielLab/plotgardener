@@ -41,11 +41,7 @@ bb_plotSignal(signal, chrom, chromstart, chromend, range = NULL,
 
 \item{just}{a string or numeric vector specifying the justification of the viewport relative to its (x, y) location: "left", "right", "centre", "center", "bottom", "top"}
 
-\item{draw}{A logical value indicating whether graphics output should be produced
-
-
-
-#' @export}
+\item{draw}{A logical value indicating whether graphics output should be produced}
 
 \item{addscale}{TRUE/FALSE whether to add a y-axis}
 }

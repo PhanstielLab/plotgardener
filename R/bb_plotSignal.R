@@ -20,7 +20,7 @@
 #'
 #'
 #'
-#' #' @export
+#' @export
 
 bb_plotSignal <- function(signal, chrom, chromstart, chromend, range = NULL, linecolor = "grey", lwd = 1, yaxis = FALSE,
                            binSize = NA, binCap = TRUE, fill = FALSE, fillcolor = NA, transparency = NA, ymax = 1, width = NULL,
@@ -103,16 +103,16 @@ bb_plotSignal <- function(signal, chrom, chromstart, chromend, range = NULL, lin
 
   }
 
-  ## Define a function to check range of data in dataframe
-  check_signal_dataframe <- function(signal, signaltrack){
-
-    if (min(signal[,2]) > signaltrack$chromstart | max(signal[,2]) < signaltrack$chromend | min(signal[,3]) > signaltrack$chromstart | max(signal[,3]) < signaltrack$chromend){
-
-        warning("Data is incomplete for the specified range.")
-
-    }
-
-  }
+  # ## Define a function to check range of data in dataframe
+  # check_signal_dataframe <- function(signal, signaltrack){
+  #
+  #   if (min(signal[,2]) > signaltrack$chromstart | max(signal[,2]) < signaltrack$chromend | min(signal[,3]) > signaltrack$chromstart | max(signal[,3]) < signaltrack$chromend){
+  #
+  #       warning("Data is incomplete for the specified range.")
+  #
+  #   }
+  #
+  # }
 
   ## Define a function that reads in signal data for bb_plotSignal
   read_signal <- function(signal, signaltrack){
@@ -129,7 +129,7 @@ bb_plotSignal <- function(signal, chrom, chromstart, chromend, range = NULL, lin
        \'chromend\' in column 3, and \'counts\' in column 4.")
 
       ## check range of data in dataframe
-      check_signal_dataframe(signal = signal, signaltrack = signaltrack)
+      #check_signal_dataframe(signal = signal, signaltrack = signaltrack)
 
     }
 
@@ -254,7 +254,7 @@ bb_plotSignal <- function(signal, chrom, chromstart, chromend, range = NULL, lin
   # INITIALIZE OBJECT
   # ======================================================================================================================================================================================
 
-  signal_track <- structure(list(chrom = gsub(pattern = "[0-9]|X|Y",replacement = "", x =  chrom), chromstart = chromstart, chromend = chromend, range = range,
+  signal_track <- structure(list(chrom = chrom, chromstart = chromstart, chromend = chromend, range = range,
                                   linecolor = linecolor, lwd = lwd, fill = fill, fillcolor = fillcolor,
                                   transparency = transparency, binSize = binSize, binNum = NULL, ymax = ymax,
                                   width = width, height = height, x = x, y = y, justification = just, grobs = NULL), class = "bb_signal")
