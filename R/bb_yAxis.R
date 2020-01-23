@@ -14,7 +14,7 @@ bb_yAxis <- function(plot, at = NULL, label = TRUE, main = TRUE, gp = gpar()){
   # CATCH ERRORS
   # ======================================================================================================================================================================================
 
-  bb_checkpage(error = "Cannot add an y-axis without a BentoBox page.")
+  check_bbpage(error = "Cannot add an y-axis without a BentoBox page.")
 
   # ======================================================================================================================================================================================
   # INITIALIZE OBJECT
