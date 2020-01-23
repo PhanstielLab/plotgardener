@@ -39,8 +39,8 @@ bb_addText <- function(label, x, y, just = "center", rotation = 0, fontcolor = "
   page_units <- get("page_units", envir = bbEnv)
 
   ## Convert coordinates to page_units
-  new_x <- convertX(unit(x, units), unitTo = page_units, valueOnly = TRUE)
-  new_y <- convertY(unit(y, units), unitTo = page_units, valueOnly = TRUE)
+  new_x <- convertX(x, unitTo = page_units, valueOnly = TRUE)
+  new_y <- convertY(y, unitTo = page_units, valueOnly = TRUE)
 
   # ======================================================================================================================================================================================
   # DEFINE PARAMETERS
