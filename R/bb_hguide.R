@@ -1,11 +1,10 @@
 #' draws a horizontal guideline at a specified y-coordinate
 #'
-#' @param y y-coordinate to draw guide
-#' @param units units of y-coordinate
+#' @param y unit object specifying y-coordinate of guide
 #' @param col color of guideline
 
 #' @export
-bb_hGuide <- function(y, units = "inches", col = "grey55"){
+bb_hGuide <- function(y, col = "grey55"){
 
   ## Get the names of the current viewports
   # current_viewports <- lapply(current.vpTree()$children, viewport_name)
