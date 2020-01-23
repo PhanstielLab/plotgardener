@@ -103,16 +103,16 @@ bb_plotSignal <- function(signal, chrom, chromstart, chromend, range = NULL, lin
 
   }
 
-  # ## Define a function to check range of data in dataframe
-  # check_signal_dataframe <- function(signal, signaltrack){
-  #
-  #   if (min(signal[,2]) > signaltrack$chromstart | max(signal[,2]) < signaltrack$chromend | min(signal[,3]) > signaltrack$chromstart | max(signal[,3]) < signaltrack$chromend){
-  #
-  #       warning("Data is incomplete for the specified range.")
-  #
-  #   }
-  #
-  # }
+  ## Define a function to check range of data in dataframe
+  check_signal_dataframe <- function(signal, signaltrack){
+
+    if (min(signal[,2]) > signaltrack$chromstart | max(signal[,2]) < signaltrack$chromend | min(signal[,3]) > signaltrack$chromstart | max(signal[,3]) < signaltrack$chromend){
+
+        warning("Data is incomplete for the specified range.")
+
+    }
+
+  }
 
   ## Define a function that reads in signal data for bb_plotSignal
   read_signal <- function(signal, signaltrack){
@@ -323,9 +323,8 @@ bb_plotSignal <- function(signal, chrom, chromstart, chromend, range = NULL, lin
   if (nrow(linking_regions) > 0){
 
     linking_regions <- cbind(linking_regions, 0)
-
     ## Make column names the same
-    names(linking_regions)[(1:3)] <- c("chromstart", "chromend", "counts")
+    colnames(linking_regions)[(1:3)] <- c("chromstart", "chromend", "counts")
 
     ## Add linking regions to signaltrack
     signal <- rbind(signal, linking_regions)
