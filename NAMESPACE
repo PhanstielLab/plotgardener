@@ -14,6 +14,7 @@ export(bb_plotGenes)
 export(bb_plotGenesNEW)
 export(bb_plotHic)
 export(bb_plotManhattan)
+export(bb_plotSignal)
 export(bb_readBigwig)
 export(bb_readHic)
 export(bb_removePlot)
@@ -21,5 +22,3 @@ export(bb_showGuides)
 export(bb_vGuide)
 export(bb_xAxis)
 export(bb_yAxis)
-
-
