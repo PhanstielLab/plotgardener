@@ -9,15 +9,14 @@
 #' @param height height of plot
 #' @param x x-coordinate of plot
 #' @param y y-coordinate of plot
-#' @param just justification of plot
-#' @param units units of width, height, x, and y-coordinates
 #' @param fontsize fontsize of gene names
 #' @param exclude names of genes to exclude from gene labeling
 #' @export
 #'
 bb_plotGenes <- function(gtf, chrom = "chr8", chromstart = 133600000, chromend = 134800000, fontcolors = c("#ff3434", "#2929ff"),
-                         strandcolors = c("#ff7e7e", "#8a8aff"), width = 3, height = 1, x = 1, y = 1, just = c("left", "top"),
-                         units = "inches", fontsize = 12, exclude = ""){
+                         strandcolors = c("#ff7e7e", "#8a8aff"), width = unit(3, "inches"), height = unit(1, "inches"), x = unit(1, "inches"),
+                         y = unit(1, "inches"), just = c("left", "top"),
+                         fontsize = 12, exclude = ""){
 
   # ======================================================================================================================================================================================
   # FUNCTIONS
@@ -45,7 +44,7 @@ bb_plotGenes <- function(gtf, chrom = "chr8", chromstart = 133600000, chromend =
     }
 
     ## Draw exon boxes
-    exon <- grid.polygon(x = c(start, start, stop, stop), y = c(yBottom, yTop, yTop, yBottom),
+    exon <- polygonGrob(x = c(start, start, stop, stop), y = c(yBottom, yTop, yTop, yBottom),
                  gp = gpar(fill = fill, col = NA), default.units = "native")
     assign("genes_grobs", addGrob(get("genes_grobs", envir = bbEnv), child = exon), envir = bbEnv)
   }
@@ -73,7 +72,7 @@ bb_plotGenes <- function(gtf, chrom = "chr8", chromstart = 133600000, chromend =
       yTop <- 0.625
       yText <- 0.85
       fill <- strandcolors[1]
-      name <- grid.text(geneName, x = xText, y = yText, just = c("center", "bottom"),
+      name <- textGrob(geneName, x = xText, y = yText, just = c("center", "bottom"),
                 gp = gpar(fontsize = fontsize, col = fontcolors[1]), default.units = "native")
 
     } else if (strand == "-"){
@@ -82,11 +81,11 @@ bb_plotGenes <- function(gtf, chrom = "chr8", chromstart = 133600000, chromend =
       yTop <- 0.425
       yText <- 0.15
       fill <- strandcolors[2]
-      name <- grid.text(geneName, x = xText, y = yText, just = c("center", "top"),
+      name <- textGrob(geneName, x = xText, y = yText, just = c("center", "top"),
                 gp = gpar(fontsize = fontsize, col = fontcolors[2]), default.units = "native")
     }
 
-    gene <- grid.polygon(x = c(start, start, stop, stop),
+    gene <- polygonGrob(x = c(start, start, stop, stop),
                  y = c(yBottom, yTop, yTop, yBottom),
                  gp = gpar(fill = fill, col = NA), default.units = "native")
 
@@ -98,13 +97,13 @@ bb_plotGenes <- function(gtf, chrom = "chr8", chromstart = 133600000, chromend =
   # ======================================================================================================================================================================================
 
   genes_plot <- structure(list(chrom = chrom, chromstart = chromstart, chromend = chromend, width = width, height = height,
-                               x = x, y = y, units = units, just = just, grobs = NULL, viewport = NULL), class = "genes_plot")
+                               x = x, y = y, just = just, grobs = NULL), class = "genes_plot")
 
   # ======================================================================================================================================================================================
   # CATCH ERRORS
   # ======================================================================================================================================================================================
 
-  check_bbpage()
+  #check_bbpage()
 
   # ======================================================================================================================================================================================
   # READ IN GTF
@@ -144,17 +143,17 @@ bb_plotGenes <- function(gtf, chrom = "chr8", chromstart = 133600000, chromend =
   vp_name <- paste0("bb_genes", length(grep(pattern = "bb_genes", x = current_viewports)) + 1)
 
   ## Make viewport
-  vp <- viewport(height = unit(page_coords[[1]]$height, page_coords[[3]]), width = unit(page_coords[[1]]$width, page_coords[[3]]),
-                 x = unit(page_coords[[1]]$x, page_coords[[3]]), y = unit((page_coords[[2]]-page_coords[[1]]$y), page_coords[[3]]),
+  vp <- viewport(height = page_coords$height, width = page_coords$width,
+                 x = page_coords$x, y = page_coords$y,
                  xscale = c(chromstart, chromend), just = just, name = vp_name)
-  genes_plot$viewport <- vp
-  pushViewport(vp)
+  #genes_plot$viewport <- vp
+  #pushViewport(vp)
 
   # ======================================================================================================================================================================================
   # INITIALIZE GTREE
   # ======================================================================================================================================================================================
 
-  assign("genes_grobs", gTree(name = "genes_grobs"), envir = bbEnv)
+  assign("genes_grobs", gTree(vp = vp), envir = bbEnv)
 
   # ======================================================================================================================================================================================
   # PLOT
@@ -168,14 +167,15 @@ bb_plotGenes <- function(gtf, chrom = "chr8", chromstart = 133600000, chromend =
                   fontcolors = fontcolors, strandcolors = strandcolors, exclude = exclude))
 
   ## Go back up viewport
-  upViewport()
+  #upViewport()
 
   # ======================================================================================================================================================================================
   # ADD GROBS TO OBJECT
   # ======================================================================================================================================================================================
 
   ## Add grobs to scale object
-  genes_plot$grobs <- get("genes_grobs", envir = bbEnv)$children
+  genes_plot$grobs <- get("genes_grobs", envir = bbEnv)
+  grid.draw(genes_plot$grobs)
 
   # ======================================================================================================================================================================================
   # RETURN OBJECT
