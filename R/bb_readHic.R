@@ -262,7 +262,8 @@ bb_readHic <- function(hic, chrom, chromstart = NULL, chromend = NULL, resolutio
   # EXTRACT SPARSE UPPER TRIANGULAR USING STRAW
   # ======================================================================================================================================================================================
 
-  upper <- straw_R(sprintf("%s %s %s %s %s %i", norm, hic, chromRegion, altchromRegion, res_scale, resolution))
+  #upper <- straw_R(sprintf("%s %s %s %s %s %i", norm, hic, chromRegion, altchromRegion, res_scale, resolution))
+  upper <- strawr::straw(norm, hic, toString(chromRegion), toString(altchromRegion), res_scale, resolution)
 
   # ======================================================================================================================================================================================
   # REORDER COLUMNS BASED ON CHROM/ALTCHROM INPUT
