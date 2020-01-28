@@ -44,7 +44,7 @@ bb_plotGenes <- function(gtf, chrom = "chr8", chromstart = 133600000, chromend =
     }
 
     ## Draw exon boxes
-    exon <- polygonGrob(x = c(start, start, stop, stop), y = c(yBottom, yTop, yTop, yBottom),
+    exon <- grid.polygon(x = c(start, start, stop, stop), y = c(yBottom, yTop, yTop, yBottom),
                  gp = gpar(fill = fill, col = NA), default.units = "native")
     assign("genes_grobs", addGrob(get("genes_grobs", envir = bbEnv), child = exon), envir = bbEnv)
   }
@@ -72,7 +72,7 @@ bb_plotGenes <- function(gtf, chrom = "chr8", chromstart = 133600000, chromend =
       yTop <- 0.625
       yText <- 0.85
       fill <- strandcolors[1]
-      name <- textGrob(geneName, x = xText, y = yText, just = c("center", "bottom"),
+      name <- grid.text(geneName, x = xText, y = yText, just = c("center", "bottom"),
                 gp = gpar(fontsize = fontsize, col = fontcolors[1]), default.units = "native")
 
     } else if (strand == "-"){
@@ -81,11 +81,11 @@ bb_plotGenes <- function(gtf, chrom = "chr8", chromstart = 133600000, chromend =
       yTop <- 0.425
       yText <- 0.15
       fill <- strandcolors[2]
-      name <- textGrob(geneName, x = xText, y = yText, just = c("center", "top"),
+      name <- grid.text(geneName, x = xText, y = yText, just = c("center", "top"),
                 gp = gpar(fontsize = fontsize, col = fontcolors[2]), default.units = "native")
     }
 
-    gene <- polygonGrob(x = c(start, start, stop, stop),
+    gene <- grid.polygon(x = c(start, start, stop, stop),
                  y = c(yBottom, yTop, yTop, yBottom),
                  gp = gpar(fill = fill, col = NA), default.units = "native")
 
@@ -146,8 +146,8 @@ bb_plotGenes <- function(gtf, chrom = "chr8", chromstart = 133600000, chromend =
   vp <- viewport(height = page_coords$height, width = page_coords$width,
                  x = page_coords$x, y = page_coords$y,
                  xscale = c(chromstart, chromend), just = just, name = vp_name)
-  #genes_plot$viewport <- vp
-  #pushViewport(vp)
+
+  pushViewport(vp)
 
   # ======================================================================================================================================================================================
   # INITIALIZE GTREE
@@ -167,7 +167,7 @@ bb_plotGenes <- function(gtf, chrom = "chr8", chromstart = 133600000, chromend =
                   fontcolors = fontcolors, strandcolors = strandcolors, exclude = exclude))
 
   ## Go back up viewport
-  #upViewport()
+  upViewport()
 
   # ======================================================================================================================================================================================
   # ADD GROBS TO OBJECT
@@ -175,7 +175,7 @@ bb_plotGenes <- function(gtf, chrom = "chr8", chromstart = 133600000, chromend =
 
   ## Add grobs to scale object
   genes_plot$grobs <- get("genes_grobs", envir = bbEnv)
-  grid.draw(genes_plot$grobs)
+  #grid.draw(genes_plot$grobs)
 
   # ======================================================================================================================================================================================
   # RETURN OBJECT
