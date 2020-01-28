@@ -120,7 +120,7 @@ bb_plotSignal <- function(signal, chrom, chromstart, chromend, range = NULL, lin
     ## if .hic file, read in with bb_rhic
     if (!(class(signal) %in% "data.frame")){
 
-      signal <- bb_readBigwig(signal)
+      signal <- bb_readBigwig(filename = signal, chromosome = chrom, start = chromstart, end = chromend)
       signal <- signal[,c(1,2,3,6)]
 
     } else {
