@@ -8,8 +8,9 @@
 #' @param linecolor color of line outlining signal track
 #' @param lwd linewidth of line outlining signal track
 #' @param binSize the length of each bin in bp
-#' @param addscale TRUE/FALSE whether to add a y-axis
 #' @param binCap TRUE/FALSE whether the function will limit the number of bins to 8,000
+#' @param fillcolor if want plot to be filled, specify fillcolor
+#' @param transparency if want to specify a transparency for the fill, specify transparency
 #' @param ymax fraction of max y value to set as height of plot
 #' @param width A unit object specifying width
 #' @param height A unit object specifying height
@@ -18,12 +19,9 @@
 #' @param just a string or numeric vector specifying the justification of the viewport relative to its (x, y) location: "left", "right", "centre", "center", "bottom", "top"
 #' @param draw A logical value indicating whether graphics output should be produced
 #'
-#'
-#'
 #' @export
-
 bb_plotSignal <- function(signal, chrom, chromstart, chromend, range = NULL, linecolor = "grey", lwd = 1, yaxis = FALSE,
-                           binSize = NA, binCap = TRUE, fill = FALSE, fillcolor = NA, transparency = NA, ymax = 1, width = NULL,
+                           binSize = NA, binCap = TRUE, fillcolor = NULL, transparency = NULL, ymax = 1, width = NULL,
                            height = NULL, x = NULL, y = NULL, just = c("left", "top"), draw = TRUE, ...  ){
 
   # ======================================================================================================================================================================================
@@ -89,16 +87,7 @@ bb_plotSignal <- function(signal, chrom, chromstart, chromend, range = NULL, lin
 
     }
 
-    if (signaltrack$fill == TRUE){
 
-      if (is.na(signaltrack$fillcolor) | is.na(signaltrack$transparency)){
-
-        stop("If \'fill\' == TRUE, \'fillcolor\' and \'transparency\' must be provided.")
-
-      }
-
-
-    }
 
 
   }
@@ -203,7 +192,7 @@ bb_plotSignal <- function(signal, chrom, chromstart, chromend, range = NULL, lin
   ## Define a function that adds slightly negative values for polygon plotting if using fill
   add_neg_vals <- function(signal, signaltrack){
 
-    if (signaltrack$fill == TRUE){
+    if (!is.null(signaltrack$fillcolor)){
 
       signal <- rbind(c(min(signal[,1]), -0.00001), signal)
       signal <- rbind(signal, c(max(signal[,1]), -0.00001))
@@ -226,12 +215,18 @@ bb_plotSignal <- function(signal, chrom, chromstart, chromend, range = NULL, lin
   }
 
   ## Define a function that makes the signal grobs
-  signal_grobs <- function(signal, signaltrack){
+  signal_grobs <- function(signal, signaltrack, transparency){
 
-    if (signaltrack$fill == TRUE){
+    if (!is.null(signaltrack$fillcolor)){
 
       rgbcol = col2rgb(signaltrack$fillcolor)
-      finalcolor = rgb(rgbcol[1], rgbcol[2], rgbcol[3], alpha = signaltrack$transparency * 255, maxColorValue = 255)
+
+      if (is.null(transparency)){
+
+        transparency = 1
+      }
+
+      finalcolor = rgb(rgbcol[1], rgbcol[2], rgbcol[3], alpha = transparency * 255, maxColorValue = 255)
 
       signalGrob <- polygonGrob(x = signal[,1], y = signal[,2], gp = gpar(fill = finalcolor, lwd = signaltrack$lwd, col = signaltrack$linecolor), default.units = "native")
 
@@ -255,8 +250,8 @@ bb_plotSignal <- function(signal, chrom, chromstart, chromend, range = NULL, lin
   # ======================================================================================================================================================================================
 
   signal_track <- structure(list(chrom = chrom, chromstart = chromstart, chromend = chromend, range = range,
-                                  linecolor = linecolor, lwd = lwd, fill = fill, fillcolor = fillcolor,
-                                  transparency = transparency, binSize = binSize, binNum = NULL, ymax = ymax,
+                                  linecolor = linecolor, lwd = lwd, fillcolor = fillcolor,
+                                  binSize = binSize, binNum = NULL, ymax = ymax,
                                   width = width, height = height, x = x, y = y, justification = just, grobs = NULL), class = "bb_signal")
   attr(x = signal_track, which = "plotted") <- draw
 
@@ -399,7 +394,7 @@ bb_plotSignal <- function(signal, chrom, chromstart, chromend, range = NULL, lin
   # MAKE GROBS
   # ======================================================================================================================================================================================
 
-  signal_grobs(signal = signal, signaltrack = signal_track)
+  signal_grobs(signal = signal, signaltrack = signal_track, transparency = transparency)
 
   # ======================================================================================================================================================================================
   # SCALE
