@@ -60,7 +60,9 @@ bb_labelGenome <- function(plot, x, y, just = c("left", "top"), rotation = 0,
   # SET PARAMETERS
   # ======================================================================================================================================================================================
 
-  chrom <- paste0("chr", plot$chrom)
+  chromNumber <- gsub(pattern = "chr", replacement = "", x = plot$chrom)
+
+  chrom <- paste0("chr", chromNumber)
   chromstartlabel <- plot$chromstart/fact
   chromendlabel <- plot$chromend/fact
   bb_genome_label$width <- plot$width
