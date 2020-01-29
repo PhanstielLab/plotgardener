@@ -196,7 +196,7 @@ bb_annotateLoops <- function(hic, loops, shift = 4, type = "box", lty = "dashed"
   ## Define a function to add arrow annotation
   arrowAnnotation <- function(df, hic, object, shift){
 
-    if (hic$additonal_parameters$half == "bottom"){
+    if (hic$additional_parameters$half == "bottom"){
 
      x0 <- as.numeric(df[6]) + (0.5 * hic$additional_parameters$resolution)
      y0 <- as.numeric(df[2]) - (0.5 * hic$additional_parameters$resolution)
@@ -208,7 +208,7 @@ bb_annotateLoops <- function(hic, loops, shift = 4, type = "box", lty = "dashed"
      grid.draw(arrow1)
      assign("annotation_grobs", addGrob(gTree = get("annotation_grobs", envir = bbEnv), child = arrow1), envir = bbEnv)
 
-    } else if (hic$additional_paramters$half == "top"){
+    } else if (hic$additional_parameters$half == "top"){
 
       x0 <- as.numeric(df[2]) - (0.5 * hic$additional_parameters$resolution)
       y0 <- as.numeric(df[6]) + (0.5 * hic$additional_parameters$resolution)
@@ -228,7 +228,7 @@ bb_annotateLoops <- function(hic, loops, shift = 4, type = "box", lty = "dashed"
 
       ## TOP
       x02 <- as.numeric(df[2]) - (0.5 * hic$additional_parameters$resolution)
-      y02 <- as.numeric(df[6]) + (0.5 * hic$additional_parametersresolution)
+      y02 <- as.numeric(df[6]) + (0.5 * hic$additional_parameters$resolution)
 
       arrow1 <- segmentsGrob(x0 = x01, y0 = y01, x1 = x01 + (shift * hic$additional_parameters$resolution), y1 = y01 - (shift * hic$additional_parameters$resolution),
                     arrow = arrow(length = unit(0.1, "inches"), ends = "first", type = "closed"), default.units = "native",
@@ -275,9 +275,8 @@ bb_annotateLoops <- function(hic, loops, shift = 4, type = "box", lty = "dashed"
   # ======================================================================================================================================================================================
   # SUBSET FOR LOOPS IN REGION
   # ======================================================================================================================================================================================
-
-  ## Make sure region values in bedpe are numeric
-  loops[,1:6] <- dplyr::mutate_if(loops[,1:6], is.character, as.numeric)
+  ## Assuming loops are in first six columns only
+  loops <- loops[,1:6]
 
   loops_subset <- subset_loops(loops = loops, object = loop_annot)
 
