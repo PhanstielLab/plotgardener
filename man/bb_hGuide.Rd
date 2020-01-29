@@ -4,12 +4,10 @@
 \alias{bb_hGuide}
 \title{draws a horizontal guideline at a specified y-coordinate}
 \usage{
-bb_hGuide(y, units = "inches", col = "grey55")
+bb_hGuide(y, col = "grey55")
 }
 \arguments{
-\item{y}{y-coordinate to draw guide}
-
-\item{units}{units of y-coordinate}
+\item{y}{unit object specifying y-coordinate of guide}
 
 \item{col}{color of guideline}
 }

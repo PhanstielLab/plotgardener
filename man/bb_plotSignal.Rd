@@ -6,8 +6,8 @@
 \usage{
 bb_plotSignal(signal, chrom, chromstart, chromend, range = NULL,
   linecolor = "grey", lwd = 1, yaxis = FALSE, binSize = NA,
-  binCap = TRUE, fill = FALSE, fillcolor = NA, transparency = NA,
-  ymax = 1, width = NULL, height = NULL, x = NULL, y = NULL,
+  binCap = TRUE, fillcolor = NULL, transparency = NULL, ymax = 1,
+  width = NULL, height = NULL, x = NULL, y = NULL,
   just = c("left", "top"), draw = TRUE, ...)
 }
 \arguments{
@@ -29,6 +29,10 @@ bb_plotSignal(signal, chrom, chromstart, chromend, range = NULL,
 
 \item{binCap}{TRUE/FALSE whether the function will limit the number of bins to 8,000}
 
+\item{fillcolor}{if want plot to be filled, specify fillcolor}
+
+\item{transparency}{if want to specify a transparency for the fill, specify transparency}
+
 \item{ymax}{fraction of max y value to set as height of plot}
 
 \item{width}{A unit object specifying width}
@@ -42,8 +46,6 @@ bb_plotSignal(signal, chrom, chromstart, chromend, range = NULL,
 \item{just}{a string or numeric vector specifying the justification of the viewport relative to its (x, y) location: "left", "right", "centre", "center", "bottom", "top"}
 
 \item{draw}{A logical value indicating whether graphics output should be produced}
-
-\item{addscale}{TRUE/FALSE whether to add a y-axis}
 }
 \description{
 plots signal track data

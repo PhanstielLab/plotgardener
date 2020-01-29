@@ -6,9 +6,9 @@
 \usage{
 bb_plotGenes(gtf, chrom = "chr8", chromstart = 133600000,
   chromend = 134800000, fontcolors = c("#ff3434", "#2929ff"),
-  strandcolors = c("#ff7e7e", "#8a8aff"), width = 3, height = 1,
-  x = 1, y = 1, just = c("left", "top"), units = "inches",
-  fontsize = 12, exclude = "")
+  strandcolors = c("#ff7e7e", "#8a8aff"), width = unit(3, "inches"),
+  height = unit(1, "inches"), x = unit(1, "inches"), y = unit(1,
+  "inches"), just = c("left", "top"), fontsize = 12, exclude = "")
 }
 \arguments{
 \item{gtf}{gtf file or dataframe}
@@ -30,10 +30,6 @@ bb_plotGenes(gtf, chrom = "chr8", chromstart = 133600000,
 \item{x}{x-coordinate of plot}
 
 \item{y}{y-coordinate of plot}
-
-\item{just}{justification of plot}
-
-\item{units}{units of width, height, x, and y-coordinates}
 
 \item{fontsize}{fontsize of gene names}
 
