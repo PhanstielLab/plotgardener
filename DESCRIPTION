@@ -3,7 +3,7 @@ Title: Genome plotting with grid Graphics
 Version: 0.1.0
 Authors@R: person("Nicole", "Kramer", email = "nekramer@live.unc.edu", role = c("aut", "cre"))
 Description: What the package does (one paragraph).
-Depends: R (>= 3.5.0), grid, data.table, tidyr, dplyr, ggplotify
+Depends: R (>= 3.5.0), tools, grid, data.table, tidyr, dplyr, ggplotify
 biocViews: rtracklayer
 License: What license is it under?
 Encoding: UTF-8
