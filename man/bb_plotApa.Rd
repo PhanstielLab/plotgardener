@@ -4,9 +4,18 @@
 \alias{bb_plotApa}
 \title{plots an Apa plot}
 \usage{
-bb_plotApa(apa, loopNumber = 1, palette = colorRampPalette(c("white",
-  "dark red")), zrange = NULL, x = NULL, y = NULL, width = NULL,
-  height = NULL, just = c("center"), draw = TRUE)
+bb_plotApa(
+  apa,
+  loopNumber = 1,
+  palette = colorRampPalette(c("white", "dark red")),
+  zrange = NULL,
+  x = NULL,
+  y = NULL,
+  width = NULL,
+  height = NULL,
+  just = c("center"),
+  draw = TRUE
+)
 }
 \arguments{
 \item{apa}{path to APA txt file or an APA matrix}

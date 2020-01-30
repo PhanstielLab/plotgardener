@@ -4,8 +4,15 @@
 \alias{bb_annotateLoops}
 \title{annotates loops in a Hi-C plot}
 \usage{
-bb_annotateLoops(hic, loops, shift = 4, type = "box", lty = "dashed",
-  lwd = 1, col = "black")
+bb_annotateLoops(
+  hic,
+  loops,
+  shift = 4,
+  type = "box",
+  lty = "dashed",
+  lwd = 1,
+  col = "black"
+)
 }
 \arguments{
 \item{hic}{hic plot to annotate}

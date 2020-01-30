@@ -4,8 +4,15 @@
 \alias{bb_placePlot}
 \title{places a plot that has been previously created but not drawn}
 \usage{
-bb_placePlot(plot, x = NULL, y = NULL, width = NULL, height = NULL,
-  just = c("left", "top"), draw = T)
+bb_placePlot(
+  plot,
+  x = NULL,
+  y = NULL,
+  width = NULL,
+  height = NULL,
+  just = c("left", "top"),
+  draw = T
+)
 }
 \arguments{
 \item{plot}{plot to be placed}

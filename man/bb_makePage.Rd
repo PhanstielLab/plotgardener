@@ -4,8 +4,15 @@
 \alias{bb_makePage}
 \title{Makes a page for a BentoBox layout}
 \usage{
-bb_makePage(width = 8.5, height = 11, units = "inches",
-  showOutline = TRUE, showRuler = TRUE, xgrid = 0.5, ygrid = 0.5)
+bb_makePage(
+  width = 8.5,
+  height = 11,
+  units = "inches",
+  showOutline = TRUE,
+  showRuler = TRUE,
+  xgrid = 0.5,
+  ygrid = 0.5
+)
 }
 \arguments{
 \item{width}{page width, in specified units}
