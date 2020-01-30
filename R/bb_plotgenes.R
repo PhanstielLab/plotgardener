@@ -160,11 +160,15 @@ bb_plotGenes <- function(gtf, chrom = "chr8", chromstart = 133600000, chromend =
   # ======================================================================================================================================================================================
 
   ## Plot exons
-  invisible(apply(gtf_exons, 1, draw_exon, chromstart = chromstart, chromend = chromend, strandcolors = strandcolors))
+  if (nrow(gtf_exons) > 0){
+    invisible(apply(gtf_exons, 1, draw_exon, chromstart = chromstart, chromend = chromend, strandcolors = strandcolors))
+    ## Plot and label genes
+    invisible(apply(gtf_genes, 1, draw_gene, chromstart = chromstart, chromend = chromend, fontsize = fontsize,
+                    fontcolors = fontcolors, strandcolors = strandcolors, exclude = exclude))
+  }
 
-  ## Plot and label genes
-  invisible(apply(gtf_genes, 1, draw_gene, chromstart = chromstart, chromend = chromend, fontsize = fontsize,
-                  fontcolors = fontcolors, strandcolors = strandcolors, exclude = exclude))
+
+
 
   ## Go back up viewport
   upViewport()
