@@ -4,9 +4,19 @@
 \alias{bb_addText}
 \title{wrapper to draw a textGrob based on bb_makePage coordinates and units}
 \usage{
-bb_addText(label, x, y, just = "center", rotation = 0,
-  fontcolor = "black", transparency = 1, fontsize = 12, cex = 1,
-  fontfamily = "", fontface = "plain")
+bb_addText(
+  label,
+  x,
+  y,
+  just = "center",
+  rotation = 0,
+  fontcolor = "black",
+  transparency = 1,
+  fontsize = 12,
+  cex = 1,
+  fontfamily = "",
+  fontface = "plain"
+)
 }
 \arguments{
 \item{label}{character or expression}

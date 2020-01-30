@@ -4,11 +4,21 @@
 \alias{bb_plotGenes}
 \title{plots a track of genes}
 \usage{
-bb_plotGenes(gtf, chrom = "chr8", chromstart = 133600000,
-  chromend = 134800000, fontcolors = c("#ff3434", "#2929ff"),
-  strandcolors = c("#ff7e7e", "#8a8aff"), width = unit(3, "inches"),
-  height = unit(1, "inches"), x = unit(1, "inches"), y = unit(1,
-  "inches"), just = c("left", "top"), fontsize = 12, exclude = "")
+bb_plotGenes(
+  gtf,
+  chrom = "chr8",
+  chromstart = 133600000,
+  chromend = 134800000,
+  fontcolors = c("#ff3434", "#2929ff"),
+  strandcolors = c("#ff7e7e", "#8a8aff"),
+  width = unit(3, "inches"),
+  height = unit(1, "inches"),
+  x = unit(1, "inches"),
+  y = unit(1, "inches"),
+  just = c("left", "top"),
+  fontsize = 12,
+  exclude = ""
+)
 }
 \arguments{
 \item{gtf}{gtf file or dataframe}

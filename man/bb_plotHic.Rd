@@ -4,13 +4,28 @@
 \alias{bb_plotHic}
 \title{plots HiC interaction matrix}
 \usage{
-bb_plotHic(hic, chrom = 8, chromstart = 133600000,
-  chromend = 134800000, half = "both", resolution = 10000,
-  zrange = NULL, palette = colorRampPalette(c("white", "dark red")),
-  width = NULL, height = NULL, x = NULL, y = NULL,
-  just = c("left", "top"), draw = TRUE, altchrom = NULL,
-  altchromstart = NULL, altchromend = NULL, althalf = NULL,
-  norm = "KR", ...)
+bb_plotHic(
+  hic,
+  chrom = 8,
+  chromstart = 133600000,
+  chromend = 134800000,
+  half = "both",
+  resolution = 10000,
+  zrange = NULL,
+  palette = colorRampPalette(c("white", "dark red")),
+  width = NULL,
+  height = NULL,
+  x = NULL,
+  y = NULL,
+  just = c("left", "top"),
+  draw = TRUE,
+  altchrom = NULL,
+  altchromstart = NULL,
+  altchromend = NULL,
+  althalf = NULL,
+  norm = "KR",
+  ...
+)
 }
 \arguments{
 \item{hic}{path to .hic file or 3 column dataframe of counts}

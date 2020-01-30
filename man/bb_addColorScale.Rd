@@ -4,9 +4,20 @@
 \alias{bb_addColorScale}
 \title{adds color scale for heatmap plots}
 \usage{
-bb_addColorScale(plot, border = FALSE, height, width, x, y,
-  orientation = "vertical", fontsize = 8, fontcolor = "dark grey",
-  fontface = "plain", just = c("left", "top"), ...)
+bb_addColorScale(
+  plot,
+  border = FALSE,
+  height,
+  width,
+  x,
+  y,
+  orientation = "vertical",
+  fontsize = 8,
+  fontcolor = "dark grey",
+  fontface = "plain",
+  just = c("left", "top"),
+  ...
+)
 }
 \arguments{
 \item{plot}{plot to add scale to}

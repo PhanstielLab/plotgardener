@@ -4,8 +4,13 @@
 \alias{bb_readBigwig}
 \title{Reads a bigwig file and returns it as a data frame.}
 \usage{
-bb_readBigwig(filename, chromosome = NULL, start = 1,
-  end = .Machine$integer.max, strand = "*")
+bb_readBigwig(
+  filename,
+  chromosome = NULL,
+  start = 1,
+  end = .Machine$integer.max,
+  strand = "*"
+)
 }
 \arguments{
 \item{filename}{bigwig filename}

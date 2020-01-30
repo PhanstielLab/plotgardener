@@ -4,9 +4,19 @@
 \alias{bb_readHic}
 \title{extracts HiC data from .hic file using Straw}
 \usage{
-bb_readHic(hic, chrom, chromstart = NULL, chromend = NULL,
-  resolution = 10000, zrange = NULL, norm = "KR", res_scale = "BP",
-  altchrom = NULL, altchromstart = NULL, altchromend = NULL)
+bb_readHic(
+  hic,
+  chrom,
+  chromstart = NULL,
+  chromend = NULL,
+  resolution = 10000,
+  zrange = NULL,
+  norm = "KR",
+  res_scale = "BP",
+  altchrom = NULL,
+  altchromstart = NULL,
+  altchromend = NULL
+)
 }
 \arguments{
 \item{hic}{path to .hic file}

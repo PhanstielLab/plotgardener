@@ -4,9 +4,23 @@
 \alias{bb_zoomHic}
 \title{zooms and plots region of Hi-C plot}
 \usage{
-bb_zoomHic(hic, chromstart, chromend, altchromstart = NULL,
-  altchromend = NULL, x, y, width, height, units, just, lty = "solid",
-  lwd = 1, col = "black", lineSide = "right")
+bb_zoomHic(
+  hic,
+  chromstart,
+  chromend,
+  altchromstart = NULL,
+  altchromend = NULL,
+  x,
+  y,
+  width,
+  height,
+  units,
+  just,
+  lty = "solid",
+  lwd = 1,
+  col = "black",
+  lineSide = "right"
+)
 }
 \arguments{
 \item{hic}{hic plot to zoom inon}

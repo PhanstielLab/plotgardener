@@ -4,11 +4,28 @@
 \alias{bb_plotSignal}
 \title{plots signal track data}
 \usage{
-bb_plotSignal(signal, chrom, chromstart, chromend, range = NULL,
-  linecolor = "grey", lwd = 1, yaxis = FALSE, binSize = NA,
-  binCap = TRUE, fillcolor = NULL, transparency = NULL, ymax = 1,
-  width = NULL, height = NULL, x = NULL, y = NULL,
-  just = c("left", "top"), draw = TRUE, ...)
+bb_plotSignal(
+  signal,
+  chrom,
+  chromstart,
+  chromend,
+  range = NULL,
+  linecolor = "grey",
+  lwd = 1,
+  yaxis = FALSE,
+  binSize = NA,
+  binCap = TRUE,
+  fillcolor = NULL,
+  transparency = NULL,
+  ymax = 1,
+  width = NULL,
+  height = NULL,
+  x = NULL,
+  y = NULL,
+  just = c("left", "top"),
+  draw = TRUE,
+  ...
+)
 }
 \arguments{
 \item{signal}{signal track data to be plotted (bigwig file, bedgraph format dataframe, or bedgraph)}

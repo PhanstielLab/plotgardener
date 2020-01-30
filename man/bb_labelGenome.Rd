@@ -4,9 +4,19 @@
 \alias{bb_labelGenome}
 \title{Adds genome coordinates to the axis of a plot}
 \usage{
-bb_labelGenome(plot, x, y, just = c("left", "top"), rotation = 0,
-  scale = "bp", fontsize = 10, fontcolor = "black", lineAbove = T,
-  linecolor = "black", lwd = 1)
+bb_labelGenome(
+  plot,
+  x,
+  y,
+  just = c("left", "top"),
+  rotation = 0,
+  scale = "bp",
+  fontsize = 10,
+  fontcolor = "black",
+  lineAbove = T,
+  linecolor = "black",
+  lwd = 1
+)
 }
 \arguments{
 \item{plot}{plot to annotate}

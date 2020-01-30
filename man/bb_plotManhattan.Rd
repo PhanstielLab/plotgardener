@@ -4,9 +4,22 @@
 \alias{bb_plotManhattan}
 \title{plots a Manhattan plot}
 \usage{
-bb_plotManhattan(bedfile, chrom, chromstart, chromend, col, ymax = 1,
-  ylim = NULL, x = NULL, y = NULL, width = NULL, height = NULL,
-  just = "center", draw = TRUE, ...)
+bb_plotManhattan(
+  bedfile,
+  chrom,
+  chromstart,
+  chromend,
+  col,
+  ymax = 1,
+  ylim = NULL,
+  x = NULL,
+  y = NULL,
+  width = NULL,
+  height = NULL,
+  just = "center",
+  draw = TRUE,
+  ...
+)
 }
 \arguments{
 \item{bedfile}{bedfile for Manhattan plot}
