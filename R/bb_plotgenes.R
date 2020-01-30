@@ -30,7 +30,6 @@ bb_plotGenes <- function(gtf, chrom = "chr8", chromstart = 133600000, chromend =
 
     ## Separate plus and minus strand
     if (strand == "+"){
-
       yBottom <- 0.5
       yTop <- 0.7
       fill <- strandcolors[1]
@@ -161,12 +160,17 @@ bb_plotGenes <- function(gtf, chrom = "chr8", chromstart = 133600000, chromend =
 
   ## Plot exons
   if (nrow(gtf_exons) > 0){
+
     invisible(apply(gtf_exons, 1, draw_exon, chromstart = chromstart, chromend = chromend, strandcolors = strandcolors))
-    ## Plot and label genes
-    invisible(apply(gtf_genes, 1, draw_gene, chromstart = chromstart, chromend = chromend, fontsize = fontsize,
-                    fontcolors = fontcolors, strandcolors = strandcolors, exclude = exclude))
+
   }
 
+  if(nrow(gtf_genes) > 0){
+
+  ## Plot and label genes
+  invisible(apply(gtf_genes, 1, draw_gene, chromstart = chromstart, chromend = chromend, fontsize = fontsize,
+                  fontcolors = fontcolors, strandcolors = strandcolors, exclude = exclude))
+  }
 
 
 
