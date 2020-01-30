@@ -400,7 +400,7 @@ bb_plotSignal <- function(signal, chrom, chromstart, chromend, range = NULL, lin
   } else {
 
     ## just making a flat line
-    signalGrob <- segmentsGrob(x0 = 0, y0 = 0, x1 = 1, y1 = 0, gp = gpar(col = signaltrack$linecolor, lwd = signaltrack$lwd))
+    signalGrob <- segmentsGrob(x0 = 0, y0 = 0, x1 = 1, y1 = 0, gp = gpar(col = signal_track$linecolor, lwd = signal_track$lwd))
     ## Add grob to gtree
     assign("signal_grobs", addGrob(gTree = get("signal_grobs", envir = bbEnv), child = signalGrob), envir = bbEnv)
     warning("Not enough data within range to plot.")
