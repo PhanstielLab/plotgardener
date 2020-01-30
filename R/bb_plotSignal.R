@@ -135,16 +135,8 @@ bb_plotSignal <- function(signal, chrom, chromstart, chromend, range = NULL, lin
     ## Filter for desired region
     signal <- signal[which(signal[,1] == signaltrack$chrom & ((signal[,2] > signaltrack$chromstart & signal[,2] < signaltrack$chromend | signal[,3] > signaltrack$chromstart &
                                                                  signal[,3] < signaltrack$chromend ))), (2:4)]
-
     ## Remove any duplicate rows
     signal <- signal[!duplicated(signal),]
-
-    ## Exit if there isn't enough data
-    if (nrow(signal) < 2){
-
-      stop("Not enough data within range to plot.")
-
-    }
 
     return(signal)
 
@@ -285,73 +277,80 @@ bb_plotSignal <- function(signal, chrom, chromstart, chromend, range = NULL, lin
 
   signal <- format_data(signal = signal, signaltrack = signal_track)
 
-  # ======================================================================================================================================================================================
-  # CHECK AND ADJUST BIN NUMBER
-  # ======================================================================================================================================================================================
+  if (nrow(signal) >= 2){
 
-  signal_track <- check_binNum(signaltrack = signal_track, binCap = binCap)
+    # ======================================================================================================================================================================================
+    # CHECK AND ADJUST BIN NUMBER
+    # ======================================================================================================================================================================================
 
-  # ======================================================================================================================================================================================
-  # BIN DATA
-  # ======================================================================================================================================================================================
+    signal_track <- check_binNum(signaltrack = signal_track, binCap = binCap)
 
-  binned_signal <- data.frame(seq(signal_track$chromstart, signal_track$chromend - signal_track$binSize, signal_track$binSize),
-                              seq(signal_track$chromstart + signal_track$binSize, signal_track$chromend, signal_track$binSize),
-                              rep(0, times = signal_track$binNum))
+    # ======================================================================================================================================================================================
+    # BIN DATA
+    # ======================================================================================================================================================================================
 
-  ## Add column names
-  colnames(binned_signal) = c("chromstart", "chromend", "counts")
+    binned_signal <- data.frame(seq(signal_track$chromstart, signal_track$chromend - signal_track$binSize, signal_track$binSize),
+                                seq(signal_track$chromstart + signal_track$binSize, signal_track$chromend, signal_track$binSize),
+                                rep(0, times = signal_track$binNum))
 
-  binned_signal[,3] = apply(binned_signal, 1, bin_signal, signal = signal)
+    ## Add column names
+    colnames(binned_signal) = c("chromstart", "chromend", "counts")
 
-  ## Use binned data as signal track
-  signal <- binned_signal
+    binned_signal[,3] = apply(binned_signal, 1, bin_signal, signal = signal)
 
-  # ======================================================================================================================================================================================
-  # LINKING REGIONS
-  # ======================================================================================================================================================================================
+    ## Use binned data as signal track
+    signal <- binned_signal
 
-  linking_regions <- cbind(signal[1:(nrow(signal) - 1), 2], signal[2:nrow(signal), 1])
+    # ======================================================================================================================================================================================
+    # LINKING REGIONS
+    # ======================================================================================================================================================================================
 
-  linking_regions <- matrix(linking_regions[which(linking_regions[,1] != linking_regions[,2]),], ncol = 2)
+    linking_regions <- cbind(signal[1:(nrow(signal) - 1), 2], signal[2:nrow(signal), 1])
 
-  if (nrow(linking_regions) > 0){
+    linking_regions <- matrix(linking_regions[which(linking_regions[,1] != linking_regions[,2]),], ncol = 2)
 
-    linking_regions <- cbind(linking_regions, 0)
-    ## Make column names the same
-    colnames(linking_regions)[(1:3)] <- c("chromstart", "chromend", "counts")
+    if (nrow(linking_regions) > 0){
 
-    ## Add linking regions to signaltrack
-    signal <- rbind(signal, linking_regions)
+      linking_regions <- cbind(linking_regions, 0)
+      ## Make column names the same
+      colnames(linking_regions)[(1:3)] <- c("chromstart", "chromend", "counts")
+
+      ## Add linking regions to signaltrack
+      signal <- rbind(signal, linking_regions)
+    }
+
+    # ======================================================================================================================================================================================
+    # SORT AND COMBINE DATA
+    # ======================================================================================================================================================================================
+
+    ## Sort data
+    signal <- signal[order(signal[,1]),]
+
+    ## Convert two columns to one
+    signal <- cbind(as.vector(t(signal[,c(1, 2)])), as.vector(t(signal[,c(3, 3)])))
+
+    # ======================================================================================================================================================================================
+    # Y-LIMITS
+    # ======================================================================================================================================================================================
+
+    ## Determine add slightly negative value to both ends to ensure proper polygon plotting
+    signal <- add_neg_vals(signal = signal, signaltrack = signal_track)
+
+    ## Determine the y-limits
+    signal_track <- adjust_range(signal = signal, signaltrack = signal_track)
+
+
   }
 
-  # ======================================================================================================================================================================================
-  # SORT AND COMBINE DATA
-  # ======================================================================================================================================================================================
 
-  ## Sort data
-  signal <- signal[order(signal[,1]),]
-
-  ## Convert two columns to one
-  signal <- cbind(as.vector(t(signal[,c(1, 2)])), as.vector(t(signal[,c(3, 3)])))
-
-  # ======================================================================================================================================================================================
-  # Y-LIMITS
-  # ======================================================================================================================================================================================
-
-  ## Determine add slighltly negative value to both ends to ensure proper polygon plotting
-  signal <- add_neg_vals(signal = signal, signaltrack = signal_track)
-
-  ## Determine the y-limits
-  signal_track <- adjust_range(signal = signal, signaltrack = signal_track)
 
   # ======================================================================================================================================================================================
   # VIEWPORTS
   # ======================================================================================================================================================================================
 
   ## Get viewport name
-  current_viewports <- lapply(current.vpTree()$children$bb_page$children, viewport_name)
-  vp_name <- paste0("bb_signal", length(grep(pattern = "bb_signal", x = current_viewports)) + 1)
+  currentViewports <- current_viewports()
+  vp_name <- paste0("bb_signal", length(grep(pattern = "bb_signal", x = currentViewports)) + 1)
 
   ## If placing information is provided but plot == TRUE, set up it's own viewport separate from bb_makepage
   ## Not translating into page_coordinates
@@ -394,7 +393,20 @@ bb_plotSignal <- function(signal, chrom, chromstart, chromend, range = NULL, lin
   # MAKE GROBS
   # ======================================================================================================================================================================================
 
-  signal_grobs(signal = signal, signaltrack = signal_track, transparency = transparency)
+  if (nrow(signal) >= 2){
+
+    signal_grobs(signal = signal, signaltrack = signal_track, transparency = transparency)
+
+  } else {
+
+    ## just making a flat line
+    signalGrob <- segmentsGrob(x0 = 0, y0 = 0, x1 = 1, y1 = 0, gp = gpar(col = signaltrack$linecolor, lwd = signaltrack$lwd))
+    ## Add grob to gtree
+    assign("signal_grobs", addGrob(gTree = get("signal_grobs", envir = bbEnv), child = signalGrob), envir = bbEnv)
+    warning("Not enough data within range to plot.")
+
+  }
+
 
   # ======================================================================================================================================================================================
   # SCALE
