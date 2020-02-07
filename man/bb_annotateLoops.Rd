@@ -9,7 +9,7 @@ bb_annotateLoops(
   loops,
   shift = 4,
   type = "box",
-  lty = "dashed",
+  lty = "solid",
   lwd = 1,
   col = "black"
 )
