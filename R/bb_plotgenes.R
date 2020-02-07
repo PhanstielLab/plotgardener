@@ -1,194 +1,318 @@
-#' plots a track of genes
-#' @param gtf gtf file or dataframe
-#' @param chrom chromsome of gene region as a string
-#' @param chromstart chromstart of gene region
-#' @param chromend chromend of gene region
-#' @param fontcolors a vector of 2 indicating the font colors for the plus and minus strands
-#' @param strandcolors a vector of 2 indicating the strang color for the plus and minus strands
-#' @param width width of plot
-#' @param height height of plot
-#' @param x x-coordinate of plot
-#' @param y y-coordinate of plot
-#' @param fontsize fontsize of gene names
-#' @param exclude names of genes to exclude from gene labeling
+
+
 #' @export
-#'
-bb_plotGenes <- function(gtf, chrom = "chr8", chromstart = 133600000, chromend = 134800000, fontcolors = c("#ff3434", "#2929ff"),
-                         strandcolors = c("#ff7e7e", "#8a8aff"), width = unit(3, "inches"), height = unit(1, "inches"), x = unit(1, "inches"),
-                         y = unit(1, "inches"), just = c("left", "top"),
-                         fontsize = 12, exclude = ""){
+bb_plotGenes <- function(assembly = "hg19", chrom, chromstart, chromend, fontcolors = c("#2929ff", "#ff3434"),
+                            strandcolors = c("#8a8aff", "#ff7e7e"), width = NULL, height = unit(0.6, "inches"), x = NULL, y = NULL,
+                            just = c("left", "top"), fontsize = 8, exclude = "", draw = T){
 
   # ======================================================================================================================================================================================
   # FUNCTIONS
   # ======================================================================================================================================================================================
-  ## Define a function to draw boxes where exons are
-  draw_exon <- function(df, chromstart, chromend, strandcolors){
 
-    start <- as.numeric(df[2])
-    stop <- as.numeric(df[3])
-    strand <- df[4]
+  parse_starts <- function(range){
+    ## Separate character range into two numeric coords
+    range <- strsplit(range, "-")[[1]]
+    start <- as.numeric(range[1])
 
-    ## Separate plus and minus strand
-    if (strand == "+"){
-      yBottom <- 0.5
-      yTop <- 0.7
-      fill <- strandcolors[1]
-
-    } else if (strand == "-"){
-
-      yBottom <- 0.5
-      yTop <- 0.3
-      fill <- strandcolors[2]
-
-    }
-
-    ## Draw exon boxes
-    exon <- grid.polygon(x = c(start, start, stop, stop), y = c(yBottom, yTop, yTop, yBottom),
-                 gp = gpar(fill = fill, col = NA), default.units = "native")
-    assign("genes_grobs", addGrob(get("genes_grobs", envir = bbEnv), child = exon), envir = bbEnv)
+    return(start)
   }
 
-  ## Define a function to draw lines where genes are
-  draw_gene <- function(df, chromstart, chromend, fontsize, fontcolors, strandcolors, exclude){
+  parse_widths <- function(range){
+    ## Separate character range into two numeric coords
+    range <- strsplit(range, "-")[[1]]
+    start <- as.numeric(range[1])
+    end <- as.numeric(range[2])
+    width <- end - start
 
-    start <- as.numeric(df[2])
-    stop <- as.numeric(df[3])
-    strand <- df[4]
-    geneName <- df[6]
+    return(width)
+  }
 
-    ## Get center of gene
-    xText <- mean(c(start, stop))
+  exon_grobs <- function(df, strandcolors){
 
-    ## Filter out unwanted gene names
-    if(geneName %in% exclude){
-      geneName <- ""
+    exon_ranges <- as.list(strsplit(as.character(df[7]), ",")[[1]])
+
+    starts <- lapply(exon_ranges, parse_starts)
+    widths <- lapply(exon_ranges, parse_widths)
+    exons_dataframe <- cbind(unlist(starts), unlist(widths))
+
+    if (df[3] == "+"){
+
+      exons <- rectGrob(x = exons_dataframe[,1],
+               y = unit(0.63, "npc"),
+               just = "left",
+               width = exons_dataframe[,2],
+               height = unit(0.18, "npc"),
+               gp = gpar(fill = strandcolors[1],
+                         col = strandcolors[1],
+                         lwd = 1.25, alpha = 0.5),
+               vp = vp_gene,
+               default.units = "native")
+
+    } else if (df[3] == "-"){
+
+      exons <- rectGrob(x = exons_dataframe[,1],
+                        y = unit(0.37, "npc"),
+                        just = "left",
+                        width = exons_dataframe[,2],
+                        height = unit(0.18, "npc"),
+                        gp = gpar(fill = strandcolors[2],
+                                  col = strandcolors[2],
+                                  lwd = 1.25, alpha = 0.5),
+                        vp = vp_gene,
+                        default.units = "native")
+
     }
 
-    ## Define y positions for lines and text for + and - strands
-    if (strand == "+"){
+    assign("gene_grobs", addGrob(get("gene_grobs", envir = bbEnv), child = exons), envir = bbEnv)
 
-      yBottom <- 0.575
-      yTop <- 0.625
-      yText <- 0.85
-      fill <- strandcolors[1]
-      name <- grid.text(geneName, x = xText, y = yText, just = c("center", "bottom"),
-                gp = gpar(fontsize = fontsize, col = fontcolors[1]), default.units = "native")
+  }
 
-    } else if (strand == "-"){
+  utr_grobs <- function(df, strandcolors){
 
-      yBottom <- 0.375
-      yTop <- 0.425
-      yText <- 0.15
-      fill <- strandcolors[2]
-      name <- grid.text(geneName, x = xText, y = yText, just = c("center", "top"),
-                gp = gpar(fontsize = fontsize, col = fontcolors[2]), default.units = "native")
+    utr_ranges <- as.list(strsplit(as.character(df[8]), ",")[[1]])
+
+    if (length(utr_ranges) != 0){
+
+      starts <- lapply(utr_ranges, parse_starts)
+      widths <- lapply(utr_ranges, parse_widths)
+      utrs_dataframe <- cbind(unlist(starts), unlist(widths))
+
+      if (df[3] == "+"){
+
+        # invisible(lapply(utr_ranges, utr_grobs, yCoord = unit(0.63, "npc"), strandcolor = strandcolors[1]))
+        utrs <- rectGrob(x = utrs_dataframe[,1],
+                         y = unit(0.63, "npc"),
+                         just = "left",
+                         width = utrs_dataframe[,2],
+                         height = unit(0.1, "npc"),
+                         gp = gpar(fill = strandcolors[1], col = NA, alpha = 0.5),
+                         vp = vp_gene,
+                         default.units = "native")
+
+
+      } else if (df[3] == "-"){
+
+        #invisible(lapply(utr_ranges, utr_grobs, yCoord = unit(0.37, "npc"), strandcolor = strandcolors[2]))
+        utrs <- rectGrob(x = utrs_dataframe[,1],
+                         y = unit(0.37, "npc"),
+                         just = "left",
+                         width = utrs_dataframe[,2],
+                         height = unit(0.1, "npc"),
+                         gp = gpar(fill = strandcolors[2], col = NA, alpha = 0.5),
+                         vp = vp_gene,
+                         default.units = "native")
+
+      }
+
+      assign("gene_grobs", addGrob(get("gene_grobs", envir = bbEnv), child = utrs), envir = bbEnv)
     }
 
-    gene <- grid.polygon(x = c(start, start, stop, stop),
-                 y = c(yBottom, yTop, yTop, yBottom),
-                 gp = gpar(fill = fill, col = NA), default.units = "native")
 
-    assign("genes_grobs", setChildren(get("genes_grobs", envir = bbEnv), children = gList(name, gene)), envir = bbEnv)
+
   }
 
   # ======================================================================================================================================================================================
   # INITIALIZE OBJECT
   # ======================================================================================================================================================================================
 
-  genes_plot <- structure(list(chrom = chrom, chromstart = chromstart, chromend = chromend, width = width, height = height,
-                               x = x, y = y, just = just, grobs = NULL), class = "genes_plot")
+  genes_plot <- structure(list(chrom = gsub(pattern = "chr", replacement = "", x = chrom), chromstart = chromstart, chromend = chromend, width = width, height = height,
+                               x = x, y = y, justification = just, grobs = NULL), class = "bb_genes")
+  attr(x = genes_plot, which = "plotted") <- draw
 
   # ======================================================================================================================================================================================
   # CATCH ERRORS
   # ======================================================================================================================================================================================
 
-  #check_bbpage()
+  check_placement(object = genes_plot)
 
   # ======================================================================================================================================================================================
-  # READ IN GTF
+  # GET APPROPRIATE BUILD DATA
   # ======================================================================================================================================================================================
 
-  if (class(gtf) %in% "data.frame"){
-    gtf_df = gtf
+  if (assembly == "hg19"){
 
-  } else {
-    gtf <- rtracklayer::import(gtf)
-    gtf_df <- as.data.frame(gtf)
+    data <- bb_gene_data
+    #data <- get("GENE_DATA", envir = globalenv())
+
   }
 
-  gtf_df <- data.frame(gtf_df$seqnames, gtf_df$start, gtf_df$end, gtf_df$strand, gtf_df$type, gtf_df$gene_name)
-  colnames(gtf_df) <- c("seqnames", "start", "end", "strand", "type", "gene_name")
+  assign("DATA", data, envir = globalenv())
 
   # ======================================================================================================================================================================================
-  # SUBSET GTF
+  # SUBSET DATA
   # ======================================================================================================================================================================================
 
-  ## Subset for region
-  gtf_subset <- gtf_df[which(gtf_df$seqnames == chrom & gtf_df$start >= chromstart & gtf_df$end <= chromend ), ]
+  ## Chromosome and any overlapping regions
+  data <- data[which(data$Chromosome == chrom & data$Start <= chromend & data$Stop >= chromstart),]
 
-  ## Split into exons and genes
-  gtf_exons <- gtf_subset[which(gtf_subset$type == "exon"), ]
-  gtf_genes <- gtf_subset[which(gtf_subset$type == "gene"), ]
+  ## Genes on plus strand and genes on minus strand
+  plus_genes <- data[which(data$Strand == "+"),]
+  minus_genes <- data[which(data$Strand == "-"),]
 
   # ======================================================================================================================================================================================
   # VIEWPORTS
   # ======================================================================================================================================================================================
 
-  ## Convert coordinates into same units as page
-  page_coords <- convert_page(object = genes_plot)
+  ## Define text grob for "+" and "-" viewport scaling
+  tG <- textGrob(label = "+", gp = gpar(fontsize = fontsize))
 
   ## Name viewport
-  current_viewports <- lapply(current.vpTree()$children$bb_page$children, viewport_name)
-  vp_name <- paste0("bb_genes", length(grep(pattern = "bb_genes", x = current_viewports)) + 1)
+  currentViewports <- current_viewports()
+  vp_name <- paste0("bb_genes", length(grep(pattern = "bb_genes", x = currentViewports)) + 1)
 
-  ## Make viewport
-  vp <- viewport(height = page_coords$height, width = page_coords$width,
-                 x = page_coords$x, y = page_coords$y,
-                 xscale = c(chromstart, chromend), just = just, name = vp_name)
+  if (is.null(x) & is.null(y)){
 
-  pushViewport(vp)
+    ## Make viewport for "+" and "-" labels to the left of the gene track
+    vp_labelW <- convertWidth(widthDetails(tG) * 2, unitTo = "npc")
+
+    vp_label <- viewport(height = unit(.12, "npc"),
+                         width = vp_labelW,
+                         x = unit(0, "npc"), y = unit(0.5, "npc"), just = "left",
+                         name = paste0(vp_name, "_label"))
+
+
+    vp_gene <- viewport(height = unit(.12, "npc"), width = unit(1, "npc") - vp_labelW,
+                   x = vp_labelW, y = unit(0.5, "npc"),
+                   clip = "on",
+                   xscale = c(chromstart, chromend),
+                   just = "left",
+                   name = vp_name)
+
+    if (draw == TRUE){
+
+      grid.newpage()
+
+    }
+
+  } else {
+
+    ## Convert coordinates into same units as page
+    page_coords <- convert_page(object = genes_plot)
+
+    ## Make viewport for gene track
+    vp_gene <- viewport(height = page_coords$height, width = page_coords$width,
+                   x = page_coords$x, y = page_coords$y,
+                   clip = "on",
+                   xscale = c(chromstart, chromend),
+                   just = just,
+                   name = vp_name)
+
+    ## Make viewport for "+" and "-" labels based on above viewport
+    topLeft_vp <- vp_topLeft(viewport = vp_gene)
+
+    vp_label <- viewport(height = page_coords$height,
+                         width = convertWidth(widthDetails(tG) * 2, unitTo = get("page_units", envir = bbEnv)),
+                         x = topLeft_vp[[1]], y = topLeft_vp[[2]], just = c("right", "top"),
+                         name = paste0(vp_name, "_label"))
+  }
 
   # ======================================================================================================================================================================================
-  # INITIALIZE GTREE
+  # INITIALIZE GTREE FOR GROBS
   # ======================================================================================================================================================================================
 
-  assign("genes_grobs", gTree(vp = vp), envir = bbEnv)
+  assign("gene_grobs", gTree(), envir = bbEnv)
 
   # ======================================================================================================================================================================================
-  # PLOT
+  # MAKE GROBS
   # ======================================================================================================================================================================================
 
-  ## Plot exons
-  if (nrow(gtf_exons) > 0){
+  ##########################################################
+  ## GENE LINES
+  ##########################################################
 
-    invisible(apply(gtf_exons, 1, draw_exon, chromstart = chromstart, chromend = chromend, strandcolors = strandcolors))
+  plus_genes$width <- plus_genes$Stop - plus_genes$Start
+
+  minus_genes$width <- minus_genes$Stop - minus_genes$Start
+
+  plus_geneGrobs <- rectGrob(x = plus_genes$Start, y = unit(0.63, "npc"),
+                       width = plus_genes$width, height = unit(0.05, "npc"),
+                       just = "left", gp = gpar(fill = strandcolors[1], col = NA, alpha = 0.5),
+                       vp = vp_gene, default.units = "native")
+
+  minus_geneGrobs <- rectGrob(x = minus_genes$Start, y = unit(0.37, "npc"),
+                             width = minus_genes$width, height = unit(0.05, "npc"),
+                             just = "left", gp = gpar(fill = strandcolors[2], col = NA, alpha = 0.5),
+                             vp = vp_gene, default.units = "native")
+
+  assign("gene_grobs", addGrob(get("gene_grobs", envir = bbEnv), child = plus_geneGrobs), envir = bbEnv)
+  assign("gene_grobs", addGrob(get("gene_grobs", envir = bbEnv), child = minus_geneGrobs), envir = bbEnv)
+
+  ##########################################################
+  ## GENE EXONS
+  ##########################################################
+
+  invisible(apply(data, 1, exon_grobs, strandcolors = strandcolors))
+
+  ##########################################################
+  ## GENE UTRS
+  ##########################################################
+
+  invisible(apply(data, 1, utr_grobs, strandcolors = strandcolors))
+
+  ##########################################################
+  ## GENE NAME LABELS
+  ##########################################################
+  assign("plus_genes", plus_genes, envir = globalenv())
+  assign("minus_genes", minus_genes, envir = globalenv())
+
+
+  ## Add column with center location of each gene label
+  plus_genes$label <- rowMeans(plus_genes[c("Start", "Stop")])
+  minus_genes$label <- rowMeans(minus_genes[c("Start", "Stop")])
+
+  ## Declutter labels
+  ## Sort data according to their gene length so longer ones will be labeled first
+  plus_genes <- plus_genes[order(plus_genes$width, decreasing = TRUE),]
+  minus_genes <- minus_genes[order(minus_genes$width, decreasing = TRUE),]
+
+  ## Additional prioritization can go here
+
+
+  ## Grobs
+  plus_names <- textGrob(label = plus_genes$Gene,
+                         x = plus_genes$label, y = unit(0.85, "npc"),
+                         gp = gpar(col = fontcolors[1], fontsize = fontsize),
+                         vp = vp_gene,
+                         default.units = "native",
+                         check.overlap = TRUE)
+
+  minus_names <- textGrob(label = minus_genes$Gene,
+                         x = minus_genes$label, y = unit(0.15, "npc"),
+                         gp = gpar(col = fontcolors[2], fontsize = fontsize),
+                         vp = vp_gene,
+                         default.units = "native",
+                         check.overlap = TRUE)
+
+  assign("gene_grobs", addGrob(get("gene_grobs", envir = bbEnv), child = plus_names), envir = bbEnv)
+  assign("gene_grobs", addGrob(get("gene_grobs", envir = bbEnv), child = minus_names), envir = bbEnv)
+
+
+  ##########################################################
+  ## + AND - LABELS
+  ##########################################################
+
+  plus_label <- textGrob(label = "+", y = unit(0.63, "npc"), gp = gpar(fontsize = fontsize + 2, col = fontcolors[1], fontface = "bold"), vp = vp_label)
+  minus_label <- textGrob(label = "\u2013", y = unit(0.37, "npc"), gp = gpar(fontsize = fontsize + 2, col = fontcolors[2], fontface = "bold"), vp = vp_label)
+
+  assign("gene_grobs", addGrob(get("gene_grobs", envir = bbEnv), child = plus_label), envir = bbEnv)
+  assign("gene_grobs", addGrob(get("gene_grobs", envir = bbEnv), child = minus_label), envir = bbEnv)
+
+  # ======================================================================================================================================================================================
+  # IF PLOT == TRUE, DRAW GROBS
+  # ======================================================================================================================================================================================
+
+  if (draw == TRUE){
+
+    grid.draw(get("gene_grobs", envir = bbEnv))
 
   }
 
-  if(nrow(gtf_genes) > 0){
-
-  ## Plot and label genes
-  invisible(apply(gtf_genes, 1, draw_gene, chromstart = chromstart, chromend = chromend, fontsize = fontsize,
-                  fontcolors = fontcolors, strandcolors = strandcolors, exclude = exclude))
-  }
-
-
-
-  ## Go back up viewport
-  upViewport()
 
   # ======================================================================================================================================================================================
   # ADD GROBS TO OBJECT
   # ======================================================================================================================================================================================
 
-  ## Add grobs to scale object
-  genes_plot$grobs <- get("genes_grobs", envir = bbEnv)
-  #grid.draw(genes_plot$grobs)
-
-  # ======================================================================================================================================================================================
-  # RETURN OBJECT
-  # ======================================================================================================================================================================================
+  genes_plot$grobs <- get("gene_grobs", envir = bbEnv)
 
   return(genes_plot)
-
 }

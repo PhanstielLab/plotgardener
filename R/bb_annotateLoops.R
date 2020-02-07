@@ -9,7 +9,7 @@
 #' @param col line color
 #'
 #' @export
-bb_annotateLoops <- function(hic, loops, shift = 4, type = "box", lty = "dashed", lwd = 1, col = "black"){
+bb_annotateLoops <- function(hic, loops, shift = 4, type = "box", lty = "solid", lwd = 1, col = "black"){
 
   # ======================================================================================================================================================================================
   # FUNCTIONS
@@ -266,7 +266,7 @@ bb_annotateLoops <- function(hic, loops, shift = 4, type = "box", lty = "dashed"
   # READ IN BEDPE FILE
   # ======================================================================================================================================================================================
 
-  if (!class(loops) %in% "data.frame"){
+  if (!"data.frame" %in% class(loops)){
 
     loops <- data.table::fread(loops)
 
@@ -277,6 +277,10 @@ bb_annotateLoops <- function(hic, loops, shift = 4, type = "box", lty = "dashed"
   # ======================================================================================================================================================================================
   ## Assuming loops are in first six columns only
   loops <- loops[,1:6]
+
+  ##MAY HAVE TO CHANGE THIS PART, BUT GETTING RID OF ANY "CHR" AND CONVERTING TO NUMERIC IN COLUMNS 1 AND 4
+  loops[,1] <- as.numeric(gsub(pattern = "chr", replacement = "", x = loops[,1]))
+  loops[,4] <- as.numeric(gsub(pattern = "chr", replacement = "", x = loops[,4]))
 
   loops_subset <- subset_loops(loops = loops, object = loop_annot)
 
