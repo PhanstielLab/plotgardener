@@ -19,15 +19,15 @@ bb_readBigwig <- function(filename, chrom = NULL, chromstart = 1, chromend = .Ma
     stop("Filename cannot be NULL.")
 
   }
-  if (end < start - 1) {
+  if (chromend < chromstart - 1) {
 
     stop("End must be >= start - 1.")
 
   }
 
 
-  if(!is.null(chromosome)) {
-    as.data.frame(import.bw(filename, which=GRanges(paste0(chromosome, ':', start, '-', end, ':', strand))))
+  if(!is.null(chrom)) {
+    as.data.frame(import.bw(filename, which=GRanges(paste0(chrom, ':', chromstart, '-', chromend, ':', strand))))
   } else {
     as.data.frame(import.bw(filename))
   }
