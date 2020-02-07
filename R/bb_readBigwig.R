@@ -1,13 +1,13 @@
 #' Reads a bigwig file and returns it as a data frame.
 #'
 #' @param filename bigwig filename
-#' @param chromosome chromosome as a string, e.g. "chr3"
-#' @param start first base number to consider
-#' @param end last base number to consider
+#' @param chrom chromosome as a string, e.g. "chr3"
+#' @param chromstart first base number to consider
+#' @param chromend last base number to consider
 #' @param strand strand, i.e. '+', '-', or '*'
 #' @export
 #'
-bb_readBigwig <- function(filename, chromosome = NULL, start = 1, end = .Machine$integer.max, strand = '*') {
+bb_readBigwig <- function(filename, chrom = NULL, chromstart = 1, chromend = .Machine$integer.max, strand = '*') {
 
   if (!hasArg(filename)) {
 

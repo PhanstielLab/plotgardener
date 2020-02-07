@@ -6,20 +6,20 @@
 \usage{
 bb_readBigwig(
   filename,
-  chromosome = NULL,
-  start = 1,
-  end = .Machine$integer.max,
+  chrom = NULL,
+  chromstart = 1,
+  chromend = .Machine$integer.max,
   strand = "*"
 )
 }
 \arguments{
 \item{filename}{bigwig filename}
 
-\item{chromosome}{chromosome as a string, e.g. "chr3"}
+\item{chrom}{chromosome as a string, e.g. "chr3"}
 
-\item{start}{first base number to consider}
+\item{chromstart}{first base number to consider}
 
-\item{end}{last base number to consider}
+\item{chromend}{last base number to consider}
 
 \item{strand}{strand, i.e. '+', '-', or '*'}
 }
