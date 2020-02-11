@@ -12,12 +12,11 @@
 #' @param lineAbove TRUE/FALSE indicating if line should be above or below text
 #' @param linecolor linecolor
 #' @param lwd linewidth
-
-
+#' @param fontfamily fontfamily for text
 #' @export
 
 bb_labelGenome <- function(plot, x, y, just = c("left", "top"), rotation = 0,
-                           scale = "bp", fontsize = 10, fontcolor = "black", lineAbove = T, linecolor = "black", lwd = 1){
+                           scale = "bp", fontsize = 10, fontcolor = "black", lineAbove = T, linecolor = "black", lwd = 1, fontfamily = ""){
 
   # ======================================================================================================================================================================================
   # FUNCTIONS
@@ -31,7 +30,7 @@ bb_labelGenome <- function(plot, x, y, just = c("left", "top"), rotation = 0,
   # ======================================================================================================================================================================================
 
   bb_genome_label <- structure(list(x = x, y = y, width = NULL, height = NULL, scale = scale, grobs = NULL,
-                                    gpar = list(fontsize = fontsize, fontcolor = fontcolor, linecolor = linecolor, lwd = lwd)), class = "genome_label")
+                                    gpar = list(fontsize = fontsize, fontcolor = fontcolor, linecolor = linecolor, lwd = lwd, fontfamily = fontfamily)), class = "genome_label")
 
   # ======================================================================================================================================================================================
   # CATCH ERRORS
@@ -54,7 +53,7 @@ bb_labelGenome <- function(plot, x, y, just = c("left", "top"), rotation = 0,
     fact = 1000
   }
 
-  tg <- textGrob(label = scale, x = 0.5, y = 0.5, default.units = "npc", gp = gpar(fontsize = fontsize))
+  tg <- textGrob(label = scale, x = 0.5, y = 0.5, default.units = "npc", gp = gpar(fontsize = fontsize, fontfamily = fontfamily))
 
   # ======================================================================================================================================================================================
   # SET PARAMETERS
@@ -73,8 +72,8 @@ bb_labelGenome <- function(plot, x, y, just = c("left", "top"), rotation = 0,
   # ======================================================================================================================================================================================
 
   ## Name viewport
-  current_viewports <- lapply(current.vpTree()$children$bb_page$children, viewport_name)
-  vp_name <- paste0("bb_genomeLabel", length(grep(pattern = "bb_genomeLabel", x = current_viewports)) + 1)
+  currentViewports <- current_viewports()
+  vp_name <- paste0("bb_genomeLabel", length(grep(pattern = "bb_genomeLabel", x = currentViewports)) + 1)
 
   ## Convert coordinates into same units as page
   page_coords <- convert_page(object = bb_genome_label)
@@ -99,16 +98,16 @@ bb_labelGenome <- function(plot, x, y, just = c("left", "top"), rotation = 0,
   if (lineAbove == T){
 
     line <- segmentsGrob(x0 = 0, x1 = 1, y0 = 1, y1 = 1, gp = gpar(col = linecolor, lwd = lwd))
-    chromLab <- textGrob(label = chrom, x = 0.5, y = 0.85, gp = gpar(fontface = "bold", fontsize = fontsize, col = fontcolor), just = c("center", "top"))
-    startLab <- textGrob(label = paste(round(chromstartlabel, 1), scale, sep = " "), x = 0, y = 0.85, just = c("left", "top"), gp = gpar(fontsize = fontsize, col = linecolor))
-    endLab <- textGrob(label = paste(round(chromendlabel, 1), scale, sep = " "), x = 1, y = 0.85, just = c("right","top"), gp = gpar(fontsize = fontsize, col = linecolor))
+    chromLab <- textGrob(label = chrom, x = 0.5, y = 0.85, gp = gpar(fontface = "bold", fontsize = fontsize, col = fontcolor, fontfamily = fontfamily), just = c("center", "top"))
+    startLab <- textGrob(label = paste(round(chromstartlabel, 1), scale, sep = " "), x = 0, y = 0.85, just = c("left", "top"), gp = gpar(fontsize = fontsize, col = linecolor, fontfamily = fontfamily))
+    endLab <- textGrob(label = paste(round(chromendlabel, 1), scale, sep = " "), x = 1, y = 0.85, just = c("right","top"), gp = gpar(fontsize = fontsize, col = linecolor, fontfamily = fontfamily))
 
   } else if (lineAbove == F){
 
     line <- segmentsGrob(x0 = 0, x1 = 1, y0 = 0, y1 = 0, gp = gpar(col = linecolor, lwd = lwd))
-    chromLab <- textGrob(label = chrom, x = 0.5, y = 0.15, gp = gpar(fontface = "bold", fontsize = fontsize, col = fontcolor), just = c("center", "bottom"))
-    startLab <- textGrob(label = paste(round(chromstartlabel, 1), scale, sep = " "), x = 0, y = 0.15, just = c("left", "bottom"), gp = gpar(fontsize = fontsize, col = linecolor))
-    endLab <- textGrob(label = paste(round(chromendlabel, 1), scale, sep = " "), x = 1, y = 0.15, just = c("right", "bottom"), gp = gpar(fontsize = fontsize, col = linecolor))
+    chromLab <- textGrob(label = chrom, x = 0.5, y = 0.15, gp = gpar(fontface = "bold", fontsize = fontsize, col = fontcolor, fontfamily = fontfamily), just = c("center", "bottom"))
+    startLab <- textGrob(label = paste(round(chromstartlabel, 1), scale, sep = " "), x = 0, y = 0.15, just = c("left", "bottom"), gp = gpar(fontsize = fontsize, col = linecolor, fontfamily = fontfamily))
+    endLab <- textGrob(label = paste(round(chromendlabel, 1), scale, sep = " "), x = 1, y = 0.15, just = c("right", "bottom"), gp = gpar(fontsize = fontsize, col = linecolor, fontfamily = fontfamily))
 
   }
 

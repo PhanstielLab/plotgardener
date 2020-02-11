@@ -9,13 +9,14 @@
 #' @param orientation "vertical" or "horizontal" orientation
 #' @param fontsize fontsize for text
 #' @param fontcolor fontcolor for text
+#' @param fontfamily fontfamily for text
 #' @param fontface fontface for text
 #' @param just justification of scale viewport
 #'
 #' @author Nicole Kramer
 #' @export
 bb_addColorScale <- function(plot, border = FALSE, height, width, x, y, orientation = "vertical", fontsize = 8,
-                      fontcolor = "dark grey", fontface = "plain", just = c("left", "top"), ...){
+                      fontcolor = "dark grey", fontfamily = "", fontface = "plain", just = c("left", "top"), ...){
 
   # ======================================================================================================================================================================================
   # FUNCTIONS
@@ -46,7 +47,7 @@ bb_addColorScale <- function(plot, border = FALSE, height, width, x, y, orientat
 
   bb_scale <- structure(list(color_palette = plot$color_palette, min_val = plot$zrange[1], max_val = plot$zrange[2],
                               orientation = orientation, height = height, width = width, x = x, y = y, grobs = NULL,
-                             gpar = list(fontsize = fontsize, fontcolor = fontcolor, fontface = fontface)), class = "bb_scale")
+                             gpar = list(fontsize = fontsize, fontcolor = fontcolor, fontface = fontface, fontfamily = fontfamily)), class = "bb_scale")
 
   # ======================================================================================================================================================================================
   # CALL ERRORS
@@ -63,8 +64,8 @@ bb_addColorScale <- function(plot, border = FALSE, height, width, x, y, orientat
   page_coords <- convert_page(object = bb_scale)
 
   ## Make viewport name
-  current_viewports <- lapply(current.vpTree()$children$bb_page$children, viewport_name)
-  vp_name <- paste0("bb_scale", length(grep(pattern = "bb_scale", x = current_viewports)) + 1)
+  currentViewports <- current_viewports()
+  vp_name <- paste0("bb_scale", length(grep(pattern = "bb_scale", x = currentViewports)) + 1)
 
   ## Make viewport
   vp <- viewport(height = page_coords$height, width = page_coords$width,
@@ -84,11 +85,11 @@ bb_addColorScale <- function(plot, border = FALSE, height, width, x, y, orientat
   if (orientation == "vertical"){
 
     digitLab <- textGrob(label = 0, x = 0.5, y = 0, just = c("center", "bottom"), default.units = "npc",
-                       gp = gpar(fontsize = fontsize, col = fontcolor, fontface = fontface))
+                       gp = gpar(fontsize = fontsize, col = fontcolor, fontface = fontface, fontfamily = fontfamily))
     lowLab <- textGrob(label = bb_scale$min_val, x = 0.5, y = 0, just = c("center", "bottom"), default.units = "npc",
-                       gp = gpar(fontsize = fontsize, col = fontcolor, fontface = fontface))
+                       gp = gpar(fontsize = fontsize, col = fontcolor, fontface = fontface, fontfamily = fontfamily))
     highLab <- textGrob(label = bb_scale$max_val, x = 0.5, y = 1, just = c("center", "top"), default.units = "npc",
-                        gp = gpar(fontsize = fontsize, col = fontcolor, fontface = fontface))
+                        gp = gpar(fontsize = fontsize, col = fontcolor, fontface = fontface, fontfamily = fontfamily))
 
     lH <- convertHeight(x = grobHeight(lowLab), unitTo = "npc", valueOnly = T)
     hH <- convertHeight(x = grobHeight(highLab), unitTo = "npc", valueOnly = T)
@@ -116,11 +117,11 @@ bb_addColorScale <- function(plot, border = FALSE, height, width, x, y, orientat
   if (orientation == "horizontal"){
 
     digitLab <- textGrob(label = 0, x = 0, y = 0.5, just = c("left", "center"), default.units = "npc",
-                         gp = gpar(fontsize = fontsize, col = fontcolor, fontface = fontface))
+                         gp = gpar(fontsize = fontsize, col = fontcolor, fontface = fontface, fontfamily = fontfamily))
     lowLab <- textGrob(label = bb_scale$min_val, x = 0, y = 0.5, just = c("left", "center"), default.units = "npc",
-                       gp = gpar(fontsize = fontsize, col = fontcolor, fontface = fontface))
+                       gp = gpar(fontsize = fontsize, col = fontcolor, fontface = fontface, fontfamily = fontfamily))
     highLab <- textGrob(label = bb_scale$max_val, x = 1, y = 0.5, just = c("right", "center"), default.units = "npc",
-                        gp = gpar(fontsize = fontsize, col = fontcolor, fontface = fontface))
+                        gp = gpar(fontsize = fontsize, col = fontcolor, fontface = fontface, fontfamily = fontfamily))
 
     lW <- convertWidth(x = grobWidth(lowLab), unitTo = "npc", valueOnly = T)
     hW <- convertWidth(x = grobWidth(highLab), unitTo = "npc", valueOnly = T)

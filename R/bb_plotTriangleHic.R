@@ -441,6 +441,7 @@ bb_plotTriangleHic <- function(hic, chrom, chromstart, chromend, resolution = 10
 
   hic_plot <- structure(list(chrom = chrom, chromstart = chromstart, chromend = chromend, x = x, y = y, width = width, height = NULL, justification = just,
                              zrange = zrange, color_palette = NULL, grobs = NULL), class = "bb_trianglehic")
+  hic_plot$height <-unit(convertWidth(width, unitTo = get("page_units", envir = bbEnv), valueOnly = T)*0.5, get("page_units", envir = bbEnv))
   attr(x = hic_plot, which = "plotted") <- draw
 
   # ======================================================================================================================================================================================
@@ -515,7 +516,7 @@ bb_plotTriangleHic <- function(hic, chrom, chromstart, chromend, resolution = 10
 
     ## Get sides of viewport based on input width
     vp_side <- (convertWidth(width, unitTo = get("page_units", envir = bbEnv), valueOnly = T))/sqrt(two)
-    hic_plot$height <-unit(convertWidth(width, unitTo = get("page_units", envir = bbEnv), valueOnly = T)*0.5, get("page_units", envir = bbEnv))
+
 
     ## Get bottom left point of triangle (hence bottom left of actual viewport) based on just
     bottom_coords <- convert_just(width = width, x = x, y = y, just = just)
