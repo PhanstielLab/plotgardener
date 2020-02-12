@@ -136,8 +136,6 @@ bb_plotGenes <- function(assembly = "hg19", chrom, chromstart, chromend, fontcol
 
   }
 
-  assign("DATA", data, envir = globalenv())
-
   # ======================================================================================================================================================================================
   # SUBSET DATA
   # ======================================================================================================================================================================================
@@ -224,18 +222,25 @@ bb_plotGenes <- function(assembly = "hg19", chrom, chromstart, chromend, fontcol
 
   minus_genes$width <- minus_genes$Stop - minus_genes$Start
 
-  plus_geneGrobs <- rectGrob(x = plus_genes$Start, y = unit(0.63, "npc"),
-                       width = plus_genes$width, height = unit(0.05, "npc"),
-                       just = "left", gp = gpar(fill = strandcolors[1], col = NA, alpha = 0.5),
-                       vp = vp_gene, default.units = "native")
+  if (nrow(plus_genes) > 0){
 
-  minus_geneGrobs <- rectGrob(x = minus_genes$Start, y = unit(0.37, "npc"),
-                             width = minus_genes$width, height = unit(0.05, "npc"),
-                             just = "left", gp = gpar(fill = strandcolors[2], col = NA, alpha = 0.5),
-                             vp = vp_gene, default.units = "native")
+    plus_geneGrobs <- rectGrob(x = plus_genes$Start, y = unit(0.63, "npc"),
+                               width = plus_genes$width, height = unit(0.05, "npc"),
+                               just = "left", gp = gpar(fill = strandcolors[1], col = NA, alpha = 0.5),
+                               vp = vp_gene, default.units = "native")
+    assign("gene_grobs", addGrob(get("gene_grobs", envir = bbEnv), child = plus_geneGrobs), envir = bbEnv)
 
-  assign("gene_grobs", addGrob(get("gene_grobs", envir = bbEnv), child = plus_geneGrobs), envir = bbEnv)
-  assign("gene_grobs", addGrob(get("gene_grobs", envir = bbEnv), child = minus_geneGrobs), envir = bbEnv)
+  }
+
+  if (nrow(minus_genes) > 0 ){
+
+    minus_geneGrobs <- rectGrob(x = minus_genes$Start, y = unit(0.37, "npc"),
+                                width = minus_genes$width, height = unit(0.05, "npc"),
+                                just = "left", gp = gpar(fill = strandcolors[2], col = NA, alpha = 0.5),
+                                vp = vp_gene, default.units = "native")
+    assign("gene_grobs", addGrob(get("gene_grobs", envir = bbEnv), child = minus_geneGrobs), envir = bbEnv)
+
+  }
 
   ##########################################################
   ## GENE EXONS
@@ -255,10 +260,10 @@ bb_plotGenes <- function(assembly = "hg19", chrom, chromstart, chromend, fontcol
   assign("plus_genes", plus_genes, envir = globalenv())
   assign("minus_genes", minus_genes, envir = globalenv())
 
-
   ## Add column with center location of each gene label
   plus_genes$label <- rowMeans(plus_genes[c("Start", "Stop")])
   minus_genes$label <- rowMeans(minus_genes[c("Start", "Stop")])
+
 
   ## Declutter labels
   ## Sort data according to their gene length so longer ones will be labeled first
@@ -269,23 +274,27 @@ bb_plotGenes <- function(assembly = "hg19", chrom, chromstart, chromend, fontcol
 
 
   ## Grobs
-  plus_names <- textGrob(label = plus_genes$Gene,
-                         x = plus_genes$label, y = unit(0.85, "npc"),
-                         gp = gpar(col = fontcolors[1], fontsize = fontsize),
-                         vp = vp_gene,
-                         default.units = "native",
-                         check.overlap = TRUE)
+  if (nrow(plus_genes) > 0){
+    plus_names <- textGrob(label = plus_genes$Gene,
+                           x = plus_genes$label, y = unit(0.85, "npc"),
+                           gp = gpar(col = fontcolors[1], fontsize = fontsize),
+                           vp = vp_gene,
+                           default.units = "native",
+                           check.overlap = TRUE)
 
-  minus_names <- textGrob(label = minus_genes$Gene,
-                         x = minus_genes$label, y = unit(0.15, "npc"),
-                         gp = gpar(col = fontcolors[2], fontsize = fontsize),
-                         vp = vp_gene,
-                         default.units = "native",
-                         check.overlap = TRUE)
+    assign("gene_grobs", addGrob(get("gene_grobs", envir = bbEnv), child = plus_names), envir = bbEnv)
+  }
 
-  assign("gene_grobs", addGrob(get("gene_grobs", envir = bbEnv), child = plus_names), envir = bbEnv)
-  assign("gene_grobs", addGrob(get("gene_grobs", envir = bbEnv), child = minus_names), envir = bbEnv)
+  if (nrow(minus_genes) > 0){
 
+    minus_names <- textGrob(label = minus_genes$Gene,
+                            x = minus_genes$label, y = unit(0.15, "npc"),
+                            gp = gpar(col = fontcolors[2], fontsize = fontsize),
+                            vp = vp_gene,
+                            default.units = "native",
+                            check.overlap = TRUE)
+    assign("gene_grobs", addGrob(get("gene_grobs", envir = bbEnv), child = minus_names), envir = bbEnv)
+  }
 
   ##########################################################
   ## + AND - LABELS
