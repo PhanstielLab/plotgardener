@@ -31,39 +31,44 @@ bb_plotGenes <- function(assembly = "hg19", chrom, chromstart, chromend, fontcol
 
     exon_ranges <- as.list(strsplit(as.character(df[7]), ",")[[1]])
 
-    starts <- lapply(exon_ranges, parse_starts)
-    widths <- lapply(exon_ranges, parse_widths)
-    exons_dataframe <- cbind(unlist(starts), unlist(widths))
+    if (length(exon_ranges) > 0){
 
-    if (df[3] == "+"){
+      starts <- lapply(exon_ranges, parse_starts)
+      widths <- lapply(exon_ranges, parse_widths)
+      exons_dataframe <- cbind(unlist(starts), unlist(widths))
 
-      exons <- rectGrob(x = exons_dataframe[,1],
-               y = unit(0.63, "npc"),
-               just = "left",
-               width = exons_dataframe[,2],
-               height = unit(0.18, "npc"),
-               gp = gpar(fill = strandcolors[1],
-                         col = strandcolors[1],
-                         lwd = 1.25, alpha = 0.5),
-               vp = vp_gene,
-               default.units = "native")
 
-    } else if (df[3] == "-"){
+      if (df[3] == "+"){
 
-      exons <- rectGrob(x = exons_dataframe[,1],
-                        y = unit(0.37, "npc"),
-                        just = "left",
-                        width = exons_dataframe[,2],
-                        height = unit(0.18, "npc"),
-                        gp = gpar(fill = strandcolors[2],
-                                  col = strandcolors[2],
-                                  lwd = 1.25, alpha = 0.5),
-                        vp = vp_gene,
-                        default.units = "native")
+        exons <- rectGrob(x = exons_dataframe[,1],
+                          y = unit(0.63, "npc"),
+                          just = "left",
+                          width = exons_dataframe[,2],
+                          height = unit(0.18, "npc"),
+                          gp = gpar(fill = strandcolors[1],
+                                    col = strandcolors[1],
+                                    lwd = 1.25, alpha = 0.5),
+                          vp = vp_gene,
+                          default.units = "native")
+
+      } else if (df[3] == "-"){
+
+        exons <- rectGrob(x = exons_dataframe[,1],
+                          y = unit(0.37, "npc"),
+                          just = "left",
+                          width = exons_dataframe[,2],
+                          height = unit(0.18, "npc"),
+                          gp = gpar(fill = strandcolors[2],
+                                    col = strandcolors[2],
+                                    lwd = 1.25, alpha = 0.5),
+                          vp = vp_gene,
+                          default.units = "native")
+
+      }
+
+      assign("gene_grobs", addGrob(get("gene_grobs", envir = bbEnv), child = exons), envir = bbEnv)
 
     }
-
-    assign("gene_grobs", addGrob(get("gene_grobs", envir = bbEnv), child = exons), envir = bbEnv)
 
   }
 
@@ -71,7 +76,7 @@ bb_plotGenes <- function(assembly = "hg19", chrom, chromstart, chromend, fontcol
 
     utr_ranges <- as.list(strsplit(as.character(df[8]), ",")[[1]])
 
-    if (length(utr_ranges) != 0){
+    if (length(utr_ranges) > 0){
 
       starts <- lapply(utr_ranges, parse_starts)
       widths <- lapply(utr_ranges, parse_widths)
@@ -106,7 +111,6 @@ bb_plotGenes <- function(assembly = "hg19", chrom, chromstart, chromend, fontcol
 
       assign("gene_grobs", addGrob(get("gene_grobs", envir = bbEnv), child = utrs), envir = bbEnv)
     }
-
 
 
   }
