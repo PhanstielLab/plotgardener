@@ -377,6 +377,7 @@ bb_plotSignal <- function(signal, chrom, chromstart, chromend, range = NULL, lin
     ## Make viewport
     vp <- viewport(height = page_coords$height, width = page_coords$width,
                    x = page_coords$x, y = page_coords$y,
+                   clip = "on",
                    xscale = c(chromstart, chromend), yscale = c(signal_track$range[1], signal_track$range[2]),
                    just = just,
                    name = vp_name)
