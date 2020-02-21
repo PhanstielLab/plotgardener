@@ -39,38 +39,54 @@ bb_plotHic <- function(hic, chrom = 8, chromstart = 133600000, chromend = 134800
   # ======================================================================================================================================================================================
 
   ## Define a function that catches errors for bb_plothic
-  errorcheck_bb_plothic <- function(hic, hic_plot){
+  errorcheck_bb_plothic <- function(hic, hic_plot, norm){
 
-    # hic input
-    # ===================================================================================
-    ## If hic is data frame ensure that it is formatted correctly
-    if (class(hic) %in% "data.frame" && ncol(hic) != 3){
+    ###### hic/norm #####
+
+    ## if it's a dataframe or datatable, it needs to be properly formatted
+    if ("data.frame" %in% class(hic) && ncol(hic) != 3){
 
       stop("Invalid dataframe format.  Input a dataframe with 3 columns: chrA, chrB, counts.")
 
     }
 
-    ## If hic is path, make sure it has the correct extension and that it exists
-    if (!class(hic) %in% "data.frame"){
+    if (!"data.frame" %in% class(hic)){
 
+      ## if it's a file path, it needs to be a .hic file
       if (file_ext(hic) != "hic"){
 
         stop("Invalid input. File must have a \".hic\" extension")
 
       }
 
+      ## if it's a file path, it needs to exist
       if (!file.exists(hic)){
 
         stop(paste("File", hic, "does not exist."))
 
       }
 
+      ## if it's a valid .hic file, it needs to have a valid norm parameter
+      if (is.null(norm)){
+
+        stop("If providing .hic file, please specify \'norm\'.  Options are \'NONE\', \'VC\', \'VC_SQRT\', or \'KR\'.")
+
+      } else {
+
+        if (!norm %in% c("NONE", "VC", "VC_SQRT", "KR")) {
+
+          stop("If providing .hic file, please specify \'norm\'.  Options are \'NONE\', \'VC\', \'VC_SQRT\', or \'KR\'.")
+
+        }
+
+      }
+
     }
 
-    # chrom/altchrom/chromstart/chromend/altchromstart/altchromend
-    # ===================================================================================
+    ###### chrom/chromstart/chromend/altchrom/altchromstart/altchromend #####
+
     ## Can't have only one NULL chromstart or chromend
-    if ((is.null(hic_plot$chromstart) & !is.null(hic_plot$chromend)) | (is.null(hic_plot$chromend) & !is.null(hic_plot$chromstart))){
+    if (any(is.null(hic_plot$chromstart), is.null(hic_plot$chromend))){
 
       stop("Please specify \'chromstart\' and \'chromend\'.")
 
@@ -93,7 +109,7 @@ bb_plotHic <- function(hic, chrom = 8, chromstart = 133600000, chromend = 134800
       }
 
       ## Can't have only one NULL altchromstart or altchromend
-      if ((is.null(hic_plot$altchromstart) & !is.null(hic_plot$altchromend)) | (is.null(hic_plot$altchromend) & !is.null(hic_plot$altchromstart))){
+      if (any(is.null(hic_plot$altchromstart), is.null(hic_plot$altchromend))){
 
         stop("If specifying alternate chromosome, need to give \'altchromstart\' and \'altchromend\'.")
 
@@ -115,8 +131,8 @@ bb_plotHic <- function(hic, chrom = 8, chromstart = 133600000, chromend = 134800
 
     }
 
-    # zrange
-    # ===================================================================================
+    ###### zrange #####
+
     ## Ensure properly formatted zrange
     if (!is.null(hic_plot$zrange)){
 
@@ -150,42 +166,51 @@ bb_plotHic <- function(hic, chrom = 8, chromstart = 133600000, chromend = 134800
 
     }
 
-    # parameter values
-    # ===================================================================================
+    ###### resolution #####
 
-    if (!(hic_plot$additional_parameters$resolution %in% c(2500000, 1000000, 500000, 250000, 100000, 50000, 25000, 10000, 5000))){
+    if (is.null(hic_plot$resolution)){
 
       stop("Invalid \'resolution\' value.  Options are 2500000, 1000000, 500000, 250000, 100000, 50000, 25000, 10000, or 5000.")
 
-    }
+    } else {
 
+      if (!(hic_plot$resolution %in% c(2500000, 1000000, 500000, 250000, 100000, 50000, 25000, 10000, 5000))){
 
-    if (!(hic_plot$additional_parameters$half %in% c("both", "top", "bottom"))){
-
-      stop("Invalid \'half\'.  Options are \'both\', \top\', or \'bottom\'.")
-
-    }
-
-    if (!is.null(hic_plot$altchrom) & is.null(hic_plot$additional_parameters$althalf)){
-
-      stop("If specifying alternate chromosome, please provide \'althalf\'.")
-
-    }
-
-    if (!is.null(hic_plot$altchrom)){
-
-      if (!(hic_plot$additional_parameters$althalf %in% c("top", "bottom"))){
-
-        stop("Please specify \'althalf\'.  Options are \'top\' or \'bottom\'.")
+        stop("Invalid \'resolution\' value.  Options are 2500000, 1000000, 500000, 250000, 100000, 50000, 25000, 10000, or 5000.")
 
       }
 
     }
 
+    ###### half/althalf #####
 
-    if (!class(hic) %in% "data.frame" & !(hic_plot$additional_parameters$norm %in% c("NONE", "VC", "VC_SQRT", "KR"))){
+    if (is.null(hic_plot$altchrom)){
 
-      stop("If providing .hic file, please specify \'norm\'.  Options are \'NONE\', \'VC\', \'VC_SQRT\', or \'KR\'.")
+      if (!(hic_plot$half %in% c("both", "top", "bottom"))){
+
+        stop("Invalid \'half\'.  Options are \'both\', \top\', or \'bottom\'.")
+
+      }
+
+    } else {
+
+      if (is.null(hic_plot$althalf)){
+
+        stop("If specifying alternate chromosome, please provide \'althalf\'.")
+      }
+
+      if (!hic_plot$althalf %in% c("top", "bottom")){
+
+        stop("Invalid \'althalf\'.  Options are \'top\' or \'bottom\'.")
+
+      }
+
+      if (!is.null(hic_plot$half)){
+
+        warning("\'half\' option is unused.  \'althalf\' option will be used.")
+
+      }
+
 
     }
 
@@ -214,20 +239,20 @@ bb_plotHic <- function(hic, chrom = 8, chromstart = 133600000, chromend = 134800
   }
 
   ## Define a function that reads in hic data for bb_plothic
-  read_data <- function(hic, hic_plot){
+  read_data <- function(hic, hic_plot, norm){
 
     ## if .hic file, read in with bb_rhic
     if (!(class(hic) %in% "data.frame")){
 
       message(paste("Reading in hic file with", norm, "normalization."))
 
-      readchromstart <- hic_plot$chromstart - hic_plot$additional_parameters$resolution
-      readchromend <- hic_plot$chromend + hic_plot$additional_parameters$resolution
-      readaltchromstart <- hic_plot$altchromstart - hic_plot$additional_parameters$resolution
-      readaltchromend <- hic_plot$altchromend + hic_plot$additional_parameters$resolution
+      readchromstart <- hic_plot$chromstart - hic_plot$resolution
+      readchromend <- hic_plot$chromend + hic_plot$resolution
+      readaltchromstart <- hic_plot$altchromstart - hic_plot$resolution
+      readaltchromend <- hic_plot$altchromend + hic_plot$resolution
 
       hic <- bb_readHic(hic = hic, chrom = hic_plot$chrom, chromstart = readchromstart, chromend = readchromend,
-                     resolution = hic_plot$additional_parameters$resolution, zrange = hic_plot$zrange,norm = hic_plot$additional_parameters$norm,
+                     resolution = hic_plot$resolution, zrange = hic_plot$zrange, norm = norm,
                      altchrom = hic_plot$altchrom, altchromstart = readaltchromstart,
                      altchromend = readaltchromend)
 
@@ -252,19 +277,19 @@ bb_plotHic <- function(hic, chrom = 8, chromstart = 133600000, chromend = 134800
 
     if(is.null(hic_plot$altchrom)){
 
-      hic <- hic[which(hic[,1] >= hic_plot$chromstart - hic_plot$additional_parameters$resolution &
-                         hic[,1] <= hic_plot$chromend + hic_plot$additional_parameters$resolution &
-                         hic[,2] >= hic_plot$chromstart - hic_plot$additional_parameters$resolution &
-                         hic[,2] <= hic_plot$chromend + hic_plot$additional_parameters$resolution),]
+      hic <- hic[which(hic[,1] >= hic_plot$chromstart - hic_plot$resolution &
+                         hic[,1] <= hic_plot$chromend + hic_plot$resolution &
+                         hic[,2] >= hic_plot$chromstart - hic_plot$resolution &
+                         hic[,2] <= hic_plot$chromend + hic_plot$resolution),]
 
     } else {
 
-      if (chrom != altchrom){
+      if (hic_plot$chrom != hic_plot$altchrom){
 
-        hic <- hic[which(hic[,1] >= hic_plot$chromstart - hic_plot$additional_parameters$resolution &
-                           hic[,1] <= hic_plot$chromend + hic_plot$additional_parameters$resolution &
-                           hic[,2] >= hic_plot$altchromstart - hic_plot$additional_parameters$resolution &
-                           hic[,2] <= hic_plot$altchromend + hic_plot$additional_parameters$resolution),]
+        hic <- hic[which(hic[,1] >= hic_plot$chromstart - hic_plot$resolution &
+                           hic[,1] <= hic_plot$chromend + hic_plot$resolution &
+                           hic[,2] >= hic_plot$altchromstart - hic_plot$resolution &
+                           hic[,2] <= hic_plot$altchromend + hic_plot$resolution),]
 
       }
 
@@ -302,22 +327,27 @@ bb_plotHic <- function(hic, chrom = 8, chromstart = 133600000, chromend = 134800
 
     if(is.null(hic_plot$altchrom)){
 
-      xscale <- c(hic_plot$chromstart, (hic_plot$chromend + hic_plot$additional_parameters$resolution))
+      #xscale <- c(hic_plot$chromstart, (hic_plot$chromend + hic_plot$resolution))
+      xscale <- c(hic_plot$chromstart, hic_plot$chromend)
       yscale <- xscale
 
     } else {
 
-      if (hic_plot$additional_parameters$althalf == "bottom"){
+      if (hic_plot$althalf == "bottom"){
 
-        xscale <- c(hic_plot$chromstart, (hic_plot$chromend + hic_plot$additional_parameters$resolution))
-        yscale <- c(hic_plot$altchromstart, (hic_plot$altchromend + hic_plot$additional_parameters$resolution))
+        #xscale <- c(hic_plot$chromstart, (hic_plot$chromend + hic_plot$resolution))
+        #yscale <- c(hic_plot$altchromstart, (hic_plot$altchromend + hic_plot$resolution))
+        xscale <- c(hic_plot$chromstart, hic_plot$chromend)
+        yscale <- c(hic_plot$altchromstart, hic_plot$altchromend)
 
       }
 
-      if (hic_plot$additional_parameters$althalf == "top"){
+      if (hic_plot$althalf == "top"){
 
-        xscale <- c(hic_plot$altchromstart, (hic_plot$altchromend + hic_plot$additional_parameters$resolution))
-        yscale <- c(hic_plot$chromstart, (hic_plot$chromend + hic_plot$additional_parameters$resolution))
+        #xscale <- c(hic_plot$altchromstart, (hic_plot$altchromend + hic_plot$resolution))
+        #yscale <- c(hic_plot$chromstart, (hic_plot$chromend + hic_plot$resolution))
+        xscale <- c(hic_plot$altchromstart, hic_plot$altchromend)
+        yscale <- c(hic_plot$chromstart, hic_plot$chromend)
 
       }
 
@@ -338,13 +368,13 @@ bb_plotHic <- function(hic, chrom = 8, chromstart = 133600000, chromend = 134800
 
     } else {
 
-      if (hic_plot$additional_parameters$half == "both"){
+      if (hic_plot$half == "both"){
 
         ## all squares
         squares <- hic
         triangles <- NULL
 
-      } else if (hic_plot$additional_parameters$half == "top"){
+      } else if (hic_plot$half == "top"){
 
         ## squares for top half
         ## triangles for diagonal
@@ -352,7 +382,7 @@ bb_plotHic <- function(hic, chrom = 8, chromstart = 133600000, chromend = 134800
         squares <- hic[which(hic[,2] > hic[,1]),]
         triangles <- hic[which(hic[,2] == hic[,1]),]
 
-      } else if (hic_plot$additional_parameters$half == "bottom"){
+      } else if (hic_plot$half == "bottom"){
 
         ## squares for bottom half
         ## triangles for diagonal
@@ -377,11 +407,11 @@ bb_plotHic <- function(hic, chrom = 8, chromstart = 133600000, chromend = 134800
     y <- as.numeric(hic[2])
 
     xleft = x
-    xright = x + hic_plot$additional_parameters$resolution
+    xright = x + hic_plot$resolution
     ybottom = y
-    ytop = y + hic_plot$additional_parameters$resolution
+    ytop = y + hic_plot$resolution
 
-    if (hic_plot$additional_parameters$half == "top"){
+    if (hic_plot$half == "top"){
 
       hic_triangle <- polygonGrob(x = c(xleft, xleft, xright),
                                   y = c(ybottom, ytop, ytop),
@@ -389,7 +419,7 @@ bb_plotHic <- function(hic, chrom = 8, chromstart = 133600000, chromend = 134800
                                   default.units = "native")
 
 
-    } else if (hic_plot$additional_parameters$half == "bottom"){
+    } else if (hic_plot$half == "bottom"){
 
 
       hic_triangle <- polygonGrob(x = c(xleft, xright, xright),
@@ -410,10 +440,7 @@ bb_plotHic <- function(hic, chrom = 8, chromstart = 133600000, chromend = 134800
 
   hic_plot <- structure(list(chrom = chrom, chromstart = chromstart, chromend = chromend, altchrom = altchrom, altchromstart = altchromstart,
                              altchromend = altchromend, x = x, y = y, width = width, height = height, justification = just,
-                             zrange = zrange, color_palette = NULL, grobs = NULL,
-                             additional_parameters = list(half = half,
-                                                          resolution = resolution, althalf = althalf,
-                                                          norm = norm)), class = "bb_hic")
+                             zrange = zrange, resolution = resolution, half = half, althalf = althalf, color_palette = NULL, grobs = NULL), class = "bb_hic")
   attr(x = hic_plot, which = "plotted") <- draw
 
   # ======================================================================================================================================================================================
@@ -421,13 +448,13 @@ bb_plotHic <- function(hic, chrom = 8, chromstart = 133600000, chromend = 134800
   # ======================================================================================================================================================================================
 
   check_placement(object = hic_plot)
-  errorcheck_bb_plothic(hic = hic, hic_plot = hic_plot)
+  errorcheck_bb_plothic(hic = hic, hic_plot = hic_plot, norm = norm)
 
   # ======================================================================================================================================================================================
   # READ IN DATA
   # ======================================================================================================================================================================================
 
-  hic <- read_data(hic = hic, hic_plot = hic_plot)
+  hic <- read_data(hic = hic, hic_plot = hic_plot, norm = norm)
 
   # ======================================================================================================================================================================================
   # SUBSET DATA
@@ -443,7 +470,6 @@ bb_plotHic <- function(hic, chrom = 8, chromstart = 133600000, chromend = 134800
   colnames(hicFlip) <- c("x", "y", "counts")
   hic <- unique(rbind(hic, hicFlip))
   colnames(hic) = c("x", "y", "counts")
-
 
   # ======================================================================================================================================================================================
   # SET ZRANGE AND SCALE DATA
