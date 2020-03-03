@@ -18,7 +18,7 @@
 #' @param altchromstart alternate chromosome start for off-diagonal plotting or interchromosomal plotting
 #' @param altchromend alternate chromosome end for off-diagonal plotting or interchromosomal plotting
 #' @param althalf if plotting altchrom region, which side off diagonal to plot; options are "top" or "bottom"
-#' @param norm if giving .hic file, hic data normalization; options are "NONE", "VC", "VC_SQRT", and "KR"
+#' @param norm if giving .hic file, hic data normalization; must be found in hic file
 #'
 #' @return Function will plot a HiC interaction matrix and return a bb_hicPlot object
 #'
@@ -46,7 +46,7 @@ bb_plotHic <- function(hic, chrom = 8, chromstart = 133600000, chromend = 134800
     ## if it's a dataframe or datatable, it needs to be properly formatted
     if ("data.frame" %in% class(hic) && ncol(hic) != 3){
 
-      stop("Invalid dataframe format.  Input a dataframe with 3 columns: chrA, chrB, counts.")
+      stop("Invalid dataframe format.  Input a dataframe with 3 columns: chrA, chrB, counts.", call. = FALSE)
 
     }
 
@@ -55,29 +55,21 @@ bb_plotHic <- function(hic, chrom = 8, chromstart = 133600000, chromend = 134800
       ## if it's a file path, it needs to be a .hic file
       if (file_ext(hic) != "hic"){
 
-        stop("Invalid input. File must have a \".hic\" extension")
+        stop("Invalid input. File must have a \".hic\" extension", call. = FALSE)
 
       }
 
       ## if it's a file path, it needs to exist
       if (!file.exists(hic)){
 
-        stop(paste("File", hic, "does not exist."))
+        stop(paste("File", hic, "does not exist."), call. = FALSE)
 
       }
 
       ## if it's a valid .hic file, it needs to have a valid norm parameter
       if (is.null(norm)){
 
-        stop("If providing .hic file, please specify \'norm\'.  Options are \'NONE\', \'VC\', \'VC_SQRT\', or \'KR\'.")
-
-      } else {
-
-        if (!norm %in% c("NONE", "VC", "VC_SQRT", "KR")) {
-
-          stop("If providing .hic file, please specify \'norm\'.  Options are \'NONE\', \'VC\', \'VC_SQRT\', or \'KR\'.")
-
-        }
+        stop("If providing .hic file, please specify \'norm\'.", call. = FALSE)
 
       }
 
@@ -88,14 +80,14 @@ bb_plotHic <- function(hic, chrom = 8, chromstart = 133600000, chromend = 134800
     ## Can't have only one NULL chromstart or chromend
     if (any(is.null(hic_plot$chromstart), is.null(hic_plot$chromend))){
 
-      stop("Please specify \'chromstart\' and \'chromend\'.")
+      stop("Please specify \'chromstart\' and \'chromend\'.", call. = FALSE)
 
     }
 
     ## Chromstart should be smaller than chromend
     if (hic_plot$chromstart > hic_plot$chromend){
 
-      stop("\'chromstart\' should not be larger than \'chromend\'.")
+      stop("\'chromstart\' should not be larger than \'chromend\'.", call. = FALSE)
 
     }
 
@@ -104,28 +96,28 @@ bb_plotHic <- function(hic, chrom = 8, chromstart = 133600000, chromend = 134800
       ## Can't specify altchrom without a chrom
       if (is.null(hic_plot$chrom)){
 
-        stop("Specified \'altchrom\', but did not give \'chrom\'.")
+        stop("Specified \'altchrom\', but did not give \'chrom\'.", call. = FALSE)
 
       }
 
       ## Can't have only one NULL altchromstart or altchromend
       if (any(is.null(hic_plot$altchromstart), is.null(hic_plot$altchromend))){
 
-        stop("If specifying alternate chromosome, need to give \'altchromstart\' and \'altchromend\'.")
+        stop("If specifying alternate chromosome, need to give \'altchromstart\' and \'altchromend\'.", call. = FALSE)
 
       }
 
       ## Altchromstart should be smaller than altchromend
       if (hic_plot$altchromstart > hic_plot$altchromend){
 
-        stop("\'altchromstart\' should not be larger than \'altchromend\'.")
+        stop("\'altchromstart\' should not be larger than \'altchromend\'.", call. = FALSE)
 
       }
 
       ## Check to see if region is square
       if ((hic_plot$chromend - hic_plot$chromstart) != (hic_plot$altchromend - hic_plot$altchromstart)){
 
-        warning("Trying to plot non-square region.")
+        warning("Trying to plot non-square region.", call. = FALSE)
 
       }
 
@@ -139,28 +131,28 @@ bb_plotHic <- function(hic, chrom = 8, chromstart = 133600000, chromend = 134800
       ## zrange needs to be a vector
       if (!is.vector(hic_plot$zrange)){
 
-        stop("\'zrange\' must be a vector of length 2.")
+        stop("\'zrange\' must be a vector of length 2.", call. = FALSE)
 
       }
 
       ## zrange vector needs to be length 2
       if (length(hic_plot$zrange) != 2){
 
-        stop("\'zrange\' must be a vector of length 2.")
+        stop("\'zrange\' must be a vector of length 2.", call. = FALSE)
 
       }
 
       ## zrange vector needs to be numbers
       if (!is.numeric(hic_plot$zrange)){
 
-        stop("\'zrange\' must be a vector of two numbers.")
+        stop("\'zrange\' must be a vector of two numbers.", call. = FALSE)
 
       }
 
       ## second value should be larger than the first value
       if (hic_plot$zrange[1] >= hic_plot$zrange[2]){
 
-        stop("\'zrange\' must be a vector of two numbers in which the 2nd value is larger than the 1st.")
+        stop("\'zrange\' must be a vector of two numbers in which the 2nd value is larger than the 1st.", call. = FALSE)
 
       }
 
@@ -170,13 +162,13 @@ bb_plotHic <- function(hic, chrom = 8, chromstart = 133600000, chromend = 134800
 
     if (is.null(hic_plot$resolution)){
 
-      stop("Invalid \'resolution\' value.  Options are 2500000, 1000000, 500000, 250000, 100000, 50000, 25000, 10000, or 5000.")
+      stop("Invalid \'resolution\' value.  Options are 2500000, 1000000, 500000, 250000, 100000, 50000, 25000, 10000, or 5000.", call. = FALSE)
 
     } else {
 
       if (!(hic_plot$resolution %in% c(2500000, 1000000, 500000, 250000, 100000, 50000, 25000, 10000, 5000))){
 
-        stop("Invalid \'resolution\' value.  Options are 2500000, 1000000, 500000, 250000, 100000, 50000, 25000, 10000, or 5000.")
+        stop("Invalid \'resolution\' value.  Options are 2500000, 1000000, 500000, 250000, 100000, 50000, 25000, 10000, or 5000.", call. = FALSE)
 
       }
 
@@ -188,7 +180,7 @@ bb_plotHic <- function(hic, chrom = 8, chromstart = 133600000, chromend = 134800
 
       if (!(hic_plot$half %in% c("both", "top", "bottom"))){
 
-        stop("Invalid \'half\'.  Options are \'both\', \top\', or \'bottom\'.")
+        stop("Invalid \'half\'.  Options are \'both\', \top\', or \'bottom\'.", call. = FALSE)
 
       }
 
@@ -196,18 +188,18 @@ bb_plotHic <- function(hic, chrom = 8, chromstart = 133600000, chromend = 134800
 
       if (is.null(hic_plot$althalf)){
 
-        stop("If specifying alternate chromosome, please provide \'althalf\'.")
+        stop("If specifying alternate chromosome, please provide \'althalf\'.", call. = FALSE)
       }
 
       if (!hic_plot$althalf %in% c("top", "bottom")){
 
-        stop("Invalid \'althalf\'.  Options are \'top\' or \'bottom\'.")
+        stop("Invalid \'althalf\'.  Options are \'top\' or \'bottom\'.", call. = FALSE)
 
       }
 
       if (!is.null(hic_plot$half)){
 
-        warning("\'half\' option is unused.  \'althalf\' option will be used.")
+        warning("\'half\' option is unused.  \'althalf\' option will be used.", call. = FALSE)
 
       }
 
@@ -223,7 +215,7 @@ bb_plotHic <- function(hic, chrom = 8, chromstart = 133600000, chromend = 134800
 
       if (min(hic[,1]) > hic_plot$chromstart | max(hic[,1]) < hic_plot$chromend | min(hic[,2]) > hic_plot$chromstart | max(hic[,2]) < hic_plot$chromend){
 
-        warning("Data is incomplete for the specified range.")
+        warning("Data is incomplete for the specified range.", call. = FALSE)
 
       }
 
@@ -231,7 +223,7 @@ bb_plotHic <- function(hic, chrom = 8, chromstart = 133600000, chromend = 134800
 
       if (min(hic[,1]) > hic_plot$chromstart | max(hic[,1]) < hic_plot$chromend | min(hic[,2]) > hic_plot$altchromstart | max(hic[,2]) < hic_plot$altchromend){
 
-        warning("Data is incomplete for the specified range.")
+        warning("Data is incomplete for the specified range.", call. = FALSE)
       }
 
     }
@@ -327,7 +319,6 @@ bb_plotHic <- function(hic, chrom = 8, chromstart = 133600000, chromend = 134800
 
     if(is.null(hic_plot$altchrom)){
 
-      #xscale <- c(hic_plot$chromstart, (hic_plot$chromend + hic_plot$resolution))
       xscale <- c(hic_plot$chromstart, hic_plot$chromend)
       yscale <- xscale
 
@@ -335,8 +326,6 @@ bb_plotHic <- function(hic, chrom = 8, chromstart = 133600000, chromend = 134800
 
       if (hic_plot$althalf == "bottom"){
 
-        #xscale <- c(hic_plot$chromstart, (hic_plot$chromend + hic_plot$resolution))
-        #yscale <- c(hic_plot$altchromstart, (hic_plot$altchromend + hic_plot$resolution))
         xscale <- c(hic_plot$chromstart, hic_plot$chromend)
         yscale <- c(hic_plot$altchromstart, hic_plot$altchromend)
 
@@ -344,8 +333,6 @@ bb_plotHic <- function(hic, chrom = 8, chromstart = 133600000, chromend = 134800
 
       if (hic_plot$althalf == "top"){
 
-        #xscale <- c(hic_plot$altchromstart, (hic_plot$altchromend + hic_plot$resolution))
-        #yscale <- c(hic_plot$chromstart, (hic_plot$chromend + hic_plot$resolution))
         xscale <- c(hic_plot$altchromstart, hic_plot$altchromend)
         yscale <- c(hic_plot$chromstart, hic_plot$chromend)
 
@@ -493,7 +480,7 @@ bb_plotHic <- function(hic, chrom = 8, chromstart = 133600000, chromend = 134800
   } else {
 
     ## If we still have a null zrange or a length(unique(zrange)) == 1, means we couldn't do it in setzrange above (empty data or data with only 1 value)
-    warning("Can't scale data to colors.")
+    warning("Can't scale data to colors.", call. = FALSE)
 
   }
 
@@ -522,6 +509,7 @@ bb_plotHic <- function(hic, chrom = 8, chromstart = 133600000, chromend = 134800
 
     if (draw == TRUE){
 
+      vp$name <- "bb_hic1"
       grid.newpage()
 
     }

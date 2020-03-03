@@ -7,7 +7,7 @@
 #' @param chromend chromosome end position of chrom
 #' @param resolution the width of each pixel
 #' @param zrange the range of interaction scores to plot, where extreme values will be set to the max or min; if null, zrange will be set to (0, max(data))
-#' @param norm hic data normalization; options are "NONE", "VC", "VC_SQRT", and "KR"
+#' @param norm hic data normalization; must be found in hic file
 #' @param res_scale resolution scale; options are "BP" and "FRAG"
 #' @param altchrom if looking at region between two different chromosomes, this is the specified alternative chromosome
 #' @param altchromstart if looking at region between two different chromosomes, start position of altchrom
@@ -30,25 +30,25 @@ bb_readHic <- function(hic, chrom, chromstart = NULL, chromend = NULL, resolutio
     ## hic input needs to be a path to a .hic file
     if (class(hic) != "character"){
 
-      stop("Invalid input. Input needs to be a path to a .hic file.")
+      stop("Invalid input. Input needs to be a path to a .hic file.", call. = FALSE)
 
     }
 
     if ((file_ext(hic) != "hic")){
 
-      stop("Invalid input. File must have a \".hic\" extension")
+      stop("Invalid input. File must have a \".hic\" extension", call. = FALSE)
 
     }
 
     if (!file.exists(hic)){
 
-      stop(paste("File", hic, "does not exist."))
+      stop(paste("File", hic, "does not exist."), call. = FALSE)
     }
 
     ## Can't have only one NULL chromstart or chromend
     if ((is.null(chromstart) & !is.null(chromend)) | (is.null(chromend) & !is.null(chromstart))){
 
-      stop("Cannot have one \'NULL\' \'chromstart\' or \'chromend\'.")
+      stop("Cannot have one \'NULL\' \'chromstart\' or \'chromend\'.", call. = FALSE)
 
     }
 
@@ -57,7 +57,7 @@ bb_readHic <- function(hic, chrom, chromstart = NULL, chromend = NULL, resolutio
       ## Chromstart should be smaller than chromend
       if (chromstart > chromend){
 
-        stop("\'chromstart\' should not be larger than \'chromend\'.")
+        stop("\'chromstart\' should not be larger than \'chromend\'.", call. = FALSE)
 
       }
 
@@ -68,21 +68,21 @@ bb_readHic <- function(hic, chrom, chromstart = NULL, chromend = NULL, resolutio
       ## Can't specify altchrom without a chrom
       if (is.null(chrom)){
 
-        stop("Specified \'altchrom\', but did not give \'chrom\'.")
+        stop("Specified \'altchrom\', but did not give \'chrom\'.", call. = FALSE)
 
       }
 
       ## Can't have only one NULL altchromstart or altchromend
       if ((is.null(altchromstart) & !is.null(altchromend)) | (is.null(altchromend) & !is.null(altchromstart))){
 
-        stop("Cannot have one \'NULL\' \'altchromstart\' or \'altchromend\'.")
+        stop("Cannot have one \'NULL\' \'altchromstart\' or \'altchromend\'.", call. = FALSE)
 
       }
       ## Altchromstart should be smaller than altchromend
 
       if (altchromstart > altchromend){
 
-        stop("\'altchromstart\' should not be larger than \'altchromend\'.")
+        stop("\'altchromstart\' should not be larger than \'altchromend\'.", call. = FALSE)
 
       }
 
@@ -93,7 +93,7 @@ bb_readHic <- function(hic, chrom, chromstart = NULL, chromend = NULL, resolutio
         if (is.null(chromstart) | is.null(chromend) | is.null(altchromstart) | is.null(altchromend)){
 
           stop("If giving the same \'chrom\' and \'altchrom\', please specify \'chromstart\', \'chromend\', \'altchromstart\', and \'altchromend\'.
-               If trying to get all interactions between one chromosome, just specify \'chrom\'.")
+               If trying to get all interactions between one chromosome, just specify \'chrom\'.", call. = FALSE)
 
         }
 
@@ -107,44 +107,38 @@ bb_readHic <- function(hic, chrom, chromstart = NULL, chromend = NULL, resolutio
       ## zrange needs to be a vector
       if (!is.vector(zrange)){
 
-        stop("\'zrange\' must be a vector of length 2.")
+        stop("\'zrange\' must be a vector of length 2.", call. = FALSE)
 
       }
 
       ## zrange vector needs to be length 2
       if (length(zrange) != 2){
 
-        stop("\'zrange\' must be a vector of length 2.")
+        stop("\'zrange\' must be a vector of length 2.", call. = FALSE)
 
       }
 
       ## zrange vector needs to be numbers
       if (!is.numeric(zrange)){
 
-        stop("\'zrange\' must be a vector of two numbers.")
+        stop("\'zrange\' must be a vector of two numbers.", call. = FALSE)
 
       }
 
       ## second value should be larger than the first value
       if (zrange[1] >= zrange[2]){
 
-        stop("\'zrange\' must be a vector of two numbers in which the 2nd value is larger than the 1st.")
+        stop("\'zrange\' must be a vector of two numbers in which the 2nd value is larger than the 1st.", call. = FALSE)
 
       }
 
     }
 
-    ## Check for valid "norm" parameter
-    if (!(norm %in% c("NONE", "VC", "VC_SQRT", "KR"))){
-
-      stop("Invalid \'norm\'.  Options are \'NONE\', \'VC\', \'VC_SQRT\', or \'KR\'.")
-
-    }
 
     ## Check for valid "res_scale" parameter
     if(!(res_scale %in% c("BP", "FRAG"))){
 
-      stop("Invalid \'res_scale\'.  Options are \'BP\' and \'FRAG\'.")
+      stop("Invalid \'res_scale\'.  Options are \'BP\' and \'FRAG\'.", call. = FALSE)
 
     }
 
@@ -296,7 +290,7 @@ bb_readHic <- function(hic, chrom, chromstart = NULL, chromend = NULL, resolutio
   # ======================================================================================================================================================================================
   if (nrow(renamed_data) == 0){
 
-    warning("Warning: no data found in region.  Suggestions: check chromosome, check region.")
+    warning("Warning: no data found in region.  Suggestions: check chromosome, check region.", call. = FALSE)
   }
 
   return(renamed_data)

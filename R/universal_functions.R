@@ -280,7 +280,7 @@ check_bbpage <- function(error){
 
   if (!"bb_page" %in% current.vpPath()){
 
-    stop(error)
+    stop(error, call. = FALSE)
 
   }
 
@@ -297,20 +297,20 @@ check_placement <- function(object){
       ## 1. Need both an x and y coordinate
       if (!is.null(object$x) & is.null(object$y)){
 
-        stop("If giving placement coordinates, need to specify both x and y.")
+        stop("If giving placement coordinates, need to specify both x and y.", call. = FALSE)
 
       }
 
       if (!is.null(object$y) & is.null(object$x)){
 
-        stop("If giving placement coordinates, need to specify both x and y.")
+        stop("If giving placement coordinates, need to specify both x and y.", call. = FALSE)
 
       }
 
       ## 2. Need plot dimensions
       if (is.null(object$width) | is.null(object$height)){
 
-        stop("If giving placement coordinates, need to specify plot width and plot height.")
+        stop("If giving placement coordinates, need to specify plot width and plot height.", call. = FALSE)
 
       }
 
