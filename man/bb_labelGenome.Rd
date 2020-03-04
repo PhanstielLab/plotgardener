@@ -15,7 +15,8 @@ bb_labelGenome(
   fontcolor = "black",
   lineAbove = T,
   linecolor = "black",
-  lwd = 1
+  lwd = 1,
+  fontfamily = ""
 )
 }
 \arguments{
@@ -38,6 +39,8 @@ bb_labelGenome(
 \item{linecolor}{linecolor}
 
 \item{lwd}{linewidth}
+
+\item{fontfamily}{fontfamily for text}
 
 \item{units}{units of inputted x and y}
 

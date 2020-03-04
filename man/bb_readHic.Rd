@@ -31,7 +31,7 @@ bb_readHic(
 
 \item{zrange}{the range of interaction scores to plot, where extreme values will be set to the max or min; if null, zrange will be set to (0, max(data))}
 
-\item{norm}{hic data normalization; options are "NONE", "VC", "VC_SQRT", and "KR"}
+\item{norm}{hic data normalization; must be found in hic file}
 
 \item{res_scale}{resolution scale; options are "BP" and "FRAG"}
 

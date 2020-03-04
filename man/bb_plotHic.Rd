@@ -64,7 +64,7 @@ bb_plotHic(
 
 \item{althalf}{if plotting altchrom region, which side off diagonal to plot; options are "top" or "bottom"}
 
-\item{norm}{if giving .hic file, hic data normalization; options are "NONE", "VC", "VC_SQRT", and "KR"}
+\item{norm}{if giving .hic file, hic data normalization; must be found in hic file}
 }
 \value{
 Function will plot a HiC interaction matrix and return a bb_hicPlot object

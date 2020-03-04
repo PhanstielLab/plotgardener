@@ -7,6 +7,7 @@
 bb_annotateLoops(
   hic,
   loops,
+  half = "inherit",
   shift = 4,
   type = "box",
   lty = "solid",
@@ -17,7 +18,9 @@ bb_annotateLoops(
 \arguments{
 \item{hic}{hic plot to annotate}
 
-\item{loops}{bedpe file or dataframe in bedpe file format with loop positions}
+\item{loops}{bedpe file or dataframe in bedpe file format with loop positions (chr1 and chr2 must be numbers)}
+
+\item{half}{which half of hic plots to annotate; default is "inherit", which will inherit whatever is plotted; other options are "both", "top", or "bottom"}
 
 \item{shift}{number of pixels on either end of loop in box/circle; number of pixels for length of arrow}
 

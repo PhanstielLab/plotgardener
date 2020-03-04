@@ -14,6 +14,7 @@ bb_addColorScale(
   orientation = "vertical",
   fontsize = 8,
   fontcolor = "dark grey",
+  fontfamily = "",
   fontface = "plain",
   just = c("left", "top"),
   ...
@@ -37,6 +38,8 @@ bb_addColorScale(
 \item{fontsize}{fontsize for text}
 
 \item{fontcolor}{fontcolor for text}
+
+\item{fontfamily}{fontfamily for text}
 
 \item{fontface}{fontface for text}
 

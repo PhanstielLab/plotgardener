@@ -866,6 +866,10 @@ bb_plotTriangleHic <- function(hic, chrom, chromstart, chromend, resolution = 10
         return(list(hic, pixelsChop))
       }
 
+    } else {
+      pixelsChop = 0
+      return(list(hic, pixelsChop))
+
     }
 
   }

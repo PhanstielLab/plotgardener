@@ -6,16 +6,17 @@
 \usage{
 bb_plotTriangleHic(
   hic,
-  chrom = 8,
-  chromstart = 133600000,
-  chromend = 134800000,
+  chrom,
+  chromstart,
+  chromend,
   resolution = 10000,
   zrange = NULL,
   palette = colorRampPalette(c("white", "dark red")),
-  width,
-  x,
-  y,
-  just,
+  width = NULL,
+  height = NULL,
+  x = NULL,
+  y = NULL,
+  just = c("left", "bottom"),
   norm = "KR",
   draw = T,
   ...
@@ -24,7 +25,7 @@ bb_plotTriangleHic(
 \arguments{
 \item{hic}{path to .hic file or 3 column dataframe of counts}
 
-\item{chrom}{chromosome of region to be plotted}
+\item{chrom}{chromosome of region to be plotted, based on build (i.e. for hg19 just a number, for hg38 string like "chr8")}
 
 \item{chromstart}{chromosome start of region to be plotted}
 
@@ -38,13 +39,15 @@ bb_plotTriangleHic(
 
 \item{width}{A unit object specifying the bottom width of the triangle}
 
+\item{height}{A unit object specifying the height of the triangle}
+
 \item{x}{A unit object specifying x-location}
 
 \item{y}{A unit object specifying y-location}
 
 \item{just}{a string or numeric vector specifying the justification of the viewport relative to its (x, y) location}
 
-\item{norm}{if giving .hic file, hic data normalization; options are "NONE", "VC", "VC_SQRT", and "KR"}
+\item{norm}{if giving .hic file, hic data normalization; must be found in hic file}
 
 \item{draw}{A logical value indicating whether graphics output should be produced}
 }
