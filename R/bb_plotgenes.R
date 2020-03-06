@@ -3,7 +3,7 @@
 #' @export
 bb_plotGenes <- function(assembly = "hg19", chrom, chromstart, chromend, fontcolors = c("#2929ff", "#ff3434"),
                             strandcolors = c("#8a8aff", "#ff7e7e"), width = NULL, height = unit(0.6, "inches"), x = NULL, y = NULL,
-                            just = c("left", "top"), fontsize = 8, exclude = "", draw = T){
+                            just = c("left", "top"), fontsize = 8, exclude = "", strandLabels = T, draw = T){
 
   # ======================================================================================================================================================================================
   # FUNCTIONS
@@ -164,23 +164,42 @@ bb_plotGenes <- function(assembly = "hg19", chrom, chromstart, chromend, fontcol
 
   if (is.null(x) & is.null(y)){
 
-    ## Make viewport for "+" and "-" labels to the left of the gene track
-    vp_labelW <- convertWidth(widthDetails(tG) * 2, unitTo = "npc")
+    if (strandLabels == TRUE){
 
-    vp_label <- viewport(height = unit(.12, "npc"),
-                         width = vp_labelW,
-                         x = unit(0, "npc"), y = unit(0.5, "npc"), just = "left",
-                         name = paste0(vp_name, "_label"))
+      ## Make viewport for "+" and "-" labels to the left of the gene track
+      vp_labelW <- convertWidth(widthDetails(tG) * 2, unitTo = "npc")
+
+      vp_label <- viewport(height = unit(.12, "npc"),
+                           width = vp_labelW,
+                           x = unit(0, "npc"), y = unit(0.5, "npc"), just = "left",
+                           name = paste0(vp_name, "_label"))
+
+      vp_gene <- viewport(height = unit(.12, "npc"), width = unit(1, "npc") - vp_labelW,
+                          x = vp_labelW, y = unit(0.5, "npc"),
+                          clip = "on",
+                          xscale = c(chromstart, chromend),
+                          just = "left",
+                          name = vp_name)
+    } else {
+
+      vp_gene <- viewport(height = unit(.12, "npc"), width = unit(1, "npc"),
+                          x = unit(0, "npc"), y = unit(0.5, "npc"),
+                          clip = "on",
+                          xscale = c(chromstart, chromend),
+                          just = "left",
+                          name = vp_name)
 
 
-    vp_gene <- viewport(height = unit(.12, "npc"), width = unit(1, "npc") - vp_labelW,
-                   x = vp_labelW, y = unit(0.5, "npc"),
-                   clip = "on",
-                   xscale = c(chromstart, chromend),
-                   just = "left",
-                   name = vp_name)
+    }
+
 
     if (draw == TRUE){
+
+      vp_gene$name <- "bb_genes1"
+      if (strandLabels == TRUE){
+        vp_label$name <- "bb_genes1_label"
+      }
+
 
       grid.newpage()
 
@@ -199,13 +218,19 @@ bb_plotGenes <- function(assembly = "hg19", chrom, chromstart, chromend, fontcol
                    just = just,
                    name = vp_name)
 
-    ## Make viewport for "+" and "-" labels based on above viewport
-    topLeft_vp <- vp_topLeft(viewport = vp_gene)
+    if (strandLabels == TRUE){
 
-    vp_label <- viewport(height = page_coords$height,
-                         width = convertWidth(widthDetails(tG) * 2, unitTo = get("page_units", envir = bbEnv)),
-                         x = topLeft_vp[[1]], y = topLeft_vp[[2]], just = c("right", "top"),
-                         name = paste0(vp_name, "_label"))
+      ## Make viewport for "+" and "-" labels based on above viewport
+      topLeft_vp <- vp_topLeft(viewport = vp_gene)
+
+      vp_label <- viewport(height = page_coords$height,
+                           width = convertWidth(widthDetails(tG) * 2, unitTo = get("page_units", envir = bbEnv)),
+                           x = topLeft_vp[[1]], y = topLeft_vp[[2]], just = c("right", "top"),
+                           name = paste0(vp_name, "_label"))
+
+    }
+
+
   }
 
   # ======================================================================================================================================================================================
@@ -304,12 +329,15 @@ bb_plotGenes <- function(assembly = "hg19", chrom, chromstart, chromend, fontcol
   ## + AND - LABELS
   ##########################################################
 
-  plus_label <- textGrob(label = "+", y = unit(0.63, "npc"), gp = gpar(fontsize = fontsize + 2, col = fontcolors[1], fontface = "bold"), vp = vp_label)
-  minus_label <- textGrob(label = "\u2013", y = unit(0.37, "npc"), gp = gpar(fontsize = fontsize + 2, col = fontcolors[2], fontface = "bold"), vp = vp_label)
+  if (strandLabels == TRUE){
 
-  assign("gene_grobs", addGrob(get("gene_grobs", envir = bbEnv), child = plus_label), envir = bbEnv)
-  assign("gene_grobs", addGrob(get("gene_grobs", envir = bbEnv), child = minus_label), envir = bbEnv)
+    plus_label <- textGrob(label = "+", y = unit(0.63, "npc"), gp = gpar(fontsize = fontsize + 2, col = fontcolors[1], fontface = "bold"), vp = vp_label)
+    minus_label <- textGrob(label = "-", y = unit(0.37, "npc"), gp = gpar(fontsize = fontsize + 2, col = fontcolors[2], fontface = "bold"), vp = vp_label)
 
+    assign("gene_grobs", addGrob(get("gene_grobs", envir = bbEnv), child = plus_label), envir = bbEnv)
+    assign("gene_grobs", addGrob(get("gene_grobs", envir = bbEnv), child = minus_label), envir = bbEnv)
+
+  }
   # ======================================================================================================================================================================================
   # IF PLOT == TRUE, DRAW GROBS
   # ======================================================================================================================================================================================

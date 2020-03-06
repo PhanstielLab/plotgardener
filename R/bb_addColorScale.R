@@ -28,14 +28,14 @@ bb_addColorScale <- function(plot, border = FALSE, height, width, x, y, orientat
     ## checking min_val and max val
     if (as.numeric(bb_scale$min_val) > as.numeric(bb_scale$max_val)){
 
-      warning("/'min_val/' is larger than /'max_val/'. Scale labels may be incorrect.")
+      warning("/'min_val/' is larger than /'max_val/'. Scale labels may be incorrect.", call. = FALSE)
 
     }
 
     ## check proper orientation
     if (!bb_scale$orientation %in% c("vertical", "horizontal")){
 
-      stop("Invalid /'orientation/' parameter. Options are 'vertical' or 'horizontal'.")
+      stop("Invalid /'orientation/' parameter. Options are 'vertical' or 'horizontal'.", call. = FALSE)
 
     }
 

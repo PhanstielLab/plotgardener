@@ -541,17 +541,20 @@ bb_plotHic <- function(hic, chrom = 8, chromstart = 133600000, chromend = 134800
   ## Determine which grobs will be squares [[1]] and which will be triangles [[2]]
   shapes <- hic_shapes(hic = hic, hic_plot = hic_plot)
 
-  ## Make square grobs and add to grob gTree
-  hic_squares <- rectGrob(x = shapes[[1]]$x,
-                          y = shapes[[1]]$y,
-                          just = c("left", "bottom"),
-                          width = resolution,
-                          height = resolution,
-                          gp = gpar(col = NA, fill = shapes[[1]]$color),
-                          default.units = "native")
+  if (!is.null(shapes[[1]])){
 
-  assign("hic_grobs", addGrob(gTree = get("hic_grobs", envir = bbEnv), child = hic_squares), envir = bbEnv)
+    ## Make square grobs and add to grob gTree
+    hic_squares <- rectGrob(x = shapes[[1]]$x,
+                            y = shapes[[1]]$y,
+                            just = c("left", "bottom"),
+                            width = resolution,
+                            height = resolution,
+                            gp = gpar(col = NA, fill = shapes[[1]]$color),
+                            default.units = "native")
 
+    assign("hic_grobs", addGrob(gTree = get("hic_grobs", envir = bbEnv), child = hic_squares), envir = bbEnv)
+
+  }
 
   ## Make triangle grobs and add to grob gTree
   if (!is.null(shapes[[2]])){
