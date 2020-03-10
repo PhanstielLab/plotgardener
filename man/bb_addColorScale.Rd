@@ -11,7 +11,7 @@ bb_addColorScale(
   width,
   x,
   y,
-  orientation = "vertical",
+  orientation = "v",
   fontsize = 8,
   fontcolor = "dark grey",
   fontfamily = "",
@@ -33,7 +33,7 @@ bb_addColorScale(
 
 \item{y}{A unit object specifying y-location}
 
-\item{orientation}{"vertical" or "horizontal" orientation}
+\item{orientation}{"v" (vertical) or "h" (horizontal) orientation}
 
 \item{fontsize}{fontsize for text}
 

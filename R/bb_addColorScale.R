@@ -6,7 +6,7 @@
 #' @param width A unit object specifying width
 #' @param x A unit object specifying x-location
 #' @param y A unit object specifying y-location
-#' @param orientation "vertical" or "horizontal" orientation
+#' @param orientation "v" (vertical) or "h" (horizontal) orientation
 #' @param fontsize fontsize for text
 #' @param fontcolor fontcolor for text
 #' @param fontfamily fontfamily for text
@@ -15,7 +15,7 @@
 #'
 #' @author Nicole Kramer
 #' @export
-bb_addColorScale <- function(plot, border = FALSE, height, width, x, y, orientation = "vertical", fontsize = 8,
+bb_addColorScale <- function(plot, border = FALSE, height, width, x, y, orientation = "v", fontsize = 8,
                       fontcolor = "dark grey", fontfamily = "", fontface = "plain", just = c("left", "top"), ...){
 
   # ======================================================================================================================================================================================
@@ -33,9 +33,9 @@ bb_addColorScale <- function(plot, border = FALSE, height, width, x, y, orientat
     }
 
     ## check proper orientation
-    if (!bb_scale$orientation %in% c("vertical", "horizontal")){
+    if (!bb_scale$orientation %in% c("v", "h")){
 
-      stop("Invalid /'orientation/' parameter. Options are 'vertical' or 'horizontal'.", call. = FALSE)
+      stop("Invalid /'orientation/' parameter. Options are 'v' or 'h'.", call. = FALSE)
 
     }
 
@@ -82,7 +82,7 @@ bb_addColorScale <- function(plot, border = FALSE, height, width, x, y, orientat
   # ======================================================================================================================================================================================
   # VERTICAL ORIENTATION
   # ======================================================================================================================================================================================
-  if (orientation == "vertical"){
+  if (orientation == "v"){
 
     digitLab <- textGrob(label = 0, x = 0.5, y = 0, just = c("center", "bottom"), default.units = "npc",
                        gp = gpar(fontsize = fontsize, col = fontcolor, fontface = fontface, fontfamily = fontfamily))
@@ -114,7 +114,7 @@ bb_addColorScale <- function(plot, border = FALSE, height, width, x, y, orientat
   # ======================================================================================================================================================================================
   # HORIZONTAL ORIENTATION
   # ======================================================================================================================================================================================
-  if (orientation == "horizontal"){
+  if (orientation == "h"){
 
     digitLab <- textGrob(label = 0, x = 0, y = 0.5, just = c("left", "center"), default.units = "npc",
                          gp = gpar(fontsize = fontsize, col = fontcolor, fontface = fontface, fontfamily = fontfamily))
@@ -129,7 +129,7 @@ bb_addColorScale <- function(plot, border = FALSE, height, width, x, y, orientat
 
     new_width <- 1 - (hW + lW + dW)
 
-    color_scale <- rasterGrob(matrix(data = bb_scale$color_palette, nrow = 1, ncol = length(color_vector)), width = unit(new_width, "npc"), height = page_coords$height,
+    color_scale <- rasterGrob(matrix(data = bb_scale$color_palette, nrow = 1, ncol = length(bb_scale$color_palette)), width = unit(new_width, "npc"), height = page_coords$height,
                 x = unit(lW + (0.5 * dW), "npc"), just = "left")
 
     if (border == T){
