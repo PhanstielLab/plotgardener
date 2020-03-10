@@ -94,7 +94,6 @@ bb_plotGenes <- function(assembly = "hg19", chrom, chromstart, chromend, fontcol
                          vp = vp_gene,
                          default.units = "native")
 
-
       } else if (df[3] == "-"){
 
         #invisible(lapply(utr_ranges, utr_grobs, yCoord = unit(0.37, "npc"), strandcolor = strandcolors[2]))

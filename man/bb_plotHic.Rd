@@ -6,9 +6,9 @@
 \usage{
 bb_plotHic(
   hic,
-  chrom = 8,
-  chromstart = 133600000,
-  chromend = 134800000,
+  chrom = 1,
+  chromstart = 22500000,
+  chromend = 23200000,
   half = "both",
   resolution = 10000,
   zrange = NULL,

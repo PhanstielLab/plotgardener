@@ -29,7 +29,7 @@
 #' @export
 #'
 #'
-bb_plotHic <- function(hic, chrom = 8, chromstart = 133600000, chromend = 134800000, half = "both", resolution = 10000, zrange = NULL,
+bb_plotHic <- function(hic, chrom = 1, chromstart = 22500000, chromend = 23200000, half = "both", resolution = 10000, zrange = NULL,
                        palette = colorRampPalette(c("white", "dark red")), width = NULL, height = NULL, x = NULL, y = NULL,
                        just = c("left", "top"), draw = TRUE, altchrom = NULL, altchromstart = NULL, altchromend = NULL, althalf = NULL,
                        norm = "KR", ...){
@@ -425,7 +425,7 @@ bb_plotHic <- function(hic, chrom = 8, chromstart = 133600000, chromend = 134800
   # INITIALIZE OBJECT
   # ======================================================================================================================================================================================
 
-  hic_plot <- structure(list(chrom = chrom, chromstart = chromstart, chromend = chromend, altchrom = altchrom, altchromstart = altchromstart,
+  hic_plot <- structure(list(chrom = chrom, chromstart = as.numeric(chromstart), chromend = as.numeric(chromend), altchrom = altchrom, altchromstart = altchromstart,
                              altchromend = altchromend, x = x, y = y, width = width, height = height, justification = just,
                              zrange = zrange, resolution = resolution, half = half, althalf = althalf, color_palette = NULL, grobs = NULL), class = "bb_hic")
   attr(x = hic_plot, which = "plotted") <- draw

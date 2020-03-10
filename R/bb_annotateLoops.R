@@ -10,7 +10,7 @@
 #' @param col line color
 #'
 #' @export
-bb_annotateLoops <- function(hic, loops, half = "inherit", shift = 4, type = "box", lty = "solid", lwd = 1, col = "black"){
+bb_annotateLoops <- function(hic, loops, half = "inherit", shift = 4, type = "box", lty = "solid", lwd = 1, col = "black", rotation = 0){
 
   # ======================================================================================================================================================================================
   # FUNCTIONS

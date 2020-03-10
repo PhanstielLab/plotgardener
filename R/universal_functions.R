@@ -297,20 +297,26 @@ check_placement <- function(object){
       ## 1. Need both an x and y coordinate
       if (!is.null(object$x) & is.null(object$y)){
 
-        stop("If giving placement coordinates, need to specify both x and y.", call. = FALSE)
+        stop("Placement detected with y value missing.", call. = FALSE)
 
       }
 
       if (!is.null(object$y) & is.null(object$x)){
 
-        stop("If giving placement coordinates, need to specify both x and y.", call. = FALSE)
+        stop("Placement detected with x value missing.", call. = FALSE)
 
       }
 
       ## 2. Need plot dimensions
-      if (is.null(object$width) | is.null(object$height)){
+      if (is.null(object$width)){
 
-        stop("If giving placement coordinates, need to specify plot width and plot height.", call. = FALSE)
+        stop("Placement detected with plot width missing.", call. = FALSE)
+
+      }
+
+      if (is.null(object$height)){
+
+        stop("Placement detected with plot height missing.", call. = FALSE)
 
       }
 

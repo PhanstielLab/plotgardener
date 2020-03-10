@@ -12,7 +12,8 @@ bb_annotateLoops(
   type = "box",
   lty = "solid",
   lwd = 1,
-  col = "black"
+  col = "black",
+  rotation = 0
 )
 }
 \arguments{

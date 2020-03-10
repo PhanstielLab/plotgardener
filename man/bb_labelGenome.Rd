@@ -13,10 +13,12 @@ bb_labelGenome(
   scale = "bp",
   fontsize = 10,
   fontcolor = "black",
-  lineAbove = T,
   linecolor = "black",
   lwd = 1,
-  fontfamily = ""
+  fontfamily = "",
+  commas = TRUE,
+  ticks = NULL,
+  tcl = 0.5
 )
 }
 \arguments{
@@ -28,13 +30,13 @@ bb_labelGenome(
 
 \item{just}{justification}
 
+\item{rotation}{angle of rotation of label}
+
 \item{scale}{scale of the plot; options are "bp", "Kb", or "Mb"}
 
 \item{fontsize}{fontsize for labels (in points)}
 
 \item{fontcolor}{color for all text/lines}
-
-\item{lineAbove}{TRUE/FALSE indicating if line should be above or below text}
 
 \item{linecolor}{linecolor}
 
@@ -42,9 +44,11 @@ bb_labelGenome(
 
 \item{fontfamily}{fontfamily for text}
 
-\item{units}{units of inputted x and y}
+\item{commas}{A logical value indicating whether to include commas in start and stop labels}
 
-\item{side}{side of the plot to annotate, options are "bottom", "top", "right", or "left"}
+\item{ticks}{Specified locations of ticks}
+
+\item{tcl}{Length of tickmark as fraction of text height}
 }
 \description{
 Adds genome coordinates to the axis of a plot
