@@ -2,7 +2,7 @@
 % Please edit documentation in R/bb_plotBedpe.R
 \name{bb_plotBedpe}
 \alias{bb_plotBedpe}
-\title{plots paired-end data}
+\title{plots paired-end data for a single chromosome}
 \usage{
 bb_plotBedpe(
   bedpe,
@@ -13,7 +13,7 @@ bb_plotBedpe(
   colorby = NULL,
   colorbycol = NULL,
   colorbyrange = NULL,
-  linecolor = NULL,
+  linecolor = NA,
   boxHeight = unit(0.025, "inches"),
   spaceHeight = unit(0.025, "inches"),
   limitDots = TRUE,
@@ -52,13 +52,13 @@ bb_plotBedpe(
 
 \item{limitDots}{logical value indicating whether to plot "..." to indicate additional, unplotted bedpe elements}
 
-\item{x}{A unit object specifying x-location}
+\item{x}{A numeric vector or unit object specifying x-location}
 
-\item{y}{A unit object specifying y-location}
+\item{y}{A numeric vector or unit object specifying y-location}
 
-\item{width}{A unit object specifying width}
+\item{width}{A numeric vector or unit object specifying width}
 
-\item{height}{A unit object specifying height}
+\item{height}{A numeric vector or unit object specifying height}
 
 \item{just}{string or numeric vector specifying the justification of the viewport relative to its (x, y) location: "left", "right", "centre", "center", "bottom", "top"}
 
@@ -67,5 +67,5 @@ bb_plotBedpe(
 \item{draw}{A logical value indicating whether graphics output should be produced}
 }
 \description{
-plots paired-end data
+plots paired-end data for a single chromosome
 }

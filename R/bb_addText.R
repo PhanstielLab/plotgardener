@@ -1,8 +1,8 @@
 #' wrapper to draw a textGrob based on bb_makePage coordinates and units
 #'
 #' @param label character or expression
-#' @param x A unit object specifying x-location
-#' @param y A unit object specifying y-location
+#' @param x A numeric vector or unit object specifying x-location
+#' @param y A numeric vector or unit object specifying y-location
 #' @param just justification of text relative to its (x, y) location
 #' @param rotation angle to rotate text
 #' @param fontcolor fontcolor
@@ -11,10 +11,11 @@
 #' @param cex multiplier applied to fontsize
 #' @param fontfamily the font family
 #' @param fontface the fontface (bold, italic, ...)
+#' @param default.units A string indicating the default units to use if x or y are only given as numeric vectors
 #'
 #' @export
 bb_addText <- function(label, x, y, just = "center", rotation = 0, fontcolor = "black", transparency = 1, fontsize = 12, cex = 1,
-                    fontfamily = "", fontface = "plain"){
+                    fontfamily = "", fontface = "plain", default.units = "inches"){
 
   # ======================================================================================================================================================================================
   # CATCH ERRORS
@@ -38,9 +39,45 @@ bb_addText <- function(label, x, y, just = "center", rotation = 0, fontcolor = "
   page_height <- get("page_height", envir = bbEnv)
   page_units <- get("page_units", envir = bbEnv)
 
+  if (class(x) != "unit"){
+
+    if (!is.numeric(x)){
+
+      stop("x-coordinate is neither a unit object or a numeric value. Cannot place object.", call. = FALSE)
+
+    }
+
+    if (is.null(default.units)){
+
+      stop("x-coordinate detected as numeric.\'default.units\' must be specified.", call. = FALSE)
+
+    }
+
+    bb_text$x <- unit(x, default.units)
+
+  }
+
+  if (class(y) != "unit"){
+
+    if (!is.numeric(y)){
+
+      stop("y-coordinate is neither a unit object or a numeric value. Cannot place object.", call. = FALSE)
+
+    }
+
+    if (is.null(default.units)){
+
+      stop("y-coordinate detected as numeric.\'default.units\' must be specified.", call. = FALSE)
+
+    }
+
+    bb_text$y <- unit(y, default.units)
+
+  }
+
   ## Convert coordinates to page_units
-  new_x <- convertX(x, unitTo = page_units, valueOnly = TRUE)
-  new_y <- convertY(y, unitTo = page_units, valueOnly = TRUE)
+  new_x <- convertX(bb_text$x, unitTo = page_units, valueOnly = TRUE)
+  new_y <- convertY(bb_text$y, unitTo = page_units, valueOnly = TRUE)
 
   # ======================================================================================================================================================================================
   # DEFINE PARAMETERS

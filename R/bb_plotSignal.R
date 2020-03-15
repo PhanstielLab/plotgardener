@@ -12,17 +12,18 @@
 #' @param fillcolor if want plot to be filled, specify fillcolor
 #' @param transparency if want to specify a transparency for the fill, specify transparency
 #' @param ymax fraction of max y value to set as height of plot
-#' @param width A unit object specifying width
-#' @param height A unit object specifying height
-#' @param x A unit object specifying x-location
-#' @param y A unit object specifying y-location
+#' @param width A numeric or unit object specifying width
+#' @param height A numeric or unit object specifying height
+#' @param x A numeric or unit object specifying x-location
+#' @param y A numeric or unit object specifying y-location
 #' @param just a string or numeric vector specifying the justification of the viewport relative to its (x, y) location: "left", "right", "centre", "center", "bottom", "top"
+#' @param default.units A string indicating the default units to use if x, y, width, or height are only given as numerics
 #' @param draw A logical value indicating whether graphics output should be produced
 #'
 #' @export
 bb_plotSignal <- function(signal, chrom, chromstart, chromend, range = NULL, linecolor = "grey", lwd = 1, yaxis = FALSE,
                            binSize = NA, binCap = TRUE, fillcolor = NULL, transparency = NULL, ymax = 1, width = NULL,
-                           height = NULL, x = NULL, y = NULL, just = c("left", "top"), draw = TRUE, ...  ){
+                           height = NULL, x = NULL, y = NULL, just = c("left", "top"), default.units = "inches", draw = TRUE, ...  ){
 
   # ======================================================================================================================================================================================
   # FUNCTIONS
@@ -253,6 +254,12 @@ bb_plotSignal <- function(signal, chrom, chromstart, chromend, range = NULL, lin
 
   check_placement(object = signal_track)
   errorcheck_bb_signaltrack(signal = signal, signaltrack = signal_track)
+
+  # ======================================================================================================================================================================================
+  # PARSE UNITS
+  # ======================================================================================================================================================================================
+
+  signal_track <- defaultUnits(object = signal_track, default.units = default.units)
 
   # ======================================================================================================================================================================================
   # SET BINSIZE

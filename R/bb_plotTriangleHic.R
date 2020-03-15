@@ -7,12 +7,13 @@
 #' @param resolution the width in bp of each pixel; options are 2500000, 1000000, 500000, 250000, 100000, 50000, 25000, 10000, or 5000
 #' @param zrange the range of interaction scores to plot, where extreme values will be set to the max or min
 #' @param palette ColorRamp palette to use for representing interaction scores
-#' @param width A unit object specifying the bottom width of the triangle
-#' @param height A unit object specifying the height of the triangle
-#' @param x A unit object specifying x-location
-#' @param y A unit object specifying y-location
+#' @param width A numeric or unit object specifying the bottom width of the triangle
+#' @param height A numeric or unit object specifying the height of the triangle
+#' @param x A numeric or unit object specifying x-location
+#' @param y A numeric or unit object specifying y-location
 #' @param just a string or numeric vector specifying the justification of the viewport relative to its (x, y) location
 #' @param draw A logical value indicating whether graphics output should be produced
+#' @param default.units A string indicating the default units to use if x, y, width, or height are only given as numerics
 #' @param norm if giving .hic file, hic data normalization; must be found in hic file
 #'
 #' @export
@@ -20,7 +21,7 @@
 #'
 bb_plotTriangleHic <- function(hic, chrom, chromstart, chromend, resolution = 10000, zrange = NULL,
                                palette = colorRampPalette(c("white", "dark red")), width = NULL, height = NULL,
-                               x = NULL, y = NULL, just = c("left", "bottom"), norm = "KR", draw = T, ...){
+                               x = NULL, y = NULL, just = c("left", "top"), norm = "KR", default.units = "inches", draw = T, ...){
 
   # ======================================================================================================================================================================================
   # FUNCTIONS
@@ -400,16 +401,16 @@ bb_plotTriangleHic <- function(hic, chrom, chromstart, chromend, resolution = 10
     side_missing <- dplyr::setdiff(all_coords, hic_side$y)
     top_missing <- dplyr::setdiff(all_coords, hic_top$x)
 
-    side_missing_comp <- rep(hic_side$x, length(side_missing))
-    top_missing_comp <- rep(hic_top$y, length(top_missing))
+    side_missing_comp <- rep(hic_side[1,1], length(side_missing))
+    top_missing_comp <- rep(hic_top[1,2], length(top_missing))
 
     add_side <- data.frame("x" = side_missing_comp, "y" = side_missing, "counts" = rep(NA, length(side_missing)),
                            "color" = rep(NA, length(side_missing)),
                            "width" = rep(hic_plot$resolution, length(side_missing)), "height" = rep(hic_plot$resolution, length(side_missing)))
 
-    add_top <- data.frame("x" = top_missing, "y" = top_missing_comp, "counts" = rep(NA, length(side_missing)),
-                          "color" = rep(NA, length(side_missing)),
-                          "width" = rep(hic_plot$resolution, length(side_missing)), "height" = rep(hic_plot$resolution, length(side_missing)))
+    add_top <- data.frame("x" = top_missing, "y" = top_missing_comp, "counts" = rep(NA, length(top_missing)),
+                          "color" = rep(NA, length(top_missing)),
+                          "width" = rep(hic_plot$resolution, length(top_missing)), "height" = rep(hic_plot$resolution, length(top_missing)))
 
     sideTotal <- rbind(hic_side, add_side)
     sideTotal <- sideTotal[-which(sideTotal[,1] == min(sideTotal[,1]) & sideTotal[,2] == max(sideTotal[,2])),]
@@ -898,26 +899,38 @@ bb_plotTriangleHic <- function(hic, chrom, chromstart, chromend, resolution = 10
   }
 
   # ======================================================================================================================================================================================
-  # JUSTIFICATION OF PLOT
-  # ======================================================================================================================================================================================
-
-  new_just <- reset_just(just = just, x = x, y = y, width = width, height = height)
-
-  # ======================================================================================================================================================================================
   # INITIALIZE OBJECT
   # ======================================================================================================================================================================================
 
-  hic_plot <- structure(list(chrom = chrom, chromstart = chromstart, chromend = chromend, x = x, y = y, width = width, height = height, justification = new_just,
+  hic_plot <- structure(list(chrom = chrom, chromstart = cas.numeric(chromstart), chromend = as.numeric(chromend), x = x, y = y, width = width, height = height, justification = NULL,
                              zrange = zrange, altchrom = chrom, altchromstart = chromstart, altchromend = chromend, resolution = resolution,
                              color_palette = NULL, grobs = NULL), class = "bb_trianglehic")
   attr(x = hic_plot, which = "plotted") <- draw
 
   # ======================================================================================================================================================================================
-  # CATCH ERRORS
+  # CHECK PLACEMENT
   # ======================================================================================================================================================================================
 
   check_placement(object = hic_plot)
+
+  # ======================================================================================================================================================================================
+  # PARSE UNITS
+  # ======================================================================================================================================================================================
+
+  hic_plot <- defaultUnits(object = hic_plot, default.units = default.units)
+
+  # ======================================================================================================================================================================================
+  # CATCH ERRORS
+  # ======================================================================================================================================================================================
+
   errorcheck_bb_plotTriangleHic(hic = hic, hic_plot = hic_plot, norm = norm)
+
+  # ======================================================================================================================================================================================
+  # JUSTIFICATION OF PLOT
+  # ======================================================================================================================================================================================
+
+  new_just <- reset_just(just = just, x = hic_plot$x, y = hic_plot$y, width = hic_plot$width, height = hic_plot$height)
+  hic_plot$justification <- new_just
 
   # ======================================================================================================================================================================================
   # READ IN DATA
@@ -984,7 +997,7 @@ bb_plotTriangleHic <- function(hic, chrom, chromstart, chromend, resolution = 10
   } else {
 
     ## Get sides of viewport based on input width
-    vp_side <- (convertWidth(width, unitTo = get("page_units", envir = bbEnv), valueOnly = T))/sqrt(two)
+    vp_side <- (convertWidth(hic_plot$width, unitTo = get("page_units", envir = bbEnv), valueOnly = T))/sqrt(two)
 
     ## Get bottom left point of triangle (hence bottom left of actual viewport) based on just
     bottom_coords <- convert_just(hic_plot = hic_plot)

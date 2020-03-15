@@ -7,15 +7,17 @@
 #' @param col single colors, vector of colors, or color palette for coloring points
 #' @param ymax fraction of max y value to set as height of plot
 #' @param ylim numeric vector of length 2, giving the y coordinates range
-#' @param x A unit object specifying x-location
-#' @param y A unit object speicifying y-location
-#' @param width A unit object specifying width
-#' @param height A unit object specifying height
+#' @param x A numeric or unit object specifying x-location
+#' @param y A numeric or unit object speicifying y-location
+#' @param width A numeric or unit object specifying width
+#' @param height A numeric or unit object specifying height
 #' @param just justification of plot
+#' @param default.units A string indicating the default units to use if x, y, width, or height are only given as numeric vectors
 #' @param draw A logical value indicating whether graphics output should be produced
 #'
 #' @export
-bb_plotManhattan <- function(bedfile, chrom, chromstart, chromend, col, ymax = 1, ylim = NULL, x = NULL, y = NULL, width = NULL, height = NULL, just = "center", draw = TRUE,  ... ){
+bb_plotManhattan <- function(bedfile, chrom, chromstart, chromend, col, ymax = 1, ylim = NULL, x = NULL, y = NULL, width = NULL, height = NULL, just = "center", default.units = "inches",
+                             draw = TRUE,  ... ){
 
   # ======================================================================================================================================================================================
   # FUNCTIONS
@@ -40,6 +42,12 @@ bb_plotManhattan <- function(bedfile, chrom, chromstart, chromend, col, ymax = 1
 
   man_plot <- structure(list(chrom = chrom, chromstart = chromstart, chromend = chromend, x = x, y = y, width = width, height = height, justification = just,
                              colors = col, ylim = ylim, ymax = ymax, grobs = NULL), class = "bb_manhattan")
+
+  # ======================================================================================================================================================================================
+  # PARSE UNITS
+  # ======================================================================================================================================================================================
+
+  man_plot <- defaultUnits(object = man_plot, default.units = default.units)
 
   # ======================================================================================================================================================================================
   # SUBSET DATA

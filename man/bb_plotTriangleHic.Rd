@@ -16,8 +16,9 @@ bb_plotTriangleHic(
   height = NULL,
   x = NULL,
   y = NULL,
-  just = c("left", "bottom"),
+  just = c("left", "top"),
   norm = "KR",
+  default.units = "inches",
   draw = T,
   ...
 )
@@ -37,17 +38,19 @@ bb_plotTriangleHic(
 
 \item{palette}{ColorRamp palette to use for representing interaction scores}
 
-\item{width}{A unit object specifying the bottom width of the triangle}
+\item{width}{A numeric or unit object specifying the bottom width of the triangle}
 
-\item{height}{A unit object specifying the height of the triangle}
+\item{height}{A numeric or unit object specifying the height of the triangle}
 
-\item{x}{A unit object specifying x-location}
+\item{x}{A numeric or unit object specifying x-location}
 
-\item{y}{A unit object specifying y-location}
+\item{y}{A numeric or unit object specifying y-location}
 
 \item{just}{a string or numeric vector specifying the justification of the viewport relative to its (x, y) location}
 
 \item{norm}{if giving .hic file, hic data normalization; must be found in hic file}
+
+\item{default.units}{A string indicating the default units to use if x, y, width, or height are only given as numerics}
 
 \item{draw}{A logical value indicating whether graphics output should be produced}
 }

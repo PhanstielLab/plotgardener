@@ -7,16 +7,17 @@
 bb_addColorScale(
   plot,
   border = FALSE,
-  height,
-  width,
   x,
   y,
+  width,
+  height,
   orientation = "v",
   fontsize = 8,
   fontcolor = "dark grey",
   fontfamily = "",
   fontface = "plain",
   just = c("left", "top"),
+  default.units = "inches",
   ...
 )
 }
@@ -25,13 +26,13 @@ bb_addColorScale(
 
 \item{border}{option to add border around scale}
 
-\item{height}{A unit object specifying height}
+\item{x}{A numeric vector or unit object specifying x-location}
 
-\item{width}{A unit object specifying width}
+\item{y}{A numeric vector or unit object specifying y-location}
 
-\item{x}{A unit object specifying x-location}
+\item{width}{A numeric vector or unit object specifying width}
 
-\item{y}{A unit object specifying y-location}
+\item{height}{A numeric vector or unit object specifying height}
 
 \item{orientation}{"v" (vertical) or "h" (horizontal) orientation}
 
@@ -44,6 +45,8 @@ bb_addColorScale(
 \item{fontface}{fontface for text}
 
 \item{just}{justification of scale viewport}
+
+\item{default.units}{A string indicating the default units to use if x, y, width, or height are only given as numeric vectors}
 }
 \description{
 adds color scale for heatmap plots

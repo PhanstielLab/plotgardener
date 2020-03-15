@@ -59,7 +59,6 @@ current_viewports <- function(){
   return(current)
 }
 
-
 ## Define a function to convert viewport x and y into center based on justification
 adjust_vpCoords <- function(viewport){
 
@@ -261,7 +260,7 @@ convert_page <- function(object){
   old_height <- object$height
   old_width <- object$width
   new_x <- convertX(old_x, unitTo = page_units)
-  new_y <- unit(page_height, units = page_units) - convertY(old_y, unitTo = page_units)
+  new_y <- convertY(unit(page_height, units = page_units) - convertY(old_y, unitTo = page_units), unitTo = page_units)
   new_height <- convertHeight(old_height, unitTo = page_units)
   new_width <- convertWidth(old_width, unitTo = page_units)
 
@@ -329,7 +328,6 @@ check_placement <- function(object){
 
 }
 
-
 check_group_placement <- function(object){
 
   if (attributes(object)$plotted == T){
@@ -345,6 +343,90 @@ check_group_placement <- function(object){
     check_bbpage(error = "Must make a BentoBox page with bb_makePage() before placing a plot or group.")
 
   }
+
+}
+
+## Define a function that converts coordinates/dimensions into default units
+defaultUnits <- function(object, default.units){
+
+  if (!(is.null(object$x) & is.null(object$y))){
+
+    if (class(object$x) != "unit"){
+
+      if (!is.numeric(object$x)){
+
+        stop("x-coordinate is neither a unit object or a numeric value. Cannot place object.", call. = FALSE)
+
+      }
+
+      if (is.null(default.units)){
+
+        stop("x-coordinate detected as numeric.\'default.units\' must be specified.", call. = FALSE)
+
+      }
+
+      object$x <- unit(object$x, default.units)
+
+    }
+
+
+    if (class(object$y) != "unit"){
+
+      if (!is.numeric(object$y)){
+
+        stop("y-coordinate is neither a unit object or a numeric value. Cannot place object.", call. = FALSE)
+
+      }
+
+      if (is.null(default.units)){
+
+        stop("y-coordinate detected as numeric.\'default.units\' must be specified.", call. = FALSE)
+
+      }
+
+      object$y <- unit(object$y, default.units)
+
+    }
+
+    if (class(object$width) != "unit"){
+
+      if (!is.numeric(object$width)){
+
+        stop("Width is neither a unit object or a numeric value. Cannot place object.", call. = FALSE)
+
+      }
+
+      if (is.null(default.units)){
+
+        stop("Width detected as numeric.\'default.units\' must be specified.", call. = FALSE)
+
+      }
+
+      object$width <- unit(object$width, default.units)
+
+    }
+
+    if (class(object$height) != "unit"){
+
+      if (!is.numeric(object$height)){
+
+        stop("Height is neither a unit object or a numeric value. Cannot place object.", call. = FALSE)
+
+      }
+
+      if (is.null(default.units)){
+
+        stop("Height detected as numeric.\'default.units\' must be specified.", call. = FALSE)
+
+      }
+
+      object$height <- unit(object$height, default.units)
+
+    }
+
+  }
+
+  return(object)
 
 }
 

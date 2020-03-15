@@ -17,6 +17,7 @@ bb_plotManhattan(
   width = NULL,
   height = NULL,
   just = "center",
+  default.units = "inches",
   draw = TRUE,
   ...
 )
@@ -36,15 +37,17 @@ bb_plotManhattan(
 
 \item{ylim}{numeric vector of length 2, giving the y coordinates range}
 
-\item{x}{A unit object specifying x-location}
+\item{x}{A numeric or unit object specifying x-location}
 
-\item{y}{A unit object speicifying y-location}
+\item{y}{A numeric or unit object speicifying y-location}
 
-\item{width}{A unit object specifying width}
+\item{width}{A numeric or unit object specifying width}
 
-\item{height}{A unit object specifying height}
+\item{height}{A numeric or unit object specifying height}
 
 \item{just}{justification of plot}
+
+\item{default.units}{A string indicating the default units to use if x, y, width, or height are only given as numeric vectors}
 
 \item{draw}{A logical value indicating whether graphics output should be produced}
 }

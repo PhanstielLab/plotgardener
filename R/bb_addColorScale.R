@@ -2,27 +2,28 @@
 #'
 #' @param plot plot to add scale to
 #' @param border option to add border around scale
-#' @param height A unit object specifying height
-#' @param width A unit object specifying width
-#' @param x A unit object specifying x-location
-#' @param y A unit object specifying y-location
+#' @param x A numeric vector or unit object specifying x-location
+#' @param y A numeric vector or unit object specifying y-location
+#' @param width A numeric vector or unit object specifying width
+#' @param height A numeric vector or unit object specifying height
 #' @param orientation "v" (vertical) or "h" (horizontal) orientation
 #' @param fontsize fontsize for text
 #' @param fontcolor fontcolor for text
 #' @param fontfamily fontfamily for text
 #' @param fontface fontface for text
 #' @param just justification of scale viewport
+#' @param default.units A string indicating the default units to use if x, y, width, or height are only given as numeric vectors
 #'
 #' @author Nicole Kramer
 #' @export
-bb_addColorScale <- function(plot, border = FALSE, height, width, x, y, orientation = "v", fontsize = 8,
-                      fontcolor = "dark grey", fontfamily = "", fontface = "plain", just = c("left", "top"), ...){
+bb_addColorScale <- function(plot, border = FALSE, x, y, width, height, orientation = "v", fontsize = 8,
+                      fontcolor = "dark grey", fontfamily = "", fontface = "plain", just = c("left", "top"), default.units = "inches", ...){
 
   # ======================================================================================================================================================================================
   # FUNCTIONS
   # ======================================================================================================================================================================================
 
-  ## Define a function that catches errors for bb_addlegend
+  ## Define a function that catches errors for bb_addscale
   errorcheck_bb_addscale <- function(bb_scale){
 
     ## checking min_val and max val
@@ -42,6 +43,22 @@ bb_addColorScale <- function(plot, border = FALSE, height, width, x, y, orientat
   }
 
   # ======================================================================================================================================================================================
+  # INITIAL ERRORS
+  # ======================================================================================================================================================================================
+
+  if (is.null(plot$color_palette)){
+
+    stop("Cannot add color scale to an input plot that does not have a color palette.", call. = FALSE)
+
+  }
+
+  if (is.null(plot$zrange)){
+
+    stop("Cannot add color scale to an input plot that does not have a zrange.", call. = FALSE)
+
+  }
+
+  # ======================================================================================================================================================================================
   # INITIALIZE OBJECT
   # ======================================================================================================================================================================================
 
@@ -55,6 +72,12 @@ bb_addColorScale <- function(plot, border = FALSE, height, width, x, y, orientat
 
   check_bbpage(error = "Must have a BentoBox page with a plot before adding a scale.")
   errorcheck_bb_addscale(bb_scale = bb_scale)
+
+  # ======================================================================================================================================================================================
+  # PARSE UNITS
+  # ======================================================================================================================================================================================
+
+  bb_scale <- defaultUnits(object = bb_scale, default.units = default.units)
 
   # ======================================================================================================================================================================================
   # VIEWPORTS

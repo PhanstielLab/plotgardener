@@ -15,15 +15,16 @@ bb_addText(
   fontsize = 12,
   cex = 1,
   fontfamily = "",
-  fontface = "plain"
+  fontface = "plain",
+  default.units = "inches"
 )
 }
 \arguments{
 \item{label}{character or expression}
 
-\item{x}{A unit object specifying x-location}
+\item{x}{A numeric vector or unit object specifying x-location}
 
-\item{y}{A unit object specifying y-location}
+\item{y}{A numeric vector or unit object specifying y-location}
 
 \item{just}{justification of text relative to its (x, y) location}
 
@@ -40,6 +41,8 @@ bb_addText(
 \item{fontfamily}{the font family}
 
 \item{fontface}{the fontface (bold, italic, ...)}
+
+\item{default.units}{A string indicating the default units to use if x or y are only given as numeric vectors}
 }
 \description{
 wrapper to draw a textGrob based on bb_makePage coordinates and units

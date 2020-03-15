@@ -1,20 +1,27 @@
 #' adds a plot created with ggplot2 to a BentoBox layout
 #'
 #' @param plot ggplot object
-#' @param x A unit object specifying x-location.
-#' @param y A unit object specifying y-location.
-#' @param width A unit object specifying width.
-#' @param height A unit object specifying height.
+#' @param x A numeric or unit object specifying x-location.
+#' @param y A numeric or unit object specifying y-location.
+#' @param width A numeric or unit object specifying width.
+#' @param height A numeric or unit object specifying height.
 #' @param just A string or numeric vector specifying the justification of the plot relative to its (x, y) location
+#' @param default.units A string indicating the default units to use if x, y, width, or height are only given as numeric vectors
 #'
 #' @export
-bb_plotGG <- function(plot, x, y, width, height, just = c("left", "top")){
+bb_plotGG <- function(plot, x, y, width, height, just = c("left", "top"), default.units = "inches"){
 
   # ======================================================================================================================================================================================
   # INITIALIZE PLOT OBJECT
   # ======================================================================================================================================================================================
 
   gg_plot <- structure(list(width = width, height = height, x = x, y = y, justification = just), class = "bb_gg")
+
+  # ======================================================================================================================================================================================
+  # PARSE UNITS
+  # ======================================================================================================================================================================================
+
+  gg_plot <- defaultUnits(object = gg_plot, default.units = default.units)
 
   # ======================================================================================================================================================================================
   # VIEWPORTS

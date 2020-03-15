@@ -1,9 +1,25 @@
-
-
+#' plots a gene track for a specified region
+#'
+#' @param assembly desired genome assembly
+#' @param chrom chromsome of region to be plotted
+#' @param chromstart start position
+#' @param chromend end position
+#' @param fontcolors a vector indicating the font colors for the plus strand and minus strand gene labels
+#' @param strandcolors a vector indicating the strand colors for the plus strand and minus strand
+#' @param fontsize the size of gene label text (in points)
+#' @param strandLabels A logical value indicating whether to include +/- strand labels
+#' @param x A numeric or unit object specifying x-location
+#' @param y A numeric or unit object specifying y-location
+#' @param width A numeric or unit object specifying width
+#' @param height A numeric or unit object specifying height
+#' @param just string or numeric vector specifying the justification of the viewport relative to its (x, y) location: "left", "right", "centre", "center", "bottom", "top"
+#' @param default.units A string indicating the default units to use if x, y, width, or height are only given as numerics
+#' @param draw A logical value indicating whether graphics output should be produced
+#'
 #' @export
 bb_plotGenes <- function(assembly = "hg19", chrom, chromstart, chromend, fontcolors = c("#2929ff", "#ff3434"),
-                            strandcolors = c("#8a8aff", "#ff7e7e"), width = NULL, height = unit(0.6, "inches"), x = NULL, y = NULL,
-                            just = c("left", "top"), fontsize = 8, exclude = "", strandLabels = T, draw = T){
+                            strandcolors = c("#8a8aff", "#ff7e7e"), fontsize = 8, strandLabels = T, x = NULL, y = NULL, width = NULL, height = unit(0.6, "inches"),
+                            just = c("left", "top"), default.units = "inches", draw = T){
 
   # ======================================================================================================================================================================================
   # FUNCTIONS
@@ -129,13 +145,18 @@ bb_plotGenes <- function(assembly = "hg19", chrom, chromstart, chromend, fontcol
   check_placement(object = genes_plot)
 
   # ======================================================================================================================================================================================
+  # PARSE UNITS
+  # ======================================================================================================================================================================================
+
+  genes_plot <- defaultUnits(object = genes_plot, default.units = default.units)
+
+  # ======================================================================================================================================================================================
   # GET APPROPRIATE BUILD DATA
   # ======================================================================================================================================================================================
 
   if (assembly == "hg19"){
 
     data <- bb_gene_data
-    #data <- get("GENE_DATA", envir = globalenv())
 
   }
 

@@ -8,11 +8,12 @@
 #' @param resolution the width in bp of each pixel; options are 2500000, 1000000, 500000, 250000, 100000, 50000, 25000, 10000, or 5000
 #' @param zrange the range of interaction scores to plot, where extreme values will be set to the max or min
 #' @param palette ColorRamp palette to use for representing interaction scores
-#' @param width A unit object specifying width
-#' @param height A unit object specifying height
-#' @param x A unit object specifying x-location
-#' @param y A unit object specifying y-location
+#' @param width A numeric or unit object specifying width
+#' @param height A numeric or unit object specifying height
+#' @param x A numeric or unit object specifying x-location
+#' @param y A numeric or unit object specifying y-location
 #' @param just a string or numeric vector specifying the justification of the viewport relative to its (x, y) location
+#' @param default.units A string indicating the default units to use if x, y, width, or height are only given as numeric vectors
 #' @param draw A logical value indicating whether graphics output should be produced
 #' @param altchrom alternate chromosome for off-diagonal plotting or interchromosomal plotting
 #' @param altchromstart alternate chromosome start for off-diagonal plotting or interchromosomal plotting
@@ -31,7 +32,7 @@
 #'
 bb_plotHic <- function(hic, chrom = 1, chromstart = 22500000, chromend = 23200000, half = "both", resolution = 10000, zrange = NULL,
                        palette = colorRampPalette(c("white", "dark red")), width = NULL, height = NULL, x = NULL, y = NULL,
-                       just = c("left", "top"), draw = TRUE, altchrom = NULL, altchromstart = NULL, altchromend = NULL, althalf = NULL,
+                       just = c("left", "top"), default.units = "inches", draw = TRUE, altchrom = NULL, altchromstart = NULL, altchromend = NULL, althalf = NULL,
                        norm = "KR", ...){
 
   # ======================================================================================================================================================================================
@@ -436,6 +437,12 @@ bb_plotHic <- function(hic, chrom = 1, chromstart = 22500000, chromend = 2320000
 
   check_placement(object = hic_plot)
   errorcheck_bb_plothic(hic = hic, hic_plot = hic_plot, norm = norm)
+
+  # ======================================================================================================================================================================================
+  # PARSE UNITS
+  # ======================================================================================================================================================================================
+
+  hic_plot <- defaultUnits(object = hic_plot, default.units = default.units)
 
   # ======================================================================================================================================================================================
   # READ IN DATA

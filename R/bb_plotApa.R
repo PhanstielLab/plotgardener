@@ -3,16 +3,17 @@
 #' @param loopNumber number of DNA loops
 #' @param palette ColorRamp palette to use for representing interaction scores
 #' @param zrangethe range of interaction scores to plot, where extreme values will be set to the max or min
-#' @param x A unit object specifying x-location
-#' @param y A unit object specifying y-location
-#' @param width A unit object specifying width
-#' @param height A unit object specifying height
+#' @param x A numeric or unit object specifying x-location
+#' @param y A numeric or unit object specifying y-location
+#' @param width A numeric or unit object specifying width
+#' @param height A numeric or unit object specifying height
 #' @param just justification of x and y-coordinates
+#' @param default.units A string indicating the default units to use if x, y, width, or height are only given as numeric vectors
 #' @param draw A logical value indicating whether graphics output should be produced
 
 #' @export
 bb_plotApa <- function(apa, loopNumber = 1, palette = colorRampPalette(c("white", "dark red")), zrange = NULL, x = NULL, y = NULL, width = NULL, height = NULL, just = c("center"),
-                       draw = TRUE){
+                       default.units = "inches", draw = TRUE){
 
   # ======================================================================================================================================================================================
   # FUNCTIONS
@@ -122,6 +123,12 @@ bb_plotApa <- function(apa, loopNumber = 1, palette = colorRampPalette(c("white"
 
   check_placement(object = apa_plot)
   errorcheck_bb_plotApa(apa = apa, apa_plot = apa_plot)
+
+  # ======================================================================================================================================================================================
+  # PARSE UNITS
+  # ======================================================================================================================================================================================
+
+  apa_plot <- defaultUnits(object = apa_plot, default.units = default.units)
 
   # ======================================================================================================================================================================================
   # READ IN DATA

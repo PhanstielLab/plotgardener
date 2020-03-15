@@ -1,8 +1,8 @@
 #' Adds genome coordinates to the axis of a plot
 #'
 #' @param plot plot to annotate
-#' @param x A unit object specifying x-location
-#' @param y A unit object specifying y-location
+#' @param x A numeric or unit object specifying x-location
+#' @param y A numeric or unit object specifying y-location
 #' @param just justification
 #' @param rotation angle of rotation of label
 #' @param scale scale of the plot; options are "bp", "Kb", or "Mb"
@@ -14,10 +14,11 @@
 #' @param commas A logical value indicating whether to include commas in start and stop labels
 #' @param ticks Specified locations of ticks
 #' @param tcl Length of tickmark as fraction of text height
+#' @param default.units A string indicating the default units to use if x or y are only given as numeric vectors
 #' @export
 
 bb_labelGenome <- function(plot, x, y, just = c("left", "top"), rotation = 0,
-                           scale = "bp", fontsize = 10, fontcolor = "black", linecolor = "black", lwd = 1, fontfamily = "", commas = TRUE, ticks = NULL, tcl = 0.5){
+                           scale = "bp", fontsize = 10, fontcolor = "black", linecolor = "black", lwd = 1, fontfamily = "", commas = TRUE, ticks = NULL, tcl = 0.5, default.units = "inches"){
 
   # ======================================================================================================================================================================================
   # FUNCTIONS
@@ -114,6 +115,46 @@ bb_labelGenome <- function(plot, x, y, just = c("left", "top"), rotation = 0,
   } else {
     height <- convertHeight(tgH, unitTo = get("page_units", envir = bbEnv), valueOnly = T)
     bb_genome_label$height <- unit(tgH, get("page_units", envir = bbEnv))
+  }
+
+  # ======================================================================================================================================================================================
+  # PARSE UNITS
+  # ======================================================================================================================================================================================
+
+  if (class(x) != "unit"){
+
+    if (!is.numeric(x)){
+
+      stop("x-coordinate is neither a unit object or a numeric value. Cannot place object.", call. = FALSE)
+
+    }
+
+    if (is.null(default.units)){
+
+      stop("x-coordinate detected as numeric.\'default.units\' must be specified.", call. = FALSE)
+
+    }
+
+    bb_genome_label$x <- unit(x, default.units)
+
+  }
+
+  if (class(y) != "unit"){
+
+    if (!is.numeric(y)){
+
+      stop("y-coordinate is neither a unit object or a numeric value. Cannot place object.", call. = FALSE)
+
+    }
+
+    if (is.null(default.units)){
+
+      stop("y-coordinate detected as numeric.\'default.units\' must be specified.", call. = FALSE)
+
+    }
+
+    bb_genome_label$y <- unit(y, default.units)
+
   }
 
   # ======================================================================================================================================================================================

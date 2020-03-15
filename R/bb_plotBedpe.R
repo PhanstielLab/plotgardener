@@ -1,4 +1,4 @@
-#' plots paired-end data
+#' plots paired-end data for a single chromosome
 #'
 #' @param bedpe bed paired end data to be plotted
 #' @param chrom chromsome of region to be plotted
@@ -12,17 +12,17 @@
 #' @param boxHeight height of boxes at either end of bedpe element
 #' @param spaceHeight height of space between boxes of different bedpe elements
 #' @param limitDots logical value indicating whether to plot "..." to indicate additional, unplotted bedpe elements
-#' @param x A unit object specifying x-location
-#' @param y A unit object specifying y-location
-#' @param width A unit object specifying width
-#' @param height A unit object specifying height
+#' @param x A numeric vector or unit object specifying x-location
+#' @param y A numeric vector or unit object specifying y-location
+#' @param width A numeric vector or unit object specifying width
+#' @param height A numeric vector or unit object specifying height
 #' @param just string or numeric vector specifying the justification of the viewport relative to its (x, y) location: "left", "right", "centre", "center", "bottom", "top"
 #' @param default.units A string indicating the default units to use if x, y, width, or height are only given as numeric vectors
 #' @param draw A logical value indicating whether graphics output should be produced
 #'
 #' @export
 
-bb_plotBedpe <- function(bedpe, chrom, chromstart, chromend, fillcolor = "black", colorby = NULL, colorbycol = NULL, colorbyrange = NULL, linecolor = NULL, boxHeight = unit(0.025, "inches"),
+bb_plotBedpe <- function(bedpe, chrom, chromstart, chromend, fillcolor = "black", colorby = NULL, colorbycol = NULL, colorbyrange = NULL, linecolor = NA, boxHeight = unit(0.025, "inches"),
                          spaceHeight = unit(.025, "inches"), limitDots = TRUE, x = NULL, y = NULL, width = NULL, height = NULL, just = c("left", "top"), default.units = "inches", draw = TRUE, ...){
 
   # ======================================================================================================================================================================================
@@ -31,23 +31,21 @@ bb_plotBedpe <- function(bedpe, chrom, chromstart, chromend, fillcolor = "black"
 
   errorcheck_bb_plotBedpe <- function(bedpe, bedpe_plot){
 
-
-
     ## bedpe file
     ## if it's a file path, it needs to exist
     if (!"data.frame" %in% class(bedpe)){
 
       # ## File extension
-      if (file_ext(loops) != "bedpe"){
+      if (file_ext(bedpe) != "bedpe"){
 
         stop("Invalid input. File must have a \".bedpe\" extension")
 
       }
 
       ## File existence
-      if (!file.exists(loops)){
+      if (!file.exists(bedpe)){
 
-        stop(paste("File", loops, "does not exist."), call. = FALSE)
+        stop(paste("File", bedpe, "does not exist."), call. = FALSE)
 
       }
 
@@ -76,8 +74,7 @@ bb_plotBedpe <- function(bedpe, chrom, chromstart, chromend, fillcolor = "black"
   # INITIALIZE OBJECT
   # ======================================================================================================================================================================================
 
-  bedpe_plot <- structure(list(chrom = chrom, chromstart = as.numeric(chromstart), chromend = as.numeric(chromend), fillcolor = fillcolor,
-                                 linecolor = linecolor, colorby = colorby, colorbycol = colorbycol, colorbyrange = colorbyrange,
+  bedpe_plot <- structure(list(chrom = chrom, chromstart = as.numeric(chromstart), chromend = as.numeric(chromend), color_palette = NULL, zrange = colorbyrange,
                                  width = width, height = height, x = x, y = y, justification = just, grobs = NULL), class = "bb_bedpe")
   attr(x = bedpe_plot, which = "plotted") <- draw
 
@@ -86,29 +83,13 @@ bb_plotBedpe <- function(bedpe, chrom, chromstart, chromend, fillcolor = "black"
   # ======================================================================================================================================================================================
 
   check_placement(object = bedpe_plot)
+  errorcheck_bb_plotBedpe(bedpe = bedpe, bedpe_plot = bedpe_plot)
 
   # ======================================================================================================================================================================================
   # PARSE UNITS
   # ======================================================================================================================================================================================
 
-  if (!(is.null(x) & is.null(y))){
-
-    if (is.numeric(class(x)) | is.numeric(class(y)) | is.numeric(class(width)) | is.numeric(class(height))){
-
-      if (is.null(default.units)){
-
-        stop("One or more placement coordinates detected as numeric.\'default.units\' must be specified.", call. = FALSE)
-
-      }
-
-      bedpe_plot$x <- unit(x, default.units)
-      bedpe_plot$y <- unit(y, default.units)
-      bedpe_plot$width <- unit(width, default.units)
-      bedpe_plot$height <- unit(height, default.units)
-
-    }
-
-  }
+  bedpe_plot <- defaultUnits(object = bedpe_plot, default.units = default.units)
 
   # ======================================================================================================================================================================================
   # READ IN FILE OR DATAFRAME
@@ -139,18 +120,6 @@ bb_plotBedpe <- function(bedpe, chrom, chromstart, chromend, fillcolor = "black"
   bedpe$stop2 <- stop2
 
   # ======================================================================================================================================================================================
-  # SUBSET DATA
-  # ======================================================================================================================================================================================
-
-  bedpe <- bedpe[which(bedpe[,1] == chrom & bedpe[,4] == chrom & bedpe[,2] >= chromstart & bedpe[,3] <= chromend
-                       & bedpe[,5] >= chromstart & bedpe[,6] <= chromend),]
-
-  # ======================================================================================================================================================================================
-  # GET BOX WIDTHS
-  # ======================================================================================================================================================================================
-  bedpe$width1 <- bedpe$stop1 - bedpe$start1
-  bedpe$width2 <- bedpe$stop2 - bedpe$start2
-  # ======================================================================================================================================================================================
   # COLORS
   # ======================================================================================================================================================================================
 
@@ -166,15 +135,49 @@ bb_plotBedpe <- function(bedpe, chrom, chromstart, chromend, fillcolor = "black"
   ## Add colorby column
   if (!is.null(colorby)){
 
-    bedpedata$colorbyvalue <- colorby
+    bedpe$colorbyvalue <- colorby
+
+  }
+
+  # ======================================================================================================================================================================================
+  # SUBSET DATA FOR CHROMOSOME AND ANY OVERLAPPING REGIONS
+  # ======================================================================================================================================================================================
+
+  bedpe <- bedpe[which(bedpe[,1] == chrom & bedpe[,4] == chrom & bedpe[,2] <= chromend & bedpe[,6] >= chromstart),]
+
+  # ======================================================================================================================================================================================
+  # COLORBY
+  # ======================================================================================================================================================================================
+  if (!is.null(colorby)){
+
     bedpe$color <- bb_maptocolors(bedpe$colorbyvalue, colorbycol, range = colorbyrange)
+    sorted_colors <- unique(bedpe[order(bedpe$colorbyvalue),]$color)
+    bedpe_plot$color_palette <- sorted_colors
 
     if (is.null(colorbyrange)){
 
       colorbyrange <- c(min(bedpe$colorbyvalue), max(bedpe$colorbyvalue))
+      bedpe_plot$zrange <- colorbyrange
 
     }
+
   }
+
+  # ======================================================================================================================================================================================
+  # GET BOX WIDTHS AND TOTAL DISTANCES
+  # ======================================================================================================================================================================================
+
+  bedpe$width1 <- bedpe$stop1 - bedpe$start1
+  bedpe$width2 <- bedpe$stop2 - bedpe$start2
+  bedpe$pos1 <- rowMeans(bedpe[,2:3])
+  bedpe$pos2 <- rowMeans(bedpe[,5:6])
+  bedpe$distance <- abs(bedpe$pos2- bedpe$pos1)
+
+  # ======================================================================================================================================================================================
+  # SORT BY DISTANCE FOR PRETTIER PLOTTING
+  # ======================================================================================================================================================================================
+
+  bedpe <- bedpe[order(bedpe$distance, decreasing = TRUE),]
 
   # ======================================================================================================================================================================================
   # VIEWPORTS
@@ -213,12 +216,10 @@ bb_plotBedpe <- function(bedpe, chrom, chromstart, chromend, fillcolor = "black"
                    x = page_coords$x, y = page_coords$y,
                    clip = "on",
                    xscale = c(chromstart, chromend),
-                   yscale = c(0, convertHeight(height, unitTo = get("page_units", envir = bbEnv), valueOnly = TRUE)),
+                   yscale = c(0, convertHeight(page_coords$height, unitTo = get("page_units", envir = bbEnv), valueOnly = TRUE)),
                    just = just,
                    name = vp_name)
   }
-
-
 
   # ======================================================================================================================================================================================
   # INITIALIZE GTREE FOR GROBS
@@ -252,6 +253,13 @@ bb_plotBedpe <- function(bedpe, chrom, chromstart, chromend, fillcolor = "black"
     if (nrow(bedpe) > limit){
       bedpe <- bedpe[1:limit,]
       warning("Not enough plotting space for all provided bedpe elements.", call. = FALSE)
+      if (limitDots == TRUE){
+
+        dotsGrob <- textGrob(label = "...", x = unit(1, "npc"), y = unit(0, "npc"), just = c("right", "bottom"))
+
+        assign("bedpe_grobs", addGrob(gTree = get("bedpe_grobs", envir = bbEnv), child = dotsGrob), envir = bbEnv)
+
+      }
     } else if (nrow(bedpe) < limit){
       warning("Excess plotting space for the provided bedpe elements.", call. = FALSE)
     }
@@ -275,23 +283,15 @@ bb_plotBedpe <- function(bedpe, chrom, chromstart, chromend, fillcolor = "black"
                            default.units = "native",
                            gp = gpar(fill = bedpe$color, col = linecolor))
 
-    bedpeLine <- segmentsGrob(x0 = bedpe$stop1,
+    bedpeLine <- segmentsGrob(x0 = bedpe$pos1,
                               y0 = bedpe$y - 0.5*boxHeight,
-                              x1 = bedpe$start2,
+                              x1 = bedpe$pos2,
                               y1 = bedpe$y - 0.5*boxHeight,
                               default.units = "native",
                               gp = gpar(col = bedpe$color))
 
 
     assign("bedpe_grobs", setChildren(get("bedpe_grobs", envir = bbEnv), children = gList(bedpeRect1, bedpeRect2, bedpeLine)), envir = bbEnv)
-
-    if (limitDots == TRUE){
-
-      dotsGrob <- textGrob(label = "...", x = unit(1, "npc"), y = unit(0, "npc"), just = c("right", "bottom"))
-
-      assign("bedpe_grobs", addGrob(gTree = get("bedpe_grobs", envir = bbEnv), child = dotsGrob), envir = bbEnv)
-
-    }
 
   } else {
 
