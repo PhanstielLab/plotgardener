@@ -4,20 +4,30 @@
 \alias{bb_plotGG}
 \title{adds a plot created with ggplot2 to a BentoBox layout}
 \usage{
-bb_plotGG(plot, x, y, width, height, just = c("left", "top"))
+bb_plotGG(
+  plot,
+  x,
+  y,
+  width,
+  height,
+  just = c("left", "top"),
+  default.units = "inches"
+)
 }
 \arguments{
 \item{plot}{ggplot object}
 
-\item{x}{A unit object specifying x-location.}
+\item{x}{A numeric or unit object specifying x-location.}
 
-\item{y}{A unit object specifying y-location.}
+\item{y}{A numeric or unit object specifying y-location.}
 
-\item{width}{A unit object specifying width.}
+\item{width}{A numeric or unit object specifying width.}
 
-\item{height}{A unit object specifying height.}
+\item{height}{A numeric or unit object specifying height.}
 
 \item{just}{A string or numeric vector specifying the justification of the plot relative to its (x, y) location}
+
+\item{default.units}{A string indicating the default units to use if x, y, width, or height are only given as numeric vectors}
 }
 \description{
 adds a plot created with ggplot2 to a BentoBox layout
