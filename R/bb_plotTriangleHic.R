@@ -902,7 +902,7 @@ bb_plotTriangleHic <- function(hic, chrom, chromstart, chromend, resolution = 10
   # INITIALIZE OBJECT
   # ======================================================================================================================================================================================
 
-  hic_plot <- structure(list(chrom = chrom, chromstart = cas.numeric(chromstart), chromend = as.numeric(chromend), x = x, y = y, width = width, height = height, justification = NULL,
+  hic_plot <- structure(list(chrom = chrom, chromstart = as.numeric(chromstart), chromend = as.numeric(chromend), x = x, y = y, width = width, height = height, justification = NULL,
                              zrange = zrange, altchrom = chrom, altchromstart = chromstart, altchromend = chromend, resolution = resolution,
                              color_palette = NULL, grobs = NULL), class = "bb_trianglehic")
   attr(x = hic_plot, which = "plotted") <- draw
