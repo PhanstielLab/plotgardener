@@ -217,7 +217,6 @@ bb_plotTriangleHic <- function(hic, chrom, chromstart, chromend, resolution = 10
       check_dataframe(hic = hic, hic_plot = hic_plot)
 
     }
-
     ## Rename columns for later processing
     colnames(hic) <- c("x", "y", "counts")
 
@@ -228,11 +227,10 @@ bb_plotTriangleHic <- function(hic, chrom, chromstart, chromend, resolution = 10
   ## Define a function that subsets data
   subset_data <- function(hic, hic_plot){
 
-    hic <- hic[which(hic[,1] >= hic_plot$chromstart - hic_plot$resolution &
+    hic <- hic[which(hic[,1] >= floor(hic_plot$chromstart/hic_plot$resolution)*hic_plot$resolution &
                        hic[,1] < hic_plot$chromend &
-                       hic[,2] >= hic_plot$chromstart - hic_plot$resolution &
+                       hic[,2] >= floor(hic_plot$chromstart/hic_plot$resolution)*hic_plot$resolution &
                        hic[,2] < hic_plot$chromend),]
-
     return(hic)
   }
 
@@ -416,7 +414,6 @@ bb_plotTriangleHic <- function(hic, chrom, chromstart, chromend, resolution = 10
     sideTotal <- sideTotal[-which(sideTotal[,1] == min(sideTotal[,1]) & sideTotal[,2] == max(sideTotal[,2])),]
     topTotal <- rbind(hic_top, add_top)
 
-
     hic <- rbind(hic, sideTotal, topTotal)
     hic <- hic[order(as.numeric(rownames(hic))),]
 
@@ -452,20 +449,20 @@ bb_plotTriangleHic <- function(hic, chrom, chromstart, chromend, resolution = 10
       new_height <- hic_plot$resolution - (top_max - hic_plot$chromend)
 
       ## Adjust top left square from both left and top
-      top_left$x <- chromstart
+      top_left$x <- hic_plot$chromstart
       top_left$width <- new_width
       top_left$height <- new_height
 
       ## Adjust left squares from left
-      left_squares$x <- chromstart
+      left_squares$x <- hic_plot$chromstart
       left_squares$width <- new_width
 
       ## Adjust top squares from top
       top_squares$height <- new_height
 
       ## Adjust bottom left triangle
-      bottom_left$x <- chromstart
-      bottom_left$y <- chromstart
+      bottom_left$x <- hic_plot$chromstart
+      bottom_left$y <- hic_plot$chromstart
       bottom_left$width <- new_width
       bottom_left$height <- new_width
 
@@ -480,18 +477,20 @@ bb_plotTriangleHic <- function(hic, chrom, chromstart, chromend, resolution = 10
         new_width <- hic_plot$resolution - (hic_plot$chromstart - left_min)
 
         ## Adjust top left square from left only
-        top_left$x <- chromstart
+        top_left$x <- hic_plot$chromstart
         top_left$width <- new_width
 
         ## Adjust left squares from left
-        left_squares$x <- chromstart
+        left_squares$x <- hic_plot$chromstart
         left_squares$width <- new_width
 
         ## Adjust bottom left triangle
-        bottom_left$x <- chromstart
-        bottom_left$y <- chromstart
+        bottom_left$x <- hic_plot$chromstart
+        bottom_left$y <- hic_plot$chromstart
         bottom_left$width <- new_width
         bottom_left$height <- new_width
+
+
 
       }
 
@@ -1024,6 +1023,8 @@ bb_plotTriangleHic <- function(hic, chrom, chromstart, chromend, resolution = 10
 
   hic$width <- resolution
   hic$height <- resolution
+
+
 
   ## Manually "clip" the grobs that fall out of the desired chromstart to chromend region
   hic_total <- manual_clip(hic = hic, hic_plot = hic_plot)
