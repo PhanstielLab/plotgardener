@@ -118,22 +118,6 @@ bb_plotTriangleHic <- function(hic, chrom, chromstart, chromend, resolution = 10
 
     }
 
-    ##### resolution #####
-
-    if (is.null(hic_plot$resolution)){
-
-      stop("Invalid \'resolution\' value.  Options are 2500000, 1000000, 500000, 250000, 100000, 50000, 25000, 10000, or 5000.", call. = FALSE)
-
-    } else {
-
-      if (!(hic_plot$resolution %in% c(2500000, 1000000, 500000, 250000, 100000, 50000, 25000, 10000, 5000))){
-
-        stop("Invalid \'resolution\' value.  Options are 2500000, 1000000, 500000, 250000, 100000, 50000, 25000, 10000, or 5000.", call. = FALSE)
-
-      }
-
-    }
-
     ##### zrange #####
 
     ## Ensure properly formatted zrange

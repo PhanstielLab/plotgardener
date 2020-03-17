@@ -5,7 +5,7 @@
 #' @param chromstart chromosome start of region to be plotted
 #' @param chromend chromosome end of region to be plotted
 #' @param half what sides of square plot; options are "both", top", or "bottom"
-#' @param resolution the width in bp of each pixel; options are 2500000, 1000000, 500000, 250000, 100000, 50000, 25000, 10000, or 5000
+#' @param resolution the width in bp of each pixel
 #' @param zrange the range of interaction scores to plot, where extreme values will be set to the max or min
 #' @param palette ColorRamp palette to use for representing interaction scores
 #' @param width A numeric or unit object specifying width
@@ -159,21 +159,6 @@ bb_plotHic <- function(hic, chrom = 1, chromstart = 22500000, chromend = 2320000
 
     }
 
-    ###### resolution #####
-
-    if (is.null(hic_plot$resolution)){
-
-      stop("Invalid \'resolution\' value.  Options are 2500000, 1000000, 500000, 250000, 100000, 50000, 25000, 10000, or 5000.", call. = FALSE)
-
-    } else {
-
-      if (!(hic_plot$resolution %in% c(2500000, 1000000, 500000, 250000, 100000, 50000, 25000, 10000, 5000))){
-
-        stop("Invalid \'resolution\' value.  Options are 2500000, 1000000, 500000, 250000, 100000, 50000, 25000, 10000, or 5000.", call. = FALSE)
-
-      }
-
-    }
 
     ###### half/althalf #####
 
