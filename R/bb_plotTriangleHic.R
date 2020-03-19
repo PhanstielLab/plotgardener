@@ -203,6 +203,7 @@ bb_plotTriangleHic <- function(hic, chrom, chromstart, chromend, resolution = 10
     }
     ## Rename columns for later processing
     colnames(hic) <- c("x", "y", "counts")
+    hic <- na.omit(hic)
 
     return(hic)
 
@@ -220,9 +221,6 @@ bb_plotTriangleHic <- function(hic, chrom, chromstart, chromend, resolution = 10
 
   ## Define a function that sets the zrange
   set_zrange <- function(hic, hic_plot){
-
-    ## make sure using values that aren't NA
-    hic <- hic[which(!is.na(hic$counts)),]
 
     ## no zrange, only one value
     if (is.null(hic_plot$zrange) & length(unique(hic$counts)) == 1){
