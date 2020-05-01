@@ -28,14 +28,6 @@ bb_annotateLoops <- function(hic, loops, half = "inherit", shift = 4, type = "bo
 
     }
 
-    ## Check that plot is actually plotted
-    currentViewports <- current_viewports()
-    if (!hic$grobs$vp$name %in% currentViewports){
-
-      stop("Input Hi-C plot is not plotted.", call. = FALSE)
-
-    }
-
     ###### loops #####
 
     ## if loops is a dataframe or datatable, it needs to be properly formatted

@@ -27,13 +27,15 @@ bb_labelGenome <- function(plot, x, y, just = c("left", "top"), rotation = 0,
   ## Define a function that catches errors for bb_labelgenome
   errorcheck_bb_labelgenome <- function(plot, scale, ticks){
 
-    ## Check that input plot is actually plotted
-    currentViewports <- current_viewports()
-    if (!plot$grobs$vp$name %in% currentViewports){
+    ## Check that input plot is a valid type of plot to be annotated (needs a chrom, chromstart, chromend)
+    inputNames <- attributes(plot)$names
+    if (!("chrom" %in% inputNames) | !("chromstart" %in% inputNames) | !("chromend" %in% inputNames)){
 
-      stop("Input plot is not plotted.", call. = FALSE)
+      stop("Invalid input plot. Please input a plot that has genomic coordinates associated with it.")
 
     }
+
+
 
     ## Check that scale is an appropriate value
     if (!scale %in% c("bp", "Kb", "Mb")){
