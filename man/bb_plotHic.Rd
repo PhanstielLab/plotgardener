@@ -39,7 +39,7 @@ bb_plotHic(
 
 \item{half}{what sides of square plot; options are "both", top", or "bottom"}
 
-\item{resolution}{the width in bp of each pixel; options are 2500000, 1000000, 500000, 250000, 100000, 50000, 25000, 10000, or 5000}
+\item{resolution}{the width in bp of each pixel}
 
 \item{zrange}{the range of interaction scores to plot, where extreme values will be set to the max or min}
 

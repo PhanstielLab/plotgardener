@@ -130,33 +130,27 @@ bb_annotateLoops <- function(hic, loops, half = "inherit", shift = 4, type = "bo
 
   }
 
-  ## Define a function to get rid of any "chr" and converting to numeric in columns 1 and 4
-  format_data <- function(loops){
-
-    loops <- gsub(pattern = "chr", replacement = "", x = loops)
-
-    return(loops)
-
-  }
-
   ## Define a function that subsets loop data for hic region
   subset_loops <- function(loops, object){
 
+    chrom <- paste0("chr", object$chrom)
+    altchrom <- paste0("chr", object$altchrom)
+
     if (object$chrom == object$altchrom){
 
-      loops_subset <- loops[which(loops[,1] == object$chrom & loops[,4] == object$chrom & loops[,2] >= object$chromstart & loops[,3] <= object$chromend
+      loops_subset <- loops[which(loops[,1] == chrom & loops[,4] == chrom & loops[,2] >= object$chromstart & loops[,3] <= object$chromend
                                   & loops[,5] >= object$chromstart & loops[,6] <= object$chromend),]
 
     } else {
 
       if (object$chrom > object$altchrom){
 
-        loops_subset <- loops[which(loops[,1] == object$altchrom & loops[,4] == object$chrom & loops[,2] >= object$altchromstart & loops[,3] <= object$altchromend
+        loops_subset <- loops[which(loops[,1] == altchrom & loops[,4] == chrom & loops[,2] >= object$altchromstart & loops[,3] <= object$altchromend
                                     & loops[,5] >= object$chromstart & loops[,6] <= object$chromend),]
 
       } else if (object$chrom < object$altchrom){
 
-        loops_subset <- loops[which(loops[,1] == object$chrom & loops[,4] == object$altchrom & loops[,2] >= object$chromstart & loops[,3] <= object$chromend
+        loops_subset <- loops[which(loops[,1] == chrom & loops[,4] == altchrom & loops[,2] >= object$chromstart & loops[,3] <= object$chromend
                                     & loops[,5] >= object$altchromstart & loops[,6] <= object$altchromend),]
 
       }
@@ -562,8 +556,8 @@ bb_annotateLoops <- function(hic, loops, half = "inherit", shift = 4, type = "bo
 
   if (!"data.frame" %in% class(loops)){
 
-    loops <- data.table::fread(loops)
-    if (nrow(loops < 1)){
+    loops <- as.data.frame(data.table::fread(loops))
+    if (nrow(loops) < 1){
       stop("Loop input contains no values.", call. = FALSE)
     }
 
@@ -574,9 +568,6 @@ bb_annotateLoops <- function(hic, loops, half = "inherit", shift = 4, type = "bo
   # ======================================================================================================================================================================================
   ## Assuming loops are in first six columns only
   loops <- loops[,1:6]
-
-  loops[,1] <- lapply(loops[,1], format_data)[[1]]
-  loops[,4] <- lapply(loops[,4], format_data)[[1]]
 
   loops_subset <- subset_loops(loops = loops, object = loop_annot)
 
