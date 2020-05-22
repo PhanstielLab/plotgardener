@@ -6,48 +6,71 @@
 \usage{
 bb_plotManhattan(
   bedfile,
-  chrom,
-  chromstart,
-  chromend,
-  col,
+  pVals,
+  chrom = NULL,
+  chromstart = NULL,
+  chromend = NULL,
+  assembly = "hg19",
+  col = "black",
+  space = 0.01,
+  cex = 0.25,
+  transp = 1,
   ymax = 1,
-  ylim = NULL,
+  range = NULL,
+  sigVal = 5e-08,
+  sigLine = F,
+  sigCol = NULL,
   x = NULL,
   y = NULL,
   width = NULL,
   height = NULL,
-  just = "center",
+  just = c("left", "top"),
   default.units = "inches",
-  draw = TRUE,
-  ...
+  draw = T
 )
 }
 \arguments{
-\item{bedfile}{bedfile for Manhattan plot}
+\item{bedfile}{bedfile for Manhattan plot, either .bed file or dataframe in bed format}
 
-\item{chrom}{chromosome of region to be plotted}
+\item{pVals}{name of column in bedfile of corresponding p-values (will be converted to -log(10) space) or other associated vector}
 
-\item{chromstart}{chromstart of region to be plotted}
+\item{chrom}{chromosome of region to be plotted, if specific region desired}
 
-\item{chromend}{chromend of region to be plotted}
+\item{chromstart}{start of region to be plotted, if specific region desired}
 
-\item{col}{single colors, vector of colors, or color palette for coloring points}
+\item{chromend}{end of region to be plotted, if specific region desired}
+
+\item{assembly}{genome assembly, for entire genome plotting}
+
+\item{col}{single color, vector of colors, or color palette}
+
+\item{space}{the space between each chromsome as a fraction of the width of the plot}
+
+\item{cex}{number indiciating the amount by which points should be scaled relative to the default}
+
+\item{transp}{transparency of colors}
 
 \item{ymax}{fraction of max y value to set as height of plot}
 
-\item{ylim}{numeric vector of length 2, giving the y coordinates range}
+\item{range}{y-range of p-values to plot (c(min, max))}
+
+\item{sigVal}{numeric indicating the significance level}
+
+\item{sigLine}{logical indicating whether to draw a line at the significance level}
+
+\item{sigCol}{single color for coloring significant values}
 
 \item{x}{A numeric or unit object specifying x-location}
 
-\item{y}{A numeric or unit object speicifying y-location}
+\item{y}{A numeric or unit object specifying y-location}
 
 \item{width}{A numeric or unit object specifying width}
 
 \item{height}{A numeric or unit object specifying height}
 
-\item{just}{justification of plot}
+\item{just}{A string or numeric vector specifying the justification of the viewport relative to its (x, y) location: "left", "right", "centre", "center", "bottom", "top"}
 
-\item{default.units}{A string indicating the default units to use if x, y, width, or height are only given as numeric vectors}
+\item{default.units}{A string indicating the default units to use if x, y, width, or height are only given as numerics}
 
 \item{draw}{A logical value indicating whether graphics output should be produced}
 }

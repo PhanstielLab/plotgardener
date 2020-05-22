@@ -39,8 +39,8 @@ bb_yAxis <- function(plot, at = NULL, label = TRUE, main = TRUE, gp = gpar()){
   # ======================================================================================================================================================================================
 
   ## Make viewport name
-  current_viewports <- lapply(current.vpTree()$children$bb_page$children, viewport_name)
-  vp_name <- paste0("bb_yaxis", length(grep(pattern = "bb_yaxis", x = current_viewports)) + 1)
+  currentViewports <- current_viewports()
+  vp_name <- paste0("bb_yaxis", length(grep(pattern = "bb_yaxis", x = currentViewports)) + 1)
 
   ## Define viewport
   if (main == TRUE){
@@ -62,7 +62,7 @@ bb_yAxis <- function(plot, at = NULL, label = TRUE, main = TRUE, gp = gpar()){
   # PLOT
   # ======================================================================================================================================================================================
 
-  yGrob <- grid.yaxis(at = at, label = label, main = main, gp = gp, vp = vp_name)
+  yGrob <- grid.yaxis(at = at, label = label, main = main, gp = gp, vp = vp)
   yaxis_grobs <- gTree(vp = vp, children = gList(yGrob))
   yAxis$grobs <- yaxis_grobs
 
