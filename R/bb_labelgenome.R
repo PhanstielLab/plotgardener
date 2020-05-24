@@ -25,17 +25,20 @@ bb_labelGenome <- function(plot, x, y, just = c("left", "top"), rotation = 0,
   # ======================================================================================================================================================================================
 
   ## Define a function that catches errors for bb_labelgenome
-  errorcheck_bb_labelgenome <- function(plot, scale, ticks){
+  errorcheck_bb_labelgenome <- function(plot, scale, ticks, object){
 
-    ## Check that input plot is a valid type of plot to be annotated (needs a chrom, chromstart, chromend)
-    inputNames <- attributes(plot)$names
-    if (!("chrom" %in% inputNames) | !("chromstart" %in% inputNames) | !("chromend" %in% inputNames)){
+    ## Check that input plot is a valid type of plot to be annotated
+    if (class(plot) != "bb_manhattan"){
 
-      stop("Invalid input plot. Please input a plot that has genomic coordinates associated with it.")
+      ## Manhattan plots can do whole genome assembly but other plots can't
+      inputNames <- attributes(plot)$names
+      if (!("chrom" %in% inputNames) | !("chromstart" %in% inputNames) | !("chromend" %in% inputNames)){
+
+        stop("Invalid input plot. Please input a plot that has genomic coordinates associated with it.")
+
+      }
 
     }
-
-
 
     ## Check that scale is an appropriate value
     if (!scale %in% c("bp", "Kb", "Mb")){
@@ -44,10 +47,17 @@ bb_labelGenome <- function(plot, x, y, just = c("left", "top"), rotation = 0,
 
     }
 
-    ## If giving tick values, make sure they fall within the chromstart to chromend range
     if (!is.null(ticks)){
 
-      if (range(ticks)[1] < plot$chromstart | range(ticks[2]) > plot$chromend){
+      ## Can't have ticks if label is genome assembly for manhattan plot
+      if (is.null(object$chrom)){
+
+        stop("Cannot add tick marks to a genome label of entire genome assembly.", call. = FALSE)
+
+      }
+
+      ## Make sure ticks fall within the chromstart to chromend range
+      if (range(ticks)[1] < object$chromstart | range(ticks)[2] > object$chromend){
 
         stop("Given tick locations do not fall within the genomic range.", call. = FALSE)
 
@@ -57,19 +67,160 @@ bb_labelGenome <- function(plot, x, y, just = c("left", "top"), rotation = 0,
 
   }
 
+  ## Define a function that parses genome assembly vs. chrom/chromstart/chromend label
+  parse_plot <- function(plot, object){
+
+    ## Manhattan plots will require different types of genome labels
+    if (class(plot) == "bb_manhattan"){
+
+      ## whole genome option
+      if (is.null(plot$chrom)){
+
+        object$assembly <- plot$assembly
+
+      } else {
+
+        chromNumber <- gsub(pattern = "chr", replacement = "", x = plot$chrom)
+        chrom <- paste0("chr", chromNumber)
+        object$chrom <- chrom
+        object$chromstart <- plot$chromstart
+        object$chromend <- plot$chromend
+
+      }
+
+    } else {
+
+      chromNumber <- gsub(pattern = "chr", replacement = "", x = plot$chrom)
+      chrom <- paste0("chr", chromNumber)
+      object$chrom <- chrom
+      object$chromstart <- plot$chromstart
+      object$chromend <- plot$chromend
+
+    }
+
+    return(object)
+
+  }
+
+  ## Define a function that parses the viewport for genome assembly vs. chrom/chromstart/chromend label
+  parse_viewport <- function(plot, object, height, page_coords, vp_name, just, rotation){
+
+    if (!is.null(object$chrom)){
+
+      vp <- viewport(width = page_coords$width, height = page_coords$height,
+                     x = page_coords$x, y = page_coords$y,
+                     just = just,
+                     name = vp_name,
+                     xscale = c(object$chromstart, object$chromend),
+                     yscale = c(0, height),
+                     angle = rotation)
+    } else {
+
+      ## get the offsets based on spacer for the assembly
+      if (object$assembly == "hg19"){
+        assembly_data <- bb_hg19
+      }
+
+      ## get the offsets based on spacer for the assembly
+      offsetAssembly <- parse_assembly(assemblyData = assembly_data, space = plot$space)
+      cumsums <- cumsum(as.numeric(assembly_data[,2]))
+      spacer <- cumsums[length(cumsum(as.numeric(assembly_data[,2])))] * plot$space
+
+      vp <- viewport(width = page_coords$width, height = page_coords$height,
+                     x = page_coords$x, y = page_coords$y,
+                     just = just,
+                     name = vp_name,
+                     xscale = c(0, max(offsetAssembly[,4]) + spacer),
+                     yscale = c(0, height),
+                     angle = rotation)
+    }
+
+    return(vp)
+  }
+
+  ## Define a function that makes tick, line, and text grobs for chrom/chromstart/chromend labels
+  chrom_grobs <- function(tgH, ticks, tickHeight, scale, chromLabel, startLabel, endLabel, height, object){
+
+    if (!is.null(ticks)){
+
+      ## check to make sure the ticks actually fall within the region
+      tgH <- convertHeight(tgH, unitTo = get("page_units", envir = bbEnv), valueOnly = T)
+      tick_height <- convertHeight(tickHeight, unitTo = get("page_units", envir = bbEnv), valueOnly = T)
+      x_coords <- ticks
+      y_coords <- rep(height-tick_height, length(ticks))
+      tickGrobs <- segmentsGrob(x0 = x_coords, y0 = rep(height, length(ticks)),
+                                x1 = x_coords, y1 = y_coords,
+                                gp = gpar(col = object$gpar$linecolor, lwd = object$gpar$lwd), default.units = "native")
+      line <- segmentsGrob(x0 = 0, x1 = 1, y0 = 1, y1 = 1, gp = gpar(col = object$gpar$linecolor, lwd = object$gpar$lwd))
+      chromLab <- textGrob(label = chromLabel, x = 0.5, y = unit(height-(tick_height + 0.5*tgH), "native"),
+                           gp = gpar(fontface = "bold", fontsize = object$gpar$fontsize, col = object$gpar$fontcolor,
+                                     fontfamily = object$gpar$fontfamily), just = c("center", "top"))
+      startLab <- textGrob(label = paste(startLabel, scale, sep = " "), x = 0, y = unit(height-(tick_height + 0.5*tgH), "native"), just = c("left", "top"),
+                           gp = gpar(fontsize = object$gpar$fontsize, col = object$gpar$linecolor, fontfamily = object$gpar$fontfamily))
+      endLab <- textGrob(label = paste(endLabel, scale, sep = " "), x = 1, y = unit(height-(tick_height + 0.5*tgH), "native"), just = c("right","top"),
+                         gp = gpar(fontsize = object$gpar$fontsize, col = object$gpar$linecolor, fontfamily = object$gpar$fontfamily))
+
+      assign("label_grobs", setChildren(get("label_grobs", envir = bbEnv), children =  gList(line, chromLab, startLab, endLab, tickGrobs)), envir = bbEnv)
+
+    } else {
+
+      line <- segmentsGrob(x0 = 0, x1 = 1, y0 = 1, y1 = 1, gp = gpar(col = object$gpar$linecolor, lwd = object$gpar$lwd))
+      chromLab <- textGrob(label = chromLabel, x = 0.5, y = 0.85,
+                           gp = gpar(fontface = "bold", fontsize = object$gpar$fontsize, col = object$gpar$fontcolor, fontfamily = object$gpar$fontfamily), just = c("center", "top"))
+      startLab <- textGrob(label = paste(startLabel, scale, sep = " "), x = 0, y = 0.85, just = c("left", "top"),
+                           gp = gpar(fontsize = object$gpar$fontsize, col = object$gpar$linecolor, fontfamily = object$gpar$fontfamily))
+      endLab <- textGrob(label = paste(endLabel, scale, sep = " "), x = 1, y = 0.85, just = c("right","top"),
+                         gp = gpar(fontsize = object$gpar$fontsize, col = object$gpar$linecolor, fontfamily = object$gpar$fontfamily))
+
+      assign("label_grobs", setChildren(get("label_grobs", envir = bbEnv), children = gList(line, chromLab, startLab, endLab)), envir = bbEnv)
+
+    }
+
+  }
+
+  ## define a function that makes line and text grobs for whole assembly labels
+  genome_grobs <- function(plot, object){
+
+    ## Get internal assembly data
+    if (object$assembly == "hg19"){
+      assembly_data <- bb_hg19
+    }
+
+    ## Get the offsets based on spacer for the assembly
+    offsetAssembly <- parse_assembly(assemblyData = assembly_data, space = plot$space)
+
+    ## Get the centers of each chrom
+    chromCenters <- (offsetAssembly[,3] + offsetAssembly[,4]) / 2
+
+    line <- segmentsGrob(x0 = 0, x1 = 1, y0 = 1, y1 = 1, gp = gpar(col = object$gpar$linecolor, lwd = object$gpar$lwd))
+    labels <- textGrob(label = gsub("chr", "", offsetAssembly[,1]), x = chromCenters, y = unit(0.85, "npc"), just = c("center", "top"),
+                       gp = gpar(fontsize = object$gpar$fontsize, col = object$gpar$fontcolor, fontfamily = object$gpar$fontfamily),
+                       default.units = "native")
+    assign("label_grobs", setChildren(get("label_grobs", envir = bbEnv), children = gList(line, labels)), envir = bbEnv)
+
+  }
+
+
   # ======================================================================================================================================================================================
   # INITIALIZE OBJECT
   # ======================================================================================================================================================================================
 
-  bb_genome_label <- structure(list(chrom = NULL, chromstart = plot$chromstart, chromend = plot$chromend, x = x, y = y, width = NULL, height = NULL, scale = scale, grobs = NULL,
+  bb_genome_label <- structure(list(assembly = NULL, chrom = NULL, chromstart = NULL, chromend = NULL, x = x, y = y, width = NULL, height = NULL, scale = scale, grobs = NULL,
                                     gpar = list(fontsize = fontsize, fontcolor = fontcolor, linecolor = linecolor, lwd = lwd, fontfamily = fontfamily)), class = "genome_label")
+
+  # ======================================================================================================================================================================================
+  # PARSE TYPE OF INPUT PLOT
+  # ======================================================================================================================================================================================
+
+  ## Determine whole genome assembly labeling vs chrom/chromstart/chromend
+  bb_genome_label <- parse_plot(plot = plot, object = bb_genome_label)
 
   # ======================================================================================================================================================================================
   # CATCH ERRORS
   # ======================================================================================================================================================================================
 
   check_bbpage(error = "Cannot add a genome label without a BentoBox page.")
-  errorcheck_bb_labelgenome(plot = plot, scale = scale, ticks = ticks)
+  errorcheck_bb_labelgenome(plot = plot, scale = scale, ticks = ticks, object = bb_genome_label)
 
   # ======================================================================================================================================================================================
   # SET UP PAGE/SCALE
@@ -97,24 +248,28 @@ bb_labelGenome <- function(plot, x, y, just = c("left", "top"), rotation = 0,
   # ======================================================================================================================================================================================
   # SET PARAMETERS
   # ======================================================================================================================================================================================
-  chromNumber <- gsub(pattern = "chr", replacement = "", x = plot$chrom)
-  chrom <- paste0("chr", chromNumber)
-  bb_genome_label$chrom <- chrom
 
-  if (commas == TRUE){
-    chromstartlabel <- formatC(round(plot$chromstart/fact, 1), format = format, big.mark = ",")
-    chromendlabel <- formatC(round(plot$chromend/fact, 1), format = format, big.mark = ",")
-  } else {
-    chromstartlabel <- round(plot$chromstart/fact, 1)
-    chromendlabel <- round(plot$chromend/fact, 1)
+  ## If chrom/chromstart/chromend label - comma parsing
+  if (!is.null(bb_genome_label$chrom)){
+
+    if (commas == TRUE){
+      chromstartlabel <- formatC(round(plot$chromstart/fact, 1), format = format, big.mark = ",")
+      chromendlabel <- formatC(round(plot$chromend/fact, 1), format = format, big.mark = ",")
+    } else {
+      chromstartlabel <- round(plot$chromstart/fact, 1)
+      chromendlabel <- round(plot$chromend/fact, 1)
+    }
+
   }
 
+  ## Label dimensions
   bb_genome_label$width <- plot$width
   if (!is.null(ticks)){
     tick_height <- tgH*tcl
     height <- convertHeight(tgH + tick_height + 0.5*tgH, unitTo = get("page_units", envir = bbEnv), valueOnly = T)
     bb_genome_label$height <- unit(height, get("page_units", envir = bbEnv))
   } else {
+    tick_height <- NULL
     height <- convertHeight(tgH, unitTo = get("page_units", envir = bbEnv), valueOnly = T)
     bb_genome_label$height <- unit(tgH, get("page_units", envir = bbEnv))
   }
@@ -171,13 +326,8 @@ bb_labelGenome <- function(plot, x, y, just = c("left", "top"), rotation = 0,
   page_coords <- convert_page(object = bb_genome_label)
 
   ## Make viewport
-  vp <- viewport(width = page_coords$width, height = page_coords$height,
-                 x = page_coords$x, y = page_coords$y,
-                 just = just,
-                 name = vp_name,
-                 xscale = c(plot$chromstart, plot$chromend),
-                 yscale = c(0, height),
-                 angle = rotation)
+  vp <- parse_viewport(plot = plot, object = bb_genome_label, height = height,
+                       page_coords = page_coords, vp_name = vp_name, just = just, rotation = rotation)
 
   # ======================================================================================================================================================================================
   # INITIALIZE GTREE
@@ -189,35 +339,15 @@ bb_labelGenome <- function(plot, x, y, just = c("left", "top"), rotation = 0,
   # GROBS
   # ======================================================================================================================================================================================
 
-  if (!is.null(ticks)){
+  ## Chrom/chromstart/chromend grobs
+  if (!is.null(bb_genome_label$chrom)){
 
-    ## check to make sure the ticks actually fall within the region
-    tgH <- convertHeight(tgH, unitTo = get("page_units", envir = bbEnv), valueOnly = T)
-    tick_height <- convertHeight(tick_height, unitTo = get("page_units", envir = bbEnv), valueOnly = T)
-    x_coords <- ticks
-    y_coords <- rep(height-tick_height, length(ticks))
-    tickGrobs <- segmentsGrob(x0 = x_coords, y0 = rep(height, length(ticks)), x1 = x_coords, y1 = y_coords, gp = gpar(col = linecolor, lwd = lwd), default.units = "native")
-
-    line <- segmentsGrob(x0 = 0, x1 = 1, y0 = 1, y1 = 1, gp = gpar(col = linecolor, lwd = lwd))
-    chromLab <- textGrob(label = chrom, x = 0.5, y = unit(height-(tick_height + 0.5*tgH), "native"),
-                         gp = gpar(fontface = "bold", fontsize = fontsize, col = fontcolor, fontfamily = fontfamily), just = c("center", "top"))
-    startLab <- textGrob(label = paste(chromstartlabel, scale, sep = " "), x = 0, y = unit(height-(tick_height + 0.5*tgH), "native"), just = c("left", "top"),
-                         gp = gpar(fontsize = fontsize, col = linecolor, fontfamily = fontfamily))
-    endLab <- textGrob(label = paste(chromendlabel, scale, sep = " "), x = 1, y = unit(height-(tick_height + 0.5*tgH), "native"), just = c("right","top"),
-                       gp = gpar(fontsize = fontsize, col = linecolor, fontfamily = fontfamily))
-
-    assign("label_grobs", setChildren(get("label_grobs", envir = bbEnv), children =  gList(line, chromLab, startLab, endLab, tickGrobs)), envir = bbEnv)
+    chrom_grobs(tgH = tgH, ticks = ticks, tickHeight = tick_height, scale = scale, chromLabel = bb_genome_label$chrom,
+                startLabel = chromstartlabel, endLabel = chromendlabel, height = height, object = bb_genome_label)
 
   } else {
-
-    line <- segmentsGrob(x0 = 0, x1 = 1, y0 = 1, y1 = 1, gp = gpar(col = linecolor, lwd = lwd))
-    chromLab <- textGrob(label = chrom, x = 0.5, y = 0.85, gp = gpar(fontface = "bold", fontsize = fontsize, col = fontcolor, fontfamily = fontfamily), just = c("center", "top"))
-    startLab <- textGrob(label = paste(chromstartlabel, scale, sep = " "), x = 0, y = 0.85, just = c("left", "top"),
-                         gp = gpar(fontsize = fontsize, col = linecolor, fontfamily = fontfamily))
-    endLab <- textGrob(label = paste(chromendlabel, scale, sep = " "), x = 1, y = 0.85, just = c("right","top"),
-                       gp = gpar(fontsize = fontsize, col = linecolor, fontfamily = fontfamily))
-
-    assign("label_grobs", setChildren(get("label_grobs", envir = bbEnv), children = gList(line, chromLab, startLab, endLab)), envir = bbEnv)
+    ## Whole genome grobs
+    genome_grobs(plot = plot, object = bb_genome_label)
 
   }
 

@@ -430,6 +430,36 @@ defaultUnits <- function(object, default.units){
 
 }
 
+## Define a function that determines the chromosome offsets for a genome assembly (manhattan plots)
+parse_assembly <- function(assemblyData, space){
+
+  ## space is the space in between each chromosome as a fraction of the width of the plot
+
+  ## Determine the offset for each chromomse
+  cumsums <- cumsum(as.numeric(assemblyData[,2]))
+  spacer <- cumsums[length(cumsums)] * space
+  additionalSpace <- (1:length(cumsums)-0) * spacer
+
+  ## Start position
+  startPos <- c(0, cumsums[1:length(cumsums)-1])
+  startPos <- startPos + additionalSpace
+  assemblyData[,3] <- startPos
+
+  ## Stop Position
+  stopPos <- cumsums + (1:(length(cumsums))) * spacer
+  assemblyData[,4] <- stopPos
+
+  colnames(assemblyData) <- c("chrom", "length", "start", "stop")
+
+  return(assemblyData)
+
+}
+
+
+
+
+
+
 
 
 

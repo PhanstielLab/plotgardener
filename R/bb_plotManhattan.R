@@ -1,7 +1,7 @@
 #' plots a Manhattan plot
 #'
 #' @param bedfile bedfile for Manhattan plot, either .bed file or dataframe in bed format
-#' @param pVals name of column in bedfile of corresponding p-values (will be converted to -log(10) space) or other associated vector
+#' @param pVals name of column in bedfile of corresponding p-values (will be converted to -log(10) space)
 #' @param chrom chromosome of region to be plotted, if specific region desired
 #' @param chromstart start of region to be plotted, if specific region desired
 #' @param chromend end of region to be plotted, if specific region desired
@@ -83,6 +83,10 @@ bb_plotManhattan <- function(bedfile, pVals, chrom = NULL, chromstart = NULL, ch
         stop("Name of p-value column not found in bedfile.", call. = FALSE)
       }
 
+    } else {
+
+      stop("P-value input must the name of a column in the bedfile.", call. = FALSE)
+
     }
 
     ## colors and corresponding types of plotted regions
@@ -152,27 +156,17 @@ bb_plotManhattan <- function(bedfile, pVals, chrom = NULL, chromstart = NULL, ch
 
       } else {
 
-        bedfile <- bedfile[which(bedfile[,1] == chrom & bedfile[,2] >= chromstart & bedfile[,2] <= chromend),]
+        bedfile <- bed_data[which(bedfile[,1] == chrom & bedfile[,2] >= chromstart & bedfile[,2] <= chromend),]
 
       }
 
     }
 
     ## Parse pVals
-    if (class(pVals) == "character"){
-
-      pVal_col <- which(colnames(bedfile) == pVals)
-      pvals <- bedfile[,pVal_col]
-
-    } else {
-
-      pvals <- pVals
-
-    }
-
+    pVal_col <- which(colnames(bedfile) == pVals)
+    pvals <- bedfile[,pVal_col]
 
     ## Put data into internal format
-
     bed_data <- data.frame("chr" = bedfile[,1], "pos" = bedfile[,2], "pval" = pvals)
     bed_data$chr <- as.character(bed_data$chr)
 
@@ -186,31 +180,6 @@ bb_plotManhattan <- function(bedfile, pVals, chrom = NULL, chromstart = NULL, ch
 
       return(bb_hg19)
     }
-
-  }
-
-  ## Define a function that determines the chromosome offsets for a genome assembly
-  parse_assembly <- function(assemblyData, space){
-
-    ## space is the space in between each chromosome as a fraction of the width of the plot
-
-    ## Determine the offset for each chromomse
-    cumsums <- cumsum(as.numeric(assemblyData[,2]))
-    spacer <- cumsums[length(cumsums)] * space
-    additionalSpace <- (1:length(cumsums)-0) * spacer
-
-    ## Start position
-    startPos <- c(0, cumsums[1:length(cumsums)-1])
-    startPos <- startPos + additionalSpace
-    assemblyData[,3] <- startPos
-
-    ## Stop Position
-    stopPos <- cumsums + (1:(length(cumsums))) * spacer
-    assemblyData[,4] <- stopPos
-
-    colnames(assemblyData) <- c("chrom", "length", "start", "stop")
-
-    return(assemblyData)
 
   }
 
@@ -306,7 +275,7 @@ bb_plotManhattan <- function(bedfile, pVals, chrom = NULL, chromstart = NULL, ch
   # INITIALIZE OBJECT
   # ======================================================================================================================================================================================
 
-  man_plot <- structure(list(range = range, ymax = ymax,
+  man_plot <- structure(list(range = range, ymax = ymax, space = space,
                                  width = width, height = height, x = x, y = y, justification = just, grobs = NULL), class = "bb_manhattan")
   attr(x = man_plot, which = "plotted") <- draw
 
@@ -371,8 +340,8 @@ bb_plotManhattan <- function(bedfile, pVals, chrom = NULL, chromstart = NULL, ch
     ## Whole single chromosome
     if (is.null(chromstart) & is.null(chromend)){
 
-      man_plot$chromstart <- NULL
-      man_plot$chromend <- NULL
+      man_plot$chromstart <- min(bed_data[,2])
+      man_plot$chromend <- max(bed_data[,2])
 
       ## Set viewport xscale
       xscale <- c(min(bed_data[,2]), max(bed_data[,2]))
