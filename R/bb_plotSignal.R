@@ -32,13 +32,13 @@ bb_plotSignal <- function(signal, chrom, chromstart, chromend, range = NULL, lin
   ## Define a function that catches errors for bb_plotSignal
   errorcheck_bb_signaltrack <- function(signal, signaltrack){
 
-    if (class(signal) %in% "data.frame" && ncol(signal) != 4){
+    if ("data.frame" %in% class(signal) && ncol(signal) != 4){
 
       stop("Invalid dataframe format.  Input a dataframe with 4 columns in bedgraph format: chrom, chromstart, chromend, counts.")
 
     }
 
-    if (!class(signal) %in% "data.frame"){
+    if (!"data.frame" %in% class(signal)){
 
       if (!file_ext(signal) %in% c("bw", "bigWig", "bigwig", "bedgraph")){
 
@@ -108,7 +108,7 @@ bb_plotSignal <- function(signal, chrom, chromstart, chromend, range = NULL, lin
   read_signal <- function(signal, signaltrack){
 
     ## if .hic file, read in with bb_rhic
-    if (!(class(signal) %in% "data.frame")){
+    if (!"data.frame" %in% class(signal)){
 
       signal <- bb_readBigwig(filename = signal, chrom = chrom, chromstart = chromstart, chromend = chromend)
       signal <- signal[,c(1,2,3,6)]
@@ -120,6 +120,7 @@ bb_plotSignal <- function(signal, chrom, chromstart, chromend, range = NULL, lin
 
       ## check range of data in dataframe
       #check_signal_dataframe(signal = signal, signaltrack = signaltrack)
+      signal <- as.data.frame(signal)
 
     }
 
@@ -295,13 +296,9 @@ bb_plotSignal <- function(signal, chrom, chromstart, chromend, range = NULL, lin
     # ======================================================================================================================================================================================
     # BIN DATA
     # ======================================================================================================================================================================================
-
-    binned_signal <- data.frame(seq(signal_track$chromstart, signal_track$chromend - signal_track$binSize, signal_track$binSize),
-                                seq(signal_track$chromstart + signal_track$binSize, signal_track$chromend, signal_track$binSize),
-                                rep(0, times = signal_track$binNum))
-
-    ## Add column names
-    colnames(binned_signal) = c("chromstart", "chromend", "counts")
+    binned_signal <- data.frame("chromstart" = seq(signal_track$chromstart, signal_track$chromend - signal_track$binSize, signal_track$binSize),
+                                "chromend" = seq(signal_track$chromstart + signal_track$binSize, signal_track$chromend, signal_track$binSize),
+                                "counts" = 0)
 
     binned_signal[,3] = apply(binned_signal, 1, bin_signal, signal = signal)
 
