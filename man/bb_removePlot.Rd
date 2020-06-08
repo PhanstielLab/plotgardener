@@ -2,13 +2,13 @@
 % Please edit documentation in R/bb_removePlot.R
 \name{bb_removePlot}
 \alias{bb_removePlot}
-\title{removes BentoBox plots}
+\title{Removes BentoBox plots and annotations}
 \usage{
 bb_removePlot(plot)
 }
 \arguments{
-\item{plot}{BentoBox plot to remove; defined by the output of a BentoBox plotting function}
+\item{plot}{BentoBox plot to remove, defined by the output of a BentoBox plotting function.}
 }
 \description{
-removes BentoBox plots
+Removes BentoBox plots and annotations
 }
