@@ -306,8 +306,6 @@ bb_plotGenes <- function(assembly = "hg19", chrom, chromstart, chromend, fontcol
   ##########################################################
   ## GENE NAME LABELS
   ##########################################################
-  assign("plus_genes", plus_genes, envir = globalenv())
-  assign("minus_genes", minus_genes, envir = globalenv())
 
   ## Add column with center location of each gene label
   plus_genes$label <- rowMeans(plus_genes[c("Start", "Stop")])

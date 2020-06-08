@@ -32,7 +32,7 @@ bb_plotManhattan(
 \arguments{
 \item{bedfile}{bedfile for Manhattan plot, either .bed file or dataframe in bed format}
 
-\item{pVals}{name of column in bedfile of corresponding p-values (will be converted to -log(10) space) or other associated vector}
+\item{pVals}{name of column in bedfile of corresponding p-values (will be converted to -log(10) space)}
 
 \item{chrom}{chromosome of region to be plotted, if specific region desired}
 
