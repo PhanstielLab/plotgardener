@@ -357,7 +357,7 @@ bb_labelGenome <- function(plot, x, y, just = c("left", "top"),
 
     ## Make grobs based on seqType
     if (seqType == "letters"){
-      seqGrobs <- textGrob(label = dfSequence$nucleotide, x = dfSequence$pos, y = unit(1, "npc"), just = c("center", "top"),
+      seqGrobs <- textGrob(label = dfSequence$nucleotide, x = dfSequence$pos, y = unit(0.5, "npc"), just = "center",
                            vp = seq_vp,
                            default.units = "native",
                            gp = gpar(col = dfSequence$col, fontsize = object$gpar$fontsize - 2, fontfamily = object$gpar$fontfamily))
@@ -419,8 +419,8 @@ bb_labelGenome <- function(plot, x, y, just = c("left", "top"),
 
   tgH <- convertHeight(heightDetails(textGrob(label = scale, x = 0.5, y = 0.5, default.units = "npc", gp = gpar(fontsize = fontsize, fontfamily = fontfamily))),
                        unitTo = get("page_units", envir = bbEnv))
-  seq_height <- convertHeight(heightDetails(textGrob(label = "A", x = 0.5, y = 0.5, default.units = "npc", gp = gpar(fontsize = fontsize - 2, fontfamily = fontfamily))),
-                              unitTo = get("page_units", envir = bbEnv))
+  seq_height <- heightDetails(textGrob(label = "A", x = 0.5, y = 0.5, default.units = "npc", gp = gpar(fontsize = fontsize - 2, fontfamily = fontfamily)))
+  seq_height <- convertHeight(seq_height + 0.05*seq_height, unitTo = get("page_units", envir = bbEnv))
 
   # ======================================================================================================================================================================================
   # SET PARAMETERS
