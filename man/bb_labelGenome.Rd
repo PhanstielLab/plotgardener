@@ -17,6 +17,7 @@ bb_labelGenome(
   fontfamily = "",
   commas = TRUE,
   sequence = TRUE,
+  boxWidth = 0.5,
   assembly = "hg19",
   ticks = NULL,
   tcl = 0.5,

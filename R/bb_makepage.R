@@ -26,13 +26,11 @@ bb_makePage <- function(width = 8.5, height = 11, default.units = "inches", show
                       xscale = c(0, width), yscale = rev(c(0, height)),
                       name = "bb_page")
 
-  pushViewport(page_vp)
-
   # ======================================================================================================================================================================================
   # INITIALIZE GTREE
   # ======================================================================================================================================================================================
 
-  assign("guide_grobs", gTree(name = "guide_grobs"), envir = bbEnv)
+  assign("guide_grobs", gTree(name = "guide_grobs", vp = page_vp), envir = bbEnv)
 
   # ======================================================================================================================================================================================
   # SHOW OUTLINE
@@ -40,7 +38,7 @@ bb_makePage <- function(width = 8.5, height = 11, default.units = "inches", show
 
   if (showOutline == TRUE){
 
-    border <- grid.rect()
+    border <- rectGrob()
     assign("guide_grobs", addGrob(gTree = get("guide_grobs", envir = bbEnv), child = border), envir = bbEnv)
 
   }
@@ -56,9 +54,9 @@ bb_makePage <- function(width = 8.5, height = 11, default.units = "inches", show
     x1 <- -1/32
     y0 <- height
     y1 <- height + 1/32
-    xsegs <- grid.segments(x0 = seq(0, width, div), y0 = y0,
+    xsegs <- segmentsGrob(x0 = seq(0, width, div), y0 = y0,
                           x1 = seq(0, width, div), y1 = y1, default.units = default.units, gp = gpar(col = "black"))
-    ysegs <- grid.segments(x0 = x0, y0 = seq(0, height, div),
+    ysegs <- segmentsGrob(x0 = x0, y0 = seq(0, height, div),
                           x1 = x1, y1 = seq(0, height, div), default.units = default.units, gp = gpar(col = "black"))
     assign("guide_grobs", addGrob(gTree = get("guide_grobs", envir = bbEnv), child = xsegs), envir = bbEnv)
     assign("guide_grobs", addGrob(gTree = get("guide_grobs", envir = bbEnv), child = ysegs), envir = bbEnv)
@@ -69,20 +67,20 @@ bb_makePage <- function(width = 8.5, height = 11, default.units = "inches", show
       x1 <- x1 - 1/32
       y0 <- y1
       y1 <- y1 + 1/32
-      v <- grid.segments(x0 = xsegs$x0[xsegs$x0 %in% seq(0, width, div)], y0 = y0,
+      v <- segmentsGrob(x0 = xsegs$x0[xsegs$x0 %in% seq(0, width, div)], y0 = y0,
                         x1 = xsegs$x0[xsegs$x0 %in% seq(0, width, div)], y1 = y1, default.units = default.units, gp = gpar(col = "black"))
-      h <- grid.segments(x0 = x0, y0 = ysegs$y1[ysegs$y1 %in% seq(0, height, div)],
+      h <- segmentsGrob(x0 = x0, y0 = ysegs$y1[ysegs$y1 %in% seq(0, height, div)],
                         x1 = x1, y1 = ysegs$y1[ysegs$y1 %in% seq(0, height, div)], default.units = default.units, gp = gpar(col = "black"))
 
       assign("guide_grobs", addGrob(gTree = get("guide_grobs", envir = bbEnv), child = v), envir = bbEnv)
       assign("guide_grobs", addGrob(gTree = get("guide_grobs", envir = bbEnv), child = h), envir = bbEnv)
     }
 
-    hLabel <- grid.text(label = seq(0, width, div), x = seq(0, width, div), y = y0, vjust = -0.5, default.units = default.units)
-    vLabel <- grid.text(label = seq(0, height, div), x = x0, y = seq(0, height, div), hjust = 1.5, default.units = "native")
+    hLabel <- textGrob(label = seq(0, width, div), x = seq(0, width, div), y = y0, vjust = -0.5, default.units = default.units)
+    vLabel <- textGrob(label = seq(0, height, div), x = x0, y = seq(0, height, div), hjust = 1.5, default.units = "native")
 
     ## Unit annotation
-    unitLabel <- grid.text(label = default.units, x = 0, y = height, hjust = 1.75, vjust = -1.5, default.units = default.units, just = c("right", "bottom"))
+    unitLabel <- textGrob(label = default.units, x = 0, y = height, hjust = 1.75, vjust = -1.5, default.units = default.units, just = c("right", "bottom"))
 
     assign("guide_grobs", addGrob(gTree = get("guide_grobs", envir = bbEnv), child = hLabel), envir = bbEnv)
     assign("guide_grobs", addGrob(gTree = get("guide_grobs", envir = bbEnv), child = vLabel), envir = bbEnv)
@@ -97,11 +95,11 @@ bb_makePage <- function(width = 8.5, height = 11, default.units = "inches", show
   ## Draw x and y gridlines
   tryCatch(expr = {
 
-    xGrid <- grid.segments(x0 = seq(0, width, xgrid), y0 = 0,
+    xGrid <- segmentsGrob(x0 = seq(0, width, xgrid), y0 = 0,
                           x1 = seq(0, width, xgrid), y1 = height,
                           default.units = default.units, gp = gpar(col = "grey50", lty = 2, lwd = 0.5))
 
-    yGrid <- grid.segments(x0 = 0, y0 = seq(0, height, ygrid),
+    yGrid <- segmentsGrob(x0 = 0, y0 = seq(0, height, ygrid),
                           x1 = width, y1 = seq(0, height, ygrid),
                           default.units = default.units, gp = gpar(col = "grey50", lty = 2, lwd = 0.5))
 
@@ -109,6 +107,13 @@ bb_makePage <- function(width = 8.5, height = 11, default.units = "inches", show
     assign("guide_grobs", addGrob(gTree = get("guide_grobs", envir = bbEnv), child = yGrid), envir = bbEnv)
 
   }, error = function(e) return())
+
+  # ======================================================================================================================================================================================
+  # DRAW GROBS
+  # ======================================================================================================================================================================================
+
+  grid.draw(get("guide_grobs", envir = bbEnv))
+  downViewport("bb_page")
 
   # ======================================================================================================================================================================================
   # ASSIGN PAGE PARAMETERS

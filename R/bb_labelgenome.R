@@ -21,7 +21,7 @@
 
 bb_labelGenome <- function(plot, x, y, just = c("left", "top"),
                            scale = "bp", fontsize = 10, fontcolor = "black", linecolor = "black", lwd = 1,
-                           fontfamily = "", commas = TRUE, sequence = TRUE, assembly = "hg19", ticks = NULL, tcl = 0.5, default.units = "inches"){
+                           fontfamily = "", commas = TRUE, sequence = TRUE, boxWidth = 0.5, assembly = "hg19", ticks = NULL, tcl = 0.5, default.units = "inches"){
 
   # ======================================================================================================================================================================================
   # FUNCTIONS
@@ -334,7 +334,7 @@ bb_labelGenome <- function(plot, x, y, just = c("left", "top"),
   }
 
   ## Define a function that makes sequence grobs (boxes or letters)
-  seq_grobs <- function(object, seqHeight, seqType, assembly, chromLabel, vp){
+  seq_grobs <- function(object, seqHeight, seqType, assembly, chromLabel, vp, boxWidth){
 
     if (assembly == "hg19"){
       seqAssembly <- BSgenome.Hsapiens.UCSC.hg19::BSgenome.Hsapiens.UCSC.hg19
@@ -364,7 +364,7 @@ bb_labelGenome <- function(plot, x, y, just = c("left", "top"),
 
     } else if (seqType == "boxes"){
       #seq_height <- convertHeight(seqHeight, unitTo = get("page_units", envir = bbEnv), valueOnly = T)
-      seqGrobs <- rectGrob(x = dfSequence$pos, y = unit(1, "npc"), width = 0.5, height = unit(seqHeight - 0.05*seqHeight, get("page_units", envir = bbEnv)),
+      seqGrobs <- rectGrob(x = dfSequence$pos, y = unit(1, "npc"), width = boxWidth, height = unit(seqHeight - 0.05*seqHeight, get("page_units", envir = bbEnv)),
                            just = c("center", "top"),
                            vp = seq_vp,
                            default.units = "native",
@@ -541,7 +541,7 @@ bb_labelGenome <- function(plot, x, y, just = c("left", "top"),
     ## Sequence grobs
     if (sequence == TRUE & !is.null(seqType)){
 
-      seq_grobs(object = bb_genome_label, seqHeight = seq_height, seqType = seqType, assembly = assembly, chromLabel = bb_genome_label$chrom, vp = vp)
+      seq_grobs(object = bb_genome_label, seqHeight = seq_height, seqType = seqType, assembly = assembly, chromLabel = bb_genome_label$chrom, vp = vp, boxWidth = boxWidth)
 
     }
 

@@ -7,7 +7,7 @@ Depends: R (>= 3.5.0), tools, grid, data.table, tidyr, dplyr, ggplotify, Rmpfr
 License: What license is it under?
 Encoding: UTF-8
 LazyData: true
-RoxygenNote: 7.1.0
+RoxygenNote: 7.1.1
 Imports: 
     rtracklayer, strawr, BSgenome, BSgenome.Hsapiens.UCSC.hg19, GenomicRanges, IRanges
 Remotes: aidenlab/straw/R
