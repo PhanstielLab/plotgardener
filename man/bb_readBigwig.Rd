@@ -23,6 +23,9 @@ bb_readBigwig(
 
 \item{strand}{strand, i.e. '+', '-', or '*'}
 }
+\value{
+Function will return a 6-column dataframe of bigwig information.
+}
 \description{
 Reads a bigwig file and returns it as a data frame.
 }
