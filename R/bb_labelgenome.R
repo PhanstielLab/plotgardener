@@ -381,7 +381,7 @@ bb_labelGenome <- function(plot, x, y, just = c("left", "top"),
   # ======================================================================================================================================================================================
 
   bb_genome_label <- structure(list(assembly = NULL, chrom = NULL, chromstart = NULL, chromend = NULL, x = x, y = y, width = NULL, height = NULL, scale = scale, grobs = NULL,
-                                    gpar = list(fontsize = fontsize, fontcolor = fontcolor, linecolor = linecolor, lwd = lwd, fontfamily = fontfamily)), class = "genome_label")
+                                    gpar = list(fontsize = fontsize, fontcolor = fontcolor, linecolor = linecolor, lwd = lwd, fontfamily = fontfamily, assembly = assembly)), class = "genome_label")
 
   # ======================================================================================================================================================================================
   # PARSE TYPE OF INPUT PLOT

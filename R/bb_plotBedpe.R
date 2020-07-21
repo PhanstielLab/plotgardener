@@ -9,6 +9,7 @@
 #' @param colorbycol palette to apply color scale to (only valid when colorby is not NULL)
 #' @param colorbyrange the range of values to apply the color scale to
 #' @param linecolor border color
+#' @param assembly desired genome assembly
 #' @param boxHeight height of boxes at either end of bedpe element
 #' @param spaceHeight height of space between boxes of different bedpe elements
 #' @param limitDots logical value indicating whether to plot "..." to indicate additional, unplotted bedpe elements
@@ -22,8 +23,8 @@
 #'
 #' @export
 
-bb_plotBedpe <- function(bedpe, chrom, chromstart, chromend, fillcolor = "black", colorby = NULL, colorbycol = NULL, colorbyrange = NULL, linecolor = NA, boxHeight = unit(0.025, "inches"),
-                         spaceHeight = unit(.025, "inches"), limitDots = TRUE, x = NULL, y = NULL, width = NULL, height = NULL, just = c("left", "top"), default.units = "inches", draw = TRUE, ...){
+bb_plotBedpe <- function(bedpe, chrom, chromstart = NULL, chromend = NULL, fillcolor = "black", colorby = NULL, colorbycol = NULL, colorbyrange = NULL, linecolor = NA, assembly = "hg19",
+                         boxHeight = unit(0.025, "inches"), spaceHeight = unit(.025, "inches"), limitDots = TRUE, x = NULL, y = NULL, width = NULL, height = NULL, just = c("left", "top"), default.units = "inches", draw = TRUE, ...){
 
   # ======================================================================================================================================================================================
   # FUNCTIONS
@@ -52,18 +53,26 @@ bb_plotBedpe <- function(bedpe, chrom, chromstart, chromend, fillcolor = "black"
     }
 
 
-    ## chrom needs to be a character
-    if (class(bedpe_plot$chrom) != "character"){
 
-      stop("Invalid \'chrom\'; input must be a string of form \"chr\"_.", call. = FALSE)
+    ## Can't have only one NULL chromstart or chromend
+    if ((is.null(bedpe_plot$chromstart) & !is.null(bedpe_plot$chromend)) | (is.null(bedpe_plot$chromend) & !is.null(bedpe_plot$chromstart))){
+
+      stop("Cannot have one \'NULL\' \'chromstart\' or \'chromend\'.", call. = FALSE)
 
     }
 
-    ## chromend > chromstart
-    if (bedpe_plot$chromend < bedpe_plot$chromstart){
 
-      stop("\'chromstart\' should not be larger than \'chromend\'.", call. = FALSE)
 
+
+    if (!is.null(bedpe_plot$chromstart) & !is.null(bedpe_plot$chromend)){
+
+      ## chromend > chromstart
+      if (bedpe_plot$chromend < bedpe_plot$chromstart){
+
+        stop("\'chromstart\' should not be larger than \'chromend\'.", call. = FALSE)
+
+
+      }
 
     }
 
@@ -74,8 +83,8 @@ bb_plotBedpe <- function(bedpe, chrom, chromstart, chromend, fillcolor = "black"
   # INITIALIZE OBJECT
   # ======================================================================================================================================================================================
 
-  bedpe_plot <- structure(list(chrom = chrom, chromstart = as.numeric(chromstart), chromend = as.numeric(chromend), color_palette = NULL, zrange = colorbyrange,
-                                 width = width, height = height, x = x, y = y, justification = just, grobs = NULL), class = "bb_bedpe")
+  bedpe_plot <- structure(list(chrom = chrom, chromstart = chromstart, chromend = chromend, color_palette = NULL, zrange = colorbyrange,
+                                 width = width, height = height, x = x, y = y, justification = just, grobs = NULL, assembly = assembly), class = "bb_bedpe")
   attr(x = bedpe_plot, which = "plotted") <- draw
 
   # ======================================================================================================================================================================================
@@ -142,8 +151,18 @@ bb_plotBedpe <- function(bedpe, chrom, chromstart, chromend, fillcolor = "black"
   # ======================================================================================================================================================================================
   # SUBSET DATA FOR CHROMOSOME AND ANY OVERLAPPING REGIONS
   # ======================================================================================================================================================================================
+  if (is.null(chromstart) & is.null(chromend)){
 
-  bedpe <- bedpe[which(bedpe[,1] == chrom & bedpe[,4] == chrom & bedpe[,2] <= chromend & bedpe[,6] >= chromstart),]
+    if (assembly == "hg19"){
+      genome <- bb_hg19
+    }
+
+    bedpe_plot$chromstart <- 1
+    bedpe_plot$chromend <- genome[which(genome$chrom == chrom),]$length
+
+  }
+
+  bedpe <- bedpe[which(bedpe[,1] == bedpe_plot$chrom & bedpe[,4] == bedpe_plot$chrom & bedpe[,2] <= bedpe_plot$chromend & bedpe[,6] >= bedpe_plot$chromstart),]
 
   # ======================================================================================================================================================================================
   # COLORBY
@@ -194,7 +213,7 @@ bb_plotBedpe <- function(bedpe, chrom, chromstart, chromend, fillcolor = "black"
     vp <- viewport(height = unit(1, "snpc"), width = unit(1, "snpc"),
                    x = unit(0.5, "npc"), y = unit(0.5, "npc"),
                    clip = "on",
-                   xscale = c(chromstart, chromend),
+                   xscale = c(bedpe_plot$chromstart, bedpe_plot$chromend),
                    yscale = c(0, 1),
                    just = "center",
                    name = vp_name)
@@ -215,7 +234,7 @@ bb_plotBedpe <- function(bedpe, chrom, chromstart, chromend, fillcolor = "black"
     vp <- viewport(height = page_coords$height, width = page_coords$width,
                    x = page_coords$x, y = page_coords$y,
                    clip = "on",
-                   xscale = c(chromstart, chromend),
+                   xscale = c(bedpe_plot$chromstart, bedpe_plot$chromend),
                    yscale = c(0, convertHeight(page_coords$height, unitTo = get("page_units", envir = bbEnv), valueOnly = TRUE)),
                    just = just,
                    name = vp_name)
@@ -295,9 +314,6 @@ bb_plotBedpe <- function(bedpe, chrom, chromstart, chromend, fillcolor = "black"
 
   } else {
 
-    ## Just make a rectangle
-    bedpeGrob <- rectGrob()
-    assign("bedpe_grobs", addGrob(gTree = get("bedpe_grobs", envir = bbEnv), child = bedpeGrob), envir = bbEnv)
     warning("Bedpe contains no values.", call. = FALSE)
 
   }

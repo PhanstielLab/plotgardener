@@ -455,10 +455,18 @@ parse_assembly <- function(assemblyData, space){
 
 }
 
+## Define a function that makes a color transparent
+makeTransparent <- function(color, alpha){
 
+  if (is.null(alpha)){
+    alpha <- 1
+  }
 
+  rgb <- col2rgb(color)
+  transp <- rgb(rgb[1], rgb[2], rgb[3], alpha = alpha*255, maxColorValue = 255)
+  return(transp)
 
-
+}
 
 
 

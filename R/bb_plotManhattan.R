@@ -276,7 +276,7 @@ bb_plotManhattan <- function(bedfile, pVals, chrom = NULL, chromstart = NULL, ch
   # ======================================================================================================================================================================================
 
   man_plot <- structure(list(range = range, ymax = ymax, space = space,
-                                 width = width, height = height, x = x, y = y, justification = just, grobs = NULL), class = "bb_manhattan")
+                             width = width, height = height, x = x, y = y, justification = just, grobs = NULL, assembly = assembly), class = "bb_manhattan")
   attr(x = man_plot, which = "plotted") <- draw
 
   # ======================================================================================================================================================================================
@@ -389,7 +389,6 @@ bb_plotManhattan <- function(bedfile, pVals, chrom = NULL, chromstart = NULL, ch
 
 
   colorBed <- rbind(color_nonsig, color_sig)
-  #colorBed <- parse_color(col = col, offsetAssembly = offsetAssembly, bedData = bed_data)
 
   # ======================================================================================================================================================================================
   # VIEWPORTS
@@ -412,6 +411,7 @@ bb_plotManhattan <- function(bedfile, pVals, chrom = NULL, chromstart = NULL, ch
 
     if (draw == TRUE){
 
+      vp$name <- "bb_manhattan1"
       grid.newpage()
 
     }

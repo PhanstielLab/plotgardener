@@ -4,9 +4,11 @@
 #' @param chrom chromosome of region to be plotted, based on build (i.e. for hg19 just a number, for hg38 string like "chr8")
 #' @param chromstart chromosome start of region to be plotted
 #' @param chromend chromosome end of region to be plotted
-#' @param resolution the width in bp of each pixel; options are 2500000, 1000000, 500000, 250000, 100000, 50000, 25000, 10000, or 5000
+#' @param resolution the width in bp of each pixel; for hic files, "auto" will attempt to choose a resolution based on the size of the region; for
+#' dataframes, "auto" will attempt to detect the resolution the dataframe contains
 #' @param zrange the range of interaction scores to plot, where extreme values will be set to the max or min
 #' @param palette ColorRamp palette to use for representing interaction scores
+#' @param assembly desired genome assembly
 #' @param width A numeric or unit object specifying the bottom width of the triangle
 #' @param height A numeric or unit object specifying the height of the triangle
 #' @param x A numeric or unit object specifying x-location
@@ -19,8 +21,8 @@
 #' @export
 #'
 #'
-bb_plotTriangleHic <- function(hic, chrom, chromstart, chromend, resolution = 10000, zrange = NULL,
-                               palette = colorRampPalette(c("white", "dark red")), width = NULL, height = NULL,
+bb_plotTriangleHic <- function(hic, chrom, chromstart = NULL, chromend = NULL, resolution = "auto", zrange = NULL,
+                               palette = colorRampPalette(c("white", "dark red")), assembly = "hg19", width = NULL, height = NULL,
                                x = NULL, y = NULL, just = c("left", "top"), norm = "KR", default.units = "inches", draw = T, ...){
 
   # ======================================================================================================================================================================================
@@ -98,23 +100,21 @@ bb_plotTriangleHic <- function(hic, chrom, chromstart, chromend, resolution = 10
 
     ##### chrom/chromstart/chromend #####
 
-    if (is.null(hic_plot$chrom)){
-
-      stop("Please specify \'chrom\'.", call. = FALSE)
-
-    }
 
     ## Can't have only one NULL chromstart or chromend
-    if (any(is.null(hic_plot$chromstart), is.null(hic_plot$chromend))){
+    if ((is.null(hic_plot$chromstart) & !is.null(hic_plot$chromend)) | (is.null(hic_plot$chromend) & !is.null(hic_plot$chromstart))){
 
-      stop("Please specify \'chromstart\' and \'chromend\'.", call. = FALSE)
+      stop("Cannot have one \'NULL\' \'chromstart\' or \'chromend\'.", call. = FALSE)
 
     }
 
-    ## chromstart should be smaller than chromend
-    if (hic_plot$chromstart > hic_plot$chromend){
+    if (!is.null(hic_plot$chromstart) & !is.null(hic_plot$chromend)){
+      ## Chromstart should be smaller than chromend
+      if (hic_plot$chromstart > hic_plot$chromend){
 
-      stop("\'chromstart\' should not be larger than \'chromend\'.", call. = FALSE)
+        stop("\'chromstart\' should not be larger than \'chromend\'.", call. = FALSE)
+
+      }
 
     }
 
@@ -179,24 +179,70 @@ bb_plotTriangleHic <- function(hic, chrom, chromstart, chromend, resolution = 10
 
   }
 
-  ## Define a function that reads in hic data for bb_plothic
-  read_data <- function(hic, hic_plot, norm){
+  ## Define a function to adjust/detect resolution based on .hic file/dataframe
+  adjust_resolution <- function(hic, hic_plot){
+
+    if (!("data.frame" %in% class(hic))){
+      ## Get range of data and try to pick a resolution to extract from hic file
+      dataRange <- hic_plot$chromend - hic_plot$chromstart
+      if (dataRange >= 150000000){
+        bestRes <- 500000
+      } else if (dataRange >= 75000000 & dataRange < 150000000){
+        bestRes <- 250000
+      } else if (dataRange >= 35000000 & dataRange < 75000000){
+        bestRes <- 100000
+      } else if (dataRange >= 20000000 & dataRange < 35000000){
+        bestRes <- 50000
+      } else if (dataRange >= 5000000 & dataRange < 20000000){
+        bestRes <- 25000
+      } else if (dataRange >= 3000000 & dataRange < 5000000){
+        bestRes <- 10000
+      } else {
+        bestRes <- 5000
+      }
+
+      hic_plot$resolution <- as.integer(bestRes)
+
+    } else {
+
+      ## Try to detect resolution from data
+      offDiag <- hic[which(hic[,1] != hic[,2]),]
+      bpDiffs <- abs(offDiag[,2] - offDiag[,1])
+      predRes <- min(bpDiffs)
+
+      hic_plot$resolution <- as.integer(predRes)
+
+    }
+
+    return(hic_plot)
+  }
+
+  ## Define a function that reads in hic data
+  read_data <- function(hic, hic_plot, norm, assembly){
+
+    parse_chrom <- function(assembly, chrom){
+
+      if (assembly == "hg19"){
+        strawChrom <- as.numeric(gsub("chr", "", chrom))
+      }
+
+      return(strawChrom)
+    }
 
     ## if .hic file, read in with bb_rhic
     if (!("data.frame" %in% class(hic))){
 
-      message(paste("Reading in hic file with", norm, "normalization."))
+      strawChrom <- parse_chrom(assembly = assembly, chrom = hic_plot$chrom)
 
       readchromstart <- hic_plot$chromstart - hic_plot$resolution
       readchromend <- hic_plot$chromend + hic_plot$resolution
 
-      hic <- bb_readHic(hic = hic, chrom = hic_plot$chrom, chromstart = readchromstart, chromend = readchromend,
+      hic <- bb_readHic(hic = hic, chrom = strawChrom, chromstart = readchromstart, chromend = readchromend,
                         resolution = hic_plot$resolution, zrange = hic_plot$zrange, norm = norm)
 
     } else {
 
-      message("Reading in dataframe.")
-
+      message(paste("Read in dataframe.", hic_plot$resolution, "BP resolution detected."))
       ## check range of data in dataframe
       check_dataframe(hic = hic, hic_plot = hic_plot)
 
@@ -510,355 +556,6 @@ bb_plotTriangleHic <- function(hic, chrom, chromstart, chromend, resolution = 10
 
   }
 
-  ## Define a function that will manually "crop" the point of the triangle plot if the height is too large
-  manual_cropTop <- function(hic, hic_plot){
-
-    ## function that subsets regions of matrices
-    matrix_data <- function(hic, data, upper_tri, lower_tri){
-
-      if (nrow(data) <= 1){
-
-        return(data)
-
-      } else {
-
-        cast <- as.matrix(reshape::cast(data, formula = y ~ x, value = "counts"))
-
-        if (upper_tri == TRUE){
-
-          cast[upper.tri(cast)] <- NA
-        }
-
-        if (lower_tri == TRUE){
-
-          cast[lower.tri(cast)] <- NA
-        }
-
-        chop <- setNames(reshape2::melt(cast), c("y", "x", "counts"))
-        chop <- chop[c(2,1,3)]
-        chop <- subset(chop, !is.na(counts))
-        final <- merge(chop, hic)
-
-        return(final)
-
-      }
-
-
-    }
-
-    ## function that makes shapes for bottom diagonal
-    hic_bottomDiagonal <- function(diag, side_difference){
-
-      x <- as.numeric(diag[1])
-      y <- as.numeric(diag[2])
-      width <- as.numeric(diag[5])
-      height <- as.numeric(diag[6])
-
-      x1 <- x
-      x2 <- x + width - side_difference
-      x3 <- x + width
-      x4 <- x3
-      x5 <- x1
-
-      y1 <- y + side_difference
-      y2 <- y + height
-      y3 <- y2
-      y4 <- y
-      y5 <- y4
-
-      col <- diag[4]
-
-      hic_pentagon <- polygonGrob(x = c(x1, x2, x3, x4, x5),
-                                  y = c(y1, y2, y3, y4, y5),
-                                  gp = gpar(col = NA, fill = col),
-                                  default.units = "native")
-
-      assign("hic_grobs2", addGrob(gTree = get("hic_grobs2", envir = bbEnv), child = hic_pentagon), envir = bbEnv)
-
-
-    }
-
-    ## function that makes shapes for top diagonal
-    hic_topDiagonal <- function(diag, side_difference){
-
-      x <- as.numeric(diag[1])
-      y <- as.numeric(diag[2])
-      width <- as.numeric(diag[5])
-      height <- as.numeric(diag[6])
-
-      x1 <- x + width - side_difference
-      x2 <- x + width
-      x3 <- x2
-
-      y1 <- y
-      y2 <- y + side_difference
-      y3 <- y
-
-      col <- diag[4]
-
-      hic_triangle <- polygonGrob(x = c(x1, x2, x3),
-                                  y = c(y1, y2, y3),
-                                  gp = gpar(col = NA, fill = col),
-                                  default.units = "native")
-
-      assign("hic_grobs2", addGrob(gTree = get("hic_grobs2", envir = bbEnv), child = hic_triangle), envir = bbEnv)
-
-    }
-
-    if (!is.null(hic_plot$x) & !is.null(hic_plot$y)){
-
-      two <- mpfr(2, 120)
-      desired_height <- convertHeight(hic_plot$height, unitTo = get("page_units", envir = bbEnv), valueOnly = T)
-      calc_height <- convertWidth(hic_plot$width, unitTo = get("page_units", envir = bbEnv), valueOnly = T)*0.5
-      width <- convertWidth(hic_plot$width, unitTo = get("page_units", envir = bbEnv), valueOnly = T)
-      side_length <- width/sqrt(two)
-
-      ## here we need to chop pixels out
-      if (calc_height > desired_height){
-
-        ## Extract the pixels that fall along the sides
-        hic_side <- hic[which(hic[,1] == min(hic[,1])),]
-        hic_top <- hic[which(hic[,2] == max(hic[,2])),]
-
-        ## This is the length (in page units) to chop
-        side_chop <- (calc_height - desired_height) * sqrt(two)
-
-        ## Get the top left and bottom left to take pixel cropping into account
-        topPixel <- hic[which(hic[,1] == min(hic[,1]) & hic[,2] == max(hic[,2])),]
-        bottomLeft <- hic_side[which(hic_side[,2] == min(hic_side[,2])),]
-
-        ## Subtract the top left and bottom left pixel from the other hic_side pixels
-        sidePixels <- hic_side[-which(hic_side[,1] == min(hic_side[,1]) & hic_side[,2] == max(hic_side[,2])),]
-        sidePixels <- sidePixels[-which(sidePixels[,2] == min(sidePixels[,2])),]
-
-        ## Get the total number of pixels on a side (both sides should be the same)
-        pixelNo <- nrow(sidePixels) + (topPixel$height/hic_plot$resolution) + (bottomLeft$height/hic_plot$resolution)
-
-        ## This is length of a full pixel in page units
-        pixelLength <- side_length/pixelNo
-
-        ## This is the number of pixels to chop (being overconservative)
-        pixelsChop <- side_chop/pixelLength - min(topPixel$height/hic_plot$resolution, topPixel$width/hic_plot$resolution)
-
-        chop_data_side <- tail(hic_side, n = as.numeric(ceiling(pixelsChop)) + 1)
-        chop_data_top <- head(hic_top, n = as.numeric(ceiling(pixelsChop)) + 1)
-
-        ## Leftover pixel distances:
-        ## coming from the bottom of a full pixel
-        bottom_difference <- hic_plot$resolution - (as.numeric(pixelsChop) - as.numeric(floor(pixelsChop)))*hic_plot$resolution
-        ## coming from the top of a full pixel
-        top_difference <- (as.numeric(pixelsChop) - as.numeric(floor(pixelsChop)))*hic_plot$resolution
-
-        ## Getting coordinates of square region of where to chop
-        x_coords <- chop_data_top$x
-        y_coords <- chop_data_side$y
-        x_coords2 <- x_coords[-length(x_coords)]
-        y_coords2 <- y_coords[-1]
-
-        # Get 2 square regions of where to chop (one for larger diagonal and other for inner diagonal)
-        square_chop <- hic[which(hic[,1] %in% x_coords & hic[,2] %in% y_coords),]
-        square_chop2 <- hic[which(hic[,1] %in% x_coords2 & hic[,2] %in% y_coords2),]
-
-        ## Get entire triangular region to eliminate
-        removed <- matrix_data(hic = hic, data = square_chop, upper_tri = TRUE, lower_tri = FALSE)
-
-        ## Get main diagonal to make pentagons
-        bdiagonal <- matrix_data(hic = hic, data = square_chop, upper_tri = TRUE, lower_tri = TRUE)
-
-        ## Get slightly higher diagonal to make tiny triangles
-        tdiagonal <- matrix_data(hic = hic, data = square_chop2, upper_tri = TRUE, lower_tri = TRUE)
-
-        ## BOTTOM DIAGONAL PENTAGONS
-        ## Extract first and last pixels in case of pixel cropping
-
-        ## First
-        if (nrow(bdiagonal) > 1){
-
-          bdiagonal_first <- bdiagonal[which(bdiagonal$x == min(bdiagonal$x) & bdiagonal$y == min(bdiagonal$y)),]
-          if (bdiagonal_first$x >= (bdiagonal_first$x + bdiagonal_first$width - bottom_difference)){
-            hic_pentagon1 <- polygonGrob(x = c(bdiagonal_first$x, bdiagonal_first$x,
-                                               bdiagonal_first$x + bdiagonal_first$width, bdiagonal_first$x + bdiagonal_first$width),
-                                         y = c(bdiagonal_first$y, bdiagonal_first$y + bdiagonal_first$height,
-                                               bdiagonal_first$y + bdiagonal_first$height, bdiagonal_first$y),
-                                         gp = gpar(col = NA, fill = bdiagonal_first$color),
-                                         default.units = "native")
-          } else {
-            hic_pentagon1 <- polygonGrob(x = c(bdiagonal_first$x, bdiagonal_first$x + bdiagonal_first$width - bottom_difference,
-                                               bdiagonal_first$x + bdiagonal_first$width, bdiagonal_first$x + bdiagonal_first$width,
-                                               bdiagonal_first$x),
-                                         y = c(bdiagonal_first$y + bdiagonal_first$height - (bdiagonal_first$width - bottom_difference),
-                                               bdiagonal_first$y + bdiagonal_first$height,
-                                               bdiagonal_first$y + bdiagonal_first$height, bdiagonal_first$y, bdiagonal_first$y),
-                                         gp = gpar(col = NA, fill = bdiagonal_first$color),
-                                         default.units = "native")
-          }
-          assign("hic_grobs2", addGrob(gTree = get("hic_grobs2", envir = bbEnv), child = hic_pentagon1), envir = bbEnv)
-
-          ## Last
-          bdiagonal_last <- bdiagonal[which(bdiagonal$x == max(bdiagonal$x) & bdiagonal$y == max(bdiagonal$y)),]
-          if ((bdiagonal_last$y + bdiagonal_last$height) <= (bdiagonal_last$y + bottom_difference)){
-            hic_pentagon2 <- polygonGrob(x = c(bdiagonal_last$x, bdiagonal_last$x, bdiagonal_last$x + bdiagonal_last$width,
-                                               bdiagonal_last$x + bdiagonal_last$width),
-                                         y = c(bdiagonal_last$y, bdiagonal_last$y + bdiagonal_last$height, bdiagonal_last$y + bdiagonal_last$height,
-                                               bdiagonal_last$y),
-                                         gp = gpar(col = NA, fill = bdiagonal_last$color),
-                                         default.units = "native")
-          } else {
-            hic_pentagon2 <- polygonGrob(x = c(bdiagonal_last$x, bdiagonal_last$x + bdiagonal_last$height - bottom_difference, bdiagonal_last$x + bdiagonal_last$width,
-                                               bdiagonal_last$x + bdiagonal_last$width, bdiagonal_last$x),
-                                         y = c(bdiagonal_last$y + bottom_difference, bdiagonal_last$y + bdiagonal_last$height, bdiagonal_last$y + bdiagonal_last$height,
-                                               bdiagonal_last$y, bdiagonal_last$y),
-                                         gp = gpar(col = NA, fill = bdiagonal_last$color),
-                                         default.units = "native")
-          }
-          assign("hic_grobs2", addGrob(gTree = get("hic_grobs2", envir = bbEnv), child = hic_pentagon2), envir = bbEnv)
-
-          ## Remove first and last pixel
-          bdiagonal <- bdiagonal[-which(bdiagonal$x == min(bdiagonal$x)),]
-          bdiagonal <- bdiagonal[-which(bdiagonal$x == max(bdiagonal$x)),]
-
-          if (nrow(bdiagonal) >= 1){
-
-            invisible(apply(bdiagonal, 1, hic_bottomDiagonal, side_difference = bottom_difference))
-
-          }
-
-        } else if (nrow(bdiagonal) == 1){
-
-          hic_pentagon <- polygonGrob(x = c(bdiagonal$x, bdiagonal$x, bdiagonal$x + bdiagonal$height - bottom_difference, bdiagonal$x + bdiagonal$width, bdiagonal$x + bdiagonal$width),
-                                      y = c(bdiagonal$y, bdiagonal$y + bottom_difference, bdiagonal$y + bdiagonal$height, bdiagonal$y + bdiagonal$height, bdiagonal$y),
-                                      gp = gpar(col = NA, fill = bdiagonal$color),
-                                      default.units = "native")
-          assign("hic_grobs2", addGrob(gTree = get("hic_grobs2", envir = bbEnv), child = hic_pentagon), envir = bbEnv)
-
-        }
-
-        ## TOP DIAGONAL TRIANGLES
-        ## Extract first and last pixels in case of pixel cropping
-        if (nrow(tdiagonal) > 1){
-
-          tdiagonal_first <- tdiagonal[which(tdiagonal$x == min(tdiagonal$x) & tdiagonal$y == min(tdiagonal$y)),]
-          tdiagonal_last <- tdiagonal[which(tdiagonal$x == max(tdiagonal$x) & tdiagonal$y == max(tdiagonal$y)),]
-
-          if (tdiagonal_first$x > (tdiagonal_first$x + tdiagonal_first$width - bottom_difference)){
-            hic_triangle1 <- polygonGrob(x = c(tdiagonal_first$x, tdiagonal_first$x, tdiagonal_first$x + tdiagonal_first$width,
-                                               tdiagonal_first$x + tdiagonal_first$width),
-                                         y = c(tdiagonal_first$y, tdiagonal_first$y + bottom_difference - tdiagonal_first$width,
-                                               tdiagonal_first$y + bottom_difference, tdiagonal_first$y),
-                                         gp = gpar(col = NA, fill = tdiagonal_first$color),
-                                         default.units = "native")
-          } else {
-            hic_triangle1 <- polygonGrob(x = c(tdiagonal_first$x + tdiagonal_first$width - bottom_difference,
-                                               tdiagonal_first$x + tdiagonal_first$width, tdiagonal_first$x + tdiagonal_first$width),
-                                         y = c(tdiagonal_first$y, tdiagonal_first$y + bottom_difference, tdiagonal_first$y),
-                                         gp = gpar(col = NA, fill = tdiagonal_first$color),
-                                         default.units = "native")
-          }
-          assign("hic_grobs2", addGrob(gTree = get("hic_grobs2", envir = bbEnv), child = hic_triangle1), envir = bbEnv)
-          if ((tdiagonal_last$y + tdiagonal_last$height) < (tdiagonal_last$y + bottom_difference)){
-            hic_triangle2 <- polygonGrob(x = c(tdiagonal_last$x + tdiagonal_last$width - bottom_difference,
-                                               tdiagonal_last$x + tdiagonal_last$width - (bottom_difference - tdiagonal_last$height),
-                                               tdiagonal_last$x + tdiagonal_last$width,
-                                               tdiagonal_last$x + tdiagonal_last$width),
-                                         y = c(tdiagonal_last$y, tdiagonal_last$y + tdiagonal_last$height,
-                                               tdiagonal_last$y + tdiagonal_last$height, tdiagonal_last$y),
-                                         gp = gpar(col = NA, fill = tdiagonal_last$color),
-                                         default.units = "native")
-          } else {
-            hic_triangle2 <- polygonGrob(x = c(tdiagonal_last$x + tdiagonal_last$width - bottom_difference,
-                                               tdiagonal_last$x + tdiagonal_last$width,
-                                               tdiagonal_last$x + tdiagonal_last$width),
-                                         y = c(tdiagonal_last$y, tdiagonal_last$y + bottom_difference,
-                                               tdiagonal_last$y),
-                                         gp = gpar(col = NA, fill = tdiagonal_last$color),
-                                         default.units = "native")
-          }
-          assign("hic_grobs2", addGrob(gTree = get("hic_grobs2", envir = bbEnv), child = hic_triangle2), envir = bbEnv)
-
-          ## Remove first and last pixel
-          tdiagonal <- tdiagonal[-which(tdiagonal$x == min(tdiagonal$x)),]
-          tdiagonal <- tdiagonal[-which(tdiagonal$x == max(tdiagonal$x)),]
-
-          if (nrow(tdiagonal) >= 1){
-            ## Triangles for the rest of the pixels
-            invisible(apply(tdiagonal, 1, hic_topDiagonal, side_difference = bottom_difference))
-
-          }
-
-        } else if (nrow(tdiagonal) == 1) {
-
-            if (((tdiagonal$y + tdiagonal$height) < (tdiagonal$y + bottom_difference)) & (tdiagonal$x > (tdiagonal$x + tdiagonal$width - bottom_difference))){
-
-              hic_triangle <- polygonGrob(x = c(tdiagonal$x, tdiagonal$x, tdiagonal$x + tdiagonal$width - (bottom_difference - tdiagonal$height),
-                                                tdiagonal$x + tdiagonal$width, tdiagonal$x + tdiagonal$width),
-                                          y = c(tdiagonal$y, tdiagonal$y + bottom_difference - tdiagonal$width, tdiagonal$y + tdiagonal$height,
-                                                tdiagonal$y + tdiagonal$height, tdiagonal$y),
-                                          gp = gpar(col = NA, fill = tdiagonal$color),
-                                          default.units = "native")
-            } else {
-
-              if ((tdiagonal$y + tdiagonal$height) < (tdiagonal$y + bottom_difference)){
-                ## right side pixel chopping
-                hic_triangle <- polygonGrob(x = c(tdiagonal$x + tdiagonal$width - bottom_difference,
-                                                  tdiagonal$x + tdiagonal$width - (bottom_difference - tdiagonal$height),
-                                                  tdiagonal$x + tdiagonal$width,
-                                                  tdiagonal$x + tdiagonal$width),
-                                            y = c(tdiagonal$y, tdiagonal$y + tdiagonal$height,
-                                                  tdiagonal$y + tdiagonal$height, tdiagonal$y),
-                                            gp = gpar(col = NA, fill = tdiagonal$color),
-                                            default.units = "native")
-              } else if (tdiagonal$x > (tdiagonal$x + tdiagonal$width - bottom_difference)){
-                ## left side pixel chopping
-                hic_triangle <- polygonGrob(x = c(tdiagonal$x, tdiagonal$x, tdiagonal$x + tdiagonal$width,
-                                                  tdiagonal$x + tdiagonal$width),
-                                            y = c(tdiagonal$y, tdiagonal$y + bottom_difference - tdiagonal$width,
-                                                  tdiagonal$y + bottom_difference, tdiagonal$y),
-                                            gp = gpar(col = NA, fill = tdiagonal$color),
-                                            default.units = "native")
-
-              } else {
-
-                hic_triangle <- polygonGrob(x = c(tdiagonal$x + tdiagonal$width - bottom_difference, tdiagonal$x + tdiagonal$width, tdiagonal$x + tdiagonal$width),
-                                            y = c(tdiagonal$y, tdiagonal$y + bottom_difference, tdiagonal$y),
-                                            gp = gpar(col = NA, fill = tdiagonal$color),
-                                            default.units = "native")
-
-              }
-
-            }
-
-          assign("hic_grobs2", addGrob(gTree = get("hic_grobs2", envir = bbEnv), child = hic_triangle), envir = bbEnv)
-
-        }
-
-        ## Remove pixels to be completely deleted or that have already been plotted with other shapes
-        hic_removed <- dplyr::setdiff(hic, removed)
-
-        return(list(hic_removed, as.numeric(pixelsChop)))
-
-        } else if (calc_height < desired_height){
-
-        units <- gsub(pattern = "[0-9]|\\.", replacement = "", as.character(hic_plot$width))
-        converted_height <- convertHeight(unit(calc_height, get("page_units", envir = bbEnv)), unitTo = units, valueOnly = T)
-        pixelsChop = 0
-
-        warning(paste0("Specified height is larger than the height of a right triangle with the specified width. Adjusting height to ", converted_height, " ", units, "."), call. = FALSE)
-        return(list(hic, pixelsChop))
-
-      } else {
-
-        pixelsChop = 0
-        return(list(hic, pixelsChop))
-      }
-
-    } else {
-      pixelsChop = 0
-      return(list(hic, pixelsChop))
-
-    }
-
-  }
-
   ## Define a function that makes grobs for the hic diagonal
   hic_diagonal <- function(hic){
 
@@ -886,9 +583,9 @@ bb_plotTriangleHic <- function(hic, chrom, chromstart, chromend, resolution = 10
   # INITIALIZE OBJECT
   # ======================================================================================================================================================================================
 
-  hic_plot <- structure(list(chrom = chrom, chromstart = as.numeric(chromstart), chromend = as.numeric(chromend), x = x, y = y, width = width, height = height, justification = NULL,
+  hic_plot <- structure(list(chrom = chrom, chromstart = chromstart, chromend = chromend, x = x, y = y, width = width, height = height, justification = NULL,
                              zrange = zrange, altchrom = chrom, altchromstart = chromstart, altchromend = chromend, resolution = resolution,
-                             color_palette = NULL, grobs = NULL), class = "bb_trianglehic")
+                             color_palette = NULL, grobs = NULL, assembly = assembly), class = "bb_trianglehic")
   attr(x = hic_plot, which = "plotted") <- draw
 
   # ======================================================================================================================================================================================
@@ -917,10 +614,33 @@ bb_plotTriangleHic <- function(hic, chrom, chromstart, chromend, resolution = 10
   hic_plot$justification <- new_just
 
   # ======================================================================================================================================================================================
+  # WHOLE CHROM
+  # ======================================================================================================================================================================================
+  if (is.null(chromstart) & is.null(chromend)){
+    if (assembly == "hg19"){
+      genome <- bb_hg19
+    }
+
+    hic_plot$chromstart <- 1
+    hic_plot$chromend <- genome[which(genome$chrom == chrom),]$length
+    hic_plot$altchromstart <- 1
+    hic_plot$altchromend <- genome[which(genome$chrom == chrom),]$length
+
+  }
+
+  # ======================================================================================================================================================================================
+  # ADJUST RESOLUTION
+  # ======================================================================================================================================================================================
+
+  if (resolution == "auto"){
+    hic_plot <- adjust_resolution(hic = hic, hic_plot = hic_plot)
+  }
+
+  # ======================================================================================================================================================================================
   # READ IN DATA
   # ======================================================================================================================================================================================
 
-  hic <- read_data(hic = hic, hic_plot = hic_plot, norm = norm)
+  hic <- read_data(hic = hic, hic_plot = hic_plot, norm = norm, assembly = assembly)
 
   # ======================================================================================================================================================================================
   # SUBSET DATA
@@ -947,12 +667,7 @@ bb_plotTriangleHic <- function(hic, chrom, chromstart, chromend, resolution = 10
     sorted_colors <- unique(hic[order(hic$counts),]$color)
     hic_plot$color_palette <- sorted_colors
 
-  } else {
-
-    ## If we still have a null zrange or a length(unique(zrange)) == 1, means we couldn't do it in setzrange above (empty data or data with only 1 value)
-    warning("Can't scale data to colors.", call. = FALSE)
-
-  }
+    }
 
   # ======================================================================================================================================================================================
   # VIEWPORTS
@@ -964,16 +679,28 @@ bb_plotTriangleHic <- function(hic, chrom, chromstart, chromend, resolution = 10
 
   if (is.null(x) & is.null(y)){
 
-    vp <- viewport(height = unit(1/sqrt(two), "snpc"), width = unit(1/sqrt(2), "snpc"),
-                   x = unit(0.5, "npc"), y = unit(0.25, "npc"),
-                   xscale = c(chromstart, chromend), yscale = c(chromstart, chromend),
-                   just = "center",
-                   name = vp_name,
-                   angle = -45)
+    inside_vp <- viewport(height = unit(1, "npc"), width = unit(0.5, "npc"),
+                          x = unit(0, "npc"), y = unit(0, "npc"),
+                          xscale = c(hic_plot$chromstart, hic_plot$chromend),
+                          yscale = c(hic_plot$chromstart, hic_plot$chromend),
+                          just = c("left", "bottom"),
+                          name = paste0(vp_name, "_inside"),
+                          angle = -45)
+
+    outside_vp <- viewport(height = unit(0.75, "snpc"),
+                           width = unit(1.5, "snpc"),
+                           x = unit(0.125, "npc"),
+                           y = unit(0.25, "npc"),
+                           xscale = c(hic_plot$chromstart, hic_plot$chromend),
+                           clip = "on",
+                           just = c("left", "bottom"),
+                           name = paste0(vp_name, "_outside"))
+
 
     if (draw == TRUE){
 
-      vp$name <- "bb_trianglehic1"
+      inside_vp$name <- "bb_trianglehic1_inside"
+      outside_vp$name <- "bb_trianglehic1_outside"
       grid.newpage()
 
     }
@@ -986,44 +713,49 @@ bb_plotTriangleHic <- function(hic, chrom, chromstart, chromend, resolution = 10
     ## Get bottom left point of triangle (hence bottom left of actual viewport) based on just
     bottom_coords <- convert_just(hic_plot = hic_plot)
 
-    ## Make viewport
-    vp <- viewport(height = unit(vp_side, get("page_units", envir = bbEnv)), width = unit(vp_side, get("page_units", envir = bbEnv)),
-                   x = unit(bottom_coords[[1]], get("page_units", envir = bbEnv)),
-                   y = unit(bottom_coords[[2]], get("page_units", envir = bbEnv)),
-                   xscale = c(chromstart, chromend), yscale = c(chromstart, chromend),
-                   just = c("left", "bottom"),
-                   name = vp_name,
-                   angle = -45)
+    inside_vp <- viewport(height = unit(vp_side, get("page_units", envir = bbEnv)), width = unit(vp_side, get("page_units", envir = bbEnv)),
+                          x = unit(0, "npc"),
+                          y = unit(0, "npc"),
+                          xscale = c(hic_plot$chromstart, hic_plot$chromend),
+                          yscale = c(hic_plot$chromstart, hic_plot$chromend),
+                          just = c("left", "bottom"),
+                          name = paste0(vp_name, "_inside"),
+                          angle = -45)
+
+    ## Convert coordinates into same units as page for outside vp
+    page_coords <- convert_page(object = hic_plot)
+
+    outside_vp <- viewport(height = page_coords$height,
+                           width = page_coords$width,
+                           x = unit(bottom_coords[[1]], get("page_units", envir = bbEnv)),
+                           y = unit(bottom_coords[[2]], get("page_units", envir = bbEnv)),
+                           xscale = c(hic_plot$chromstart, hic_plot$chromend),
+                           clip = "on",
+                           just = c("left", "bottom"),
+                           name = paste0(vp_name, "_outside"))
   }
 
   # ======================================================================================================================================================================================
   # INITIALIZE GTREE FOR GROBS
   # ======================================================================================================================================================================================
 
-  assign("hic_grobs2", gTree(vp = vp), envir = bbEnv)
+  assign("hic_grobs2", gTree(vp = inside_vp), envir = bbEnv)
 
   # ======================================================================================================================================================================================
   # MAKE GROBS
   # ======================================================================================================================================================================================
 
-  hic$width <- resolution
-  hic$height <- resolution
-
-
+  hic$width <- hic_plot$resolution
+  hic$height <- hic_plot$resolution
 
   ## Manually "clip" the grobs that fall out of the desired chromstart to chromend region
-  hic_total <- manual_clip(hic = hic, hic_plot = hic_plot)
-  hic_total <- hic_total[which(hic_total$width != 0 | hic_total$height != 0),]
-  hic_total <- hic_total[order(as.numeric(rownames(hic_total))),]
+  hic <- manual_clip(hic = hic, hic_plot = hic_plot)
+  hic <- hic[which(hic$width != 0 | hic$height != 0),]
+  hic <- hic[order(as.numeric(rownames(hic))),]
 
-  ## Manually crop the grobs into a trapezoid if the input height is larger than the calculated height for the triangle
-  cropped <- manual_cropTop(hic = hic_total, hic_plot = hic_plot)
-  hic_total2 <- cropped[[1]]
-  attr(x = hic_plot, which = "choppedPixels") <- cropped[[2]]
-
-  ## Separate into squares and triangles
-  squares <- hic_total2[which(hic_total2[,2] > hic_total2[,1]),]
-  triangles <- hic_total2[which(hic_total2[,2] == hic_total2[,1]),]
+  ## Separate into squares for upper region and triangle shapes for the diagonal
+  squares <- hic[which(hic[,2] > hic[,1]),]
+  triangles <- hic[which(hic[,2] == hic[,1]),]
 
   if (nrow(squares) > 0){
 
@@ -1044,14 +776,18 @@ bb_plotTriangleHic <- function(hic, chrom, chromstart, chromend, resolution = 10
 
   }
 
+  if (nrow(squares) == 0 & nrow(triangles) == 0){
+    warning("Warning: no data found in region.  Suggestions: check chromosome, check region.", call. = FALSE)
+  }
   # ======================================================================================================================================================================================
   # IF DRAW == TRUE, DRAW GROBS
   # ======================================================================================================================================================================================
 
   if (draw == TRUE){
 
+    pushViewport(outside_vp)
     grid.draw(get("hic_grobs2", envir = bbEnv))
-
+    upViewport()
   }
 
   # ======================================================================================================================================================================================

@@ -2,22 +2,24 @@
 #'
 #'
 #' @param hic path to .hic file
-#' @param chrom if not alternative chromosome, chromosome of desired region
-#' @param chromstart chromosome start position of chrom
-#' @param chromend chromosome end position of chrom
-#' @param resolution the width of each pixel
+#' @param chrom chromosome of desired region
+#' @param chromstart start position
+#' @param chromend end position
+#' @param resolution the width of each pixel; "auto" will attempt to choose a resolution (in basepairs) based on the size of the region
 #' @param zrange the range of interaction scores to plot, where extreme values will be set to the max or min; if null, zrange will be set to (0, max(data))
 #' @param norm hic data normalization; must be found in hic file
 #' @param res_scale resolution scale; options are "BP" and "FRAG"
+#' @param assembly desired genome assembly
 #' @param altchrom if looking at region between two different chromosomes, this is the specified alternative chromosome
 #' @param altchromstart if looking at region between two different chromosomes, start position of altchrom
 #' @param altchromend if looking at region between two different chromsomes, end position of altchrom
 #'
+#' @return Function will return a 3-column dataframe
 #'
 #' @export
 
-bb_readHic <- function(hic, chrom, chromstart = NULL, chromend = NULL, resolution = 10000, zrange = NULL,
-                    norm = "KR", res_scale = "BP", altchrom = NULL, altchromstart = NULL, altchromend = NULL){
+bb_readHic <- function(hic, chrom, chromstart = NULL, chromend = NULL, resolution = "auto", zrange = NULL,
+                       norm = "KR", res_scale = "BP", assembly = "hg19", altchrom = NULL, altchromstart = NULL, altchromend = NULL){
 
 
   # ======================================================================================================================================================================================
@@ -144,12 +146,45 @@ bb_readHic <- function(hic, chrom, chromstart = NULL, chromend = NULL, resolutio
 
   }
 
+  ## Define a function that determines a best resolution for size of region
+  auto_resolution <- function(chromstart, chromend){
+
+    if (is.null(chromstart) & is.null(chromend)){
+      autoRes <- 500000
+    } else {
+      dataRange <- chromend - chromstart
+      if (dataRange >= 150000000){
+        autoRes <- 500000
+      } else if (dataRange >= 75000000 & dataRange < 150000000){
+        autoRes <- 250000
+      } else if (dataRange >= 35000000 & dataRange < 75000000){
+        autoRes <- 100000
+      } else if (dataRange >= 20000000 & dataRange < 35000000){
+        autoRes <- 50000
+      } else if (dataRange >= 5000000 & dataRange < 20000000){
+        autoRes <- 25000
+      } else if (dataRange >= 3000000 & dataRange < 5000000){
+        autoRes <- 10000
+      } else {
+        autoRes <- 5000
+      }
+    }
+
+    return(as.integer(autoRes))
+
+  }
+
   ## Define a function to parse chromsome/region for Straw
-  parse_region <- function(chrom, chromstart, chromend){
+  parse_region <- function(chrom, chromstart, chromend, assembly){
+
+    if (assembly == "hg19"){
+      strawChrom <- as.numeric(gsub("chr", "", chrom))
+    }
+
 
     if (is.null(chromstart) & is.null(chromend)){
 
-      regionStraw <- chrom
+      regionStraw <- strawChrom
 
     } else {
 
@@ -157,7 +192,7 @@ bb_readHic <- function(hic, chrom, chromstart = NULL, chromend = NULL, resolutio
 
       chromstart <- format(chromstart, scientific = FALSE)
       chromend <- format(chromend, scientific = FALSE)
-      regionStraw <- paste(chrom, chromstart, chromend, sep = ":")
+      regionStraw <- paste(strawChrom, chromstart, chromend, sep = ":")
 
     }
 
@@ -232,7 +267,7 @@ bb_readHic <- function(hic, chrom, chromstart = NULL, chromend = NULL, resolutio
   # PARSE REGIONS
   # ======================================================================================================================================================================================
 
-  chromRegion <- parse_region(chrom = chrom, chromstart = parse_chromstart, chromend = parse_chromend)
+  chromRegion <- parse_region(chrom = chrom, chromstart = parse_chromstart, chromend = parse_chromend, assembly = assembly)
 
   if (is.null(altchrom)){
 
@@ -246,25 +281,35 @@ bb_readHic <- function(hic, chrom, chromstart = NULL, chromend = NULL, resolutio
 
     } else {
 
-      altchromRegion <- parse_region(chrom = altchrom, chromstart = parse_altchromstart, chromend = parse_altchromend)
+      altchromRegion <- parse_region(chrom = altchrom, chromstart = parse_altchromstart, chromend = parse_altchromend, assembly = assembly)
 
     }
 
   }
 
   # ======================================================================================================================================================================================
+  # ADJUST RESOLUTION
+  # ======================================================================================================================================================================================
+
+  if (resolution == "auto"){
+    resolution <- auto_resolution(chromstart = chromstart, chromend = chromend)
+    res_scale <- "BP"
+  }
+
+  # ======================================================================================================================================================================================
   # EXTRACT SPARSE UPPER TRIANGULAR USING STRAW
   # ======================================================================================================================================================================================
 
-  #upper <- straw_R(sprintf("%s %s %s %s %s %i", norm, hic, chromRegion, altchromRegion, res_scale, resolution))
   upper <- strawr::straw(norm, hic, toString(chromRegion), toString(altchromRegion), res_scale, resolution)
 
   # ======================================================================================================================================================================================
   # REORDER COLUMNS BASED ON CHROM/ALTCHROM INPUT
   # ======================================================================================================================================================================================
   if (!is.null(altchrom)){
+    numberChrom <- as.numeric(gsub("chr|[A-Z]", "", chrom))
+    numberaltChrom <- as.numeric(gsub("chr|[A-Z]", "", altchrom))
 
-    if (chrom > altchrom){
+    if (numberChrom > numberaltChrom){
 
       upper <- upper[, c(2, 1, 3)]
       colnames(upper) <- c("x", "y", "counts")
@@ -286,6 +331,12 @@ bb_readHic <- function(hic, chrom, chromstart = NULL, chromend = NULL, resolutio
   renamed_data <- rename_columns(upper = scaled_data, chrom = chrom, altchrom = altchrom)
 
   # ======================================================================================================================================================================================
+  # REMOVE NAN VALUES
+  # ======================================================================================================================================================================================
+
+  renamed_data <- na.omit(renamed_data)
+
+  # ======================================================================================================================================================================================
   # RETURN DATAFRAME
   # ======================================================================================================================================================================================
   if (nrow(renamed_data) == 0){
@@ -293,5 +344,6 @@ bb_readHic <- function(hic, chrom, chromstart = NULL, chromend = NULL, resolutio
     warning("Warning: no data found in region.  Suggestions: check chromosome, check region.", call. = FALSE)
   }
 
+  message(paste("Read in hic file with", norm, "normalization at", resolution, res_scale, "resolution."))
   return(renamed_data)
 }

@@ -7,11 +7,12 @@
 bb_plotTriangleHic(
   hic,
   chrom,
-  chromstart,
-  chromend,
-  resolution = 10000,
+  chromstart = NULL,
+  chromend = NULL,
+  resolution = "auto",
   zrange = NULL,
   palette = colorRampPalette(c("white", "dark red")),
+  assembly = "hg19",
   width = NULL,
   height = NULL,
   x = NULL,
@@ -32,11 +33,14 @@ bb_plotTriangleHic(
 
 \item{chromend}{chromosome end of region to be plotted}
 
-\item{resolution}{the width in bp of each pixel; options are 2500000, 1000000, 500000, 250000, 100000, 50000, 25000, 10000, or 5000}
+\item{resolution}{the width in bp of each pixel; for hic files, "auto" will attempt to choose a resolution based on the size of the region; for
+dataframes, "auto" will attempt to detect the resolution the dataframe contains}
 
 \item{zrange}{the range of interaction scores to plot, where extreme values will be set to the max or min}
 
 \item{palette}{ColorRamp palette to use for representing interaction scores}
+
+\item{assembly}{desired genome assembly}
 
 \item{width}{A numeric or unit object specifying the bottom width of the triangle}
 

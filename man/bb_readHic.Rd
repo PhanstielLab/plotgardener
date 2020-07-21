@@ -9,10 +9,11 @@ bb_readHic(
   chrom,
   chromstart = NULL,
   chromend = NULL,
-  resolution = 10000,
+  resolution = "auto",
   zrange = NULL,
   norm = "KR",
   res_scale = "BP",
+  assembly = "hg19",
   altchrom = NULL,
   altchromstart = NULL,
   altchromend = NULL
@@ -21,13 +22,13 @@ bb_readHic(
 \arguments{
 \item{hic}{path to .hic file}
 
-\item{chrom}{if not alternative chromosome, chromosome of desired region}
+\item{chrom}{chromosome of desired region}
 
-\item{chromstart}{chromosome start position of chrom}
+\item{chromstart}{start position}
 
-\item{chromend}{chromosome end position of chrom}
+\item{chromend}{end position}
 
-\item{resolution}{the width of each pixel}
+\item{resolution}{the width of each pixel; "auto" will attempt to choose a resolution (in basepairs) based on the size of the region}
 
 \item{zrange}{the range of interaction scores to plot, where extreme values will be set to the max or min; if null, zrange will be set to (0, max(data))}
 
@@ -35,11 +36,16 @@ bb_readHic(
 
 \item{res_scale}{resolution scale; options are "BP" and "FRAG"}
 
+\item{assembly}{desired genome assembly}
+
 \item{altchrom}{if looking at region between two different chromosomes, this is the specified alternative chromosome}
 
 \item{altchromstart}{if looking at region between two different chromosomes, start position of altchrom}
 
 \item{altchromend}{if looking at region between two different chromsomes, end position of altchrom}
+}
+\value{
+Function will return a 3-column dataframe
 }
 \description{
 extracts HiC data from .hic file using Straw

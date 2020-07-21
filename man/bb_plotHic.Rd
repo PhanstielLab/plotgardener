@@ -6,13 +6,14 @@
 \usage{
 bb_plotHic(
   hic,
-  chrom = 1,
-  chromstart = 22500000,
-  chromend = 23200000,
+  chrom,
+  chromstart = NULL,
+  chromend = NULL,
   half = "both",
-  resolution = 10000,
+  resolution = "auto",
   zrange = NULL,
   palette = colorRampPalette(c("white", "dark red")),
+  assembly = "hg19",
   width = NULL,
   height = NULL,
   x = NULL,
@@ -33,17 +34,20 @@ bb_plotHic(
 
 \item{chrom}{chromosome of region to be plotted}
 
-\item{chromstart}{chromosome start of region to be plotted}
+\item{chromstart}{start position}
 
-\item{chromend}{chromosome end of region to be plotted}
+\item{chromend}{end position}
 
 \item{half}{what sides of square plot; options are "both", top", or "bottom"}
 
-\item{resolution}{the width in bp of each pixel}
+\item{resolution}{the width in bp of each pixel; for hic files, "auto" will attempt to choose a resolution based on the size of the region; for
+dataframes, "auto" will attempt to detect the resolution the dataframe contains}
 
 \item{zrange}{the range of interaction scores to plot, where extreme values will be set to the max or min}
 
 \item{palette}{ColorRamp palette to use for representing interaction scores}
+
+\item{assembly}{desired genome assembly}
 
 \item{width}{A numeric or unit object specifying width}
 
@@ -70,7 +74,7 @@ bb_plotHic(
 \item{norm}{if giving .hic file, hic data normalization; must be found in hic file}
 }
 \value{
-Function will plot a HiC interaction matrix and return a bb_hicPlot object
+Function will plot a HiC interaction matrix and return a bb_hic object
 }
 \description{
 plots HiC interaction matrix

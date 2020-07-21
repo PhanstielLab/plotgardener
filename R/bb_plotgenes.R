@@ -20,6 +20,8 @@
 #' @param default.units A string indicating the default units to use if x, y, width, or height are only given as numerics
 #' @param draw A logical value indicating whether graphics output should be produced
 #'
+#' @return Function will plot a gene track and return a bb_genes object
+#'
 #' @export
 bb_plotGenes <- function(assembly = "hg19", chrom, chromstart = NULL, chromend = NULL, fontcolors = c("#2929ff", "#ff3434"),
                          strandcolors = c("#8a8aff", "#ff7e7e"), geneOrder = NULL, geneHighlights = NULL, geneBackground = "grey",
@@ -54,14 +56,6 @@ bb_plotGenes <- function(assembly = "hg19", chrom, chromstart = NULL, chromend =
       }
 
     }
-
-  }
-
-  makeTransparent <- function(color){
-
-    rgb <- col2rgb(color)
-    transp <- rgb(rgb[1], rgb[2], rgb[3], alpha = 0.5*255, maxColorValue = 255)
-    return(transp)
 
   }
 
@@ -192,8 +186,9 @@ bb_plotGenes <- function(assembly = "hg19", chrom, chromstart = NULL, chromend =
   # INITIALIZE OBJECT
   # ======================================================================================================================================================================================
 
-  genes_plot <- structure(list(chrom = gsub(pattern = "chr", replacement = "", x = chrom), chromstart = chromstart, chromend = chromend, width = width, height = height,
-                               x = x, y = y, justification = just, grobs = NULL), class = "bb_genes")
+
+  genes_plot <- structure(list(chrom = chrom, chromstart = chromstart, chromend = chromend, width = width, height = height,
+                               x = x, y = y, justification = just, grobs = NULL, assembly = assembly), class = "bb_genes")
   attr(x = genes_plot, which = "plotted") <- draw
 
   # ======================================================================================================================================================================================
@@ -383,7 +378,7 @@ bb_plotGenes <- function(assembly = "hg19", chrom, chromstart = NULL, chromend =
 
       plus_geneGrobs <- rectGrob(x = plus_genes$Start, y = unit(0.63, "npc"),
                                  width = plus_genes$width, height = unit(0.18, "npc"),
-                                 just = "left", gp = gpar(fill = plus_genes$strandColor, col = makeTransparent(plus_genes$strandColor), lwd = stroke, alpha = 0.5),
+                                 just = "left", gp = gpar(fill = plus_genes$strandColor, col = makeTransparent(plus_genes$strandColor, alpha = 0.5), lwd = stroke, alpha = 0.5),
                                  vp = vp_gene, default.units = "native")
       assign("gene_grobs", addGrob(get("gene_grobs", envir = bbEnv), child = plus_geneGrobs), envir = bbEnv)
 
@@ -394,7 +389,7 @@ bb_plotGenes <- function(assembly = "hg19", chrom, chromstart = NULL, chromend =
 
       minus_geneGrobs <- rectGrob(x = minus_genes$Start, y = unit(0.37, "npc"),
                                   width = minus_genes$width, height = unit(0.18, "npc"),
-                                  just = "left", gp = gpar(fill = minus_genes$strandColor, col = makeTransparent(minus_genes$strandColor), lwd = stroke, alpha = 0.5),
+                                  just = "left", gp = gpar(fill = minus_genes$strandColor, col = makeTransparent(minus_genes$strandColor, alpha = 0.5), lwd = stroke, alpha = 0.5),
                                   vp = vp_gene, default.units = "native")
       assign("gene_grobs", addGrob(get("gene_grobs", envir = bbEnv), child = minus_geneGrobs), envir = bbEnv)
 
@@ -407,7 +402,7 @@ bb_plotGenes <- function(assembly = "hg19", chrom, chromstart = NULL, chromend =
 
       plus_geneGrobs <- rectGrob(x = plus_genes$Start, y = unit(0.63, "npc"),
                                  width = plus_genes$width, height = unit(0.05, "npc"),
-                                 just = "left", gp = gpar(fill = plus_genes$strandColor, col = makeTransparent(plus_genes$strandColor), lwd = stroke, alpha = 0.5),
+                                 just = "left", gp = gpar(fill = plus_genes$strandColor, col = makeTransparent(plus_genes$strandColor, alpha = 0.5), lwd = stroke, alpha = 0.5),
                                  vp = vp_gene, default.units = "native")
       assign("gene_grobs", addGrob(get("gene_grobs", envir = bbEnv), child = plus_geneGrobs), envir = bbEnv)
 
@@ -418,7 +413,7 @@ bb_plotGenes <- function(assembly = "hg19", chrom, chromstart = NULL, chromend =
 
       minus_geneGrobs <- rectGrob(x = minus_genes$Start, y = unit(0.37, "npc"),
                                   width = minus_genes$width, height = unit(0.05, "npc"),
-                                  just = "left", gp = gpar(fill = minus_genes$strandColor, col = makeTransparent(minus_genes$strandColor), lwd = stroke, alpha = 0.5),
+                                  just = "left", gp = gpar(fill = minus_genes$strandColor, col = makeTransparent(minus_genes$strandColor, alpha = 0.5), lwd = stroke, alpha = 0.5),
                                   vp = vp_gene, default.units = "native")
       assign("gene_grobs", addGrob(get("gene_grobs", envir = bbEnv), child = minus_geneGrobs), envir = bbEnv)
 

@@ -9,6 +9,14 @@ Encoding: UTF-8
 LazyData: true
 RoxygenNote: 7.1.1
 Imports: 
-    rtracklayer, strawr, BSgenome, BSgenome.Hsapiens.UCSC.hg19, GenomicRanges, IRanges
+       rtracklayer,
+    strawr,
+    BSgenome,
+    BSgenome.Hsapiens.UCSC.hg19,
+    GenomicRanges,
+    IRanges,
+    Rcpp
 Remotes: aidenlab/straw/R
 biocViews: rtracklayer, BSgenome, BSgenome.Hsapiens.UCSC.hg19, GenomicRanges, IRanges
+LinkingTo: 
+    Rcpp

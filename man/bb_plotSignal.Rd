@@ -7,17 +7,18 @@
 bb_plotSignal(
   signal,
   chrom,
-  chromstart,
-  chromend,
+  chromstart = NULL,
+  chromend = NULL,
   range = NULL,
   linecolor = "grey",
   lwd = 1,
-  yaxis = FALSE,
   binSize = NA,
   binCap = TRUE,
   fillcolor = NULL,
-  transparency = NULL,
+  assembly = "hg19",
+  transparency = 1,
   ymax = 1,
+  scale = FALSE,
   width = NULL,
   height = NULL,
   x = NULL,
@@ -29,7 +30,7 @@ bb_plotSignal(
 )
 }
 \arguments{
-\item{signal}{signal track data to be plotted (bigwig file, bedgraph format dataframe, or bedgraph)}
+\item{signal}{signal track data to be plotted (bigwig file, bedgraph format dataframe, or bedgraph); can be one or a list of two}
 
 \item{chrom}{chromosome of region to be plotted as a string (i.e. "chr3")}
 
@@ -39,7 +40,7 @@ bb_plotSignal(
 
 \item{range}{y-range to plot (c(min, max))}
 
-\item{linecolor}{color of line outlining signal track}
+\item{linecolor}{color(s) of line outlining signal track(s); if using fillcolor and no outline is desired, set to NA}
 
 \item{lwd}{linewidth of line outlining signal track}
 
@@ -47,11 +48,15 @@ bb_plotSignal(
 
 \item{binCap}{TRUE/FALSE whether the function will limit the number of bins to 8,000}
 
-\item{fillcolor}{if want plot to be filled, specify fillcolor}
+\item{fillcolor}{color(s) filling in signal track(s)}
 
-\item{transparency}{if want to specify a transparency for the fill, specify transparency}
+\item{assembly}{desired genome assembly}
 
-\item{ymax}{fraction of max y value to set as height of plot}
+\item{transparency}{numerical value for fillcolor transparency, if fillcolor is specified}
+
+\item{ymax}{fraction of max y-value to set as height of plot}
+
+\item{scale}{A logical value indicating whether to include a data scale label in the top left corner}
 
 \item{width}{A numeric or unit object specifying width}
 

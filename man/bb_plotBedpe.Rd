@@ -7,13 +7,14 @@
 bb_plotBedpe(
   bedpe,
   chrom,
-  chromstart,
-  chromend,
+  chromstart = NULL,
+  chromend = NULL,
   fillcolor = "black",
   colorby = NULL,
   colorbycol = NULL,
   colorbyrange = NULL,
   linecolor = NA,
+  assembly = "hg19",
   boxHeight = unit(0.025, "inches"),
   spaceHeight = unit(0.025, "inches"),
   limitDots = TRUE,
@@ -45,6 +46,8 @@ bb_plotBedpe(
 \item{colorbyrange}{the range of values to apply the color scale to}
 
 \item{linecolor}{border color}
+
+\item{assembly}{desired genome assembly}
 
 \item{boxHeight}{height of boxes at either end of bedpe element}
 
