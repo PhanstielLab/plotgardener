@@ -25,7 +25,6 @@
 #'
 #' @return Function will plot a HiC interaction matrix and return a bb_hic object
 #'
-#' @author Nicole Kramer
 #'
 #' @examples
 #'

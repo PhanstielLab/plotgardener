@@ -82,6 +82,3 @@ plots HiC interaction matrix
 \examples{
 
 }
-\author{
-Nicole Kramer
-}

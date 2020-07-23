@@ -127,7 +127,7 @@ bb_plotSignal <- function(signal, chrom, chromstart = NULL, chromend = NULL, ran
     if (!"data.frame" %in% class(signal)){
 
       signal <- bb_readBigwig(filename = signal, chrom = signaltrack$chrom, chromstart = signaltrack$chromstart, chromend = signaltrack$chromend)
-      signal <- signal[,c(1,2,3,6)]
+      signal <- signal[,c(1:3,6)]
 
     } else {
 
