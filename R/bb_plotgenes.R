@@ -341,7 +341,7 @@ bb_plotGenes <- function(assembly = "hg19", chrom, chromstart = NULL, chromend =
     vp_gene <- viewport(height = page_coords$height, width = page_coords$width,
                    x = page_coords$x, y = page_coords$y,
                    clip = "on",
-                   xscale = c(gene_plot$chromstart, gene_plot$chromend),
+                   xscale = c(genes_plot$chromstart, genes_plot$chromend),
                    just = just,
                    name = vp_name)
 
