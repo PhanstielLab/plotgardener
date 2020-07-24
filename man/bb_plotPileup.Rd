@@ -13,6 +13,7 @@ bb_plotPileup(
   fillcolor = "black",
   linecolor = NA,
   colorby = NULL,
+  colorbyrange = NULL,
   strandSplit = FALSE,
   boxHeight = unit(2, "mm"),
   spaceHeight = 0.3,
@@ -37,11 +38,13 @@ bb_plotPileup(
 
 \item{assembly}{desired genome assembly}
 
-\item{fillcolor}{color(s) to color pileup elements}
+\item{fillcolor}{single value, vector, or palette specifying colors of pileup elements}
 
 \item{linecolor}{linecolor of line outlining pileup elements}
 
 \item{colorby}{name of column in bed data to scale colors by}
+
+\item{colorbyrange}{the range of values to apply a colorby palette scale to, if colorby values are numeric}
 
 \item{strandSplit}{logical indicating whether plus and minus-stranded elements should be separated}
 

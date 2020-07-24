@@ -5,9 +5,10 @@
 #' @param chromstart start position
 #' @param chromend end position
 #' @param assembly desired genome assembly
-#' @param fillcolor color(s) to color pileup elements
+#' @param fillcolor single value, vector, or palette specifying colors of pileup elements
 #' @param linecolor linecolor of line outlining pileup elements
 #' @param colorby name of column in bed data to scale colors by
+#' @param colorbyrange the range of values to apply a colorby palette scale to, if colorby values are numeric
 #' @param strandSplit logical indicating whether plus and minus-stranded elements should be separated
 #' @param boxHeight height of pileup element boxes, as a numeric value with default units or a unit value
 #' @param spaceHeight height of spacing between pileup element boxes, as a fraction of boxHeight
@@ -24,7 +25,7 @@
 #'
 #' @export
 
-bb_plotPileup <- function(bed, chrom, chromstart = NULL, chromend = NULL, assembly = "hg19", fillcolor = "black", linecolor = NA, colorby = NULL, strandSplit = FALSE,
+bb_plotPileup <- function(bed, chrom, chromstart = NULL, chromend = NULL, assembly = "hg19", fillcolor = "black", linecolor = NA, colorby = NULL, colorbyrange = NULL, strandSplit = FALSE,
                           boxHeight =  unit(2, "mm"), spaceHeight = 0.3, spaceWidth = 0.02, x = NULL,
                           y = NULL, width = NULL, height = NULL, just = c("left", "top"), default.units = "inches", draw = TRUE){
 
@@ -43,8 +44,6 @@ bb_plotPileup <- function(bed, chrom, chromstart = NULL, chromend = NULL, assemb
     }
 
 
-
-
     if (!is.null(pileup_plot$chromstart) & !is.null(pileup_plot$chromend)){
 
       ## chromend > chromstart
@@ -56,6 +55,10 @@ bb_plotPileup <- function(bed, chrom, chromstart = NULL, chromend = NULL, assemb
       }
 
     }
+
+
+
+
 
   }
 
@@ -72,13 +75,11 @@ bb_plotPileup <- function(bed, chrom, chromstart = NULL, chromend = NULL, assemb
     return(yscale)
   }
 
-
-
   # ======================================================================================================================================================================================
   # INITIALIZE OBJECT
   # ======================================================================================================================================================================================
 
-  pileup_plot <- structure(list(chrom = chrom, chromstart = chromstart, chromend = chromend, width = width,
+  pileup_plot <- structure(list(chrom = chrom, chromstart = chromstart, chromend = chromend, color_palette = NULL, zrange = colorbyrange, width = width,
                                 height = height, x = x, y = y, justification = just, grobs = NULL, assembly = assembly), class = "bb_pileup")
   attr(x = pileup_plot, which = "plotted") <- draw
 
@@ -123,37 +124,30 @@ bb_plotPileup <- function(bed, chrom, chromstart = NULL, chromend = NULL, assemb
   bed <- bed[which(bed[,1] == pileup_plot$chrom & bed[,2] <= pileup_plot$chromend & bed[,3] >= pileup_plot$chromstart),]
 
   # ======================================================================================================================================================================================
-  # COLORS
+  # SGET COLORBY DATA
   # ======================================================================================================================================================================================
 
-  if (is.null(colorby)){
-
-    bed$color <- fillcolor
-
-  } else {
-
-    ## Find associated vector to colorby
+  if (!is.null(colorby)){
     colorbyCol <- which(colnames(bed) == colorby)
     colorbyCol <- bed[,colorbyCol]
 
     ## if the associated column isn't numbers, convert unique values to a set of numbers
     if (class(colorbyCol) != "numeric" | class(colorbyCol) != "integer"){
       colorbyCol <- factor(colorbyCol)
-      colorbyCol <- as.numeric(colorbyCol)
-    }
-
-    if (class(fillcolor) == "function"){
-      colorVec <- bb_maptocolors(colorbyCol, fillcolor)
+      bed$colorby <- as.numeric(colorbyCol)
     } else {
-      colorbyCol <- factor(colorbyCol)
-      mappedColors <- rep(fillcolor, ceiling(length(levels(colorbyCol))/length(fillcolor)))
-      colorVec <- mappedColors[colorbyCol]
+
+      if (is.null(colorbyrange)){
+        colorbyrange <- c(min(bed$colorbyvalue), max(bed$colorbyvalue))
+        bed_plot$zrange <- colorbyrange
+      }
+
+      bed$colorby <- colorbyCol
     }
 
-    bed$color <- colorVec
-
+  } else {
+    bed$colorby <- NA
   }
-
 
   # ======================================================================================================================================================================================
   # SEPARATE DATA INTO STRANDS
@@ -198,10 +192,10 @@ bb_plotPileup <- function(bed, chrom, chromstart = NULL, chromend = NULL, assemb
 
   } else {
 
-    yscale <- strand_scale(strandSplit = strandSplit, height = convertHeight(page_coords$height, unitTo = get("page_units", envir = bbEnv), valueOnly = TRUE))
-
     ## Convert coordinates into same units as page
     page_coords <- convert_page(object = pileup_plot)
+
+    yscale <- strand_scale(strandSplit = strandSplit, height = convertHeight(page_coords$height, unitTo = get("page_units", envir = bbEnv), valueOnly = TRUE))
 
     ## Make viewport
     vp <- viewport(height = page_coords$height, width = page_coords$width,
@@ -252,14 +246,15 @@ bb_plotPileup <- function(bed, chrom, chromstart = NULL, chromend = NULL, assemb
       bed <- bed[sample(nrow(bed)),]
 
       ## Convert to numeric matrix for Rcpp function parsing
-      bedMatrix <- as.matrix(bed[,c(2,3,ncol(bed))])
+      bedMatrix <- as.matrix(bed[,c(2,3,ncol(bed)-1, ncol(bed))])
 
       ## Assign a row for each element
-      rowDF <- checkRow(bedMatrix, maxRows, 2, wiggle)
+      rowDF <- checkRow(bedMatrix, maxRows, 3, wiggle)
 
       rowDF <- as.data.frame(rowDF)
-      colnames(rowDF) <- c("start", "stop", "row")
-      rowDF$color <- bed$color
+      colnames(rowDF) <- c("start", "stop", "colorby", "row")
+
+
       if (any(rowDF$row == 0)){
         rowDF <- rowDF[which(rowDF$row != 0),]
         warning("Not enough plotting space for all provided pileup elements.", call. = FALSE)
@@ -287,11 +282,10 @@ bb_plotPileup <- function(bed, chrom, chromstart = NULL, chromend = NULL, assemb
       posStrand <- posStrand[sample(nrow(posStrand)),]
       posStrand$row <- 0
       ## Convert to numeric matrix for Rcpp function parsing
-      posMatrix <- as.matrix(posStrand[,c(2,3,ncol(posStrand))])
-      posDF <- checkRow(posMatrix, floor(maxRows/2), 2, wiggle)
+      posMatrix <- as.matrix(posStrand[,c(2,3,ncol(posStrand)-1, ncol(posStrand))])
+      posDF <- checkRow(posMatrix, floor(maxRows/2), 3, wiggle)
       posDF <- as.data.frame(posDF)
-      colnames(posDF) <- c("start", "stop", "row")
-      posDF$color <- posStrand$color
+      colnames(posDF) <- c("start", "stop", "colorby", "row")
       if (any(posDF$row == 0)){
         posDF <- posDF[which(posDF$row != 0),]
         warning("Not enough plotting space for all provided plus strand pileup elements.", call. = FALSE)
@@ -304,6 +298,8 @@ bb_plotPileup <- function(bed, chrom, chromstart = NULL, chromend = NULL, assemb
       posDF$row <- posDF$row - 1
       posDF$width <- posDF$stop - posDF$start
       posDF$y <- (0.5*spaceHeight) + posDF$row*(boxHeight + spaceHeight)
+      posDF$row <- posDF$row + 1
+      posDF$row <- posDF$row + floor(maxRows/2)
 
     } else {
       posDF <- data.frame()
@@ -314,13 +310,10 @@ bb_plotPileup <- function(bed, chrom, chromstart = NULL, chromend = NULL, assemb
 
       minStrand <- minStrand[sample(nrow(minStrand)),]
       minStrand$row <- 0
-
-      minMatrix <- as.matrix(minStrand[,c(2,3,ncol(minStrand))])
-      minDF <- checkRow(minMatrix, floor(maxRows/2), 2, wiggle)
+      minMatrix <- as.matrix(minStrand[,c(2,3,ncol(minStrand)-1,ncol(minStrand))])
+      minDF <- checkRow(minMatrix, floor(maxRows/2), 3, wiggle)
       minDF <- as.data.frame(minDF)
-      colnames(minDF) <- c("start", "stop", "row")
-      minDF$color <- minStrand$color
-
+      colnames(minDF) <- c("start", "stop", "colorby", "row")
       if (any(minDF$row == 0)){
         minDF <- minDF[which(minDF$row != 0),]
         warning("Not enough plotting space for all provided minus strand pileup elements.", call. = FALSE)
@@ -333,14 +326,59 @@ bb_plotPileup <- function(bed, chrom, chromstart = NULL, chromend = NULL, assemb
       minDF$row <- minDF$row - 1
       minDF$width <- minDF$stop - minDF$start
       minDF$y <- ((0.5*spaceHeight + boxHeight) + minDF$row*(boxHeight + spaceHeight))*-1
+      rowIndex <- minDF$row + 1
+      rowRange <- floor(maxRows/2):1
+      minDF$row <- rowRange[rowIndex]
 
     } else {
       minDF <- data.frame()
     }
 
     rowDF <- rbind(posDF, minDF)
+  }
+
+  # ======================================================================================================================================================================================
+  # COLORS
+  # ======================================================================================================================================================================================
+
+  if (is.null(colorby)){
+
+    if (class(fillcolor) == "function"){
+      colors <- fillcolor(maxRows)
+      indeces <- rowDF$row
+      rowDF$color <- colors[indeces]
+
+    } else {
+
+      if (length(fillcolor) == 1){
+        rowDF$color <- fillcolor
+      } else {
+
+        colors <- rep(fillcolor, ceiling(maxRows/length(fillcolor)))[1:maxRows]
+        indeces <- rowDF$row
+        rowDF$color <- colors[indeces]
+
+      }
+
+    }
+
+  } else {
+
+    if (class(fillcolor) == "function"){
+
+      rowDF$color <- bb_maptocolors(rowDF$colorby, fillcolor, range = colorbyrange)
+      sorted_colors <- unique(rowDF[order(rowDF$colorby),]$color)
+
+    } else {
+
+      colorbyCol <- factor(rowDF$colorby)
+      mappedColors <- rep(fillcolor, ceiling(length(levels(colorbyCol))/length(fillcolor)))
+      rowDF$color <- mappedColors[rowDF$colorby]
+    }
+
 
   }
+
 
   # ======================================================================================================================================================================================
   # MAKE GROBS

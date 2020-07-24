@@ -11,13 +11,11 @@ bb_plotBedpe(
   chromend = NULL,
   fillcolor = "black",
   colorby = NULL,
-  colorbycol = NULL,
   colorbyrange = NULL,
   linecolor = NA,
   assembly = "hg19",
-  boxHeight = unit(0.025, "inches"),
-  spaceHeight = unit(0.025, "inches"),
-  limitDots = TRUE,
+  boxHeight = unit(2, "mm"),
+  spaceHeight = 0.3,
   x = NULL,
   y = NULL,
   width = NULL,
@@ -37,13 +35,11 @@ bb_plotBedpe(
 
 \item{chromend}{end position}
 
-\item{fillcolor}{single value or vector specifying colors of bedpe elements}
+\item{fillcolor}{single value, vector, or palette specifying colors of bedpe elements}
 
-\item{colorby}{vector to scale colors by}
+\item{colorby}{name of column in bedpe data to scale fillcolors by}
 
-\item{colorbycol}{palette to apply color scale to (only valid when colorby is not NULL)}
-
-\item{colorbyrange}{the range of values to apply the color scale to}
+\item{colorbyrange}{the range of values to apply a colorby palette scale to, if colorby values are numeric}
 
 \item{linecolor}{border color}
 
@@ -52,8 +48,6 @@ bb_plotBedpe(
 \item{boxHeight}{height of boxes at either end of bedpe element}
 
 \item{spaceHeight}{height of space between boxes of different bedpe elements}
-
-\item{limitDots}{logical value indicating whether to plot "..." to indicate additional, unplotted bedpe elements}
 
 \item{x}{A numeric vector or unit object specifying x-location}
 
