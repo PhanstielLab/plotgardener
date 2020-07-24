@@ -351,7 +351,7 @@ defaultUnits <- function(object, default.units){
 
   if (!(is.null(object$x) & is.null(object$y))){
 
-    if (class(object$x) != "unit"){
+    if (!"unit" %in% class(object$x)){
 
       if (!is.numeric(object$x)){
 
@@ -370,7 +370,7 @@ defaultUnits <- function(object, default.units){
     }
 
 
-    if (class(object$y) != "unit"){
+    if (!"unit" %in% class(object$y)){
 
       if (!is.numeric(object$y)){
 
@@ -388,7 +388,7 @@ defaultUnits <- function(object, default.units){
 
     }
 
-    if (class(object$width) != "unit"){
+    if (!"unit" %in% class(object$width)){
 
       if (!is.numeric(object$width)){
 
@@ -406,7 +406,7 @@ defaultUnits <- function(object, default.units){
 
     }
 
-    if (class(object$height) != "unit"){
+    if (!"unit" %in% class(object$height)){
 
       if (!is.numeric(object$height)){
 
