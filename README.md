@@ -4,7 +4,6 @@
 
 Rapid and precise coordinate-based visualization of genomic data
 
-
 ## Dependencies
 
 Currently rtrackler needs to be installed manually. To install
