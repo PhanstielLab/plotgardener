@@ -133,24 +133,24 @@ bb_annotateLoops <- function(hic, loops, half = "inherit", shift = 4, type = "bo
   ## Define a function that subsets loop data for hic region
   subset_loops <- function(loops, object){
 
-    chrom <- paste0("chr", object$chrom)
-    altchrom <- paste0("chr", object$altchrom)
+    numberChrom <- as.numeric(gsub("chr", "", object$chrom))
+    numberAltChrom <- as.numeric(gsub("chr", "", object$altchrom))
 
-    if (object$chrom == object$altchrom){
+    if (numberChrom == numberAltChrom){
 
-      loops_subset <- loops[which(loops[,1] == chrom & loops[,4] == chrom & loops[,2] >= object$chromstart & loops[,3] <= object$chromend
+      loops_subset <- loops[which(loops[,1] == object$chrom & loops[,4] == object$chrom & loops[,2] >= object$chromstart & loops[,3] <= object$chromend
                                   & loops[,5] >= object$chromstart & loops[,6] <= object$chromend),]
 
     } else {
 
-      if (object$chrom > object$altchrom){
+      if (numberChrom > numberAltChrom){
 
-        loops_subset <- loops[which(loops[,1] == altchrom & loops[,4] == chrom & loops[,2] >= object$altchromstart & loops[,3] <= object$altchromend
+        loops_subset <- loops[which(loops[,1] == object$altchrom & loops[,4] == object$chrom & loops[,2] >= object$altchromstart & loops[,3] <= object$altchromend
                                     & loops[,5] >= object$chromstart & loops[,6] <= object$chromend),]
 
-      } else if (object$chrom < object$altchrom){
+      } else if (numberChrom < numberAltChrom){
 
-        loops_subset <- loops[which(loops[,1] == chrom & loops[,4] == altchrom & loops[,2] >= object$chromstart & loops[,3] <= object$chromend
+        loops_subset <- loops[which(loops[,1] == object$chrom & loops[,4] == object$altchrom & loops[,2] >= object$chromstart & loops[,3] <= object$chromend
                                     & loops[,5] >= object$altchromstart & loops[,6] <= object$altchromend),]
 
       }
