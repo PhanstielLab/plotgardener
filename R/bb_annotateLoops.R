@@ -15,6 +15,8 @@ bb_annotateLoops <- function(hic, loops, half = "inherit", shift = 4, type = "bo
   # ======================================================================================================================================================================================
   # FUNCTIONS
   # ======================================================================================================================================================================================
+  ## For more accurate calculation of sqrt(2)
+  two <- mpfr(2, 120)
 
   ## Define a function to catch errors for bb_annotateLoops
   errorcheck_bb_annotateLoops <- function(hic, loops, half, type){
@@ -186,187 +188,6 @@ bb_annotateLoops <- function(hic, loops, half = "inherit", shift = 4, type = "bo
 
   }
 
-  ## Define a function that checks if any of the loop annotations fall out of the plotted region of a triangle hic plot
-  annot_limits <- function(loop, hic, shift, type){
-
-    if (class(hic) == "bb_trianglehic"){
-
-      if (attributes(hic)$choppedPixels != 0){
-
-        ## this is a function that will determine if two line segments intersect
-        check_intersection <- function(point1, point2, point3, point4){
-          ## point1 and point2 define one line segment
-          ## point3 and point4 define other line segment
-          onSegment<- function(pointp, pointq, pointr){
-
-            if (pointq[[1]] <= max(pointp[[1]], pointr[[1]]) && pointq[[1]] >= min(pointp[[1]], pointr[[1]]) &&
-                pointq[[2]] <= max(pointp[[2]], pointr[[2]]) && pointq[[2]] >= min(pointp[[2]], pointr[[2]])){
-              return(TRUE)
-            } else {
-
-              return(FALSE)
-            }
-
-          }
-
-          orientation <- function(pointp, pointq, pointr){
-
-            value <- (pointq[[2]] - pointp[[2]])*(pointr[[1]] - pointq[[1]]) -
-              (pointq[[1]] - pointp[[1]])*(pointr[[2]] - pointq[[2]])
-
-            if (value == 0){
-              return(0)
-            } else {
-              if(value > 0){
-                return(1)
-              } else {
-                return(2)
-              }
-            }
-          }
-
-          o1 <- orientation(pointp = point1, pointq = point2, pointr = point3)
-          o2 <- orientation(pointp = point1, pointq = point2, pointr = point4)
-          o3 <- orientation(pointp = point3, pointq = point4, pointr = point1)
-          o4 <- orientation(pointp = point3, pointq = point4, pointr = point2)
-
-          if (o1 != o2 && o3 != o4){
-            return(TRUE)
-          }
-
-          if (o1 == 0 && onSegment(pointp = point1, pointq = point3, pointr = point2)){
-            return(TRUE)
-          }
-
-          if (o2 == 0 && onSegment(pointp = point1, pointq = point4, pointr = point2)){
-            return(TRUE)
-          }
-
-          if (o3 ==0 && onSegment(pointp = point3, pointq = point1, pointr = point4)){
-            return(TRUE)
-          }
-
-          if(o4 == 0 && onSegment(pointp = point3, pointq = point2, pointr = point4)){
-            return(TRUE)
-          }
-
-          return(FALSE)
-
-        }
-
-        ## this is a function that will determine if a line intersects a circle
-        checkCircle <- function(a, b, c, x, y, radius){
-
-          dist <- (abs(a*x + b*y + c))/sqrt(a^2+b^2)
-
-          if (radius == dist){
-            return(FALSE)
-          }  else if (radius > dist){
-            return(TRUE)
-          } else {
-            return(FALSE)
-          }
-
-        }
-
-        normx <- ((hic$chromstart + attributes(hic)$choppedPixels*hic$resolution) - hic$chromstart)/(hic$chromend - hic$chromstart)
-        normy <- ((hic$chromend - attributes(hic)$choppedPixels*hic$resolution) - hic$chromstart)/(hic$chromend - hic$chromstart)
-
-        slope <- (1 - normy)/(normx - 0)
-
-        if (type == "box"){
-
-          side <- (as.numeric(loop[6]) - as.numeric(loop[5])) + (2 * shift * hic$resolution)
-          center_x <- 0.5 * (as.numeric(loop[2]) + as.numeric(loop[3]))
-          center_y <- 0.5 * (as.numeric(loop[5]) + as.numeric(loop[6]))
-
-          check1 <- check_intersection(point1 = list(hic$chromstart, hic$chromend - attributes(hic)$choppedPixels*hic$resolution),
-                                   point2 = list(hic$chromstart + attributes(hic)$choppedPixels*hic$resolution, hic$chromend),
-                                   point3 = list(center_x - 0.5*side, center_y - 0.5*side),
-                                   point4 = list(center_x - 0.5*side, center_y + 0.5*side))
-
-          check2 <- check_intersection(point1 = list(hic$chromstart, hic$chromend - attributes(hic)$choppedPixels*hic$resolution),
-                                   point2 = list(hic$chromstart + attributes(hic)$choppedPixels*hic$resolution, hic$chromend),
-                                   point3 = list(center_x - 0.5*side, center_y - 0.5*side),
-                                   point4 = list(center_x + 0.5*side, center_y - 0.5*side))
-
-          check3 <- check_intersection(point1 = list(hic$chromstart, hic$chromend - attributes(hic)$choppedPixels*hic$resolution),
-                                       point2 = list(hic$chromstart + attributes(hic)$choppedPixels*hic$resolution, hic$chromend),
-                                       point3 = list(center_x - 0.5*side, center_y + 0.5*side),
-                                       point4 = list(center_x + 0.5*side, center_y + 0.5*side))
-
-          check4 <- check_intersection(point1 = list(hic$chromstart, hic$chromend - attributes(hic)$choppedPixels*hic$resolution),
-                                       point2 = list(hic$chromstart + attributes(hic)$choppedPixels*hic$resolution, hic$chromend),
-                                       point3 = list(center_x + 0.5*side, center_y + 0.5*side),
-                                       point4 = list(center_x + 0.5*side, center_y - 0.5*side))
-
-
-
-          if (check1 == TRUE | check2 == TRUE | check3 == TRUE | check4 == TRUE){
-
-            warning("Loop annotation falls out of plotted region.", call. = FALSE)
-
-          }
-
-          norm_x0 <- ((center_x + 0.5*side) - hic$chromstart)/(hic$chromend - hic$chromstart)
-          solve_val <- slope*norm_x0 + normy
-          norm_y0 <- ((center_y - 0.5*side) - hic$chromstart)/(hic$chromend - hic$chromstart)
-          if (norm_y0 > solve_val){
-            warning("Loop annotation falls out of plotted region.", call. = FALSE)
-          }
-
-        } else if (type == "circle"){
-
-          radius <- (0.5 * (as.numeric(loop[6]) - as.numeric(loop[5]))) + (shift * hic$resolution)
-          center_x <- 0.5 * (as.numeric(loop[2]) + as.numeric(loop[3]))
-          center_y <- 0.5 * (as.numeric(loop[5]) + as.numeric(loop[6]))
-
-          rad1 <- center_x - radius
-          norm_rad1 <- (rad1 - hic$chromstart)/(hic$chromend - hic$chromstart)
-          rad2 <- center_x + radius
-          norm_rad2 <- (rad2 - hic$chromstart)/(hic$chromend - hic$chromstart)
-          norm_radius <- norm_rad2 - norm_rad1
-
-          norm_centerx <- (center_x - hic$chromstart)/(hic$chromend - hic$chromstart)
-          norm_centery <- (center_y - hic$chromstart)/(hic$chromend - hic$chromstart)
-
-          check1 <- checkCircle(a = -slope, b = 1, c = -normy, x = norm_centerx, y = norm_centery, radius = norm_radius)
-
-          if (check1 == TRUE){
-
-            warning("Loop annotation falls out of plotted region.", call. = FALSE)
-
-          }
-
-        } else if (type == "arrow"){
-
-          x0 <- as.numeric(loop[2]) - (0.5 * (as.numeric(loop[6]) - as.numeric(loop[5])))
-          y0 <- as.numeric(loop[6]) + (0.5 * (as.numeric(loop[6]) - as.numeric(loop[5])))
-          x1 <-  x0 - (shift * hic$resolution)
-          y1 <- y0 + (shift * hic$resolution)
-
-          check1 <- check_intersection(point1 = list(hic$chromstart, hic$chromend - attributes(hic)$choppedPixels*hic$resolution),
-                                       point2 = list(hic$chromstart + attributes(hic)$choppedPixels*hic$resolution, hic$chromend),
-                                       point3 = list(x0, y0), point4 = list(x1, y1))
-          if (check1 == TRUE){
-
-            warning("Loop annotation falls out of plotted region.", call. = FALSE)
-          }
-          norm_x0 <- (x0 - hic$chromstart)/(hic$chromend - hic$chromstart)
-          solve_val <- slope*norm_x0 + normy
-          norm_y0 <- (y0 - hic$chromstart)/(hic$chromend - hic$chromstart)
-          if (norm_y0 > solve_val){
-            warning("Loop annotation falls out of plotted region.", call. = FALSE)
-          }
-
-        }
-
-      }
-
-    }
-
-  }
-
   ## Define a function to add box annotation
   boxAnnotation <- function(df, hic, object, shift, half){
 
@@ -379,7 +200,6 @@ bb_annotateLoops <- function(hic, loops, half = "inherit", shift = 4, type = "bo
       rect1 <- rectGrob(x = center_x, y = center_y, width = side, height = side, default.units = "native",
                         gp = gpar(lty = object$gpar$lty, lwd = object$gpar$lwd, col = object$gpar$col, fill = NA))
 
-      grid.draw(rect1)
       assign("annotation_grobs", addGrob(gTree = get("annotation_grobs", envir = bbEnv), child = rect1), envir = bbEnv)
 
     } else if (half == "top"){
@@ -389,7 +209,6 @@ bb_annotateLoops <- function(hic, loops, half = "inherit", shift = 4, type = "bo
       rect1 <- rectGrob(x = center_x, y = center_y, width = side, height = side, default.units = "native",
                         gp = gpar(lty = object$gpar$lty, lwd = object$gpar$lwd, col = object$gpar$col, fill = NA))
 
-      grid.draw(rect1)
       assign("annotation_grobs", addGrob(gTree = get("annotation_grobs", envir = bbEnv), child = rect1), envir = bbEnv)
 
     } else if (half == "both"){
@@ -407,8 +226,6 @@ bb_annotateLoops <- function(hic, loops, half = "inherit", shift = 4, type = "bo
       rect2 <- rectGrob(x = center_x2, y = center_y2, width = side, height = side, default.units = "native",
                         gp = gpar(lty = object$gpar$lty, lwd = object$gpar$lwd, col = object$gpar$col, fill = NA))
 
-      grid.draw(rect1)
-      grid.draw(rect2)
       assign("annotation_grobs", addGrob(gTree = get("annotation_grobs", envir = bbEnv), child = rect1), envir = bbEnv)
       assign("annotation_grobs", addGrob(gTree = get("annotation_grobs", envir = bbEnv), child = rect2), envir = bbEnv)
 
@@ -428,7 +245,6 @@ bb_annotateLoops <- function(hic, loops, half = "inherit", shift = 4, type = "bo
       circ1 <- circleGrob(x = center_x, y = center_y, r = radius, default.units = "native",
                           gp = gpar(lty = object$gpar$lty, lwd = object$gpar$lwd, col = object$gpar$col, fill = NA))
 
-      grid.draw(circ1)
       assign("annotation_grobs", addGrob(gTree = get("annotation_grobs", envir = bbEnv), child = circ1), envir = bbEnv)
 
     } else if (half == "top"){
@@ -438,7 +254,6 @@ bb_annotateLoops <- function(hic, loops, half = "inherit", shift = 4, type = "bo
       circ1 <- circleGrob(x = center_x, y = center_y, r = radius, default.units = "native",
                           gp = gpar(lty = object$gpar$lty, lwd = object$gpar$lwd, col = object$gpar$col, fill = NA))
 
-      grid.draw(circ1)
       assign("annotation_grobs", addGrob(gTree = get("annotation_grobs", envir = bbEnv), child = circ1), envir = bbEnv)
 
     } else if (half == "both"){
@@ -456,8 +271,6 @@ bb_annotateLoops <- function(hic, loops, half = "inherit", shift = 4, type = "bo
       circ2 <- circleGrob(x = center_x2, y = center_y2, r = radius, default.units = "native",
                           gp = gpar(lty = object$gpar$lty, lwd = object$gpar$lwd, col = object$gpar$col, fill = NA))
 
-      grid.draw(circ1)
-      grid.draw(circ2)
       assign("annotation_grobs", addGrob(gTree = get("annotation_grobs", envir = bbEnv), child = circ1), envir = bbEnv)
       assign("annotation_grobs", addGrob(gTree = get("annotation_grobs", envir = bbEnv), child = circ2), envir = bbEnv)
 
@@ -477,7 +290,6 @@ bb_annotateLoops <- function(hic, loops, half = "inherit", shift = 4, type = "bo
                    arrow = arrow(length = unit(0.1, "inches"), ends = "first", type = "closed"), default.units = "native",
                    gp = gpar(lty = object$gpar$lty, lwd = object$gpar$lwd, fill = object$gpar$col))
 
-     grid.draw(arrow1)
      assign("annotation_grobs", addGrob(gTree = get("annotation_grobs", envir = bbEnv), child = arrow1), envir = bbEnv)
 
     } else if (half == "top"){
@@ -489,7 +301,6 @@ bb_annotateLoops <- function(hic, loops, half = "inherit", shift = 4, type = "bo
                     arrow = arrow(length = unit(0.1, "inches"), ends = "first", type = "closed"), default.units = "native",
                     gp = gpar(lty = object$gpar$lty, lwd = object$gpar$lwd, fill = object$gpar$col))
 
-      grid.draw(arrow1)
       assign("annotation_grobs", addGrob(gTree = get("annotation_grobs", envir = bbEnv), child = arrow1), envir = bbEnv)
 
     } else if (half == "both"){
@@ -509,8 +320,6 @@ bb_annotateLoops <- function(hic, loops, half = "inherit", shift = 4, type = "bo
                     arrow = arrow(length = unit(0.1, "inches"), ends = "first", type = "closed"), default.units = "native",
                     gp = gpar(lty = object$gpar$lty, lwd = object$gpar$lwd, fill = object$gpar$col))
 
-      grid.draw(arrow1)
-      grid.draw(arrow2)
       assign("annotation_grobs", addGrob(gTree = get("annotation_grobs", envir = bbEnv), child = arrow1), envir = bbEnv)
       assign("annotation_grobs", addGrob(gTree = get("annotation_grobs", envir = bbEnv), child = arrow2), envir = bbEnv)
 
@@ -571,11 +380,6 @@ bb_annotateLoops <- function(hic, loops, half = "inherit", shift = 4, type = "bo
 
   loops_subset <- subset_loops(loops = loops, object = loop_annot)
 
-  # ======================================================================================================================================================================================
-  # CHECK THE ANNOTATION LIMITS OF THE LOOPS
-  # ======================================================================================================================================================================================
-
-  invisible(apply(loops_subset, 1, annot_limits, hic = hic, shift = shift, type = type))
 
   # ======================================================================================================================================================================================
   # VIEWPORTS
@@ -597,17 +401,19 @@ bb_annotateLoops <- function(hic, loops, half = "inherit", shift = 4, type = "bo
                    name = vp_name)
   } else if (class(hic) == "bb_trianglehic"){
 
-    vp <- viewport(height = hic$grobs$vp$height, width = hic$grobs$vp$width,
-                   x = hic$grobs$vp$x, y = hic$grobs$vp$y,
+
+    width <- convertUnit(hic$outsideVP$width, unitTo = get("page_units", bbEnv), valueOnly = T)
+
+    vp <- viewport(height = unit(width/sqrt(two), get("page_units", bbEnv)), width = unit(width/sqrt(two), get("page_units", bbEnv)),
+                   x = hic$outsideVP$x, y = hic$outsideVP$y,
                    xscale = hic$grobs$vp$xscale,
                    yscale = hic$grobs$vp$yscale,
-                   just = hic$grobs$vp$justification,
+                   just = hic$outsideVP$justification,
                    name = vp_name,
                    angle = -45)
 
   }
 
-  pushViewport(vp)
 
   # ======================================================================================================================================================================================
   # INITIALIZE GTREE OF GROBS
@@ -619,22 +425,27 @@ bb_annotateLoops <- function(hic, loops, half = "inherit", shift = 4, type = "bo
   # PLOT
   # ======================================================================================================================================================================================
 
-  if (type == "box"){
+  if (nrow(loops_subset) > 0){
 
-    invisible(apply(loops_subset, 1, boxAnnotation, hic = hic, object = loop_annot, shift = shift, half = half))
+    if (type == "box"){
 
-  } else if (type == "circle"){
+      invisible(apply(loops_subset, 1, boxAnnotation, hic = hic, object = loop_annot, shift = shift, half = half))
 
-    invisible(apply(loops_subset, 1, circleAnnotation, hic = hic, object = loop_annot, shift = shift, half = half))
+    } else if (type == "circle"){
 
-  } else if (type == "arrow"){
+      invisible(apply(loops_subset, 1, circleAnnotation, hic = hic, object = loop_annot, shift = shift, half = half))
 
-    invisible(apply(loops_subset, 1, arrowAnnotation, hic = hic, object = loop_annot, shift = shift, half = half))
+    } else if (type == "arrow"){
 
+      invisible(apply(loops_subset, 1, arrowAnnotation, hic = hic, object = loop_annot, shift = shift, half = half))
+
+    }
+
+  } else {
+
+    warning("No loops found in region.", call. = FALSE)
   }
 
-  ## Go back to root viewport
-  upViewport()
 
   # ======================================================================================================================================================================================
   # ADD GROBS TO OBJECT
@@ -642,6 +453,7 @@ bb_annotateLoops <- function(hic, loops, half = "inherit", shift = 4, type = "bo
 
   loop_annot$grobs <- get("annotation_grobs", envir = bbEnv)
   grid.draw(loop_annot$grobs)
+
   # ======================================================================================================================================================================================
   # RETURN OBJECT
   # ======================================================================================================================================================================================

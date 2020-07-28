@@ -585,7 +585,7 @@ bb_plotTriangleHic <- function(hic, chrom, chromstart = NULL, chromend = NULL, r
 
   hic_plot <- structure(list(chrom = chrom, chromstart = chromstart, chromend = chromend, x = x, y = y, width = width, height = height, justification = NULL,
                              zrange = zrange, altchrom = chrom, altchromstart = chromstart, altchromend = chromend, resolution = resolution,
-                             color_palette = NULL, grobs = NULL, assembly = assembly), class = "bb_trianglehic")
+                             color_palette = NULL, grobs = NULL, outsideVP = NULL, assembly = assembly), class = "bb_trianglehic")
   attr(x = hic_plot, which = "plotted") <- draw
 
   # ======================================================================================================================================================================================
@@ -739,6 +739,7 @@ bb_plotTriangleHic <- function(hic, chrom, chromstart = NULL, chromend = NULL, r
   # INITIALIZE GTREE FOR GROBS
   # ======================================================================================================================================================================================
 
+  hic_plot$outsideVP <- outside_vp
   assign("hic_grobs2", gTree(vp = inside_vp), envir = bbEnv)
 
   # ======================================================================================================================================================================================
