@@ -120,7 +120,7 @@ bb_plotSignal <- function(signal, chrom, chromstart = NULL, chromend = NULL, ran
 
   }
 
-## Define a function that reads in signal data for bb_plotSignal
+  ## Define a function that reads in signal data for bb_plotSignal
   read_signal <- function(signal, signaltrack){
 
     ## if .bw file, read in with bb_readBigwig
@@ -298,6 +298,49 @@ bb_plotSignal <- function(signal, chrom, chromstart = NULL, chromend = NULL, ran
 
   }
 
+  ## Define a function that finds data that falls out of the plot's range and draws a tiny black line to indicate it
+  cutoffGrobs <- function(signal, signaltrack, side){
+
+    grobCutoffs <- function(df, side){
+
+      x0 <- df[1]
+      x1 <- df[2]
+
+      if (side == "top"){
+        y <- 1
+      } else {
+        y <- 0
+      }
+
+      cutoffGrob <- segmentsGrob(x0 = x0, x1 = x1, y0 = unit(y, "npc"), y1 = unit(y, "npc"),
+                                 gp = gpar(lwd = 2),
+                                 default.units = "native")
+      assign("signal_grobs", addGrob(gTree = get("signal_grobs", envir = bbEnv), child = cutoffGrob), envir = bbEnv)
+
+    }
+
+    if (side == "top"){
+      outsideData <- which(signal[,2] > signaltrack$range[2])
+    } else {
+      outsideData <- which(signal[,2] < signaltrack$range[1])
+    }
+
+    ## Get index pairs of outside data
+    outsidePairs <- as.integer(outsideData + 1)
+    ## Combine and order
+    Outsidei <- c(outsideData, outsidePairs)
+    Outsidei <- Outsidei[order(Outsidei)]
+    ## Get xcoords
+    Outside <- signal[Outsidei,1]
+    ## x0s are odd indeces and x1s are even
+    x0s <- Outside[c(TRUE, FALSE)]
+    x1s <- Outside[c(FALSE, TRUE)]
+    pairs <- data.frame("x0" = x0s, "x1" = x1s)
+
+    invisible(apply(pairs, 1, grobCutoffs, side = side))
+
+  }
+
   # ======================================================================================================================================================================================
   # INITIALIZE OBJECT
   # ======================================================================================================================================================================================
@@ -320,7 +363,6 @@ bb_plotSignal <- function(signal, chrom, chromstart = NULL, chromend = NULL, ran
   # ======================================================================================================================================================================================
 
   signal_track <- defaultUnits(object = signal_track, default.units = default.units)
-
 
   # ======================================================================================================================================================================================
   # WHOLE CHROM
@@ -428,7 +470,6 @@ bb_plotSignal <- function(signal, chrom, chromstart = NULL, chromend = NULL, ran
 
   }
 
-
   # ======================================================================================================================================================================================
   # VIEWPORTS
   # ======================================================================================================================================================================================
@@ -489,6 +530,9 @@ bb_plotSignal <- function(signal, chrom, chromstart = NULL, chromend = NULL, ran
 
     if (nrow(posSignal) >= 2){
       sigGrob(signal = posSignal2, fillCol = fills[[1]], lineCol = lines[[1]], lwd = signal_track$lwd, transparency = transparency)
+      ## Find and make cutoff lines
+      cutoffGrobs(signal = posSignal2, signaltrack = signal_track, side = "top")
+
     } else {
       posGrob <- segmentsGrob(x0 = 0, y0 = 0, x1 = 1, y1 = 0, gp = gpar(col = lines[[1]], lwd = signal_track$lwd))
       assign("signal_grobs", addGrob(gTree = get("signal_grobs", envir = bbEnv), child = posGrob), envir = bbEnv)
@@ -498,6 +542,8 @@ bb_plotSignal <- function(signal, chrom, chromstart = NULL, chromend = NULL, ran
 
     if (nrow(negSignal) >= 2){
       sigGrob(signal = negSignal2, fillCol = fills[[2]], lineCol = lines[[2]], lwd = signal_track$lwd, transparency = transparency)
+      ## Find and make cutoff lines
+      cutoffGrobs(signal = negSignal2, signaltrack = signal_track, side = "bottom")
     } else {
       negGrob <- segmentsGrob(x0 = 0, y0 = 0, x1 = 1, y1 = 0, gp = gpar(col = lines[[2]], lwd = signal_track$lwd))
       assign("signal_grobs", addGrob(gTree = get("signal_grobs", envir = bbEnv), child = negGrob), envir = bbEnv)
@@ -513,6 +559,8 @@ bb_plotSignal <- function(signal, chrom, chromstart = NULL, chromend = NULL, ran
     if (nrow(posSignal) >= 2){
       sigGrob(signal = posSignal2, fillCol = signal_track$fillcolor, lineCol = signal_track$linecolor,
               lwd = signal_track$lwd, transparency = transparency)
+      ## Find and make cutoff lines
+      cutoffGrobs(signal = posSignal2, signaltrack = signal_track, side = "top")
     } else {
       signalGrob <- segmentsGrob(x0 = 0, y0 = 0, x1 = 1, y1 = 0, gp = gpar(col = signal_track$linecolor, lwd = signal_track$lwd))
       assign("signal_grobs", addGrob(gTree = get("signal_grobs", envir = bbEnv), child = signalGrob), envir = bbEnv)
