@@ -33,8 +33,8 @@ bb_plotPileup <- function(bed, chrom, chromstart = NULL, chromend = NULL, assemb
   # FUNCTIONS
   # ======================================================================================================================================================================================
 
-  errorcheck_bb_plotpileup <- function(pileup_plot){
-
+  ## Define a function that catches errors
+  errorcheck_bb_plotpileup <- function(bed, pileup_plot, colorby){
 
     ## Can't have only one NULL chromstart or chromend
     if ((is.null(pileup_plot$chromstart) & !is.null(pileup_plot$chromend)) | (is.null(pileup_plot$chromend) & !is.null(pileup_plot$chromstart))){
@@ -56,12 +56,22 @@ bb_plotPileup <- function(bed, chrom, chromstart = NULL, chromend = NULL, assemb
 
     }
 
+    if (!is.null(colorby)){
+      if (!any(colnames(bed) == colorby)){
+        stop("Colorby column not found in data. Check colorby column name.", call. = FALSE)
+      }
+
+      if (length(which(colnames(bed) == colorby)) > 1){
+        stop("Multiple matching colorby columns found in data. Please provide colorby column name with only one occurrence.", call. = FALSE)
+      }
+    }
 
 
 
 
   }
 
+  ## Define a function that parses the yscale based on split strands
   strand_scale <- function(strandSplit, height){
 
     if (strandSplit == TRUE){
@@ -84,11 +94,10 @@ bb_plotPileup <- function(bed, chrom, chromstart = NULL, chromend = NULL, assemb
   attr(x = pileup_plot, which = "plotted") <- draw
 
   # ======================================================================================================================================================================================
-  # CATCH ERRORS
+  # CHECK PLACEMENT
   # ======================================================================================================================================================================================
 
   check_placement(object = pileup_plot)
-  errorcheck_bb_plotpileup(pileup_plot = pileup_plot)
 
   # ======================================================================================================================================================================================
   # PARSE UNITS
@@ -101,10 +110,16 @@ bb_plotPileup <- function(bed, chrom, chromstart = NULL, chromend = NULL, assemb
   # ======================================================================================================================================================================================
 
   if (!"data.frame" %in% class(bed)){
-
     bed <- as.data.frame(data.table::fread(bed))
-
+  } else {
+    bed <- as.data.frame(bed)
   }
+
+  # ======================================================================================================================================================================================
+  # CATCH ERRORS
+  # ======================================================================================================================================================================================
+
+  errorcheck_bb_plotpileup(bed = bed, pileup_plot = pileup_plot, colorby = colorby)
 
   # ======================================================================================================================================================================================
   # SUBSET DATA FOR CHROMOSOME AND ANY OVERLAPPING REGIONS
@@ -124,7 +139,7 @@ bb_plotPileup <- function(bed, chrom, chromstart = NULL, chromend = NULL, assemb
   bed <- bed[which(bed[,1] == pileup_plot$chrom & bed[,2] <= pileup_plot$chromend & bed[,3] >= pileup_plot$chromstart),]
 
   # ======================================================================================================================================================================================
-  # SGET COLORBY DATA
+  # SET COLORBY DATA
   # ======================================================================================================================================================================================
 
   if (!is.null(colorby)){
@@ -137,12 +152,12 @@ bb_plotPileup <- function(bed, chrom, chromstart = NULL, chromend = NULL, assemb
       bed$colorby <- as.numeric(colorbyCol)
     } else {
 
+      bed$colorby <- colorbyCol
       if (is.null(colorbyrange)){
-        colorbyrange <- c(min(bed$colorbyvalue), max(bed$colorbyvalue))
-        bed_plot$zrange <- colorbyrange
+        colorbyrange <- c(min(bed$colorby), max(bed$colorby))
+        pileup_plot$zrange <- colorbyrange
       }
 
-      bed$colorby <- colorbyCol
     }
 
   } else {
@@ -351,7 +366,7 @@ bb_plotPileup <- function(bed, chrom, chromstart = NULL, chromend = NULL, assemb
     } else {
 
       if (length(fillcolor) == 1){
-        rowDF$color <- fillcolor
+        rowDF$color <- rep(fillcolor, nrow(rowDF))
       } else {
 
         colors <- rep(fillcolor, ceiling(maxRows/length(fillcolor)))[1:maxRows]
@@ -368,6 +383,7 @@ bb_plotPileup <- function(bed, chrom, chromstart = NULL, chromend = NULL, assemb
 
       rowDF$color <- bb_maptocolors(rowDF$colorby, fillcolor, range = colorbyrange)
       sorted_colors <- unique(rowDF[order(rowDF$colorby),]$color)
+      pileup_plot$color_palette <- sorted_colors
 
     } else {
 
