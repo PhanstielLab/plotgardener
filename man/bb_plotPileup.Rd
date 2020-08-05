@@ -52,7 +52,7 @@ bb_plotPileup(
 
 \item{spaceHeight}{height of spacing between pileup element boxes, as a fraction of boxHeight}
 
-\item{spaceWidth}{width of spacing between pileup element boxes, as a fraction of the plot's genomic range}
+\item{spaceWidth}{width of minimum spacing between pileup element boxes, as a fraction of the plot's genomic range}
 
 \item{x}{A numeric or unit object specifying x-location}
 

@@ -12,7 +12,7 @@
 #' @param strandSplit logical indicating whether plus and minus-stranded elements should be separated
 #' @param boxHeight height of pileup element boxes, as a numeric value with default units or a unit value
 #' @param spaceHeight height of spacing between pileup element boxes, as a fraction of boxHeight
-#' @param spaceWidth width of spacing between pileup element boxes, as a fraction of the plot's genomic range
+#' @param spaceWidth width of minimum spacing between pileup element boxes, as a fraction of the plot's genomic range
 #' @param x A numeric or unit object specifying x-location
 #' @param y A numeric or unit object specifying y-location
 #' @param width A numeric or unit object specifying width
@@ -284,6 +284,9 @@ bb_plotPileup <- function(bed, chrom, chromstart = NULL, chromend = NULL, assemb
       rowDF$row <- rowDF$row - 1
       rowDF$width <- rowDF$stop - rowDF$start
       rowDF$y <- rowDF$row*(boxHeight + spaceHeight)
+
+      ## Reset row for colors
+      rowDF$row <- rowDF$row + 1
 
     } else {
       rowDF <- data.frame()

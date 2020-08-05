@@ -163,6 +163,25 @@ bb_plotGenes <- function(assembly = "hg19", chrom, chromstart = NULL, chromend =
 
   }
 
+  cutoffLabel <- function(df, fontsize, xscale, vp){
+
+    label <- df[1]
+    location <- df[2]
+
+    pushViewport(vp)
+    labelWidth <- convertWidth(widthDetails(textGrob(label = label, gp = gpar(fontsize = fontsize))), unitTo = "native", valueOnly = T)
+    upViewport()
+    leftBound <- as.numeric(location) - 0.5*labelWidth
+    rightBound <- as.numeric(location) + 0.5*labelWidth
+
+    if (leftBound < xscale[1] | rightBound > xscale[2]){
+      return(NA)
+    } else {
+      return(label)
+    }
+
+  }
+
   gene_priorities <- function(genes, geneOrder){
 
     ## Split list into the ones in geneOrder and the ones not
@@ -465,25 +484,49 @@ bb_plotGenes <- function(assembly = "hg19", chrom, chromstart = NULL, chromend =
 
   ## Grobs
   if (nrow(plus_genes) > 0){
-    plus_names <- textGrob(label = plus_genes$Gene,
-                           x = plus_genes$label, y = unit(0.85, "npc"),
-                           gp = gpar(col = plus_genes$fontColor, fontsize = fontsize),
-                           vp = vp_gene,
-                           default.units = "native",
-                           check.overlap = TRUE)
 
-    assign("gene_grobs", addGrob(get("gene_grobs", envir = bbEnv), child = plus_names), envir = bbEnv)
+    checkedplusLabels <- apply(data.frame("label" = plus_genes$Gene, "labelLoc" = plus_genes$label), 1, cutoffLabel, fontsize = fontsize,
+                           xscale = c(genes_plot$chromstart, genes_plot$chromend),
+                           vp = vp_gene)
+    plus_genes$Gene <- checkedplusLabels
+    plus_genes <- plus_genes[!is.na(plus_genes$Gene), ]
+
+    if (nrow(plus_genes) > 0){
+
+      plus_names <- textGrob(label = plus_genes$Gene,
+                             x = plus_genes$label, y = unit(0.85, "npc"),
+                             gp = gpar(col = plus_genes$fontColor, fontsize = fontsize),
+                             vp = vp_gene,
+                             default.units = "native",
+                             check.overlap = TRUE)
+
+      assign("gene_grobs", addGrob(get("gene_grobs", envir = bbEnv), child = plus_names), envir = bbEnv)
+
+    }
+
+
   }
 
   if (nrow(minus_genes) > 0){
 
-    minus_names <- textGrob(label = minus_genes$Gene,
-                            x = minus_genes$label, y = unit(0.15, "npc"),
-                            gp = gpar(col = minus_genes$fontColor, fontsize = fontsize),
-                            vp = vp_gene,
-                            default.units = "native",
-                            check.overlap = TRUE)
-    assign("gene_grobs", addGrob(get("gene_grobs", envir = bbEnv), child = minus_names), envir = bbEnv)
+    checkedminusLabels <- apply(data.frame("label" = minus_genes$Gene, "labelLoc" = minus_genes$label), 1, cutoffLabel, fontsize = fontsize,
+                               xscale = c(genes_plot$chromstart, genes_plot$chromend),
+                               vp = vp_gene)
+    minus_genes$Gene <- checkedminusLabels
+    minus_genes <- minus_genes[!is.na(minus_genes$Gene), ]
+
+    if(nrow(minus_genes) > 0){
+
+      minus_names <- textGrob(label = minus_genes$Gene,
+                              x = minus_genes$label, y = unit(0.15, "npc"),
+                              gp = gpar(col = minus_genes$fontColor, fontsize = fontsize),
+                              vp = vp_gene,
+                              default.units = "native",
+                              check.overlap = TRUE)
+      assign("gene_grobs", addGrob(get("gene_grobs", envir = bbEnv), child = minus_names), envir = bbEnv)
+
+    }
+
   }
 
   ##########################################################
