@@ -6,12 +6,15 @@
 #' @param width A unit object specifying width.
 #' @param height A unit object specifying height.
 #' @param just A string or numeric vector specifying the justification of the plot relative to its (x, y) location
+#' @param default.units A string indicating the default units to use if x, y, width, or height are only given as numeric vectors
+#' @param draw A logical value indicating whether graphics output should be produced
 #'
-#' @return Function will plot a HiC interaction matrix and return a bb_hicPlot object
+#' @return Function will update dimensions of an input plot and return an updated BentoBox plot object
 #'
 #'
 #' @export
-bb_placePlot <- function(plot, x = NULL, y = NULL, width = NULL, height = NULL, just = c("left", "top"), draw = T){
+bb_placePlot <- function(plot, x = NULL, y = NULL, width = NULL, height = NULL, just = c("left", "top"),
+                         default.units = "inches", draw = T){
 
   # ======================================================================================================================================================================================
   # FUNCTIONS
@@ -140,7 +143,6 @@ bb_placePlot <- function(plot, x = NULL, y = NULL, width = NULL, height = NULL, 
 
   }
 
-
   # ======================================================================================================================================================================================
   # INITIALIZE PLOT OBJECT COPY
   # ======================================================================================================================================================================================
@@ -148,8 +150,106 @@ bb_placePlot <- function(plot, x = NULL, y = NULL, width = NULL, height = NULL, 
   object <- plot
 
   # ======================================================================================================================================================================================
+  # PARSE UNITS FOR INPUTS
+  # ======================================================================================================================================================================================
+
+  if (!is.null(x)){
+
+    if (!"unit" %in% class(x)){
+
+      if (!is.numeric(x)){
+
+        warning("x-coordinate is neither a unit object or a numeric value. Cannot parse x-coordinate.", call. = FALSE)
+        x <- NULL
+
+      }
+
+      if (is.null(default.units)){
+
+        warning("x-coordinate detected as numeric.\'default.units\' must be specified.", call. = FALSE)
+        x <- NULL
+
+      }
+
+      x <- unit(x, default.units)
+
+    }
+  }
+
+  if (!is.null(y)){
+
+    if (!"unit" %in% class(y)){
+
+      if (!is.numeric(y)){
+
+        warning("y-coordinate is neither a unit object or a numeric value. Cannot parse y-coordinate.", call. = FALSE)
+        y <- NULL
+
+      }
+
+      if (is.null(default.units)){
+
+        warning("y-coordinate detected as numeric.\'default.units\' must be specified.", call. = FALSE)
+        y <- NULL
+
+      }
+
+      y <- unit(y, default.units)
+
+    }
+  }
+
+  if (!is.null(width)){
+
+    if (!"unit" %in% class(width)){
+
+      if (!is.numeric(width)){
+
+        warning("width is neither a unit object or a numeric value. Cannot parse width.", call. = FALSE)
+        width <- NULL
+
+      }
+
+      if (is.null(default.units)){
+
+        warning("width detected as numeric.\'default.units\' must be specified.", call. = FALSE)
+        width <- NULL
+
+      }
+
+      width <- unit(width, default.units)
+
+    }
+  }
+
+  if (!is.null(height)){
+
+    if (!"unit" %in% class(height)){
+
+      if (!is.numeric(height)){
+
+        warning("height is neither a unit object or a numeric value. Cannot parse height.", call. = FALSE)
+        height <- NULL
+
+
+      }
+
+      if (is.null(default.units)){
+
+        warning("height detected as numeric.\'default.units\' must be specified.", call. = FALSE)
+        height <- NULL
+
+      }
+
+      height <- unit(height, default.units)
+
+    }
+  }
+
+  # ======================================================================================================================================================================================
   # UPDATE DIMENSIONS AND COORDINATES OF PLOT OBJECT BASED ON INPUTS
   # ======================================================================================================================================================================================
+
   object <- set_values(object = object, x = x, y = y, width = width, height = height)
   object$justification <- just
   attr(x = object, which = "plotted") <- draw
@@ -171,8 +271,8 @@ bb_placePlot <- function(plot, x = NULL, y = NULL, width = NULL, height = NULL, 
   # ======================================================================================================================================================================================
 
   ## Get viewport name
-  current_viewports <- lapply(current.vpTree()$children$bb_page$children, viewport_name)
-  vp_name <- paste0(gsub(pattern = "[0-9]", replacement = "", x = object$grobs$vp$name), length(grep(pattern = gsub(pattern = "[0-9]", replacement = "", x = object$grobs$vp$name), x = current_viewports)) + 1)
+  currentViewports <- current_viewports()
+  vp_name <- paste0(gsub(pattern = "[0-9]", replacement = "", x = object$grobs$vp$name), length(grep(pattern = gsub(pattern = "[0-9]", replacement = "", x = object$grobs$vp$name), x = currentViewports)) + 1)
 
 
   ## If full placing information isn't provided but plot == TRUE, set up it's own viewport separate from bb_makepage
@@ -189,7 +289,7 @@ bb_placePlot <- function(plot, x = NULL, y = NULL, width = NULL, height = NULL, 
     if (draw == TRUE){
 
       grid.newpage()
-      warning("Plot placement will only fill up the graphical device.")
+      warning("Plot placement will only fill up the graphical device.", call. = FALSE)
 
     }
 

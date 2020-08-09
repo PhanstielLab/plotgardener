@@ -1,8 +1,8 @@
-#' plots an Apa plot
+#' plots an APA plot
 #' @param apa path to APA txt file or an APA matrix
 #' @param loopNumber number of DNA loops
 #' @param palette ColorRamp palette to use for representing interaction scores
-#' @param zrangethe range of interaction scores to plot, where extreme values will be set to the max or min
+#' @param zrange the range of interaction scores to plot, where extreme values will be set to the max or min
 #' @param x A numeric or unit object specifying x-location
 #' @param y A numeric or unit object specifying y-location
 #' @param width A numeric or unit object specifying width
@@ -163,11 +163,6 @@ bb_plotApa <- function(apa, loopNumber = 1, palette = colorRampPalette(c("white"
     sorted_colors <- bb_maptocolors(unique(data[order(data)]), col = palette, num = 100, range = apa_plot$zrange)
     apa_plot$color_palette <- sorted_colors
 
-  } else {
-
-    ## If we still have a null zrange or a length(unique(zrange)) == 1, means we couldn't do it in setzrange above (empty data or data with only 1 value)
-    warning("Can't scale data to colors.")
-
   }
 
   # ======================================================================================================================================================================================
@@ -175,8 +170,8 @@ bb_plotApa <- function(apa, loopNumber = 1, palette = colorRampPalette(c("white"
   # ======================================================================================================================================================================================
 
   ## Get viewport name
-  current_viewports <- lapply(current.vpTree()$children$bb_page$children, viewport_name)
-  vp_name <- paste0("bb_apa", length(grep(pattern = "bb_apa", x = current_viewports)) + 1)
+  currentViewports <- current_viewports()
+  vp_name <- paste0("bb_apa", length(grep(pattern = "bb_apa", x = currentViewports)) + 1)
 
   ## If placing information is provided but plot == TRUE, set up it's own viewport separate from bb_makepage
   ## Not translating into page_coordinates
@@ -189,6 +184,7 @@ bb_plotApa <- function(apa, loopNumber = 1, palette = colorRampPalette(c("white"
 
     if (draw == TRUE){
 
+      vp$name <- "bb_apa1"
       grid.newpage()
 
     }

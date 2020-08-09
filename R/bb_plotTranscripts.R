@@ -485,26 +485,44 @@ bb_plotTranscripts <- function(assembly = "hg19", chrom, chromstart = NULL, chro
 
   if (nrow(rowData) > 0){
 
-    ##########################################################
-    ## TRANSCRIPT LINES
-    ##########################################################
 
-    transcriptLine <- rectGrob(x = rowData$Start,
-                               y = rowData$y + 0.5*boxHeight,
-                               width = rowData$width,
-                               height = boxHeight*0.2,
-                               just = "left",
-                               gp = gpar(fill = rowData$color, col = makeTransparent(rowData$color, alpha = 0.5), lwd = stroke, alpha = 0.5),
-                               default.units = "native")
+    if ((transcript_plot$chromend - transcript_plot$chromstart) >= 25000000){
+
+      ##########################################################
+      ## JUST TRANSCRIPT LINES
+      ##########################################################
+
+      transcriptLine <- rectGrob(x = rowData$Start,
+                                 y = rowData$y,
+                                 width = rowData$width,
+                                 height = boxHeight,
+                                 just = c("left", "bottom"),
+                                 gp = gpar(fill = rowData$color, col = rowData$color, lwd = stroke, alpha = 0.5),
+                                 default.units = "native")
+
+    } else {
+
+      ##########################################################
+      ## TRANSCRIPT LINES, EXONS, AND UTRS
+      ##########################################################
+
+      transcriptLine <- rectGrob(x = rowData$Start,
+                                 y = rowData$y + 0.5*boxHeight,
+                                 width = rowData$width,
+                                 height = boxHeight*0.2,
+                                 just = "left",
+                                 gp = gpar(fill = rowData$color, col = makeTransparent(rowData$color, alpha = 0.5), lwd = stroke, alpha = 0.5),
+                                 default.units = "native")
+
+
+      invisible(apply(rowData, 1, exon_grobs, boxHeight = boxHeight))
+      invisible(apply(rowData, 1, utr_grobs, boxHeight = boxHeight))
+
+
+    }
 
     assign("transcript_grobs", addGrob(get("transcript_grobs", envir = bbEnv), child = transcriptLine), envir = bbEnv)
 
-    ##########################################################
-    ## TRANSCRIPT EXONS AND UTRS
-    ##########################################################
-
-    invisible(apply(rowData, 1, exon_grobs, boxHeight = boxHeight))
-    invisible(apply(rowData, 1, utr_grobs, boxHeight = boxHeight))
 
     ##########################################################
     ## TRANSCRIPT NAME LABELS

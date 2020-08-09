@@ -2,7 +2,7 @@
 % Please edit documentation in R/bb_plotApa.R
 \name{bb_plotApa}
 \alias{bb_plotApa}
-\title{plots an Apa plot}
+\title{plots an APA plot}
 \usage{
 bb_plotApa(
   apa,
@@ -25,6 +25,8 @@ bb_plotApa(
 
 \item{palette}{ColorRamp palette to use for representing interaction scores}
 
+\item{zrange}{the range of interaction scores to plot, where extreme values will be set to the max or min}
+
 \item{x}{A numeric or unit object specifying x-location}
 
 \item{y}{A numeric or unit object specifying y-location}
@@ -38,9 +40,7 @@ bb_plotApa(
 \item{default.units}{A string indicating the default units to use if x, y, width, or height are only given as numeric vectors}
 
 \item{draw}{A logical value indicating whether graphics output should be produced}
-
-\item{zrangethe}{range of interaction scores to plot, where extreme values will be set to the max or min}
 }
 \description{
-plots an Apa plot
+plots an APA plot
 }

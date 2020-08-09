@@ -11,6 +11,7 @@ bb_placePlot(
   width = NULL,
   height = NULL,
   just = c("left", "top"),
+  default.units = "inches",
   draw = T
 )
 }
@@ -26,9 +27,13 @@ bb_placePlot(
 \item{height}{A unit object specifying height.}
 
 \item{just}{A string or numeric vector specifying the justification of the plot relative to its (x, y) location}
+
+\item{default.units}{A string indicating the default units to use if x, y, width, or height are only given as numeric vectors}
+
+\item{draw}{A logical value indicating whether graphics output should be produced}
 }
 \value{
-Function will plot a HiC interaction matrix and return a bb_hicPlot object
+Function will update dimensions of an input plot and return an updated BentoBox plot object
 }
 \description{
 places a plot that has been previously created but not drawn
