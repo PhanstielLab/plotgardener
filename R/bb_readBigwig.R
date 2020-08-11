@@ -29,7 +29,7 @@ bb_readBigwig <- function(filename, chrom = NULL, chromstart = 1, chromend = .Ma
 
 
   if(!is.null(chrom)) {
-    as.data.frame(rtracklayer::import.bw(filename, which=GRanges(paste0(chrom, ':', chromstart, '-', chromend, ':', strand))))
+    as.data.frame(rtracklayer::import.bw(filename, which=GenomicRanges::GRanges(paste0(chrom, ':', chromstart, '-', chromend, ':', strand))))
   } else {
     as.data.frame(rtracklayer::import.bw(filename))
   }
