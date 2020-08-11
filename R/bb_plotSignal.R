@@ -376,6 +376,7 @@ bb_plotSignal <- function(signal, chrom, chromstart = NULL, chromend = NULL, ran
     signal_track$chromstart <- 1
     signal_track$chromend <- genome[which(genome$chrom == chrom),]$length
 
+
   }
 
   # ======================================================================================================================================================================================
