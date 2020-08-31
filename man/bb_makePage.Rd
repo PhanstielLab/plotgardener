@@ -5,6 +5,7 @@
 \title{Makes a page for a BentoBox layout}
 \usage{
 bb_makePage(
+  params = NULL,
   width = 8.5,
   height = 11,
   default.units = "inches",
@@ -15,6 +16,8 @@ bb_makePage(
 )
 }
 \arguments{
+\item{params}{an optional "bb_params" object space containing relevant function parameters}
+
 \item{width}{A numeric specifying width}
 
 \item{height}{A numeric ospecifying height}

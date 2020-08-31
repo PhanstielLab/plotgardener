@@ -4,10 +4,12 @@
 \alias{bb_hGuide}
 \title{draws a horizontal guideline at a specified y-coordinate}
 \usage{
-bb_hGuide(y, col = "grey55", default.units = "inches")
+bb_hGuide(y, params = NULL, col = "grey55", default.units = "inches", ...)
 }
 \arguments{
 \item{y}{A numeric or unit object specifying y-coordinate of guide}
+
+\item{params}{an optional "bb_params" object space containing relevant function parameters}
 
 \item{col}{color of guideline}
 
