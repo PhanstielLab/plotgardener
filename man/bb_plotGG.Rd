@@ -10,6 +10,7 @@ bb_plotGG(
   y,
   width,
   height,
+  params = NULL,
   just = c("left", "top"),
   default.units = "inches"
 )
@@ -24,6 +25,8 @@ bb_plotGG(
 \item{width}{A numeric or unit object specifying width.}
 
 \item{height}{A numeric or unit object specifying height.}
+
+\item{params}{an optional "bb_params" object space containing relevant function parameters}
 
 \item{just}{A string or numeric vector specifying the justification of the plot relative to its (x, y) location}
 
