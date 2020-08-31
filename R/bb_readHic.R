@@ -1,8 +1,8 @@
 #' extracts HiC data from .hic file using Straw
 #'
-#'
 #' @param hic path to .hic file
 #' @param chrom chromosome of desired region
+#' @param params an optional "bb_params" object space containing relevant function parameters
 #' @param chromstart start position
 #' @param chromend end position
 #' @param resolution the width of each pixel; "auto" will attempt to choose a resolution (in basepairs) based on the size of the region
@@ -18,7 +18,7 @@
 #'
 #' @export
 
-bb_readHic <- function(hic, chrom, chromstart = NULL, chromend = NULL, resolution = "auto", zrange = NULL,
+bb_readHic <- function(hic, chrom, params = NULL, chromstart = NULL, chromend = NULL, resolution = "auto", zrange = NULL,
                        norm = "KR", res_scale = "BP", assembly = "hg19", altchrom = NULL, altchromstart = NULL, altchromend = NULL){
 
 
@@ -236,28 +236,56 @@ bb_readHic <- function(hic, chrom, chromstart = NULL, chromend = NULL, resolutio
   }
 
   # ======================================================================================================================================================================================
-  # CATCH ERRORS
+  # PARSE PARAMETERS
   # ======================================================================================================================================================================================
 
-  errorcheck_bb_rhic(hic = hic, chromstart = chromstart, chromend = chromend, zrange = zrange, altchrom = altchrom, altchromstart = altchromstart,
-                     altchromend = altchromend, norm = norm, res_scale = res_scale)
+  ## Check which defaults are not overwritten and set to NULL
+  if(missing(resolution)) resolution <- NULL
+  if(missing(norm)) norm <- NULL
+  if(missing(res_scale)) res_scale <- NULL
+  if(missing(assembly)) assembly <- NULL
+
+  ## Check if hic/chrom arguments are missing (could be in object)
+  if(!hasArg(hic)) hic <- NULL
+  if(!hasArg(chrom)) chrom <- NULL
+
+  ## Compile all parameters into an internal object
+  bb_rhic <- structure(list(hic = hic, chrom = chrom, chromstart = chromstart, chromend = chromend, resolution = resolution, zrange = zrange,
+                            norm = norm, res_scale = res_scale, assembly = assembly, altchrom = altchrom, altchromstart = altchromstart, altchromend = altchromend), class = "bb_rhic")
+
+  bb_rhic <- parseParams(bb_params = params, object_params = bb_rhic)
+
+  ## For any defaults that are still NULL, set back to default
+  if(is.null(bb_rhic$resolution)) bb_rhic$resolution <- "auto"
+  if(is.null(bb_rhic$norm)) bb_rhic$norm <- "KR"
+  if(is.null(bb_rhic$res_scale)) bb_rhic$res_scale <- "BP"
+  if(is.null(bb_rhic$assembly)) bb_rhic$assembly <- "hg19"
+
+  # ======================================================================================================================================================================================
+  # CATCH ERRORS
+  # ======================================================================================================================================================================================
+  if(is.null(bb_rhic$hic)) stop("argument \"hic\" is missing, with no default.", call. = FALSE)
+  if(is.null(bb_rhic$chrom)) stop("argument \"chrom\" is missing, with no default.", call. = FALSE)
+
+  errorcheck_bb_rhic(hic = bb_rhic$hic, chromstart = bb_rhic$chromstart, chromend = bb_rhic$chromend, zrange = bb_rhic$zrange, altchrom = bb_rhic$altchrom,
+                     altchromstart = bb_rhic$altchromstart, altchromend = bb_rhic$altchromend, norm = bb_rhic$norm, res_scale = bb_rhic$res_scale)
 
   # ======================================================================================================================================================================================
   # SET PARAMETERS
   # ======================================================================================================================================================================================
-  parse_chromstart <- chromstart
-  parse_chromend <- chromend
-  parse_altchromstart <- altchromstart
-  parse_altchromend <- altchromend
+  parse_chromstart <- bb_rhic$chromstart
+  parse_chromend <- bb_rhic$chromend
+  parse_altchromstart <- bb_rhic$altchromstart
+  parse_altchromend <- bb_rhic$altchromend
 
 
   ## For off diagonal plotting, grabbing whole symmetric region
-  if (!is.null(altchrom)){
+  if (!is.null(bb_rhic$altchrom)){
 
-    if (chrom == altchrom){
+    if (bb_rhic$chrom == bb_rhic$altchrom){
 
-      parse_chromstart <- min(chromstart, altchromstart)
-      parse_chromend <- max(chromend, altchromend)
+      parse_chromstart <- min(bb_rhic$chromstart, bb_rhic$altchromstart)
+      parse_chromend <- max(bb_rhic$chromend, bb_rhic$altchromend)
 
     }
 
@@ -267,21 +295,21 @@ bb_readHic <- function(hic, chrom, chromstart = NULL, chromend = NULL, resolutio
   # PARSE REGIONS
   # ======================================================================================================================================================================================
 
-  chromRegion <- parse_region(chrom = chrom, chromstart = parse_chromstart, chromend = parse_chromend, assembly = assembly)
+  chromRegion <- parse_region(chrom = bb_rhic$chrom, chromstart = parse_chromstart, chromend = parse_chromend, assembly = bb_rhic$assembly)
 
-  if (is.null(altchrom)){
+  if (is.null(bb_rhic$altchrom)){
 
     altchromRegion <- chromRegion
 
   } else {
 
-    if (chrom == altchrom){
+    if (bb_rhic$chrom == bb_rhic$altchrom){
 
       altchromRegion <- chromRegion
 
     } else {
 
-      altchromRegion <- parse_region(chrom = altchrom, chromstart = parse_altchromstart, chromend = parse_altchromend, assembly = assembly)
+      altchromRegion <- parse_region(chrom = bb_rhic$altchrom, chromstart = parse_altchromstart, chromend = parse_altchromend, assembly = bb_rhic$assembly)
 
     }
 
@@ -291,23 +319,23 @@ bb_readHic <- function(hic, chrom, chromstart = NULL, chromend = NULL, resolutio
   # ADJUST RESOLUTION
   # ======================================================================================================================================================================================
 
-  if (resolution == "auto"){
-    resolution <- auto_resolution(chromstart = chromstart, chromend = chromend)
-    res_scale <- "BP"
+  if (bb_rhic$resolution == "auto"){
+    bb_rhic$resolution <- auto_resolution(chromstart = bb_rhic$chromstart, chromend = bb_rhic$chromend)
+    bb_rhic$res_scale <- "BP"
   }
 
   # ======================================================================================================================================================================================
   # EXTRACT SPARSE UPPER TRIANGULAR USING STRAW
   # ======================================================================================================================================================================================
 
-  upper <- strawr::straw(norm, hic, toString(chromRegion), toString(altchromRegion), res_scale, resolution)
+  upper <- strawr::straw(bb_rhic$norm, bb_rhic$hic, toString(chromRegion), toString(altchromRegion), bb_rhic$res_scale, bb_rhic$resolution)
 
   # ======================================================================================================================================================================================
   # REORDER COLUMNS BASED ON CHROM/ALTCHROM INPUT
   # ======================================================================================================================================================================================
-  if (!is.null(altchrom)){
-    numberChrom <- as.numeric(gsub("chr|[A-Z]", "", chrom))
-    numberaltChrom <- as.numeric(gsub("chr|[A-Z]", "", altchrom))
+  if (!is.null(bb_rhic$altchrom)){
+    numberChrom <- as.numeric(gsub("chr|[A-Z]", "", bb_rhic$chrom))
+    numberaltChrom <- as.numeric(gsub("chr|[A-Z]", "", bb_rhic$altchrom))
 
     if (numberChrom > numberaltChrom){
 
@@ -322,13 +350,13 @@ bb_readHic <- function(hic, chrom, chromstart = NULL, chromend = NULL, resolutio
   # SCALE DATA WITH ZRANGE
   # ======================================================================================================================================================================================
 
-  scaled_data <- scale_data(upper = upper, zrange = zrange)
+  scaled_data <- scale_data(upper = upper, zrange = bb_rhic$zrange)
 
   # ======================================================================================================================================================================================
   # FORMAT DATA IN PROPER ORDER AND WITH LABELS
   # ======================================================================================================================================================================================
 
-  renamed_data <- rename_columns(upper = scaled_data, chrom = chrom, altchrom = altchrom)
+  renamed_data <- rename_columns(upper = scaled_data, chrom = bb_rhic$chrom, altchrom = bb_rhic$altchrom)
 
   # ======================================================================================================================================================================================
   # REMOVE NAN VALUES
@@ -344,6 +372,6 @@ bb_readHic <- function(hic, chrom, chromstart = NULL, chromend = NULL, resolutio
     warning("Warning: no data found in region.  Suggestions: check chromosome, check region.", call. = FALSE)
   }
 
-  message(paste("Read in hic file with", norm, "normalization at", resolution, res_scale, "resolution."))
+  message(paste("Read in hic file with", bb_rhic$norm, "normalization at", bb_rhic$resolution, bb_rhic$res_scale, "resolution."))
   return(renamed_data)
 }

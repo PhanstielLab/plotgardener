@@ -1,5 +1,7 @@
 #' plots an APA plot
+#'
 #' @param apa path to APA txt file or an APA matrix
+#' @param params an optional "bb_params" object space containing relevant function parameters
 #' @param loopNumber number of DNA loops
 #' @param palette ColorRamp palette to use for representing interaction scores
 #' @param zrange the range of interaction scores to plot, where extreme values will be set to the max or min
@@ -12,8 +14,8 @@
 #' @param draw A logical value indicating whether graphics output should be produced
 
 #' @export
-bb_plotApa <- function(apa, loopNumber = 1, palette = colorRampPalette(c("white", "dark red")), zrange = NULL, x = NULL, y = NULL, width = NULL, height = NULL, just = c("center"),
-                       default.units = "inches", draw = TRUE){
+bb_plotApa <- function(apa, params = NULL, loopNumber = 1, palette = colorRampPalette(c("white", "dark red")), zrange = NULL,
+                       x = NULL, y = NULL, width = NULL, height = NULL, just = c("center"), default.units = "inches", draw = TRUE){
 
   # ======================================================================================================================================================================================
   # FUNCTIONS
@@ -111,30 +113,60 @@ bb_plotApa <- function(apa, loopNumber = 1, palette = colorRampPalette(c("white"
   }
 
   # ======================================================================================================================================================================================
+  # PARSE PARAMETERS
+  # ======================================================================================================================================================================================
+
+  ## Check which defaults are not overwritten and set to NULL
+  if(missing(loopNumber)) loopNumber <- NULL
+  if(missing(palette)) palette <- NULL
+  if(missing(just)) just <- NULL
+  if(missing(default.units)) default.units <- NULL
+  if(missing(draw)) draw <- NULL
+
+  ## Check if apa argument is missing (could be in object)
+  if(!hasArg(apa)) apa <- NULL
+
+  ## Compile all parameters into an internal object
+  bb_apaInternal <- structure(list(apa = apa, loopNumber = loopNumber, palette = palette, zrange = zrange,
+                                   x = x, y = y, width = width, just = just, default.units = default.units, draw = draw), class = "bb_apaInternal")
+
+  bb_apaInternal <- parseParams(bb_params = params, object_params = bb_apaInternal)
+
+  ## For any defaults that are still NULL, set back to default
+  if(is.null(bb_apaInternal$loopNumber)) bb_apaInternal$loopNumber <- 1
+  if(is.null(bb_apaInternal$palette)) bb_apaInternal$palette <- colorRampPalette(c("white", "dark red"))
+  if(is.null(bb_apaInternal$just)) bb_apaInternal$just <- c("center")
+  if(is.null(bb_apaInternal$default.units)) bb_apaInternal$default.units <- "inches"
+  if(is.null(bb_apaInternal$draw)) bb_apaInternal$draw <- TRUE
+
+  # ======================================================================================================================================================================================
   # INITIALIZE OBJECT
   # ======================================================================================================================================================================================
 
-  apa_plot <- structure(list(x = x, y = y, width = width, height = height, justification = just,
-                             zrange = zrange, color_palette = NULL, grobs = NULL), class = "bb_apa")
+  apa_plot <- structure(list(x = bb_apaInternal$x, y = bb_apaInternal$y, width = bb_apaInternal$width, height = bb_apaInternal$height, justification = bb_apaInternal$just,
+                             zrange = bb_apaInternal$zrange, color_palette = NULL, grobs = NULL), class = "bb_apa")
+  attr(x = apa_plot, which = "plotted") <- bb_apaInternal$draw
 
   # ======================================================================================================================================================================================
   # CATCH ERRORS
   # ======================================================================================================================================================================================
 
+  if(is.null(bb_apaInternal$apa)) stop("argument \"apa\" is missing, with no default.", call. = FALSE)
+
   check_placement(object = apa_plot)
-  errorcheck_bb_plotApa(apa = apa, apa_plot = apa_plot)
+  errorcheck_bb_plotApa(apa = bb_apaInternal$apa, apa_plot = apa_plot)
 
   # ======================================================================================================================================================================================
   # PARSE UNITS
   # ======================================================================================================================================================================================
 
-  apa_plot <- defaultUnits(object = apa_plot, default.units = default.units)
+  apa_plot <- defaultUnits(object = apa_plot, default.units = bb_apaInternal$default.units)
 
   # ======================================================================================================================================================================================
   # READ IN DATA
   # ======================================================================================================================================================================================
 
-  data <- read_apa(apa = apa)
+  data <- read_apa(apa = bb_apaInternal$apa)
 
   # ======================================================================================================================================================================================
   # GET AVERAGE LOOP STRENGTH
@@ -142,7 +174,7 @@ bb_plotApa <- function(apa, loopNumber = 1, palette = colorRampPalette(c("white"
 
   ## Set scale to 0; divide aggregate values by number of loops to get average loop strength
   data <- data - min(data)
-  data <- data/loopNumber
+  data <- data/bb_apaInternal$loopNumber
 
   # ======================================================================================================================================================================================
   # SET ZRANGE AND SCALE DATA
@@ -155,14 +187,15 @@ bb_plotApa <- function(apa, loopNumber = 1, palette = colorRampPalette(c("white"
   # ======================================================================================================================================================================================
   # CONVERT NUMBERS TO COLORS
   # ======================================================================================================================================================================================
-
   ## if we don't have an appropriate zrange (even after setting it based on a null zrange), can't scale to colors
   if (!is.null(apa_plot$zrange) & length(unique(apa_plot$zrange)) == 2){
 
-    colors <- matrix(bb_maptocolors(data, col = palette, num = 100, range = apa_plot$zrange), nrow = 21, ncol = 21)
-    sorted_colors <- bb_maptocolors(unique(data[order(data)]), col = palette, num = 100, range = apa_plot$zrange)
+    colors <- matrix(bb_maptocolors(data, col = bb_apaInternal$palette, num = 100, range = apa_plot$zrange), nrow = 21, ncol = 21)
+    sorted_colors <- bb_maptocolors(unique(data[order(data)]), col = bb_apaInternal$palette, num = 100, range = apa_plot$zrange)
     apa_plot$color_palette <- sorted_colors
 
+  } else {
+    colors <- NULL
   }
 
   # ======================================================================================================================================================================================
@@ -175,14 +208,14 @@ bb_plotApa <- function(apa, loopNumber = 1, palette = colorRampPalette(c("white"
 
   ## If placing information is provided but plot == TRUE, set up it's own viewport separate from bb_makepage
   ## Not translating into page_coordinates
-  if (is.null(x) & is.null(y)){
+  if (is.null(apa_plot$x) & is.null(apa_plot$y)){
 
     vp <- viewport(height = unit(1, "snpc"), width = unit(1, "snpc"),
                    x = unit(0.5, "npc"), y = unit(0.5, "npc"),
                    just = "center",
                    name = vp_name)
 
-    if (draw == TRUE){
+    if (bb_apaInternal$draw == TRUE){
 
       vp$name <- "bb_apa1"
       grid.newpage()
@@ -197,33 +230,46 @@ bb_plotApa <- function(apa, loopNumber = 1, palette = colorRampPalette(c("white"
     ## Make viewport
     vp <- viewport(height = page_coords$height, width = page_coords$width,
                    x = page_coords$x, y = page_coords$y,
-                   just = just,
+                   just = bb_apaInternal$just,
                    name = vp_name)
   }
+
+  # ======================================================================================================================================================================================
+  # GTREE
+  # ======================================================================================================================================================================================
+
+  assign("apa_grobs", gTree(vp = vp), envir = bbEnv)
 
   # ======================================================================================================================================================================================
   # MAKE GROB
   # ======================================================================================================================================================================================
 
-  ## Make raster grob
-  apa_grob <- rasterGrob(colors, interpolate = F)
-  apa_grobs <- gTree(vp = vp, children = gList(apa_grob))
+  if (!is.null(colors)){
 
-  # ======================================================================================================================================================================================
-  # IF PLOT == TRUE, DRAW GROBS
-  # ======================================================================================================================================================================================
+    ## Make raster grob
+    apa_grob <- rasterGrob(colors, interpolate = F)
+    assign("apa_grobs", addGrob(gTree = get("apa_grobs", envir = bbEnv), child = apa_grob), envir = bbEnv)
 
-  if (draw == TRUE){
+  } else {
 
-    grid.draw(apa_grobs)
-
+    warning("APA data could not be plotted.", call. = FALSE)
   }
 
   # ======================================================================================================================================================================================
   # ADD GROBS TO OBJECT
   # ======================================================================================================================================================================================
 
-  apa_plot$grobs <- apa_grobs
+  apa_plot$grobs <- get("apa_grobs", envir = bbEnv)
+
+  # ======================================================================================================================================================================================
+  # IF PLOT == TRUE, DRAW GROBS
+  # ======================================================================================================================================================================================
+
+  if (bb_apaInternal$draw == TRUE){
+
+    grid.draw(apa_plot$grobs)
+
+  }
 
   # ======================================================================================================================================================================================
   # RETURN OBJECT

@@ -5,8 +5,10 @@
 \title{plots and highlights a chromosome with its cytobands}
 \usage{
 bb_plotKaryogram(
-  assembly = "hg19",
   chrom,
+  params = NULL,
+  assembly = "hg19",
+  orientation = "h",
   start = NULL,
   end = NULL,
   highlightCol = "red",
@@ -21,9 +23,13 @@ bb_plotKaryogram(
 )
 }
 \arguments{
+\item{chrom}{chromsome to plot}
+
+\item{params}{an optional "bb_params" object space containing relevant function parameters}
+
 \item{assembly}{desired genome assembly}
 
-\item{chrom}{chromsome to plot}
+\item{orientation}{"v" (vertical) or "h" (horizontal) orientation}
 
 \item{start}{highlight start}
 

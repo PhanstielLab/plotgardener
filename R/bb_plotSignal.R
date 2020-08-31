@@ -2,16 +2,15 @@
 #'
 #' @param signal signal track data to be plotted (bigwig file, bedgraph format dataframe, or bedgraph); can be one or a list of two
 #' @param chrom chromosome of region to be plotted as a string (i.e. "chr3")
+#' @param params an optional "bb_params" object space containing relevant function parameters
 #' @param chromstart start position
 #' @param chromend end position
 #' @param range y-range to plot (c(min, max))
 #' @param linecolor color(s) of line outlining signal track(s); if using fillcolor and no outline is desired, set to NA
-#' @param lwd linewidth of line outlining signal track
 #' @param binSize the length of each bin in bp
 #' @param binCap TRUE/FALSE whether the function will limit the number of bins to 8,000
 #' @param fillcolor color(s) filling in signal track(s)
 #' @param assembly desired genome assembly
-#' @param transparency numerical value for fillcolor transparency, if fillcolor is specified
 #' @param ymax fraction of max y-value to set as height of plot
 #' @param scale A logical value indicating whether to include a data scale label in the top left corner
 #' @param width A numeric or unit object specifying width
@@ -23,9 +22,9 @@
 #' @param draw A logical value indicating whether graphics output should be produced
 #'
 #' @export
-bb_plotSignal <- function(signal, chrom, chromstart = NULL, chromend = NULL, range = NULL, linecolor = "grey", lwd = 1,
-                          binSize = NA, binCap = TRUE, fillcolor = NULL, assembly = "hg19", transparency = 1, ymax = 1, scale = FALSE, width = NULL,
-                           height = NULL, x = NULL, y = NULL, just = c("left", "top"), default.units = "inches", draw = TRUE, ...  ){
+bb_plotSignal <- function(signal, chrom, params = NULL, chromstart = NULL, chromend = NULL, range = NULL, linecolor = "grey",
+                          binSize = NA, binCap = TRUE, fillcolor = NULL, assembly = "hg19", ymax = 1, scale = FALSE, width = NULL,
+                           height = NULL, x = NULL, y = NULL, just = c("left", "top"), default.units = "inches", draw = TRUE, ...){
 
   # ======================================================================================================================================================================================
   # FUNCTIONS
@@ -179,7 +178,7 @@ bb_plotSignal <- function(signal, chrom, chromstart = NULL, chromend = NULL, ran
       updated_binNum <- (signaltrack$chromend - signaltrack$chromstart)
       updated_binSize <- 1
       signaltrack$binNum <- updated_binNum
-      signaltrack$binSize <- updated_Size
+      signaltrack$binSize <- updated_binSize
       warning(paste0("Number of bins larger than plot length: adjusting to ", binNum, " bins of size 1."), call. = FALSE)
     }
 
@@ -262,6 +261,72 @@ bb_plotSignal <- function(signal, chrom, chromstart = NULL, chromend = NULL, ran
     return(newSignal)
   }
 
+  ## Define a function that adjusts the range
+  set_range <- function(signal1, signal2, signaltrack, split, pos = TRUE){
+
+    if (split == TRUE){
+
+      ## posSignal
+      if (pos == TRUE){
+
+        if (is.null(signaltrack$range)){
+
+          if (nrow(signal1) >= 2){
+
+            signaltrack$range[2] <- signaltrack$ymax * max(signal2[,2])
+
+          } else {
+
+            signaltrack$range[2] <- 1
+
+          }
+
+        }
+
+      }
+
+      ## negSignal
+      if (pos == FALSE){
+
+        if (is.na(signaltrack$range[1])){
+
+          if (nrow(signal1) >= 2){
+
+            signaltrack$range[1] <- signaltrack$ymax * min(signal2[,2])
+
+          } else {
+
+            signaltrack$range[1] <- -1
+
+          }
+
+        }
+
+      }
+
+
+    } else {
+
+      if (is.null(signaltrack$range)){
+
+        if (nrow(signal1) >= 2){
+
+          signaltrack$range <- c(0, signaltrack$ymax*max(signal2[,2]))
+
+        } else {
+
+          signaltrack$range <- c(0, 1)
+
+        }
+
+      }
+
+    }
+
+    return(signaltrack)
+
+  }
+
   ## Define a function that parses out one vs. two fillcolors/linecolors
   parseColors <- function(color){
 
@@ -278,17 +343,24 @@ bb_plotSignal <- function(signal, chrom, chromstart = NULL, chromend = NULL, ran
   }
 
   ## Define a function that makes a grob for a signal (pos/neg)
-  sigGrob <- function(signal, fillCol, lineCol, lwd, transparency){
+  sigGrob <- function(signal, fillCol, lineCol, gp){
 
+    gp$col <- lineCol
     if (!is.null(fillCol)){
 
-      finalcolor <- makeTransparent(color = fillCol, alpha = transparency)
-      sigGrob <- polygonGrob(x = signal[,1], y = signal[,2], gp = gpar(fill = finalcolor, lwd = lwd, col = lineCol), default.units = "native")
+      if ("alpha" %in% names(gp)){
+        fillCol <- makeTransparent(color = fillCol, alpha = gp$alpha)
+      }
+
+      gp$fill <- finalcolor
+
+
+      sigGrob <- polygonGrob(x = signal[,1], y = signal[,2], gp = gp, default.units = "native")
 
     } else {
 
       sigGrob <- segmentsGrob(x0 = signal[c(1:1-length(signal[,1])), 1], y0 = signal[c(1:1-length(signal[,2])), 2],
-                              x1 = signal[c(2:length(signal[,1])), 1], y1 = signal[c(2:length(signal[,2])), 2], gp = gpar(col = lineCol, lwd = lwd), default.units = "native")
+                              x1 = signal[c(2:length(signal[,1])), 1], y1 = signal[c(2:length(signal[,2])), 2], gp = gp, default.units = "native")
 
     }
 
@@ -342,39 +414,79 @@ bb_plotSignal <- function(signal, chrom, chromstart = NULL, chromend = NULL, ran
   }
 
   # ======================================================================================================================================================================================
+  # PARSE PARAMETERS
+  # ======================================================================================================================================================================================
+
+  ## Check which defaults are not overwritten and set to NULL
+  if(missing(linecolor)) linecolor <- NULL
+  if(missing(binSize)) binSize <- NULL
+  if(missing(binCap)) binCap <- NULL
+  if(missing(assembly)) assembly <- NULL
+  if(missing(ymax)) ymax <- NULL
+  if(missing(scale)) scale <- NULL
+  if(missing(just)) just <- NULL
+  if(missing(default.units)) default.units <- NULL
+  if(missing(draw)) draw <- NULL
+
+  ## Check if signal/chrom arguments are missing (could be in object)
+  if(!hasArg(signal)) signal <- NULL
+  if(!hasArg(chrom)) chrom <- NULL
+
+  ## Compile all parameters into an internal object
+  bb_sigInternal <- structure(list(signal = signal, chrom = chrom, chromstart = chromstart, chromend = chromend, range = range, linecolor = linecolor, binSize = binSize,
+                                   binCap = binCap, fillcolor = fillcolor, assembly = assembly, ymax = ymax, scale = scale, width = width, height = height,
+                                   x = x, y = y, just = just, default.units = default.units, draw = draw), class = "bb_sigInternal")
+
+  bb_sigInternal <- parseParams(bb_params = params, object_params = bb_sigInternal)
+
+  ## For any defaults that are still NULL, set back to default
+  if(is.null(bb_sigInternal$linecolor)) bb_sigInternal$linecolor <- "grey"
+  if(is.null(bb_sigInternal$binSize)) bb_sigInternal$binSize <- NA
+  if(is.null(bb_sigInternal$binCap)) bb_sigInternal$binCap <- TRUE
+  if(is.null(bb_sigInternal$assembly)) bb_sigInternal$assembly <- "hg19"
+  if(is.null(bb_sigInternal$ymax)) bb_sigInternal$ymax <- 1
+  if(is.null(bb_sigInternal$scale)) bb_sigInternal$scale <- FALSE
+  if(is.null(bb_sigInternal$just)) bb_sigInternal$just <- c("left", "top")
+  if(is.null(bb_sigInternal$default.units)) bb_sigInternal$default.units <- "inches"
+  if(is.null(bb_sigInternal$draw)) bb_sigInternal$draw <- TRUE
+
+  # ======================================================================================================================================================================================
   # INITIALIZE OBJECT
   # ======================================================================================================================================================================================
 
-  signal_track <- structure(list(chrom = chrom, chromstart = chromstart, chromend = chromend, range = range,
-                                  linecolor = linecolor, lwd = lwd, fillcolor = fillcolor,
-                                  binSize = binSize, binNum = NULL, ymax = ymax,
-                                  width = width, height = height, x = x, y = y, justification = just, grobs = NULL, assembly = "hg19"), class = "bb_signal")
-  attr(x = signal_track, which = "plotted") <- draw
+  signal_track <- structure(list(chrom = bb_sigInternal$chrom, chromstart = bb_sigInternal$chromstart, chromend = bb_sigInternal$chromend, range = bb_sigInternal$range,
+                                  binSize = bb_sigInternal$binSize, binNum = NULL, ymax = bb_sigInternal$ymax,
+                                  width = bb_sigInternal$width, height = bb_sigInternal$height, x = bb_sigInternal$x, y = bb_sigInternal$y,
+                                 justification = bb_sigInternal$just, grobs = NULL, assembly = bb_sigInternal$assembly), class = "bb_signal")
+  attr(x = signal_track, which = "plotted") <- bb_sigInternal$draw
 
   # ======================================================================================================================================================================================
   # CATCH ERRORS
   # ======================================================================================================================================================================================
 
+  if(is.null(bb_sigInternal$signal)) stop("argument \"signal\" is missing, with no default.", call. = FALSE)
+  if(is.null(bb_sigInternal$chrom)) stop("argument \"chrom\" is missing, with no default.", call. = FALSE)
+
   check_placement(object = signal_track)
-  errorcheck_bb_signaltrack(signal = signal, signaltrack = signal_track)
+  errorcheck_bb_signaltrack(signal = bb_sigInternal$signal, signaltrack = signal_track)
 
   # ======================================================================================================================================================================================
   # PARSE UNITS
   # ======================================================================================================================================================================================
 
-  signal_track <- defaultUnits(object = signal_track, default.units = default.units)
+  signal_track <- defaultUnits(object = signal_track, default.units = bb_sigInternal$default.units)
 
   # ======================================================================================================================================================================================
   # WHOLE CHROM
   # ======================================================================================================================================================================================
 
-  if (is.null(chromstart) & is.null(chromend)){
-    if (assembly == "hg19"){
+  if (is.null(signal_track$chromstart) & is.null(signal_track$chromend)){
+    if (signal_track$assembly == "hg19"){
       genome <- bb_hg19
     }
 
     signal_track$chromstart <- 1
-    signal_track$chromend <- genome[which(genome$chrom == chrom),]$length
+    signal_track$chromend <- genome[which(genome$chrom == signal_track$chrom),]$length
 
 
   }
@@ -383,7 +495,7 @@ bb_plotSignal <- function(signal, chrom, chromstart = NULL, chromend = NULL, ran
   # SET BINSIZE
   # ======================================================================================================================================================================================
 
-  if (is.na(binSize) == TRUE){
+  if (is.na(signal_track$binSize) == TRUE){
 
     binSize <- (signal_track$chromend - signal_track$chromstart)/2000
     signal_track$binSize <- binSize
@@ -394,15 +506,15 @@ bb_plotSignal <- function(signal, chrom, chromstart = NULL, chromend = NULL, ran
   # CHECK AND ADJUST BIN NUMBER
   # ======================================================================================================================================================================================
 
-  signal_track <- check_binNum(signaltrack = signal_track, binCap = binCap)
+  signal_track <- check_binNum(signaltrack = signal_track, binCap = bb_sigInternal$binCap)
 
   # ======================================================================================================================================================================================
   # READ IN, FORMAT, FILTER, BIN, LINK AND SORT DATA
   # ======================================================================================================================================================================================
 
-  if (length(class(signal)) == 1 && class(signal) == "list"){
+  if (length(class(bb_sigInternal$signal)) == 1 && class(bb_sigInternal$signal) == "list"){
 
-    signal <- lapply(signal, read_signal, signaltrack = signal_track)
+    signal <- lapply(bb_sigInternal$signal, read_signal, signaltrack = signal_track)
     signal <- lapply(signal, format_data, signaltrack = signal_track)
     posSignal <- signal[[1]]
     negSignal <- signal[[2]]
@@ -410,7 +522,7 @@ bb_plotSignal <- function(signal, chrom, chromstart = NULL, chromend = NULL, ran
 
   } else {
 
-    signal <- read_signal(signal = signal, signaltrack = signal_track)
+    signal <- read_signal(signal = bb_sigInternal$signal, signaltrack = signal_track)
     signal <- format_data(signal = signal, signaltrack = signal_track)
 
     if (any(signal[,3] < 0)){
@@ -436,38 +548,33 @@ bb_plotSignal <- function(signal, chrom, chromstart = NULL, chromend = NULL, ran
 
     if (nrow(posSignal) >= 2){
       posSignal2 <- parseData(signal = posSignal, signaltrack = signal_track)
-      if (is.null(signal_track$range)){
-        signal_track$range[2] <- signal_track$ymax * max(posSignal2[,2])
-      }
-
-    } else {
-      signal_track$range[2] <- 1
     }
+
+    signal_track <- set_range(signal1 = posSignal, signal2 = posSignal2, signaltrack = signal_track, split = TRUE)
+
 
     if (nrow(negSignal) >= 2){
       negSignal2 <- parseData(signal = negSignal, signaltrack = signal_track)
       negSignal2[,2] <- negSignal2[,2]*-1
-      if (is.na(signal_track$range[1])){
-        signal_track$range[1] <- signal_track$ymax * min(negSignal2[,2])
-      }
-
-    } else {
-      signal_track$range[1] <- -1
     }
+
+    signal_track <- set_range(signal1 = negSignal, signal2 = negSignal2, signaltrack = signal_track, split = TRUE, pos = FALSE)
+
+
+    if (signal_track$range[1] == 0 & signal_track$range[2] == 0){
+      signal_track$range <- c(-1, 1)
+    }
+
 
 
   } else {
 
     if (nrow(posSignal) >= 2){
       posSignal2 <- parseData(signal = posSignal, signaltrack = signal_track)
-
-      if (is.null(signal_track$range)){
-        signal_track$range <- c(0, ymax*max(posSignal2[,2]))
-      }
-
-    } else {
-      signal_track$range <- c(0, 1)
     }
+
+    signal_track <- set_range(signal1 = posSignal, signal2 = posSignal2, signaltrack = signal_track, split = FALSE)
+
 
   }
 
@@ -481,7 +588,7 @@ bb_plotSignal <- function(signal, chrom, chromstart = NULL, chromend = NULL, ran
 
   ## If placing information is provided but plot == TRUE, set up it's own viewport separate from bb_makepage
   ## Not translating into page_coordinates
-  if (is.null(x) & is.null(y)){
+  if (is.null(signal_track$x) & is.null(signal_track$y)){
 
     vp <- viewport(height = unit(0.25, "snpc"), width = unit(1, "snpc"),
                    x = unit(0.5, "npc"), y = unit(0.5, "npc"),
@@ -491,7 +598,7 @@ bb_plotSignal <- function(signal, chrom, chromstart = NULL, chromend = NULL, ran
                    just = "center",
                    name = vp_name)
 
-    if (draw == TRUE){
+    if (bb_sigInternal$draw == TRUE){
 
       vp$name <- "bb_signal1"
       grid.newpage()
@@ -509,7 +616,7 @@ bb_plotSignal <- function(signal, chrom, chromstart = NULL, chromend = NULL, ran
                    clip = "on",
                    xscale = c(signal_track$chromstart, signal_track$chromend),
                    yscale = c(signal_track$range[1], signal_track$range[2]),
-                   just = just,
+                   just = bb_sigInternal$just,
                    name = vp_name)
   }
 
@@ -524,46 +631,65 @@ bb_plotSignal <- function(signal, chrom, chromstart = NULL, chromend = NULL, ran
   # MAKE GROBS
   # ======================================================================================================================================================================================
 
+  gp = gpar(...)
+  if (length(gp) != 0){
+    if ("col" %in% names(gp)){
+      gp$axis <- gp$col
+    } else{
+      gp$axis <- "black"
+    }
+
+  }
+
   if (split == TRUE){
 
-    fills <- parseColors(signal_track$fillcolor)
-    lines <- parseColors(signal_track$linecolor)
+    fills <- parseColors(bb_sigInternal$fillcolor)
+    lines <- parseColors(bb_sigInternal$linecolor)
 
     if (nrow(posSignal) >= 2){
-      sigGrob(signal = posSignal2, fillCol = fills[[1]], lineCol = lines[[1]], lwd = signal_track$lwd, transparency = transparency)
+      sigGrob(signal = posSignal2, fillCol = fills[[1]], lineCol = lines[[1]], gp = gp)
       ## Find and make cutoff lines
       cutoffGrobs(signal = posSignal2, signaltrack = signal_track, side = "top")
 
     } else {
-      posGrob <- segmentsGrob(x0 = 0, y0 = 0, x1 = 1, y1 = 0, gp = gpar(col = lines[[1]], lwd = signal_track$lwd))
+      gp$col <- lines[[1]]
+      posGrob <- segmentsGrob(x0 = 0, y0 = unit(0, "native"), x1 = 1, y1 = unit(0, "native"), gp = gp)
       assign("signal_grobs", addGrob(gTree = get("signal_grobs", envir = bbEnv), child = posGrob), envir = bbEnv)
       warning("Not enough top signal data to plot.", call. = FALSE)
     }
 
 
     if (nrow(negSignal) >= 2){
-      sigGrob(signal = negSignal2, fillCol = fills[[2]], lineCol = lines[[2]], lwd = signal_track$lwd, transparency = transparency)
+      sigGrob(signal = negSignal2, fillCol = fills[[2]], lineCol = lines[[2]], gp = gp)
       ## Find and make cutoff lines
       cutoffGrobs(signal = negSignal2, signaltrack = signal_track, side = "bottom")
     } else {
-      negGrob <- segmentsGrob(x0 = 0, y0 = 0, x1 = 1, y1 = 0, gp = gpar(col = lines[[2]], lwd = signal_track$lwd))
+      gp$col <- lines[[2]]
+      negGrob <- segmentsGrob(x0 = 0, y0 = unit(0, "native"), x1 = 1, y1 = unit(0, "native"), gp = gp)
       assign("signal_grobs", addGrob(gTree = get("signal_grobs", envir = bbEnv), child = negGrob), envir = bbEnv)
       warning("Not enough bottom signal data to plot.", call. = FALSE)
     }
 
+    gp$col <- gp$axis
+    if (!"lwd" %in% names(gp)){
+      gp$lwd <- 1.5
+    } else{
+      gp$lwd <- gp$lwd + 0.5
+    }
+
     lineGrob <- segmentsGrob(x0 = unit(0, "npc"), x1 = unit(1, "npc"), y0 = 0, y1 = 0,
-                             gp = gpar(col = "black", lwd = signal_track$lwd + 0.5), default.units = "native")
+                             gp = gp, default.units = "native")
     assign("signal_grobs", addGrob(gTree = get("signal_grobs", envir = bbEnv), child = lineGrob), envir = bbEnv)
 
   } else {
 
     if (nrow(posSignal) >= 2){
-      sigGrob(signal = posSignal2, fillCol = signal_track$fillcolor, lineCol = signal_track$linecolor,
-              lwd = signal_track$lwd, transparency = transparency)
+      sigGrob(signal = posSignal2, fillCol = bb_sigInternal$fillcolor[1], lineCol = bb_sigInternal$linecolor[1], gp = gp)
       ## Find and make cutoff lines
       cutoffGrobs(signal = posSignal2, signaltrack = signal_track, side = "top")
     } else {
-      signalGrob <- segmentsGrob(x0 = 0, y0 = 0, x1 = 1, y1 = 0, gp = gpar(col = signal_track$linecolor, lwd = signal_track$lwd))
+      gp$col <- bb_sigInternal$linecolor
+      signalGrob <- segmentsGrob(x0 = 0, y0 = unit(0, "native"), x1 = 1, y1 = unit(0, "native"), gp = gp)
       assign("signal_grobs", addGrob(gTree = get("signal_grobs", envir = bbEnv), child = signalGrob), envir = bbEnv)
       warning("Not enough data within range to plot.", call. = FALSE)
     }
@@ -574,11 +700,12 @@ bb_plotSignal <- function(signal, chrom, chromstart = NULL, chromend = NULL, ran
   # ======================================================================================================================================================================================
 
   ## Add scale of the range of data in the top left corner
-  if (scale == TRUE){
+  if (bb_sigInternal$scale == TRUE){
+    gp$col <- gp$axis
     upperLim <- round(signal_track$range[2], digits = 4)
     lowerLim <- round(signal_track$range[1], digits = 4)
-
-    scaleGrob <- textGrob(label = paste0("[", lowerLim, " - ", upperLim, "]"), just = c("left", "top"), x = 0, y = 1, gp = gpar(col = "black", fontsize = 8))
+    scaleGrob <- textGrob(label = paste0("[", lowerLim, " - ", upperLim, "]"), just = c("left", "top"), x = 0, y = 1,
+                          gp = gp)
 
     ## Add grob to gtree
     assign("signal_grobs", addGrob(gTree = get("signal_grobs", envir = bbEnv), child = scaleGrob), envir = bbEnv)
@@ -589,7 +716,7 @@ bb_plotSignal <- function(signal, chrom, chromstart = NULL, chromend = NULL, ran
   # IF PLOT == TRUE, DRAW GROBS
   # ======================================================================================================================================================================================
 
-  if (draw == TRUE){
+  if (bb_sigInternal$draw == TRUE){
 
     grid.draw(get("signal_grobs", envir = bbEnv))
 

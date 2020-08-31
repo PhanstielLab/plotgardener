@@ -8,15 +8,14 @@ bb_addText(
   label,
   x,
   y,
+  params = NULL,
   just = "center",
-  rotation = 0,
   fontcolor = "black",
-  transparency = 1,
   fontsize = 12,
-  cex = 1,
-  fontfamily = "",
-  fontface = "plain",
-  default.units = "inches"
+  rot = 0,
+  check.overlap = FALSE,
+  default.units = "inches",
+  ...
 )
 }
 \arguments{
@@ -26,21 +25,17 @@ bb_addText(
 
 \item{y}{A numeric vector or unit object specifying y-location}
 
-\item{just}{justification of text relative to its (x, y) location}
+\item{params}{an optional "bb_params" object space containing relevant function parameters}
 
-\item{rotation}{angle to rotate text}
+\item{just}{justification of text relative to its (x, y) location}
 
 \item{fontcolor}{fontcolor}
 
-\item{transparency}{degree of text transparency}
-
 \item{fontsize}{the size of text (in points)}
 
-\item{cex}{multiplier applied to fontsize}
+\item{rot}{the angle to rotate the song}
 
-\item{fontfamily}{the font family}
-
-\item{fontface}{the fontface (bold, italic, ...)}
+\item{check.overlap}{A logical value to indicate whether to check for and omit overlapping text.}
 
 \item{default.units}{A string indicating the default units to use if x or y are only given as numeric vectors}
 }

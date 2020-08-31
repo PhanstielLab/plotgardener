@@ -1,12 +1,13 @@
 #' plots a Manhattan plot
 #'
-#' @param bedfile bedfile for Manhattan plot, either .bed file or dataframe in bed format
+#' @param bed bedfile for Manhattan plot, either .bed file or dataframe in bed format
 #' @param pVals name of column in bedfile of corresponding p-values (will be converted to -log(10) space)
+#' @param params an optional "bb_params" object space containing relevant function parameters
 #' @param chrom chromosome of region to be plotted, if specific region desired
 #' @param chromstart start of region to be plotted, if specific region desired
 #' @param chromend end of region to be plotted, if specific region desired
 #' @param assembly genome assembly, for entire genome plotting
-#' @param col single color, vector of colors, or color palette
+#' @param colors single color, vector of colors, or color palette
 #' @param space the space between each chromsome as a fraction of the width of the plot
 #' @param cex number indiciating the amount by which points should be scaled relative to the default
 #' @param transp transparency of colors
@@ -24,16 +25,16 @@
 #' @param draw A logical value indicating whether graphics output should be produced
 #'
 #' @export
-bb_plotManhattan <- function(bedfile, pVals, chrom = NULL, chromstart = NULL, chromend = NULL, assembly = "hg19", col = "black", space = 0.01, cex = 0.25, transp = 1, ymax = 1,
-                             range = NULL, sigVal = 5e-08, sigLine = F, sigCol = NULL, x = NULL, y = NULL, width = NULL, height = NULL, just = c("left", "top"),
-                             default.units = "inches", draw = T){
+bb_plotManhattan <- function(bed, pVals, params = NULL, chrom = NULL, chromstart = NULL, chromend = NULL, assembly = "hg19", fillcolor = "black", pch = 19, space = 0.01,
+                             cex = 0.25, ymax = 1, range = NULL, sigVal = 5e-08, sigLine = F, sigCol = NULL, x = NULL, y = NULL, width = NULL, height = NULL, just = c("left", "top"),
+                             default.units = "inches", draw = T, ...){
 
   # ======================================================================================================================================================================================
   # FUNCTIONS
   # ======================================================================================================================================================================================
 
   ## Define a function that checks for errors in bb_plotManhattan
-  errorcheck_bb_plotmanhattan <- function(bedfile, chrom, assembly, chromstart, chromend, pVals, object){
+  errorcheck_bb_plotmanhattan <- function(bedfile, chrom, assembly, chromstart, chromend, pVals, object, fillcolor){
 
     # errorcheck valid assembly
     if (is.null(chrom)){
@@ -92,15 +93,15 @@ bb_plotManhattan <- function(bedfile, pVals, chrom = NULL, chromstart = NULL, ch
     ## colors and corresponding types of plotted regions
     if (!is.null(chrom)){
 
-      if (class(col) == "function"){
+      if (class(fillcolor) == "function"){
 
-        stop("\'col\' cannot be a palette when plotting a specified chromsome range.", call. = FALSE)
+        stop("\'fillcolor\' cannot be a palette when plotting a specified chromsome range.", call. = FALSE)
 
       }
 
-      if (length(col) > 1){
+      if (length(fillcolor) > 1){
 
-        stop("\'col\' cannot be a vector when plotting a specified chromsome range.", call. = FALSE)
+        stop("\'fillcolor\' cannot be a vector when plotting a specified chromsome range.", call. = FALSE)
       }
 
     }
@@ -217,18 +218,18 @@ bb_plotManhattan <- function(bedfile, pVals, chrom = NULL, chromstart = NULL, ch
   }
 
   ## Define a function that parses colors
-  parse_color <- function(col, offsetAssembly, bedData){
+  parse_color <- function(fillcolor, offsetAssembly, bedData){
 
     if (!is.null(offsetAssembly)){
 
       ## parse type of color input
-      if (class(col) == "function"){
+      if (class(fillcolor) == "function"){
 
-        newCol <- col(nrow(offsetAssembly))
+        newCol <- fillcolor(nrow(offsetAssembly))
 
       } else {
 
-        newCol <- rep(col, ceiling(nrow(offsetAssembly)/length(col)))
+        newCol <- rep(fillcolor, ceiling(nrow(offsetAssembly)/length(fillcolor)))
 
       }
 
@@ -259,7 +260,7 @@ bb_plotManhattan <- function(bedfile, pVals, chrom = NULL, chromstart = NULL, ch
 
     } else {
 
-      colorBed <- cbind(bedData, rep(col, nrow(bedData)))
+      colorBed <- cbind(bedData, rep(fillcolor, nrow(bedData)))
       colorBed[,4] <- as.character(colorBed[,4])
 
     }
@@ -272,49 +273,95 @@ bb_plotManhattan <- function(bedfile, pVals, chrom = NULL, chromstart = NULL, ch
   }
 
   # ======================================================================================================================================================================================
+  # PARSE PARAMETERS
+  # ======================================================================================================================================================================================
+
+  ## Check which defaults are not overwritten and set to NULL
+  if(missing(assembly)) assembly <- NULL
+  if(missing(fillcolor)) fillcolor <- NULL
+  if(missing(pch)) pch <- NULL
+  if(missing(space)) space <- NULL
+  if(missing(cex)) cex <- NULL
+  if(missing(ymax)) ymax <- NULL
+  if(missing(sigVal)) sigVal <- NULL
+  if(missing(sigLine)) sigLine <- NULL
+  if(missing(just)) just <- NULL
+  if(missing(default.units)) default.units <- NULL
+  if(missing(draw)) draw <- NULL
+
+  ## Check if bed/pVals arguments are missing (could be in object)
+  if(!hasArg(bed)) bed <- NULL
+  if(!hasArg(pVals)) pVals <- NULL
+
+  ## Compile all parameters into an internal object
+  bb_manInternal <- structure(list(bed = bed, pVals = pVals, chrom = chrom, chromstart = chromstart, chromend = chromend, assembly = assembly,
+                                   fillcolor = fillcolor, pch = pch, space = space, cex = cex, ymax = ymax, range = range, sigVal = sigVal,
+                                   sigLine = sigLine, sigCol = sigCol, x = x, y = y, width = width, height = height, just = just,
+                                   default.units = default.units, draw = draw), class = "bb_manInternal")
+
+  bb_manInternal <- parseParams(bb_params = params, object_params = bb_manInternal)
+
+  ## For any defaults that are still NULL, set back to default
+  if(is.null(bb_manInternal$assembly)) bb_manInternal$assembly <- "hg19"
+  if(is.null(bb_manInternal$fillcolor)) bb_manInternal$fillcolor <- "black"
+  if(is.null(bb_manInternal$pch)) bb_manInternal$pch <- 19
+  if(is.null(bb_manInternal$space)) bb_manInternal$space <- 0.01
+  if(is.null(bb_manInternal$cex)) bb_manInternal$cex <- 0.25
+  if(is.null(bb_manInternal$ymax)) bb_manInternal$ymax <- 1
+  if(is.null(bb_manInternal$sigVal)) bb_manInternal$sigVal <- 5e-08
+  if(is.null(bb_manInternal$sigLine)) bb_manInternal$sigLine <- FALSE
+  if(is.null(bb_manInternal$just)) bb_manInternal$just <- c("left", "top")
+  if(is.null(bb_manInternal$default.units)) bb_manInternal$default.units <- "inches"
+  if(is.null(bb_manInternal$draw)) bb_manInternal$draw <- TRUE
+
+  # ======================================================================================================================================================================================
   # INITIALIZE OBJECT
   # ======================================================================================================================================================================================
 
-  man_plot <- structure(list(range = range, ymax = ymax, space = space,
-                             width = width, height = height, x = x, y = y, justification = just, grobs = NULL, assembly = assembly), class = "bb_manhattan")
-  attr(x = man_plot, which = "plotted") <- draw
+  man_plot <- structure(list(range = bb_manInternal$range, ymax = bb_manInternal$ymax, space = bb_manInternal$space,
+                             width = bb_manInternal$width, height = bb_manInternal$height, x = bb_manInternal$x, y = bb_manInternal$y,
+                             justification = bb_manInternal$just, grobs = NULL, assembly = bb_manInternal$assembly), class = "bb_manhattan")
+  attr(x = man_plot, which = "plotted") <- bb_manInternal$draw
 
   # ======================================================================================================================================================================================
   # CATCH ERRORS
   # ======================================================================================================================================================================================
 
+  if(is.null(bb_manInternal$bed)) stop("argument \"bed\" is missing, with no default.", call. = FALSE)
+  if(is.null(bb_manInternal$pVals)) stop("argument \"pVals\" is missing, with no default.", call. = FALSE)
+
   check_placement(object = man_plot)
-  errorcheck_bb_plotmanhattan(bedfile = bedfile, chrom = chrom, assembly = assembly, chromstart = chromstart, chromend = chromend, pVals = pVals, object = man_plot)
+  errorcheck_bb_plotmanhattan(bedfile = bb_manInternal$bed, chrom = man_plot$chrom, assembly = man_plot$assembly, chromstart = man_plot$chromstart, chromend = man_plot$chromend,
+                              pVals = bb_manInternal$pVals, object = man_plot,
+                              fillcolor = bb_manInternal$fillcolor)
 
   # ======================================================================================================================================================================================
   # PARSE UNITS
   # ======================================================================================================================================================================================
 
-  man_plot <- defaultUnits(object = man_plot, default.units = default.units)
+  man_plot <- defaultUnits(object = man_plot, default.units = bb_manInternal$default.units)
 
   # ======================================================================================================================================================================================
   # READ AND SUBSET DATA
   # ======================================================================================================================================================================================
 
-  bed_data <- parse_data(bedfile = bedfile, chrom = chrom, chromstart = chromstart, chromend = chromend, pVals = pVals)
+  bed_data <- parse_data(bedfile = bb_manInternal$bed, chrom = man_plot$chrom, chromstart = man_plot$chromstart, chromend = man_plot$chromend, pVals = bb_manInternal$pVals)
 
   # ======================================================================================================================================================================================
   # WHOLE GENOME
   # ======================================================================================================================================================================================
 
-  if (is.null(chrom)){
+  if (is.null(man_plot$chrom)){
 
     ## Add assembly to object to denote as a whole genome
-    man_plot$assembly <- assembly
-    man_plot$chrom <- NULL
     man_plot$chromstart <- NULL
     man_plot$chromend <- NULL
 
     ## Access internal assembly
-    assembly_data <- internal_assembly(assembly = assembly)
+    assembly_data <- internal_assembly(assembly = man_plot$assembly)
 
     ## get the offsets based on spacer for the assembly
-    offsetAssembly <- parse_assembly(assemblyData = assembly_data, space = space)
+    offsetAssembly <- parse_assembly(assemblyData = assembly_data, space = bb_manInternal$space)
 
     ## remove bed_data data that aren't in the genome assembly
     bed_data <- bed_data[bed_data[,1] %in% offsetAssembly[,1],]
@@ -324,7 +371,7 @@ bb_plotManhattan <- function(bedfile, pVals, chrom = NULL, chromstart = NULL, ch
 
     ## Set viewport xscale
     cumsums <- cumsum(as.numeric(assembly_data[,2]))
-    spacer <- cumsums[length(cumsum(as.numeric(assembly_data[,2])))] * space
+    spacer <- cumsums[length(cumsum(as.numeric(assembly_data[,2])))] * bb_manInternal$space
 
     xscale <- c(0, max(offsetAssembly[,4]) + spacer)
 
@@ -334,11 +381,10 @@ bb_plotManhattan <- function(bedfile, pVals, chrom = NULL, chromstart = NULL, ch
   # SINGLE CHROMOSOME
   # ======================================================================================================================================================================================
     man_plot$assembly <- NULL
-    man_plot$chrom <- chrom
     offsetAssembly <- NULL
 
     ## Whole single chromosome
-    if (is.null(chromstart) & is.null(chromend)){
+    if (is.null(man_plot$chromstart) & is.null(man_plot$chromend)){
 
       man_plot$chromstart <- min(bed_data[,2])
       man_plot$chromend <- max(bed_data[,2])
@@ -348,12 +394,9 @@ bb_plotManhattan <- function(bedfile, pVals, chrom = NULL, chromstart = NULL, ch
 
 
     } else {
-    ## specified range of chromosome
-      man_plot$chromstart <- chromstart
-      man_plot$chromend <- chromend
 
       ## Set viewport xscale
-      xscale <- c(chromstart, chromend)
+      xscale <- c(man_plot$chromstart, man_plot$chromend)
 
     }
 
@@ -369,22 +412,22 @@ bb_plotManhattan <- function(bedfile, pVals, chrom = NULL, chromstart = NULL, ch
   # SPLIT DATA INTO SIG AND NON-SIG VALUES FOR ADDITIONAL COLORING
   # ======================================================================================================================================================================================
 
-  sigBed <- bed_data[bed_data$pval <= sigVal,]
-  nonsigBed <- bed_data[bed_data$pval > sigVal,]
+  sigBed <- bed_data[bed_data$pval <= bb_manInternal$sigVal,]
+  nonsigBed <- bed_data[bed_data$pval > bb_manInternal$sigVal,]
 
   # ======================================================================================================================================================================================
   # COLORS
   # ======================================================================================================================================================================================
 
-  color_nonsig <- parse_color(col = col, offsetAssembly = offsetAssembly, bedData = nonsigBed)
+  color_nonsig <- parse_color(fillcolor = bb_manInternal$fillcolor, offsetAssembly = offsetAssembly, bedData = nonsigBed)
 
-  if (!is.null(sigCol)){
+  if (!is.null(bb_manInternal$sigCol)){
 
-    color_sig <- parse_color(col = sigCol, offsetAssembly = offsetAssembly, bedData = sigBed)
+    color_sig <- parse_color(fillcolor = bb_manInternal$sigCol, offsetAssembly = offsetAssembly, bedData = sigBed)
 
   } else {
 
-    color_sig <- parse_color(col = col, offsetAssembly = offsetAssembly, bedData = sigBed)
+    color_sig <- parse_color(fillcolor = bb_manInternal$fillcolor, offsetAssembly = offsetAssembly, bedData = sigBed)
   }
 
 
@@ -400,7 +443,7 @@ bb_plotManhattan <- function(bedfile, pVals, chrom = NULL, chromstart = NULL, ch
 
   ## If placing information is provided but plot == TRUE, set up it's own viewport separate from bb_makepage
   ## Not translating into page_coordinates
-  if (is.null(x) & is.null(y)){
+  if (is.null(man_plot$x) & is.null(man_plot$y)){
 
     vp <- viewport(height = unit(0.25, "snpc"), width = unit(1, "snpc"),
                    x = unit(0.5, "npc"), y = unit(0.5, "npc"),
@@ -409,7 +452,7 @@ bb_plotManhattan <- function(bedfile, pVals, chrom = NULL, chromstart = NULL, ch
                    just = "center",
                    name = vp_name)
 
-    if (draw == TRUE){
+    if (bb_manInternal$draw == TRUE){
 
       vp$name <- "bb_manhattan1"
       grid.newpage()
@@ -426,7 +469,7 @@ bb_plotManhattan <- function(bedfile, pVals, chrom = NULL, chromstart = NULL, ch
                    x = page_coords$x, y = page_coords$y,
                    clip = "on",
                    xscale = xscale, yscale = c(man_plot$range[1], man_plot$range[2]),
-                   just = just,
+                   just = bb_manInternal$just,
                    name = vp_name)
   }
 
@@ -439,8 +482,19 @@ bb_plotManhattan <- function(bedfile, pVals, chrom = NULL, chromstart = NULL, ch
   # ======================================================================================================================================================================================
   # MAKE GROBS
   # ======================================================================================================================================================================================
-  points <- pointsGrob(x = colorBed$pos, y = -log10(colorBed$pval), pch = 19,
-                       gp = gpar(alpha = transp, cex = cex, col = colorBed$color),
+  gp = gpar(...)
+  if (length(gp) != 0){
+    if ("col" %in% names(gp)){
+
+      gp$linecolor <- gp$col
+
+    }
+  }
+  gp$col <- colorBed$color
+  gp$cex <- cex
+
+  points <- pointsGrob(x = colorBed$pos, y = -log10(colorBed$pval), pch = bb_manInternal$pch,
+                       gp = gp,
                        default.units = "native")
   assign("manhattan_grobs", addGrob(gTree = get("manhattan_grobs", envir = bbEnv), child = points), envir = bbEnv)
 
@@ -448,9 +502,11 @@ bb_plotManhattan <- function(bedfile, pVals, chrom = NULL, chromstart = NULL, ch
   # SIGLINE
   # ======================================================================================================================================================================================
 
-  if (sigLine == TRUE){
+  if (bb_manInternal$sigLine == TRUE){
 
-    sigGrob <- segmentsGrob(x0 = unit(0, "npc"), y0 = unit(-log10(sigVal), "native"), x1 = unit(1, "npc"), y1 = unit(-log10(sigVal), "native"), gp = gpar(col = "black"))
+    gp$col <- gp$linecolor
+    sigGrob <- segmentsGrob(x0 = unit(0, "npc"), y0 = unit(-log10(bb_manInternal$sigVal), "native"), x1 = unit(1, "npc"), y1 = unit(-log10(bb_manInternal$sigVal), "native"),
+                            gp = gp)
     assign("manhattan_grobs", addGrob(gTree = get("manhattan_grobs", envir = bbEnv), child = sigGrob), envir = bbEnv)
   }
 
@@ -459,7 +515,7 @@ bb_plotManhattan <- function(bedfile, pVals, chrom = NULL, chromstart = NULL, ch
   # IF PLOT == TRUE, DRAW GROBS
   # ======================================================================================================================================================================================
 
-  if (draw == TRUE){
+  if (bb_manInternal$draw == TRUE){
 
     grid.draw(get("manhattan_grobs", envir = bbEnv))
 

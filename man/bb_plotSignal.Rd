@@ -7,16 +7,15 @@
 bb_plotSignal(
   signal,
   chrom,
+  params = NULL,
   chromstart = NULL,
   chromend = NULL,
   range = NULL,
   linecolor = "grey",
-  lwd = 1,
   binSize = NA,
   binCap = TRUE,
   fillcolor = NULL,
   assembly = "hg19",
-  transparency = 1,
   ymax = 1,
   scale = FALSE,
   width = NULL,
@@ -34,6 +33,8 @@ bb_plotSignal(
 
 \item{chrom}{chromosome of region to be plotted as a string (i.e. "chr3")}
 
+\item{params}{an optional "bb_params" object space containing relevant function parameters}
+
 \item{chromstart}{start position}
 
 \item{chromend}{end position}
@@ -42,8 +43,6 @@ bb_plotSignal(
 
 \item{linecolor}{color(s) of line outlining signal track(s); if using fillcolor and no outline is desired, set to NA}
 
-\item{lwd}{linewidth of line outlining signal track}
-
 \item{binSize}{the length of each bin in bp}
 
 \item{binCap}{TRUE/FALSE whether the function will limit the number of bins to 8,000}
@@ -51,8 +50,6 @@ bb_plotSignal(
 \item{fillcolor}{color(s) filling in signal track(s)}
 
 \item{assembly}{desired genome assembly}
-
-\item{transparency}{numerical value for fillcolor transparency, if fillcolor is specified}
 
 \item{ymax}{fraction of max y-value to set as height of plot}
 

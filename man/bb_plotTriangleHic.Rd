@@ -7,6 +7,7 @@
 bb_plotTriangleHic(
   hic,
   chrom,
+  params = NULL,
   chromstart = NULL,
   chromend = NULL,
   resolution = "auto",
@@ -20,14 +21,15 @@ bb_plotTriangleHic(
   just = c("left", "top"),
   norm = "KR",
   default.units = "inches",
-  draw = T,
-  ...
+  draw = T
 )
 }
 \arguments{
 \item{hic}{path to .hic file or 3 column dataframe of counts}
 
 \item{chrom}{chromosome of region to be plotted, based on build (i.e. for hg19 just a number, for hg38 string like "chr8")}
+
+\item{params}{an optional "bb_params" object space containing relevant function parameters}
 
 \item{chromstart}{chromosome start of region to be plotted}
 

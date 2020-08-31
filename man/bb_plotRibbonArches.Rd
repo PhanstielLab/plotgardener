@@ -7,9 +7,11 @@
 bb_plotRibbonArches(
   bedpe,
   chrom,
+  params = NULL,
   chromstart = NULL,
   chromend = NULL,
-  loopHeight = NULL,
+  cutoffArches = FALSE,
+  archHeight = NULL,
   style = "3D",
   arch = 5,
   position = "top",
@@ -18,14 +20,15 @@ bb_plotRibbonArches(
   colorby = NULL,
   colorbyrange = NULL,
   assembly = "hg19",
-  transp = 0.4,
+  alpha = 0.4,
   x = NULL,
   y = NULL,
   width = NULL,
   height = NULL,
   just = c("left", "top"),
   default.units = "inches",
-  draw = T
+  draw = T,
+  ...
 )
 }
 \arguments{
@@ -33,11 +36,15 @@ bb_plotRibbonArches(
 
 \item{chrom}{chromsome of region to be plotted}
 
+\item{params}{an optional "bb_params" object space containing relevant function parameters}
+
 \item{chromstart}{start position}
 
 \item{chromend}{end position}
 
-\item{loopHeight}{single value or vector specifying the arch heights;
+\item{cutoffArches}{a logical value indicating whether to include arches that get cutoff in the region}
+
+\item{archHeight}{single value or vector specifying the arch heights;
 when NULL, all arches will be the same height, filling up the given viewport}
 
 \item{style}{style of arches: "3D" or "2D"}
@@ -56,7 +63,7 @@ when NULL, all arches will be the same height, filling up the given viewport}
 
 \item{assembly}{desired genome assembly}
 
-\item{transp}{transparency of arches}
+\item{alpha}{transparency of arches}
 
 \item{x}{A numeric or unit object specifying x-location}
 

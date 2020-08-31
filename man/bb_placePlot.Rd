@@ -6,6 +6,7 @@
 \usage{
 bb_placePlot(
   plot,
+  params = NULL,
   x = NULL,
   y = NULL,
   width = NULL,
@@ -17,6 +18,8 @@ bb_placePlot(
 }
 \arguments{
 \item{plot}{plot to be placed}
+
+\item{params}{an optional "bb_params" object space containing relevant function parameters}
 
 \item{x}{A unit object specifying x-location.}
 

@@ -6,16 +6,15 @@
 \usage{
 bb_addColorScale(
   plot,
-  border = FALSE,
   x,
   y,
   width,
   height,
+  params = NULL,
+  border = FALSE,
   orientation = "v",
   fontsize = 8,
   fontcolor = "dark grey",
-  fontfamily = "",
-  fontface = "plain",
   just = c("left", "top"),
   default.units = "inches",
   ...
@@ -23,8 +22,6 @@ bb_addColorScale(
 }
 \arguments{
 \item{plot}{plot to add scale to}
-
-\item{border}{option to add border around scale}
 
 \item{x}{A numeric vector or unit object specifying x-location}
 
@@ -34,15 +31,15 @@ bb_addColorScale(
 
 \item{height}{A numeric vector or unit object specifying height}
 
+\item{params}{an optional "bb_params" object space containing relevant function parameters}
+
+\item{border}{option to add border around scale}
+
 \item{orientation}{"v" (vertical) or "h" (horizontal) orientation}
 
 \item{fontsize}{fontsize for text}
 
 \item{fontcolor}{fontcolor for text}
-
-\item{fontfamily}{fontfamily for text}
-
-\item{fontface}{fontface for text}
 
 \item{just}{justification of scale viewport}
 

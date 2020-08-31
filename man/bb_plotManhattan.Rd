@@ -5,19 +5,20 @@
 \title{plots a Manhattan plot}
 \usage{
 bb_plotManhattan(
-  bedfile,
+  bed,
   pVals,
+  params = NULL,
   chrom = NULL,
   chromstart = NULL,
   chromend = NULL,
   assembly = "hg19",
-  col = "black",
+  fillcolor = "black",
+  pch = 19,
   space = 0.01,
   cex = 0.25,
-  transp = 1,
   ymax = 1,
   range = NULL,
-  sigVal = 5e-08,
+  sigVal = 0.00000005,
   sigLine = F,
   sigCol = NULL,
   x = NULL,
@@ -26,13 +27,16 @@ bb_plotManhattan(
   height = NULL,
   just = c("left", "top"),
   default.units = "inches",
-  draw = T
+  draw = T,
+  ...
 )
 }
 \arguments{
-\item{bedfile}{bedfile for Manhattan plot, either .bed file or dataframe in bed format}
+\item{bed}{bedfile for Manhattan plot, either .bed file or dataframe in bed format}
 
 \item{pVals}{name of column in bedfile of corresponding p-values (will be converted to -log(10) space)}
+
+\item{params}{an optional "bb_params" object space containing relevant function parameters}
 
 \item{chrom}{chromosome of region to be plotted, if specific region desired}
 
@@ -42,13 +46,9 @@ bb_plotManhattan(
 
 \item{assembly}{genome assembly, for entire genome plotting}
 
-\item{col}{single color, vector of colors, or color palette}
-
 \item{space}{the space between each chromsome as a fraction of the width of the plot}
 
 \item{cex}{number indiciating the amount by which points should be scaled relative to the default}
-
-\item{transp}{transparency of colors}
 
 \item{ymax}{fraction of max y value to set as height of plot}
 
@@ -73,6 +73,10 @@ bb_plotManhattan(
 \item{default.units}{A string indicating the default units to use if x, y, width, or height are only given as numerics}
 
 \item{draw}{A logical value indicating whether graphics output should be produced}
+
+\item{colors}{single color, vector of colors, or color palette}
+
+\item{transp}{transparency of colors}
 }
 \description{
 plots a Manhattan plot

@@ -8,20 +8,20 @@ bb_labelGenome(
   plot,
   x,
   y,
+  params = NULL,
   just = c("left", "top"),
   scale = "bp",
   fontsize = 10,
   fontcolor = "black",
   linecolor = "black",
-  lwd = 1,
-  fontfamily = "",
   commas = TRUE,
   sequence = TRUE,
   boxWidth = 0.5,
   assembly = "hg19",
   ticks = NULL,
   tcl = 0.5,
-  default.units = "inches"
+  default.units = "inches",
+  ...
 )
 }
 \arguments{
@@ -30,6 +30,8 @@ bb_labelGenome(
 \item{x}{A numeric or unit object specifying x-location.}
 
 \item{y}{A numeric or unit object specifying y-location.}
+
+\item{params}{an optional "bb_params" object space containing relevant function parameters}
 
 \item{just}{The justification of the label relative to its (x, y) location.If there are two values, the first specifies horizontal justification and
 the second value specifies vertical justification. Possible string values are: "left", "right", "centre", "center", "bottom", and "top".}
@@ -42,10 +44,6 @@ the second value specifies vertical justification. Possible string values are: "
 
 \item{linecolor}{Axis linecolor.}
 
-\item{lwd}{Axis linewidth.}
-
-\item{fontfamily}{Text fontfamily.}
-
 \item{commas}{A logical value indicating whether to include commas in start and stop labels.}
 
 \item{sequence}{A logical value indicating whether to include sequence information above the label axis (only at appropriate resolutions).}
@@ -57,6 +55,10 @@ the second value specifies vertical justification. Possible string values are: "
 \item{tcl}{Length of tickmark as fraction of text height.}
 
 \item{default.units}{A string indicating the default units to use if x or y are only given as numerics.}
+
+\item{lwd}{Axis linewidth.}
+
+\item{fontfamily}{Text fontfamily.}
 }
 \description{
 Adds genome coordinates to the axis of a BentoBox plot

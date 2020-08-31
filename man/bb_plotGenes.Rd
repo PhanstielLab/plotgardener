@@ -5,8 +5,9 @@
 \title{plots a gene track for a specified region}
 \usage{
 bb_plotGenes(
-  assembly = "hg19",
   chrom,
+  params = NULL,
+  assembly = "hg19",
   chromstart = NULL,
   chromend = NULL,
   fontcolors = c("#2929ff", "#ff3434"),
@@ -27,9 +28,11 @@ bb_plotGenes(
 )
 }
 \arguments{
-\item{assembly}{desired genome assembly}
-
 \item{chrom}{chromsome of region to be plotted}
+
+\item{params}{an optional "bb_params" object space containing relevant function parameters}
+
+\item{assembly}{desired genome assembly}
 
 \item{chromstart}{start position}
 

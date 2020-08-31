@@ -7,6 +7,7 @@
 bb_plotPileup(
   bed,
   chrom,
+  params = NULL,
   chromstart = NULL,
   chromend = NULL,
   assembly = "hg19",
@@ -24,13 +25,16 @@ bb_plotPileup(
   height = NULL,
   just = c("left", "top"),
   default.units = "inches",
-  draw = TRUE
+  draw = TRUE,
+  ...
 )
 }
 \arguments{
 \item{bed}{genomic data in BED format}
 
 \item{chrom}{chromosome of region to be plotted}
+
+\item{params}{an optional "bb_params" object space containing relevant function parameters}
 
 \item{chromstart}{start position}
 
@@ -48,7 +52,7 @@ bb_plotPileup(
 
 \item{strandSplit}{logical indicating whether plus and minus-stranded elements should be separated}
 
-\item{boxHeight}{height of pileup element boxes, as a numeric value with default units or a unit value}
+\item{boxHeight}{A numeric or unit object specifying height of pileup element boxes}
 
 \item{spaceHeight}{height of spacing between pileup element boxes, as a fraction of boxHeight}
 

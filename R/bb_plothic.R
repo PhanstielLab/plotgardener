@@ -2,6 +2,7 @@
 #'
 #' @param hic path to .hic file or 3 column dataframe of counts
 #' @param chrom chromosome of region to be plotted
+#' @param params an optional "bb_params" object space containing relevant function parameters
 #' @param chromstart start position
 #' @param chromend end position
 #' @param half what sides of square plot; options are "both", top", or "bottom"
@@ -32,10 +33,10 @@
 #'
 #'
 
-bb_plotHic <- function(hic, chrom, chromstart = NULL, chromend = NULL, half = "both", resolution = "auto", zrange = NULL,
+bb_plotHic <- function(hic, chrom, params = NULL, chromstart = NULL, chromend = NULL, half = "both", resolution = "auto", zrange = NULL,
                        palette = colorRampPalette(c("white", "dark red")), assembly = "hg19", width = NULL, height = NULL, x = NULL, y = NULL,
                        just = c("left", "top"), default.units = "inches", draw = TRUE, altchrom = NULL, altchromstart = NULL, altchromend = NULL, althalf = NULL,
-                       norm = "KR", ...){
+                       norm = "KR"){
 
   # ======================================================================================================================================================================================
   # FUNCTIONS
@@ -471,38 +472,78 @@ bb_plotHic <- function(hic, chrom, chromstart = NULL, chromend = NULL, half = "b
   }
 
   # ======================================================================================================================================================================================
+  # PARSE PARAMETERS
+  # ======================================================================================================================================================================================
+
+  ## Check which defaults are not overwritten and set to NULL
+  if(missing(half)) half <- NULL
+  if(missing(resolution)) resolution <- NULL
+  if(missing(palette)) palette <- NULL
+  if(missing(assembly)) assembly <- NULL
+  if(missing(just)) just <- NULL
+  if(missing(default.units)) default.units <- NULL
+  if(missing(draw)) draw <- NULL
+  if(missing(norm)) norm <- NULL
+
+  ## Check if hic/chrom arguments are missing (could be in object)
+  if(!hsaArg(hic)) hic <- NULL
+  if(!hasArg(chrom)) chrom <- NULL
+
+  ## Compile all parameters into an internal object
+  bb_hicInternal <- structure(list(hic = hic, chrom = chrom, chromstart = chromstart, chromend = chromend, half = half, resolution = resolution,
+                                   zrange = zrange, palette = palette, assembly = assembly, width = width, height = height, x = x, y = y, just = just,
+                                   default.units = default.units, draw = draw, altchrom = altchrom, altchromstart = altchromstart, altchromend = altchromend,
+                                   althalf = althalf, norm = norm), class = "bb_hicInternal")
+
+  bb_hicInternal <- parseParams(bb_params = params, object_params = bb_hicInternal)
+
+  ## For any defaults that are still NULL, set back to default
+  if(is.null(bb_hicInternal$half)) bb_hicInternal$half <- "both"
+  if(is.null(bb_hicInternal$resolution)) bb_hicInternal$resolution <- "auto"
+  if(is.null(bb_hicInternal$palette)) bb_hicInternal$palette <- colorRampPalette(c("white", "dark red"))
+  if(is.null(bb_hicInternal$assembly)) bb_hicInternal$assembly <- "hg19"
+  if(is.null(bb_hicInternal$just)) bb_hicInternal$just <- c("left", "top")
+  if(is.null(bb_hicInternal$default.units)) bb_hicInternal$default.units <- "inches"
+  if(is.null(bb_hicInternal$draw)) bb_hicInternal$draw <- TRUE
+  if(is.null(bb_hicInternal$norm)) bb_hicInternal$norm <- "KR"
+
+  # ======================================================================================================================================================================================
   # INITIALIZE OBJECT
   # ======================================================================================================================================================================================
 
-  hic_plot <- structure(list(chrom = chrom, chromstart = chromstart, chromend = chromend, altchrom = altchrom, altchromstart = altchromstart,
-                             altchromend = altchromend, x = x, y = y, width = width, height = height, justification = just,
-                             zrange = zrange, resolution = resolution, half = half, althalf = althalf, color_palette = NULL, grobs = NULL, assembly = assembly), class = "bb_hic")
-  attr(x = hic_plot, which = "plotted") <- draw
+  hic_plot <- structure(list(chrom = bb_hicInternal$chrom, chromstart = bb_hicInternal$chromstart, chromend = bb_hicInternal$chromend, altchrom = bb_hicInternal$altchrom,
+                             altchromstart = bb_hicInternal$altchromstart, altchromend = bb_hicInternal$altchromend, x = bb_hicInternal$x, y = bb_hicInternal$y,
+                             width = bb_hicInternal$width, height = bb_hicInternal$height, justification = bb_hicInternal$just, zrange = bb_hicInternal$zrange,
+                             resolution = bb_hicInternal$resolution, half = bb_hicInternal$half, althalf = bb_hicInternal$althalf, color_palette = NULL, grobs = NULL,
+                             assembly = bb_hicInternal$assembly), class = "bb_hic")
+  attr(x = hic_plot, which = "plotted") <- bb_hicInternal$draw
 
   # ======================================================================================================================================================================================
   # CATCH ERRORS
   # ======================================================================================================================================================================================
 
+  if(is.null(bb_hicInternal$hic)) stop("argument \"hic\" is missing, with no default.", call. = FALSE)
+  if(is.null(bb_hicInternal$chrom)) stop("argument \"chrom\" is missing, with no default.", call. = FALSE)
+
   check_placement(object = hic_plot)
-  errorcheck_bb_plothic(hic = hic, hic_plot = hic_plot, norm = norm)
+  errorcheck_bb_plothic(hic = bb_hicInternal$hic, hic_plot = hic_plot, norm = bb_hicInternal$norm)
 
   # ======================================================================================================================================================================================
   # PARSE UNITS
   # ======================================================================================================================================================================================
 
-  hic_plot <- defaultUnits(object = hic_plot, default.units = default.units)
-
+  hic_plot <- defaultUnits(object = hic_plot, default.units = bb_hicInternal$default.units)
 
   # ======================================================================================================================================================================================
   # WHOLE CHROM
   # ======================================================================================================================================================================================
-  if (is.null(chromstart) & is.null(chromend)){
-    if (assembly == "hg19"){
+  if (is.null(hic_plot$chromstart) & is.null(hic_plot$chromend)){
+    if (hic_plot$assembly == "hg19"){
       genome <- bb_hg19
     }
 
     hic_plot$chromstart <- 1
-    hic_plot$chromend <- genome[which(genome$chrom == chrom),]$length
+    hic_plot$chromend <- genome[which(genome$chrom == hic_plot$chrom),]$length
 
   }
 
@@ -510,8 +551,8 @@ bb_plotHic <- function(hic, chrom, chromstart = NULL, chromend = NULL, half = "b
   # ADJUST RESOLUTION
   # ======================================================================================================================================================================================
 
-  if (resolution == "auto"){
-    hic_plot <- adjust_resolution(hic = hic, hic_plot = hic_plot)
+  if (hic_plot$resolution == "auto"){
+    hic_plot <- adjust_resolution(hic = bb_hicInternal$hic, hic_plot = hic_plot)
   }
 
 
@@ -519,7 +560,7 @@ bb_plotHic <- function(hic, chrom, chromstart = NULL, chromend = NULL, half = "b
   # READ IN DATA
   # ======================================================================================================================================================================================
 
-  hic <- read_data(hic = hic, hic_plot = hic_plot, norm = norm, assembly = assembly)
+  hic <- read_data(hic = bb_hicInternal$hic, hic_plot = hic_plot, norm = bb_hicInternal$norm, assembly = hic_plot$assembly)
 
   # ======================================================================================================================================================================================
   # SUBSET DATA
@@ -551,7 +592,7 @@ bb_plotHic <- function(hic, chrom, chromstart = NULL, chromend = NULL, half = "b
   ## if we don't have an appropriate zrange (even after setting it based on a null zrange), can't scale to colors
   if (!is.null(hic_plot$zrange) & length(unique(hic_plot$zrange)) == 2){
 
-    hic$color <- bb_maptocolors(hic$counts, col = palette, num = 100, range = hic_plot$zrange)
+    hic$color <- bb_maptocolors(hic$counts, col = bb_hicInternal$palette, num = 100, range = hic_plot$zrange)
     sorted_colors <- unique(hic[order(hic$counts),]$color)
     hic_plot$color_palette <- sorted_colors
 
@@ -570,7 +611,7 @@ bb_plotHic <- function(hic, chrom, chromstart = NULL, chromend = NULL, half = "b
 
   ## If placing information is provided but plot == TRUE, set up it's own viewport separate from bb_makepage
   ## Not translating into page_coordinates
-  if (is.null(x) & is.null(y)){
+  if (is.null(hic_plot$x) & is.null(hic_plot$y)){
 
     vp <- viewport(height = unit(1, "snpc"), width = unit(1, "snpc"),
                    x = unit(0.5, "npc"), y = unit(0.5, "npc"),
@@ -579,7 +620,7 @@ bb_plotHic <- function(hic, chrom, chromstart = NULL, chromend = NULL, half = "b
                    just = "center",
                    name = vp_name)
 
-    if (draw == TRUE){
+    if (bb_hicInternal$draw == TRUE){
 
       vp$name <- "bb_hic1"
       grid.newpage()
@@ -596,7 +637,7 @@ bb_plotHic <- function(hic, chrom, chromstart = NULL, chromend = NULL, half = "b
                    x = page_coords$x, y = page_coords$y,
                    clip = "on",
                    xscale = scale[[1]], yscale = scale[[2]],
-                   just = just,
+                   just = bb_hicInternal$just,
                    name = vp_name)
   }
 
@@ -647,7 +688,7 @@ bb_plotHic <- function(hic, chrom, chromstart = NULL, chromend = NULL, half = "b
   # IF PLOT == TRUE, DRAW GROBS
   # ======================================================================================================================================================================================
 
-  if (draw == TRUE){
+  if (bb_hicInternal$draw == TRUE){
 
     grid.draw(get("hic_grobs", envir = bbEnv))
 
@@ -662,11 +703,11 @@ bb_plotHic <- function(hic, chrom, chromstart = NULL, chromend = NULL, half = "b
   # ======================================================================================================================================================================================
   # RETURN OBJECT
   # ======================================================================================================================================================================================
-  if (is.null(altchrom)){
+  if (is.null(hic_plot$altchrom)){
 
-    hic_plot$altchrom = chrom
-    hic_plot$altchromstart = chromstart
-    hic_plot$altchromend = chromend
+    hic_plot$altchrom = hic_plot$chrom
+    hic_plot$altchromstart = hic_plot$chromstart
+    hic_plot$altchromend = hic_plot$chromend
 
   }
 

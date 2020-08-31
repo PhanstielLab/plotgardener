@@ -5,23 +5,62 @@
 #' @param y A numeric or unit object specifying y-location.
 #' @param width A numeric or unit object specifying width.
 #' @param height A numeric or unit object specifying height.
+#' @param params an optional "bb_params" object space containing relevant function parameters
 #' @param just A string or numeric vector specifying the justification of the plot relative to its (x, y) location
 #' @param default.units A string indicating the default units to use if x, y, width, or height are only given as numeric vectors
 #'
 #' @export
-bb_plotBase <- function(plot, x, y, width, height, just = c("left", "top"), default.units = "inches"){
+bb_plotBase <- function(plot, x, y, width, height, params = NULL, just = c("left", "top"), default.units = "inches"){
+
+  # ======================================================================================================================================================================================
+  # PARSE PARAMETERS
+  # ======================================================================================================================================================================================
+
+  ## Check which defaults are not overwritten and set to NULL
+  if(missing(just)) just <- NULL
+  if(missing(default.units)) default.units <- NULL
+
+  ## Check if plot/x/y/width/height arguments are missing (could be in object)
+  if(!hasArg(plot)) plot <- NULL
+  if(!hasArg(x)) x <- NULL
+  if(!hasArg(y)) y <- NULL
+  if(!hasArg(width)) width <- NULL
+  if(!hasArg(height)) height <- NULL
+
+  ## Compile all parameters into an internal object
+  bb_baseInternal <- structure(list(plot = plot,x = x, y = y, width = width, height = height,
+                                     just = just, default.units = default.units), class = "bb_baseInternal")
+
+  bb_baseInternal <- parseParams(bb_params = params, object_params = bb_baseInternal)
+
+  ## For any defaults that are still NULL, set back to default
+  if(is.null(bb_baseInternal$just)) bb_baseInternal$just <- c("left", "top")
+  if(is.null(bb_baseInternal$default.units)) bb_baseInternal$default.units <- "inches"
 
   # ======================================================================================================================================================================================
   # INITIALIZE PLOT OBJECT
   # ======================================================================================================================================================================================
 
-  base_plot <- structure(list(width = width, height = height, x = x, y = y, justification = just, grobs = NULL), class = "bb_base")
+  base_plot <- structure(list(width = bb_baseInternal$width, height = bb_baseInternal$height, x = bb_baseInternal$x, y = bb_baseInternal$y,
+                              justification = bb_baseInternal$just, grobs = NULL), class = "bb_base")
+
+  # ======================================================================================================================================================================================
+  # CALL ERRORS
+  # ======================================================================================================================================================================================
+
+  if(is.null(bb_baseInternal$plot)) stop("argument \"plot\" is missing, with no default.", call. = FALSE)
+  if(is.null(bb_baseInternal$x)) stop("argument \"x\" is missing, with no default.", call. = FALSE)
+  if(is.null(bb_baseInternal$y)) stop("argument \"y\" is missing, with no default.", call. = FALSE)
+  if(is.null(bb_baseInternal$width)) stop("argument \"width\" is missing, with no default.", call. = FALSE)
+  if(is.null(bb_baseInternal$height)) stop("argument \"height\" is missing, with no default.", call. = FALSE)
+
+  check_bbpage(error = "Must have a BentoBox page before adding a base R plot.")
 
   # ======================================================================================================================================================================================
   # PARSE UNITS
   # ======================================================================================================================================================================================
 
-  base_plot <- defaultUnits(object = base_plot, default.units = default.units)
+  base_plot <- defaultUnits(object = base_plot, default.units = bb_baseInternal$default.units)
 
   # ======================================================================================================================================================================================
   # VIEWPORTS
@@ -37,13 +76,13 @@ bb_plotBase <- function(plot, x, y, width, height, just = c("left", "top"), defa
   ## Make viewport for gene track
   vp <- viewport(height = page_coords$height, width = page_coords$width,
                       x = page_coords$x, y = page_coords$y,
-                      just = just, name = vp_name)
+                      just = bb_baseInternal$just, name = vp_name)
 
   # ======================================================================================================================================================================================
   # CONVERT PLOT TO A GROB
   # ======================================================================================================================================================================================
 
-  gtree <- ggplotify::base2grob(plot)
+  gtree <- ggplotify::base2grob(bb_baseInternal$plot)
 
   # ======================================================================================================================================================================================
   # ASSIGN VIEWPORT TO GTREE

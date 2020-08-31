@@ -7,6 +7,7 @@
 bb_plotBedpe(
   bedpe,
   chrom,
+  params = NULL,
   chromstart = NULL,
   chromend = NULL,
   fillcolor = "black",
@@ -32,6 +33,8 @@ bb_plotBedpe(
 
 \item{chrom}{chromsome of region to be plotted}
 
+\item{params}{an optional "bb_params" object space containing relevant function parameters}
+
 \item{chromstart}{start position}
 
 \item{chromend}{end position}
@@ -46,7 +49,7 @@ bb_plotBedpe(
 
 \item{assembly}{desired genome assembly}
 
-\item{boxHeight}{height of boxes at either end of bedpe element}
+\item{boxHeight}{A numeric or unit object specifying height of boxes at either end of bedpe element}
 
 \item{spaceHeight}{height of space between boxes of different bedpe elements}
 

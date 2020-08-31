@@ -2,6 +2,7 @@
 #'
 #' @param bed genomic data in BED format
 #' @param chrom chromosome of region to be plotted
+#' @param params an optional "bb_params" object space containing relevant function parameters
 #' @param chromstart start position
 #' @param chromend end position
 #' @param assembly desired genome assembly
@@ -10,7 +11,7 @@
 #' @param colorby name of column in bed data to scale colors by
 #' @param colorbyrange the range of values to apply a colorby palette scale to, if colorby values are numeric
 #' @param strandSplit logical indicating whether plus and minus-stranded elements should be separated
-#' @param boxHeight height of pileup element boxes, as a numeric value with default units or a unit value
+#' @param boxHeight A numeric or unit object specifying height of pileup element boxes
 #' @param spaceHeight height of spacing between pileup element boxes, as a fraction of boxHeight
 #' @param spaceWidth width of minimum spacing between pileup element boxes, as a fraction of the plot's genomic range
 #' @param x A numeric or unit object specifying x-location
@@ -25,9 +26,10 @@
 #'
 #' @export
 
-bb_plotPileup <- function(bed, chrom, chromstart = NULL, chromend = NULL, assembly = "hg19", fillcolor = "black", linecolor = NA, colorby = NULL, colorbyrange = NULL, strandSplit = FALSE,
-                          boxHeight =  unit(2, "mm"), spaceHeight = 0.3, spaceWidth = 0.02, x = NULL,
-                          y = NULL, width = NULL, height = NULL, just = c("left", "top"), default.units = "inches", draw = TRUE){
+bb_plotPileup <- function(bed, chrom, params = NULL, chromstart = NULL, chromend = NULL, assembly = "hg19", fillcolor = "black", linecolor = NA,
+                          colorby = NULL, colorbyrange = NULL, strandSplit = FALSE, boxHeight =  unit(2, "mm"), spaceHeight = 0.3,
+                          spaceWidth = 0.02, x = NULL, y = NULL, width = NULL, height = NULL, just = c("left", "top"),
+                          default.units = "inches", draw = TRUE, ...){
 
   # ======================================================================================================================================================================================
   # FUNCTIONS
@@ -86,53 +88,112 @@ bb_plotPileup <- function(bed, chrom, chromstart = NULL, chromend = NULL, assemb
   }
 
   # ======================================================================================================================================================================================
+  # PARSE PARAMETERS
+  # ======================================================================================================================================================================================
+
+  ## Check which defaults are not overwritten and set to NULL
+  if(missing(assembly)) assembly <- NULL
+  if(missing(fillcolor)) fillcolor <- NULL
+  if(missing(linecolor)) linecolor <- NULL
+  if(missing(strandSplit)) strandSplit <- NULL
+  if(missing(boxHeight)) boxHeight <- NULL
+  if(missing(spaceHeight)) spaceHeight <- NULL
+  if(missing(spaceWidth)) spaceWidth <- NULL
+  if(missing(just)) just <- NULL
+  if(missing(default.units)) default.units <- NULL
+  if(missing(draw)) draw <- NULL
+
+  ## Check if bed/chrom arguments are missing (could be in object)
+  if(!hasArg(bed)) bed <- NULL
+  if(!hasArg(chrom)) chrom <- NULL
+
+  ## Compile all parameters into an internal object
+  bb_pileInternal <- structure(list(bed = bed, chrom = chrom, chromstart = chromstart, chromend = chromend, assembly = assembly, fillcolor = fillcolor, linecolor = linecolor,
+                                    colorby = colorby, colorbyrange = colorbyrange, strandSplit = strandSplit, boxHeight = boxHeight, spaceHeight = spaceHeight, spaceWidth = spaceWidth,
+                                    x = x, y = y, width = width, height = height, just = just, default.units = default.units, draw = draw), class = "bb_pileInternal")
+
+  bb_pileInternal <- parseParams(bb_params = params, object_params = bb_pileInternal)
+
+  ## For any defaults that are still NULL, set back to default
+  if(is.null(bb_pileInternal$assembly)) bb_pileInternal$assembly <- "hg19"
+  if(is.null(bb_pileInternal$fillcolor)) bb_pileInternal$fillcolor <- "black"
+  if(is.null(bb_pileInternal$linecolor)) bb_pileInternal$linecolor <- NA
+  if(is.null(bb_pileInternal$strandSplit)) bb_pileInternal$strandSplit <- FALSE
+  if(is.null(bb_pileInternal$boxHeight)) bb_pileInternal$boxHeight <- unit(2, "mm")
+  if(is.null(bb_pileInternal$spaceHeight)) bb_pileInternal$spaceHeight <- 0.3
+  if(is.null(bb_pileInternal$spaceWidth)) bb_pileInternal$spaceWidth <- 0.02
+  if(is.null(bb_pileInternal$just)) bb_pileInternal$just <- c("left", "top")
+  if(is.null(bb_pileInternal$default.units)) bb_pileInternal$default.units <- "inches"
+  if(is.null(bb_pileInternal$draw)) bb_pileInternal$draw <- TRUE
+
+  # ======================================================================================================================================================================================
   # INITIALIZE OBJECT
   # ======================================================================================================================================================================================
 
-  pileup_plot <- structure(list(chrom = chrom, chromstart = chromstart, chromend = chromend, color_palette = NULL, zrange = colorbyrange, width = width,
-                                height = height, x = x, y = y, justification = just, grobs = NULL, assembly = assembly), class = "bb_pileup")
-  attr(x = pileup_plot, which = "plotted") <- draw
+  pileup_plot <- structure(list(chrom = bb_pileInternal$chrom, chromstart = bb_pileInternal$chromstart, chromend = bb_pileInternal$chromend, color_palette = NULL,
+                                zrange = bb_pileInternal$colorbyrange, width = bb_pileInternal$width, height = bb_pileInternal$height, x = bb_pileInternal$x, y = bb_pileInternal$y,
+                                justification = bb_pileInternal$just, grobs = NULL, assembly = bb_pileInternal$assembly), class = "bb_pileup")
+  attr(x = pileup_plot, which = "plotted") <- bb_pileInternal$draw
 
   # ======================================================================================================================================================================================
-  # CHECK PLACEMENT
+  # CHECK PLACEMENT/ARGUMENT ERROS
   # ======================================================================================================================================================================================
 
+  if(is.null(bb_pilieInternal$bed)) stop("argument \"bed\" is missing, with no default.", call. = FALSE)
+  if(is.null(bb_pilieInternal$chrom)) stop("argument \"chrom\" is missing, with no default.", call. = FALSE)
   check_placement(object = pileup_plot)
 
   # ======================================================================================================================================================================================
   # PARSE UNITS
   # ======================================================================================================================================================================================
 
-  pileup_plot <- defaultUnits(object = pileup_plot, default.units = default.units)
+  pileup_plot <- defaultUnits(object = pileup_plot, default.units = bb_pileInternal$default.units)
+  if (!"unit" %in% class(bb_pileInternal$boxHeight)){
+
+    if (!is.numeric(bb_pileInternal$boxHeight)){
+
+      stop("\'boxHeight\' is neither a unit object or a numeric value. Cannot make pileup plot.", call. = FALSE)
+
+    }
+
+    if (is.null(bb_pileInternal$default.units)){
+
+      stop("\'boxHeight\' detected as numeric.\'default.units\' must be specified.", call. = FALSE)
+
+    }
+
+    bb_pileInternal$boxHeight <- unit(bb_pileInternal$boxHeight, bb_pileInternal$default.units)
+
+  }
 
   # ======================================================================================================================================================================================
   # READ IN FILE OR DATAFRAME
   # ======================================================================================================================================================================================
 
-  if (!"data.frame" %in% class(bed)){
-    bed <- as.data.frame(data.table::fread(bed))
+  if (!"data.frame" %in% class(bb_pileInternal$bed)){
+    bed <- as.data.frame(data.table::fread(bb_pileInternal$bed))
   } else {
-    bed <- as.data.frame(bed)
+    bed <- as.data.frame(bb_pileInternal$bed)
   }
 
   # ======================================================================================================================================================================================
   # CATCH ERRORS
   # ======================================================================================================================================================================================
 
-  errorcheck_bb_plotpileup(bed = bed, pileup_plot = pileup_plot, colorby = colorby)
+  errorcheck_bb_plotpileup(bed = bed, pileup_plot = pileup_plot, colorby = bb_pileInternal$colorby)
 
   # ======================================================================================================================================================================================
   # SUBSET DATA FOR CHROMOSOME AND ANY OVERLAPPING REGIONS
   # ======================================================================================================================================================================================
 
-   if (is.null(chromstart) & is.null(chromend)){
+   if (is.null(pileup_plot$chromstart) & is.null(pileup_plot$chromend)){
 
-    if (assembly == "hg19"){
+    if (bb_pileInternal$assembly == "hg19"){
       genome <- bb_hg19
     }
 
     pileup_plot$chromstart <- 1
-    pileup_plot$chromend <- genome[which(genome$chrom == chrom),]$length
+    pileup_plot$chromend <- genome[which(genome$chrom == pieleup_plot$chrom),]$length
 
   }
 
@@ -142,8 +203,8 @@ bb_plotPileup <- function(bed, chrom, chromstart = NULL, chromend = NULL, assemb
   # SET COLORBY DATA
   # ======================================================================================================================================================================================
 
-  if (!is.null(colorby)){
-    colorbyCol <- which(colnames(bed) == colorby)
+  if (!is.null(bb_pileInternal$colorby)){
+    colorbyCol <- which(colnames(bed) == bb_pileInternal$colorby)
     colorbyCol <- bed[,colorbyCol]
 
     ## if the associated column isn't numbers, convert unique values to a set of numbers
@@ -153,22 +214,22 @@ bb_plotPileup <- function(bed, chrom, chromstart = NULL, chromend = NULL, assemb
     } else {
 
       bed$colorby <- colorbyCol
-      if (is.null(colorbyrange)){
-        colorbyrange <- c(min(bed$colorby), max(bed$colorby))
-        pileup_plot$zrange <- colorbyrange
-      }
+    }
 
+    if (is.null(bb_pileInternal$colorbyrange)){
+      colorbyrange <- c(min(bed$colorby), max(bed$colorby))
+      pileup_plot$zrange <- colorbyrange
     }
 
   } else {
-    bed$colorby <- NA
+    bed$colorby <- rep(NA, nrow(bed))
   }
 
   # ======================================================================================================================================================================================
   # SEPARATE DATA INTO STRANDS
   # ======================================================================================================================================================================================
 
-  if (strandSplit == TRUE){
+  if (bb_pileInternal$strandSplit == TRUE){
 
     ## assuming strand is in the 6th column
     posStrand <- bed[which(bed[,6] == "+"),]
@@ -186,9 +247,9 @@ bb_plotPileup <- function(bed, chrom, chromstart = NULL, chromend = NULL, assemb
 
   ## If placing information is provided but plot == TRUE, set up it's own viewport separate from bb_makepage
   ## Not translating into page_coordinates
-  if (is.null(x) & is.null(y)){
+  if (is.null(pileup_plot$x) & is.null(pileup_plot$y)){
 
-    yscale <- strand_scale(strandSplit = strandSplit, height = 0.5)
+    yscale <- strand_scale(strandSplit = bb_pileInternal$strandSplit, height = 0.5)
 
     vp <- viewport(height = unit(0.5, "snpc"), width = unit(1, "snpc"),
                    x = unit(0.5, "npc"), y = unit(0.5, "npc"),
@@ -198,7 +259,7 @@ bb_plotPileup <- function(bed, chrom, chromstart = NULL, chromend = NULL, assemb
                    just = "center",
                    name = vp_name)
 
-    if (draw == TRUE){
+    if (bb_pileInternal$draw == TRUE){
 
       vp$name <- "bb_pileup1"
       grid.newpage()
@@ -210,7 +271,7 @@ bb_plotPileup <- function(bed, chrom, chromstart = NULL, chromend = NULL, assemb
     ## Convert coordinates into same units as page
     page_coords <- convert_page(object = pileup_plot)
 
-    yscale <- strand_scale(strandSplit = strandSplit, height = convertHeight(page_coords$height, unitTo = get("page_units", envir = bbEnv), valueOnly = TRUE))
+    yscale <- strand_scale(strandSplit = bb_pileInternal$strandSplit, height = convertHeight(page_coords$height, unitTo = get("page_units", envir = bbEnv), valueOnly = TRUE))
 
     ## Make viewport
     vp <- viewport(height = page_coords$height, width = page_coords$width,
@@ -218,7 +279,7 @@ bb_plotPileup <- function(bed, chrom, chromstart = NULL, chromend = NULL, assemb
                    clip = "on",
                    xscale = c(pileup_plot$chromstart, pileup_plot$chromend),
                    yscale = yscale,
-                   just = just,
+                   just = bb_pileInternal$just,
                    name = vp_name)
   }
 
@@ -233,25 +294,25 @@ bb_plotPileup <- function(bed, chrom, chromstart = NULL, chromend = NULL, assemb
   # ======================================================================================================================================================================================
 
   ## Determine how many rows are going to fit based on boxHeight and spaceHeight
-  if (is.null(x) & is.null(y)){
+  if (is.null(pileup_plot$x) & is.null(pileup_plot$y)){
 
     pushViewport(vp)
-    boxHeight <- convertHeight(boxHeight, unitTo = "npc", valueOnly = T)
-    spaceHeight <- boxHeight*spaceHeight
+    boxHeight <- convertHeight(bb_pileInternal$boxHeight, unitTo = "npc", valueOnly = T)
+    spaceHeight <- boxHeight*(bb_pileInternal$spaceHeight)
     upViewport()
 
   } else {
 
-    boxHeight <- convertHeight(boxHeight, unitTo = get("page_units", envir = bbEnv), valueOnly = T)
-    spaceHeight <- boxHeight*spaceHeight
+    boxHeight <- convertHeight(bb_pileInternal$boxHeight, unitTo = get("page_units", envir = bbEnv), valueOnly = T)
+    spaceHeight <- boxHeight*(bb_pileInternal$spaceHeight)
 
   }
 
   maxRows <- floor((vp$yscale[2] + spaceHeight)/(boxHeight + spaceHeight))
-  wiggle <- abs(pileup_plot$chromend - pileup_plot$chromstart) * spaceWidth
+  wiggle <- abs(pileup_plot$chromend - pileup_plot$chromstart) * bb_pileInternal$spaceWidth
 
 
-  if (strandSplit == FALSE){
+  if (bb_pileInternal$strandSplit == FALSE){
 
     if (nrow(bed) > 0){
 
@@ -359,20 +420,20 @@ bb_plotPileup <- function(bed, chrom, chromstart = NULL, chromend = NULL, assemb
   # COLORS
   # ======================================================================================================================================================================================
 
-  if (is.null(colorby)){
+  if (is.null(bb_pileInternal$colorby)){
 
-    if (class(fillcolor) == "function"){
-      colors <- fillcolor(maxRows)
+    if (class(bb_pileInternal$fillcolor) == "function"){
+      colors <- bb_pileInternal$fillcolor(maxRows)
       indeces <- rowDF$row
       rowDF$color <- colors[indeces]
 
     } else {
 
-      if (length(fillcolor) == 1){
-        rowDF$color <- rep(fillcolor, nrow(rowDF))
+      if (length(bb_pileInternal$fillcolor) == 1){
+        rowDF$color <- rep(bb_pileInternal$fillcolor, nrow(rowDF))
       } else {
 
-        colors <- rep(fillcolor, ceiling(maxRows/length(fillcolor)))[1:maxRows]
+        colors <- rep(bb_pileInternal$fillcolor, ceiling(maxRows/length(bb_pileInternal$fillcolor)))[1:maxRows]
         indeces <- rowDF$row
         rowDF$color <- colors[indeces]
 
@@ -382,16 +443,16 @@ bb_plotPileup <- function(bed, chrom, chromstart = NULL, chromend = NULL, assemb
 
   } else {
 
-    if (class(fillcolor) == "function"){
+    if (class(bb_pileInternal$fillcolor) == "function"){
 
-      rowDF$color <- bb_maptocolors(rowDF$colorby, fillcolor, range = colorbyrange)
+      rowDF$color <- bb_maptocolors(rowDF$colorby, bb_pileInternal$fillcolor, range = pileup_plot$zrange)
       sorted_colors <- unique(rowDF[order(rowDF$colorby),]$color)
       pileup_plot$color_palette <- sorted_colors
 
     } else {
 
       colorbyCol <- factor(rowDF$colorby)
-      mappedColors <- rep(fillcolor, ceiling(length(levels(colorbyCol))/length(fillcolor)))
+      mappedColors <- rep(bb_pileInternal$fillcolor, ceiling(length(levels(colorbyCol))/length(bb_pileInternal$fillcolor)))
       rowDF$color <- mappedColors[rowDF$colorby]
     }
 
@@ -405,13 +466,20 @@ bb_plotPileup <- function(bed, chrom, chromstart = NULL, chromend = NULL, assemb
 
   if (nrow(rowDF) > 0){
 
+    alpha <- 1
+    if (!length(list(...)) == 0){
+      if ("alpha" %in% names(list(...))){
+        alpha <- list(...)$alpha
+      }
+    }
+
     bedRects <- rectGrob(x = rowDF$start,
                          y = rowDF$y,
                          width = rowDF$width,
                          height = boxHeight,
                          just = c("left", "bottom"),
                          default.units = "native",
-                         gp = gpar(fill = rowDF$color, col = linecolor))
+                         gp = gpar(fill = rowDF$color, col = bb_pileInternal$linecolor, alpha = alpha))
     assign("pileup_grobs", addGrob(gTree = get("pileup_grobs", envir = bbEnv), child = bedRects), envir = bbEnv)
 
   } else {
@@ -419,11 +487,11 @@ bb_plotPileup <- function(bed, chrom, chromstart = NULL, chromend = NULL, assemb
     warning("No pileup data to plot.", call. = FALSE)
   }
 
-  if (strandSplit == TRUE){
+  if (bb_pileInternal$strandSplit == TRUE){
 
     lineGrob <- segmentsGrob(x0 = unit(0, "npc"), x1 = unit(1, "npc"),
                              y0 = unit(0, "native"), y1 = unit(0, "native"),
-                             gp = gpar(col = "black"))
+                             gp = gpar(...))
     assign("pileup_grobs", addGrob(gTree = get("pileup_grobs", envir = bbEnv), child = lineGrob), envir = bbEnv)
 
   }
@@ -433,7 +501,7 @@ bb_plotPileup <- function(bed, chrom, chromstart = NULL, chromend = NULL, assemb
   # IF PLOT == TRUE, DRAW GROBS
   # ======================================================================================================================================================================================
 
-  if (draw == TRUE){
+  if (bb_pileInternal$draw == TRUE){
 
     grid.draw(get("pileup_grobs", envir = bbEnv))
 

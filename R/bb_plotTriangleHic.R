@@ -2,6 +2,7 @@
 #'
 #' @param hic path to .hic file or 3 column dataframe of counts
 #' @param chrom chromosome of region to be plotted, based on build (i.e. for hg19 just a number, for hg38 string like "chr8")
+#' @param params an optional "bb_params" object space containing relevant function parameters
 #' @param chromstart chromosome start of region to be plotted
 #' @param chromend chromosome end of region to be plotted
 #' @param resolution the width in bp of each pixel; for hic files, "auto" will attempt to choose a resolution based on the size of the region; for
@@ -21,9 +22,9 @@
 #' @export
 #'
 #'
-bb_plotTriangleHic <- function(hic, chrom, chromstart = NULL, chromend = NULL, resolution = "auto", zrange = NULL,
+bb_plotTriangleHic <- function(hic, chrom, params = NULL, chromstart = NULL, chromend = NULL, resolution = "auto", zrange = NULL,
                                palette = colorRampPalette(c("white", "dark red")), assembly = "hg19", width = NULL, height = NULL,
-                               x = NULL, y = NULL, just = c("left", "top"), norm = "KR", default.units = "inches", draw = T, ...){
+                               x = NULL, y = NULL, just = c("left", "top"), norm = "KR", default.units = "inches", draw = T){
 
   # ======================================================================================================================================================================================
   # FUNCTIONS
@@ -417,143 +418,57 @@ bb_plotTriangleHic <- function(hic, chrom, chromstart = NULL, chromend = NULL, r
   ## Define a function that manually "clips" squares/triangles along edges
   manual_clip <- function(hic, hic_plot){
 
-    ## make sure appropriate coordinates are in both the sides of the hic data (i.e. no missing pixels)
-    all_coords <- seq(floor(hic_plot$chromstart/hic_plot$resolution)*hic_plot$resolution,
-                      floor((hic_plot$chromend - hic_plot$resolution)/hic_plot$resolution)*hic_plot$resolution, hic_plot$resolution)
+    clipLeft <- hic[which(hic[,1] < hic_plot$chromstart),]
+    clipTop <- hic[which((hic[,2] + hic_plot$resolution) > hic_plot$chromend),]
 
-    hic_side <- hic[which(hic[,1] == min(hic[,1])),]
-    hic_top <- hic[which(hic[,2] == max(hic[,2])),]
+    topLeft <- suppressMessages(dplyr::inner_join(clipLeft, clipTop))
 
-    hic <- hic[which(hic[,1] != min(hic[,1])),]
-    hic <- hic[which(hic[,2] != max(hic[,2])),]
-
-    side_missing <- dplyr::setdiff(all_coords, hic_side$y)
-    top_missing <- dplyr::setdiff(all_coords, hic_top$x)
-
-    side_missing_comp <- rep(hic_side[1,1], length(side_missing))
-    top_missing_comp <- rep(hic_top[1,2], length(top_missing))
-
-    add_side <- data.frame("x" = side_missing_comp, "y" = side_missing, "counts" = rep(NA, length(side_missing)),
-                           "color" = rep(NA, length(side_missing)),
-                           "width" = rep(hic_plot$resolution, length(side_missing)), "height" = rep(hic_plot$resolution, length(side_missing)))
-
-    add_top <- data.frame("x" = top_missing, "y" = top_missing_comp, "counts" = rep(NA, length(top_missing)),
-                          "color" = rep(NA, length(top_missing)),
-                          "width" = rep(hic_plot$resolution, length(top_missing)), "height" = rep(hic_plot$resolution, length(top_missing)))
-
-    sideTotal <- rbind(hic_side, add_side)
-    sideTotal <- sideTotal[-which(sideTotal[,1] == min(sideTotal[,1]) & sideTotal[,2] == max(sideTotal[,2])),]
-    topTotal <- rbind(hic_top, add_top)
-
-    hic <- rbind(hic, sideTotal, topTotal)
-    hic <- hic[order(as.numeric(rownames(hic))),]
-
-    ## lowest most genomic coordinate of data set
-    left_min <- min(hic[,1])
-    ## highest most genomic coordinate of data set
-    top_max <- max(hic[,2]) + hic_plot$resolution
+    clipLeft <- suppressMessages(dplyr::anti_join(clipLeft, topLeft))
+    clipTop <- suppressMessages(dplyr::anti_join(clipTop, topLeft))
 
     ############# Squares
     squares <- hic[which(hic[,2] > hic[,1]),]
+    clipLeftsquares <- suppressMessages(dplyr::inner_join(squares, clipLeft))
+    clipTopsquares <- suppressMessages(dplyr::inner_join(squares, clipTop))
+    clippedSquares <- rbind(clipLeftsquares, clipTopsquares, topLeft)
 
-    top_left <- squares[which(squares[,1] == min(squares[,1]) & squares[,2] == max(squares[,2])),]
-    squares <- squares[-which(squares[,1] == min(squares[,1]) & squares[,2] == max(squares[,2])),]
+    squares <- suppressMessages(dplyr::anti_join(squares, clippedSquares))
 
-    left_squares <- squares[which(squares[,1] == min(squares[,1])),]
-    squares <- squares[-which(squares[,1] == min(squares[,1])),]
 
-    top_squares <- squares[which(squares[,2] == max(squares[,2])),]
-    squares <- squares[-which(squares[,2] == max(squares[,2])),]
+    clipLeftsquares$width <- hic_plot$resolution - (hic_plot$chromstart - clipLeftsquares$x)
+    clipLeftsquares$x <- rep(hic_plot$chromstart, nrow(clipLeftsquares))
+
+    #clipTopsquares$height <- hic_plot$resolution - (hic_plot$chromend - clipTopsquares$y)
+    clipTopsquares$height <- hic_plot$chromend - clipTopsquares$y
+
+    topLeft$width <-  hic_plot$resolution - (hic_plot$chromstart - topLeft$x)
+    topLeft$x <- rep(hic_plot$chromstart, nrow(topLeft))
+    #topLeft$height <- hic_plot$resolution - (hic_plot$chromend - topLeft$y)
+    topLeft$height <- hic_plot$chromend - topLeft$y
+
 
     ############# Triangles
     triangles <- hic[which(hic[,2] == hic[,1]),]
+    topRight <- suppressMessages(dplyr::inner_join(triangles, clipTop))
+    bottomLeft <- suppressMessages(dplyr::inner_join(triangles, clipLeft))
+    clippedTriangles <- rbind(topRight, bottomLeft)
 
-    bottom_left <- triangles[which(triangles[,1] == min(triangles[,1])),]
-    triangles <- triangles[-which(triangles[,1] == min(triangles[,1])),]
+    triangles <- suppressMessages(dplyr::anti_join(triangles, clippedTriangles))
 
-    top_right <- triangles[which(triangles[,2] == max(triangles[,2])),]
-    triangles <- triangles[-which(triangles[,2] == max(triangles[,2])),]
+    #topRight$height <- hic_plot$resolution - (hic_plot$chromend - topRight$y)
+    topRight$height <- hic_plot$chromend - topRight$y
+    topRight$width <- topRight$height
 
-    if (left_min < hic_plot$chromstart & top_max > hic_plot$chromend){
-
-      new_width <- hic_plot$resolution - (hic_plot$chromstart - left_min)
-      new_height <- hic_plot$resolution - (top_max - hic_plot$chromend)
-
-      ## Adjust top left square from both left and top
-      top_left$x <- hic_plot$chromstart
-      top_left$width <- new_width
-      top_left$height <- new_height
-
-      ## Adjust left squares from left
-      left_squares$x <- hic_plot$chromstart
-      left_squares$width <- new_width
-
-      ## Adjust top squares from top
-      top_squares$height <- new_height
-
-      ## Adjust bottom left triangle
-      bottom_left$x <- hic_plot$chromstart
-      bottom_left$y <- hic_plot$chromstart
-      bottom_left$width <- new_width
-      bottom_left$height <- new_width
-
-      ## Adjust top right triangle
-      top_right$height <- new_height
-      top_right$width <- new_height
-
-    } else {
-
-      if (left_min < hic_plot$chromstart){
-
-        new_width <- hic_plot$resolution - (hic_plot$chromstart - left_min)
-
-        ## Adjust top left square from left only
-        top_left$x <- hic_plot$chromstart
-        top_left$width <- new_width
-
-        ## Adjust left squares from left
-        left_squares$x <- hic_plot$chromstart
-        left_squares$width <- new_width
-
-        ## Adjust bottom left triangle
-        bottom_left$x <- hic_plot$chromstart
-        bottom_left$y <- hic_plot$chromstart
-        bottom_left$width <- new_width
-        bottom_left$height <- new_width
+    bottomLeft$width <- hic_plot$resolution - (hic_plot$chromstart - bottomLeft$x)
+    bottomLeft$height <- bottomLeft$width
+    bottomLeft$x <- rep(hic_plot$chromstart, nrow(bottomLeft))
+    bottomLeft$y <- rep(hic_plot$chromstart, nrow(bottomLeft))
 
 
+    ## Recombine
+    clippedHic <- rbind(squares, triangles, clipLeftsquares, clipTopsquares, topLeft, topRight, bottomLeft)
 
-      }
-
-      else if (top_max > hic_plot$chromend){
-
-        new_height <- hic_plot$resolution - (top_max - hic_plot$chromend)
-
-        ## Adjust top left square from top only
-        top_left$height <- new_height
-
-        ## Adjust top squares from top
-        top_squares$height <- new_height
-
-        ## Adjust top triangle
-        top_right$height <- new_height
-        top_right$width <- new_height
-
-      }
-
-    }
-
-    ## Recombine squares
-    all_squares <- rbind(squares, top_left, left_squares, top_squares)
-
-    ## Recombine triangles
-    all_triangles <- rbind(triangles, top_right, bottom_left)
-
-    ##vRecombine everything
-    total <- rbind(all_squares, all_triangles)
-
-    return(total)
-
+    return(clippedHic)
   }
 
   ## Define a function that makes grobs for the hic diagonal
@@ -580,51 +495,87 @@ bb_plotTriangleHic <- function(hic, chrom, chromstart = NULL, chromend = NULL, r
   }
 
   # ======================================================================================================================================================================================
+  # PARSE PARAMETERS
+  # ======================================================================================================================================================================================
+
+  ## Check which defaults are not overwritten and set to NULL
+  if(missing(resolution)) resolution <- NULL
+  if(missing(palette)) palette <- NULL
+  if(missing(assembly)) assembly <- NULL
+  if(missing(just)) just <- NULL
+  if(missing(norm)) norm <- NULL
+  if(missing(default.units)) default.units <- NULL
+  if(missing(draw)) draw <- NULL
+
+  ## Check if hic/chrom arguments are missing (could be in object)
+  if(!hasArg(hic)) hic <- NULL
+  if(!hasArg(chrom)) chrom <- NULL
+
+  ## Compile all parameters into an internal object
+  bb_thicInternal <- structure(list(hic = hic, chrom = chrom, chromstart = chromstart, chromend = chromend, resolution = resolution,
+                                    zrange = zrange, palette = palette, assembly = assembly, width = width, height = height, x = x,
+                                    y = y, just = just, norm = norm, default.units = default.units, draw = draw), class = "bb_thicInternal")
+
+  bb_thicInternal <- parseParams(bb_params = params, object_params = bb_thicInternal)
+
+  ## For any defaults that are still NULL, set back to default
+  if(is.null(bb_thicInternal$resolution)) bb_thicInternal$resolution <- "auto"
+  if(is.null(bb_thicInternal$palette)) bb_thicInternal$palette <- colorRampPalette(c("white", "dark red"))
+  if(is.null(bb_thicInternal$assembly)) bb_thicInternal$assembly <- "hg19"
+  if(is.null(bb_thicInternal$just)) bb_thicInternal$just <- c("left", "top")
+  if(is.null(bb_thicInternal$norm)) bb_thicInternal$norm <- "KR"
+  if(is.null(bb_thicInternal$default.units)) bb_thicInternal$default.units <- "inches"
+  if(is.null(bb_thicInternal$draw)) bb_thicInternal$draw <- TRUE
+
+  # ======================================================================================================================================================================================
   # INITIALIZE OBJECT
   # ======================================================================================================================================================================================
 
-  hic_plot <- structure(list(chrom = chrom, chromstart = chromstart, chromend = chromend, x = x, y = y, width = width, height = height, justification = NULL,
-                             zrange = zrange, altchrom = chrom, altchromstart = chromstart, altchromend = chromend, resolution = resolution,
-                             color_palette = NULL, grobs = NULL, outsideVP = NULL, assembly = assembly), class = "bb_trianglehic")
-  attr(x = hic_plot, which = "plotted") <- draw
+  hic_plot <- structure(list(chrom = bb_thicInternal$chrom, chromstart = bb_thicInternal$chromstart, chromend = bb_thicInternal$chromend,
+                             x = bb_thicInternal$x, y = bb_thicInternal$y, width = bb_thicInternal$width, height = bb_thicInternal$height, justification = NULL,
+                             zrange = bb_thicInternal$zrange, altchrom = bb_thicInternal$chrom, altchromstart = bb_thicInternal$chromstart, altchromend = bb_thicInternal$chromend,
+                             resolution = bb_thicInternal$resolution, color_palette = NULL, grobs = NULL, outsideVP = NULL, assembly = bb_thicInternal$assembly), class = "bb_trianglehic")
+  attr(x = hic_plot, which = "plotted") <- bb_thicInternal$draw
 
   # ======================================================================================================================================================================================
-  # CHECK PLACEMENT
+  # CHECK PLACEMENT/ARGUMENT ERRORS
   # ======================================================================================================================================================================================
 
+  if(is.null(bb_thicInternal$hic)) stop("argument \"hic\" is missing, with no default.", call. = FALSE)
+  if(is.null(bb_thicInternal$chrom)) stop("argument \"chrom\" is missing, with no default.", call. = FALSE)
   check_placement(object = hic_plot)
 
   # ======================================================================================================================================================================================
   # PARSE UNITS
   # ======================================================================================================================================================================================
 
-  hic_plot <- defaultUnits(object = hic_plot, default.units = default.units)
+  hic_plot <- defaultUnits(object = hic_plot, default.units = bb_thicInternal$default.units)
 
   # ======================================================================================================================================================================================
   # CATCH ERRORS
   # ======================================================================================================================================================================================
 
-  errorcheck_bb_plotTriangleHic(hic = hic, hic_plot = hic_plot, norm = norm)
+  errorcheck_bb_plotTriangleHic(hic = bb_thicInternal$hic, hic_plot = hic_plot, norm = bb_thicInternal$norm)
 
   # ======================================================================================================================================================================================
   # JUSTIFICATION OF PLOT
   # ======================================================================================================================================================================================
 
-  new_just <- reset_just(just = just, x = hic_plot$x, y = hic_plot$y, width = hic_plot$width, height = hic_plot$height)
+  new_just <- reset_just(just = bb_thicInternal$just, x = hic_plot$x, y = hic_plot$y, width = hic_plot$width, height = hic_plot$height)
   hic_plot$justification <- new_just
 
   # ======================================================================================================================================================================================
   # WHOLE CHROM
   # ======================================================================================================================================================================================
-  if (is.null(chromstart) & is.null(chromend)){
-    if (assembly == "hg19"){
+  if (is.null(hic_plot$chromstart) & is.null(hic_plot$chromend)){
+    if (hic_plot$assembly == "hg19"){
       genome <- bb_hg19
     }
 
     hic_plot$chromstart <- 1
-    hic_plot$chromend <- genome[which(genome$chrom == chrom),]$length
+    hic_plot$chromend <- genome[which(genome$chrom == hic_plot$chrom),]$length
     hic_plot$altchromstart <- 1
-    hic_plot$altchromend <- genome[which(genome$chrom == chrom),]$length
+    hic_plot$altchromend <- genome[which(genome$chrom == hic_plot$chrom),]$length
 
   }
 
@@ -632,15 +583,15 @@ bb_plotTriangleHic <- function(hic, chrom, chromstart = NULL, chromend = NULL, r
   # ADJUST RESOLUTION
   # ======================================================================================================================================================================================
 
-  if (resolution == "auto"){
-    hic_plot <- adjust_resolution(hic = hic, hic_plot = hic_plot)
+  if (bb_thicInternal$resolution == "auto"){
+    hic_plot <- adjust_resolution(hic = bb_thicInternal$hic, hic_plot = hic_plot)
   }
 
   # ======================================================================================================================================================================================
   # READ IN DATA
   # ======================================================================================================================================================================================
 
-  hic <- read_data(hic = hic, hic_plot = hic_plot, norm = norm, assembly = assembly)
+  hic <- read_data(hic = bb_thicInternal$hic, hic_plot = hic_plot, norm = bb_thicInternal$norm, assembly = hic_plot$assembly)
 
   # ======================================================================================================================================================================================
   # SUBSET DATA
@@ -663,7 +614,7 @@ bb_plotTriangleHic <- function(hic, chrom, chromstart = NULL, chromend = NULL, r
   ## if we don't have an appropriate zrange (even after setting it based on a null zrange), can't scale to colors
   if (!is.null(hic_plot$zrange) & length(unique(hic_plot$zrange)) == 2){
 
-    hic$color <- bb_maptocolors(hic$counts, col = palette, num = 100, range = hic_plot$zrange)
+    hic$color <- bb_maptocolors(hic$counts, col = bb_thicInternal$palette, num = 100, range = hic_plot$zrange)
     sorted_colors <- unique(hic[order(hic$counts),]$color)
     hic_plot$color_palette <- sorted_colors
 
@@ -677,7 +628,7 @@ bb_plotTriangleHic <- function(hic, chrom, chromstart = NULL, chromend = NULL, r
   currentViewports <- current_viewports()
   vp_name <- paste0("bb_trianglehic", length(grep(pattern = "bb_trianglehic", x = currentViewports)) + 1)
 
-  if (is.null(x) & is.null(y)){
+  if (is.null(hic_plot$x) & is.null(hic_plot$y)){
 
     inside_vp <- viewport(height = unit(1, "npc"), width = unit(0.5, "npc"),
                           x = unit(0, "npc"), y = unit(0, "npc"),
@@ -697,7 +648,7 @@ bb_plotTriangleHic <- function(hic, chrom, chromstart = NULL, chromend = NULL, r
                            name = paste0(vp_name, "_outside"))
 
 
-    if (draw == TRUE){
+    if (bb_thicInternal$draw == TRUE){
 
       inside_vp$name <- "bb_trianglehic1_inside"
       outside_vp$name <- "bb_trianglehic1_outside"
@@ -751,7 +702,6 @@ bb_plotTriangleHic <- function(hic, chrom, chromstart = NULL, chromend = NULL, r
 
   ## Manually "clip" the grobs that fall out of the desired chromstart to chromend region
   hic <- manual_clip(hic = hic, hic_plot = hic_plot)
-  hic <- hic[which(hic$width != 0 | hic$height != 0),]
   hic <- hic[order(as.numeric(rownames(hic))),]
 
   ## Separate into squares for upper region and triangle shapes for the diagonal
@@ -784,7 +734,7 @@ bb_plotTriangleHic <- function(hic, chrom, chromstart = NULL, chromend = NULL, r
   # IF DRAW == TRUE, DRAW GROBS
   # ======================================================================================================================================================================================
 
-  if (draw == TRUE){
+  if (bb_thicInternal$draw == TRUE){
 
     pushViewport(outside_vp)
     grid.draw(get("hic_grobs2", envir = bbEnv))

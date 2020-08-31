@@ -6,6 +6,7 @@
 \usage{
 bb_plotApa(
   apa,
+  params = NULL,
   loopNumber = 1,
   palette = colorRampPalette(c("white", "dark red")),
   zrange = NULL,
@@ -20,6 +21,8 @@ bb_plotApa(
 }
 \arguments{
 \item{apa}{path to APA txt file or an APA matrix}
+
+\item{params}{an optional "bb_params" object space containing relevant function parameters}
 
 \item{loopNumber}{number of DNA loops}
 

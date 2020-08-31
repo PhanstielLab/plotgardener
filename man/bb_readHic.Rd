@@ -7,6 +7,7 @@
 bb_readHic(
   hic,
   chrom,
+  params = NULL,
   chromstart = NULL,
   chromend = NULL,
   resolution = "auto",
@@ -23,6 +24,8 @@ bb_readHic(
 \item{hic}{path to .hic file}
 
 \item{chrom}{chromosome of desired region}
+
+\item{params}{an optional "bb_params" object space containing relevant function parameters}
 
 \item{chromstart}{start position}
 

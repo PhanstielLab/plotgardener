@@ -1,6 +1,7 @@
 #' places a plot that has been previously created but not drawn
 #'
 #' @param plot plot to be placed
+#' @param params an optional "bb_params" object space containing relevant function parameters
 #' @param x A unit object specifying x-location.
 #' @param y A unit object specifying y-location.
 #' @param width A unit object specifying width.
@@ -13,14 +14,12 @@
 #'
 #'
 #' @export
-bb_placePlot <- function(plot, x = NULL, y = NULL, width = NULL, height = NULL, just = c("left", "top"),
+bb_placePlot <- function(plot, params = NULL, x = NULL, y = NULL, width = NULL, height = NULL, just = c("left", "top"),
                          default.units = "inches", draw = T){
 
   # ======================================================================================================================================================================================
   # FUNCTIONS
   # ======================================================================================================================================================================================
-  ## Error function
-  # if you give an x, need to give a y and vice versa
 
   set_x <- function(object, val){
 
@@ -144,104 +143,133 @@ bb_placePlot <- function(plot, x = NULL, y = NULL, width = NULL, height = NULL, 
   }
 
   # ======================================================================================================================================================================================
+  # PARSE PARAMETERS
+  # ======================================================================================================================================================================================
+
+  ## Check which defaults are not overwritten and set to NULL
+  if(missing(just)) just <- NULL
+  if(missing(default.units)) default.units <- NULL
+  if(missing(draw)) draw <- NULL
+
+  ## Check if plot argument is missing (could be in object)
+  if(!hasArg(plot)) plot <- NULL
+
+  ## Compile all parameters into an internal object
+  bb_place <- structure(list(plot = plot, x = x, y = y, width = width, height = height, draw = draw,
+                                     just = just, default.units = default.units), class = "bb_place")
+
+  bb_place <- parseParams(bb_params = params, object_params = bb_place)
+
+  ## For any defaults that are still NULL, set back to default
+  if(is.null(bb_place$just)) bb_place$just <- c("left", "top")
+  if(is.null(bb_place$default.units)) bb_place$default.units <- "inches"
+  if(is.null(bb_place$draw)) bb_place$draw <- TRUE
+
+  # ======================================================================================================================================================================================
+  # ERRORS
+  # ======================================================================================================================================================================================
+
+  if(is.null(bb_place$plot)) stop("argument \"plot\" is missing, with no default.", call. = FALSE)
+
+  # ======================================================================================================================================================================================
   # INITIALIZE PLOT OBJECT COPY
   # ======================================================================================================================================================================================
 
-  object <- plot
+  object <- bb_place$plot
 
   # ======================================================================================================================================================================================
   # PARSE UNITS FOR INPUTS
   # ======================================================================================================================================================================================
 
-  if (!is.null(x)){
+  if (!is.null(bb_place$x)){
 
-    if (!"unit" %in% class(x)){
+    if (!"unit" %in% class(bb_place$x)){
 
-      if (!is.numeric(x)){
+      if (!is.numeric(bb_place$x)){
 
         warning("x-coordinate is neither a unit object or a numeric value. Cannot parse x-coordinate.", call. = FALSE)
-        x <- NULL
+        bb_place$x <- NULL
 
       }
 
-      if (is.null(default.units)){
+      if (is.null(bb_place$default.units)){
 
         warning("x-coordinate detected as numeric.\'default.units\' must be specified.", call. = FALSE)
-        x <- NULL
+        bb_place$x <- NULL
 
       }
 
-      x <- unit(x, default.units)
+      bb_place$x <- unit(bb_place$x, bb_place$default.units)
 
     }
   }
 
-  if (!is.null(y)){
+  if (!is.null(bb_place$y)){
 
-    if (!"unit" %in% class(y)){
+    if (!"unit" %in% class(bb_place$y)){
 
-      if (!is.numeric(y)){
+      if (!is.numeric(bb_place$y)){
 
         warning("y-coordinate is neither a unit object or a numeric value. Cannot parse y-coordinate.", call. = FALSE)
-        y <- NULL
+        bb_place$y <- NULL
 
       }
 
-      if (is.null(default.units)){
+      if (is.null(bb_place$default.units)){
 
         warning("y-coordinate detected as numeric.\'default.units\' must be specified.", call. = FALSE)
-        y <- NULL
+        bb_place$y <- NULL
 
       }
 
-      y <- unit(y, default.units)
+      bb_place$y <- unit(bb_place$y, bb_place$default.units)
 
     }
   }
 
-  if (!is.null(width)){
+  if (!is.null(bb_place$width)){
 
-    if (!"unit" %in% class(width)){
+    if (!"unit" %in% class(bb_place$width)){
 
-      if (!is.numeric(width)){
+      if (!is.numeric(bb_place$width)){
 
         warning("width is neither a unit object or a numeric value. Cannot parse width.", call. = FALSE)
-        width <- NULL
+        bb_place$width <- NULL
 
       }
 
-      if (is.null(default.units)){
+      if (is.null(bb_place$default.units)){
 
         warning("width detected as numeric.\'default.units\' must be specified.", call. = FALSE)
-        width <- NULL
+        bb_place$width <- NULL
 
       }
 
-      width <- unit(width, default.units)
+      bb_place$width <- unit(bb_place$width, bb_place$default.units)
 
     }
   }
 
-  if (!is.null(height)){
+  if (!is.null(bb_place$height)){
 
-    if (!"unit" %in% class(height)){
+    if (!"unit" %in% class(bb_place$height)){
 
-      if (!is.numeric(height)){
+      if (!is.numeric(bb_place$height)){
 
         warning("height is neither a unit object or a numeric value. Cannot parse height.", call. = FALSE)
-        height <- NULL
+        bb_place$height <- NULL
 
 
       }
 
-      if (is.null(default.units)){
+      if (is.null(bb_place$default.units)){
 
         warning("height detected as numeric.\'default.units\' must be specified.", call. = FALSE)
-        height <- NULL
+        bb_place$height <- NULL
 
       }
 
-      height <- unit(height, default.units)
+      bb_place$height <- unit(bb_place$height, bb_place$default.units)
 
     }
   }
@@ -250,15 +278,15 @@ bb_placePlot <- function(plot, x = NULL, y = NULL, width = NULL, height = NULL, 
   # UPDATE DIMENSIONS AND COORDINATES OF PLOT OBJECT BASED ON INPUTS
   # ======================================================================================================================================================================================
 
-  object <- set_values(object = object, x = x, y = y, width = width, height = height)
-  object$justification <- just
-  attr(x = object, which = "plotted") <- draw
+  object <- set_values(object = object, x = bb_place$x, y = bb_place$y, width = bb_place$width, height = bb_place$height)
+  object$justification <- bb_place$just
+  attr(x = object, which = "plotted") <- bb_place$draw
 
   # ======================================================================================================================================================================================
   # INHERIT DIMENSIONS/COOORDINATES WHERE NULL
   # ======================================================================================================================================================================================
 
-  object <- parse_coordinates(input_plot = plot, output_plot = object)
+  object <- parse_coordinates(input_plot = bb_place$plot, output_plot = object)
 
   # ======================================================================================================================================================================================
   # CALL ERRORS
@@ -286,7 +314,7 @@ bb_placePlot <- function(plot, x = NULL, y = NULL, width = NULL, height = NULL, 
                        just = "center",
                        name = vp_name)
 
-    if (draw == TRUE){
+    if (bb_place$draw == TRUE){
 
       grid.newpage()
       warning("Plot placement will only fill up the graphical device.", call. = FALSE)
@@ -303,25 +331,9 @@ bb_placePlot <- function(plot, x = NULL, y = NULL, width = NULL, height = NULL, 
                        x = page_coords$x, y = page_coords$y,
                        clip = "on",
                        xscale = object$grobs$vp$xscale, yscale = object$grobs$vp$yscale,
-                       just = just,
+                       just = bb_place$just,
                        name = vp_name)
   }
-
-
-
-
-
-  # ## Convert coordinates into same units as page
-  # page_coords <- convert_page(object = object)
-  #
-  #
-  # ## Make viewport
-  # new_vp <- viewport(height = page_coords$height, width = page_coords$width,
-  #                x = page_coords$x, y = page_coords$y,
-  #                clip = "on",
-  #                xscale = object$grobs$vp$xscale, yscale = object$grobs$vp$yscale,
-  #                just = just,
-  #                name = vp_name)
 
   # ======================================================================================================================================================================================
   # RENAME GROBS
@@ -340,7 +352,7 @@ bb_placePlot <- function(plot, x = NULL, y = NULL, width = NULL, height = NULL, 
   # IF DRAW == TRUE, DRAW GROBS
   # ======================================================================================================================================================================================
 
-  if (draw == TRUE){
+  if (bb_place$draw == TRUE){
 
     grid.draw(object$grobs)
 

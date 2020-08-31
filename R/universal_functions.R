@@ -247,6 +247,65 @@ vp_bottomLeft <- function(viewport){
 
 }
 
+## Define a function to change viewport x and y-coordinates to bottom right based on justification
+vp_bottomRight <- function(viewport){
+
+  if (length(viewport$justification == 2)){
+
+    if ("left" %in% viewport$justification & "center" %in% viewport$justification){
+      vp_x <- viewport$x + viewport$width
+      vp_y <- viewport$y - (0.5 * viewport$height)
+    } else if ("right" %in% viewport$justification & "center" %in% viewport$justification){
+      vp_x <- viewport$x
+      vp_y <- viewport$y - (0.5 * viewport$height)
+    } else if ("center" %in% viewport$justification & "bottom" %in% viewport$justification){
+      vp_x <- viewport$x + (0.5 * viewport$width)
+      vp_y <- viewport$y
+    } else if ("center" %in% viewport$justification & "top" %in% viewport$justification){
+      vp_x <- viewport$x + (0.5 * viewport$width)
+      vp_y <- viewport$y - (viewport$height)
+    } else if ("left" %in% viewport$justification & "top" %in% viewport$justification){
+      vp_x <- viewport$x + viewport$width
+      vp_y <- viewport$y - (viewport$height)
+    } else if ("right" %in% viewport$justification & "top" %in% viewport$justification){
+      vp_x <- viewport$x
+      vp_y <- viewport$y - (viewport$height)
+    } else if ("left" %in% pviewport$justification & "bottom" %in% viewport$justification){
+      vp_x <- viewport$x + viewport$width
+      vp_y <- viewport$y
+    } else if ("right" %in% viewport$justification & "bottom" %in% viewport$justification){
+      vp_x <- viewport$x
+      vp_y <- viewport$y
+    } else {
+      vp_x <- viewport$x + (0.5 * viewport$width)
+      vp_y <- viewport$y - (0.5 * viewport$height)
+    }
+
+  } else if (length(viewport$justification == 1)){
+
+    if (viewport$justification == "left"){
+      vp_x <- viewport$x + viewport$width
+      vp_y <- viewport$y - (0.5 * viewport$height)
+    } else if (viewport$justification == "right"){
+      vp_x <- viewport$x
+      vp_y <- viewport$y - (0.5 * viewport$height)
+    } else if (viewport$justification == "bottom"){
+      vp_x <- viewport$x + (0.5 * viewport$width)
+      vp_y <- viewport$y
+    } else if (viewport$justification == "top"){
+      vp_x <- viewport$x + (0.5 * viewport$width)
+      vp_y <- viewport$y - (viewport$height)
+    } else {
+      vp_x <- viewport$x + (0.5 * viewport$width)
+      vp_y <- viewport$y - (0.5 * viewport$height)
+    }
+
+  }
+
+  return(list(vp_x, vp_y))
+
+}
+
 ## Define a function to convert to page units
 convert_page <- function(object){
 
@@ -468,6 +527,64 @@ makeTransparent <- function(color, alpha){
 
 }
 
+## Define a function that parses parameters from a bb_params object
+parseParams <- function(bb_params, object_params){
+
+  getNull <- function(name, params){
+
+    val <- params[[name]]
+    if (is.null(val)){
+      return(name)
+    }
+
+  }
+
+  if (!is.null(bb_params)){
+    ## First make sure it's actually a "bb_params" object
+    if (class(bb_params) != "bb_params"){
+      warning("Input object ignored. Object must be a \'bb_params\' class object.", call. = FALSE)
+    } else {
+
+      objectNames <- names(object_params)
+
+      ## Get the NULL object params that haven't been set with other parameter input
+      nullNames <- unlist(lapply(objectNames, getNull, params = object_params))
+      ## Get any of the object values that match those names
+      objectMatches <- bb_params[which(names(bb_params) %in% nullNames)]
+      ## Replace object_param values with bb_params values
+      object_params[match(names(objectMatches), names(object_params))] <- objectMatches
+      ## Find gene region for relevant classes
+      if ("chrom" %in% objectNames){
+
+        if ("gene" %in% names(bb_params)){
+
+          assembly <- object_params$assembly
+          if (assembly == "hg19"){
+            genes <- bb_hg19gtf
+          }
+
+          geneRegion <- genes[which(genes$Gene == bb_params$gene),]
+          object_params$chrom <- geneRegion$Chromosome
+
+          if ("chromstart" %in% objectNames & "chromend" %in% objectNames){
+
+            object_params$chromstart <- geneRegion$Start
+            object_params$chromend <- geneRegion$Stop
+
+          }
+
+
+        }
+
+      }
+
+
+    }
+
+  }
+
+  return(object_params)
+}
 
 
 

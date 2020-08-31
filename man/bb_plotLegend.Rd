@@ -2,28 +2,35 @@
 % Please edit documentation in R/bb_plotLegend.R
 \name{bb_plotLegend}
 \alias{bb_plotLegend}
-\title{plots a horizontal legend}
+\title{plots a legend}
 \usage{
 bb_plotLegend(
   legend,
+  params = NULL,
+  orientation = "v",
   fillcolor = NULL,
   pch = NULL,
   lty = NULL,
   title = NULL,
   fontsize = 10,
   border = TRUE,
+  bg = NA,
   x = NULL,
   y = NULL,
   width = NULL,
   height = NULL,
-  just = c("left", "bottom"),
+  just = c("left", "top"),
   default.units = "inches",
   draw = TRUE,
   ...
 )
 }
 \arguments{
-\item{legend}{single value or vector of legend text}
+\item{legend}{single value or vector of legend text#'}
+
+\item{params}{an optional "bb_params" object space containing relevant function parameters}
+
+\item{orientation}{"v" (vertical) or "h" (horizontal) orientation}
 
 \item{fillcolor}{if specified, this argument will produce boxes filled with the specified colors to appear beside the legend text}
 
@@ -34,6 +41,8 @@ bb_plotLegend(
 \item{title}{legend title}
 
 \item{border}{option to add border around legend}
+
+\item{bg}{background color of legend}
 
 \item{x}{A numeric vector or unit object specifying x-location}
 
@@ -50,5 +59,5 @@ bb_plotLegend(
 \item{draw}{A logical value indicating whether graphics output should be produced}
 }
 \description{
-plots a horizontal legend
+plots a legend
 }

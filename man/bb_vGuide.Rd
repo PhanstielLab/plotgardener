@@ -4,10 +4,12 @@
 \alias{bb_vGuide}
 \title{draws a vertical guideline at a specified x-coordinate}
 \usage{
-bb_vGuide(x, col = "grey55", default.units = "inches")
+bb_vGuide(x, params = NULL, col = "grey55", default.units = "inches", ...)
 }
 \arguments{
 \item{x}{A numeric or unit object specifying x-coordinate of guide}
+
+\item{params}{an optional "bb_params" object space containing relevant function parameters}
 
 \item{col}{color of guideline}
 

@@ -7,6 +7,7 @@
 bb_plotHic(
   hic,
   chrom,
+  params = NULL,
   chromstart = NULL,
   chromend = NULL,
   half = "both",
@@ -25,14 +26,15 @@ bb_plotHic(
   altchromstart = NULL,
   altchromend = NULL,
   althalf = NULL,
-  norm = "KR",
-  ...
+  norm = "KR"
 )
 }
 \arguments{
 \item{hic}{path to .hic file or 3 column dataframe of counts}
 
 \item{chrom}{chromosome of region to be plotted}
+
+\item{params}{an optional "bb_params" object space containing relevant function parameters}
 
 \item{chromstart}{start position}
 

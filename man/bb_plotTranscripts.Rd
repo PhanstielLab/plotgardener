@@ -5,8 +5,9 @@
 \title{plots gene transcripts in a pileup style}
 \usage{
 bb_plotTranscripts(
-  assembly = "hg19",
   chrom,
+  params = NULL,
+  assembly = "hg19",
   chromstart = NULL,
   chromend = NULL,
   boxHeight = unit(2, "mm"),
@@ -28,15 +29,17 @@ bb_plotTranscripts(
 )
 }
 \arguments{
-\item{assembly}{desired genome assembly}
-
 \item{chrom}{chromsome of region to be plotted}
+
+\item{params}{an optional "bb_params" object space containing relevant function parameters}
+
+\item{assembly}{desired genome assembly}
 
 \item{chromstart}{start position}
 
 \item{chromend}{end position}
 
-\item{boxHeight}{total height of transcripts, as a numeric value with default units or a unit value}
+\item{boxHeight}{A numeric or unit object specifying total height of each transcript}
 
 \item{spaceHeight}{height of spacing between transcripts, as a fraction of boxHeight}
 

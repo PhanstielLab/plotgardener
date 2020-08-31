@@ -4,10 +4,19 @@
 \alias{bb_xAxis}
 \title{wrapper function for plotting an x axis in its own viewport}
 \usage{
-bb_xAxis(plot, at = NULL, label = TRUE, main = TRUE, gp = gpar())
+bb_xAxis(
+  plot,
+  params = NULL,
+  at = NULL,
+  label = TRUE,
+  main = TRUE,
+  gp = gpar()
+)
 }
 \arguments{
 \item{plot}{plot to add axis to}
+
+\item{params}{an optional "bb_params" object space containing relevant function parameters}
 
 \item{at}{a numeric vector of x-value locations for the tick marks}
 

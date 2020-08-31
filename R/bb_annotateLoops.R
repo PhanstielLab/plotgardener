@@ -2,15 +2,13 @@
 #'
 #' @param hic hic plot to annotate
 #' @param loops bedpe file or dataframe in bedpe file format with loop positions (chr1 and chr2 must be numbers)
+#' @param params an optional "bb_params" object space containing relevant function parameters
 #' @param half which half of hic plots to annotate; default is "inherit", which will inherit whatever is plotted; other options are "both", "top", or "bottom"
 #' @param shift number of pixels on either end of loop in box/circle; number of pixels for length of arrow
 #' @param type type of annotation; options are "box", "circle", or "arrow"
-#' @param lty line type; options are "solid" (1), "dashed" (2), "dotted" (3), "dotdash" (4), "longdash" (5), or "twodash" (6)
-#' @param lwd line width;
-#' @param col line color
 #'
 #' @export
-bb_annotateLoops <- function(hic, loops, half = "inherit", shift = 4, type = "box", lty = "solid", lwd = 1, col = "black", rotation = 0){
+bb_annotateLoops <- function(hic, loops, params = NULL, half = "inherit", shift = 4, type = "box", ...){
 
   # ======================================================================================================================================================================================
   # FUNCTIONS
@@ -198,7 +196,7 @@ bb_annotateLoops <- function(hic, loops, half = "inherit", shift = 4, type = "bo
       center_x <- 0.5 * (as.numeric(df[5]) + as.numeric(df[6]))
       center_y <- 0.5 * (as.numeric(df[2]) + as.numeric(df[3]))
       rect1 <- rectGrob(x = center_x, y = center_y, width = side, height = side, default.units = "native",
-                        gp = gpar(lty = object$gpar$lty, lwd = object$gpar$lwd, col = object$gpar$col, fill = NA))
+                        gp = object$gp)
 
       assign("annotation_grobs", addGrob(gTree = get("annotation_grobs", envir = bbEnv), child = rect1), envir = bbEnv)
 
@@ -207,7 +205,7 @@ bb_annotateLoops <- function(hic, loops, half = "inherit", shift = 4, type = "bo
       center_x <- 0.5 * (as.numeric(df[2]) + as.numeric(df[3]))
       center_y <- 0.5 * (as.numeric(df[5]) + as.numeric(df[6]))
       rect1 <- rectGrob(x = center_x, y = center_y, width = side, height = side, default.units = "native",
-                        gp = gpar(lty = object$gpar$lty, lwd = object$gpar$lwd, col = object$gpar$col, fill = NA))
+                        gp = object$gp)
 
       assign("annotation_grobs", addGrob(gTree = get("annotation_grobs", envir = bbEnv), child = rect1), envir = bbEnv)
 
@@ -222,9 +220,9 @@ bb_annotateLoops <- function(hic, loops, half = "inherit", shift = 4, type = "bo
       center_y2 <- 0.5 * (as.numeric(df[5]) + as.numeric(df[6]))
 
       rect1 <- rectGrob(x = center_x1, y = center_y1, width = side, height = side, default.units = "native",
-                        gp = gpar(lty = object$gpar$lty, lwd = object$gpar$lwd, col = object$gpar$col, fill = NA))
+                        gp = object$gp)
       rect2 <- rectGrob(x = center_x2, y = center_y2, width = side, height = side, default.units = "native",
-                        gp = gpar(lty = object$gpar$lty, lwd = object$gpar$lwd, col = object$gpar$col, fill = NA))
+                        gp = object$gp)
 
       assign("annotation_grobs", addGrob(gTree = get("annotation_grobs", envir = bbEnv), child = rect1), envir = bbEnv)
       assign("annotation_grobs", addGrob(gTree = get("annotation_grobs", envir = bbEnv), child = rect2), envir = bbEnv)
@@ -243,7 +241,7 @@ bb_annotateLoops <- function(hic, loops, half = "inherit", shift = 4, type = "bo
       center_x <- 0.5 * (as.numeric(df[5]) + as.numeric(df[6]))
       center_y <- 0.5 * (as.numeric(df[2]) + as.numeric(df[3]))
       circ1 <- circleGrob(x = center_x, y = center_y, r = radius, default.units = "native",
-                          gp = gpar(lty = object$gpar$lty, lwd = object$gpar$lwd, col = object$gpar$col, fill = NA))
+                          gp = object$gp)
 
       assign("annotation_grobs", addGrob(gTree = get("annotation_grobs", envir = bbEnv), child = circ1), envir = bbEnv)
 
@@ -252,7 +250,7 @@ bb_annotateLoops <- function(hic, loops, half = "inherit", shift = 4, type = "bo
       center_x <- 0.5 * (as.numeric(df[2]) + as.numeric(df[3]))
       center_y <- 0.5 * (as.numeric(df[5]) + as.numeric(df[6]))
       circ1 <- circleGrob(x = center_x, y = center_y, r = radius, default.units = "native",
-                          gp = gpar(lty = object$gpar$lty, lwd = object$gpar$lwd, col = object$gpar$col, fill = NA))
+                          gp = object$gp)
 
       assign("annotation_grobs", addGrob(gTree = get("annotation_grobs", envir = bbEnv), child = circ1), envir = bbEnv)
 
@@ -267,9 +265,9 @@ bb_annotateLoops <- function(hic, loops, half = "inherit", shift = 4, type = "bo
       center_y2 <- 0.5 * (as.numeric(df[5]) + as.numeric(df[6]))
 
       circ1 <- circleGrob(x = center_x1, y = center_y1, r = radius, default.units = "native",
-                          gp = gpar(lty = object$gpar$lty, lwd = object$gpar$lwd, col = object$gpar$col, fill = NA))
+                          gp = object$gp)
       circ2 <- circleGrob(x = center_x2, y = center_y2, r = radius, default.units = "native",
-                          gp = gpar(lty = object$gpar$lty, lwd = object$gpar$lwd, col = object$gpar$col, fill = NA))
+                          gp = object$gp)
 
       assign("annotation_grobs", addGrob(gTree = get("annotation_grobs", envir = bbEnv), child = circ1), envir = bbEnv)
       assign("annotation_grobs", addGrob(gTree = get("annotation_grobs", envir = bbEnv), child = circ2), envir = bbEnv)
@@ -288,7 +286,7 @@ bb_annotateLoops <- function(hic, loops, half = "inherit", shift = 4, type = "bo
 
      arrow1 <- segmentsGrob(x0 = x0, y0 = y0, x1 = x0 + (shift * hic$resolution), y1 = y0 - (shift * hic$resolution),
                    arrow = arrow(length = unit(0.1, "inches"), ends = "first", type = "closed"), default.units = "native",
-                   gp = gpar(lty = object$gpar$lty, lwd = object$gpar$lwd, fill = object$gpar$col))
+                   gp = object$gp)
 
      assign("annotation_grobs", addGrob(gTree = get("annotation_grobs", envir = bbEnv), child = arrow1), envir = bbEnv)
 
@@ -299,7 +297,7 @@ bb_annotateLoops <- function(hic, loops, half = "inherit", shift = 4, type = "bo
 
       arrow1 <- segmentsGrob(x0 = x0, y0 = y0, x1 = x0 - (shift * hic$resolution), y1 = y0 + (shift * hic$resolution),
                     arrow = arrow(length = unit(0.1, "inches"), ends = "first", type = "closed"), default.units = "native",
-                    gp = gpar(lty = object$gpar$lty, lwd = object$gpar$lwd, fill = object$gpar$col))
+                    gp = object$gp)
 
       assign("annotation_grobs", addGrob(gTree = get("annotation_grobs", envir = bbEnv), child = arrow1), envir = bbEnv)
 
@@ -315,10 +313,10 @@ bb_annotateLoops <- function(hic, loops, half = "inherit", shift = 4, type = "bo
 
       arrow1 <- segmentsGrob(x0 = x01, y0 = y01, x1 = x01 + (shift * hic$resolution), y1 = y01 - (shift * hic$resolution),
                     arrow = arrow(length = unit(0.1, "inches"), ends = "first", type = "closed"), default.units = "native",
-                    gp = gpar(lty = object$gpar$lty, lwd = object$gpar$lwd, fill = object$gpar$col))
+                    gp = object$gp)
       arrow2 <- segmentsGrob(x0 = x02, y0 = y02, x1 = x02 - (shift * hic$resolution), y1 = y02 + (shift * hic$resolution),
                     arrow = arrow(length = unit(0.1, "inches"), ends = "first", type = "closed"), default.units = "native",
-                    gp = gpar(lty = object$gpar$lty, lwd = object$gpar$lwd, fill = object$gpar$col))
+                    gp = object$gp)
 
       assign("annotation_grobs", addGrob(gTree = get("annotation_grobs", envir = bbEnv), child = arrow1), envir = bbEnv)
       assign("annotation_grobs", addGrob(gTree = get("annotation_grobs", envir = bbEnv), child = arrow2), envir = bbEnv)
@@ -328,32 +326,61 @@ bb_annotateLoops <- function(hic, loops, half = "inherit", shift = 4, type = "bo
   }
 
   # ======================================================================================================================================================================================
+  # PARSE PARAMETERS
+  # ======================================================================================================================================================================================
+
+  ## Check which defaults are not overwritten and set to NULL
+  if(missing(half)) half <- NULL
+  if(missing(shift)) shift <- NULL
+  if(missing(type)) type <- NULL
+
+  ## Check if hic/loops arguments are missing (could be in object)
+  if(!hasArg(hic)) hic <- NULL
+  if(!hasArg(loops)) loops <- NULL
+
+  ## Compile all parameters into an internal object
+  bb_loopInternal <- structure(list(hic = hic, loops = loops, half = half, shift = shift, type = type), class = "bb_loopInternal")
+
+  bb_loopInternal <- parseParams(bb_params = params, object_params = bb_loopInternal)
+
+  ## For any defaults that are still NULL, set back to default
+  if(is.null(bb_loopInternal$half)) bb_loopInternal$half <- "inherit"
+  if(is.null(bb_loopInternal$shift)) bb_loopInternal$shift <- 4
+  if(is.null(bb_loopInternal$type)) bb_loopInternal$type <- "box"
+
+  # ======================================================================================================================================================================================
   # INITIALIZE OBJECT: GET REGION/DIMENSIONS FROM HIC PLOT INPUT
   # ======================================================================================================================================================================================
 
-  loop_annot <- structure(list(chrom = hic$chrom, chromstart = hic$chromstart, chromend = hic$chromend, altchrom = hic$altchrom,
-                               altchromstart = hic$altchromstart, altchromend = hic$altchromend, x = hic$x, y = hic$y, width = hic$width,
-                               height = hic$height, justification = hic$just, grobs = NULL,
-                             gpar = list(lty = lty, lwd = lwd, col = col)), class = "bb_loop")
+  loop_annot <- structure(list(chrom = bb_loopInternal$hic$chrom, chromstart = bb_loopInternal$hic$chromstart, chromend = bb_loopInternal$hic$chromend, altchrom = bb_loopInternal$hic$altchrom,
+                               altchromstart = bb_loopInternal$hic$altchromstart, altchromend = bb_loopInternal$hic$altchromend, x = bb_loopInternal$hic$x, y = bb_loopInternal$hic$y,
+                               width = bb_loopInternal$hic$width, height = bb_loopInternal$hic$height, just = bb_loopInternal$hic$just, grobs = NULL,
+                               gp = gpar(fill = NA, ...)), class = "bb_loop")
 
   # ======================================================================================================================================================================================
   # CATCH ERRORS
   # ======================================================================================================================================================================================
 
   check_bbpage(error = "Cannot annotate loops without a BentoBox page.")
-  errorcheck_bb_annotateLoops(hic = hic, loops = loops, half = half, type = type)
+  if(is.null(bb_loopInternal$hic)) stop("argument \"hic\" is missing, with no default.", call. = FALSE)
+  if(is.null(bb_loopInternal$loops)) stop("argument \"loops\" is missing, with no default.", call. = FALSE)
+
+
+  errorcheck_bb_annotateLoops(hic = bb_loopInternal$hic, loops = bb_loopInternal$loops,
+                              half = bb_loopInternal$half, type = bb_loopInternal$type)
 
   # ======================================================================================================================================================================================
   # PARSE INHERITED HALF
   # ======================================================================================================================================================================================
 
+  half <- bb_loopInternal$half
   if (half == "inherit"){
 
-    half <- inherit_half(hic = hic)
+    half <- inherit_half(hic = bb_loopInternal$hic)
 
   }
 
-  if (class(hic) == "bb_trianglehic"){
+  if (class(bb_loopInternal$hic) == "bb_trianglehic"){
 
     half <- "top"
 
@@ -363,11 +390,12 @@ bb_annotateLoops <- function(hic, loops, half = "inherit", shift = 4, type = "bo
   # READ IN FILE OR DATAFRAME
   # ======================================================================================================================================================================================
 
+  loops <- bb_loopInternal$loops
   if (!"data.frame" %in% class(loops)){
 
     loops <- as.data.frame(data.table::fread(loops))
     if (nrow(loops) < 1){
-      stop("Loop input contains no values.", call. = FALSE)
+      warning("Loop input contains no values.", call. = FALSE)
     }
 
   }
@@ -380,7 +408,6 @@ bb_annotateLoops <- function(hic, loops, half = "inherit", shift = 4, type = "bo
 
   loops_subset <- subset_loops(loops = loops, object = loop_annot)
 
-
   # ======================================================================================================================================================================================
   # VIEWPORTS
   # ======================================================================================================================================================================================
@@ -390,25 +417,25 @@ bb_annotateLoops <- function(hic, loops, half = "inherit", shift = 4, type = "bo
   vp_name <- paste0("bb_loopAnnotation", length(grep(pattern = "bb_loopAnnotation", x = currentViewports)) + 1)
 
   ## Make viewport based on hic input viewport
-  if (class(hic) == "bb_hic"){
+  if (class(bb_loopInternal$hic) == "bb_hic"){
 
-    vp <- viewport(height = hic$grobs$vp$height, width = hic$grobs$vp$width,
-                   x = hic$grobs$vp$x, y = hic$grobs$vp$y,
+    vp <- viewport(height = bb_loopInternal$hic$grobs$vp$height, width = bb_loopInternal$hic$grobs$vp$width,
+                   x = bb_loopInternal$hic$grobs$vp$x, y = bb_loopInternal$hic$grobs$vp$y,
                    clip = "on",
-                   xscale = hic$grobs$vp$xscale,
-                   yscale = hic$grobs$vp$yscale,
-                   just = hic$grobs$vp$justification,
+                   xscale = bb_loopInternal$hic$grobs$vp$xscale,
+                   yscale = bb_loopInternal$hic$grobs$vp$yscale,
+                   just = bb_loopInternal$hic$grobs$vp$justification,
                    name = vp_name)
-  } else if (class(hic) == "bb_trianglehic"){
+  } else if (class(bb_loopInternal$hic) == "bb_trianglehic"){
 
 
-    width <- convertUnit(hic$outsideVP$width, unitTo = get("page_units", bbEnv), valueOnly = T)
+    width <- convertUnit(bb_loopInternal$hic$outsideVP$width, unitTo = get("page_units", bbEnv), valueOnly = T)
 
     vp <- viewport(height = unit(width/sqrt(two), get("page_units", bbEnv)), width = unit(width/sqrt(two), get("page_units", bbEnv)),
-                   x = hic$outsideVP$x, y = hic$outsideVP$y,
-                   xscale = hic$grobs$vp$xscale,
-                   yscale = hic$grobs$vp$yscale,
-                   just = hic$outsideVP$justification,
+                   x = bb_loopInternal$hic$outsideVP$x, y = bb_loopInternal$hic$outsideVP$y,
+                   xscale = bb_loopInternal$hic$grobs$vp$xscale,
+                   yscale = bb_loopInternal$hic$grobs$vp$yscale,
+                   just = bb_loopInternal$hic$outsideVP$justification,
                    name = vp_name,
                    angle = -45)
 
@@ -427,17 +454,17 @@ bb_annotateLoops <- function(hic, loops, half = "inherit", shift = 4, type = "bo
 
   if (nrow(loops_subset) > 0){
 
-    if (type == "box"){
+    if (bb_loopInternal$type == "box"){
 
-      invisible(apply(loops_subset, 1, boxAnnotation, hic = hic, object = loop_annot, shift = shift, half = half))
+      invisible(apply(loops_subset, 1, boxAnnotation, hic = bb_loopInternal$hic, object = loop_annot, shift = bb_loopInternal$shift, half = half))
 
-    } else if (type == "circle"){
+    } else if (bb_loopInternal$type == "circle"){
 
-      invisible(apply(loops_subset, 1, circleAnnotation, hic = hic, object = loop_annot, shift = shift, half = half))
+      invisible(apply(loops_subset, 1, circleAnnotation, hic = bb_loopInternal$hic, object = loop_annot, shift = bb_loopInternal$shift, half = half))
 
-    } else if (type == "arrow"){
+    } else if (bb_loopInternal$type == "arrow"){
 
-      invisible(apply(loops_subset, 1, arrowAnnotation, hic = hic, object = loop_annot, shift = shift, half = half))
+      invisible(apply(loops_subset, 1, arrowAnnotation, hic = bb_loopInternal$hic, object = loop_annot, shift = bb_loopInternal$shift, half = half))
 
     }
 

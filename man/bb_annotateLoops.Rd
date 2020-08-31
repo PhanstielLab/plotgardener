@@ -7,13 +7,11 @@
 bb_annotateLoops(
   hic,
   loops,
+  params = NULL,
   half = "inherit",
   shift = 4,
   type = "box",
-  lty = "solid",
-  lwd = 1,
-  col = "black",
-  rotation = 0
+  ...
 )
 }
 \arguments{
@@ -21,17 +19,13 @@ bb_annotateLoops(
 
 \item{loops}{bedpe file or dataframe in bedpe file format with loop positions (chr1 and chr2 must be numbers)}
 
+\item{params}{an optional "bb_params" object space containing relevant function parameters}
+
 \item{half}{which half of hic plots to annotate; default is "inherit", which will inherit whatever is plotted; other options are "both", "top", or "bottom"}
 
 \item{shift}{number of pixels on either end of loop in box/circle; number of pixels for length of arrow}
 
 \item{type}{type of annotation; options are "box", "circle", or "arrow"}
-
-\item{lty}{line type; options are "solid" (1), "dashed" (2), "dotted" (3), "dotdash" (4), "longdash" (5), or "twodash" (6)}
-
-\item{lwd}{line width;}
-
-\item{col}{line color}
 }
 \description{
 annotates loops in a Hi-C plot

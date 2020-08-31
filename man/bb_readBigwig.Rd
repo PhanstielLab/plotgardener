@@ -6,6 +6,7 @@
 \usage{
 bb_readBigwig(
   filename,
+  params = NULL,
   chrom = NULL,
   chromstart = 1,
   chromend = .Machine$integer.max,
@@ -14,6 +15,8 @@ bb_readBigwig(
 }
 \arguments{
 \item{filename}{bigwig filename}
+
+\item{params}{an optional "bb_params" object space containing relevant function parameters}
 
 \item{chrom}{chromosome as a string, e.g. "chr3"}
 
