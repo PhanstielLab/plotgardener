@@ -88,23 +88,6 @@ bb_plotKaryogram <- function(chrom, params = NULL, assembly = "hg19", orientatio
 
   }
 
-  ## Define a function that draws rounded rectangles for each of the cytogram bands
-  drawRoundRects <- function(df){
-
-    x <- df[2]
-    width <- df[7]
-    col <- df[6]
-
-    bandGrob <- roundrectGrob(x = x, y = unit(0.5, "npc"),
-                              width = width,  height = unit(1, "npc"),
-                              just = "left", default.units = "native",
-                              gp = gpar(fill = col, col = NA))
-
-    assign("karyogram_grobs", addGrob(get("karyogram_grobs", envir = bbEnv), child = bandGrob), envir = bbEnv)
-
-
-  }
-
   # ======================================================================================================================================================================================
   # PARSE PARAMETERS
   # ======================================================================================================================================================================================
@@ -406,7 +389,11 @@ bb_plotKaryogram <- function(chrom, params = NULL, assembly = "hg19", orientatio
 
   data$width <- data$chromEnd - data$chromStart
 
-  invisible(apply(data, 1, drawRoundRects))
+  rectBands <- rectGrob(x = data$chromStart, y = unit(0.5, "npc"),
+                           width = data$width, height = unit(1, "npc"),
+                           just = "left", default.units = "native",
+                           gp = gpar(fill = data$color, col = NA))
+  assign("karyogram_grobs", addGrob(get("karyogram_grobs", envir = bbEnv), child = rectBands), envir = bbEnv)
 
 
   ## OUTLINE ##
