@@ -431,7 +431,7 @@ bb_labelGenome <- function(plot, x, y, params = NULL, just = c("left", "top"), s
 
   bb_genome_label <- structure(list(assembly = NULL, chrom = NULL, chromstart = NULL, chromend = NULL, x = bb_glabelInternal$x, y = bb_glabelInternal$y, width = NULL, height = NULL,
                                     just = bb_glabelInternal$just, scale = bb_glabelInternal$scale, grobs = NULL,
-                                    gp = gpar(fontsize = bb_labelInternal$fontsize, col = bb_glabelInternal$linecolor, fontcolor = bb_glabelInternal$fontcolor, ...)), class = "bb_genomeLabel")
+                                    gp = gpar(fontsize = bb_glabelInternal$fontsize, col = bb_glabelInternal$linecolor, fontcolor = bb_glabelInternal$fontcolor, ...)), class = "bb_genomeLabel")
 
   # ======================================================================================================================================================================================
   # CATCH ERRORS
