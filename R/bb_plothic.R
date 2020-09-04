@@ -486,7 +486,7 @@ bb_plotHic <- function(hic, chrom, params = NULL, chromstart = NULL, chromend = 
   if(missing(norm)) norm <- NULL
 
   ## Check if hic/chrom arguments are missing (could be in object)
-  if(!hsaArg(hic)) hic <- NULL
+  if(!hasArg(hic)) hic <- NULL
   if(!hasArg(chrom)) chrom <- NULL
 
   ## Compile all parameters into an internal object
