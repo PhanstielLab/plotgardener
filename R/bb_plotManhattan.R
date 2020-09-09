@@ -157,7 +157,7 @@ bb_plotManhattan <- function(bed, pVals, params = NULL, chrom = NULL, chromstart
 
       } else {
 
-        bedfile <- bed_data[which(bedfile[,1] == chrom & bedfile[,2] >= chromstart & bedfile[,2] <= chromend),]
+        bedfile <- bedfile[which(bedfile[,1] == chrom & bedfile[,2] >= chromstart & bedfile[,2] <= chromend),]
 
       }
 
