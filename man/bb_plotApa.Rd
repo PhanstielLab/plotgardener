@@ -9,6 +9,7 @@ bb_plotApa(
   params = NULL,
   loopNumber = 1,
   palette = colorRampPalette(c("white", "dark red")),
+  scaleStrength = TRUE,
   zrange = NULL,
   x = NULL,
   y = NULL,
@@ -27,6 +28,8 @@ bb_plotApa(
 \item{loopNumber}{number of DNA loops}
 
 \item{palette}{ColorRamp palette to use for representing interaction scores}
+
+\item{scaleStrength}{A logical value indicating divide aggregate values by number of loops to get average loop strength}
 
 \item{zrange}{the range of interaction scores to plot, where extreme values will be set to the max or min}
 

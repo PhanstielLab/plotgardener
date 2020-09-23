@@ -4,6 +4,7 @@
 #' @param params an optional "bb_params" object space containing relevant function parameters
 #' @param loopNumber number of DNA loops
 #' @param palette ColorRamp palette to use for representing interaction scores
+#' @param scaleStrength A logical value indicating divide aggregate values by number of loops to get average loop strength
 #' @param zrange the range of interaction scores to plot, where extreme values will be set to the max or min
 #' @param x A numeric or unit object specifying x-location
 #' @param y A numeric or unit object specifying y-location
@@ -14,7 +15,7 @@
 #' @param draw A logical value indicating whether graphics output should be produced
 
 #' @export
-bb_plotApa <- function(apa, params = NULL, loopNumber = 1, palette = colorRampPalette(c("white", "dark red")), zrange = NULL,
+bb_plotApa <- function(apa, params = NULL, loopNumber = 1, palette = colorRampPalette(c("white", "dark red")), scaleStrength = TRUE, zrange = NULL,
                        x = NULL, y = NULL, width = NULL, height = NULL, just = c("center"), default.units = "inches", draw = TRUE){
 
   # ======================================================================================================================================================================================
@@ -121,6 +122,7 @@ bb_plotApa <- function(apa, params = NULL, loopNumber = 1, palette = colorRampPa
   ## Check which defaults are not overwritten and set to NULL
   if(missing(loopNumber)) loopNumber <- NULL
   if(missing(palette)) palette <- NULL
+  if(missing(scaleStrength)) scaleStrength <- NULL
   if(missing(just)) just <- NULL
   if(missing(default.units)) default.units <- NULL
   if(missing(draw)) draw <- NULL
@@ -129,7 +131,7 @@ bb_plotApa <- function(apa, params = NULL, loopNumber = 1, palette = colorRampPa
   if(!hasArg(apa)) apa <- NULL
 
   ## Compile all parameters into an internal object
-  bb_apaInternal <- structure(list(apa = apa, loopNumber = loopNumber, palette = palette, zrange = zrange,
+  bb_apaInternal <- structure(list(apa = apa, loopNumber = loopNumber, palette = palette, scaleStrength = scaleStrength, zrange = zrange,
                                    x = x, y = y, width = width, just = just, default.units = default.units, draw = draw), class = "bb_apaInternal")
 
   bb_apaInternal <- parseParams(bb_params = params, object_params = bb_apaInternal)
@@ -137,6 +139,7 @@ bb_plotApa <- function(apa, params = NULL, loopNumber = 1, palette = colorRampPa
   ## For any defaults that are still NULL, set back to default
   if(is.null(bb_apaInternal$loopNumber)) bb_apaInternal$loopNumber <- 1
   if(is.null(bb_apaInternal$palette)) bb_apaInternal$palette <- colorRampPalette(c("white", "dark red"))
+  if(is.null(bb_apaInternal$scaleStrength)) bb_apaInternal$scaleStrength <- TRUE
   if(is.null(bb_apaInternal$just)) bb_apaInternal$just <- c("center")
   if(is.null(bb_apaInternal$default.units)) bb_apaInternal$default.units <- "inches"
   if(is.null(bb_apaInternal$draw)) bb_apaInternal$draw <- TRUE
@@ -173,9 +176,12 @@ bb_plotApa <- function(apa, params = NULL, loopNumber = 1, palette = colorRampPa
   # GET AVERAGE LOOP STRENGTH
   # ======================================================================================================================================================================================
 
-  ## Set scale to 0; divide aggregate values by number of loops to get average loop strength
-  apa_data <- apa_data - min(apa_data)
-  apa_data <- apa_data/bb_apaInternal$loopNumber
+  if (bb_apaInternal$scaleStrength == TRUE) {
+    ## Set scale to 0; divide aggregate values by number of loops to get average loop strength
+    apa_data <- apa_data - min(apa_data)
+    apa_data <- apa_data/bb_apaInternal$loopNumber
+
+  }
 
   # ======================================================================================================================================================================================
   # SET ZRANGE AND SCALE DATA
@@ -191,7 +197,7 @@ bb_plotApa <- function(apa, params = NULL, loopNumber = 1, palette = colorRampPa
   ## if we don't have an appropriate zrange (even after setting it based on a null zrange), can't scale to colors
   if (!is.null(apa_plot$zrange) & length(unique(apa_plot$zrange)) == 2){
 
-    colors <- matrix(bb_maptocolors(apa_data, col = bb_apaInternal$palette, num = 100, range = apa_plot$zrange), nrow = 21, ncol = 21)
+    colors <- matrix(bb_maptocolors(apa_data, col = bb_apaInternal$palette, num = 100, range = apa_plot$zrange), nrow = nrow(apa_data), ncol = ncol(apa_data))
     sorted_colors <- bb_maptocolors(unique(apa_data[order(apa_data)]), col = bb_apaInternal$palette, num = 100, range = apa_plot$zrange)
     apa_plot$color_palette <- sorted_colors
 

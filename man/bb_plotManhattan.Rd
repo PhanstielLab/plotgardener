@@ -18,7 +18,7 @@ bb_plotManhattan(
   cex = 0.25,
   ymax = 1,
   range = NULL,
-  sigVal = 0.00000005,
+  sigVal = 5e-08,
   sigLine = F,
   sigCol = NULL,
   x = NULL,
