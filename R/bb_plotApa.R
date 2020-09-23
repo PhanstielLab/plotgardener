@@ -24,7 +24,7 @@ bb_plotApa <- function(apa, params = NULL, loopNumber = 1, palette = colorRampPa
   ## Define a functino that catches errors for bb_plotApa
   errorcheck_bb_plotApa <- function(apa, apa_plot){
 
-    if (class(apa) != "matrix"){
+    if (!"matrix" %in% class(apa)){
 
       if (file_ext(apa) != "txt" ){
 
@@ -76,17 +76,19 @@ bb_plotApa <- function(apa, params = NULL, loopNumber = 1, palette = colorRampPa
   ## Define a function that reads in an apa file
   read_apa <- function(apa){
 
-    if (class(apa) != "matrix"){
+    if (!"matrix" %in% class(apa)){
 
       ## Read in data from apa path
-      data <- data.table::fread(apa)
+      apa <- data.table::fread(apa)
 
       ## Remove brackets and convert to numeric
-      data <- apply(data, 2, function(x) gsub("\\[|\\]", "", x) %>% as.numeric())
+      apa <- apply(apa, 2, function(x) gsub("\\[|\\]", "", x) %>% as.numeric())
 
     }
 
-    return(data)
+    apa_data <- as.matrix(apa)
+
+    return(apa_data)
   }
 
   ## Define a function that sets the apa zrange
@@ -166,23 +168,22 @@ bb_plotApa <- function(apa, params = NULL, loopNumber = 1, palette = colorRampPa
   # READ IN DATA
   # ======================================================================================================================================================================================
 
-  data <- read_apa(apa = bb_apaInternal$apa)
-
+  apa_data <- read_apa(apa = bb_apaInternal$apa)
   # ======================================================================================================================================================================================
   # GET AVERAGE LOOP STRENGTH
   # ======================================================================================================================================================================================
 
   ## Set scale to 0; divide aggregate values by number of loops to get average loop strength
-  data <- data - min(data)
-  data <- data/bb_apaInternal$loopNumber
+  apa_data <- apa_data - min(apa_data)
+  apa_data <- apa_data/bb_apaInternal$loopNumber
 
   # ======================================================================================================================================================================================
   # SET ZRANGE AND SCALE DATA
   # ======================================================================================================================================================================================
 
-  apa_plot <- apa_zrange(apa = data, apa_plot = apa_plot)
-  data[data <= apa_plot$zrange[1]] <- apa_plot$zrange[1]
-  data[data >= apa_plot$zrange[2]] <- apa_plot$zrange[2]
+  apa_plot <- apa_zrange(apa = apa_data, apa_plot = apa_plot)
+  apa_data[apa_data <= apa_plot$zrange[1]] <- apa_plot$zrange[1]
+  apa_data[apa_data >= apa_plot$zrange[2]] <- apa_plot$zrange[2]
 
   # ======================================================================================================================================================================================
   # CONVERT NUMBERS TO COLORS
@@ -190,8 +191,8 @@ bb_plotApa <- function(apa, params = NULL, loopNumber = 1, palette = colorRampPa
   ## if we don't have an appropriate zrange (even after setting it based on a null zrange), can't scale to colors
   if (!is.null(apa_plot$zrange) & length(unique(apa_plot$zrange)) == 2){
 
-    colors <- matrix(bb_maptocolors(data, col = bb_apaInternal$palette, num = 100, range = apa_plot$zrange), nrow = 21, ncol = 21)
-    sorted_colors <- bb_maptocolors(unique(data[order(data)]), col = bb_apaInternal$palette, num = 100, range = apa_plot$zrange)
+    colors <- matrix(bb_maptocolors(apa_data, col = bb_apaInternal$palette, num = 100, range = apa_plot$zrange), nrow = 21, ncol = 21)
+    sorted_colors <- bb_maptocolors(unique(apa_data[order(apa_data)]), col = bb_apaInternal$palette, num = 100, range = apa_plot$zrange)
     apa_plot$color_palette <- sorted_colors
 
   } else {
