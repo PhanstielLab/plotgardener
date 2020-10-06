@@ -1,4 +1,4 @@
-#' extracts HiC data from .hic file using Straw
+#' extracts Hi-C data from a .hic file
 #'
 #' @param hic path to .hic file
 #' @param chrom chromosome of desired region
@@ -14,8 +14,13 @@
 #' @param altchromstart if looking at region between two different chromosomes, start position of altchrom
 #' @param altchromend if looking at region between two different chromsomes, end position of altchrom
 #'
-#' @return Function will return a 3-column dataframe
+#' @return Function will return a 3-column dataframe: chrom, altchrom, counts
 #'
+#' @examples
+#' download.file("https://www.encodeproject.org/files/ENCFF606XNW/@@download/ENCFF606XNW.hic", destfile = "ENCFF606XNW.hic", method = "auto")
+#' bb_readHic(hic = "./ENCFF606XNW.hic", chrom = "chr1")
+#' bb_readHic(hic = "./ENCFF606XNW.hic", chrom = "chr1", chromstart = 22500000, chromend = 23200000, zrange = c(0, 125))
+#' bb_readHic(hic = "./ENCFF606XNW.hic", chrom = "chr1", altchrom = "chr2")
 #' @export
 
 bb_readHic <- function(hic, chrom, params = NULL, chromstart = NULL, chromend = NULL, resolution = "auto", zrange = NULL,
@@ -81,10 +86,12 @@ bb_readHic <- function(hic, chrom, params = NULL, chromstart = NULL, chromend = 
 
       }
       ## Altchromstart should be smaller than altchromend
+      if (!is.null(altchromstart) & !is.null(altchromend)){
+        if (altchromstart > altchromend){
 
-      if (altchromstart > altchromend){
+          stop("\'altchromstart\' should not be larger than \'altchromend\'.", call. = FALSE)
 
-        stop("\'altchromstart\' should not be larger than \'altchromend\'.", call. = FALSE)
+        }
 
       }
 
@@ -178,7 +185,9 @@ bb_readHic <- function(hic, chrom, params = NULL, chromstart = NULL, chromend = 
   parse_region <- function(chrom, chromstart, chromend, assembly){
 
     if (assembly == "hg19"){
-      strawChrom <- as.numeric(gsub("chr", "", chrom))
+      strawChrom <- gsub("chr", "", chrom)
+    } else {
+      strawChrom <- chrom
     }
 
 
@@ -197,6 +206,50 @@ bb_readHic <- function(hic, chrom, params = NULL, chromstart = NULL, chromend = 
     }
 
     return(regionStraw)
+
+  }
+
+  ## Define a function to reorder chromsomes to put "chrom" input in col1
+  orderChroms <- function(hic, chrom, altchrom, assembly){
+
+    if (assembly == "hg19"){
+
+      chrom <- gsub("chr", "", chrom)
+      altchrom <- gsub("chr", "", altchrom)
+
+    }
+
+    if (!"X" %in% chrom & !"Y" %in% chrom){
+      chrom <- as.numeric(chrom)
+    }
+
+    if (!"X" %in% altchrom & !"Y" %in% altchrom){
+      altchrom <- as.numeric(altchrom)
+    }
+
+    ## CASE 1: two numbers
+    if (all(c(class(chrom), class(altchrom)) == "numeric")){
+
+      if (chrom > altchrom){
+        hic <- hic[, c(2, 1, 3)]
+      }
+
+
+    } else if (any(c(class(chrom), class(altchrom)) == "numeric")){
+    ## CASE 2: number and X/Y
+      if (class(altchrom) == "numeric"){
+        hic <- hic[, c(2, 1, 3)]
+      }
+
+    } else {
+    ## CASE 3: X and Y
+      if ("Y" %in% chrom){
+        hic <- hic[, c(2, 1, 3)]
+      }
+
+    }
+
+    return(hic)
 
   }
 
@@ -328,22 +381,25 @@ bb_readHic <- function(hic, chrom, params = NULL, chromstart = NULL, chromend = 
   # EXTRACT SPARSE UPPER TRIANGULAR USING STRAW
   # ======================================================================================================================================================================================
 
-  upper <- strawr::straw(bb_rhic$norm, bb_rhic$hic, toString(chromRegion), toString(altchromRegion), bb_rhic$res_scale, bb_rhic$resolution)
+  errorFunction <- function(c){
+    upper <- data.frame(matrix(nrow = 0, ncol = 3))
+    colnames(upper) <- c("x", "y", "counts")
+    return(upper)
+  }
+
+
+  upper <-
+    tryCatch(strawr::straw(bb_rhic$norm, bb_rhic$hic, toString(chromRegion), toString(altchromRegion), bb_rhic$res_scale, bb_rhic$resolution),
+             error = errorFunction)
 
   # ======================================================================================================================================================================================
   # REORDER COLUMNS BASED ON CHROM/ALTCHROM INPUT
   # ======================================================================================================================================================================================
+
   if (!is.null(bb_rhic$altchrom)){
-    numberChrom <- as.numeric(gsub("chr|[A-Z]", "", bb_rhic$chrom))
-    numberaltChrom <- as.numeric(gsub("chr|[A-Z]", "", bb_rhic$altchrom))
 
-    if (numberChrom > numberaltChrom){
-
-      upper <- upper[, c(2, 1, 3)]
-      colnames(upper) <- c("x", "y", "counts")
-
-    }
-
+    upper <- orderChroms(hic = upper, chrom = bb_rhic$chrom, altchrom = bb_rhic$altchrom, assembly = bb_rhic$assembly)
+    colnames(upper) <- c("x", "y", "counts")
   }
 
   # ======================================================================================================================================================================================
@@ -368,10 +424,9 @@ bb_readHic <- function(hic, chrom, params = NULL, chromstart = NULL, chromend = 
   # RETURN DATAFRAME
   # ======================================================================================================================================================================================
   if (nrow(renamed_data) == 0){
-
-    warning("Warning: no data found in region.  Suggestions: check chromosome, check region.", call. = FALSE)
+    warning("No data found in region.", call. = FALSE)
+  } else {
+    message(paste("Read in hic file with", bb_rhic$norm, "normalization at", bb_rhic$resolution, bb_rhic$res_scale, "resolution."))
   }
-
-  message(paste("Read in hic file with", bb_rhic$norm, "normalization at", bb_rhic$resolution, bb_rhic$res_scale, "resolution."))
   return(renamed_data)
 }

@@ -292,7 +292,7 @@ bb_plotHic <- function(hic, chrom, params = NULL, chromstart = NULL, chromend = 
       readaltchromstart <- hic_plot$altchromstart - hic_plot$resolution
       readaltchromend <- hic_plot$altchromend + hic_plot$resolution
 
-      hic <- hic <- suppressWarnings(bb_readHic(hic = hic, chrom = strawChrom, chromstart = readchromstart, chromend = readchromend,
+      hic <- suppressWarnings(bb_readHic(hic = hic, chrom = strawChrom, chromstart = readchromstart, chromend = readchromend,
                      resolution = hic_plot$resolution, zrange = hic_plot$zrange, norm = norm,
                      altchrom = hic_plot$altchrom, altchromstart = readaltchromstart,
                      altchromend = readaltchromend))

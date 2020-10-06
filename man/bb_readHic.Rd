@@ -2,7 +2,7 @@
 % Please edit documentation in R/bb_readHic.R
 \name{bb_readHic}
 \alias{bb_readHic}
-\title{extracts HiC data from .hic file using Straw}
+\title{extracts Hi-C data from a .hic file}
 \usage{
 bb_readHic(
   hic,
@@ -48,8 +48,14 @@ bb_readHic(
 \item{altchromend}{if looking at region between two different chromsomes, end position of altchrom}
 }
 \value{
-Function will return a 3-column dataframe
+Function will return a 3-column dataframe: chrom, altchrom, counts
 }
 \description{
-extracts HiC data from .hic file using Straw
+extracts Hi-C data from a .hic file
+}
+\examples{
+download.file("https://www.encodeproject.org/files/ENCFF606XNW/@download/ENCFF606XNW.hic", destfile = "ENCFF606XNW.hic", method = "auto")
+bb_readHic(hic = "./ENCFF606XNW.hic", chrom = "chr1")
+bb_readHic(hic = "./ENCFF606XNW.hic", chrom = "chr1", chromstart = 22500000, chromend = 23200000, zrange = c(0, 125))
+bb_readHic(hic = "./ENCFF606XNW.hic", chrom = "chr1", altchrom = "chr2")
 }
