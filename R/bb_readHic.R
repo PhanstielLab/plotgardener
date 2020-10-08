@@ -52,6 +52,13 @@ bb_readHic <- function(hic, chrom, params = NULL, chromstart = NULL, chromend = 
       stop(paste("File", hic, "does not exist."), call. = FALSE)
     }
 
+    ## Not supporting chrM
+    if (chrom == "chrM"){
+
+      stop("chrM not supported.", call. = FALSE)
+
+    }
+
     ## Can't have only one NULL chromstart or chromend
     if ((is.null(chromstart) & !is.null(chromend)) | (is.null(chromend) & !is.null(chromstart))){
 
@@ -71,6 +78,11 @@ bb_readHic <- function(hic, chrom, params = NULL, chromstart = NULL, chromend = 
     }
 
     if (!is.null(altchrom)){
+
+      if (altchrom == "chrM"){
+        stop("chrM not supported.", call. = FALSE)
+
+      }
 
       ## Can't specify altchrom without a chrom
       if (is.null(chrom)){

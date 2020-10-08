@@ -36,16 +36,6 @@ bb_plotManhattan <- function(bed, pVals, params = NULL, chrom = NULL, chromstart
   ## Define a function that checks for errors in bb_plotManhattan
   errorcheck_bb_plotmanhattan <- function(bedfile, chrom, assembly, chromstart, chromend, pVals, object, fillcolor){
 
-    # errorcheck valid assembly
-    if (is.null(chrom)){
-
-      if (assembly != "hg19"){
-
-        stop("Invalid genome assembly.", call. = FALSE)
-      }
-
-    }
-
     if (!is.null(chrom)){
 
       ## Need both chromstart and chromend if trying to do a region within a chrom
@@ -147,6 +137,8 @@ bb_plotManhattan <- function(bed, pVals, params = NULL, chrom = NULL, chromstart
     if (!"data.frame" %in% class(bedfile)){
       bedfile <- fread(bedfile)
     }
+
+    bedfile <- as.data.frame(bedfile)
 
     ## Subset data
     if (!is.null(chrom)){
