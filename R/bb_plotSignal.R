@@ -200,19 +200,6 @@ bb_plotSignal <- function(signal, chrom, params = NULL, chromstart = NULL, chrom
       return(max(list))
     }
 
-    ## Define a function that adds slightly negative values for polygon plotting if using fill
-    add_neg_vals <- function(signal, signaltrack){
-
-      if (!is.null(signaltrack$fillcolor)){
-
-        signal <- rbind(c(min(signal[,1]), -0.00001), signal)
-        signal <- rbind(signal, c(max(signal[,1]), -0.00001))
-
-      }
-
-      return(signal)
-    }
-
     # ===============================================================================================================================================
     # BIN DATA
     # ===============================================================================================================================================
@@ -251,12 +238,6 @@ bb_plotSignal <- function(signal, chrom, params = NULL, chromstart = NULL, chrom
 
     ## Convert two columns to one
     newSignal <- cbind(as.vector(t(newSignal[,c(1, 2)])), as.vector(t(newSignal[,c(3, 3)])))
-
-    # ================================================================================================================================================
-    # NEG VALUES FOR PROPER POLYGON PLOTTING
-    # ================================================================================================================================================
-
-    newSignal <- add_neg_vals(signal = newSignal, signaltrack = signaltrack)
 
     return(newSignal)
   }
@@ -354,8 +335,8 @@ bb_plotSignal <- function(signal, chrom, params = NULL, chromstart = NULL, chrom
 
       gp$fill <- fillCol
 
-
-      sigGrob <- polygonGrob(x = signal[,1], y = signal[,2], gp = gp, default.units = "native")
+      sigGrob <- polygonGrob(x = c(signal[1,1], signal[,1], signal[nrow(signal),1]),
+                             y = c(0, signal[,2], 0), gp = gp, default.units = "native")
 
     } else {
 
@@ -403,6 +384,7 @@ bb_plotSignal <- function(signal, chrom, params = NULL, chromstart = NULL, chrom
     Outsidei <- c(outsideData, outsidePairs)
     Outsidei <- Outsidei[order(Outsidei)]
     ## Get xcoords
+    signal <- as.data.frame(signal)
     Outside <- signal[Outsidei,1]
     ## x0s are odd indeces and x1s are even
     x0s <- Outside[c(TRUE, FALSE)]
