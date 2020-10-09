@@ -598,15 +598,15 @@ bb_plotTranscripts <- function(chrom, params = NULL, assembly = "hg19", chromsta
       ## Add column with center location of each gene label
       rowData$labelLoc <- rowMeans(rowData[c("Start", "Stop")])
 
-      if (labels == "transcript"){
+      if (bb_transInternal$labels == "transcript"){
         label <- rowData$Transcript
-      } else if (labels == "gene"){
+      } else if (bb_transInternal$labels == "gene"){
         label <- rowData$Gene
       } else {
         label <- paste0(rowData$Gene, ":", rowData$Transcript)
       }
 
-      checkedLabels <- apply(data.frame("label" = bb_transInternal$label, "labelLoc" = rowData$labelLoc), 1, cutoffLabel, fontsize = bb_transInternal$fontsize,
+      checkedLabels <- apply(data.frame("label" = label, "labelLoc" = rowData$labelLoc), 1, cutoffLabel, fontsize = bb_transInternal$fontsize,
                              xscale = c(transcript_plot$chromstart, transcript_plot$chromend),
                              vp = vp, unit = unit)
       rowData$label <- checkedLabels
