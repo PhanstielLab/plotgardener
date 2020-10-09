@@ -352,7 +352,7 @@ bb_plotSignal <- function(signal, chrom, params = NULL, chromstart = NULL, chrom
         fillCol <- makeTransparent(color = fillCol, alpha = gp$alpha)
       }
 
-      gp$fill <- finalcolor
+      gp$fill <- fillCol
 
 
       sigGrob <- polygonGrob(x = signal[,1], y = signal[,2], gp = gp, default.units = "native")
