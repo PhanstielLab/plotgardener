@@ -184,6 +184,8 @@ bb_plotBedpe <- function(bedpe, chrom, params = NULL, chromstart = NULL, chromen
   # ======================================================================================================================================================================================
   if (is.null(bedpe_plot$chromstart) & is.null(bedpe_plot$chromend)){
 
+    ## EDIT HERE FOR DATA
+
     if (bedpe_plot$assembly == "hg19"){
       genome <- bb_hg19
     }

@@ -186,6 +186,7 @@ bb_plotPileup <- function(bed, chrom, params = NULL, chromstart = NULL, chromend
   # SUBSET DATA FOR CHROMOSOME AND ANY OVERLAPPING REGIONS
   # ======================================================================================================================================================================================
 
+  ## EDIT HERE
    if (is.null(pileup_plot$chromstart) & is.null(pileup_plot$chromend)){
 
     if (bb_pileInternal$assembly == "hg19"){

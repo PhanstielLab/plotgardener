@@ -71,6 +71,30 @@ bb_labelGenome <- function(plot, x, y, params = NULL, just = c("left", "top"), s
 
   }
 
+  ## Define a function that checks for sequence information
+  checkSeq <- function(inObject){
+
+    if (inObject$sequence == TRUE){
+
+      ## EDIT HERE LATER FOR BSGENOME DATA
+      ## Get associated BSGenome package
+      bsgenome <- getBSgenome(assembly = inObject$assembly)
+
+      ## Check that BSGenome package is loaded and throw warning/change internal seq logical to FALSE if not
+      if (!bsgenome %in% (.packages())){
+
+        inObject$sequence <- FALSE
+        warning(paste("Sequence information cannot be displayed. Please load package", paste0("'", bsgenome, "'"), "to plot sequence for", paste0(inObject$assembly,".")), call. = FALSE)
+
+      }
+
+
+    }
+
+    return(inObject)
+
+  }
+
   ## Define a function that parses genome assembly vs. chrom/chromstart/chromend label
   parse_plot <- function(plot, object){
 
@@ -316,6 +340,7 @@ bb_labelGenome <- function(plot, x, y, params = NULL, just = c("left", "top"), s
   ## Define a function that makes line and text grobs for whole assembly labels
   genome_grobs <- function(plot, object, tgH, vp){
 
+    ## EDIT HERE TO GET WHOLE CHROMOSOME LENGTHS
     ## Get internal assembly data
     if (object$assembly == "hg19"){
       assembly_data <- bb_hg19
@@ -344,9 +369,8 @@ bb_labelGenome <- function(plot, x, y, params = NULL, just = c("left", "top"), s
   ## Define a function that makes sequence grobs (boxes or letters)
   seq_grobs <- function(object, seqHeight, seqType, assembly, chromLabel, vp, boxWidth){
 
-    if (assembly == "hg19"){
-      seqAssembly <- BSgenome.Hsapiens.UCSC.hg19::BSgenome.Hsapiens.UCSC.hg19
-    }
+    ## EDIT HERE TO ACCESS BSGENOME
+    seqAssembly <- get(getBSgenome(assembly = assembly))
 
     ## Get sequence in that region
     sequence <- strsplit(as.character(BSgenome::getSeq(seqAssembly,
@@ -443,6 +467,7 @@ bb_labelGenome <- function(plot, x, y, params = NULL, just = c("left", "top"), s
 
   check_bbpage(error = "Cannot add a genome label without a BentoBox page.")
   errorcheck_bb_labelgenome(plot = bb_glabelInternal$plot, scale = bb_genome_label$scale, ticks = bb_glabelInternal$ticks, object = bb_genome_label)
+  bb_glabelInternal <- checkSeq(inObject = bb_glabelInternal)
 
   # ======================================================================================================================================================================================
   # PARSE TYPE OF INPUT PLOT

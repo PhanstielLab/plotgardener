@@ -52,12 +52,6 @@ bb_readHic <- function(hic, chrom, params = NULL, chromstart = NULL, chromend = 
       stop(paste("File", hic, "does not exist."), call. = FALSE)
     }
 
-    ## Not supporting chrM
-    if (chrom == "chrM"){
-
-      stop("chrM not supported.", call. = FALSE)
-
-    }
 
     ## Can't have only one NULL chromstart or chromend
     if ((is.null(chromstart) & !is.null(chromend)) | (is.null(chromend) & !is.null(chromstart))){
@@ -72,6 +66,14 @@ bb_readHic <- function(hic, chrom, params = NULL, chromstart = NULL, chromend = 
       if (chromstart > chromend){
 
         stop("\'chromstart\' should not be larger than \'chromend\'.", call. = FALSE)
+
+      }
+
+
+      ## Not supporting chrM
+      if (chrom == "chrM"){
+
+        stop("chrM not supported.", call. = FALSE)
 
       }
 
@@ -196,6 +198,7 @@ bb_readHic <- function(hic, chrom, params = NULL, chromstart = NULL, chromend = 
   ## Define a function to parse chromsome/region for Straw
   parse_region <- function(chrom, chromstart, chromend, assembly){
 
+    ## EDIT HERE
     if (assembly == "hg19"){
       strawChrom <- gsub("chr", "", chrom)
     } else {
@@ -224,6 +227,7 @@ bb_readHic <- function(hic, chrom, params = NULL, chromstart = NULL, chromend = 
   ## Define a function to reorder chromsomes to put "chrom" input in col1
   orderChroms <- function(hic, chrom, altchrom, assembly){
 
+    ## EDIT HERE
     if (assembly == "hg19"){
 
       chrom <- gsub("chr", "", chrom)

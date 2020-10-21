@@ -230,6 +230,7 @@ bb_plotRibbonArches <- function(bedpe, chrom, params = NULL, chromstart = NULL, 
   # SUBSET DATA
   # ======================================================================================================================================================================================
 
+  ## EDIT HERE
   if (is.null(arches_plot$chromstart) & is.null(arches_plot$chromend)){
 
     if (arches_plot$assembly == "hg19"){

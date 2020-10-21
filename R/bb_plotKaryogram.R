@@ -145,6 +145,7 @@ bb_plotKaryogram <- function(chrom, params = NULL, assembly = "hg19", orientatio
   # GET APPROPRIATE BUILD DATA
   # ======================================================================================================================================================================================
 
+  ## EDIT HERE
   if (karyogram_plot$assembly == "hg19"){
 
     data <- bb_hg19cyto

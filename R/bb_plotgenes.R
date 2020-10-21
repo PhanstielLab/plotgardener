@@ -97,7 +97,7 @@ bb_plotGenes <- function(chrom, params = NULL, assembly = "hg19", chromstart = N
                           height = unit(0.18, "npc"),
                           gp = gpar(fill = df[11],
                                     col = df[11],
-                                    lwd = 1.25, alpha = 0.5),
+                                    lwd = 1.25),
                           vp = vp_gene,
                           default.units = "native")
 
@@ -110,7 +110,7 @@ bb_plotGenes <- function(chrom, params = NULL, assembly = "hg19", chromstart = N
                           height = unit(0.18, "npc"),
                           gp = gpar(fill = df[11],
                                     col = df[11],
-                                    lwd = 1.25, alpha = 0.5),
+                                    lwd = 1.25),
                           vp = vp_gene,
                           default.units = "native")
 
@@ -134,25 +134,23 @@ bb_plotGenes <- function(chrom, params = NULL, assembly = "hg19", chromstart = N
 
       if (df[4] == "+"){
 
-        # invisible(lapply(utr_ranges, utr_grobs, yCoord = unit(0.63, "npc"), strandcolor = strandcolors[1]))
         utrs <- rectGrob(x = utrs_dataframe[,1],
                          y = unit(0.63, "npc"),
                          just = "left",
                          width = utrs_dataframe[,2],
                          height = unit(0.1, "npc"),
-                         gp = gpar(fill = df[11], col = NA, alpha = 0.5),
+                         gp = gpar(fill = df[11], col = NA),
                          vp = vp_gene,
                          default.units = "native")
 
       } else if (df[4] == "-"){
 
-        #invisible(lapply(utr_ranges, utr_grobs, yCoord = unit(0.37, "npc"), strandcolor = strandcolors[2]))
         utrs <- rectGrob(x = utrs_dataframe[,1],
                          y = unit(0.37, "npc"),
                          just = "left",
                          width = utrs_dataframe[,2],
                          height = unit(0.1, "npc"),
-                         gp = gpar(fill = df[11], col = NA, alpha = 0.5),
+                         gp = gpar(fill = df[11], col = NA),
                          vp = vp_gene,
                          default.units = "native")
 
@@ -270,6 +268,7 @@ bb_plotGenes <- function(chrom, params = NULL, assembly = "hg19", chromstart = N
   # GET APPROPRIATE BUILD DATA
   # ======================================================================================================================================================================================
 
+  ## EDIT DATA HERE
   if (genes_plot$assembly == "hg19"){
 
     data <- bb_hg19gtf
@@ -440,7 +439,7 @@ bb_plotGenes <- function(chrom, params = NULL, assembly = "hg19", chromstart = N
 
       plus_geneGrobs <- rectGrob(x = plus_genes$Start, y = unit(0.63, "npc"),
                                  width = plus_genes$width, height = unit(0.18, "npc"),
-                                 just = "left", gp = gpar(fill = plus_genes$strandColor, col = makeTransparent(plus_genes$strandColor, alpha = 0.5), lwd = bb_geneInternal$stroke, alpha = 0.5),
+                                 just = "left", gp = gpar(fill = plus_genes$strandColor, col = plus_genes$strandColor, lwd = bb_geneInternal$stroke),
                                  vp = vp_gene, default.units = "native")
       assign("gene_grobs", addGrob(get("gene_grobs", envir = bbEnv), child = plus_geneGrobs), envir = bbEnv)
 
@@ -451,7 +450,7 @@ bb_plotGenes <- function(chrom, params = NULL, assembly = "hg19", chromstart = N
 
       minus_geneGrobs <- rectGrob(x = minus_genes$Start, y = unit(0.37, "npc"),
                                   width = minus_genes$width, height = unit(0.18, "npc"),
-                                  just = "left", gp = gpar(fill = minus_genes$strandColor, col = makeTransparent(minus_genes$strandColor, alpha = 0.5), lwd = bb_geneInternal$stroke, alpha = 0.5),
+                                  just = "left", gp = gpar(fill = minus_genes$strandColor, col = minus_genes$strandColor, lwd = bb_geneInternal$stroke),
                                   vp = vp_gene, default.units = "native")
       assign("gene_grobs", addGrob(get("gene_grobs", envir = bbEnv), child = minus_geneGrobs), envir = bbEnv)
 
@@ -464,7 +463,7 @@ bb_plotGenes <- function(chrom, params = NULL, assembly = "hg19", chromstart = N
 
       plus_geneGrobs <- rectGrob(x = plus_genes$Start, y = unit(0.63, "npc"),
                                  width = plus_genes$width, height = unit(0.05, "npc"),
-                                 just = "left", gp = gpar(fill = plus_genes$strandColor, col = makeTransparent(plus_genes$strandColor, alpha = 0.5), lwd = bb_geneInternal$stroke, alpha = 0.5),
+                                 just = "left", gp = gpar(fill = plus_genes$strandColor, col = plus_genes$strandColor, lwd = bb_geneInternal$stroke),
                                  vp = vp_gene, default.units = "native")
       assign("gene_grobs", addGrob(get("gene_grobs", envir = bbEnv), child = plus_geneGrobs), envir = bbEnv)
 
@@ -475,7 +474,7 @@ bb_plotGenes <- function(chrom, params = NULL, assembly = "hg19", chromstart = N
 
       minus_geneGrobs <- rectGrob(x = minus_genes$Start, y = unit(0.37, "npc"),
                                   width = minus_genes$width, height = unit(0.05, "npc"),
-                                  just = "left", gp = gpar(fill = minus_genes$strandColor, col = makeTransparent(minus_genes$strandColor, alpha = 0.5), lwd = bb_geneInternal$stroke, alpha = 0.5),
+                                  just = "left", gp = gpar(fill = minus_genes$strandColor, col = minus_genes$strandColor, lwd = bb_geneInternal$stroke),
                                   vp = vp_gene, default.units = "native")
       assign("gene_grobs", addGrob(get("gene_grobs", envir = bbEnv), child = minus_geneGrobs), envir = bbEnv)
 

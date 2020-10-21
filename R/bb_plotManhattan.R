@@ -349,6 +349,7 @@ bb_plotManhattan <- function(bed, pVals, params = NULL, chrom = NULL, chromstart
     man_plot$chromstart <- NULL
     man_plot$chromend <- NULL
 
+    ## EDIT HERE
     ## Access internal assembly
     assembly_data <- internal_assembly(assembly = man_plot$assembly)
 
@@ -378,6 +379,7 @@ bb_plotManhattan <- function(bed, pVals, params = NULL, chrom = NULL, chromstart
     ## Whole single chromosome
     if (is.null(man_plot$chromstart) & is.null(man_plot$chromend)){
 
+      ## EDIT HERE
       man_plot$chromstart <- min(bed_data[,2])
       man_plot$chromend <- max(bed_data[,2])
 

@@ -116,7 +116,7 @@ bb_plotTranscripts <- function(chrom, params = NULL, assembly = "hg19", chromsta
                         just = c("left", "bottom"),
                         gp = gpar(fill = df[8],
                                   col = df[8],
-                                  lwd = 1.25, alpha = 0.5),
+                                  lwd = 1.25),
                         default.units = "native")
 
 
@@ -142,7 +142,7 @@ bb_plotTranscripts <- function(chrom, params = NULL, assembly = "hg19", chromsta
                        width = utrs_dataframe[,2],
                        height = boxHeight*0.65,
                        just = "left",
-                       gp = gpar(fill = df[8], col = NA, alpha = 0.5),
+                       gp = gpar(fill = df[8], col = NA),
                        default.units = "native")
 
       assign("transcript_grobs", addGrob(get("transcript_grobs", envir = bbEnv), child = utrs), envir = bbEnv)
@@ -562,7 +562,7 @@ bb_plotTranscripts <- function(chrom, params = NULL, assembly = "hg19", chromsta
                                  width = rowData$width,
                                  height = boxHeight,
                                  just = c("left", "bottom"),
-                                 gp = gpar(fill = rowData$color, col = rowData$color, lwd = bb_transInternal$stroke, alpha = 0.5),
+                                 gp = gpar(fill = rowData$color, col = rowData$color, lwd = bb_transInternal$stroke),
                                  default.units = "native")
 
     } else {
@@ -576,7 +576,7 @@ bb_plotTranscripts <- function(chrom, params = NULL, assembly = "hg19", chromsta
                                  width = rowData$width,
                                  height = boxHeight*0.2,
                                  just = "left",
-                                 gp = gpar(fill = rowData$color, col = makeTransparent(rowData$color, alpha = 0.5), lwd = bb_transInternal$stroke, alpha = 0.5),
+                                 gp = gpar(fill = rowData$color, col = rowData$color, lwd = bb_transInternal$stroke),
                                  default.units = "native")
 
 

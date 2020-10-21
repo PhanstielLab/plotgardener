@@ -462,6 +462,7 @@ bb_plotSignal <- function(signal, chrom, params = NULL, chromstart = NULL, chrom
   # WHOLE CHROM
   # ======================================================================================================================================================================================
 
+  ##EDIT HERE
   if (is.null(signal_track$chromstart) & is.null(signal_track$chromend)){
     if (signal_track$assembly == "hg19"){
       genome <- bb_hg19

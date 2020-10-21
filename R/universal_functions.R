@@ -387,24 +387,6 @@ check_placement <- function(object){
 
 }
 
-check_group_placement <- function(object){
-
-  if (attributes(object)$plotted == T){
-
-    ## If plotting a group, need to provide placement coordinates
-    if(is.null(object$x) | is.null(object$y)){
-
-      stop("If placing a group, need to specify x and y coordinates.")
-
-    }
-
-    ## Need a bb_page
-    check_bbpage(error = "Must make a BentoBox page with bb_makePage() before placing a plot or group.")
-
-  }
-
-}
-
 ## Define a function that converts coordinates/dimensions into default units
 defaultUnits <- function(object, default.units){
 
@@ -553,30 +535,6 @@ parseParams <- function(bb_params, object_params){
       objectMatches <- bb_params[which(names(bb_params) %in% nullNames)]
       ## Replace object_param values with bb_params values
       object_params[match(names(objectMatches), names(object_params))] <- objectMatches
-      ## Find gene region for relevant classes
-      if ("chrom" %in% objectNames){
-
-        if ("gene" %in% names(bb_params)){
-
-          assembly <- object_params$assembly
-          if (assembly == "hg19"){
-            genes <- bb_hg19gtf
-          }
-
-          geneRegion <- genes[which(genes$Gene == bb_params$gene),]
-          object_params$chrom <- geneRegion$Chromosome
-
-          if ("chromstart" %in% objectNames & "chromend" %in% objectNames){
-
-            object_params$chromstart <- geneRegion$Start
-            object_params$chromend <- geneRegion$Stop
-
-          }
-
-
-        }
-
-      }
 
 
     }
@@ -585,6 +543,18 @@ parseParams <- function(bb_params, object_params){
 
   return(object_params)
 }
+
+## Define a function that determines corresponding BSgenome package for standard assemblies
+getBSgenome <- function(assembly){
+
+  bsgenome <- builds[which(builds$assembly == assembly),2]
+  return(bsgenome)
+
+}
+
+
+
+
 
 
 
