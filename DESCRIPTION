@@ -14,9 +14,9 @@ Imports:
     IRanges,
     Rcpp,
     rtracklayer,
-    BSgenome,
-    BSgenome.Hsapiens.UCSC.hg19
+    BSgenome
 Remotes: aidenlab/straw/R
-biocViews: GenomicRanges, IRanges, rtracklayer, BSgenome, BSgenome.Hsapiens.UCSC.hg19
+biocViews: GenomicRanges, IRanges, rtracklayer, BSgenome
 LinkingTo: 
     Rcpp
+Suggests: BSgenome.Hsapiens.UCSC.hg19, BSgenome.Hsapiens.UCSC.hg38, BSgenome.Hsapeins.NCBI.GRCh38, BSgenome.Mmusculus.UCSC.mm9, BSgenome.Mmusculus.UCSC.mm10
