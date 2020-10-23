@@ -554,6 +554,22 @@ getBSgenome <- function(assembly){
 
 
 
+## Define a function to check that a chromosome name is in an associated TxDb
+checkChroms <- function(chrom, txdb){
+
+  data <- get(txdb)
+  txdbChroms <- seqlevels(data)
+  if (chrom %in% txdbChroms){
+    return(TRUE)
+  } else {
+    warning(paste(chrom, "not found in", paste0(txdb, ".")), call. = FALSE)
+    return(FALSE)
+  }
+
+}
+
+
+
 
 
 

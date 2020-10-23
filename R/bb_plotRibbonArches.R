@@ -78,18 +78,38 @@ bb_plotRibbonArches <- function(bedpe, chrom, params = NULL, chromstart = NULL, 
     }
 }
 
+  ## Define a function that will produce a yscale for arches based on height/position
+  height_yscale <- function(heights, position){
+
+    if (length(heights) == 1){
+
+      if (position == "top"){
+        yscale <- c(0, heights)
+      } else {
+        yscale <- c(heights, 0)
+      }
+
+    } else {
+
+      if (position == "top"){
+        yscale <- c(0, max(heights))
+      } else {
+        yscale <- c(max(heights), 0)
+      }
+
+
+    }
+    return(yscale)
+  }
+
   ## Define a function that normalizes arch heights
   normHeights <- function(height, position, min, max){
 
     ## First normalize from 0 to 1
     newHeight <- (height - min)/(max-min)
 
-    ## Then scale to [0, 1.38] for top position and [-0.38, 1] for bottom position
-    if (position == "top"){
-      finalHeight <- newHeight * 1.38
-    } else {
-      finalHeight <- (newHeight * 1.38) + (-0.38)
-    }
+    ## Then scale to a range of 1.38
+    finalHeight <- newHeight * 1.38
 
     return(finalHeight)
 
@@ -104,7 +124,7 @@ bb_plotRibbonArches <- function(bedpe, chrom, params = NULL, chromstart = NULL, 
     y2 <- df[[6]]
     fillCol <- df[[7]]
     outerHeight <- as.numeric(df[[9]])
-
+    innerHeight <- outerHeight - 0.01
 
     if (style == "3D"){
       x1 <- df[[3]]
@@ -116,16 +136,14 @@ bb_plotRibbonArches <- function(bedpe, chrom, params = NULL, chromstart = NULL, 
     outerX = unit(seq(x1, y2, length.out = arch)[c(1:2, (arch-1):arch)], "native")
 
     if (position == "top"){
-      innerHeight <- outerHeight - 0.01
       ## Switch y-positions for top plotting
       innerY = unit(c(0, innerHeight, innerHeight, 0), "npc")
       outerY = unit(c(0, outerHeight, outerHeight, 0), "npc")
 
     } else {
-      innerHeight <- outerHeight + 0.01
       ## Switch y-positions for bottom plotting
-      innerY = unit(c(1, innerHeight, innerHeight, 1), "npc")
-      outerY = unit(c(1, outerHeight, outerHeight, 1), "npc")
+      innerY = unit(c(1, 1-innerHeight, 1-innerHeight, 1), "npc")
+      outerY = unit(c(1, 1-outerHeight, 1-outerHeight, 1), "npc")
     }
 
     ## Calculate loop arcs using bezier curves
@@ -252,7 +270,6 @@ bb_plotRibbonArches <- function(bedpe, chrom, params = NULL, chromstart = NULL, 
                         (bedpe[[5]] <= arches_plot$chromstart & bedpe[[5]] >= arches_plot$chromend))]
   }
 
-
   # ======================================================================================================================================================================================
   # COLORBY AND COLORS
   # ======================================================================================================================================================================================
@@ -348,8 +365,12 @@ bb_plotRibbonArches <- function(bedpe, chrom, params = NULL, chromstart = NULL, 
     bedpe$height <- rep(1, nrow(bedpe))
   } else if (length(bb_archInternal$archHeight) == 1){
     bedpe$height <- rep(bb_archInternal$archHeight, nrow(bedpe))
+    yscale <- height_yscale(heights = bb_archInternal$archHeight, position = bb_archInternal$position)
+    vp$yscale <- yscale
   } else {
     bedpe$height <- bb_archInternal$archHeight[1:nrow(bedpe)]
+    yscale <- height_yscale(heights = bb_archInternal$archHeight, position = bb_archInternal$position)
+    vp$yscale <- yscale
   }
 
   if (length(bedpe$height) > 0){
