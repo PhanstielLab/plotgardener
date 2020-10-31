@@ -6,7 +6,7 @@ Rapid and precise coordinate-based visualization of genomic data
 
 ## Dependencies
 
-Currently rtrackler needs to be installed manually. To install
+Currently `rtracklayer` needs to be installed manually. To install
 
 ```
 if (!requireNamespace("BiocManager", quietly = TRUE))
