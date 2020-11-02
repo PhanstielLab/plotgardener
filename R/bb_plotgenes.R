@@ -274,6 +274,9 @@ bb_plotGenes <- function(chrom, params = NULL, assembly = "hg19", chromstart = N
     data <- bb_hg19gtf
     genome <- bb_hg19
 
+  } else if (genes_plot$assembly == "hg38"){
+    data <- bb_hg38gtf
+    genome <- bb_hg38
   }
 
   # ======================================================================================================================================================================================

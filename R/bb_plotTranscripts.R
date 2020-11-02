@@ -273,6 +273,9 @@ bb_plotTranscripts <- function(chrom, params = NULL, assembly = "hg19", chromsta
     data <- bb_hg19transcripts
     genome <- bb_hg19
 
+  } else if (transcript_plot$assembly == "hg38"){
+    data <- bb_hg38transcripts
+    genome <- bb_hg38
   }
 
   # ======================================================================================================================================================================================
