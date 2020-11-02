@@ -524,7 +524,6 @@ bb_plotSignal <- function(signal, chrom, params = NULL, chromstart = NULL, chrom
 
   signal_track <- check_binNum(signaltrack = signal_track, binCap = bb_sigInternal$binCap)
 
-  print(signal_track)
   # ======================================================================================================================================================================================
   # READ IN, FORMAT, FILTER, BIN, LINK AND SORT DATA
   # ======================================================================================================================================================================================
