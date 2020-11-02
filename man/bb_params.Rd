@@ -4,10 +4,12 @@
 \alias{bb_params}
 \title{Creates a bb_params object that can be used by BentoBox functions}
 \usage{
-bb_params(gene = NULL, ...)
+bb_params(gene = NULL, assembly = "hg19", ...)
 }
 \arguments{
 \item{gene}{Optional parameter to extract chromosome, chromstart, and chromend information for a gene}
+
+\item{assembly}{If specifying gene, default genome assembly as a string or a bb_assembly object}
 
 \item{...}{This function will take any BentoBox function parameters and their values}
 }
