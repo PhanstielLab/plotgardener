@@ -14,15 +14,13 @@
 #' @param fontfamily Text fontfamily.
 #' @param commas A logical value indicating whether to include commas in start and stop labels.
 #' @param sequence A logical value indicating whether to include sequence information above the label axis (only at appropriate resolutions).
-#' @param assembly A character value indicating the genome assembly of the label. Possible values are: "hg19".
 #' @param ticks A numeric vector of x-value locations for tick marks.
 #' @param tcl Length of tickmark as fraction of text height.
 #' @param default.units A string indicating the default units to use if x or y are only given as numerics.
 #' @export
 
 bb_labelGenome <- function(plot, x, y, params = NULL, just = c("left", "top"), scale = "bp", fontsize = 10, fontcolor = "black",
-                           linecolor = "black", commas = TRUE, sequence = TRUE, boxWidth = 0.5, assembly = "hg19",
-                           ticks = NULL, tcl = 0.5, default.units = "inches", ...){
+                           linecolor = "black", commas = TRUE, sequence = TRUE, boxWidth = 0.5, ticks = NULL, tcl = 0.5, default.units = "inches", ...){
 
   # ======================================================================================================================================================================================
   # FUNCTIONS
@@ -71,65 +69,6 @@ bb_labelGenome <- function(plot, x, y, params = NULL, just = c("left", "top"), s
 
   }
 
-  ## Define a function that checks for sequence information
-  checkSeq <- function(inObject){
-
-    if (inObject$sequence == TRUE){
-
-      ## EDIT HERE LATER FOR BSGENOME DATA
-      ## Get associated BSGenome package
-      bsgenome <- getBSgenome(assembly = inObject$assembly)
-
-      ## Check that BSGenome package is loaded and throw warning/change internal seq logical to FALSE if not
-      if (!bsgenome %in% (.packages())){
-
-        inObject$sequence <- FALSE
-        warning(paste("Sequence information cannot be displayed. Please load package", paste0("'", bsgenome, "'"), "to plot sequence for", paste0(inObject$assembly,".")), call. = FALSE)
-
-      }
-
-
-    }
-
-    return(inObject)
-
-  }
-
-  ## Define a function that parses genome assembly vs. chrom/chromstart/chromend label
-  parse_plot <- function(plot, object){
-
-    ## Manhattan plots will require different types of genome labels
-    if (class(plot) == "bb_manhattan"){
-
-      ## whole genome option
-      if (is.null(plot$chrom)){
-
-        object$assembly <- plot$assembly
-
-      } else {
-
-        chromNumber <- gsub(pattern = "chr", replacement = "", x = plot$chrom)
-        chrom <- paste0("chr", chromNumber)
-        object$chrom <- chrom
-        object$chromstart <- plot$chromstart
-        object$chromend <- plot$chromend
-
-      }
-
-    } else {
-
-      chromNumber <- gsub(pattern = "chr", replacement = "", x = plot$chrom)
-      chrom <- paste0("chr", chromNumber)
-      object$chrom <- chrom
-      object$chromstart <- plot$chromstart
-      object$chromend <- plot$chromend
-
-    }
-
-    return(object)
-
-  }
-
   ## Define a function that adds commas to chromstart/chromend labels
   comma_labels <- function(object, commas, format, fact){
 
@@ -161,7 +100,7 @@ bb_labelGenome <- function(plot, x, y, params = NULL, just = c("left", "top"), s
 
     seq_height <- unit(seqHeight, get("page_units", envir = bbEnv))
 
-    if (!is.null(object$chrom)){
+    if (length(object$chrom) == 1){
 
       if (sequence == TRUE & !is.null(seqType)){
 
@@ -197,21 +136,29 @@ bb_labelGenome <- function(plot, x, y, params = NULL, just = c("left", "top"), s
 
     } else {
 
-      ## get the offsets based on spacer for the assembly
-      if (object$assembly == "hg19"){
-        assembly_data <- bb_hg19
+
+      ## Get assembly data
+      txdbChecks <- check_loadedPackage(package = object$assembly$TxDb, message = paste(paste0("`", object$assembly$TxDb,"`"), "not loaded. Please install and load to label genome."))
+      if (txdbChecks == TRUE){
+        tx_db <- eval(parse(text = object$assembly$TxDb))
+        assembly_data <- as.data.frame(setDT(as.data.frame(seqlengths(tx_db)), keep.rownames = TRUE))
+        assembly_data <- assembly_data[which(assembly_data[,1] %in% object$chrom),]
+        ## get the offsets based on spacer for the assembly
+        offsetAssembly <- spaceChroms(assemblyData = assembly_data, space = plot$space)
+        cumsums <- cumsum(as.numeric(assembly_data[,2]))
+        spacer <- cumsums[length(cumsum(as.numeric(assembly_data[,2])))] * plot$space
+        xscale <- c(0, max(offsetAssembly[,4]) + spacer)
+      } else {
+        xscale <- c(0, 1)
       }
 
-      ## get the offsets based on spacer for the assembly
-      offsetAssembly <- parse_assembly(assemblyData = assembly_data, space = plot$space)
-      cumsums <- cumsum(as.numeric(assembly_data[,2]))
-      spacer <- cumsums[length(cumsum(as.numeric(assembly_data[,2])))] * plot$space
+
 
       vp <- viewport(width = convertedPageCoords$width, height = convertedPageCoords$height,
                      x = convertedPageCoords$x, y = convertedPageCoords$y,
                      just = just,
                      name = vp_name,
-                     xscale = c(0, max(offsetAssembly[,4]) + spacer),
+                     xscale = xscale,
                      yscale = c(0, height))
     }
 
@@ -340,41 +287,43 @@ bb_labelGenome <- function(plot, x, y, params = NULL, just = c("left", "top"), s
   ## Define a function that makes line and text grobs for whole assembly labels
   genome_grobs <- function(plot, object, tgH, vp){
 
-    ## EDIT HERE TO GET WHOLE CHROMOSOME LENGTHS
-    ## Get internal assembly data
-    if (object$assembly == "hg19"){
-      assembly_data <- bb_hg19
-    }
-
+    ## Initialize gTree
     assign("label_grobs", gTree(vp = vp), envir = bbEnv)
 
-    ## Get the offsets based on spacer for the assembly
-    offsetAssembly <- parse_assembly(assemblyData = assembly_data, space = plot$space)
+    ## Get assembly data
+    txdbChecks <- suppressWarnings(check_loadedPackage(package = object$assembly$TxDb, message = NULL))
+    if (txdbChecks == TRUE){
+      tx_db <- eval(parse(text = object$assembly$TxDb))
+      assembly_data <- as.data.frame(setDT(as.data.frame(seqlengths(tx_db)), keep.rownames = TRUE))
+      assembly_data <- assembly_data[which(assembly_data[,1] %in% object$chrom),]
+      ## Get the offsets based on spacer for the assembly
+      offsetAssembly <- spaceChroms(assemblyData = assembly_data, space = plot$space)
 
-    ## Get the centers of each chrom
-    chromCenters <- (offsetAssembly[,3] + offsetAssembly[,4]) / 2
+      ## Get the centers of each chrom
+      chromCenters <- (offsetAssembly[,3] + offsetAssembly[,4]) / 2
 
-    tgH <- convertHeight(tgH, unitTo = get("page_units", envir = bbEnv), valueOnly = T)
+      tgH <- convertHeight(tgH, unitTo = get("page_units", envir = bbEnv), valueOnly = T)
 
-    line <- segmentsGrob(x0 = unit(0, "npc"), x1 = unit(1, "npc"), y0 = tgH, y1 = tgH, gp = object$gp,
+      line <- segmentsGrob(x0 = unit(0, "npc"), x1 = unit(1, "npc"), y0 = tgH, y1 = tgH, gp = object$gp,
+                           default.units = "native")
+      object$gp$col <- object$gp$fontcolor
+      labels <- textGrob(label = gsub("chr", "", offsetAssembly[,1]), x = chromCenters, y = unit(0, "npc"), just = c("center", "bottom"),
+                         gp = object$gp,
                          default.units = "native")
-    object$gp$col <- object$gp$fontcolor
-    labels <- textGrob(label = gsub("chr", "", offsetAssembly[,1]), x = chromCenters, y = unit(0, "npc"), just = c("center", "bottom"),
-                       gp = object$gp,
-                       default.units = "native")
-    assign("label_grobs", setChildren(get("label_grobs", envir = bbEnv), children = gList(line, labels)), envir = bbEnv)
+      assign("label_grobs", setChildren(get("label_grobs", envir = bbEnv), children = gList(line, labels)), envir = bbEnv)
+
+    }
+
 
   }
 
   ## Define a function that makes sequence grobs (boxes or letters)
   seq_grobs <- function(object, seqHeight, seqType, assembly, chromLabel, vp, boxWidth){
 
-    ## EDIT HERE TO ACCESS BSGENOME
-    seqAssembly <- get(getBSgenome(assembly = assembly))
-
+    bsgenome <- eval(parse(text = object$assembly$BSgenome))
     ## Get sequence in that region
-    sequence <- strsplit(as.character(BSgenome::getSeq(seqAssembly,
-                                             GenomicRanges::GRanges(seqnames = chromLabel, ranges = IRanges::IRanges(start = object$chromstart, end = object$chromend)))),
+    sequence <- strsplit(as.character(BSgenome::getSeq(bsgenome,
+                                                       GenomicRanges::GRanges(seqnames = chromLabel, ranges = IRanges::IRanges(start = object$chromstart, end = object$chromend)))),
                          split = "")
     ## Make dataframe of sequence letter, position, and color
     dfSequence <- data.frame("nucleotide" = unlist(sequence), "pos" = seq(object$chromstart, object$chromend), "col" = "black")
@@ -421,7 +370,6 @@ bb_labelGenome <- function(plot, x, y, params = NULL, just = c("left", "top"), s
   if(missing(commas)) commas <- NULL
   if(missing(sequence)) sequence <- NULL
   if(missing(boxWidth)) boxWidth <- NULL
-  if(missing(assembly)) assembly <- NULL
   if(missing(tcl)) tcl <- NULL
   if(missing(default.units)) default.units <- NULL
 
@@ -432,7 +380,7 @@ bb_labelGenome <- function(plot, x, y, params = NULL, just = c("left", "top"), s
 
   ## Compile all parameters into an internal object
   bb_glabelInternal <- structure(list(plot = plot, x = x, y = y, just = just, scale = scale, fontsize = fontsize, fontcolor = fontcolor,
-                                      linecolor = linecolor, commas = commas, sequence = sequence, boxWidth = boxWidth, assembly = assembly,
+                                      linecolor = linecolor, commas = commas, sequence = sequence, boxWidth = boxWidth,
                                       ticks = ticks, tcl = tcl, default.units = default.units), class = "bb_glabelInternal")
   bb_glabelInternal <- parseParams(bb_params = params, object_params = bb_glabelInternal)
 
@@ -445,7 +393,6 @@ bb_labelGenome <- function(plot, x, y, params = NULL, just = c("left", "top"), s
   if(is.null(bb_glabelInternal$commas)) bb_glabelInternal$commas <- TRUE
   if(is.null(bb_glabelInternal$sequence)) bb_glabelInternal$sequence <- TRUE
   if(is.null(bb_glabelInternal$boxWidth)) bb_glabelInternal$boxWidth <- 0.5
-  if(is.null(bb_glabelInternal$assembly)) bb_glabelInternal$assembly <- "hg19"
   if(is.null(bb_glabelInternal$tcl)) bb_glabelInternal$tcl <- 0.5
   if(is.null(bb_glabelInternal$default.units)) bb_glabelInternal$default.units <- "inches"
 
@@ -453,7 +400,7 @@ bb_labelGenome <- function(plot, x, y, params = NULL, just = c("left", "top"), s
   # INITIALIZE OBJECT
   # ======================================================================================================================================================================================
 
-  bb_genome_label <- structure(list(assembly = NULL, chrom = NULL, chromstart = NULL, chromend = NULL, x = bb_glabelInternal$x, y = bb_glabelInternal$y, width = NULL, height = NULL,
+  bb_genome_label <- structure(list(assembly = plot$assembly, chrom = plot$chrom, chromstart = plot$chromstart, chromend = plot$chromend, x = bb_glabelInternal$x, y = bb_glabelInternal$y, width = NULL, height = NULL,
                                     just = bb_glabelInternal$just, scale = bb_glabelInternal$scale, grobs = NULL,
                                     gp = gpar(fontsize = bb_glabelInternal$fontsize, col = bb_glabelInternal$linecolor, fontcolor = bb_glabelInternal$fontcolor, ...)), class = "bb_genomeLabel")
 
@@ -467,14 +414,6 @@ bb_labelGenome <- function(plot, x, y, params = NULL, just = c("left", "top"), s
 
   check_bbpage(error = "Cannot add a genome label without a BentoBox page.")
   errorcheck_bb_labelgenome(plot = bb_glabelInternal$plot, scale = bb_genome_label$scale, ticks = bb_glabelInternal$ticks, object = bb_genome_label)
-  bb_glabelInternal <- checkSeq(inObject = bb_glabelInternal)
-
-  # ======================================================================================================================================================================================
-  # PARSE TYPE OF INPUT PLOT
-  # ======================================================================================================================================================================================
-
-  ## Determine whole genome assembly labeling vs chrom/chromstart/chromend
-  bb_genome_label <- parse_plot(plot = bb_glabelInternal$plot, object = bb_genome_label)
 
   # ======================================================================================================================================================================================
   # SET UP PAGE/SCALE
@@ -505,8 +444,8 @@ bb_labelGenome <- function(plot, x, y, params = NULL, just = c("left", "top"), s
   # SET PARAMETERS
   # ======================================================================================================================================================================================
 
-  ## If chrom/chromstart/chromend label - comma parsing
-  if (!is.null(bb_genome_label$chrom)){
+  ## If single chrom/chromstart/chromend label - comma parsing
+  if (length(bb_genome_label$chrom) == 1){
 
     commaLabels <- comma_labels(object = bb_genome_label, commas = bb_glabelInternal$commas, format = format, fact = fact)
     chromstartlabel <- commaLabels[[1]]
@@ -536,23 +475,40 @@ bb_labelGenome <- function(plot, x, y, params = NULL, just = c("left", "top"), s
   }
 
 
-  ## Determine appropriate scaling of nucleotides
-  if (!is.null(bb_genome_label$chrom)){
+  ## Determine appropriate scaling of nucleotides and check for BSgenome packages
+  if (length(bb_genome_label$chrom) == 1){
 
-    labelWidth <- convertWidth(bb_genome_label$width, unitTo = "inches", valueOnly = T)
-    bpWidth <- convertWidth(widthDetails(textGrob(label = "A", x = 0.5, y = 0.5, default.units = "npc",
-                                                   gp = gpar(fontsize = bb_genome_label$gp$fontsize - 2))),
-                             unitTo = "inches", valueOnly = T)
-    seqRange <- bb_genome_label$chromend - bb_genome_label$chromstart
-    seqWidth <- bpWidth*seqRange
+    seqType <- NULL
 
-    if (seqWidth <= labelWidth){
-      seqType <- "letters"
-    } else if (seqWidth/labelWidth <= 9){
-      seqType <- "boxes"
+    if (!is.null(bb_genome_label$assembly$BSgenome)){
+      bsChecks <- check_loadedPackage(package = bb_genome_label$assembly$BSgenome, message = paste(paste0("`", bb_genome_label$assembly$BSgenome,"`"), "not loaded. Sequence information will not be displayed."))
+      if (bsChecks == TRUE){
+
+        labelWidth <- convertWidth(bb_genome_label$width, unitTo = "inches", valueOnly = T)
+        bpWidth <- convertWidth(widthDetails(textGrob(label = "A", x = 0.5, y = 0.5, default.units = "npc",
+                                                      gp = gpar(fontsize = bb_genome_label$gp$fontsize - 2))),
+                                unitTo = "inches", valueOnly = T)
+        seqRange <- bb_genome_label$chromend - bb_genome_label$chromstart
+        seqWidth <- bpWidth*seqRange
+
+
+        if (seqWidth <= labelWidth){
+          seqType <- "letters"
+        } else if (seqWidth/labelWidth <= 9){
+          seqType <- "boxes"
+        } else {
+          seqType <- NULL
+        }
+
+      }
+
     } else {
-      seqType <- NULL
+
+      warning("No `BSgenome` package found for the input assembly. Sequence information cannot be displayed.", call. = FALSE)
+
     }
+
+
   }
 
   # ======================================================================================================================================================================================
@@ -612,7 +568,7 @@ bb_labelGenome <- function(plot, x, y, params = NULL, just = c("left", "top"), s
   # ======================================================================================================================================================================================
 
   ## Chrom/chromstart/chromend grobs
-  if (!is.null(bb_genome_label$chrom)){
+  if (length(bb_genome_label$chrom) == 1){
 
     chrom_grobs(tgH = tgH, ticks = bb_glabelInternal$ticks, tickHeight = tick_height, sequence = bb_glabelInternal$sequence, seqType = seqType, scale = bb_genome_label$scale,
                 chromLabel = bb_genome_label$chrom,
@@ -628,7 +584,7 @@ bb_labelGenome <- function(plot, x, y, params = NULL, just = c("left", "top"), s
 
   } else {
     ## Whole genome grobs
-    genome_grobs(plot = bb_glabelInternal$plot, object = bb_genome_label, vp = vp)
+    genome_grobs(plot = bb_glabelInternal$plot, object = bb_genome_label, tgH = tgH, vp = vp)
 
   }
 

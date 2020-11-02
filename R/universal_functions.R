@@ -471,8 +471,8 @@ defaultUnits <- function(object, default.units){
 
 }
 
-## Define a function that determines the chromosome offsets for a genome assembly (manhattan plots)
-parse_assembly <- function(assemblyData, space){
+## Define a function that determines the chromosome offsets for a plot with multiple chromosomes (manhattan plots)
+spaceChroms <- function(assemblyData, space){
 
   ## space is the space in between each chromosome as a fraction of the width of the plot
 
@@ -544,29 +544,164 @@ parseParams <- function(bb_params, object_params){
   return(object_params)
 }
 
-## Define a function that determines corresponding BSgenome package for standard assemblies
-getBSgenome <- function(assembly){
 
-  bsgenome <- builds[which(builds$assembly == assembly),2]
-  return(bsgenome)
+## Define a function to get the data packages of a genome assembly
+getPackages <- function(genome, TxDb=NULL){
+  switch(genome,
+         "bosTau8" = list("TxDb" = ifelse(is.null(TxDb), "TxDb.Btaurus.UCSC.bosTau8.refGene", TxDb),
+                          "OrgDb" = "org.Bt.eg.db", gene.id.column = "ENTREZID", display.column = "SYMBOL",
+                          "BSgenome" = "BSgenome.Btaurus.UCSC.bosTau8"),
+         "bosTau9" = list("TxDb" = ifelse(is.null(TxDb), "TxDb.Btaurus.UCSC.bosTau9.refGene", TxDb),
+                          "OrgDb" = "org.Bt.eg.db", gene.id.column = "ENTREZID", display.column = "SYMBOL",
+                          "BSgenome" = "BSgenome.Btaurus.UCSC.bosTau9"),
+         "canFam3" = list("TxDb" = ifelse(is.null(TxDb), "TxDb.Cfamiliaris.UCSC.canFam3.refGene", TxDb),
+                          "OrgDb" = "org.Cf.eg.db",
+                          "BSgenome" = "BSgenome.Cfamiliaris.UCSC.canFam3"),
+         "ce6" = list("TxDb" = ifelse(is.null(TxDb), "TxDb.Celegans.UCSC.ce6.ensGene", TxDb),
+                      "OrgDb" = "org.Ce.eg.db", gene.id.column = "GENEID", display.column = "GENEID",
+                      "BSgenome" = "BSgenome.Celegans.UCSC.ce6"),
+         "ce11" = list("TxDb" = ifelse(is.null(TxDb), "TxDb.Celegans.UCSC.ce11.refGene", TxDb),  # TxDb.Celegans.UCSC.ce11.ensGene also available
+                       "OrgDb" = "org.Ce.eg.db", gene.id.column = "ENTREZID", display.column = "SYMBOL",
+                       "BSgenome" = "BSgenome.Celegans.UCSC.ce11"),
+         "danRer10" = list("TxDb" = ifelse(is.null(TxDb), "TxDb.Drerio.UCSC.danRer10.refGene", TxDb),
+                           "OrgDb" = "org.Dr.eg.db",
+                           "BSgenome" = "BSgenome.Drerio.UCSC.danRer10"),
+         "danRer11" = list("TxDb" = ifelse(is.null(TxDb), "TxDb.Drerio.UCSC.danRer11.refGene", TxDb),
+                           "OrgDb" = "org.Dr.eg.db",
+                           "BSgenome" = "BSgenome.Drerio.UCSC.danRer11"),
+         "dm3" = list("TxDb" = ifelse(is.null(TxDb), "TxDb.Dmelanogaster.UCSC.dm3.ensGene", TxDb),
+                      "OrgDb" = "org.Dm.eg.db",
+                      "BSgenome" = "BSgenome.Dmelanogaster.UCSC.dm3"),
+         "dm6" = list("TxDb" = ifelse(is.null(TxDb), "TxDb.Dmelanogaster.UCSC.dm6.ensGene", TxDb),
+                      "OrgDb" = "org.Dm.eg.db",
+                      "BSgenome" = "BSgenome.Dmelanogaster.UCSC.dm6"),
+         "galGal4" = list("TxDb" = ifelse(is.null(TxDb), "TxDb.Ggallus.UCSC.galGal4.refGene", TxDb),
+                          "OrgDb" = "org.Gg.eg.db",
+                          "BSgenome" = "BSgenome.Ggallus.UCSC.galGal4"),
+         "galGal5" = list("TxDb" = ifelse(is.null(TxDb), "TxDb.Ggallus.UCSC.galGal5.refGene", TxDb),
+                          "OrgDb" = "org.Gg.eg.db",
+                          "BSgenome" = "BSgenome.Ggallus.UCSC.galGal5"),
+         "galGal6" = list("TxDb" = ifelse(is.null(TxDb), "TxDb.Ggallus.UCSC.galGal6.refGene", TxDb),
+                          "OrgDb" = "org.Gg.eg.db",
+                          "BSgenome" = "BSgenome.Ggallus.UCSC.galGal6"),
+         "hg18" = list("TxDb" = ifelse(is.null(TxDb), "TxDb.Hsapiens.UCSC.hg18.knownGene", TxDb),
+                       "OrgDb" = "org.Hs.eg.db", gene.id.column = "ENTREZID", display.column = "SYMBOL",
+                       "BSgenome" = "BSgenome.Hsapiens.UCSC.hg18"),
+         "hg19" = list("TxDb" = ifelse(is.null(TxDb), "TxDb.Hsapiens.UCSC.hg19.knownGene", TxDb),
+                       "OrgDb" = "org.Hs.eg.db", gene.id.column = "ENTREZID", display.column = "SYMBOL",
+                       "BSgenome" = "BSgenome.Hsapiens.UCSC.hg19"),
+         "hg38" = list("TxDb" = ifelse(is.null(TxDb), "TxDb.Hsapiens.UCSC.hg38.knownGene", TxDb),
+                       "OrgDb" = "org.Hs.eg.db", gene.id.column = "ENTREZID", display.column = "SYMBOL",
+                       "BSgenome" = "BSgenome.Hsapiens.UCSC.hg38"),
+         "mm9" = list("TxDb" = ifelse(is.null(TxDb), "TxDb.Mmusculus.UCSC.mm9.knownGene", TxDb),
+                      "OrgDb" = "org.Mm.eg.db", gene.id.column = "ENTREZID", display.column = "SYMBOL",
+                      "BSgenome" = "BSgenome.Mmusculus.UCSC.mm9"),
+         "mm10" = list("TxDb" = ifelse(is.null(TxDb), "TxDb.Mmusculus.UCSC.mm10.knownGene", TxDb),
+                       "OrgDb" = "org.Mm.eg.db", gene.id.column = "ENTREZID", display.column = "SYMBOL",
+                       "BSgenome" = "BSgenome.Mmusculus.UCSC.mm10"),
+         "rheMac3" = list("TxDb" = ifelse(is.null(TxDb), "TxDb.Mmulatta.UCSC.rheMac3.refGene", TxDb),
+                          "OrgDb" = "org.Mmu.eg.db",
+                          "BSgenome" = "BSgenome.Mmulatta.UCSC.rheMac3"),
+         "rheMac8" = list("TxDb" = ifelse(is.null(TxDb), "TxDb.Mmulatta.UCSC.rheMac8.refGene", TxDb),
+                          "OrgDb" = "org.Mmu.eg.db",
+                          "BSgenome" = "BSgenome.Mmulatta.UCSC.rheMac8"),
+         "rheMac10" = list("TxDb" = ifelse(is.null(TxDb), "TxDb.Mmulatta.UCSC.rheMac10.refGene", TxDb),
+                           "OrgDb" = "org.Mmu.eg.db",
+                           "BSgenome" = "BSgenome.Mmulatta.UCSC.rheMac10"),
+         "panTro5" = list("TxDb" = ifelse(is.null(TxDb), "TxDb.Ptroglodytes.UCSC.panTro5.refGene", TxDb),
+                          "OrgDb" = "org.Pt.eg.db",
+                          "BSgenome" = "BSgenome.Ptroglodytes.UCSC.panTro5"),
+         "panTro6" = list("TxDb" = ifelse(is.null(TxDb), "TxDb.Ptroglodytes.UCSC.panTro6.refGene", TxDb),
+                          "OrgDb" = "org.Pt.eg.db",
+                          "BSgenome" = "BSgenome.Ptroglodytes.UCSC.panTro6"),
+         "rn4" = list("TxDb" = ifelse(is.null(TxDb), "TxDb.Rnorvegicus.UCSC.rn4.ensGene", TxDb),
+                      "OrgDb" = "org.Rn.eg.db",
+                      "BSgenome" = "BSgenome.Rnorvegicus.UCSC.rn4"),
+         "rn5" = list("TxDb" = ifelse(is.null(TxDb), "TxDb.Rnorvegicus.UCSC.rn5.refGene", TxDb),
+                      "OrgDb" = "org.Rn.eg.db",
+                      "BSgenome" = "BSgenome.Rnorvegicus.UCSC.rn5"),
+         "rn6" = list("TxDb" = ifelse(is.null(TxDb), "TxDb.Rnorvegicus.UCSC.rn6.refGene", TxDb),
+                      "OrgDb" = "org.Rn.eg.db",
+                      "BSgenome" = "BSgenome.Rnorvegicus.UCSC.rn6"),
+         "sacCer2" = list("TxDb" = ifelse(is.null(TxDb), "TxDb.Scerevisiae.UCSC.sacCer2.sgdGene", TxDb),
+                          "OrgDb" = "org.Sc.sgd.db", gene.id.column = "ORF", display.column = "GENENAME",
+                          "BSgenome" = "BSgenome.Scerevisiae.UCSC.sacCer2"),
+         "sacCer3" = list("TxDb" = ifelse(is.null(TxDb), "TxDb.Scerevisiae.UCSC.sacCer3.sgdGene", TxDb),
+                          "OrgDb" = "org.Sc.sgd.db", gene.id.column = "ORF", display.column = "GENENAME",
+                          "BSgenome" = "BSgenome.Scerevisiae.UCSC.sacCer3"),
+         "susScr3" = list("TxDb" = ifelse(is.null(TxDb), "TxDb.Sscrofa.UCSC.susScr3.refGene", TxDb),
+                          "OrgDb" = "org.Ss.eg.db",
+                          "BSgenome" = "BSgenome.Sscrofa.UCSC.susScr3"),
+         "susScr11" = list("TxDb" = ifelse(is.null(TxDb), "TxDb.Sscrofa.UCSC.susScr11.refGene", TxDb),
+                           "OrgDb" = "org.Ss.eg.db",
+                           "BSgenome" = "BSgenome.Sscrofa.UCSC.susScr11"),
+  )
+}
+
+## Define a function to get the assembly info based on a string (ie default) or bb_assembly object
+parse_bbAssembly <- function(assembly){
+
+  availDefaults <- c("bosTau8", "bosTau9", "canFam3", "ce6", "ce11", "danRer10",
+                     "danRer11", "dm3", "dm6", "galGal4", "galGal5", "galGal6",
+                     "hg18", "hg19", "hg38", "mm9", "mm10", "rheMac3", "rheMac8",
+                     "rehMac10", "panTro5", "panTro6", "rn4", "rn5", "rn6", "sacCer2",
+                     "sacCer3", "susScr3", "susScr11")
+
+  ## If it's just a string, get the default
+  if (class(assembly) == "character"){
+
+    if (!assembly %in% availDefaults){
+      stop("\'assembly\' not available as a default. Please make a bb_assembly object with `bb_assembly()` or pick an assembly from the defaults listed with `bb_genomes()`.", call. = FALSE)
+    }
+
+    assemblyData <- getPackages(genome = assembly)
+
+    ## If it's a bb_assembly object, use those
+  } else if (class(assembly) == "bb_assembly"){
+
+    assemblyData <- assembly
+
+  } else {
+    stop("Invalid \'assembly\' type. Please make a bb_assembly object with `bb_assembly()` or input an assembly string from the defaults listed with `bb_genomes()`.", call. = FALSE)
+  }
+
+
+  return(assemblyData)
+
 
 }
 
-
-
-## Define a function to check that a chromosome name is in an associated TxDb
-checkChroms <- function(chrom, txdb){
-
-  data <- get(txdb)
-  txdbChroms <- seqlevels(data)
-  if (chrom %in% txdbChroms){
-    return(TRUE)
-  } else {
-    warning(paste(chrom, "not found in", paste0(txdb, ".")), call. = FALSE)
+## Define a function to check that a TxDb, Org, or BSgenome package is loaded
+check_loadedPackage <- function(package, message){
+  if (!package %in% (.packages())){
+    warning(message, call. = FALSE)
     return(FALSE)
+  } else {
+    return(TRUE)
   }
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

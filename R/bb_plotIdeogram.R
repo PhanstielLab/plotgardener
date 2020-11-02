@@ -2,7 +2,7 @@
 #'
 #' @param chrom chromsome to plot
 #' @param params an optional "bb_params" object space containing relevant function parameters
-#' @param assembly desired genome assembly
+#' @param assembly default genome assembly as a string or a bb_assembly object
 #' @param orientation "v" (vertical) or "h" (horizontal) orientation
 #' @param start highlight start
 #' @param end highlight end
@@ -24,6 +24,7 @@ bb_plotIdeogram <- function(chrom, params = NULL, assembly = "hg19", orientation
   # FUNCTIONS
   # ======================================================================================================================================================================================
 
+  ## Define a function that checks errors for bb_plotIdeogram
   errorcheck_bbIdeogram <- function(start, end, orientation){
 
     if (!is.null(start)){
@@ -46,38 +47,56 @@ bb_plotIdeogram <- function(chrom, params = NULL, assembly = "hg19", orientation
 
   }
 
+  ## Define a function to get cytoBand data for a genome assembly
   cytoAssembly <- function(assembly){
-    ## parse assembly object here?
     availCytos <- list(hg18 = "cytoBand.Hsapiens.UCSC.hg18", hg19 = "cytoBand.Hsapiens.UCSC.hg19", hg38 = "cytoBand.Hsapiens.UCSC.hg38",
                        mm9 = "cytoBand.Mmusculus.UCSC.mm9", mm10 = "cytoBand.Mmusculus.UCSC.mm10", dm6 = "cytoBand.Dmelanogaster.UCSC.dm6",
                        rn5 = "cytoBand.Rnorvegicus.UCSC.rn5", rn6 = "cytoBand.Rnorvegicus.UCSC.rn6", danRer10 = "cytoBand.Drerio.UCSC.danRer10")
-    if (!assembly %in% names(availCytos)){
-      warning(paste("CytoBand data not available for", paste0(assembly, ".")), call. = FALSE)
+
+    ## Split TxDb assembly name
+    assemblyName <- unlist(strsplit(assembly$TxDb, split = "[.]"))
+
+    if (!any(names(availCytos) %in% assemblyName)){
+      warning(paste("CytoBand data not available for the given genome assembly. Ideograms can only be plotted for the following assemblies:", cat(names(availCytos), sep = ", ")), call. = FALSE)
       cytoData <- NULL
       genomeData <- NULL
     } else {
-      ## get associated cytoband data and txdb data
-      cytoData <- availCytos[[assembly]]
 
-      ## will need to edit this
-      genomeData <- defaultTxDb[[assembly]]
+      ## Get name of associated cytoband data (included in package)
+      cytoData <- availCytos[[which(names(availCytos) %in% assemblyName)]]
 
-      ## check that both are loaded
+      ## Check that included cytoband data is loaded
       currentLoaded <- ls(envir = globalenv())
       if (!cytoData %in% currentLoaded){
-        warning(paste(assembly, "cytoBand data not loaded. Run", paste0('`data("',cytoData,'")`'), "to load data."), call. = FALSE)
+        warning(paste("Assembly cytoBand data not loaded. Run", paste0('`data("',cytoData,'")`'), "to load data."), call. = FALSE)
         cytoData <- NULL
       }
 
-      if (!genomeData %in% (.packages())){
-        warning(paste(assembly, "TxDb not loaded. Please load package", paste0("'",genomeData,"'.")), call. = FALSE)
+      ## Check that TxDb package is loaded
+      txdbChecks <- check_loadedPackage(package = assembly$TxDb, message = paste(paste0("`", assembly$TxDb,"`"), "not loaded. Please install and load to plot Ideogram."))
+      if(txdbChecks == FALSE){
         genomeData <- NULL
+      } else {
+        genomeData <- assembly$TxDb
       }
-
 
     }
 
     return(list(cytoData, genomeData))
+  }
+
+  ## Define a function to check that a chromosome name is in an associated TxDb
+  checkChroms <- function(chrom, txdb){
+
+    tx_db <- eval(parse(text = txdb))
+    txdbChroms <- seqlevels(tx_db)
+    if (chrom %in% txdbChroms){
+      return(TRUE)
+    } else {
+      warning(paste(paste0("'", chrom, "'"), "not found in", paste0(txdb, ".")), call. = FALSE)
+      return(FALSE)
+    }
+
   }
 
   ## Define a function to give colors to different gieStains for the various assemblies
@@ -224,6 +243,13 @@ bb_plotIdeogram <- function(chrom, params = NULL, assembly = "hg19", orientation
   check_placement(object = ideogram_plot)
   errorcheck_bbIdeogram(start = bb_ideoInternal$start, end = bb_ideoInternal$end, orientation = bb_ideoInternal$orientation)
 
+
+  # ======================================================================================================================================================================================
+  # PARSE ASSEMBLY
+  # ======================================================================================================================================================================================
+
+  ideogram_plot$assembly <- parse_bbAssembly(assembly = ideogram_plot$assembly)
+
   # ======================================================================================================================================================================================
   # PARSE UNITS
   # ======================================================================================================================================================================================
@@ -234,13 +260,14 @@ bb_plotIdeogram <- function(chrom, params = NULL, assembly = "hg19", orientation
   # GET APPROPRIATE BUILD DATA
   # ======================================================================================================================================================================================
 
-  cytoData <- cytoAssembly(assembly = bb_ideoInternal$assembly)
+  cytoData <- cytoAssembly(assembly = ideogram_plot$assembly)
   data <- cytoData[[1]]
   if(!is.null(data)) data <- get(data)
   genome <- cytoData[[2]]
   if (!is.null(genome)){
     chromCheck <- checkChroms(chrom = bb_ideoInternal$chrom, txdb = genome)
-    genome <- get(genome)
+    genome <- eval(parse(text = genome))
+
   }
 
   chromLength <- 1
@@ -424,10 +451,8 @@ bb_plotIdeogram <- function(chrom, params = NULL, assembly = "hg19", orientation
         if (bb_ideoInternal$assembly %in% c("hg18", "hg19", "hg38")){
           ## CENTER BANDS ##
           leftCent <- data[which(data$gieStain == "acen"),][1,]
-          print(leftCent)
           leftCent_length <- leftCent$end - leftCent$start
           rightCent <- data[which(data$gieStain == "acen"),][2,]
-          print(rightCent)
           rightCent_length <- rightCent$end - rightCent$start
           centerX <- leftCent$end
           data <- subset(data, data$gieStain != "acen")
@@ -548,24 +573,23 @@ bb_plotIdeogram <- function(chrom, params = NULL, assembly = "hg19", orientation
 
     }
 
-  }
+    # ======================================================================================================================================================================================
+    # HIGHLIGHT BOX
+    # ======================================================================================================================================================================================
+
+    if (!is.null(bb_ideoInternal$start) & !is.null(bb_ideoInternal$end)){
 
 
-  # ======================================================================================================================================================================================
-  # HIGHLIGHT BOX
-  # ======================================================================================================================================================================================
+      highlightGrob <- rectGrob(x = bb_ideoInternal$start,
+                                y = unit(0.5, "npc"),
+                                width = bb_ideoInternal$end-bb_ideoInternal$start,
+                                height = unit(1, "npc"),
+                                just = "left",
+                                gp = gpar(fill = bb_ideoInternal$highlightCol, col = bb_ideoInternal$highlightCol, alpha = 0.5,...),
+                                default.units = "native")
+      assign("ideogram_grobs", addGrob(get("ideogram_grobs", envir = bbEnv), child = highlightGrob), envir = bbEnv)
 
-  if (!is.null(bb_ideoInternal$start) & !is.null(bb_ideoInternal$end)){
-
-
-    highlightGrob <- rectGrob(x = bb_ideoInternal$start,
-                              y = unit(0.5, "npc"),
-                              width = bb_ideoInternal$end-bb_ideoInternal$start,
-                              height = unit(1, "npc"),
-                              just = "left",
-                              gp = gpar(fill = bb_ideoInternal$highlightCol, col = bb_ideoInternal$highlightCol, alpha = 0.5,...),
-                              default.units = "native")
-    assign("ideogram_grobs", addGrob(get("ideogram_grobs", envir = bbEnv), child = highlightGrob), envir = bbEnv)
+    }
 
   }
 

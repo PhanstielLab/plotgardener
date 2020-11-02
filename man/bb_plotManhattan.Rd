@@ -38,13 +38,13 @@ bb_plotManhattan(
 
 \item{params}{an optional "bb_params" object space containing relevant function parameters}
 
-\item{chrom}{chromosome of region to be plotted, if specific region desired}
+\item{chrom}{string of specific chromosome to zoom in on according to genome build (Ex: hg19 = "chr1"); if NULL all chromosomes found in data will be plotted}
 
-\item{chromstart}{start of region to be plotted, if specific region desired}
+\item{chromstart}{if single chromosome specified, start of region to be plotted}
 
-\item{chromend}{end of region to be plotted, if specific region desired}
+\item{chromend}{if single chromosome specified, end of region to be plotted}
 
-\item{assembly}{genome assembly, for entire genome plotting}
+\item{assembly}{default genome assembly as a string or a bb_assembly object}
 
 \item{space}{the space between each chromsome as a fraction of the width of the plot}
 

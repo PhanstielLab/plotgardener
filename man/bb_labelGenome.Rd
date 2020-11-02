@@ -17,7 +17,6 @@ bb_labelGenome(
   commas = TRUE,
   sequence = TRUE,
   boxWidth = 0.5,
-  assembly = "hg19",
   ticks = NULL,
   tcl = 0.5,
   default.units = "inches",
@@ -47,8 +46,6 @@ the second value specifies vertical justification. Possible string values are: "
 \item{commas}{A logical value indicating whether to include commas in start and stop labels.}
 
 \item{sequence}{A logical value indicating whether to include sequence information above the label axis (only at appropriate resolutions).}
-
-\item{assembly}{A character value indicating the genome assembly of the label. Possible values are: "hg19".}
 
 \item{ticks}{A numeric vector of x-value locations for tick marks.}
 

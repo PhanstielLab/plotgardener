@@ -1,12 +1,13 @@
 #' Creates a bb_params object that can be used by BentoBox functions
 #'
 #' @param gene Optional parameter to extract chromosome, chromstart, and chromend information for a gene
+#' @param assembly If specifying gene, default genome assembly as a string or a bb_assembly object
 #' @param ... This function will take any BentoBox function parameters and their values
 #'
 #' @return All function arguments will be returned as a "bb_params" object
 #' @export
 
-bb_params <- function(gene = NULL, ...){
+bb_params <- function(gene = NULL, assembly = "hg19",...){
 
   ## Masterlist of all possible BentoBox parameters to check that it falls into that and throws warning if not
 

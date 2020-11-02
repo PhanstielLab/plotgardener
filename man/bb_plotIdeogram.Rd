@@ -27,7 +27,7 @@ bb_plotIdeogram(
 
 \item{params}{an optional "bb_params" object space containing relevant function parameters}
 
-\item{assembly}{desired genome assembly}
+\item{assembly}{default genome assembly as a string or a bb_assembly object}
 
 \item{orientation}{"v" (vertical) or "h" (horizontal) orientation}
 

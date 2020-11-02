@@ -3,10 +3,10 @@
 #' @param bed bedfile for Manhattan plot, either .bed file or dataframe in bed format
 #' @param pVals name of column in bedfile of corresponding p-values (will be converted to -log(10) space)
 #' @param params an optional "bb_params" object space containing relevant function parameters
-#' @param chrom chromosome of region to be plotted, if specific region desired
-#' @param chromstart start of region to be plotted, if specific region desired
-#' @param chromend end of region to be plotted, if specific region desired
-#' @param assembly genome assembly, for entire genome plotting
+#' @param chrom string of specific chromosome to zoom in on according to genome build (Ex: hg19 = "chr1"); if NULL all chromosomes found in data will be plotted
+#' @param chromstart if single chromosome specified, start of region to be plotted
+#' @param chromend if single chromosome specified, end of region to be plotted
+#' @param assembly default genome assembly as a string or a bb_assembly object
 #' @param colors single color, vector of colors, or color palette
 #' @param space the space between each chromsome as a fraction of the width of the plot
 #' @param cex number indiciating the amount by which points should be scaled relative to the default
@@ -34,7 +34,7 @@ bb_plotManhattan <- function(bed, pVals, params = NULL, chrom = NULL, chromstart
   # ======================================================================================================================================================================================
 
   ## Define a function that checks for errors in bb_plotManhattan
-  errorcheck_bb_plotmanhattan <- function(bedfile, chrom, assembly, chromstart, chromend, pVals, object, fillcolor){
+  errorcheck_bb_plotmanhattan <- function(bedfile, chrom, chromstart, chromend, pVals, object, fillcolor){
 
     if (!is.null(chrom)){
 
@@ -63,7 +63,14 @@ bb_plotManhattan <- function(bed, pVals, params = NULL, chrom = NULL, chromstart
 
       }
 
+    } else {
+
+      if (!is.null(chromstart) | !is.null(chromend)){
+        warning("Plotting multiple chromosomes. \'chromstart\' and \'chromend\' inputs will be ignored.", call. = FALSE)
+      }
+
     }
+
 
     ## pVals input
     if (class(pVals) == "character"){
@@ -85,13 +92,13 @@ bb_plotManhattan <- function(bed, pVals, params = NULL, chrom = NULL, chromstart
 
       if (class(fillcolor) == "function"){
 
-        stop("\'fillcolor\' cannot be a palette when plotting a specified chromsome range.", call. = FALSE)
+        stop("\'fillcolor\' cannot be a palette when plotting a single, specified chromsome range.", call. = FALSE)
 
       }
 
       if (length(fillcolor) > 1){
 
-        stop("\'fillcolor\' cannot be a vector when plotting a specified chromsome range.", call. = FALSE)
+        stop("\'fillcolor\' cannot be a vector when plotting a single, specified chromsome range.", call. = FALSE)
       }
 
     }
@@ -133,24 +140,11 @@ bb_plotManhattan <- function(bed, pVals, params = NULL, chrom = NULL, chromstart
   ## Define a function that parses the data into an internal format
   parse_data <- function(bedfile, chrom, chromstart, chromend, pVals){
 
-    ## Read in data if it's not a dataframe
-    if (!"data.frame" %in% class(bedfile)){
-      bedfile <- fread(bedfile)
-    }
-
-    bedfile <- as.data.frame(bedfile)
-
     ## Subset data
     if (!is.null(chrom)){
-
-      if (is.null(chromstart) & is.null(chromend)){
-
-        bedfile <- bedfile[which(bedfile[,1] == chrom),]
-
-      } else {
-
-        bedfile <- bedfile[which(bedfile[,1] == chrom & bedfile[,2] >= chromstart & bedfile[,2] <= chromend),]
-
+      bedfile <- bedfile[which(bedfile[,1] == chrom),]
+      if (!is.null(chromstart) & !is.null(chromend)){
+        bedfile <- bedfile[which(bedfile[,2] >= chromstart & bedfile[,2] <= chromend),]
       }
 
     }
@@ -164,16 +158,6 @@ bb_plotManhattan <- function(bed, pVals, params = NULL, chrom = NULL, chromstart
     bed_data$chr <- as.character(bed_data$chr)
 
     return(bed_data)
-  }
-
-  ## Define a function that parses the genome assembly and gets its internal data
-  internal_assembly <- function(assembly){
-
-    if (assembly == "hg19"){
-
-      return(bb_hg19)
-    }
-
   }
 
   ## Define a function that adds offsets to the beddata based on the offsets of the genome assembly
@@ -310,22 +294,45 @@ bb_plotManhattan <- function(bed, pVals, params = NULL, chrom = NULL, chromstart
   # INITIALIZE OBJECT
   # ======================================================================================================================================================================================
 
-  man_plot <- structure(list(range = bb_manInternal$range, ymax = bb_manInternal$ymax, space = bb_manInternal$space,
+  man_plot <- structure(list(chrom = bb_manInternal$chrom, chromstart = bb_manInternal$chromstart, chromend = bb_manInternal$chromend, range = bb_manInternal$range, ymax = bb_manInternal$ymax, space = bb_manInternal$space,
                              width = bb_manInternal$width, height = bb_manInternal$height, x = bb_manInternal$x, y = bb_manInternal$y,
-                             justification = bb_manInternal$just, grobs = NULL, assembly = bb_manInternal$assembly), class = "bb_manhattan")
+                             justification = bb_manInternal$just, grobs = NULL, assembly = NULL), class = "bb_manhattan")
   attr(x = man_plot, which = "plotted") <- bb_manInternal$draw
 
   # ======================================================================================================================================================================================
-  # CATCH ERRORS
+  # CATCH MISSING ARGUMENT AND PLACEMENT ERRORS
   # ======================================================================================================================================================================================
 
   if(is.null(bb_manInternal$bed)) stop("argument \"bed\" is missing, with no default.", call. = FALSE)
   if(is.null(bb_manInternal$pVals)) stop("argument \"pVals\" is missing, with no default.", call. = FALSE)
 
   check_placement(object = man_plot)
-  errorcheck_bb_plotmanhattan(bedfile = bb_manInternal$bed, chrom = man_plot$chrom, assembly = man_plot$assembly, chromstart = man_plot$chromstart, chromend = man_plot$chromend,
+
+  # ======================================================================================================================================================================================
+  # READ IN DATA
+  # ======================================================================================================================================================================================
+
+  bedfile <- bb_manInternal$bed
+  ## Read in data if it's not a dataframe or data.table
+  if (!"data.frame" %in% class(bedfile)){
+    bedfile <- fread(bedfile)
+  }
+
+  bedfile <- as.data.frame(bedfile)
+
+  # ======================================================================================================================================================================================
+  # CATCH MORE ERRORS
+  # ======================================================================================================================================================================================
+
+  errorcheck_bb_plotmanhattan(bedfile = bedfile, chrom = man_plot$chrom, chromstart = man_plot$chromstart, chromend = man_plot$chromend,
                               pVals = bb_manInternal$pVals, object = man_plot,
                               fillcolor = bb_manInternal$fillcolor)
+
+  # ======================================================================================================================================================================================
+  # PARSE ASSEMBLY
+  # ======================================================================================================================================================================================
+
+  man_plot$assembly <- parse_bbAssembly(assembly = bb_manInternal$assembly)
 
   # ======================================================================================================================================================================================
   # PARSE UNITS
@@ -337,95 +344,146 @@ bb_plotManhattan <- function(bed, pVals, params = NULL, chrom = NULL, chromstart
   # READ AND SUBSET DATA
   # ======================================================================================================================================================================================
 
-  bed_data <- parse_data(bedfile = bb_manInternal$bed, chrom = man_plot$chrom, chromstart = man_plot$chromstart, chromend = man_plot$chromend, pVals = bb_manInternal$pVals)
+  bed_data <- parse_data(bedfile = bedfile, chrom = man_plot$chrom, chromstart = man_plot$chromstart, chromend = man_plot$chromend, pVals = bb_manInternal$pVals)
 
-  # ======================================================================================================================================================================================
-  # WHOLE GENOME
-  # ======================================================================================================================================================================================
+  if (nrow(bed_data) > 0){
 
-  if (is.null(man_plot$chrom)){
+    # ======================================================================================================================================================================================
+    # MULTIPLE CHROMOSOMES
+    # ======================================================================================================================================================================================
 
-    ## Add assembly to object to denote as a whole genome
-    man_plot$chromstart <- NULL
-    man_plot$chromend <- NULL
+    if (is.null(man_plot$chrom)){
 
-    ## EDIT HERE
-    ## Access internal assembly
-    assembly_data <- internal_assembly(assembly = man_plot$assembly)
+      man_plot$chromstart <- NULL
+      man_plot$chromend <- NULL
+      chroms <- as.character(unique(bed_data[,1]))
 
-    ## get the offsets based on spacer for the assembly
-    offsetAssembly <- parse_assembly(assemblyData = assembly_data, space = bb_manInternal$space)
+      ## Get chrom sizes based on assembly data
+      txdbChecks <- check_loadedPackage(package = man_plot$assembly$TxDb, message = paste(paste0("`", man_plot$assembly$TxDb,"`"), "not loaded. Please install and load to generate full genome assembly Manhattan plot."))
+      if (txdbChecks == TRUE){
 
-    ## remove bed_data data that aren't in the genome assembly
-    bed_data <- bed_data[bed_data[,1] %in% offsetAssembly[,1],]
+        tx_db <- eval(parse(text = man_plot$assembly$TxDb))
+        assembly_data <- as.data.frame(setDT(as.data.frame(seqlengths(tx_db)), keep.rownames = TRUE))
+        assembly_data <- assembly_data[which(assembly_data[,1] %in% chroms),]
+        man_plot$chrom <- assembly_data[,1]
 
-    ## Add chromosome offsets to bed_data
-    bed_data <- bed_offset(bedData = bed_data, offsetAssembly = offsetAssembly)
+        if (any(!chroms %in% assembly_data[,1])){
+          non_txdb <- chroms[which(!chroms %in% assembly_data[,1])]
+          warning(paste("Chromosome(s)", paste0("'", non_txdb, "'", collapse = ", "), "not found in", paste0("`", man_plot$assembly$TxDb, "`"), "and will be ignored."), call. = FALSE)
+        }
 
-    ## Set viewport xscale
-    cumsums <- cumsum(as.numeric(assembly_data[,2]))
-    spacer <- cumsums[length(cumsum(as.numeric(assembly_data[,2])))] * bb_manInternal$space
+        ## get the offsets based on spacer for the assembly
+        offsetAssembly <- spaceChroms(assemblyData = assembly_data, space = bb_manInternal$space)
 
-    xscale <- c(0, max(offsetAssembly[,4]) + spacer)
+        ## remove bed_data data that aren't in the genome assembly
+        bed_data <- bed_data[bed_data[,1] %in% offsetAssembly[,1],]
 
-  } else {
+        ## Add chromosome offsets to bed_data
+        bed_data <- bed_offset(bedData = bed_data, offsetAssembly = offsetAssembly)
 
-  # ======================================================================================================================================================================================
-  # SINGLE CHROMOSOME
-  # ======================================================================================================================================================================================
-    man_plot$assembly <- NULL
-    offsetAssembly <- NULL
+        ## Set viewport xscale
+        cumsums <- cumsum(as.numeric(assembly_data[,2]))
+        spacer <- cumsums[length(cumsum(as.numeric(assembly_data[,2])))] * bb_manInternal$space
 
-    ## Whole single chromosome
-    if (is.null(man_plot$chromstart) & is.null(man_plot$chromend)){
+        xscale <- c(0, max(offsetAssembly[,4]) + spacer)
 
-      ## EDIT HERE
-      man_plot$chromstart <- min(bed_data[,2])
-      man_plot$chromend <- max(bed_data[,2])
+      } else {
+        xscale <- c(0, 1)
+      }
 
-      ## Set viewport xscale
-      xscale <- c(min(bed_data[,2]), max(bed_data[,2]))
 
 
     } else {
 
-      ## Set viewport xscale
-      xscale <- c(man_plot$chromstart, man_plot$chromend)
+      # ======================================================================================================================================================================================
+      # SINGLE CHROMOSOME
+      # ======================================================================================================================================================================================
+      offsetAssembly <- NULL
+
+      ## Whole single chromosome needs chromosome length information
+      if (is.null(man_plot$chromstart) & is.null(man_plot$chromend)){
+
+        txdbChecks <- check_loadedPackage(package = man_plot$assembly$TxDb, message = paste(paste0("`", man_plot$assembly$TxDb,"`"), "not loaded. Please install and load to generate full chromosome Manhattan plot."))
+        if (txdbChecks == TRUE){
+
+          tx_db <- eval(parse(text = man_plot$assembly$TxDb))
+          assembly_data <- seqlengths(tx_db)
+
+          if (!man_plot$chrom %in% names(assembly_data)){
+            warning(paste("Chromosome", paste0("'", man_plot$chrom, "'"), "not found in", paste0("`", man_plot$assembly$TxDb, "`"), "and data for entire chromosome cannot be plotted."), call. = FALSE)
+            xscale <- c(0, 1)
+          } else {
+            man_plot$chromstart <- 1
+            man_plot$chromend <- assembly_data[[man_plot$chrom]]
+            xscale <- c(man_plot$chromstart, man_plot$chromend)
+
+          }
+
+
+        }
+
+
+
+      } else {
+        xscale <- c(man_plot$chromstart, man_plot$chromend)
+        txdbChecks <- TRUE
+      }
+
 
     }
 
-  }
+    if (txdbChecks != FALSE){
 
-  # ======================================================================================================================================================================================
-  # Y-LIMITS
-  # ======================================================================================================================================================================================
+      # ======================================================================================================================================================================================
+      # Y-LIMITS
+      # ======================================================================================================================================================================================
 
-  man_plot <- manhattan_range(bedData = bed_data, object = man_plot)
+      man_plot <- manhattan_range(bedData = bed_data, object = man_plot)
 
-  # ======================================================================================================================================================================================
-  # SPLIT DATA INTO SIG AND NON-SIG VALUES FOR ADDITIONAL COLORING
-  # ======================================================================================================================================================================================
+      # ======================================================================================================================================================================================
+      # SPLIT DATA INTO SIG AND NON-SIG VALUES FOR ADDITIONAL COLORING
+      # ======================================================================================================================================================================================
 
-  sigBed <- bed_data[bed_data$pval <= bb_manInternal$sigVal,]
-  nonsigBed <- bed_data[bed_data$pval > bb_manInternal$sigVal,]
+      sigBed <- bed_data[bed_data$pval <= bb_manInternal$sigVal,]
+      nonsigBed <- bed_data[bed_data$pval > bb_manInternal$sigVal,]
 
-  # ======================================================================================================================================================================================
-  # COLORS
-  # ======================================================================================================================================================================================
+      # ======================================================================================================================================================================================
+      # COLORS
+      # ======================================================================================================================================================================================
 
-  color_nonsig <- parse_color(fillcolor = bb_manInternal$fillcolor, offsetAssembly = offsetAssembly, bedData = nonsigBed)
+      color_nonsig <- parse_color(fillcolor = bb_manInternal$fillcolor, offsetAssembly = offsetAssembly, bedData = nonsigBed)
 
-  if (!is.null(bb_manInternal$sigCol)){
+      if (!is.null(bb_manInternal$sigCol)){
 
-    color_sig <- parse_color(fillcolor = bb_manInternal$sigCol, offsetAssembly = offsetAssembly, bedData = sigBed)
+        color_sig <- parse_color(fillcolor = bb_manInternal$sigCol, offsetAssembly = offsetAssembly, bedData = sigBed)
+
+      } else {
+
+        color_sig <- parse_color(fillcolor = bb_manInternal$fillcolor, offsetAssembly = offsetAssembly, bedData = sigBed)
+      }
+
+
+      colorBed <- rbind(color_nonsig, color_sig)
+
+
+
+
+    } else {
+      xscale <- c(0, 1)
+      man_plot$range <- c(0, 1)
+    }
+
+
+
 
   } else {
+    txdbChecks <- TRUE
+    xscale <- c(0, 1)
+    man_plot$range <- c(0, 1)
+    warning("No data found in region.", call. = FALSE)
 
-    color_sig <- parse_color(fillcolor = bb_manInternal$fillcolor, offsetAssembly = offsetAssembly, bedData = sigBed)
   }
 
-
-  colorBed <- rbind(color_nonsig, color_sig)
 
   # ======================================================================================================================================================================================
   # VIEWPORTS
@@ -473,37 +531,40 @@ bb_plotManhattan <- function(bed, pVals, params = NULL, chrom = NULL, chromstart
 
   assign("manhattan_grobs", gTree(vp = vp), envir = bbEnv)
 
-  # ======================================================================================================================================================================================
-  # MAKE GROBS
-  # ======================================================================================================================================================================================
-  gp = gpar(...)
-  if (length(gp) != 0){
-    if ("col" %in% names(gp)){
+  if (nrow(bed_data) > 0 & txdbChecks == TRUE){
 
-      gp$linecolor <- gp$col
+    # ======================================================================================================================================================================================
+    # MAKE GROBS
+    # ======================================================================================================================================================================================
+    gp = gpar(...)
+    if (length(gp) != 0){
+      if ("col" %in% names(gp)){
 
+        gp$linecolor <- gp$col
+
+      }
     }
+    gp$col <- colorBed$color
+    gp$cex <- cex
+
+    points <- pointsGrob(x = colorBed$pos, y = -log10(colorBed$pval), pch = bb_manInternal$pch,
+                         gp = gp,
+                         default.units = "native")
+    assign("manhattan_grobs", addGrob(gTree = get("manhattan_grobs", envir = bbEnv), child = points), envir = bbEnv)
+
+    # ======================================================================================================================================================================================
+    # SIGLINE
+    # ======================================================================================================================================================================================
+
+    if (bb_manInternal$sigLine == TRUE){
+
+      gp$col <- gp$linecolor
+      sigGrob <- segmentsGrob(x0 = unit(0, "npc"), y0 = unit(-log10(bb_manInternal$sigVal), "native"), x1 = unit(1, "npc"), y1 = unit(-log10(bb_manInternal$sigVal), "native"),
+                              gp = gp)
+      assign("manhattan_grobs", addGrob(gTree = get("manhattan_grobs", envir = bbEnv), child = sigGrob), envir = bbEnv)
+    }
+
   }
-  gp$col <- colorBed$color
-  gp$cex <- cex
-
-  points <- pointsGrob(x = colorBed$pos, y = -log10(colorBed$pval), pch = bb_manInternal$pch,
-                       gp = gp,
-                       default.units = "native")
-  assign("manhattan_grobs", addGrob(gTree = get("manhattan_grobs", envir = bbEnv), child = points), envir = bbEnv)
-
-  # ======================================================================================================================================================================================
-  # SIGLINE
-  # ======================================================================================================================================================================================
-
-  if (bb_manInternal$sigLine == TRUE){
-
-    gp$col <- gp$linecolor
-    sigGrob <- segmentsGrob(x0 = unit(0, "npc"), y0 = unit(-log10(bb_manInternal$sigVal), "native"), x1 = unit(1, "npc"), y1 = unit(-log10(bb_manInternal$sigVal), "native"),
-                            gp = gp)
-    assign("manhattan_grobs", addGrob(gTree = get("manhattan_grobs", envir = bbEnv), child = sigGrob), envir = bbEnv)
-  }
-
 
   # ======================================================================================================================================================================================
   # IF PLOT == TRUE, DRAW GROBS
