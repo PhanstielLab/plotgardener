@@ -6,11 +6,12 @@
 #' @param default.units A string indicating the units of width and height
 #' @param showOutline TRUE/FALSE indicating whether to draw a black outline around the entire page
 #' @param showRuler TRUE/FALSE indicating whether to show guiding ruler along top and side of page
+#' @param showUnit TRUE/FALSE indicating whether to show name of units in top left of page
 #' @param xgrid vertical gridlines
 #' @param ygrid horizontal gridlines
 #' @export
 
-bb_makePage <- function(params = NULL, width = 8.5, height = 11, default.units = "inches", showOutline = TRUE, showRuler = TRUE, xgrid = 0.5, ygrid = 0.5){
+bb_makePage <- function(params = NULL, width = 8.5, height = 11, default.units = "inches", showOutline = TRUE, showRuler = TRUE, showUnit = TRUE, xgrid = 0.5, ygrid = 0.5){
 
   # ======================================================================================================================================================================================
   # MAKE NEW PAGE
@@ -28,12 +29,13 @@ bb_makePage <- function(params = NULL, width = 8.5, height = 11, default.units =
   if(missing(default.units)) default.units <- NULL
   if(missing(showOutline)) showOutline <- NULL
   if(missing(showRuler)) showRuler <- NULL
+  if(missing(showUnit)) showUnit <- NULL
   if(missing(xgrid)) xgrid <- NULL
   if(missing(ygrid)) ygrid <- NULL
 
   ## Compile all parameters into an internal object
   bb_page <- structure(list(width = width, height = height, default.units = default.units, showOutline = showOutline,
-                            showRuler = showRuler, xgrid = xgrid, ygrid = ygrid), class = "bb_page")
+                            showRuler = showRuler, showUnit = showUnit, xgrid = xgrid, ygrid = ygrid), class = "bb_page")
   bb_page <- parseParams(bb_params = params, object_params = bb_page)
 
   ## For any defaults that are still NULL, set back to default
@@ -42,6 +44,7 @@ bb_makePage <- function(params = NULL, width = 8.5, height = 11, default.units =
   if(is.null(bb_page$default.units)) bb_page$default.units <- "inches"
   if(is.null(bb_page$showOutline)) bb_page$showOutline <- TRUE
   if(is.null(bb_page$showRuler)) bb_page$showRuler <- TRUE
+  if(is.null(bb_page$showUnit)) bb_page$showUnit <- TRUE
   if(is.null(bb_page$xgrid)) bb_page$xgrid <- 0.5
   if(is.null(bb_page$ygrid)) bb_page$ygrid <- 0.5
 
@@ -107,11 +110,17 @@ bb_makePage <- function(params = NULL, width = 8.5, height = 11, default.units =
     hLabel <- textGrob(label = seq(0, bb_page$width, div), x = seq(0, bb_page$width, div), y = y0, vjust = -0.5, default.units = bb_page$default.units)
     vLabel <- textGrob(label = seq(0, bb_page$height, div), x = x0, y = seq(0, bb_page$height, div), hjust = 1.5, default.units = "native")
 
-    ## Unit annotation
-    unitLabel <- textGrob(label = bb_page$default.units, x = 0, y = bb_page$height, hjust = 1.75, vjust = -1.5, default.units = bb_page$default.units, just = c("right", "bottom"))
-
     assign("guide_grobs", addGrob(gTree = get("guide_grobs", envir = bbEnv), child = hLabel), envir = bbEnv)
     assign("guide_grobs", addGrob(gTree = get("guide_grobs", envir = bbEnv), child = vLabel), envir = bbEnv)
+
+
+  }
+
+
+  if (bb_page$showUnit == TRUE){
+
+    ## Unit annotation
+    unitLabel <- textGrob(label = bb_page$default.units, x = 0, y = bb_page$height, hjust = 1.75, vjust = -1.5, default.units = bb_page$default.units, just = c("right", "bottom"))
     assign("guide_grobs", addGrob(gTree = get("guide_grobs", envir = bbEnv), child = unitLabel), envir = bbEnv)
 
   }

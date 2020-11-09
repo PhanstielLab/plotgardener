@@ -11,6 +11,7 @@ bb_makePage(
   default.units = "inches",
   showOutline = TRUE,
   showRuler = TRUE,
+  showUnit = TRUE,
   xgrid = 0.5,
   ygrid = 0.5
 )
@@ -27,6 +28,8 @@ bb_makePage(
 \item{showOutline}{TRUE/FALSE indicating whether to draw a black outline around the entire page}
 
 \item{showRuler}{TRUE/FALSE indicating whether to show guiding ruler along top and side of page}
+
+\item{showUnit}{TRUE/FALSE indicating whether to show name of units in top left of page}
 
 \item{xgrid}{vertical gridlines}
 

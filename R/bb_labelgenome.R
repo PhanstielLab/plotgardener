@@ -416,6 +416,12 @@ bb_labelGenome <- function(plot, x, y, params = NULL, just = c("left", "top"), s
   errorcheck_bb_labelgenome(plot = bb_glabelInternal$plot, scale = bb_genome_label$scale, ticks = bb_glabelInternal$ticks, object = bb_genome_label)
 
   # ======================================================================================================================================================================================
+  # PARSE ASSEMBLY
+  # ======================================================================================================================================================================================
+
+  bb_genome_label$assembly <- parse_bbAssembly(assembly = bb_genome_label$assembly)
+
+  # ======================================================================================================================================================================================
   # SET UP PAGE/SCALE
   # ======================================================================================================================================================================================
 
@@ -443,7 +449,6 @@ bb_labelGenome <- function(plot, x, y, params = NULL, just = c("left", "top"), s
   # ======================================================================================================================================================================================
   # SET PARAMETERS
   # ======================================================================================================================================================================================
-
   ## If single chrom/chromstart/chromend label - comma parsing
   if (length(bb_genome_label$chrom) == 1){
 
@@ -474,13 +479,13 @@ bb_labelGenome <- function(plot, x, y, params = NULL, just = c("left", "top"), s
     bb_genome_label$height <- unit(height, get("page_units", envir = bbEnv))
   }
 
-
   ## Determine appropriate scaling of nucleotides and check for BSgenome packages
   if (length(bb_genome_label$chrom) == 1){
 
     seqType <- NULL
 
     if (!is.null(bb_genome_label$assembly$BSgenome)){
+
       bsChecks <- check_loadedPackage(package = bb_genome_label$assembly$BSgenome, message = paste(paste0("`", bb_genome_label$assembly$BSgenome,"`"), "not loaded. Sequence information will not be displayed."))
       if (bsChecks == TRUE){
 
@@ -514,8 +519,7 @@ bb_labelGenome <- function(plot, x, y, params = NULL, just = c("left", "top"), s
   # ======================================================================================================================================================================================
   # PARSE UNITS
   # ======================================================================================================================================================================================
-
-  if (class(bb_genome_label$x) != "unit"){
+  if (!"unit" %in% class(bb_genome_label$x)){
 
     if (!is.numeric(bb_genome_label$x)){
 
@@ -533,7 +537,7 @@ bb_labelGenome <- function(plot, x, y, params = NULL, just = c("left", "top"), s
 
   }
 
-  if (class(bb_genome_label$y) != "unit"){
+  if (!"unit" %in% class(bb_genome_label$y)){
 
     if (!is.numeric(bb_genome_label$y)){
 
@@ -554,7 +558,6 @@ bb_labelGenome <- function(plot, x, y, params = NULL, just = c("left", "top"), s
   # ======================================================================================================================================================================================
   # VIEWPORTS
   # ======================================================================================================================================================================================
-
   ## Name viewport
   currentViewports <- current_viewports()
   vp_name <- paste0("bb_genomeLabel", length(grep(pattern = "bb_genomeLabel", x = currentViewports)) + 1)

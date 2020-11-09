@@ -70,7 +70,7 @@ bb_addText <- function(label, x, y, params = NULL, just = "center", fontcolor = 
   page_height <- get("page_height", envir = bbEnv)
   page_units <- get("page_units", envir = bbEnv)
 
-  if (class(bb_text$x) != "unit"){
+  if (!"unit" %in% class(bb_text$x)){
 
     if (!is.numeric(bb_text$x)){
 
@@ -88,7 +88,7 @@ bb_addText <- function(label, x, y, params = NULL, just = "center", fontcolor = 
 
   }
 
-  if (class(bb_text$y) != "unit"){
+  if (!"unit" %in% class(bb_text$y)){
 
     if (!is.numeric(bb_text$y)){
 
