@@ -343,7 +343,7 @@ bb_plotGenes <- function(chrom, params = NULL, assembly = "hg19", chromstart = N
     minusBackground$fontColor <- bb_geneInternal$geneBackground[1]
     ## Automatically change fontcolor for +/- strand label
     bb_geneInternal$fontcolors[1] <- bb_geneInternal$geneBackground[1]
-    bb_geneInternal$fontcolors[2] <- bb_geneInternal$geneBackground[2]
+    bb_geneInternal$fontcolors[2] <- bb_geneInternal$geneBackground[1]
 
     ## Put highlight and background genes back together
     plus_genes <- rbind(plusHighlight, plusBackground)
