@@ -355,7 +355,7 @@ bb_annotateLoops <- function(hic, loops, params = NULL, half = "inherit", shift 
   loop_annot <- structure(list(chrom = bb_loopInternal$hic$chrom, chromstart = bb_loopInternal$hic$chromstart, chromend = bb_loopInternal$hic$chromend, altchrom = bb_loopInternal$hic$altchrom,
                                altchromstart = bb_loopInternal$hic$altchromstart, altchromend = bb_loopInternal$hic$altchromend, x = bb_loopInternal$hic$x, y = bb_loopInternal$hic$y,
                                width = bb_loopInternal$hic$width, height = bb_loopInternal$hic$height, just = bb_loopInternal$hic$just, grobs = NULL,
-                               gp = gpar(fill = NA, ...)), class = "bb_loop")
+                               gp = gpar(...)), class = "bb_loop")
 
   # ======================================================================================================================================================================================
   # CATCH ERRORS
@@ -456,13 +456,21 @@ bb_annotateLoops <- function(hic, loops, params = NULL, half = "inherit", shift 
 
     if (bb_loopInternal$type == "box"){
 
+      loop_annot$gp$fill <- NA
       invisible(apply(loops_subset, 1, boxAnnotation, hic = bb_loopInternal$hic, object = loop_annot, shift = bb_loopInternal$shift, half = half))
 
     } else if (bb_loopInternal$type == "circle"){
-
+      loop_annot$gp$fill <- NA
       invisible(apply(loops_subset, 1, circleAnnotation, hic = bb_loopInternal$hic, object = loop_annot, shift = bb_loopInternal$shift, half = half))
 
     } else if (bb_loopInternal$type == "arrow"){
+      if (is.null(loop_annot$gp$col) & is.null(loop_annot$gp$fill)){
+        loop_annot$gp$fill <- "black"
+      } else {
+        if(is.null(loop_annot$gp$fill)){
+          loop_annot$gp$fill <- loop_annot$gp$col
+        }
+      }
 
       invisible(apply(loops_subset, 1, arrowAnnotation, hic = bb_loopInternal$hic, object = loop_annot, shift = bb_loopInternal$shift, half = half))
 
