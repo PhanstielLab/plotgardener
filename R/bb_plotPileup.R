@@ -309,7 +309,7 @@ bb_plotPileup <- function(bed, chrom, params = NULL, chromstart = NULL, chromend
 
   }
 
-  maxRows <- floor((vp$yscale[2] + spaceHeight)/(boxHeight + spaceHeight))
+  maxRows <- floor((as.numeric(vp$height) + spaceHeight)/(boxHeight + spaceHeight))
   wiggle <- abs(pileup_plot$chromend - pileup_plot$chromstart) * bb_pileInternal$spaceWidth
 
 
@@ -363,7 +363,7 @@ bb_plotPileup <- function(bed, chrom, params = NULL, chromstart = NULL, chromend
       posStrand$row <- 0
       ## Convert to numeric matrix for Rcpp function parsing
       posMatrix <- as.matrix(posStrand[,c(2,3,ncol(posStrand)-1, ncol(posStrand))])
-      posDF <- checkRow(posMatrix, floor(maxRows/2), 3, wiggle)
+      posDF <- checkRow(posMatrix, maxRows*0.5, 3, wiggle)
       posDF <- as.data.frame(posDF)
       colnames(posDF) <- c("start", "stop", "colorby", "row")
       if (any(posDF$row == 0)){
@@ -391,7 +391,7 @@ bb_plotPileup <- function(bed, chrom, params = NULL, chromstart = NULL, chromend
       minStrand <- minStrand[sample(nrow(minStrand)),]
       minStrand$row <- 0
       minMatrix <- as.matrix(minStrand[,c(2,3,ncol(minStrand)-1,ncol(minStrand))])
-      minDF <- checkRow(minMatrix, floor(maxRows/2), 3, wiggle)
+      minDF <- checkRow(minMatrix, maxRows*0.5, 3, wiggle)
       minDF <- as.data.frame(minDF)
       colnames(minDF) <- c("start", "stop", "colorby", "row")
       if (any(minDF$row == 0)){
