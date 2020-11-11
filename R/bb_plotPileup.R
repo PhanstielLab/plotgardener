@@ -139,8 +139,8 @@ bb_plotPileup <- function(bed, chrom, params = NULL, chromstart = NULL, chromend
   # CHECK PLACEMENT/ARGUMENT ERROS
   # ======================================================================================================================================================================================
 
-  if(is.null(bb_pilieInternal$bed)) stop("argument \"bed\" is missing, with no default.", call. = FALSE)
-  if(is.null(bb_pilieInternal$chrom)) stop("argument \"chrom\" is missing, with no default.", call. = FALSE)
+  if(is.null(bb_pileInternal$bed)) stop("argument \"bed\" is missing, with no default.", call. = FALSE)
+  if(is.null(bb_pileInternal$chrom)) stop("argument \"chrom\" is missing, with no default.", call. = FALSE)
   check_placement(object = pileup_plot)
 
   # ======================================================================================================================================================================================
