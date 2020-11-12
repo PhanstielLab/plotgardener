@@ -108,16 +108,25 @@ bb_plotIdeogram <- function(chrom, params = NULL, assembly = "hg19", orientation
     fly <- c("dm6")
     zebrafish <- c("danRer10")
 
-    data$color <- "black"
+    data$color <- makeTransparent(color = "black", alpha = 0.3)
 
     if (assembly %in% human){
-      if(any(data$gieStain == "acen")) data[which(data$gieStain == "acen"),]$color <- "#802c28"
-      if(any(data$gieStain == "stalk")) data[which(data$gieStain == "stalk"),]$color <- "#6a7ea1"
+      #if(any(data$gieStain == "acen")) data[which(data$gieStain == "acen"),]$color <- "#802c28"
+      #if(any(data$gieStain == "stalk")) data[which(data$gieStain == "stalk"),]$color <- "#6a7ea1"
+      #if(any(data$gieStain == "gpos25")) data[which(data$gieStain == "gpos25"),]$color <- "#CFCFCF"
+      #if(any(data$gieStain == "gpos50")) data[which(data$gieStain == "gpos50"),]$color <- "#9F9F9F"
+      #if(any(data$gieStain == "gpos75")) data[which(data$gieStain == "gpos75"),]$color <- "#6F6F6F"
+      #if(any(data$gieStain == "gpos100")) data[which(data$gieStain == "gpos100"),]$color <- "#404040"
+
+
+
+      if(any(data$gieStain == "acen")) data[which(data$gieStain == "acen"),]$color <- "#D1B6B6"
+      if(any(data$gieStain == "stalk")) data[which(data$gieStain == "stalk"),]$color <- makeTransparent(color = "#6a7ea1", alpha = 0.3)
       if(any(data$gieStain == "gneg")) data[which(data$gieStain == "gneg"),]$color <- "#FFFFFF"
-      if(any(data$gieStain == "gpos25")) data[which(data$gieStain == "gpos25"),]$color <- "#CFCFCF"
-      if(any(data$gieStain == "gpos50")) data[which(data$gieStain == "gpos50"),]$color <- "#9F9F9F"
-      if(any(data$gieStain == "gpos75")) data[which(data$gieStain == "gpos75"),]$color <- "#6F6F6F"
-      if(any(data$gieStain == "gpos100")) data[which(data$gieStain == "gpos100"),]$color <- "#404040"
+      if(any(data$gieStain == "gpos25")) data[which(data$gieStain == "gpos25"),]$color <- makeTransparent(color = "#CFCFCF", alpha = 0.3)
+      if(any(data$gieStain == "gpos50")) data[which(data$gieStain == "gpos50"),]$color <- makeTransparent(color = "#9F9F9F", alpha = 0.3)
+      if(any(data$gieStain == "gpos75")) data[which(data$gieStain == "gpos75"),]$color <- makeTransparent(color = "#6F6F6F", alpha = 0.3)
+      if(any(data$gieStain == "gpos100")) data[which(data$gieStain == "gpos100"),]$color <- makeTransparent(color = "#404040", alpha = 0.3)
 
     } else if (assembly %in% mouse){
       if(any(data$gieStain == "gneg")) data[which(data$gieStain == "gneg"),]$color <- "#FFFFFF"
@@ -567,7 +576,7 @@ bb_plotIdeogram <- function(chrom, params = NULL, assembly = "hg19", orientation
 
       outlineGrob <- polygonGrob(x = Xoutline, y = Youtline,
                                  default.units = "native",
-                                 gp = gpar(fill = NA, col = "black"))
+                                 gp = gpar(fill = NA, col = "grey"))
       assign("ideogram_grobs", addGrob(get("ideogram_grobs", envir = bbEnv), child = outlineGrob), envir = bbEnv)
 
 
