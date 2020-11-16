@@ -184,25 +184,30 @@ bb_plotTriangleHic <- function(hic, chrom, params = NULL, chromstart = NULL, chr
   adjust_resolution <- function(hic, hic_plot){
 
     if (!("data.frame" %in% class(hic))){
-      ## Get range of data and try to pick a resolution to extract from hic file
-      dataRange <- hic_plot$chromend - hic_plot$chromstart
-      if (dataRange >= 150000000){
-        bestRes <- 500000
-      } else if (dataRange >= 75000000 & dataRange < 150000000){
-        bestRes <- 250000
-      } else if (dataRange >= 35000000 & dataRange < 75000000){
-        bestRes <- 100000
-      } else if (dataRange >= 20000000 & dataRange < 35000000){
-        bestRes <- 50000
-      } else if (dataRange >= 5000000 & dataRange < 20000000){
-        bestRes <- 25000
-      } else if (dataRange >= 3000000 & dataRange < 5000000){
-        bestRes <- 10000
-      } else {
-        bestRes <- 5000
+
+      if (!is.null(hic_plot$chromstart) & !is.null(hic_plot$chromend)){
+        ## Get range of data and try to pick a resolution to extract from hic file
+        dataRange <- hic_plot$chromend - hic_plot$chromstart
+        if (dataRange >= 150000000){
+          bestRes <- 500000
+        } else if (dataRange >= 75000000 & dataRange < 150000000){
+          bestRes <- 250000
+        } else if (dataRange >= 35000000 & dataRange < 75000000){
+          bestRes <- 100000
+        } else if (dataRange >= 20000000 & dataRange < 35000000){
+          bestRes <- 50000
+        } else if (dataRange >= 5000000 & dataRange < 20000000){
+          bestRes <- 25000
+        } else if (dataRange >= 3000000 & dataRange < 5000000){
+          bestRes <- 10000
+        } else {
+          bestRes <- 5000
+        }
+
+        hic_plot$resolution <- as.integer(bestRes)
+
       }
 
-      hic_plot$resolution <- as.integer(bestRes)
 
     } else {
 
@@ -223,8 +228,12 @@ bb_plotTriangleHic <- function(hic, chrom, params = NULL, chromstart = NULL, chr
 
     parse_chrom <- function(assembly, chrom){
 
-      if (assembly == "hg19"){
+      assemblyName <- unlist(strsplit(assembly$TxDb, split = "[.]"))
+
+      if ("hg19" %in% assemblyName){
         strawChrom <- as.numeric(gsub("chr", "", chrom))
+      } else {
+        strawChrom <- chrom
       }
 
       return(strawChrom)
@@ -233,19 +242,30 @@ bb_plotTriangleHic <- function(hic, chrom, params = NULL, chromstart = NULL, chr
     ## if .hic file, read in with bb_rhic
     if (!("data.frame" %in% class(hic))){
 
-      strawChrom <- parse_chrom(assembly = assembly, chrom = hic_plot$chrom)
+      if (!is.null(hic_plot$chromstart) & !is.null(hic_plot$chromend)){
 
-      readchromstart <- hic_plot$chromstart - hic_plot$resolution
-      readchromend <- hic_plot$chromend + hic_plot$resolution
+        strawChrom <- parse_chrom(assembly = assembly, chrom = hic_plot$chrom)
 
-      hic <- bb_readHic(hic = hic, chrom = strawChrom, chromstart = readchromstart, chromend = readchromend,
-                        resolution = hic_plot$resolution, zrange = hic_plot$zrange, norm = norm)
+        readchromstart <- hic_plot$chromstart - hic_plot$resolution
+        readchromend <- hic_plot$chromend + hic_plot$resolution
+
+        hic <- bb_readHic(hic = hic, chrom = strawChrom, chromstart = readchromstart, chromend = readchromend,
+                          resolution = hic_plot$resolution, zrange = hic_plot$zrange, norm = norm)
+
+      } else {
+        hic <- data.frame(matrix(nrow = 0, ncol = 3))
+      }
+
 
     } else {
 
-      message(paste("Read in dataframe.", hic_plot$resolution, "BP resolution detected."))
-      ## check range of data in dataframe
-      check_dataframe(hic = hic, hic_plot = hic_plot)
+      if (!is.null(hic_plot$chromstart) & !is.null(hic_plot$chromend)){
+        message(paste("Read in dataframe.", hic_plot$resolution, "BP resolution detected."))
+        ## check range of data in dataframe
+        check_dataframe(hic = hic, hic_plot = hic_plot)
+      } else {
+        hic <- data.frame(matrix(nrow = 0, ncol = 3))
+      }
 
     }
     ## Rename columns for later processing
@@ -259,10 +279,14 @@ bb_plotTriangleHic <- function(hic, chrom, params = NULL, chromstart = NULL, chr
   ## Define a function that subsets data
   subset_data <- function(hic, hic_plot){
 
-    hic <- hic[which(hic[,1] >= floor(hic_plot$chromstart/hic_plot$resolution)*hic_plot$resolution &
-                       hic[,1] < hic_plot$chromend &
-                       hic[,2] >= floor(hic_plot$chromstart/hic_plot$resolution)*hic_plot$resolution &
-                       hic[,2] < hic_plot$chromend),]
+    if (nrow(hic) > 0){
+      hic <- hic[which(hic[,1] >= floor(hic_plot$chromstart/hic_plot$resolution)*hic_plot$resolution &
+                         hic[,1] < hic_plot$chromend &
+                         hic[,2] >= floor(hic_plot$chromstart/hic_plot$resolution)*hic_plot$resolution &
+                         hic[,2] < hic_plot$chromend),]
+    }
+
+
     return(hic)
   }
 
@@ -546,6 +570,12 @@ bb_plotTriangleHic <- function(hic, chrom, params = NULL, chromstart = NULL, chr
   check_placement(object = hic_plot)
 
   # ======================================================================================================================================================================================
+  # PARSE ASSEMBLY
+  # ======================================================================================================================================================================================
+
+  hic_plot$assembly <- parse_bbAssembly(assembly = hic_plot$assembly)
+
+  # ======================================================================================================================================================================================
   # PARSE UNITS
   # ======================================================================================================================================================================================
 
@@ -565,19 +595,34 @@ bb_plotTriangleHic <- function(hic, chrom, params = NULL, chromstart = NULL, chr
   hic_plot$justification <- new_just
 
   # ======================================================================================================================================================================================
-  # WHOLE CHROM
+  # WHOLE CHROM INFORMATION
   # ======================================================================================================================================================================================
-  ## EDIT HERE
+
   if (is.null(hic_plot$chromstart) & is.null(hic_plot$chromend)){
-    if (hic_plot$assembly == "hg19"){
-      genome <- bb_hg19
+
+    txdbChecks <- check_loadedPackage(package = hic_plot$assembly$TxDb, message = paste(paste0("`", hic_plot$assembly$TxDb,"`"),
+                                                                               "not loaded. Please install and load to plot full chromosome HiC map."))
+    scale <- c(0, 1)
+    if (txdbChecks == TRUE){
+
+      tx_db <- eval(parse(text = hic_plot$assembly$TxDb))
+      assembly_data <- seqlengths(tx_db)
+
+      if (!hic_plot$chrom %in% names(assembly_data)){
+        warning(paste("Chromosome", paste0("'", hic_plot$chrom, "'"), "not found in", paste0("`", hic_plot$assembly$TxDb, "`"), "and data for entire chromosome cannot be plotted."), call. = FALSE)
+      } else {
+        hic_plot$chromstart <- 1
+        hic_plot$chromend <- assembly_data[[hic_plot$chrom]]
+        hic_plot$altchromstart <- 1
+        hic_plot$altchromend <- assembly_data[[hic_plot$chrom]]
+        scale <- c(hic_plot$chromstart, hic_plot$chromend)
+      }
+
     }
 
-    hic_plot$chromstart <- 1
-    hic_plot$chromend <- genome[which(genome$chrom == hic_plot$chrom),]$length
-    hic_plot$altchromstart <- 1
-    hic_plot$altchromend <- genome[which(genome$chrom == hic_plot$chrom),]$length
-
+  } else {
+    txdbChecks <- TRUE
+    scale <- c(hic_plot$chromstart, hic_plot$chromend)
   }
 
   # ======================================================================================================================================================================================
@@ -633,8 +678,8 @@ bb_plotTriangleHic <- function(hic, chrom, params = NULL, chromstart = NULL, chr
 
     inside_vp <- viewport(height = unit(1, "npc"), width = unit(0.5, "npc"),
                           x = unit(0, "npc"), y = unit(0, "npc"),
-                          xscale = c(hic_plot$chromstart, hic_plot$chromend),
-                          yscale = c(hic_plot$chromstart, hic_plot$chromend),
+                          xscale = scale,
+                          yscale = scale,
                           just = c("left", "bottom"),
                           name = paste0(vp_name, "_inside"),
                           angle = -45)
@@ -643,7 +688,7 @@ bb_plotTriangleHic <- function(hic, chrom, params = NULL, chromstart = NULL, chr
                            width = unit(1.5, "snpc"),
                            x = unit(0.125, "npc"),
                            y = unit(0.25, "npc"),
-                           xscale = c(hic_plot$chromstart, hic_plot$chromend),
+                           xscale = scale,
                            clip = "on",
                            just = c("left", "bottom"),
                            name = paste0(vp_name, "_outside"))
@@ -668,8 +713,8 @@ bb_plotTriangleHic <- function(hic, chrom, params = NULL, chromstart = NULL, chr
     inside_vp <- viewport(height = unit(vp_side, get("page_units", envir = bbEnv)), width = unit(vp_side, get("page_units", envir = bbEnv)),
                           x = unit(0, "npc"),
                           y = unit(0, "npc"),
-                          xscale = c(hic_plot$chromstart, hic_plot$chromend),
-                          yscale = c(hic_plot$chromstart, hic_plot$chromend),
+                          xscale = scale,
+                          yscale = scale,
                           just = c("left", "bottom"),
                           name = paste0(vp_name, "_inside"),
                           angle = -45)
@@ -681,7 +726,7 @@ bb_plotTriangleHic <- function(hic, chrom, params = NULL, chromstart = NULL, chr
                            width = page_coords$width,
                            x = unit(bottom_coords[[1]], get("page_units", envir = bbEnv)),
                            y = unit(bottom_coords[[2]], get("page_units", envir = bbEnv)),
-                           xscale = c(hic_plot$chromstart, hic_plot$chromend),
+                           xscale = scale,
                            clip = "on",
                            just = c("left", "bottom"),
                            name = paste0(vp_name, "_outside"))
@@ -698,39 +743,50 @@ bb_plotTriangleHic <- function(hic, chrom, params = NULL, chromstart = NULL, chr
   # MAKE GROBS
   # ======================================================================================================================================================================================
 
-  hic$width <- hic_plot$resolution
-  hic$height <- hic_plot$resolution
+  if (!is.null(hic_plot$chromstart) & !is.null(hic_plot$chromend)){
 
-  ## Manually "clip" the grobs that fall out of the desired chromstart to chromend region
-  hic <- manual_clip(hic = hic, hic_plot = hic_plot)
-  hic <- hic[order(as.numeric(rownames(hic))),]
+    hic$width <- hic_plot$resolution
+    hic$height <- hic_plot$resolution
 
-  ## Separate into squares for upper region and triangle shapes for the diagonal
-  squares <- hic[which(hic[,2] > hic[,1]),]
-  triangles <- hic[which(hic[,2] == hic[,1]),]
+    ## Manually "clip" the grobs that fall out of the desired chromstart to chromend region
+    hic <- manual_clip(hic = hic, hic_plot = hic_plot)
+    hic <- hic[order(as.numeric(rownames(hic))),]
 
-  if (nrow(squares) > 0){
+    ## Separate into squares for upper region and triangle shapes for the diagonal
+    squares <- hic[which(hic[,2] > hic[,1]),]
+    triangles <- hic[which(hic[,2] == hic[,1]),]
 
-    ## Make square grobs and add to grob gTree
-    hic_squares <- rectGrob(x = squares$x,
-                            y = squares$y,
-                            just = c("left", "bottom"),
-                            width = squares$width,
-                            height = squares$height,
-                            gp = gpar(col = NA, fill = squares$color),
-                            default.units = "native")
-    assign("hic_grobs2", addGrob(gTree = get("hic_grobs2", envir = bbEnv), child = hic_squares), envir = bbEnv)
+    if (nrow(squares) > 0){
+
+      ## Make square grobs and add to grob gTree
+      hic_squares <- rectGrob(x = squares$x,
+                              y = squares$y,
+                              just = c("left", "bottom"),
+                              width = squares$width,
+                              height = squares$height,
+                              gp = gpar(col = NA, fill = squares$color),
+                              default.units = "native")
+      assign("hic_grobs2", addGrob(gTree = get("hic_grobs2", envir = bbEnv), child = hic_squares), envir = bbEnv)
+    }
+
+    if (nrow(triangles) > 0){
+      ## Make triangle grobs and add to grob gTree
+      invisible(apply(triangles, 1, hic_diagonal))
+
+    }
+
+    if (nrow(squares) == 0 & nrow(triangles) == 0){
+
+      if (txdbChecks == TRUE){
+        warning("Warning: no data found in region.  Suggestions: check chromosome, check region.", call. = FALSE)
+      }
+
+    }
+
+
   }
 
-  if (nrow(triangles) > 0){
-    ## Make triangle grobs and add to grob gTree
-    invisible(apply(triangles, 1, hic_diagonal))
 
-  }
-
-  if (nrow(squares) == 0 & nrow(triangles) == 0){
-    warning("Warning: no data found in region.  Suggestions: check chromosome, check region.", call. = FALSE)
-  }
   # ======================================================================================================================================================================================
   # IF DRAW == TRUE, DRAW GROBS
   # ======================================================================================================================================================================================

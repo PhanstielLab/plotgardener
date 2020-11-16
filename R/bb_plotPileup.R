@@ -144,6 +144,12 @@ bb_plotPileup <- function(bed, chrom, params = NULL, chromstart = NULL, chromend
   check_placement(object = pileup_plot)
 
   # ======================================================================================================================================================================================
+  # PARSE ASSEMBLY
+  # ======================================================================================================================================================================================
+
+  pileup_plot$assembly <- parse_bbAssembly(assembly = pileup_plot$assembly)
+
+  # ======================================================================================================================================================================================
   # PARSE UNITS
   # ======================================================================================================================================================================================
 
@@ -183,28 +189,50 @@ bb_plotPileup <- function(bed, chrom, params = NULL, chromstart = NULL, chromend
   errorcheck_bb_plotpileup(bed = bed, pileup_plot = pileup_plot, colorby = bb_pileInternal$colorby)
 
   # ======================================================================================================================================================================================
+  # WHOLE CHROMOSOME DATA AND XSCALE
+  # ======================================================================================================================================================================================
+
+  if (is.null(pileup_plot$chromstart) & is.null(pileup_plot$chromend)){
+
+    txdbChecks <- check_loadedPackage(package = pileup_plot$assembly$TxDb, message = paste(paste0("`", pileup_plot$assembly$TxDb,"`"),
+                                                                                          "not loaded. Please install and load to plot full chromosome pileup plot."))
+    xscale <- c(0, 1)
+    if (txdbChecks == TRUE){
+      tx_db <- eval(parse(text = pileup_plot$assembly$TxDb))
+      assembly_data <- seqlengths(tx_db)
+
+      if (!pileup_plot$chrom %in% names(assembly_data)){
+        txdbChecks <- FALSE
+        warning(paste("Chromosome", paste0("'", pileup_plot$chrom, "'"), "not found in", paste0("`", pileup_plot$assembly$TxDb, "`"), "and data for entire chromosome cannot be plotted."), call. = FALSE)
+      } else {
+        pileup_plot$chromstart <- 1
+        pileup_plot$chromend <- assembly_data[[pileup_plot$chrom]]
+        xscale <- c(pileup_plot$chromstart, pileup_plot$chromend)
+
+      }
+
+    }
+
+  } else {
+    txdbChecks <- TRUE
+    xscale <- c(pileup_plot$chromstart, pileup_plot$chromend)
+  }
+
+  # ======================================================================================================================================================================================
   # SUBSET DATA FOR CHROMOSOME AND ANY OVERLAPPING REGIONS
   # ======================================================================================================================================================================================
 
-  ## EDIT HERE
-   if (is.null(pileup_plot$chromstart) & is.null(pileup_plot$chromend)){
-
-    if (bb_pileInternal$assembly == "hg19"){
-      genome <- bb_hg19
-    }
-
-    pileup_plot$chromstart <- 1
-    pileup_plot$chromend <- genome[which(genome$chrom == pieleup_plot$chrom),]$length
-
+  if (!is.null(pileup_plot$chromstart) & !is.null(pileup_plot$chromend)){
+    bed <- bed[which(bed[,1] == pileup_plot$chrom & bed[,2] <= pileup_plot$chromend & bed[,3] >= pileup_plot$chromstart),]
+  } else {
+    bed <- data.frame(matrix(nrow = 0, ncol = 3))
   }
-
-  bed <- bed[which(bed[,1] == pileup_plot$chrom & bed[,2] <= pileup_plot$chromend & bed[,3] >= pileup_plot$chromstart),]
 
   # ======================================================================================================================================================================================
   # SET COLORBY DATA
   # ======================================================================================================================================================================================
 
-  if (!is.null(bb_pileInternal$colorby)){
+  if (!is.null(bb_pileInternal$colorby) & nrow(bed) > 0){
     colorbyCol <- which(colnames(bed) == bb_pileInternal$colorby)
     colorbyCol <- bed[,colorbyCol]
 
@@ -255,7 +283,7 @@ bb_plotPileup <- function(bed, chrom, params = NULL, chromstart = NULL, chromend
     vp <- viewport(height = unit(0.5, "snpc"), width = unit(1, "snpc"),
                    x = unit(0.5, "npc"), y = unit(0.5, "npc"),
                    clip = "on",
-                   xscale = c(pileup_plot$chromstart, pileup_plot$chromend),
+                   xscale = xscale,
                    yscale = yscale,
                    just = "center",
                    name = vp_name)
@@ -278,7 +306,7 @@ bb_plotPileup <- function(bed, chrom, params = NULL, chromstart = NULL, chromend
     vp <- viewport(height = page_coords$height, width = page_coords$width,
                    x = page_coords$x, y = page_coords$y,
                    clip = "on",
-                   xscale = c(pileup_plot$chromstart, pileup_plot$chromend),
+                   xscale = xscale,
                    yscale = yscale,
                    just = bb_pileInternal$just,
                    name = vp_name)
@@ -354,7 +382,6 @@ bb_plotPileup <- function(bed, chrom, params = NULL, chromstart = NULL, chromend
       rowDF <- data.frame()
     }
 
-
   } else {
 
     if (nrow(posStrand) > 0){
@@ -417,55 +444,57 @@ bb_plotPileup <- function(bed, chrom, params = NULL, chromstart = NULL, chromend
     rowDF <- rbind(posDF, minDF)
   }
 
-  # ======================================================================================================================================================================================
-  # COLORS
-  # ======================================================================================================================================================================================
 
-  if (is.null(bb_pileInternal$colorby)){
+  if (nrow(rowDF) > 0){
 
-    if (class(bb_pileInternal$fillcolor) == "function"){
-      colors <- bb_pileInternal$fillcolor(maxRows)
-      indeces <- rowDF$row
-      rowDF$color <- colors[indeces]
+    # ======================================================================================================================================================================================
+    # COLORS
+    # ======================================================================================================================================================================================
 
-    } else {
+    if (is.null(bb_pileInternal$colorby)){
 
-      if (length(bb_pileInternal$fillcolor) == 1){
-        rowDF$color <- rep(bb_pileInternal$fillcolor, nrow(rowDF))
-      } else {
-
-        colors <- rep(bb_pileInternal$fillcolor, ceiling(maxRows/length(bb_pileInternal$fillcolor)))[1:maxRows]
+      if (class(bb_pileInternal$fillcolor) == "function"){
+        colors <- bb_pileInternal$fillcolor(maxRows)
         indeces <- rowDF$row
         rowDF$color <- colors[indeces]
 
+      } else {
+
+        if (length(bb_pileInternal$fillcolor) == 1){
+          rowDF$color <- rep(bb_pileInternal$fillcolor, nrow(rowDF))
+        } else {
+
+          colors <- rep(bb_pileInternal$fillcolor, ceiling(maxRows/length(bb_pileInternal$fillcolor)))[1:maxRows]
+          indeces <- rowDF$row
+          rowDF$color <- colors[indeces]
+
+        }
+
       }
-
-    }
-
-  } else {
-
-    if (class(bb_pileInternal$fillcolor) == "function"){
-
-      rowDF$color <- bb_maptocolors(rowDF$colorby, bb_pileInternal$fillcolor, range = pileup_plot$zrange)
-      sorted_colors <- unique(rowDF[order(rowDF$colorby),]$color)
-      pileup_plot$color_palette <- sorted_colors
 
     } else {
 
-      colorbyCol <- factor(rowDF$colorby)
-      mappedColors <- rep(bb_pileInternal$fillcolor, ceiling(length(levels(colorbyCol))/length(bb_pileInternal$fillcolor)))
-      rowDF$color <- mappedColors[rowDF$colorby]
+      if (class(bb_pileInternal$fillcolor) == "function"){
+
+        rowDF$color <- bb_maptocolors(rowDF$colorby, bb_pileInternal$fillcolor, range = pileup_plot$zrange)
+        sorted_colors <- unique(rowDF[order(rowDF$colorby),]$color)
+        pileup_plot$color_palette <- sorted_colors
+
+      } else {
+
+        colorbyCol <- factor(rowDF$colorby)
+        mappedColors <- rep(bb_pileInternal$fillcolor, ceiling(length(levels(colorbyCol))/length(bb_pileInternal$fillcolor)))
+        rowDF$color <- mappedColors[rowDF$colorby]
+      }
+
+
     }
 
 
-  }
+    # ======================================================================================================================================================================================
+    # MAKE GROBS
+    # ======================================================================================================================================================================================
 
-
-  # ======================================================================================================================================================================================
-  # MAKE GROBS
-  # ======================================================================================================================================================================================
-
-  if (nrow(rowDF) > 0){
 
     alpha <- 1
     if (!length(list(...)) == 0){
@@ -483,20 +512,23 @@ bb_plotPileup <- function(bed, chrom, params = NULL, chromstart = NULL, chromend
                          gp = gpar(fill = rowDF$color, col = bb_pileInternal$linecolor, alpha = alpha))
     assign("pileup_grobs", addGrob(gTree = get("pileup_grobs", envir = bbEnv), child = bedRects), envir = bbEnv)
 
+    if (bb_pileInternal$strandSplit == TRUE){
+
+      lineGrob <- segmentsGrob(x0 = unit(0, "npc"), x1 = unit(1, "npc"),
+                               y0 = unit(0, "native"), y1 = unit(0, "native"),
+                               gp = gpar(...))
+      assign("pileup_grobs", addGrob(gTree = get("pileup_grobs", envir = bbEnv), child = lineGrob), envir = bbEnv)
+
+    }
+
+
   } else {
 
-    warning("No pileup data to plot.", call. = FALSE)
-  }
-
-  if (bb_pileInternal$strandSplit == TRUE){
-
-    lineGrob <- segmentsGrob(x0 = unit(0, "npc"), x1 = unit(1, "npc"),
-                             y0 = unit(0, "native"), y1 = unit(0, "native"),
-                             gp = gpar(...))
-    assign("pileup_grobs", addGrob(gTree = get("pileup_grobs", envir = bbEnv), child = lineGrob), envir = bbEnv)
+    if (txdbChecks == TRUE){
+      warning("No pileup data to plot.", call. = FALSE)
+    }
 
   }
-
 
   # ======================================================================================================================================================================================
   # IF PLOT == TRUE, DRAW GROBS

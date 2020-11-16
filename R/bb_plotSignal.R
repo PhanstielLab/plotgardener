@@ -193,30 +193,31 @@ bb_plotSignal <- function(signal, chrom, params = NULL, chromstart = NULL, chrom
   ## Define a function that bins, links, sorts, and combines data
   parseData <- function(signal, signaltrack){
 
-    ## Define a function that finds the max signal values for each bin
-    bin_signal <- function(line, signal){
-
-      line <- as.integer(line)
-      list <- c(0)
-      list <- append(list, signal[,3][which((signal[,1] >= line[1] & signal[,1] < line[2]) |
-                                              signal[,2] > line[1] & signal[,2] <= line[2] |
-                                              signal[,1] < line[1] & signal[,2] > line[2])])
-
-      return(max(list))
-    }
-
     if (!is.na(signaltrack$binSize)){
 
       # ===============================================================================================================================================
       # BIN DATA
       # ===============================================================================================================================================
+
       binned_signal <- data.frame("chromstart" = seq(signaltrack$chromstart, signaltrack$chromend - signaltrack$binSize, signaltrack$binSize),
                                   "chromend" = seq(signaltrack$chromstart + signaltrack$binSize, signaltrack$chromend, signaltrack$binSize),
-                                  "counts" = 0)
-      binned_signal[,3] = apply(binned_signal, 1, bin_signal, signal = signal)
+                                  "bin" = factor(1:signaltrack$binNum))
 
-      ## Use binned data as signal track
-      newSignal <- binned_signal
+      breaks <- seq(signaltrack$chromstart, signaltrack$chromend, signaltrack$binSize)
+
+      ## Divide data into defined bins
+      signal$bin <- cut(signal$end, breaks, labels = 1:signaltrack$binNum)
+      ## Find the max signal value for each bin
+      binMaxes <- aggregate(signal$score, by = list(signal$bin), max)
+      colnames(binMaxes) <- c("bin", "maxscore")
+
+      ## Join bin maxes with bin starts and ends
+      binnedSignal <- dplyr::left_join(x = binned_signal, y = binMaxes, by = "bin")
+      binnedSignal[is.na(binnedSignal)] <- 0
+
+      ## Use binned data as new signal data
+      newSignal <- binnedSignal[,c(1:2,4)]
+      colnames(newSignal) <- c("chromstart", "chromend", "counts")
 
       # ================================================================================================================================================
       # LINKING REGIONS
@@ -642,8 +643,6 @@ bb_plotSignal <- function(signal, chrom, params = NULL, chromstart = NULL, chrom
   # ======================================================================================================================================================================================
 
   assign("signal_grobs", gTree(vp = vp), envir = bbEnv)
-
-
 
   # ======================================================================================================================================================================================
   # MAKE GROBS

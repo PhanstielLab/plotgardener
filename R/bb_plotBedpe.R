@@ -9,7 +9,7 @@
 #' @param colorby name of column in bedpe data to scale fillcolors by
 #' @param colorbyrange the range of values to apply a colorby palette scale to, if colorby values are numeric
 #' @param linecolor border color
-#' @param assembly desired genome assembly
+#' @param assembly default genome assembly as a string or a bb_assembly object
 #' @param boxHeight A numeric or unit object specifying height of boxes at either end of bedpe element
 #' @param spaceHeight height of space between boxes of different bedpe elements
 #' @param spaceWidth width of spacing between bedpe elements, as a fraction of the plot's genomic range
@@ -128,6 +128,12 @@ bb_plotBedpe <- function(bedpe, chrom, params = NULL, chromstart = NULL, chromen
   check_placement(object = bedpe_plot)
 
   # ======================================================================================================================================================================================
+  # PARSE ASSEMBLY
+  # ======================================================================================================================================================================================
+
+  bedpe_plot$assembly <- parse_bbAssembly(assembly = bedpe_plot$assembly)
+
+  # ======================================================================================================================================================================================
   # PARSE UNITS
   # ======================================================================================================================================================================================
 
@@ -180,23 +186,44 @@ bb_plotBedpe <- function(bedpe, chrom, params = NULL, chromstart = NULL, chromen
   bedpe[,6] <- stop2
 
   # ======================================================================================================================================================================================
-  # SUBSET DATA FOR CHROMOSOME AND ANY OVERLAPPING REGIONS
+  # WHOLE CHROMOSOME DATA AND XSCALE
   # ======================================================================================================================================================================================
+
   if (is.null(bedpe_plot$chromstart) & is.null(bedpe_plot$chromend)){
 
-    ## EDIT HERE FOR DATA
+    txdbChecks <- check_loadedPackage(package = bedpe_plot$assembly$TxDb, message = paste(paste0("`", bedpe_plot$assembly$TxDb,"`"),
+                                                                                            "not loaded. Please install and load to plot full chromosome paired-end data."))
+    xscale <- c(0, 1)
+    if (txdbChecks == TRUE){
+      tx_db <- eval(parse(text = bedpe_plot$assembly$TxDb))
+      assembly_data <- seqlengths(tx_db)
 
-    if (bedpe_plot$assembly == "hg19"){
-      genome <- bb_hg19
+      if (!bedpe_plot$chrom %in% names(assembly_data)){
+        txdbChecks <- FALSE
+        warning(paste("Chromosome", paste0("'", bedpe_plot$chrom, "'"), "not found in", paste0("`", bedpe_plot$assembly$TxDb, "`"), "and data for entire chromosome cannot be plotted."), call. = FALSE)
+      } else {
+        bedpe_plot$chromstart <- 1
+        bedpe_plot$chromend <- assembly_data[[bedpe_plot$chrom]]
+        xscale <- c(bedpe_plot$chromstart, bedpe_plot$chromend)
+
+      }
+
     }
 
-    bedpe_plot$chromstart <- 1
-    bedpe_plot$chromend <- genome[which(genome$chrom == bedpe_plot$chrom),]$length
-
+  } else {
+    txdbChecks <- TRUE
+    xscale <- c(bedpe_plot$chromstart, bedpe_plot$chromend)
   }
 
-  bedpe <- bedpe[which(bedpe[,1] == bedpe_plot$chrom & bedpe[,4] == bedpe_plot$chrom & bedpe[,2] <= bedpe_plot$chromend & bedpe[,6] >= bedpe_plot$chromstart),]
+  # ======================================================================================================================================================================================
+  # SUBSET DATA FOR CHROMOSOME AND ANY OVERLAPPING REGIONS
+  # ======================================================================================================================================================================================
 
+  if (!is.null(bedpe_plot$chromstart) & !is.null(bedpe_plot$chromend)){
+    bedpe <- bedpe[which(bedpe[,1] == bedpe_plot$chrom & bedpe[,4] == bedpe_plot$chrom & bedpe[,2] <= bedpe_plot$chromend & bedpe[,6] >= bedpe_plot$chromstart),]
+  } else {
+    bedpe <- data.frame(matrix(nrow = 0, ncol = 6))
+  }
 
   # ======================================================================================================================================================================================
   # GET BOX WIDTHS AND TOTAL DISTANCES
@@ -217,7 +244,7 @@ bb_plotBedpe <- function(bedpe, chrom, params = NULL, chromstart = NULL, chromen
   # ======================================================================================================================================================================================
   # SET COLORBY DATA
   # ======================================================================================================================================================================================
-  if (!is.null(bb_bedpeInternal$colorby)){
+  if (!is.null(bb_bedpeInternal$colorby) & nrow(bedpe) > 0){
 
     colorbyCol <- which(colnames(bedpe) == bb_bedpeInternal$colorby)
     colorbyCol <- bedpe[,colorbyCol]
@@ -257,7 +284,7 @@ bb_plotBedpe <- function(bedpe, chrom, params = NULL, chromstart = NULL, chromen
     vp <- viewport(height = unit(0.5, "snpc"), width = unit(1, "snpc"),
                    x = unit(0.5, "npc"), y = unit(0.5, "npc"),
                    clip = "on",
-                   xscale = c(bedpe_plot$chromstart, bedpe_plot$chromend),
+                   xscale = xscale,
                    yscale = c(0, 1),
                    just = "center",
                    name = vp_name)
@@ -278,7 +305,7 @@ bb_plotBedpe <- function(bedpe, chrom, params = NULL, chromstart = NULL, chromen
     vp <- viewport(height = page_coords$height, width = page_coords$width,
                    x = page_coords$x, y = page_coords$y,
                    clip = "on",
-                   xscale = c(bedpe_plot$chromstart, bedpe_plot$chromend),
+                   xscale = xscale,
                    yscale = c(0, convertHeight(page_coords$height, unitTo = get("page_units", envir = bbEnv), valueOnly = TRUE)),
                    just = bb_bedpeInternal$just,
                    name = vp_name)
@@ -289,7 +316,6 @@ bb_plotBedpe <- function(bedpe, chrom, params = NULL, chromstart = NULL, chromen
   # ======================================================================================================================================================================================
 
   assign("bedpe_grobs", gTree(vp = vp), envir = bbEnv)
-
 
   # ======================================================================================================================================================================================
   # DETERMINE ROWS FOR EACH ELEMENT
@@ -311,7 +337,7 @@ bb_plotBedpe <- function(bedpe, chrom, params = NULL, chromstart = NULL, chromen
   }
 
 
-  limit <- floor((vp$yscale[2] + spaceHeight)/(boxHeight + spaceHeight))
+  limit <- floor((as.numeric(vp$height) + spaceHeight)/(boxHeight + spaceHeight))
   wiggle <- abs(bedpe_plot$chromend - bedpe_plot$chromstart) * bb_bedpeInternal$spaceWidth
 
 
@@ -341,60 +367,52 @@ bb_plotBedpe <- function(bedpe, chrom, params = NULL, chromstart = NULL, chromen
     rowBedpe$row <- rowBedpe$row - 1
     rowBedpe$y <- rowBedpe$row*(boxHeight + spaceHeight)
 
-  } else {
-    rowBedpe <- data.frame()
-  }
+    # ======================================================================================================================================================================================
+    # COLORS
+    # ======================================================================================================================================================================================
 
-  # ======================================================================================================================================================================================
-  # COLORS
-  # ======================================================================================================================================================================================
+    if (is.null(bb_bedpeInternal$colorby)){
 
-  if (is.null(bb_bedpeInternal$colorby)){
-
-    if (class(bb_bedpeInternal$fillcolor) == "function"){
-      colors <- bb_bedpeInternal$fillcolor(limit)
-      indeces <- rowBedpe$row + 1
-      rowBedpe$color <- colors[indeces]
-
-    } else {
-
-      if (length(bb_bedpeInternal$fillcolor) == 1){
-        rowBedpe$color <- rep(bb_bedpeInternal$fillcolor, nrow(rowBedpe))
-      } else {
-
-        colors <- rep(bb_bedpeInternal$fillcolor, ceiling(limit/length(bb_bedpeInternal$fillcolor)))[1:limit]
+      if (class(bb_bedpeInternal$fillcolor) == "function"){
+        colors <- bb_bedpeInternal$fillcolor(limit)
         indeces <- rowBedpe$row + 1
         rowBedpe$color <- colors[indeces]
 
+      } else {
+
+        if (length(bb_bedpeInternal$fillcolor) == 1){
+          rowBedpe$color <- rep(bb_bedpeInternal$fillcolor, nrow(rowBedpe))
+        } else {
+
+          colors <- rep(bb_bedpeInternal$fillcolor, ceiling(limit/length(bb_bedpeInternal$fillcolor)))[1:limit]
+          indeces <- rowBedpe$row + 1
+          rowBedpe$color <- colors[indeces]
+
+        }
+
+      }
+
+    } else {
+
+      if (class(bb_bedpeInternal$fillcolor) == "function"){
+
+        rowBedpe$color <- bb_maptocolors(rowBedpe$colorby, bb_bedpeInternal$fillcolor, range = bedpe_plot$zrange)
+        sorted_colors <- unique(rowBedpe[order(rowBedpe$colorby),]$color)
+        bedpe_plot$color_palette <- sorted_colors
+
+      } else {
+
+        colorbyCol <- factor(rowBedpe$colorby)
+        mappedColors <- rep(bb_bedpeInternal$fillcolor, ceiling(length(levels(colorbyCol))/length(bb_bedpeInternal$fillcolor)))
+        rowBedpe$color <- mappedColors[rowBedpe$colorby]
       }
 
     }
 
-  } else {
 
-    if (class(bb_bedpeInternal$fillcolor) == "function"){
-
-      rowBedpe$color <- bb_maptocolors(rowBedpe$colorby, bb_bedpeInternal$fillcolor, range = bedpe_plot$zrange)
-      sorted_colors <- unique(rowBedpe[order(rowBedpe$colorby),]$color)
-      bedpe_plot$color_palette <- sorted_colors
-
-    } else {
-
-      colorbyCol <- factor(rowBedpe$colorby)
-      mappedColors <- rep(bb_bedpeInternal$fillcolor, ceiling(length(levels(colorbyCol))/length(bb_bedpeInternal$fillcolor)))
-      rowBedpe$color <- mappedColors[rowBedpe$colorby]
-    }
-
-  }
-
-
-  # ======================================================================================================================================================================================
-  # MAKE GROBS
-  # ======================================================================================================================================================================================
-
-  if (nrow(rowBedpe) > 0){
-
-
+    # ======================================================================================================================================================================================
+    # MAKE GROBS
+    # ======================================================================================================================================================================================
     bedpeRect1 <- rectGrob(x = rowBedpe$start1,
                            y = rowBedpe$y,
                            width = rowBedpe$width1,
@@ -418,14 +436,15 @@ bb_plotBedpe <- function(bedpe, chrom, params = NULL, chromstart = NULL, chromen
                               default.units = "native",
                               gp = gpar(col = rowBedpe$color, ...))
 
-
     assign("bedpe_grobs", addGrob(gTree = get("bedpe_grobs", envir = bbEnv), child = bedpeRect1), envir = bbEnv)
     assign("bedpe_grobs", addGrob(gTree = get("bedpe_grobs", envir = bbEnv), child = bedpeRect2), envir = bbEnv)
     assign("bedpe_grobs", addGrob(gTree = get("bedpe_grobs", envir = bbEnv), child = bedpeLine), envir = bbEnv)
 
-  } else {
 
-    warning("Bedpe contains no values.", call. = FALSE)
+  } else {
+    if (txdbChecks == TRUE){
+      warning("Bedpe contains no values.", call. = FALSE)
+    }
 
   }
 

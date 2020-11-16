@@ -32,7 +32,7 @@ bb_readHic <- function(hic, chrom, params = NULL, chromstart = NULL, chromend = 
   # ======================================================================================================================================================================================
 
   ## Define a function that catches errors for bb_rhic
-  errorcheck_bb_rhic <- function(hic, chromstart, chromend, zrange, altchrom, altchromstart, altchromend, norm, res_scale){
+  errorcheck_bb_rhic <- function(hic, chrom, chromstart, chromend, zrange, altchrom, altchromstart, altchromend, norm, res_scale){
 
     ## hic input needs to be a path to a .hic file
     if (class(hic) != "character"){
@@ -198,13 +198,12 @@ bb_readHic <- function(hic, chrom, params = NULL, chromstart = NULL, chromend = 
   ## Define a function to parse chromsome/region for Straw
   parse_region <- function(chrom, chromstart, chromend, assembly){
 
-    ## EDIT HERE
-    if (assembly == "hg19"){
+    assemblyName <- unlist(strsplit(assembly$TxDb, split = "[.]"))
+    if ("hg19" %in% assemblyName){
       strawChrom <- gsub("chr", "", chrom)
     } else {
       strawChrom <- chrom
     }
-
 
     if (is.null(chromstart) & is.null(chromend)){
 
@@ -227,12 +226,10 @@ bb_readHic <- function(hic, chrom, params = NULL, chromstart = NULL, chromend = 
   ## Define a function to reorder chromsomes to put "chrom" input in col1
   orderChroms <- function(hic, chrom, altchrom, assembly){
 
-    ## EDIT HERE
-    if (assembly == "hg19"){
-
+    assemblyName <- unlist(strsplit(assembly$TxDb, split = "[.]"))
+    if ("hg19" %in% assemblyName){
       chrom <- gsub("chr", "", chrom)
       altchrom <- gsub("chr", "", altchrom)
-
     }
 
     if (!"X" %in% chrom & !"Y" %in% chrom){
@@ -336,12 +333,19 @@ bb_readHic <- function(hic, chrom, params = NULL, chromstart = NULL, chromend = 
   if(is.null(bb_rhic$hic)) stop("argument \"hic\" is missing, with no default.", call. = FALSE)
   if(is.null(bb_rhic$chrom)) stop("argument \"chrom\" is missing, with no default.", call. = FALSE)
 
-  errorcheck_bb_rhic(hic = bb_rhic$hic, chromstart = bb_rhic$chromstart, chromend = bb_rhic$chromend, zrange = bb_rhic$zrange, altchrom = bb_rhic$altchrom,
+  errorcheck_bb_rhic(hic = bb_rhic$hic, chrom = bb_rhic$chrom, chromstart = bb_rhic$chromstart, chromend = bb_rhic$chromend, zrange = bb_rhic$zrange, altchrom = bb_rhic$altchrom,
                      altchromstart = bb_rhic$altchromstart, altchromend = bb_rhic$altchromend, norm = bb_rhic$norm, res_scale = bb_rhic$res_scale)
+
+  # ======================================================================================================================================================================================
+  # PARSE ASSEMBLY
+  # ======================================================================================================================================================================================
+
+  bb_rhic$assembly <- parse_bbAssembly(assembly = bb_rhic$assembly)
 
   # ======================================================================================================================================================================================
   # SET PARAMETERS
   # ======================================================================================================================================================================================
+
   parse_chromstart <- bb_rhic$chromstart
   parse_chromend <- bb_rhic$chromend
   parse_altchromstart <- bb_rhic$altchromstart

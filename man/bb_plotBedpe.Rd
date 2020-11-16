@@ -47,7 +47,7 @@ bb_plotBedpe(
 
 \item{linecolor}{border color}
 
-\item{assembly}{desired genome assembly}
+\item{assembly}{default genome assembly as a string or a bb_assembly object}
 
 \item{boxHeight}{A numeric or unit object specifying height of boxes at either end of bedpe element}
 

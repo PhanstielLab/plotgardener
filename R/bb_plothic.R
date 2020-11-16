@@ -10,7 +10,7 @@
 #' dataframes, "auto" will attempt to detect the resolution the dataframe contains
 #' @param zrange the range of interaction scores to plot, where extreme values will be set to the max or min
 #' @param palette ColorRamp palette to use for representing interaction scores
-#' @param assembly desired genome assembly
+#' @param assembly default genome assembly as a string or a bb_assembly object
 #' @param width A numeric or unit object specifying width
 #' @param height A numeric or unit object specifying height
 #' @param x A numeric or unit object specifying x-location
@@ -82,8 +82,6 @@ bb_plotHic <- function(hic, chrom, params = NULL, chromstart = NULL, chromend = 
     ###### chrom/chromstart/chromend/altchrom/altchromstart/altchromend #####
 
     ## Can't have only one NULL chromstart or chromend
-
-    ## Can't have only one NULL chromstart or chromend
     if ((is.null(hic_plot$chromstart) & !is.null(hic_plot$chromend)) | (is.null(hic_plot$chromend) & !is.null(hic_plot$chromstart))){
 
       stop("Cannot have one \'NULL\' \'chromstart\' or \'chromend\'.", call. = FALSE)
@@ -115,18 +113,19 @@ bb_plotHic <- function(hic, chrom, params = NULL, chromstart = NULL, chromend = 
 
         stop("Cannot have one \'NULL\' \'altchromstart\' or \'altchromend\'.", call. = FALSE)
 
-        if (!is.null(hic_plot$altchromstart) & !is.null(hic_plot$altchromend)){
+      }
 
-          ## Altchromstart should be smaller than altchromend
-          if (hic_plot$altchromstart > hic_plot$altchromend){
+      if (!is.null(hic_plot$altchromstart) & !is.null(hic_plot$altchromend)){
 
-            stop("\'altchromstart\' should not be larger than \'altchromend\'.", call. = FALSE)
+        ## Altchromstart should be smaller than altchromend
+        if (hic_plot$altchromstart > hic_plot$altchromend){
 
-          }
+          stop("\'altchromstart\' should not be larger than \'altchromend\'.", call. = FALSE)
 
         }
 
       }
+
 
       if (!is.null(hic_plot$chromstart) & !is.null(hic_plot$chromend) & !is.null(hic_plot$altchromstart) & !is.null(hic_plot$altchromend)){
 
@@ -210,6 +209,36 @@ bb_plotHic <- function(hic, chrom, params = NULL, chromstart = NULL, chromend = 
 
   }
 
+  ## Define a function that checks for and gets whole chromosome starts/ends based on an assembly TxDb
+  get_wholeChrom <- function(chrom, assembly){
+
+    chromstart <- NULL
+    chromend <- NULL
+
+    txdbChecks <- check_loadedPackage(package = assembly$TxDb, message = paste(paste0("`", assembly$TxDb,"`"),
+                                                                                        "not loaded. Please install and load to plot full chromosome HiC map."))
+    if (txdbChecks == TRUE){
+
+      tx_db <- eval(parse(text = assembly$TxDb))
+      assembly_data <- seqlengths(tx_db)
+
+      if (!chrom %in% names(assembly_data)){
+        warning(paste("Chromosome", paste0("'", chrom, "'"), "not found in", paste0("`", assembly$TxDb, "`"), "and data for entire chromosome cannot be plotted."), call. = FALSE)
+      } else {
+        chromstart <- 1
+        chromend <- assembly_data[[chrom]]
+
+      }
+
+
+    }
+
+
+    return(list(chromstart, chromend))
+
+
+  }
+
   ## Define a function to check range of data in dataframe
   check_dataframe <- function(hic, hic_plot){
 
@@ -236,25 +265,30 @@ bb_plotHic <- function(hic, chrom, params = NULL, chromstart = NULL, chromend = 
   adjust_resolution <- function(hic, hic_plot){
 
     if (!("data.frame" %in% class(hic))){
-      ## Get range of data and try to pick a resolution to extract from hic file
-      dataRange <- hic_plot$chromend - hic_plot$chromstart
-      if (dataRange >= 150000000){
-        bestRes <- 500000
-      } else if (dataRange >= 75000000 & dataRange < 150000000){
-        bestRes <- 250000
-      } else if (dataRange >= 35000000 & dataRange < 75000000){
-        bestRes <- 100000
-      } else if (dataRange >= 20000000 & dataRange < 35000000){
-        bestRes <- 50000
-      } else if (dataRange >= 5000000 & dataRange < 20000000){
-        bestRes <- 25000
-      } else if (dataRange >= 3000000 & dataRange < 5000000){
-        bestRes <- 10000
-      } else {
-        bestRes <- 5000
-      }
 
-      hic_plot$resolution <- as.integer(bestRes)
+      if (!is.null(hic_plot$chromstart) & !is.null(hic_plot$chromend)){
+
+        ## Get range of data and try to pick a resolution to extract from hic file
+        dataRange <- hic_plot$chromend - hic_plot$chromstart
+        if (dataRange >= 150000000){
+          bestRes <- 500000
+        } else if (dataRange >= 75000000 & dataRange < 150000000){
+          bestRes <- 250000
+        } else if (dataRange >= 35000000 & dataRange < 75000000){
+          bestRes <- 100000
+        } else if (dataRange >= 20000000 & dataRange < 35000000){
+          bestRes <- 50000
+        } else if (dataRange >= 5000000 & dataRange < 20000000){
+          bestRes <- 25000
+        } else if (dataRange >= 3000000 & dataRange < 5000000){
+          bestRes <- 10000
+        } else {
+          bestRes <- 5000
+        }
+
+        hic_plot$resolution <- as.integer(bestRes)
+
+      }
 
     } else {
 
@@ -275,8 +309,12 @@ bb_plotHic <- function(hic, chrom, params = NULL, chromstart = NULL, chromend = 
 
     parse_chrom <- function(assembly, chrom){
 
-      if (assembly == "hg19"){
-        strawChrom <- as.numeric(gsub("chr", "", chrom))
+      assemblyName <- unlist(strsplit(assembly$TxDb, split = "[.]"))
+
+      if ("hg19" %in% assemblyName){
+        strawChrom <- gsub("chr", "", chrom)
+      } else {
+        strawChrom <- chrom
       }
 
       return(strawChrom)
@@ -285,24 +323,38 @@ bb_plotHic <- function(hic, chrom, params = NULL, chromstart = NULL, chromend = 
     ## if .hic file, read in with bb_rhic
     if (!("data.frame" %in% class(hic))){
 
-      strawChrom <- parse_chrom(assembly = assembly, chrom = hic_plot$chrom)
+      if (!is.null(hic_plot$chromstart) & !is.null(hic_plot$chromend)){
 
-      readchromstart <- hic_plot$chromstart - hic_plot$resolution
-      readchromend <- hic_plot$chromend + hic_plot$resolution
-      readaltchromstart <- hic_plot$altchromstart - hic_plot$resolution
-      readaltchromend <- hic_plot$altchromend + hic_plot$resolution
+        strawChrom <- parse_chrom(assembly = assembly, chrom = hic_plot$chrom)
+        if (!is.null(hic_plot$altchrom)){
+          strawaltChrom <- parse_chrom(assembly = assembly, chrom = hic_plot$altchrom)
+        } else {
+          strawaltChrom <- NULL
+        }
 
-      hic <- suppressWarnings(bb_readHic(hic = hic, chrom = strawChrom, chromstart = readchromstart, chromend = readchromend,
-                     resolution = hic_plot$resolution, zrange = hic_plot$zrange, norm = norm,
-                     altchrom = hic_plot$altchrom, altchromstart = readaltchromstart,
-                     altchromend = readaltchromend))
+        readchromstart <- hic_plot$chromstart - hic_plot$resolution
+        readchromend <- hic_plot$chromend + hic_plot$resolution
+        readaltchromstart <- hic_plot$altchromstart - hic_plot$resolution
+        readaltchromend <- hic_plot$altchromend + hic_plot$resolution
+        hic <- suppressWarnings(bb_readHic(hic = hic, chrom = strawChrom, chromstart = readchromstart, chromend = readchromend,
+                                           resolution = hic_plot$resolution, zrange = hic_plot$zrange, norm = norm,
+                                           altchrom = strawaltChrom, altchromstart = readaltchromstart,
+                                           altchromend = readaltchromend))
+      } else {
+        hic <- data.frame(matrix(nrow = 0, ncol = 3))
+      }
+
+
 
     } else {
 
-      message(paste("Read in dataframe.  Assuming \'chrom\' in column1 and \'altchrom\' in column2.", hic_plot$resolution, "BP resolution detected."))
-
-      ## check range of data in dataframe
-      check_dataframe(hic = hic, hic_plot = hic_plot)
+      if (!is.null(hic_plot$chromstart) & !is.null(hic_plot$chromend)){
+        message(paste("Read in dataframe.  Assuming \'chrom\' in column1 and \'altchrom\' in column2.", hic_plot$resolution, "BP resolution detected."))
+        ## check range of data in dataframe
+        check_dataframe(hic = hic, hic_plot = hic_plot)
+      } else {
+        hic <- data.frame(matrix(nrow = 0, ncol = 3))
+      }
 
     }
 
@@ -317,25 +369,28 @@ bb_plotHic <- function(hic, chrom, params = NULL, chromstart = NULL, chromend = 
   ## Define a function that subsets data
   subset_data <- function(hic, hic_plot){
 
-    if(is.null(hic_plot$altchrom)){
+    if (nrow(hic) > 0){
 
-      hic <- hic[which(hic[,1] >= hic_plot$chromstart - hic_plot$resolution &
-                         hic[,1] <= hic_plot$chromend + hic_plot$resolution &
-                         hic[,2] >= hic_plot$chromstart - hic_plot$resolution &
-                         hic[,2] <= hic_plot$chromend + hic_plot$resolution),]
-
-    } else {
-
-      if (hic_plot$chrom != hic_plot$altchrom){
+      if (is.null(hic_plot$altchrom)){
 
         hic <- hic[which(hic[,1] >= hic_plot$chromstart - hic_plot$resolution &
                            hic[,1] <= hic_plot$chromend + hic_plot$resolution &
-                           hic[,2] >= hic_plot$altchromstart - hic_plot$resolution &
-                           hic[,2] <= hic_plot$altchromend + hic_plot$resolution),]
+                           hic[,2] >= hic_plot$chromstart - hic_plot$resolution &
+                           hic[,2] <= hic_plot$chromend + hic_plot$resolution),]
+
+      } else {
+
+        if (hic_plot$chrom != hic_plot$altchrom){
+
+          hic <- hic[which(hic[,1] >= hic_plot$chromstart - hic_plot$resolution &
+                             hic[,1] <= hic_plot$chromend + hic_plot$resolution &
+                             hic[,2] >= hic_plot$altchromstart - hic_plot$resolution &
+                             hic[,2] <= hic_plot$altchromend + hic_plot$resolution),]
+
+        }
+
 
       }
-
-
     }
 
     return(hic)
@@ -367,7 +422,9 @@ bb_plotHic <- function(hic, chrom, params = NULL, chromstart = NULL, chromend = 
   ## Define a function that sets viewport xscale and yscale
   vp_scale <- function(hic_plot){
 
-    if(is.null(hic_plot$altchrom)){
+  if (!is.null(hic_plot$chromstart) & !is.null(hic_plot$chromend)){
+
+    if (is.null(hic_plot$altchrom)){
 
       xscale <- c(hic_plot$chromstart, hic_plot$chromend)
       yscale <- xscale
@@ -390,6 +447,14 @@ bb_plotHic <- function(hic, chrom, params = NULL, chromstart = NULL, chromend = 
 
 
     }
+
+  } else {
+
+    xscale <- c(0, 1)
+    yscale <- c(0, 1)
+
+
+  }
 
     return(list(xscale, yscale))
   }
@@ -529,23 +594,35 @@ bb_plotHic <- function(hic, chrom, params = NULL, chromstart = NULL, chromend = 
   errorcheck_bb_plothic(hic = bb_hicInternal$hic, hic_plot = hic_plot, norm = bb_hicInternal$norm)
 
   # ======================================================================================================================================================================================
+  # PARSE ASSEMBLY
+  # ======================================================================================================================================================================================
+
+  hic_plot$assembly <- parse_bbAssembly(assembly = hic_plot$assembly)
+
+  # ======================================================================================================================================================================================
   # PARSE UNITS
   # ======================================================================================================================================================================================
 
   hic_plot <- defaultUnits(object = hic_plot, default.units = bb_hicInternal$default.units)
 
   # ======================================================================================================================================================================================
-  # WHOLE CHROM
+  # WHOLE CHROM INFORMATION
   # ======================================================================================================================================================================================
 
-  ## EDIT HERE FOR DATA
   if (is.null(hic_plot$chromstart) & is.null(hic_plot$chromend)){
-    if (hic_plot$assembly == "hg19"){
-      genome <- bb_hg19
-    }
 
-    hic_plot$chromstart <- 1
-    hic_plot$chromend <- genome[which(genome$chrom == hic_plot$chrom),]$length
+    chromData <- get_wholeChrom(chrom = hic_plot$chrom, assembly = hic_plot$assembly)
+    hic_plot$chromstart <- chromData[[1]]
+    hic_plot$chromend <- chromData[[2]]
+
+  }
+
+  if (!is.null(hic_plot$altchrom)){
+    if(is.null(hic_plot$altchromstart) & is.null(hic_plot$altchromend)){
+      altchromData <- get_wholeChrom(chrom = hic_plot$altchrom, assembly = hic_plot$assembly)
+      hic_plot$altchromstart <- altchromData[[1]]
+      hic_plot$altchromend <- altchromData[[2]]
+    }
 
   }
 
@@ -556,7 +633,6 @@ bb_plotHic <- function(hic, chrom, params = NULL, chromstart = NULL, chromend = 
   if (hic_plot$resolution == "auto"){
     hic_plot <- adjust_resolution(hic = bb_hicInternal$hic, hic_plot = hic_plot)
   }
-
 
   # ======================================================================================================================================================================================
   # READ IN DATA
@@ -653,38 +729,44 @@ bb_plotHic <- function(hic, chrom, params = NULL, chromstart = NULL, chromend = 
   # MAKE GROBS
   # ======================================================================================================================================================================================
 
-  if (nrow(hic) > 0){
+  if (!is.null(hic_plot$chromstart) & !is.null(hic_plot$chromend)){
 
-    ## Determine which grobs will be squares [[1]] and which will be triangles [[2]]
-    shapes <- hic_shapes(hic = hic, hic_plot = hic_plot)
+    if (nrow(hic) > 0){
 
-    if (!is.null(shapes[[1]])){
+      ## Determine which grobs will be squares [[1]] and which will be triangles [[2]]
+      shapes <- hic_shapes(hic = hic, hic_plot = hic_plot)
 
-      ## Make square grobs and add to grob gTree
-      hic_squares <- rectGrob(x = shapes[[1]]$x,
-                              y = shapes[[1]]$y,
-                              just = c("left", "bottom"),
-                              width = hic_plot$resolution,
-                              height = hic_plot$resolution,
-                              gp = gpar(col = NA, fill = shapes[[1]]$color),
-                              default.units = "native")
+      if (!is.null(shapes[[1]])){
 
-      assign("hic_grobs", addGrob(gTree = get("hic_grobs", envir = bbEnv), child = hic_squares), envir = bbEnv)
+        ## Make square grobs and add to grob gTree
+        hic_squares <- rectGrob(x = shapes[[1]]$x,
+                                y = shapes[[1]]$y,
+                                just = c("left", "bottom"),
+                                width = hic_plot$resolution,
+                                height = hic_plot$resolution,
+                                gp = gpar(col = NA, fill = shapes[[1]]$color),
+                                default.units = "native")
+
+        assign("hic_grobs", addGrob(gTree = get("hic_grobs", envir = bbEnv), child = hic_squares), envir = bbEnv)
+
+      }
+
+      ## Make triangle grobs and add to grob gTree
+      if (!is.null(shapes[[2]])){
+
+        invisible(apply(shapes[[2]], 1, hic_diagonal, hic_plot = hic_plot))
+
+      }
+
+    } else {
+
+      warning("Warning: no data found in region.  Suggestions: check chromosome, check region.", call. = FALSE)
 
     }
 
-    ## Make triangle grobs and add to grob gTree
-    if (!is.null(shapes[[2]])){
-
-      invisible(apply(shapes[[2]], 1, hic_diagonal, hic_plot = hic_plot))
-
-    }
-
-  } else {
-
-    warning("Warning: no data found in region.  Suggestions: check chromosome, check region.", call. = FALSE)
 
   }
+
 
   # ======================================================================================================================================================================================
   # IF PLOT == TRUE, DRAW GROBS

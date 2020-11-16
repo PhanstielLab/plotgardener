@@ -12,7 +12,7 @@ bb_plotRibbonArches(
   chromend = NULL,
   cutoffArches = FALSE,
   archHeight = NULL,
-  style = "3D",
+  style = "2D",
   arch = 5,
   position = "top",
   fillcolor = "lightgrey",
@@ -47,7 +47,7 @@ bb_plotRibbonArches(
 \item{archHeight}{single value or vector specifying the arch heights;
 when NULL, all arches will be the same height, filling up the given viewport}
 
-\item{style}{style of arches: "3D" or "2D"}
+\item{style}{style of arches: "2D" or "3D"}
 
 \item{arch}{arch curvature, determined by number of points along the curve}
 

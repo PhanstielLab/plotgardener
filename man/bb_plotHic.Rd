@@ -49,7 +49,7 @@ dataframes, "auto" will attempt to detect the resolution the dataframe contains}
 
 \item{palette}{ColorRamp palette to use for representing interaction scores}
 
-\item{assembly}{desired genome assembly}
+\item{assembly}{default genome assembly as a string or a bb_assembly object}
 
 \item{width}{A numeric or unit object specifying width}
 
