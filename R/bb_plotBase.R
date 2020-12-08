@@ -41,7 +41,7 @@ bb_plotBase <- function(plot, x, y, width, height, params = NULL, just = c("left
   # INITIALIZE PLOT OBJECT
   # ======================================================================================================================================================================================
 
-  base_plot <- structure(list(width = bb_baseInternal$width, height = bb_baseInternal$height, x = bb_baseInternal$x, y = bb_baseInternal$y,
+  bb_base <- structure(list(width = bb_baseInternal$width, height = bb_baseInternal$height, x = bb_baseInternal$x, y = bb_baseInternal$y,
                               justification = bb_baseInternal$just, grobs = NULL), class = "bb_base")
 
   # ======================================================================================================================================================================================
@@ -60,14 +60,14 @@ bb_plotBase <- function(plot, x, y, width, height, params = NULL, just = c("left
   # PARSE UNITS
   # ======================================================================================================================================================================================
 
-  base_plot <- defaultUnits(object = base_plot, default.units = bb_baseInternal$default.units)
+  bb_base <- defaultUnits(object = bb_base, default.units = bb_baseInternal$default.units)
 
   # ======================================================================================================================================================================================
   # VIEWPORTS
   # ======================================================================================================================================================================================
 
   ## Convert coordinates into same units as page
-  page_coords <- convert_page(object = base_plot)
+  page_coords <- convert_page(object = bb_base)
 
   ## Name viewport
   currentViewports <- current_viewports()
@@ -100,12 +100,12 @@ bb_plotBase <- function(plot, x, y, width, height, params = NULL, just = c("left
   # ADD GTREE TO OBJECT
   # ======================================================================================================================================================================================
 
-  base_plot$grobs <- gtree
+  bb_base$grobs <- gtree
 
   # ======================================================================================================================================================================================
   # RETURN OBJECT
   # ======================================================================================================================================================================================
 
-  return(base_plot)
+  return(bb_base)
 
 }

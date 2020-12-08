@@ -112,11 +112,11 @@ bb_plotBedpe <- function(bedpe, chrom, params = NULL, chromstart = NULL, chromen
   # INITIALIZE OBJECT
   # ======================================================================================================================================================================================
 
-  bedpe_plot <- structure(list(chrom = bb_bedpeInternal$chrom, chromstart = bb_bedpeInternal$chromstart, chromend = bb_bedpeInternal$chromend, color_palette = NULL,
+  bb_bedpe <- structure(list(chrom = bb_bedpeInternal$chrom, chromstart = bb_bedpeInternal$chromstart, chromend = bb_bedpeInternal$chromend, color_palette = NULL,
                                zrange = bb_bedpeInternal$colorbyrange, width = bb_bedpeInternal$width, height = bb_bedpeInternal$height, x = bb_bedpeInternal$x,
                                y = bb_bedpeInternal$y, justification = bb_bedpeInternal$just,
                                grobs = NULL, assembly = bb_bedpeInternal$assembly), class = "bb_bedpe")
-  attr(x = bedpe_plot, which = "plotted") <- bb_bedpeInternal$draw
+  attr(x = bb_bedpe, which = "plotted") <- bb_bedpeInternal$draw
 
   # ======================================================================================================================================================================================
   # CHECK INPUTS/PLACEMENT
@@ -125,19 +125,19 @@ bb_plotBedpe <- function(bedpe, chrom, params = NULL, chromstart = NULL, chromen
   if(is.null(bb_bedpeInternal$bedpe)) stop("argument \"bedpe\" is missing, with no default.", call. = FALSE)
   if(is.null(bb_bedpeInternal$chrom)) stop("argument \"chrom\" is missing, with no default.", call. = FALSE)
 
-  check_placement(object = bedpe_plot)
+  check_placement(object = bb_bedpe)
 
   # ======================================================================================================================================================================================
   # PARSE ASSEMBLY
   # ======================================================================================================================================================================================
 
-  bedpe_plot$assembly <- parse_bbAssembly(assembly = bedpe_plot$assembly)
+  bb_bedpe$assembly <- parse_bbAssembly(assembly = bb_bedpe$assembly)
 
   # ======================================================================================================================================================================================
   # PARSE UNITS
   # ======================================================================================================================================================================================
 
-  bedpe_plot <- defaultUnits(object = bedpe_plot, default.units = bb_bedpeInternal$default.units)
+  bb_bedpe <- defaultUnits(object = bb_bedpe, default.units = bb_bedpeInternal$default.units)
   if(!"unit" %in% class(bb_bedpeInternal$boxHeight)){
 
     if (!is.numeric(bb_bedpeInternal$boxHeight)){
@@ -169,7 +169,7 @@ bb_plotBedpe <- function(bedpe, chrom, params = NULL, chromstart = NULL, chromen
   # CATCH ERRORS
   # ======================================================================================================================================================================================
 
-  errorcheck_bb_plotBedpe(bedpe = bedpe, bedpe_plot = bedpe_plot, colorby = bb_bedpeInternal$colorby)
+  errorcheck_bb_plotBedpe(bedpe = bedpe, bedpe_plot = bb_bedpe, colorby = bb_bedpeInternal$colorby)
 
   # ======================================================================================================================================================================================
   # ORGANIZE DATA
@@ -189,22 +189,22 @@ bb_plotBedpe <- function(bedpe, chrom, params = NULL, chromstart = NULL, chromen
   # WHOLE CHROMOSOME DATA AND XSCALE
   # ======================================================================================================================================================================================
 
-  if (is.null(bedpe_plot$chromstart) & is.null(bedpe_plot$chromend)){
+  if (is.null(bb_bedpe$chromstart) & is.null(bb_bedpe$chromend)){
 
-    txdbChecks <- check_loadedPackage(package = bedpe_plot$assembly$TxDb, message = paste(paste0("`", bedpe_plot$assembly$TxDb,"`"),
+    txdbChecks <- check_loadedPackage(package = bb_bedpe$assembly$TxDb, message = paste(paste0("`", bb_bedpe$assembly$TxDb,"`"),
                                                                                             "not loaded. Please install and load to plot full chromosome paired-end data."))
     xscale <- c(0, 1)
     if (txdbChecks == TRUE){
-      tx_db <- eval(parse(text = bedpe_plot$assembly$TxDb))
+      tx_db <- eval(parse(text = bb_bedpe$assembly$TxDb))
       assembly_data <- seqlengths(tx_db)
 
-      if (!bedpe_plot$chrom %in% names(assembly_data)){
+      if (!bb_bedpe$chrom %in% names(assembly_data)){
         txdbChecks <- FALSE
-        warning(paste("Chromosome", paste0("'", bedpe_plot$chrom, "'"), "not found in", paste0("`", bedpe_plot$assembly$TxDb, "`"), "and data for entire chromosome cannot be plotted."), call. = FALSE)
+        warning(paste("Chromosome", paste0("'", bb_bedpe$chrom, "'"), "not found in", paste0("`", bb_bedpe$assembly$TxDb, "`"), "and data for entire chromosome cannot be plotted."), call. = FALSE)
       } else {
-        bedpe_plot$chromstart <- 1
-        bedpe_plot$chromend <- assembly_data[[bedpe_plot$chrom]]
-        xscale <- c(bedpe_plot$chromstart, bedpe_plot$chromend)
+        bb_bedpe$chromstart <- 1
+        bb_bedpe$chromend <- assembly_data[[bb_bedpe$chrom]]
+        xscale <- c(bb_bedpe$chromstart, bb_bedpe$chromend)
 
       }
 
@@ -212,15 +212,15 @@ bb_plotBedpe <- function(bedpe, chrom, params = NULL, chromstart = NULL, chromen
 
   } else {
     txdbChecks <- TRUE
-    xscale <- c(bedpe_plot$chromstart, bedpe_plot$chromend)
+    xscale <- c(bb_bedpe$chromstart, bb_bedpe$chromend)
   }
 
   # ======================================================================================================================================================================================
   # SUBSET DATA FOR CHROMOSOME AND ANY OVERLAPPING REGIONS
   # ======================================================================================================================================================================================
 
-  if (!is.null(bedpe_plot$chromstart) & !is.null(bedpe_plot$chromend)){
-    bedpe <- bedpe[which(bedpe[,1] == bedpe_plot$chrom & bedpe[,4] == bedpe_plot$chrom & bedpe[,2] <= bedpe_plot$chromend & bedpe[,6] >= bedpe_plot$chromstart),]
+  if (!is.null(bb_bedpe$chromstart) & !is.null(bb_bedpe$chromend)){
+    bedpe <- bedpe[which(bedpe[,1] == bb_bedpe$chrom & bedpe[,4] == bb_bedpe$chrom & bedpe[,2] <= bb_bedpe$chromend & bedpe[,6] >= bb_bedpe$chromstart),]
   } else {
     bedpe <- data.frame(matrix(nrow = 0, ncol = 6))
   }
@@ -279,7 +279,7 @@ bb_plotBedpe <- function(bedpe, chrom, params = NULL, chromstart = NULL, chromen
 
   ## If placing information is provided but plot == TRUE, set up it's own viewport separate from bb_makepage
   ## Not translating into page_coordinates
-  if (is.null(bedpe_plot$x) & is.null(bedpe_plot$y)){
+  if (is.null(bb_bedpe$x) & is.null(bb_bedpe$y)){
 
     vp <- viewport(height = unit(0.5, "snpc"), width = unit(1, "snpc"),
                    x = unit(0.5, "npc"), y = unit(0.5, "npc"),
@@ -299,7 +299,7 @@ bb_plotBedpe <- function(bedpe, chrom, params = NULL, chromstart = NULL, chromen
   } else {
 
     ## Convert coordinates into same units as page
-    page_coords <- convert_page(object = bedpe_plot)
+    page_coords <- convert_page(object = bb_bedpe)
 
     ## Make viewport
     vp <- viewport(height = page_coords$height, width = page_coords$width,
@@ -322,7 +322,7 @@ bb_plotBedpe <- function(bedpe, chrom, params = NULL, chromstart = NULL, chromen
   # ======================================================================================================================================================================================
 
   ## Determine how many bepe elements are going to fit based on boxHeight and space
-  if (is.null(bedpe_plot$x) & is.null(bedpe_plot$y)){
+  if (is.null(bb_bedpe$x) & is.null(bb_bedpe$y)){
 
     pushViewport(vp)
     boxHeight <- convertHeight(bb_bedpeInternal$boxHeight, unitTo = "npc", valueOnly = T)
@@ -338,7 +338,7 @@ bb_plotBedpe <- function(bedpe, chrom, params = NULL, chromstart = NULL, chromen
 
 
   limit <- floor((as.numeric(vp$height) + spaceHeight)/(boxHeight + spaceHeight))
-  wiggle <- abs(bedpe_plot$chromend - bedpe_plot$chromstart) * bb_bedpeInternal$spaceWidth
+  wiggle <- abs(bb_bedpe$chromend - bb_bedpe$chromstart) * bb_bedpeInternal$spaceWidth
 
 
   if (nrow(bedpe) > 0){
@@ -396,9 +396,9 @@ bb_plotBedpe <- function(bedpe, chrom, params = NULL, chromstart = NULL, chromen
 
       if (class(bb_bedpeInternal$fillcolor) == "function"){
 
-        rowBedpe$color <- bb_maptocolors(rowBedpe$colorby, bb_bedpeInternal$fillcolor, range = bedpe_plot$zrange)
+        rowBedpe$color <- bb_maptocolors(rowBedpe$colorby, bb_bedpeInternal$fillcolor, range = bb_bedpe$zrange)
         sorted_colors <- unique(rowBedpe[order(rowBedpe$colorby),]$color)
-        bedpe_plot$color_palette <- sorted_colors
+        bb_bedpe$color_palette <- sorted_colors
 
       } else {
 
@@ -462,12 +462,12 @@ bb_plotBedpe <- function(bedpe, chrom, params = NULL, chromstart = NULL, chromen
   # ADD GROBS TO OBJECT
   # ======================================================================================================================================================================================
 
-  bedpe_plot$grobs <- get("bedpe_grobs", envir = bbEnv)
+  bb_bedpe$grobs <- get("bedpe_grobs", envir = bbEnv)
 
   # ======================================================================================================================================================================================
   # RETURN OBJECT
   # ======================================================================================================================================================================================
 
-  return(bedpe_plot)
+  return(bb_bedpe)
 
 }
