@@ -29,7 +29,7 @@
 #'
 #' @export
 
-bb_plotArches <- function(bedpe, chrom, params = NULL, chromstart = NULL, chromend = NULL, cutoffArches = FALSE, archHeight = NULL, style = "2D", arch = 5, position = "top",
+bb_plotBedpeArches <- function(bedpe, chrom, params = NULL, chromstart = NULL, chromend = NULL, cutoffArches = FALSE, archHeight = NULL, style = "2D", arch = 5, position = "top",
                                 fillcolor = "lightgrey", linecolor = NA, colorby = NULL, colorbyrange = NULL, assembly = "hg19", alpha = 0.4, x = NULL, y = NULL, width = NULL,
                                 height = NULL, just = c("left", "top"), default.units = "inches", draw = T, ...){
 

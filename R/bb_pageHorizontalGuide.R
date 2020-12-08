@@ -6,7 +6,7 @@
 #' @param default.units A string indicating the default units to use if y is only given as numeric vectors
 
 #' @export
-bb_pageHguide <- function(y, params = NULL, col = "grey55", default.units = "inches", ...){
+bb_pageHorizontalGuide <- function(y, params = NULL, col = "grey55", default.units = "inches", ...){
 
 
   # ======================================================================================================================================================================================

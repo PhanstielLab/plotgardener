@@ -5,7 +5,7 @@
 #' @param default.units A string indicating the default units to use if x is only given as numeric vectors
 
 #' @export
-bb_pageVGuide <- function(x, params = NULL, col = "grey55", default.units = "inches", ...){
+bb_pageVerticalGuide <- function(x, params = NULL, col = "grey55", default.units = "inches", ...){
 
   # ======================================================================================================================================================================================
   # PARSE PARAMETERS

@@ -11,7 +11,7 @@
 #' @param ygrid horizontal gridlines
 #' @export
 
-bb_pageMake <- function(params = NULL, width = 8.5, height = 11, default.units = "inches", showOutline = TRUE, showRuler = TRUE, showUnit = TRUE, xgrid = 0.5, ygrid = 0.5){
+bb_pageCreate <- function(params = NULL, width = 8.5, height = 11, default.units = "inches", showOutline = TRUE, showRuler = TRUE, showUnit = TRUE, xgrid = 0.5, ygrid = 0.5){
 
   # ======================================================================================================================================================================================
   # MAKE NEW PAGE
