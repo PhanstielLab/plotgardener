@@ -387,6 +387,10 @@ check_placement <- function(object){
 
 }
 
+## Define a character vector of valid coordinate systems to work in
+validUnits <- c("npc", "native", "inches", "cm", "mm", "points", "bigpts", "picas", "dida",
+                "cicero", "scaledpts", "char", "lines", "snpc")
+
 ## Define a function that converts coordinates/dimensions into default units
 defaultUnits <- function(object, default.units){
 
