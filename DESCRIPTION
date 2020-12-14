@@ -16,8 +16,8 @@ Imports:
     rtracklayer,
     BSgenome,
     GenomeInfoDb
-Remotes: aidenlab/straw/R
+Remotes: PhanstielLab/straw/R
 biocViews: GenomicRanges, IRanges, rtracklayer, BSgenome, GenomeInfoDb
 LinkingTo: 
     Rcpp
-Suggests: BSgenome.Hsapiens.UCSC.hg19, BSgenome.Hsapiens.UCSC.hg38, BSgenome.Hsapeins.NCBI.GRCh38, BSgenome.Mmusculus.UCSC.mm9, BSgenome.Mmusculus.UCSC.mm10
+Suggests: BSgenome.Hsapiens.UCSC.hg19, BSgenome.Hsapiens.UCSC.hg38, BSgenome.Mmusculus.UCSC.mm9
