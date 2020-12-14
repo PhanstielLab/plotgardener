@@ -753,9 +753,6 @@ defaultGenePriorities <- function(data, assembly, transcript = FALSE){
 
   }
 
-  ## Set "Priority" Column
-  updatedData$Priority <- 1:nrow(updatedData)
-
   ## Return data with priorities
   return(updatedData)
 

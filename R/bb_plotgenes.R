@@ -82,7 +82,7 @@ bb_plotGenes <- function(chrom, params = NULL, assembly = "hg19", chromstart = N
     subset <- subset[which(!is.na(subset[[displayCol]])),]
 
     ## Put the remaining genes in order of Priority
-    remaining <- remaining[order(remaining$Priority),]
+    #remaining <- remaining[order(remaining$Priority),]
 
     ## Recombine lists, putting geneOrder section at the top
     combined <- rbind(subset, remaining)
@@ -505,17 +505,11 @@ bb_plotGenes <- function(chrom, params = NULL, assembly = "hg19", chromstart = N
 
     ## DECLUTTER LABELS
 
-    ## Access default gene prioritization based on citation/gene length
+    ## Put genes in order of default gene prioritization based on citation/gene length
     plusgeneNames <- defaultGenePriorities(data = plusgeneNames, assembly = bb_genes$assembly)
     minusgeneNames <- defaultGenePriorities(data = minusgeneNames, assembly = bb_genes$assembly)
 
-    if (is.null(bb_genesInternal$geneOrder)){
-
-      ## With no given gene order, just sort genes according to default (citation or length)
-      plusgeneNames <- plusgeneNames[order(plusgeneNames$Priority),]
-      minusgeneNames <- minusgeneNames[order(minusgeneNames$Priority),]
-
-    } else {
+    if (!is.null(bb_genesInternal$geneOrder)){
 
       ## Integrate geneOrder and default prioritization
       plusgeneNames <- gene_priorities(genes = plusgeneNames, geneOrder = bb_genesInternal$geneOrder, displayCol = displayCol)

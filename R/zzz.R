@@ -37,59 +37,58 @@
 
     if (!is.null(gene)){
 
-      ## CHANGE CODE HERE TO GET ASSOCIATED TXDB/ORG FOR GENE
-      if (assembly == 'hg19')
-      {
-        genes <- bb_hg19gtf
-        chromSizes <- bb_hg19
-      }
-      else if (assembly == 'hg38')
-      {
-        genes <- bb_hg38gtf
-        chromSizes <- bb_hg38
-      }
-      else
-      {
-        stop(paste('Assembly', shQuote(assembly), 'is not defined.'))
-      }
+      ## Parse assembly
+      assembly <- parse_bbAssembly(assembly = assembly)
 
-      ## Check that gene is in gtf file
-      if(!gene %%in%% genes$Gene) {
-        stop(paste('Gene', shQuote(gene),
+      txdbChecks <- check_loadedPackage(package = assembly$TxDb, message = paste(paste0('`', assembly$TxDb, '`'), 'not loaded. Please install and load to define genomic region based on a gene.'))
+      orgdbChecks <- check_loadedPackage(package = assembly$OrgDb, message = paste(paste0('`', assembly$OrgDb, '`'), 'not loaded. Please install and load to define genomic region based on a gene.'))
+
+      if (txdbChecks == TRUE & orgdbChecks == TRUE){
+        tx_db <- eval(parse(text = assembly$TxDb))
+        chromSizes <- seqlengths(tx_db)
+        displayCol <- assembly$display.column
+        genes <- bb_getExons(assembly = assembly)
+
+        ## Check that gene is in extracted data
+        if(!gene %%in%% genes[[displayCol]]) {
+          stop(paste('Gene', shQuote(gene),
                    'does not exist in assembly', shQuote(assembly)))
-      }
+        }
 
-      ## Check that user has not supplied both gene and chrom, chromstart, or chromend
-      if(any(!is.null(c(chrom, chromstart, chromend)))) {
-        stop('Cannont use \\'gene\\' in combination with \\'chrom\\', \\'chromstart\\', or \\'chromend\\'')
-      }
+        ## Check that user has not supplied both gene and chrom, chromstart, or chromend
+        if(any(!is.null(c(chrom, chromstart, chromend)))) {
+          stop('Cannot use \\'gene\\' in combination with \\'chrom\\', \\'chromstart\\', or \\'chromend\\'', call. = FALSE)
+        }
 
-      ## Subset for gene region
-      geneRegion <- genes[genes$Gene == object$gene,]
+        ## Subset for gene region
+        geneRegion <- genes[which(genes[[displayCol]] == object$gene),]
+        minGeneStart <- min(geneRegion$TXSTART)
+        maxGeneEnd <- max(geneRegion$TXEND)
 
+        ## Set default gene buffer (window = 2X gene length)
+        ## Define buffer
+        if (is.null(geneBuffer)) geneBuffer <- (maxGeneEnd - minGeneStart) / 2
 
-      ## Set default gene buffer (window = 2X gene length)
+        ## Assign values to bb_params object (with buffer)
+        object$chrom      <- unique(geneRegion$TXCHROM)
+        object$chromstart <- minGeneStart - geneBuffer
+        object$chromend   <- maxGeneEnd  + geneBuffer
+        object$geneBuffer <- geneBuffer
 
-      ## Define buffer
-      if (is.null(geneBuffer)) geneBuffer <- (geneRegion$Stop - geneRegion$Start) / 2
+        ## Extract chromSizes length
+        chrLength <- chromSizes[[object$chrom]]
 
-      ## Assign values to bb_params object (with buffer)
-      object$chrom      <- geneRegion$Chromosome
-      object$chromstart <- geneRegion$Start - geneBuffer
-      object$chromend   <- geneRegion$Stop  + geneBuffer
-      object$geneBuffer <- geneBuffer
+        ## Check that starts and ends are within chromSizes
+        if (object$chromstart < 1) {
+          object$chromstart <- 1
+          message('geneBuffer range is less than start. Start has been adjusted', call. = FALSE)
+        }
 
-      ## Extract chromSizes length
-      chrLength <- chromSizes$length[chromSizes$chrom == object$chrom]
+        if (object$chromend > chrLength) {
+          object$chromend   <- chrLength
+          message('geneBuffer range is greater than end. End has been adjusted', call. = FALSE)
+        }
 
-      ## Check that starts and ends are within chromSizes
-      if (object$chromstart < 1) {
-        object$chromstart <- 1
-        message('geneBuffer range is less than start. Start has been adjusted')
-      }
-      if (object$chromend > chrLength) {
-        object$chromend   <- chrLength
-        message('geneBuffer range is greater than end. End has been adjusted')
       }
 
     }
