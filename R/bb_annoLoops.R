@@ -419,7 +419,7 @@ bb_annoLoops <- function(hic, loops, params = NULL, half = "inherit", shift = 4,
   ## Make viewport based on hic input viewport
   if (class(bb_loopsInternal$hic) == "bb_hic"){
 
-    vp <- viewport(height = bb_loosInternal$hic$grobs$vp$height, width = bb_loopsInternal$hic$grobs$vp$width,
+    vp <- viewport(height = bb_loopsInternal$hic$grobs$vp$height, width = bb_loopsInternal$hic$grobs$vp$width,
                    x = bb_loopsInternal$hic$grobs$vp$x, y = bb_loopsInternal$hic$grobs$vp$y,
                    clip = "on",
                    xscale = bb_loopsInternal$hic$grobs$vp$xscale,

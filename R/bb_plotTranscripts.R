@@ -37,7 +37,7 @@ bb_plotTranscripts <- function(chrom, params = NULL, assembly = "hg19", chromsta
   # ======================================================================================================================================================================================
 
   ## Define a function that checks errors for bb_plotTranscripts
-  errorcheck_bbTranscripts <- function(transcript_plot, labels){
+  errorcheck_bb_plotTranscripts <- function(transcript_plot, labels){
 
     ## Can't have only one NULL chromstart or chromend
     if ((is.null(transcript_plot$chromstart) & !is.null(transcript_plot$chromend)) | (is.null(transcript_plot$chromend) & !is.null(transcript_plot$chromstart))){
@@ -79,51 +79,6 @@ bb_plotTranscripts <- function(chrom, params = NULL, assembly = "hg19", chromsta
     }
 
     return(yscale)
-  }
-
-  parse_starts <- function(range){
-    ## Separate character range into two numeric coords
-    range <- strsplit(range, "-")[[1]]
-    start <- as.numeric(range[1])
-
-    return(start)
-  }
-
-  parse_widths <- function(range){
-    ## Separate character range into two numeric coords
-    range <- strsplit(range, "-")[[1]]
-    start <- as.numeric(range[1])
-    end <- as.numeric(range[2])
-    width <- end - start
-
-    return(width)
-  }
-
-  ## Define a function that makes exon grobs
-  exon_grobs <- function(df, boxHeight){
-
-    exon_ranges <- as.list(strsplit(as.character(df[5]), ",")[[1]])
-
-    if (length(exon_ranges) > 0){
-
-      starts <- lapply(exon_ranges, parse_starts)
-      widths <- lapply(exon_ranges, parse_widths)
-      exons_dataframe <- cbind(unlist(starts), unlist(widths))
-      exons <- rectGrob(x = exons_dataframe[,1],
-                        y = as.numeric(df[10]),
-                        width = exons_dataframe[,2],
-                        height = boxHeight,
-                        just = c("left", "bottom"),
-                        gp = gpar(fill = df[8],
-                                  col = df[8],
-                                  lwd = 1.25),
-                        default.units = "native")
-
-
-      assign("transcript_grobs", addGrob(get("transcript_grobs", envir = bbEnv), child = exons), envir = bbEnv)
-
-    }
-
   }
 
   ## Define a function that makes utr grobs
@@ -202,65 +157,71 @@ bb_plotTranscripts <- function(chrom, params = NULL, assembly = "hg19", chromsta
   if(!hasArg(chrom)) chrom <- NULL
 
   ## Compile all parameters into an internal object
-  bb_transInternal <- structure(list(assembly = assembly, chrom = chrom, chromstart = chromstart, chromend = chromend, boxHeight = boxHeight, spaceHeight = spaceHeight,
+  bb_transcriptsInternal <- structure(list(assembly = assembly, chrom = chrom, chromstart = chromstart, chromend = chromend, boxHeight = boxHeight, spaceHeight = spaceHeight,
                                      spaceWidth = spaceWidth, fillcolor = fillcolor, colorbyStrand = colorbyStrand, labels = labels, fontsize = fontsize,
                                      strandSplit = strandSplit, stroke = stroke, x = x, y = y, width = width, height = height, just = just, default.units = default.units,
-                                     draw = draw), class = "bb_transInternal")
+                                     draw = draw), class = "bb_transcriptsInternal")
 
-  bb_transInternal <- parseParams(bb_params = params, object_params = bb_transInternal)
+  bb_transcriptsInternal <- parseParams(bb_params = params, object_params = bb_transcriptsInternal)
 
   ## For any defaults that are still NULL, set back to default
-  if(is.null(bb_transInternal$assembly)) bb_transInternal$assembly <- "hg19"
-  if(is.null(bb_transInternal$boxHeight)) bb_transInternal$boxHeight <- unit(2, "mm")
-  if(is.null(bb_transInternal$spaceHeight)) bb_transInternal$spaceHeight <- 0.3
-  if(is.null(bb_transInternal$spaceWidth)) bb_transInternal$spaceWidth <- 0.02
-  if(is.null(bb_transInternal$fillcolor)) bb_transInternal$fillcolor <- c("#8a8aff", "#ff7e7e")
-  if(is.null(bb_transInternal$colorbyStrand)) bb_transInternal$colorbyStrand <- TRUE
-  if(is.null(bb_transInternal$labels)) bb_transInternal$labels <- "transcript"
-  if(is.null(bb_transInternal$fontsize)) bb_transInternal$fontsize <- 8
-  if(is.null(bb_transInternal$strandSplit)) bb_transInternal$strandSplit <- FALSE
-  if(is.null(bb_transInternal$stroke)) bb_transInternal$stroke <- 0.1
-  if(is.null(bb_transInternal$just)) bb_transInternal$just <- c("left", "top")
-  if(is.null(bb_transInternal$default.units)) bb_transInternal$default.units <- "inches"
-  if(is.null(bb_transInternal$draw)) bb_transInternal$draw <- TRUE
+  if(is.null(bb_transcriptsInternal$assembly)) bb_transcriptsInternal$assembly <- "hg19"
+  if(is.null(bb_transcriptsInternal$boxHeight)) bb_transcriptsInternal$boxHeight <- unit(2, "mm")
+  if(is.null(bb_transcriptsInternal$spaceHeight)) bb_transcriptsInternal$spaceHeight <- 0.3
+  if(is.null(bb_transcriptsInternal$spaceWidth)) bb_transcriptsInternal$spaceWidth <- 0.02
+  if(is.null(bb_transcriptsInternal$fillcolor)) bb_transcriptsInternal$fillcolor <- c("#8a8aff", "#ff7e7e")
+  if(is.null(bb_transcriptsInternal$colorbyStrand)) bb_transcriptsInternal$colorbyStrand <- TRUE
+  if(is.null(bb_transcriptsInternal$labels)) bb_transcriptsInternal$labels <- "transcript"
+  if(is.null(bb_transcriptsInternal$fontsize)) bb_transcriptsInternal$fontsize <- 8
+  if(is.null(bb_transcriptsInternal$strandSplit)) bb_transcriptsInternal$strandSplit <- FALSE
+  if(is.null(bb_transcriptsInternal$stroke)) bb_transcriptsInternal$stroke <- 0.1
+  if(is.null(bb_transcriptsInternal$just)) bb_transcriptsInternal$just <- c("left", "top")
+  if(is.null(bb_transcriptsInternal$default.units)) bb_transcriptsInternal$default.units <- "inches"
+  if(is.null(bb_transcriptsInternal$draw)) bb_transcriptsInternal$draw <- TRUE
 
   # ======================================================================================================================================================================================
   # INITIALIZE OBJECT
   # ======================================================================================================================================================================================
 
-  transcript_plot <- structure(list(chrom = bb_transInternal$chrom, chromstart = bb_transInternal$chromstart, chromend = bb_transInternal$chromend, width = bb_transInternal$width,
-                                height = bb_transInternal$height, x = bb_transInternal$x, y = bb_transInternal$y, justification = bb_transInternal$just, grobs = NULL,
-                                assembly = bb_transInternal$assembly), class = "bb_transcripts")
-  attr(x = transcript_plot, which = "plotted") <- bb_transInternal$draw
+  bb_transcripts <- structure(list(chrom = bb_transcriptsInternal$chrom, chromstart = bb_transcriptsInternal$chromstart, chromend = bb_transcriptsInternal$chromend, width = bb_transcriptsInternal$width,
+                                height = bb_transcriptsInternal$height, x = bb_transcriptsInternal$x, y = bb_transcriptsInternal$y, justification = bb_transcriptsInternal$just, grobs = NULL,
+                                assembly = bb_transcriptsInternal$assembly), class = "bb_transcripts")
+  attr(x = bb_transcripts, which = "plotted") <- bb_transcriptsInternal$draw
 
   # ======================================================================================================================================================================================
   # CATCH ERRORS
   # ======================================================================================================================================================================================
 
-  if(is.null(transcript_plot$chrom)) stop("argument \"chrom\" is missing, with no default.", call. = FALSE)
-  check_placement(object = transcript_plot)
-  errorcheck_bbTranscripts(transcript_plot = transcript_plot, labels = bb_transInternal$labels)
+  if(is.null(bb_transcripts$chrom)) stop("argument \"chrom\" is missing, with no default.", call. = FALSE)
+  check_placement(object = bb_transcripts)
+  errorcheck_bb_plotTranscripts(transcript_plot = bb_transcripts, labels = bb_transcriptsInternal$labels)
+
+  # ======================================================================================================================================================================================
+  # PARSE ASSEMBLY
+  # ======================================================================================================================================================================================
+
+  bb_transcripts$assembly <- parse_bbAssembly(assembly = bb_transcripts$assembly)
 
   # ======================================================================================================================================================================================
   # PARSE UNITS
   # ======================================================================================================================================================================================
 
-  transcript_plot <- defaultUnits(object = transcript_plot, default.units = bb_transInternal$default.units)
-  if(!"unit" %in% class(bb_transInternal$boxHeight)){
+  bb_transcripts <- defaultUnits(object = bb_transcripts, default.units = bb_transcriptsInternal$default.units)
+  if(!"unit" %in% class(bb_transcriptsInternal$boxHeight)){
 
-    if (!is.numeric(bb_transInternal$boxHeight)){
+    if (!is.numeric(bb_transcriptsInternal$boxHeight)){
 
       stop("\'boxHeight\' is neither a unit object or a numeric value. Cannot make transcript plot.", call. = FALSE)
 
     }
 
-    if (is.null(bb_transInternal$default.units)){
+    if (is.null(bb_transcriptsInternal$default.units)){
 
       stop("\'boxHeight\' detected as numeric.\'default.units\' must be specified.", call. = FALSE)
 
     }
 
-    bb_transInternal$boxHeight <- unit(bb_transInternal$boxHeight, bb_transInternal$default.units)
+    bb_transcriptsInternal$boxHeight <- unit(bb_transcriptsInternal$boxHeight, bb_transcriptsInternal$default.units)
   }
 
 
@@ -268,59 +229,55 @@ bb_plotTranscripts <- function(chrom, params = NULL, assembly = "hg19", chromsta
   # GET APPROPRIATE BUILD DATA
   # ======================================================================================================================================================================================
 
-  if (transcript_plot$assembly == "hg19"){
+  txdbChecks <- check_loadedPackage(package = bb_transcripts$assembly$TxDb, message = paste(paste0("`", bb_transcripts$assembly$TxDb,"`"),
+                                                                                      "not loaded. Please install and load to plot gene transcripts."))
+  orgdbChecks <- check_loadedPackage(package = bb_transcripts$assembly$OrgDb, message = paste(paste0("`", bb_transcripts$assembly$OrgDb,"`"),
+                                                                                        "not loaded. Please install and load to plot gene transcripts."))
+  data <- data.frame(matrix(ncol = 22, nrow = 0))
+  xscale <- c(0, 1)
+  if (txdbChecks == TRUE & orgdbChecks == TRUE){
 
-    data <- bb_hg19transcripts
-    genome <- bb_hg19
+    tx_db <- eval(parse(text = bb_transcripts$assembly$TxDb))
+    genome <- seqlengths(tx_db)
+    displayCol <- bb_transcripts$assembly$display.column
 
-  } else if (transcript_plot$assembly == "hg38"){
-    data <- bb_hg38transcripts
-    genome <- bb_hg38
+    if (!bb_transcripts$chrom %in% names(genome)){
+      warning(paste("Chromosome", paste0("'", bb_transcripts$chrom, "'"), "not found in", paste0("`", bb_transcripts$assembly$TxDb, "`"), "and gene transcripts cannot be plotted."), call. = FALSE)
+    } else {
+      if (is.null(bb_transcripts$chromstart) & is.null(bb_transcripts$chromend)){
+        bb_transcripts$chromstart <- 1
+        bb_transcripts$chromend <- genome[[bb_transcripts$chrom]]
+      }
+
+      data <- bb_getExons(assembly = bb_transcripts$assembly, chromosome = bb_transcripts$chrom, start = bb_transcripts$chromstart, stop = bb_transcripts$chromend)
+      xscale <- c(bb_transcripts$chromstart, bb_transcripts$chromend)
+
+    }
+
   }
-
-  # ======================================================================================================================================================================================
-  # SUBSET DATA
-  # ======================================================================================================================================================================================
-
-  if (is.null(transcript_plot$chromstart) & is.null(transcript_plot$chromend)){
-
-    ## Just chromosome
-    data <- data[which(data$Chromosome == transcript_plot$chrom),]
-    transcript_plot$chromstart <- 1
-    transcript_plot$chromend <- genome[which(genome$chrom == transcript_plot$chrom),]$length
-
-  } else {
-
-    ## Chromosome and any overlapping regions of chromstart/chromend
-    data <- data[which(data$Chromosome == transcript_plot$chrom & data$Start <= transcript_plot$chromend & data$Stop >= transcript_plot$chromstart),]
-
-  }
-
-  ## Get width of each transcript
-  data$width <- data$Stop - data$Start
 
   # ======================================================================================================================================================================================
   # COLORS
   # ======================================================================================================================================================================================
 
-  if (bb_transInternal$colorbyStrand == TRUE){
-    if (length(bb_transInternal$fillcolor) == 1){
-      posCol <- bb_transInternal$fillcolor
-      negCol <- bb_transInternal$fillcolor
+  if (bb_transcriptsInternal$colorbyStrand == TRUE){
+    if (length(bb_transcriptsInternal$fillcolor) == 1){
+      posCol <- bb_transcriptsInternal$fillcolor
+      negCol <- bb_transcriptsInternal$fillcolor
     } else {
-      posCol <- bb_transInternal$fillcolor[1]
-      negCol <- bb_transInternal$fillcolor[2]
+      posCol <- bb_transcriptsInternal$fillcolor[1]
+      negCol <- bb_transcriptsInternal$fillcolor[2]
     }
 
-    pos <- data[which(data$Strand == "+"),]
-    pos$color <- posCol
-    neg <- data[which(data$Strand == "-"),]
-    neg$color <- negCol
+    pos <- data[which(data$TXSTRAND == "+"),]
+    pos$color <- rep(posCol, nrow(pos))
+    neg <- data[which(data$TXSTRAND == "-"),]
+    neg$color <- rep(negCol, nrow(neg))
     data <- rbind(pos, neg)
 
   } else {
 
-    data$color <- rep(bb_transInternal$fillcolor[1], nrow(data))
+    data$color <- rep(bb_transcriptsInternal$fillcolor[1], nrow(data))
   }
 
 
@@ -328,11 +285,10 @@ bb_plotTranscripts <- function(chrom, params = NULL, assembly = "hg19", chromsta
   # SEPARATE DATA INTO STRANDS
   # ======================================================================================================================================================================================
 
-  if (bb_transInternal$strandSplit == TRUE){
+  if (bb_transcriptsInternal$strandSplit == TRUE){
 
-    ## assuming strand is in the 6th column
-    posStrand <- data[which(data$Strand == "+"),]
-    minStrand <- data[which(data$Strand == "-"),]
+    posStrand <- data[which(data$TXSTRAND == "+"),]
+    minStrand <- data[which(data$TXSTRAND == "-"),]
 
   }
 
@@ -345,21 +301,21 @@ bb_plotTranscripts <- function(chrom, params = NULL, assembly = "hg19", chromsta
   currentViewports <- current_viewports()
   vp_name <- paste0("bb_transcripts", length(grep(pattern = "bb_transcripts", x = currentViewports)) + 1)
 
-  if (is.null(transcript_plot$x) & is.null(transcript_plot$y)){
+  if (is.null(bb_transcripts$x) & is.null(bb_transcripts$y)){
 
     height <- 0.5
-    yscale <- strand_scale(strandSplit = bb_transInternal$strandSplit, height = height)
+    yscale <- strand_scale(strandSplit = bb_transcriptsInternal$strandSplit, height = height)
 
     vp <- viewport(height = unit(0.5, "snpc"), width = unit(1, "snpc"),
                    x = unit(0.5, "npc"), y = unit(0.5, "npc"),
                    clip = "on",
-                   xscale = c(transcript_plot$chromstart, transcript_plot$chromend),
+                   xscale = xscale,
                    yscale = yscale,
                    just = "center",
                    name = vp_name)
 
 
-    if (bb_transInternal$draw == TRUE){
+    if (bb_transcriptsInternal$draw == TRUE){
 
       vp$name <- "bb_transcripts1"
       grid.newpage()
@@ -368,18 +324,18 @@ bb_plotTranscripts <- function(chrom, params = NULL, assembly = "hg19", chromsta
   } else {
 
     ## Convert coordinates into same units as page
-    page_coords <- convert_page(object = transcript_plot)
+    page_coords <- convert_page(object = bb_transcripts)
 
     height <- convertHeight(page_coords$height, unitTo = get("page_units", envir = bbEnv), valueOnly = TRUE)
-    yscale <- strand_scale(strandSplit = bb_transInternal$strandSplit, height = height)
+    yscale <- strand_scale(strandSplit = bb_transcriptsInternal$strandSplit, height = height)
 
     ## Make viewport for gene track
     vp <- viewport(height = page_coords$height, width = page_coords$width,
                    x = page_coords$x, y = page_coords$y,
                    clip = "on",
-                   xscale = c(transcript_plot$chromstart, transcript_plot$chromend),
+                   xscale = xscale,
                    yscale = yscale,
-                   just = bb_transInternal$just,
+                   just = bb_transcriptsInternal$just,
                    name = vp_name)
 
   }
@@ -395,52 +351,60 @@ bb_plotTranscripts <- function(chrom, params = NULL, assembly = "hg19", chromsta
   # ======================================================================================================================================================================================
 
   ## Determine how many rows are going to fit based on boxHeight, spaceHeight, and fontsize
-  if (is.null(bb_transInternal$labels)){
+  if (is.null(bb_transcriptsInternal$labels)){
     textHeight <- unit(0, "npc")
   } else {
-    textHeight <- heightDetails(textGrob(label = "A", gp = gpar(fontsize = bb_transInternal$fontsize)))
+    textHeight <- heightDetails(textGrob(label = "A", gp = gpar(fontsize = bb_transcriptsInternal$fontsize)))
   }
 
 
-  if (is.null(transcript_plot$x) & is.null(transcript_plot$y)){
+  if (is.null(bb_transcripts$x) & is.null(bb_transcripts$y)){
 
     pushViewport(vp)
-    boxHeight <- convertHeight(bb_transInternal$boxHeight, unitTo = "npc", valueOnly = T)
-    spaceHeight <- boxHeight*(bb_transInternal$spaceHeight)
+    boxHeight <- convertHeight(bb_transcriptsInternal$boxHeight, unitTo = "npc", valueOnly = T)
+    spaceHeight <- boxHeight*(bb_transcriptsInternal$spaceHeight)
     textHeight <- convertHeight(textHeight, unitTo = "npc", valueOnly = T)
     upViewport()
     unit <- "npc"
 
   } else {
 
-    boxHeight <- convertHeight(bb_transInternal$boxHeight, unitTo = get("page_units", envir = bbEnv), valueOnly = T)
-    spaceHeight <- boxHeight*(bb_transInternal$spaceHeight)
+    boxHeight <- convertHeight(bb_transcriptsInternal$boxHeight, unitTo = get("page_units", envir = bbEnv), valueOnly = T)
+    spaceHeight <- boxHeight*(bb_transcriptsInternal$spaceHeight)
     textHeight <- convertHeight(textHeight, unitTo = get("page_units", envir = bbEnv), valueOnly = T)
     unit <- get("page_units", envir = bbEnv)
 
   }
 
   maxRows <- floor(height/(boxHeight + spaceHeight + textHeight + 0.25*textHeight))
-  wiggle <- abs(transcript_plot$chromend - transcript_plot$chromstart) * bb_transInternal$spaceWidth
+  wiggle <- abs(bb_transcripts$chromend - bb_transcripts$chromstart) * bb_transcriptsInternal$spaceWidth
 
-  if (bb_transInternal$strandSplit == FALSE){
+  if (bb_transcriptsInternal$strandSplit == FALSE){
 
     if (nrow(data) > 0){
 
-      data$row <- 0
+      ## Get one representative row per transcript
+      repData <- data[duplicated(data$TXNAME) == F,]
 
-      ## Put in order of citation number
-      data <- data[order(data$Citation, decreasing = TRUE),]
+      repData$row <- 0
 
-      ## Convert to numeric matrix for Rcpp function parsing
-      dataMatrix <- as.matrix(data[,c(5,6,13)])
+      repData$length <- repData$TXEND - repData$TXSTART
 
-      ## Assign a row for each element
+      ## Access default transcript prioritization based on citation/transcript length
+      repData <- defaultGenePriorities(data = repData, assembly = bb_transcripts$assembly, transcript = TRUE)
+
+      ## Convert to numeric matrix with txstart, txend, and row for Rcpp function parsing
+      dataMatrix <- as.matrix(repData[c("TXSTART", "TXEND", "row")])
+
+      ## Assign a row for each representative element
       rowData <- checkRow(dataMatrix, maxRows, 2, wiggle)
-
       rowData <- as.data.frame(rowData)
-      rowData <- cbind(rowData, data$Transcript, data$Exons, data$UTRs, data$width, data$color, data$Gene)
-      colnames(rowData) <- c("Start", "Stop", "row", "Transcript", "Exons", "UTRs", "width", "color", "Gene")
+
+      ## Recombine assigned rows with original data
+      rowData <- cbind(rowData[c("row")], repData$TXNAME)
+      colnames(rowData) <- c("row", "TXNAME")
+      rowData <- suppressMessages(dplyr::left_join(x = data, y = rowData, by = "TXNAME"))
+
 
       if (any(rowData$row == 0)){
         rowData <- rowData[which(rowData$row != 0),]
@@ -452,14 +416,12 @@ bb_plotTranscripts <- function(chrom, params = NULL, assembly = "hg19", chromsta
 
       }
 
-      ## Change row index to 0 fo y-coordinate setting
+      ## Change row index to 0 for y-coordinate setting
       rowData$row <- rowData$row - 1
       rowData$y <- rowData$row*(boxHeight + spaceHeight + textHeight + 0.25*textHeight)
 
       ## Reset rows for colors
       rowData$row <- rowData$row + 1
-
-
 
     } else {
       rowData <- data.frame()
@@ -469,17 +431,29 @@ bb_plotTranscripts <- function(chrom, params = NULL, assembly = "hg19", chromsta
 
     if (nrow(posStrand) > 0){
 
-      ## Put in order of citation number
-      posStrand <- posStrand[order(posStrand$Citation, decreasing = TRUE),]
-      posStrand$row <- 0
-      ## Convert to numeric matrix for Rcpp function parsing
-      posMatrix <- as.matrix(posStrand[,c(5,6,13)])
-      posData <- checkRow(posMatrix, floor(maxRows/2), 2, wiggle)
-      posData <- as.data.frame(posData)
-      posData <- cbind(posData, posStrand$Transcript, posStrand$Exons, posStrand$UTRs, posStrand$width, posStrand$color, posStrand$Gene)
-      colnames(posData) <- c("Start", "Stop", "row", "Transcript", "Exons", "UTRs", "width", "color", "Gene")
-      if (any(posData$row == 0)){
-        posData <- posData[which(posData$row != 0),]
+      ## Get one representative row per transcript
+      repPosData <- posStrand[duplicated(posStrand$TXNAME) == F,]
+
+      repPosData$row <- 0
+
+      repPosData$length <- repPosData$TXEND - repPosData$TXSTART
+      ## Access default transcript prioritization based on citation/transcript length
+      repPosData <- defaultGenePriorities(data = repPosData, assembly = bb_transcripts$assembly, transcript = TRUE)
+
+      ## Convert to numeric matrix with txstart, txend, and row for Rcpp function parsing
+      posMatrix <- as.matrix(repPosData[c("TXSTART", "TXEND", "row")])
+
+      ## Assign a row for each representative element
+      posRowData <- checkRow(posMatrix, floor(maxRows/2), 2, wiggle)
+      posRowData <- as.data.frame(posRowData)
+
+      ## Recombine assigned rows with original data
+      posRowData <- cbind(posRowData[c("row")], repPosData$TXNAME)
+      colnames(posRowData) <- c("row", "TXNAME")
+      posRowData <- suppressMessages(dplyr::left_join(x = posStrand, y = posRowData, by = "TXNAME"))
+
+      if (any(posRowData$row == 0)){
+        posRowData <- posRowData[which(posRowData$row != 0),]
         warning("Not all plus strand transcripts shown.", call. = FALSE)
         limitGrob1 <- textGrob(label = "+", x = unit(1, "npc"), y = unit(1, "npc"),
                                just = c("right", "top"), gp = gpar(col = "black"))
@@ -487,29 +461,41 @@ bb_plotTranscripts <- function(chrom, params = NULL, assembly = "hg19", chromsta
       }
 
       ## Set row index to 0 for y-coordinate setting
-      posData$row <- posData$row - 1
-      posData$y <- (0.5*spaceHeight) + posData$row*(boxHeight + spaceHeight + textHeight + 0.25*textHeight)
+      posRowData$row <- posRowData$row - 1
+      posRowData$y <- (0.5*spaceHeight) + posRowData$row*(boxHeight + spaceHeight + textHeight + 0.25*textHeight)
 
       ## Reset rows for colors
-      posDF$row <- posDF$row + 1
-      posDF$row <- posDF$row + floor(maxRows/2)
+      posRowData$row <- posRowData$row + 1
+      posRowData$row <- posRowData$row + floor(maxRows/2)
 
     } else {
-      posData <- data.frame()
+      posRowData <- data.frame()
     }
 
     if (nrow(minStrand) > 0){
 
-      ## Put in order of citation number
-      minStrand <- minStrand[order(minStrand$Citation, decreasing = TRUE),]
-      minStrand$row <- 0
-      minMatrix <- as.matrix(minStrand[,c(5,6,13)])
-      minData <- checkRow(minMatrix, floor(maxRows/2), 2, wiggle)
-      minData <- as.data.frame(minData)
-      minData <- cbind(minData, minStrand$Transcript, minStrand$Exons, minStrand$UTRs, minStrand$width, minStrand$color, minStrand$Gene)
-      colnames(minData) <- c("Start", "Stop", "row", "Transcript", "Exons", "UTRs", "width", "color", "Gene")
-      if (any(minData$row == 0)){
-        minData <- minData[which(minData$row != 0),]
+      ## Get one representative row per transcript
+      repMinData <- minStrand[duplicated(minStrand$TXNAME) == F,]
+
+      repMinData$row <- 0
+
+      repMinData$length <- repMinData$TXEND - repMinData$TXSTART
+      ## Access default transcript prioritization based on citation/transcript length
+      repMinData <- defaultGenePriorities(data = repMinData, assembly = bb_transcripts$assembly, transcript = TRUE)
+      ## Convert to numeric matrix with txstart, txend, and row for Rcpp function parsing
+      minMatrix <- as.matrix(repMinData[c("TXSTART", "TXEND", "row")])
+
+      ## Assign a row for each representative element
+      minRowData <- checkRow(minMatrix, floor(maxRows/2), 2, wiggle)
+      minRowData <- as.data.frame(minRowData)
+
+      ## Recombine assigned rows with original data
+      minRowData <- cbind(minRowData[c("row")], repMinData$TXNAME)
+      colnames(minRowData) <- c("row", "TXNAME")
+      minRowData <- suppressMessages(dplyr::left_join(x = minStrand, y = minRowData, by = "TXNAME"))
+
+      if (any(minRowData$row == 0)){
+        minRowData <- minRowData[which(minRowData$row != 0),]
         warning("Not all minus strand transcripts shown.", call. = FALSE)
         limitGrob2 <- textGrob(label = "+", x = unit(1, "npc"), y = unit(0, "npc"),
                                just = c("right", "bottom"), gp = gpar(col = "black"))
@@ -518,19 +504,19 @@ bb_plotTranscripts <- function(chrom, params = NULL, assembly = "hg19", chromsta
       }
 
       ## Set row index to 0 for y-coordinate setting
-      minData$row <- minData$row - 1
-      minData$y <- ((0.5*spaceHeight + boxHeight + textHeight + 0.25*textHeight) + minData$row*(boxHeight + spaceHeight + textHeight + 0.25*textHeight))*-1
+      minRowData$row <- minRowData$row - 1
+      minRowData$y <- ((0.5*spaceHeight + boxHeight + textHeight + 0.25*textHeight) + minRowData$row*(boxHeight + spaceHeight + textHeight + 0.25*textHeight))*-1
 
       ## Reset rows for colors
-      rowIndex <- minDF$row + 1
+      rowIndex <- minRowData$row + 1
       rowRange <- floor(maxRows/2):1
-      minDF$row <- rowRange[rowIndex]
+      minRowData$row <- rowRange[rowIndex]
 
     } else {
-      minData <- data.frame()
+      minRowData <- data.frame()
     }
 
-    rowData <- rbind(posData, minData)
+    rowData <- rbind(posRowData, minRowData)
 
   }
 
@@ -538,9 +524,9 @@ bb_plotTranscripts <- function(chrom, params = NULL, assembly = "hg19", chromsta
   # UPDATE COLORS IF NECESSARY
   # ======================================================================================================================================================================================
 
-  if (bb_transInternal$colorbyStrand == FALSE & length(bb_transInternal$fillcolor) > 1){
+  if (bb_transcriptsInternal$colorbyStrand == FALSE & length(bb_transcriptsInternal$fillcolor) > 1){
 
-    colors <- rep(bb_transInternal$fillcolor, ceiling(maxRows/length(bb_transInternal$fillcolor)))[1:maxRows]
+    colors <- rep(bb_transcriptsInternal$fillcolor, ceiling(maxRows/length(bb_transcriptsInternal$fillcolor)))[1:maxRows]
     indeces <- rowData$row
     rowData$color <- colors[indeces]
 
@@ -553,39 +539,65 @@ bb_plotTranscripts <- function(chrom, params = NULL, assembly = "hg19", chromsta
 
   if (nrow(rowData) > 0){
 
+    ##########################################################
+    ## TRANSCRIPT LINES ONLY
+    ##########################################################
 
-    if ((transcript_plot$chromend - transcript_plot$chromstart) >= 25000000){
+    if ((bb_transcripts$chromend - bb_transcripts$chromstart) >= 25000000){
 
-      ##########################################################
-      ## JUST TRANSCRIPT LINES
-      ##########################################################
-
-      transcriptLine <- rectGrob(x = rowData$Start,
+      transcriptLine <- rectGrob(x = rowData$TXSTART,
                                  y = rowData$y,
-                                 width = rowData$width,
+                                 width = rowData$TXEND - rowData$TXSTART,
                                  height = boxHeight,
                                  just = c("left", "bottom"),
-                                 gp = gpar(fill = rowData$color, col = rowData$color, lwd = bb_transInternal$stroke),
+                                 gp = gpar(fill = rowData$color, col = rowData$color, lwd = bb_transcriptsInternal$stroke),
                                  default.units = "native")
 
     } else {
 
       ##########################################################
-      ## TRANSCRIPT LINES, EXONS, AND UTRS
+      ## TRANSCRIPT LINES
       ##########################################################
 
-      transcriptLine <- rectGrob(x = rowData$Start,
+      transcriptLine <- rectGrob(x = rowData$TXSTART,
                                  y = rowData$y + 0.5*boxHeight,
-                                 width = rowData$width,
+                                 width = rowData$TXEND - rowData$TXSTART,
                                  height = boxHeight*0.2,
                                  just = "left",
-                                 gp = gpar(fill = rowData$color, col = rowData$color, lwd = bb_transInternal$stroke),
+                                 gp = gpar(fill = rowData$color, col = rowData$color, lwd = bb_transcriptsInternal$stroke),
                                  default.units = "native")
 
+      ##########################################################
+      ## TRANSCRIPT EXONS
+      ##########################################################
 
-      invisible(apply(rowData, 1, exon_grobs, boxHeight = boxHeight))
-      invisible(apply(rowData, 1, utr_grobs, boxHeight = boxHeight))
+      transcriptExons <- rectGrob(x = rowData$EXONSTART,
+                                 y = rowData$y + 0.5*boxHeight,
+                                 width = rowData$EXONEND - rowData$EXONSTART,
+                                 height = boxHeight*0.65,
+                                 just = "left",
+                                 gp = gpar(fill = rowData$color, col = NA),
+                                 default.units = "native")
+      assign("transcript_grobs", addGrob(get("transcript_grobs", envir = bbEnv), child = transcriptExons), envir = bbEnv)
 
+      ##########################################################
+      ## TRANSCRIPT CDS
+      ##########################################################
+
+      ## Get CDS regions that aren't NA
+      cdsData <- rowData[which(!is.na(rowData$CDSSTART)),]
+      if (nrow(cdsData) > 0){
+
+        transcriptCds <- rectGrob(x = cdsData$CDSSTART,
+                                  y = cdsData$y + 0.5*boxHeight,
+                                  width = cdsData$CDSEND - cdsData$CDSSTART,
+                                  height = boxHeight,
+                                  just = "left",
+                                  gp = gpar(fill = cdsData$color, col = cdsData$color, lwd = 1.25),
+                                  default.units = "native")
+        assign("transcript_grobs", addGrob(get("transcript_grobs", envir = bbEnv), child = transcriptCds), envir = bbEnv)
+
+      }
 
     }
 
@@ -596,36 +608,40 @@ bb_plotTranscripts <- function(chrom, params = NULL, assembly = "hg19", chromsta
     ## TRANSCRIPT NAME LABELS
     ##########################################################
 
-    if (!is.null(bb_transInternal$labels)){
+    if (!is.null(bb_transcriptsInternal$labels)){
 
-      ## Add column with center location of each gene label
-      rowData$labelLoc <- rowMeans(rowData[c("Start", "Stop")])
+      ## Get representative transcript names
+      transcriptNames <- rowData[duplicated(rowData$TXNAME) == F,]
 
-      if (bb_transInternal$labels == "transcript"){
-        label <- rowData$Transcript
-      } else if (bb_transInternal$labels == "gene"){
-        label <- rowData$Gene
+      ## Add column with center location of each transcript label
+      transcriptNames$labelLoc <- rowMeans(transcriptNames[c("TXSTART", "TXEND")])
+
+      if (bb_transcriptsInternal$labels == "transcript"){
+        label <- transcriptNames$TXNAME
+      } else if (bb_transcriptsInternal$labels == "gene"){
+        label <- transcriptNames[[bb_transcripts$assembly$display.column]]
       } else {
-        label <- paste0(rowData$Gene, ":", rowData$Transcript)
+        label <- paste0(transcriptNames[[bb_transcripts$assembly$display.column]], ":", transcriptNames$TXNAME)
       }
 
-      checkedLabels <- apply(data.frame("label" = label, "labelLoc" = rowData$labelLoc), 1, cutoffLabel, fontsize = bb_transInternal$fontsize,
-                             xscale = c(transcript_plot$chromstart, transcript_plot$chromend),
+      ## Get which names aren't cutoff
+      checkedLabels <- apply(data.frame("label" = label, "labelLoc" = transcriptNames$labelLoc), 1, cutoffLabel, fontsize = bb_transcriptsInternal$fontsize,
+                             xscale = xscale,
                              vp = vp, unit = unit)
-      rowData$label <- checkedLabels
-      rowData <- rowData[!is.na(rowData$label), ]
+      transcriptNames$label <- checkedLabels
+      transcriptNames <- transcriptNames[!is.na(transcriptNames$label), ]
 
-      if (nrow(rowData) > 0){
+      if (nrow(transcriptNames) > 0){
 
-        transcriptNames <- textGrob(label = rowData$label,
-                                    x = rowData$labelLoc,
-                                    y = rowData$y + boxHeight + textHeight*0.25,
+        transcript_names <- textGrob(label = transcriptNames$label,
+                                    x = transcriptNames$labelLoc,
+                                    y = transcriptNames$y + boxHeight + textHeight*0.25,
                                     just = "bottom",
-                                    gp = gpar(col = rowData$color, fontsize = bb_transInternal$fontsize),
+                                    gp = gpar(col = transcriptNames$color, fontsize = bb_transcriptsInternal$fontsize),
                                     default.units = "native",
                                     check.overlap = TRUE)
 
-        assign("transcript_grobs", addGrob(get("transcript_grobs", envir = bbEnv), child = transcriptNames), envir = bbEnv)
+        assign("transcript_grobs", addGrob(get("transcript_grobs", envir = bbEnv), child = transcript_names), envir = bbEnv)
 
       }
 
@@ -637,7 +653,7 @@ bb_plotTranscripts <- function(chrom, params = NULL, assembly = "hg19", chromsta
   # IF PLOT == TRUE, DRAW GROBS
   # ======================================================================================================================================================================================
 
-  if (bb_transInternal$draw == TRUE){
+  if (bb_transcriptsInternal$draw == TRUE){
 
     grid.draw(get("transcript_grobs", envir = bbEnv))
 
@@ -647,12 +663,12 @@ bb_plotTranscripts <- function(chrom, params = NULL, assembly = "hg19", chromsta
   # ADD GROBS TO OBJECT
   # ======================================================================================================================================================================================
 
-  transcript_plot$grobs <- get("transcript_grobs", envir = bbEnv)
+  bb_transcripts$grobs <- get("transcript_grobs", envir = bbEnv)
 
   # ======================================================================================================================================================================================
   # RETURN OBJECT
   # ======================================================================================================================================================================================
 
-  return(transcript_plot)
+  return(bb_transcripts)
 
 }
