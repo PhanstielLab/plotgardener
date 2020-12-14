@@ -2,7 +2,7 @@
 % Please edit documentation in R/bb_pageCreate.R
 \name{bb_pageCreate}
 \alias{bb_pageCreate}
-\title{Makes a page for a BentoBox layout}
+\title{Creates a page for a BentoBox layout}
 \usage{
 bb_pageCreate(
   params = NULL,
@@ -19,11 +19,11 @@ bb_pageCreate(
 \arguments{
 \item{params}{an optional "bb_params" object space containing relevant function parameters}
 
-\item{width}{A numeric specifying width}
+\item{width}{A numeric or unit object specifying width}
 
-\item{height}{A numeric ospecifying height}
+\item{height}{A numeric or unit object specifying height}
 
-\item{default.units}{A string indicating the units of width and height}
+\item{default.units}{A string indicating the default units to use if width or height are only given as numerics}
 
 \item{showOutline}{TRUE/FALSE indicating whether to draw a black outline around the entire page}
 
@@ -36,5 +36,5 @@ bb_pageCreate(
 \item{ygrid}{horizontal gridlines}
 }
 \description{
-Makes a page for a BentoBox layout
+Creates a page for a BentoBox layout
 }
