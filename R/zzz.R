@@ -45,32 +45,35 @@
 
       if (txdbChecks == TRUE & orgdbChecks == TRUE){
         tx_db <- eval(parse(text = assembly$TxDb))
+        org_db <- eval(parse(text = assembly$OrgDb))
         chromSizes <- seqlengths(tx_db)
+        idCol <- assembly$gene.id.column
         displayCol <- assembly$display.column
-        genes <- bb_getExons(assembly = assembly)
 
-        ## Check that gene is in extracted data
-        if(!gene %%in%% genes[[displayCol]]) {
-          stop(paste('Gene', shQuote(gene),
-                   'does not exist in assembly', shQuote(assembly)))
-        }
+        ## convert input gene name to geneID
+        geneID <- tryCatch(expr = {
+          suppressMessages(select(org_db, keys = gene, columns = c(idCol), keytype = displayCol))
+
+        }, error = function(e) stop(paste('Gene', shQuote(gene), 'does not exist in assembly.'), call. = FALSE))
+
+        geneData <- suppressMessages(select(tx_db, keys = geneID[[idCol]], columns = columns(tx_db), keytype = 'GENEID'))
+
 
         ## Check that user has not supplied both gene and chrom, chromstart, or chromend
         if(any(!is.null(c(chrom, chromstart, chromend)))) {
           stop('Cannot use \\'gene\\' in combination with \\'chrom\\', \\'chromstart\\', or \\'chromend\\'', call. = FALSE)
         }
 
-        ## Subset for gene region
-        geneRegion <- genes[which(genes[[displayCol]] == object$gene),]
-        minGeneStart <- min(geneRegion$TXSTART)
-        maxGeneEnd <- max(geneRegion$TXEND)
+        ## Get info about gene region
+        minGeneStart <- min(geneData$TXSTART)
+        maxGeneEnd <- max(geneData$TXEND)
 
         ## Set default gene buffer (window = 2X gene length)
         ## Define buffer
         if (is.null(geneBuffer)) geneBuffer <- (maxGeneEnd - minGeneStart) / 2
 
         ## Assign values to bb_params object (with buffer)
-        object$chrom      <- unique(geneRegion$TXCHROM)
+        object$chrom      <- unique(geneData$TXCHROM)
         object$chromstart <- minGeneStart - geneBuffer
         object$chromend   <- maxGeneEnd  + geneBuffer
         object$geneBuffer <- geneBuffer

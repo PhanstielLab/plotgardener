@@ -1,17 +1,11 @@
-bb_getExons <- function(assembly, chromosome = NULL, start = NULL, stop = NULL){
+bb_getExons <- function(assembly, chromosome, start, stop){
 
   tx_db <- eval(parse(text = assembly$TxDb))
   org_db <- eval(parse(text = assembly$OrgDb))
 
-  if (!is.null(chromosome)){
-    genes_on_chrom <- suppressMessages(genes(tx_db, filter = list(tx_chrom = chromosome))) ## Still GRanges
-    if (!is.null(start) & !is.null(stop)){
-      genes_in_range <- genes_on_chrom[genes_on_chrom@ranges@start<=stop&genes_on_chrom@ranges@start+genes_on_chrom@ranges@width>=start]
-    }
-  } else {
-    genes_in_range <- suppressMessages(genes(tx_db))
-  }
 
+  genes_on_chrom <- suppressMessages(genes(tx_db, filter = list(tx_chrom = chromosome))) ## Still GRanges
+  genes_in_range <- genes_on_chrom[genes_on_chrom@ranges@start<=stop&genes_on_chrom@ranges@start+genes_on_chrom@ranges@width>=start]
   txs_wo_symbols <- suppressMessages(select(tx_db, keys = genes_in_range$gene_id, columns = columns(tx_db), keytype = "GENEID"))
 
   if (assembly$gene.id.column == assembly$display.column){
