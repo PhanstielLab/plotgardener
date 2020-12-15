@@ -40,8 +40,6 @@ bb_pageCreate <- function(params = NULL, width = 8.5, height = 11, default.units
 
     ## Page units must be a valid option
     page_units <- gsub("[0-9]|[.]", "", bb_page$width)
-    print(page_units)
-    print(validUnits)
     if (!page_units %in% validUnits){
       stop(paste(c("Invalid page units. Options for page units are:", validUnits), collapse = " "), call. = FALSE)
     }
@@ -89,6 +87,7 @@ bb_pageCreate <- function(params = NULL, width = 8.5, height = 11, default.units
   # DEFAULT UNITS
   # =====================================================================================================================================================================================
 
+
   if (!"unit" %in% class(bb_page$width)){
 
     if (!is.numeric(bb_page$width)){
@@ -103,7 +102,7 @@ bb_pageCreate <- function(params = NULL, width = 8.5, height = 11, default.units
 
     }
 
-    if (!default.units %in% validUnits){
+    if (!bb_page$default.units %in% validUnits){
       stop(paste(c("Invalid default units. Options for page units are:", validUnits), collapse = " "), call. = FALSE)
     }
 
@@ -125,7 +124,8 @@ bb_pageCreate <- function(params = NULL, width = 8.5, height = 11, default.units
 
     }
 
-    if (!default.units %in% validUnits){
+
+    if (!bb_page$default.units %in% validUnits){
       stop(paste(c("Invalid default units. Options for page units are:", validUnits), collapse = " "), call. = FALSE)
     }
 
