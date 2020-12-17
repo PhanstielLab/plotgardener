@@ -17,7 +17,7 @@ bb_annoLoops(
 \arguments{
 \item{hic}{hic plot to annotate}
 
-\item{loops}{bedpe file or dataframe in bedpe file format with loop positions (chr1 and chr2 must be numbers)}
+\item{loops}{bedpe file or dataframe in bedpe file format with loop positions}
 
 \item{params}{an optional "bb_params" object space containing relevant function parameters}
 
