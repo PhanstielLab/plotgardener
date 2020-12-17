@@ -30,7 +30,7 @@ bb_plotPileup(
 )
 }
 \arguments{
-\item{bed}{genomic data in BED format}
+\item{bed}{genomic data to be plotted; can be any data in BED format, a .bam file where a bam index file (.bam.bai) is in the same directory,  or a GRanges}
 
 \item{chrom}{chromosome of region to be plotted}
 

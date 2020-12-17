@@ -15,9 +15,10 @@ Imports:
     Rcpp,
     rtracklayer,
     BSgenome,
-    GenomeInfoDb
+    GenomeInfoDb,
+    plyranges
 Remotes: PhanstielLab/straw/R
-biocViews: GenomicRanges, IRanges, rtracklayer, BSgenome, GenomeInfoDb
+biocViews: GenomicRanges, IRanges, rtracklayer, BSgenome, GenomeInfoDb, plyranges
 LinkingTo: 
     Rcpp
 Suggests: BSgenome.Hsapiens.UCSC.hg19, BSgenome.Hsapiens.UCSC.hg38, BSgenome.Mmusculus.UCSC.mm9

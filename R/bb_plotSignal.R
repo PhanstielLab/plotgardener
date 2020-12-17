@@ -1,6 +1,6 @@
 #' plots signal track data
 #'
-#' @param signal signal track data to be plotted (bigwig file, bedgraph format dataframe, or bedgraph); can be one or a list of two
+#' @param signal signal track data to be plotted (bigwig file, bed format dataframe, or GRanges with "counts" metadata); can be one or a list of two
 #' @param chrom chromosome of region to be plotted as a string (i.e. "chr3")
 #' @param params an optional "bb_params" object space containing relevant function parameters
 #' @param chromstart start position
@@ -35,18 +35,15 @@ bb_plotSignal <- function(signal, chrom, params = NULL, chromstart = NULL, chrom
 
     dfChecks <- function(signal){
 
-      if ("data.frame" %in% class(signal) && ncol(signal) != 4){
-
-        stop("Invalid dataframe format.  Input a dataframe with 4 columns in bedgraph format: chrom, chromstart, chromend, counts.", call. = FALSE)
-
-      }
-
       if (!"data.frame" %in% class(signal)){
 
-        if (!file_ext(signal) %in% c("bw", "bigWig", "bigwig", "bedgraph")){
+        if (!"GRanges" %in% class(signal)){
 
-          stop("Invalid input. File must have a valid bigwig or bedgraph extension.", call. = FALSE)
+          if (!file_ext(signal) %in% c("bw", "bigWig", "bigwig", "bedgraph")){
 
+            stop("Invalid input. File must have a valid bigwig or bedgraph extension.", call. = FALSE)
+
+          }
         }
 
       }
@@ -125,25 +122,28 @@ bb_plotSignal <- function(signal, chrom, params = NULL, chromstart = NULL, chrom
     ## if .bw file, read in with bb_readBigwig
     if (!"data.frame" %in% class(signal)){
 
-      signal <- bb_readBigwig(filename = signal, chrom = signaltrack$chrom, chromstart = signaltrack$chromstart, chromend = signaltrack$chromend)
-      signal <- signal[,c(1:3,6)]
-
-    } else {
-
-      message("Reading in signal dataframe.  Assuming dataframe in bedgraph format with \'chrom\' in column1, \'chromstart\' in column 2,
-       \'chromend\' in column 3, and \'counts\' in column 4.")
-
-      ## Make dataframe
-      signal <- as.data.frame(signal)
+      if (!"GRanges" %in% class(signal)){
+        signal <- bb_readBigwig(filename = signal, chrom = signaltrack$chrom, chromstart = signaltrack$chromstart, chromend = signaltrack$chromend)
+      }
 
     }
 
+    signal <- as.data.frame(signal)
     return(signal)
 
   }
 
   ## Define a function that formats/filters signal data
   format_data <- function(signal, signaltrack){
+
+    if (!any(colnames(signal) == "score")){
+      stop("Cannot find associated `score` column in data.", call. = FALSE)
+    } else {
+      ## Grab chrom, start, end and a "score" column
+      scoreCol <- which(colnames(signal) == "score")
+      signal <- signal[c(1:3, scoreCol)]
+
+    }
 
     ## Ensure the chromosome is a character
     signal[,1] <- as.character(signal[,1])

@@ -32,7 +32,7 @@ bb_plotManhattan(
 )
 }
 \arguments{
-\item{bed}{bedfile for Manhattan plot, either .bed file or dataframe in bed format}
+\item{bed}{data for Manhattan plot, can be any data in BED format or a GRanges}
 
 \item{pVals}{name of column in bedfile of corresponding p-values (will be converted to -log(10) space)}
 

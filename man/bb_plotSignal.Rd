@@ -29,7 +29,7 @@ bb_plotSignal(
 )
 }
 \arguments{
-\item{signal}{signal track data to be plotted (bigwig file, bedgraph format dataframe, or bedgraph); can be one or a list of two}
+\item{signal}{signal track data to be plotted (bigwig file, bed format dataframe, or GRanges with "counts" metadata); can be one or a list of two}
 
 \item{chrom}{chromosome of region to be plotted as a string (i.e. "chr3")}
 

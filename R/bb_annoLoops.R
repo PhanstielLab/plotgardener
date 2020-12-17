@@ -1,7 +1,7 @@
 #' annotates loops in a Hi-C plot
 #'
 #' @param hic hic plot to annotate
-#' @param loops bedpe file or dataframe in bedpe file format with loop positions (chr1 and chr2 must be numbers)
+#' @param loops bedpe file or dataframe in bedpe file format with loop positions
 #' @param params an optional "bb_params" object space containing relevant function parameters
 #' @param half which half of hic plots to annotate; default is "inherit", which will inherit whatever is plotted; other options are "both", "top", or "bottom"
 #' @param shift number of pixels on either end of loop in box/circle; number of pixels for length of arrow

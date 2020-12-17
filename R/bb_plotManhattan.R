@@ -1,6 +1,6 @@
 #' plots a Manhattan plot
 #'
-#' @param bed bedfile for Manhattan plot, either .bed file or dataframe in bed format
+#' @param bed data for Manhattan plot, can be any data in BED format or a GRanges
 #' @param pVals name of column in bedfile of corresponding p-values (will be converted to -log(10) space)
 #' @param params an optional "bb_params" object space containing relevant function parameters
 #' @param chrom string of specific chromosome to zoom in on according to genome build (Ex: hg19 = "chr1"); if NULL all chromosomes found in data will be plotted
@@ -315,7 +315,10 @@ bb_plotManhattan <- function(bed, pVals, params = NULL, chrom = NULL, chromstart
   bedfile <- bb_manInternal$bed
   ## Read in data if it's not a dataframe or data.table
   if (!"data.frame" %in% class(bedfile)){
-    bedfile <- fread(bedfile)
+    if (!"GRanges" %in% class(bedfile)){
+      bedfile <- fread(bedfile)
+    }
+
   }
 
   bedfile <- as.data.frame(bedfile)

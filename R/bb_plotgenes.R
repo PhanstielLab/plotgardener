@@ -26,8 +26,8 @@
 #' @export
 bb_plotGenes <- function(chrom, params = NULL, assembly = "hg19", chromstart = NULL, chromend = NULL, fontcolors = c("#2929ff", "#ff3434"),
                          strandcolors = c("#8a8aff", "#ff7e7e"), geneOrder = NULL, geneHighlights = NULL, geneBackground = "grey",
-                         stroke = 0.1, fontsize = 8, strandLabels = T, x = NULL, y = NULL, width = NULL, height = unit(0.6, "inches"),
-                         just = c("left", "top"), default.units = "inches", draw = T){
+                         stroke = 0.1, fontsize = 8, strandLabels = TRUE, x = NULL, y = NULL, width = NULL, height = unit(0.6, "inches"),
+                         just = c("left", "top"), default.units = "inches", draw = TRUE){
 
   # ======================================================================================================================================================================================
   # FUNCTIONS

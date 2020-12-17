@@ -5,12 +5,17 @@
 \title{Plots genomic coordinates for the axis of a BentoBox plot}
 \usage{
 bb_plotGenomeLabel(
-  plot,
   x,
   y,
+  plot = NULL,
+  width = NULL,
+  chrom = NULL,
+  chromstart = NULL,
+  chromend = NULL,
   params = NULL,
   just = c("left", "top"),
   scale = "bp",
+  assembly = "hg19",
   fontsize = 10,
   fontcolor = "black",
   linecolor = "black",
@@ -24,11 +29,19 @@ bb_plotGenomeLabel(
 )
 }
 \arguments{
-\item{plot}{BentoBox plot to add genome label}
-
 \item{x}{A numeric or unit object specifying x-location.}
 
 \item{y}{A numeric or unit object specifying y-location.}
+
+\item{plot}{BentoBox plot to add genome label}
+
+\item{width}{if not specifying plot, width of genome label, as a numeric or unit object}
+
+\item{chrom}{if not specifying plot, chromosome of genome label}
+
+\item{chromstart}{if not specifying plot, chromstart of genome label}
+
+\item{chromend}{if not specifying plot, chromend of genome label}
 
 \item{params}{an optional "bb_params" object space containing relevant function parameters}
 
@@ -36,6 +49,8 @@ bb_plotGenomeLabel(
 the second value specifies vertical justification. Possible string values are: "left", "right", "centre", "center", "bottom", and "top".}
 
 \item{scale}{scale of the genome of the label. Options are "bp", "Kb", or "Mb"}
+
+\item{assembly}{default genome assembly as a string or a bb_assembly object (will be inherited from plot object if provided)}
 
 \item{fontsize}{Fontsize for labels (in points).}
 

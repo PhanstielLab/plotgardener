@@ -1,6 +1,6 @@
 #' plots data stored in BED format in a pileup style
 #'
-#' @param bed genomic data in BED format
+#' @param bed genomic data to be plotted; can be any data in BED format, a .bam file where a bam index file (.bam.bai) is in the same directory,  or a GRanges
 #' @param chrom chromosome of region to be plotted
 #' @param params an optional "bb_params" object space containing relevant function parameters
 #' @param chromstart start position
@@ -36,7 +36,8 @@ bb_plotPileup <- function(bed, chrom, params = NULL, chromstart = NULL, chromend
   # ======================================================================================================================================================================================
 
   ## Define a function that catches errors
-  errorcheck_bb_plotpileup <- function(bed, pileup_plot, colorby){
+  errorcheck_bb_plotpileup <- function(pileup_plot, colorby){
+
 
     ## Can't have only one NULL chromstart or chromend
     if ((is.null(pileup_plot$chromstart) & !is.null(pileup_plot$chromend)) | (is.null(pileup_plot$chromend) & !is.null(pileup_plot$chromstart))){
@@ -60,7 +61,8 @@ bb_plotPileup <- function(bed, chrom, params = NULL, chromstart = NULL, chromend
 
     if (!is.null(colorby)){
       if (!any(colnames(bed) == colorby)){
-        stop("Colorby column not found in data. Check colorby column name.", call. = FALSE)
+
+        stop(paste("Colorby column", paste0('`', colorby, '`'), "not found in data. Check colorby column name."), call. = FALSE)
       }
 
       if (length(which(colnames(bed) == colorby)) > 1){
@@ -176,17 +178,32 @@ bb_plotPileup <- function(bed, chrom, params = NULL, chromstart = NULL, chromend
   # READ IN FILE OR DATAFRAME
   # ======================================================================================================================================================================================
 
-  if (!"data.frame" %in% class(bb_pileInternal$bed)){
-    bed <- as.data.frame(data.table::fread(bb_pileInternal$bed))
-  } else {
-    bed <- as.data.frame(bb_pileInternal$bed)
+  bed <- bb_pileInternal$bed
+  if (!"data.frame" %in% class(bed)){
+    if (!"GRanges" %in% class(bed)){
+
+      if (file_ext(bed) == "bam"){
+        indexFile <- paste0(bed, ".bai")
+        if (!file.exists(indexFile)){
+          stop("Cannot read in bam file without a corresponding bam index file (.bai) in the same directory.", call. = FALSE)
+        }
+        bed <- read_bam(bed) %>% filter_by_overlaps(GRanges(seqnames = pileup_plot$chrom, ranges = IRanges(start = pileup_plot$chromstart, end = pileup_plot$chromend))) %>% mutate()
+      } else {
+        bed <- fread(bed)
+      }
+
+    }
+
   }
+
+  bed <- as.data.frame(bed)
+
 
   # ======================================================================================================================================================================================
   # CATCH ERRORS
   # ======================================================================================================================================================================================
 
-  errorcheck_bb_plotpileup(bed = bed, pileup_plot = pileup_plot, colorby = bb_pileInternal$colorby)
+  errorcheck_bb_plotpileup(pileup_plot = pileup_plot, colorby = bb_pileInternal$colorby)
 
   # ======================================================================================================================================================================================
   # WHOLE CHROMOSOME DATA AND XSCALE
@@ -260,9 +277,14 @@ bb_plotPileup <- function(bed, chrom, params = NULL, chromstart = NULL, chromend
 
   if (bb_pileInternal$strandSplit == TRUE){
 
-    ## assuming strand is in the 6th column
-    posStrand <- bed[which(bed[,6] == "+"),]
-    minStrand <- bed[which(bed[,6] == "-"),]
+    ## Look for column named 'strand'
+    if (!any(colnames(bed) == "strand")){
+      stop("No `strand` column found in data. Cannot split data based on strand.", call. = FALSE)
+    } else {
+      strand_col <- which(colnames(bed) == "strand")
+      posStrand <- bed[which(bed[,strand_col] == "+"),]
+      minStrand <- bed[which(bed[,strand_col] == "-"),]
+    }
 
   }
 
@@ -311,6 +333,7 @@ bb_plotPileup <- function(bed, chrom, params = NULL, chromstart = NULL, chromend
                    just = bb_pileInternal$just,
                    name = vp_name)
   }
+
 
   # ======================================================================================================================================================================================
   # INITIALIZE GTREE FOR GROBS
@@ -443,7 +466,6 @@ bb_plotPileup <- function(bed, chrom, params = NULL, chromstart = NULL, chromend
 
     rowDF <- rbind(posDF, minDF)
   }
-
 
   if (nrow(rowDF) > 0){
 
