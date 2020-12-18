@@ -21,7 +21,8 @@ bb_plotHicTriangle(
   just = c("left", "top"),
   norm = "KR",
   default.units = "inches",
-  draw = T
+  draw = T,
+  dataType = "observed"
 )
 }
 \arguments{
@@ -59,6 +60,8 @@ dataframes, "auto" will attempt to detect the resolution the dataframe contains}
 \item{default.units}{A string indicating the default units to use if x, y, width, or height are only given as numerics}
 
 \item{draw}{A logical value indicating whether graphics output should be produced}
+
+\item{dataType}{type of data to be returned; options are "observed" and "oe"}
 }
 \description{
 plots HiC interaction matrix in triangular format

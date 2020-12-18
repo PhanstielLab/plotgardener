@@ -18,13 +18,14 @@
 #' @param draw A logical value indicating whether graphics output should be produced
 #' @param default.units A string indicating the default units to use if x, y, width, or height are only given as numerics
 #' @param norm if giving .hic file, hic data normalization; must be found in hic file
+#' @param dataType type of data to be returned; options are "observed" and "oe"
 #'
 #' @export
 #'
 #'
 bb_plotHicTriangle <- function(hic, chrom, params = NULL, chromstart = NULL, chromend = NULL, resolution = "auto", zrange = NULL,
                                palette = colorRampPalette(c("white", "dark red")), assembly = "hg19", width = NULL, height = NULL,
-                               x = NULL, y = NULL, just = c("left", "top"), norm = "KR", default.units = "inches", draw = T){
+                               x = NULL, y = NULL, just = c("left", "top"), norm = "KR", default.units = "inches", draw = T, dataType = "observed"){
 
   # ======================================================================================================================================================================================
   # FUNCTIONS
@@ -224,7 +225,7 @@ bb_plotHicTriangle <- function(hic, chrom, params = NULL, chromstart = NULL, chr
   }
 
   ## Define a function that reads in hic data
-  read_data <- function(hic, hic_plot, norm, assembly){
+  read_data <- function(hic, hic_plot, norm, assembly, type){
 
     parse_chrom <- function(assembly, chrom){
 
@@ -250,7 +251,7 @@ bb_plotHicTriangle <- function(hic, chrom, params = NULL, chromstart = NULL, chr
         readchromend <- hic_plot$chromend + hic_plot$resolution
 
         hic <- bb_readHic(hic = hic, chrom = strawChrom, chromstart = readchromstart, chromend = readchromend,
-                          resolution = hic_plot$resolution, zrange = hic_plot$zrange, norm = norm)
+                          resolution = hic_plot$resolution, zrange = hic_plot$zrange, norm = norm, dataType = type)
 
       } else {
         hic <- data.frame(matrix(nrow = 0, ncol = 3))
@@ -530,6 +531,7 @@ bb_plotHicTriangle <- function(hic, chrom, params = NULL, chromstart = NULL, chr
   if(missing(norm)) norm <- NULL
   if(missing(default.units)) default.units <- NULL
   if(missing(draw)) draw <- NULL
+  if(missing(dataType)) dataType <- NULL
 
   ## Check if hic/chrom arguments are missing (could be in object)
   if(!hasArg(hic)) hic <- NULL
@@ -538,7 +540,7 @@ bb_plotHicTriangle <- function(hic, chrom, params = NULL, chromstart = NULL, chr
   ## Compile all parameters into an internal object
   bb_thicInternal <- structure(list(hic = hic, chrom = chrom, chromstart = chromstart, chromend = chromend, resolution = resolution,
                                     zrange = zrange, palette = palette, assembly = assembly, width = width, height = height, x = x,
-                                    y = y, just = just, norm = norm, default.units = default.units, draw = draw), class = "bb_thicInternal")
+                                    y = y, just = just, norm = norm, default.units = default.units, draw = draw, dataType = dataType), class = "bb_thicInternal")
 
   bb_thicInternal <- parseParams(bb_params = params, object_params = bb_thicInternal)
 
@@ -550,7 +552,7 @@ bb_plotHicTriangle <- function(hic, chrom, params = NULL, chromstart = NULL, chr
   if(is.null(bb_thicInternal$norm)) bb_thicInternal$norm <- "KR"
   if(is.null(bb_thicInternal$default.units)) bb_thicInternal$default.units <- "inches"
   if(is.null(bb_thicInternal$draw)) bb_thicInternal$draw <- TRUE
-
+  if(is.null(bb_thicInternal$dataType)) bb_thicInternal$dataType <- "observed"
   # ======================================================================================================================================================================================
   # INITIALIZE OBJECT
   # ======================================================================================================================================================================================
@@ -637,7 +639,7 @@ bb_plotHicTriangle <- function(hic, chrom, params = NULL, chromstart = NULL, chr
   # READ IN DATA
   # ======================================================================================================================================================================================
 
-  hic <- read_data(hic = bb_thicInternal$hic, hic_plot = hic_plot, norm = bb_thicInternal$norm, assembly = hic_plot$assembly)
+  hic <- read_data(hic = bb_thicInternal$hic, hic_plot = hic_plot, norm = bb_thicInternal$norm, assembly = hic_plot$assembly, type = bb_thicInternal$dataType)
 
   # ======================================================================================================================================================================================
   # SUBSET DATA
@@ -661,8 +663,7 @@ bb_plotHicTriangle <- function(hic, chrom, params = NULL, chromstart = NULL, chr
   if (!is.null(hic_plot$zrange) & length(unique(hic_plot$zrange)) == 2){
 
     hic$color <- bb_maptocolors(hic$counts, col = bb_thicInternal$palette, num = 100, range = hic_plot$zrange)
-    sorted_colors <- unique(hic[order(hic$counts),]$color)
-    hic_plot$color_palette <- sorted_colors
+    hic_plot$color_palette <- bb_thicInternal$palette
 
     }
 

@@ -322,8 +322,8 @@ bb_plotBedpeArches <- function(bedpe, chrom, params = NULL, chromstart = NULL, c
 
     if (class(bb_archInternal$fillcolor) == "function"){
       colors <- bb_maptocolors(colorbyCol, bb_archInternal$fillcolor, range = arches_plot$zrange)
-      sorted_colors <- unique(colors[order(colorbyCol)])
-      arches_plot$color_palette <- sorted_colors
+      #sorted_colors <- unique(colors[order(colorbyCol)])
+      arches_plot$color_palette <- bb_archInternal$fillcolor
 
     } else {
       colorbyColfac <- factor(colorbyCol)

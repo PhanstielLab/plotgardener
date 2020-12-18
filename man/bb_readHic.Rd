@@ -14,6 +14,7 @@ bb_readHic(
   zrange = NULL,
   norm = "KR",
   res_scale = "BP",
+  dataType = "observed",
   assembly = "hg19",
   altchrom = NULL,
   altchromstart = NULL,
@@ -38,6 +39,8 @@ bb_readHic(
 \item{norm}{hic data normalization; must be found in hic file}
 
 \item{res_scale}{resolution scale; options are "BP" and "FRAG"}
+
+\item{dataType}{type of data to be returned; options are "observed" and "oe"}
 
 \item{assembly}{desired genome assembly}
 

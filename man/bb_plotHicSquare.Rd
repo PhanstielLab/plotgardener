@@ -26,7 +26,8 @@ bb_plotHicSquare(
   altchromstart = NULL,
   altchromend = NULL,
   althalf = NULL,
-  norm = "KR"
+  norm = "KR",
+  dataType = "observed"
 )
 }
 \arguments{
@@ -74,6 +75,8 @@ dataframes, "auto" will attempt to detect the resolution the dataframe contains}
 \item{althalf}{if plotting altchrom region, which side off diagonal to plot; options are "top" or "bottom"}
 
 \item{norm}{if giving .hic file, hic data normalization; must be found in hic file}
+
+\item{dataType}{type of data to be returned; options are "observed" and "oe"}
 }
 \value{
 Function will plot a HiC interaction matrix and return a bb_hic object

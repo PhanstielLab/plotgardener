@@ -34,6 +34,7 @@ bb_params(
   colorbyStrand = NULL,
   commas = NULL,
   cutoffArches = NULL,
+  dataType = NULL,
   default.units = NULL,
   display.column = NULL,
   draw = NULL,

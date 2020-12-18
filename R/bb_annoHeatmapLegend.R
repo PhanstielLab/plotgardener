@@ -138,6 +138,12 @@ bb_annoHeatmapLegend <- function(plot, x, y, width, height, params = NULL, borde
   pushViewport(vp)
 
   # ======================================================================================================================================================================================
+  # SCALE COLORS
+  # ======================================================================================================================================================================================
+
+  color_scale <- bb_maptocolors(vec = seq(bb_heatmapLegend$min_val, bb_heatmapLegend$max_val, length.out = 100), col = bb_heatmapLegend$color_palette)
+
+  # ======================================================================================================================================================================================
   # INITIALIZE GTREE
   # ======================================================================================================================================================================================
 
@@ -182,7 +188,7 @@ bb_annoHeatmapLegend <- function(plot, x, y, width, height, params = NULL, borde
 
     new_height <- 1 - (lH + hH + dH)
 
-    color_scale <- rasterGrob(rev(bb_heatmapLegend$color_palette), width = page_coords$width, height = unit(new_height, "npc"),
+    color_scale <- rasterGrob(rev(color_scale), width = page_coords$width, height = unit(new_height, "npc"),
                               y = unit(1 - (hH + (0.5 * dH)), "npc"), x = unit(0.5, "npc"), just = "top")
 
 
@@ -215,7 +221,7 @@ bb_annoHeatmapLegend <- function(plot, x, y, width, height, params = NULL, borde
 
     new_width <- 1 - (hW + lW + dW)
 
-    color_scale <- rasterGrob(matrix(data = bb_heatmapLegend$color_palette, nrow = 1, ncol = length(bb_heatmapLegend$color_palette)), width = unit(new_width, "npc"), height = page_coords$height,
+    color_scale <- rasterGrob(matrix(data = color_scale, nrow = 1, ncol = length(bb_heatmapLegend$color_palette)), width = unit(new_width, "npc"), height = page_coords$height,
                 x = unit(lW + (0.5 * dW), "npc"), just = "left")
 
     if (bb_heatmapLegendInternal$border == T){

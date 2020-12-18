@@ -397,8 +397,8 @@ bb_plotBedpe <- function(bedpe, chrom, params = NULL, chromstart = NULL, chromen
       if (class(bb_bedpeInternal$fillcolor) == "function"){
 
         rowBedpe$color <- bb_maptocolors(rowBedpe$colorby, bb_bedpeInternal$fillcolor, range = bb_bedpe$zrange)
-        sorted_colors <- unique(rowBedpe[order(rowBedpe$colorby),]$color)
-        bb_bedpe$color_palette <- sorted_colors
+        #sorted_colors <- unique(rowBedpe[order(rowBedpe$colorby),]$color)
+        bb_bedpe$color_palette <- bb_bedpeInternal$fillcolor
 
       } else {
 

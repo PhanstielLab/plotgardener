@@ -499,8 +499,8 @@ bb_plotPileup <- function(bed, chrom, params = NULL, chromstart = NULL, chromend
       if (class(bb_pileInternal$fillcolor) == "function"){
 
         rowDF$color <- bb_maptocolors(rowDF$colorby, bb_pileInternal$fillcolor, range = pileup_plot$zrange)
-        sorted_colors <- unique(rowDF[order(rowDF$colorby),]$color)
-        pileup_plot$color_palette <- sorted_colors
+        #sorted_colors <- unique(rowDF[order(rowDF$colorby),]$color)
+        pileup_plot$color_palette <- bb_pileInternal$fillcolor
 
       } else {
 
