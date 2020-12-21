@@ -221,7 +221,7 @@ bb_annoHeatmapLegend <- function(plot, x, y, width, height, params = NULL, borde
 
     new_width <- 1 - (hW + lW + dW)
 
-    color_scale <- rasterGrob(matrix(data = color_scale, nrow = 1, ncol = length(bb_heatmapLegend$color_palette)), width = unit(new_width, "npc"), height = page_coords$height,
+    color_scale <- rasterGrob(matrix(data = color_scale, nrow = 1, ncol = length(color_scale)), width = unit(new_width, "npc"), height = page_coords$height,
                 x = unit(lW + (0.5 * dW), "npc"), just = "left")
 
     if (bb_heatmapLegendInternal$border == T){
