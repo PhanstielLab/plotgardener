@@ -149,7 +149,7 @@ parameter. Buffer extending beyond the length of the chromosome will be trimmed.
 p1 <- bb_params(gene = "IL1B", assembly = "hg19")
 
 ## Optionally add more parameters
-p2 <- bb_params(geneBuffer = 10000)
+p2 <- bb_params(fontsize = 10)
 
 ## Combine parameters and pass them to a BentoBox function
 bb_plotGenes(params = c(p1, p2))
