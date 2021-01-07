@@ -131,30 +131,17 @@ bb_annoLoops <- function(hic, loops, params = NULL, half = "inherit", shift = 4,
   }
 
   ## Define a function that subsets loop data for hic region
-  subset_loops <- function(loops, object){
+  subset_loops <- function(hic, loops, object){
 
-    numberChrom <- as.numeric(gsub("chr", "", object$chrom))
-    numberAltChrom <- as.numeric(gsub("chr", "", object$altchrom))
-
-    if (numberChrom == numberAltChrom){
-
+    ## chrom always in col1
+    ## altchrom always in col4
+    ## triangle hic plots will not have altchrom parameters
+    if (class(hic) == "bb_trianglehic"){
       loops_subset <- loops[which(loops[,1] == object$chrom & loops[,4] == object$chrom & loops[,2] >= object$chromstart & loops[,3] <= object$chromend
                                   & loops[,5] >= object$chromstart & loops[,6] <= object$chromend),]
-
     } else {
-
-      if (numberChrom > numberAltChrom){
-
-        loops_subset <- loops[which(loops[,1] == object$altchrom & loops[,4] == object$chrom & loops[,2] >= object$altchromstart & loops[,3] <= object$altchromend
-                                    & loops[,5] >= object$chromstart & loops[,6] <= object$chromend),]
-
-      } else if (numberChrom < numberAltChrom){
-
-        loops_subset <- loops[which(loops[,1] == object$chrom & loops[,4] == object$altchrom & loops[,2] >= object$chromstart & loops[,3] <= object$chromend
-                                    & loops[,5] >= object$altchromstart & loops[,6] <= object$altchromend),]
-
-      }
-
+      loops_subset <- loops[which(loops[,1] == object$chrom & loops[,4] == object$altchrom & loops[,2] >= object$chromstart & loops[,3] <= object$chromend
+                                  & loops[,5] >= object$altchromstart & loops[,6] <= object$altchromend),]
     }
 
     return(loops_subset)
@@ -353,7 +340,7 @@ bb_annoLoops <- function(hic, loops, params = NULL, half = "inherit", shift = 4,
   # ======================================================================================================================================================================================
 
   bb_loops <- structure(list(chrom = bb_loopsInternal$hic$chrom, chromstart = bb_loopsInternal$hic$chromstart, chromend = bb_loopsInternal$hic$chromend, altchrom = bb_loopsInternal$hic$altchrom,
-                               altchromstart = bb_loopsInternal$hic$altchromstart, altchromend = bb_loopsInternal$hic$altchromend, x = bb_loopsInternal$hic$x, y = bb_loopsInternal$hic$y,
+                               altchromstart = bb_loopsInternal$hic$altchromstart, altchromend = bb_loopsInternal$hic$altchromend, assembly = bb_loopsInternal$hic$assembly, x = bb_loopsInternal$hic$x, y = bb_loopsInternal$hic$y,
                                width = bb_loopsInternal$hic$width, height = bb_loopsInternal$hic$height, just = bb_loopsInternal$hic$just, grobs = NULL,
                                gp = gpar(...)), class = "bb_loops")
 
@@ -397,6 +384,26 @@ bb_annoLoops <- function(hic, loops, params = NULL, half = "inherit", shift = 4,
     if (nrow(loops) < 1){
       warning("Loop input contains no values.", call. = FALSE)
     }
+
+
+  }
+
+  ## Check format of chromosomes in columns 1 and 4
+  if (bb_loops$assembly$Genome == "hg19"){
+
+    checkChr <- function(chr){
+      return(grepl("chr", chr))
+    }
+
+    col1Checks <- unlist(lapply(loops[,1], checkChr))
+    if (any(col1Checks == FALSE)){
+      stop("Chromosomes in column 1 are in invalid format for hg19 genome assembly. Please specify chromosomes as a string with the following format: 'chr1'.", call. = FALSE)
+    }
+    col4Checks <- unlist(lapply(loops[,4], checkChr))
+    if (any(col4Checks == FALSE)){
+      stop("Chromosomes in column 4 are in invalid format for hg19 genome assembly. Please specify chromosomes as a string with the following format: 'chr1'.", call. = FALSE)
+    }
+
 
   }
 

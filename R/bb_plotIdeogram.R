@@ -53,8 +53,8 @@ bb_plotIdeogram <- function(chrom, params = NULL, assembly = "hg19", orientation
                        mm9 = "cytoBand.Mmusculus.UCSC.mm9", mm10 = "cytoBand.Mmusculus.UCSC.mm10", dm6 = "cytoBand.Dmelanogaster.UCSC.dm6",
                        rn5 = "cytoBand.Rnorvegicus.UCSC.rn5", rn6 = "cytoBand.Rnorvegicus.UCSC.rn6", danRer10 = "cytoBand.Drerio.UCSC.danRer10")
 
-    ## Split TxDb assembly name
-    assemblyName <- unlist(strsplit(assembly$TxDb, split = "[.]"))
+    ## Get string assembly name
+    assemblyName <- assembly$Genome
 
     if (!any(names(availCytos) %in% assemblyName)){
       warning(paste("CytoBand data not available for the given genome assembly. Ideograms can only be plotted for the following assemblies:", cat(names(availCytos), sep = ", ")), call. = FALSE)

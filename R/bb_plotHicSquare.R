@@ -99,6 +99,16 @@ bb_plotHicSquare <- function(hic, chrom, params = NULL, chromstart = NULL, chrom
 
     }
 
+    ## Even though straw technically works without "chr" for hg19, will not accept for consistency purposes
+    if (hic_plot$assembly$Genome == "hg19"){
+
+      if (grepl("chr", hic_plot$chrom) == FALSE){
+
+        stop(paste(paste0("'",hic_plot$chrom, "'"), "is an invalid input for an hg19 chromsome. Please specify chromosome as", paste0("'chr", hic_plot$chrom, "'.")), call. = FALSE)
+      }
+
+    }
+
     if (!is.null(hic_plot$altchrom)){
 
       ## Can't specify altchrom without a chrom
@@ -107,6 +117,16 @@ bb_plotHicSquare <- function(hic, chrom, params = NULL, chromstart = NULL, chrom
         stop("Specified \'altchrom\', but did not give \'chrom\'.", call. = FALSE)
 
       }
+      ## Even though straw technically works without "chr" for hg19, will not accept for consistency purposes
+      if (hic_plot$assembly$Genome == "hg19"){
+
+        if (grepl("chr", hic_plot$altchrom) == FALSE){
+
+          stop(paste(paste0("'",hic_plot$altchrom, "'"), "is an invalid input for an hg19 chromsome. Please specify chromosome as", paste0("'chr", hic_plot$altchrom, "'.")), call. = FALSE)
+        }
+
+      }
+
 
       ## Can't have only one NULL altchromstart or altchromend
 
@@ -308,38 +328,36 @@ bb_plotHicSquare <- function(hic, chrom, params = NULL, chromstart = NULL, chrom
   ## Define a function that reads in hic data for bb_plothic
   read_data <- function(hic, hic_plot, norm, assembly, type){
 
-    parse_chrom <- function(assembly, chrom){
-
-      assemblyName <- unlist(strsplit(assembly$TxDb, split = "[.]"))
-
-      if ("hg19" %in% assemblyName){
-        strawChrom <- gsub("chr", "", chrom)
-      } else {
-        strawChrom <- chrom
-      }
-
-      return(strawChrom)
-    }
+    # parse_chrom <- function(assembly, chrom){
+    #
+    #   if (assembly$Genome == "hg19"){
+    #     strawChrom <- gsub("chr", "", chrom)
+    #   } else {
+    #     strawChrom <- chrom
+    #   }
+    #
+    #   return(strawChrom)
+    # }
 
     ## if .hic file, read in with bb_rhic
     if (!("data.frame" %in% class(hic))){
 
       if (!is.null(hic_plot$chromstart) & !is.null(hic_plot$chromend)){
 
-        strawChrom <- parse_chrom(assembly = assembly, chrom = hic_plot$chrom)
-        if (!is.null(hic_plot$altchrom)){
-          strawaltChrom <- parse_chrom(assembly = assembly, chrom = hic_plot$altchrom)
-        } else {
-          strawaltChrom <- NULL
-        }
+        # strawChrom <- parse_chrom(assembly = assembly, chrom = hic_plot$chrom)
+        # if (!is.null(hic_plot$altchrom)){
+        #   strawaltChrom <- parse_chrom(assembly = assembly, chrom = hic_plot$altchrom)
+        # } else {
+        #   strawaltChrom <- NULL
+        # }
 
         readchromstart <- hic_plot$chromstart - hic_plot$resolution
         readchromend <- hic_plot$chromend + hic_plot$resolution
         readaltchromstart <- hic_plot$altchromstart - hic_plot$resolution
         readaltchromend <- hic_plot$altchromend + hic_plot$resolution
-        hic <- suppressWarnings(bb_readHic(hic = hic, chrom = strawChrom, chromstart = readchromstart, chromend = readchromend,
+        hic <- suppressWarnings(bb_readHic(hic = hic, chrom = hic_plot$chrom, chromstart = readchromstart, chromend = readchromend,
                                            resolution = hic_plot$resolution, zrange = hic_plot$zrange, norm = norm,
-                                           altchrom = strawaltChrom, altchromstart = readaltchromstart,
+                                           altchrom = hic_plot$altchrom, altchromstart = readaltchromstart,
                                            altchromend = readaltchromend, dataType = type))
       } else {
         hic <- data.frame(matrix(nrow = 0, ncol = 3))
@@ -575,6 +593,9 @@ bb_plotHicSquare <- function(hic, chrom, params = NULL, chromstart = NULL, chrom
   if(is.null(bb_hicInternal$norm)) bb_hicInternal$norm <- "KR"
   if(is.null(bb_hicInternal$dataType)) bb_hicInternal$dataType <- "observed"
 
+  if(is.null(bb_hicInternal$hic)) stop("argument \"hic\" is missing, with no default.", call. = FALSE)
+  if(is.null(bb_hicInternal$chrom)) stop("argument \"chrom\" is missing, with no default.", call. = FALSE)
+
   # ======================================================================================================================================================================================
   # INITIALIZE OBJECT
   # ======================================================================================================================================================================================
@@ -587,20 +608,17 @@ bb_plotHicSquare <- function(hic, chrom, params = NULL, chromstart = NULL, chrom
   attr(x = hic_plot, which = "plotted") <- bb_hicInternal$draw
 
   # ======================================================================================================================================================================================
-  # CATCH ERRORS
-  # ======================================================================================================================================================================================
-
-  if(is.null(bb_hicInternal$hic)) stop("argument \"hic\" is missing, with no default.", call. = FALSE)
-  if(is.null(bb_hicInternal$chrom)) stop("argument \"chrom\" is missing, with no default.", call. = FALSE)
-
-  check_placement(object = hic_plot)
-  errorcheck_bb_plothic(hic = bb_hicInternal$hic, hic_plot = hic_plot, norm = bb_hicInternal$norm)
-
-  # ======================================================================================================================================================================================
   # PARSE ASSEMBLY
   # ======================================================================================================================================================================================
 
   hic_plot$assembly <- parse_bbAssembly(assembly = hic_plot$assembly)
+
+  # ======================================================================================================================================================================================
+  # CATCH ERRORS
+  # ======================================================================================================================================================================================
+
+  check_placement(object = hic_plot)
+  errorcheck_bb_plothic(hic = bb_hicInternal$hic, hic_plot = hic_plot, norm = bb_hicInternal$norm)
 
   # ======================================================================================================================================================================================
   # PARSE UNITS

@@ -17,11 +17,6 @@
 #'
 #' @return Function will return a 3-column dataframe: chrom, altchrom, counts
 #'
-#' @examples
-#' download.file("https://www.encodeproject.org/files/ENCFF606XNW/@@download/ENCFF606XNW.hic", destfile = "ENCFF606XNW.hic", method = "auto")
-#' bb_readHic(hic = "./ENCFF606XNW.hic", chrom = "chr1")
-#' bb_readHic(hic = "./ENCFF606XNW.hic", chrom = "chr1", chromstart = 22500000, chromend = 23200000, zrange = c(0, 125))
-#' bb_readHic(hic = "./ENCFF606XNW.hic", chrom = "chr1", altchrom = "chr2")
 #' @export
 
 bb_readHic <- function(hic, chrom, params = NULL, chromstart = NULL, chromend = NULL, resolution = "auto", zrange = NULL,
@@ -33,7 +28,7 @@ bb_readHic <- function(hic, chrom, params = NULL, chromstart = NULL, chromend = 
   # ======================================================================================================================================================================================
 
   ## Define a function that catches errors for bb_rhic
-  errorcheck_bb_rhic <- function(hic, chrom, chromstart, chromend, zrange, altchrom, altchromstart, altchromend, norm, res_scale){
+  errorcheck_bb_rhic <- function(hic, chrom, chromstart, chromend, zrange, altchrom, altchromstart, altchromend, norm, res_scale, assembly){
 
     ## hic input needs to be a path to a .hic file
     if (class(hic) != "character"){
@@ -61,6 +56,24 @@ bb_readHic <- function(hic, chrom, params = NULL, chromstart = NULL, chromend = 
 
     }
 
+    ## Not supporting chrM
+    if (chrom == "chrM"){
+
+      stop("chrM not supported.", call. = FALSE)
+
+    }
+
+    ## Even though straw technically works without "chr" for hg19, will not accept for consistency purposes
+    if (assembly == "hg19"){
+
+      if (grepl("chr", chrom) == FALSE){
+
+        stop(paste(paste0("'",chrom, "'"), "is an invalid input for an hg19 chromsome. Please specify chromosome as", paste0("'chr", chrom, "'.")), call. = FALSE)
+      }
+
+    }
+
+
     if (!is.null(chromstart) & !is.null(chromend)){
 
       ## Chromstart should be smaller than chromend
@@ -70,20 +83,22 @@ bb_readHic <- function(hic, chrom, params = NULL, chromstart = NULL, chromend = 
 
       }
 
-
-      ## Not supporting chrM
-      if (chrom == "chrM"){
-
-        stop("chrM not supported.", call. = FALSE)
-
-      }
-
     }
 
     if (!is.null(altchrom)){
 
       if (altchrom == "chrM"){
         stop("chrM not supported.", call. = FALSE)
+
+      }
+
+      ## Even though straw technically works without "chr" for hg19, will not accept for consistency purposes
+      if (assembly == "hg19"){
+
+        if (grepl("chr", altchrom) == FALSE){
+
+          stop(paste(paste0("'",altchrom, "'"), "is an invalid input for an hg19 chromsome. Please specify chromosome as", paste0("'chr", altchrom, "'.")), call. = FALSE)
+        }
 
       }
 
@@ -199,8 +214,7 @@ bb_readHic <- function(hic, chrom, params = NULL, chromstart = NULL, chromend = 
   ## Define a function to parse chromsome/region for Straw
   parse_region <- function(chrom, chromstart, chromend, assembly){
 
-    assemblyName <- unlist(strsplit(assembly$TxDb, split = "[.]"))
-    if ("hg19" %in% assemblyName){
+    if (assembly == "hg19"){
       strawChrom <- gsub("chr", "", chrom)
     } else {
       strawChrom <- chrom
@@ -227,8 +241,7 @@ bb_readHic <- function(hic, chrom, params = NULL, chromstart = NULL, chromend = 
   ## Define a function to reorder chromsomes to put "chrom" input in col1
   orderChroms <- function(hic, chrom, altchrom, assembly){
 
-    assemblyName <- unlist(strsplit(assembly$TxDb, split = "[.]"))
-    if ("hg19" %in% assemblyName){
+    if (assembly == "hg19"){
       chrom <- gsub("chr", "", chrom)
       altchrom <- gsub("chr", "", altchrom)
     }
@@ -330,20 +343,21 @@ bb_readHic <- function(hic, chrom, params = NULL, chromstart = NULL, chromend = 
   if(is.null(bb_rhic$assembly)) bb_rhic$assembly <- "hg19"
   if(is.null(bb_rhic$dataType)) bb_rhic$dataType <- "observed"
 
-  # ======================================================================================================================================================================================
-  # CATCH ERRORS
-  # ======================================================================================================================================================================================
   if(is.null(bb_rhic$hic)) stop("argument \"hic\" is missing, with no default.", call. = FALSE)
   if(is.null(bb_rhic$chrom)) stop("argument \"chrom\" is missing, with no default.", call. = FALSE)
-
-  errorcheck_bb_rhic(hic = bb_rhic$hic, chrom = bb_rhic$chrom, chromstart = bb_rhic$chromstart, chromend = bb_rhic$chromend, zrange = bb_rhic$zrange, altchrom = bb_rhic$altchrom,
-                     altchromstart = bb_rhic$altchromstart, altchromend = bb_rhic$altchromend, norm = bb_rhic$norm, res_scale = bb_rhic$res_scale)
 
   # ======================================================================================================================================================================================
   # PARSE ASSEMBLY
   # ======================================================================================================================================================================================
 
   bb_rhic$assembly <- parse_bbAssembly(assembly = bb_rhic$assembly)
+
+  # ======================================================================================================================================================================================
+  # CATCH ERRORS
+  # ======================================================================================================================================================================================
+
+  errorcheck_bb_rhic(hic = bb_rhic$hic, chrom = bb_rhic$chrom, chromstart = bb_rhic$chromstart, chromend = bb_rhic$chromend, zrange = bb_rhic$zrange, altchrom = bb_rhic$altchrom,
+                     altchromstart = bb_rhic$altchromstart, altchromend = bb_rhic$altchromend, norm = bb_rhic$norm, res_scale = bb_rhic$res_scale, assembly = bb_rhic$assembly$Genome)
 
   # ======================================================================================================================================================================================
   # SET PARAMETERS
@@ -371,7 +385,7 @@ bb_readHic <- function(hic, chrom, params = NULL, chromstart = NULL, chromend = 
   # PARSE REGIONS
   # ======================================================================================================================================================================================
 
-  chromRegion <- parse_region(chrom = bb_rhic$chrom, chromstart = parse_chromstart, chromend = parse_chromend, assembly = bb_rhic$assembly)
+  chromRegion <- parse_region(chrom = bb_rhic$chrom, chromstart = parse_chromstart, chromend = parse_chromend, assembly = bb_rhic$assembly$Genome)
 
   if (is.null(bb_rhic$altchrom)){
 
@@ -385,7 +399,7 @@ bb_readHic <- function(hic, chrom, params = NULL, chromstart = NULL, chromend = 
 
     } else {
 
-      altchromRegion <- parse_region(chrom = bb_rhic$altchrom, chromstart = parse_altchromstart, chromend = parse_altchromend, assembly = bb_rhic$assembly)
+      altchromRegion <- parse_region(chrom = bb_rhic$altchrom, chromstart = parse_altchromstart, chromend = parse_altchromend, assembly = bb_rhic$assembly$Genome)
 
     }
 
@@ -421,7 +435,7 @@ bb_readHic <- function(hic, chrom, params = NULL, chromstart = NULL, chromend = 
 
   if (!is.null(bb_rhic$altchrom)){
 
-    upper <- orderChroms(hic = upper, chrom = bb_rhic$chrom, altchrom = bb_rhic$altchrom, assembly = bb_rhic$assembly)
+    upper <- orderChroms(hic = upper, chrom = bb_rhic$chrom, altchrom = bb_rhic$altchrom, assembly = bb_rhic$assembly$Genome)
     colnames(upper) <- c("x", "y", "counts")
   }
 

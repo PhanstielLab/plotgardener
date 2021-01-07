@@ -64,7 +64,7 @@ bb_plotHicTriangle <- function(hic, chrom, params = NULL, chromstart = NULL, chr
   }
 
   ## Define a function that catches errors for bb_plotTriangleHic
-  errorcheck_bb_plotTriangleHic <- function(hic, hic_plot, norm){
+  errorcheck_bb_plotTriangleHic <- function(hic, hic_plot, norm, assembly){
 
     ###### hic/norm #####
 
@@ -109,6 +109,17 @@ bb_plotHicTriangle <- function(hic, chrom, params = NULL, chromstart = NULL, chr
       stop("Cannot have one \'NULL\' \'chromstart\' or \'chromend\'.", call. = FALSE)
 
     }
+
+    ## Even though straw technically works without "chr" for hg19, will not accept for consistency purposes
+    if (assembly == "hg19"){
+
+      if (grepl("chr", hic_plot$chrom) == FALSE){
+
+        stop(paste(paste0("'",hic_plot$chrom, "'"), "is an invalid input for an hg19 chromsome. Please specify chromosome as", paste0("'chr", hic_plot$chrom, "'.")), call. = FALSE)
+      }
+
+    }
+
 
     if (!is.null(hic_plot$chromstart) & !is.null(hic_plot$chromend)){
       ## Chromstart should be smaller than chromend
@@ -227,30 +238,28 @@ bb_plotHicTriangle <- function(hic, chrom, params = NULL, chromstart = NULL, chr
   ## Define a function that reads in hic data
   read_data <- function(hic, hic_plot, norm, assembly, type){
 
-    parse_chrom <- function(assembly, chrom){
-
-      assemblyName <- unlist(strsplit(assembly$TxDb, split = "[.]"))
-
-      if ("hg19" %in% assemblyName){
-        strawChrom <- as.numeric(gsub("chr", "", chrom))
-      } else {
-        strawChrom <- chrom
-      }
-
-      return(strawChrom)
-    }
+    # parse_chrom <- function(assembly, chrom){
+    #
+    #   if (assembly$Genome == "hg19"){
+    #     strawChrom <- as.numeric(gsub("chr", "", chrom))
+    #   } else {
+    #     strawChrom <- chrom
+    #   }
+    #
+    #   return(strawChrom)
+    # }
 
     ## if .hic file, read in with bb_rhic
     if (!("data.frame" %in% class(hic))){
 
       if (!is.null(hic_plot$chromstart) & !is.null(hic_plot$chromend)){
 
-        strawChrom <- parse_chrom(assembly = assembly, chrom = hic_plot$chrom)
+        #strawChrom <- parse_chrom(assembly = assembly, chrom = hic_plot$chrom)
 
         readchromstart <- hic_plot$chromstart - hic_plot$resolution
         readchromend <- hic_plot$chromend + hic_plot$resolution
 
-        hic <- bb_readHic(hic = hic, chrom = strawChrom, chromstart = readchromstart, chromend = readchromend,
+        hic <- bb_readHic(hic = hic, chrom = hic_plot$chrom, chromstart = readchromstart, chromend = readchromend,
                           resolution = hic_plot$resolution, zrange = hic_plot$zrange, norm = norm, dataType = type)
 
       } else {
@@ -587,7 +596,7 @@ bb_plotHicTriangle <- function(hic, chrom, params = NULL, chromstart = NULL, chr
   # CATCH ERRORS
   # ======================================================================================================================================================================================
 
-  errorcheck_bb_plotTriangleHic(hic = bb_thicInternal$hic, hic_plot = hic_plot, norm = bb_thicInternal$norm)
+  errorcheck_bb_plotTriangleHic(hic = bb_thicInternal$hic, hic_plot = hic_plot, norm = bb_thicInternal$norm, assembly = hic_plot$assembly$Genome)
 
   # ======================================================================================================================================================================================
   # JUSTIFICATION OF PLOT

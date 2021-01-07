@@ -1,5 +1,6 @@
 #' Makes a bb_assembly object for alternate TxDB, OrgDb,and BSgenome packages
 #'
+#' @param Genome string of genome assembly name
 #' @param TxDb string of the desired TxDb package
 #' @param OrgDb string of the desired OrgDb package
 #' @param gene.id.column string name of OrgDb column that refers to the given TxDb gene ID's
@@ -8,9 +9,9 @@
 #'
 #' @export
 
-bb_assembly <- function(TxDb, OrgDb, gene.id.column = "ENTREZID", display.column = "SYMBOL", BSgenome = NULL){
+bb_assembly <- function(Genome, TxDb, OrgDb, gene.id.column = "ENTREZID", display.column = "SYMBOL", BSgenome = NULL){
 
-  object <- structure(list(TxDb, OrgDb, gene.id.column, display.column), class = "bb_assembly")
+  object <- structure(list(Genome, TxDb, OrgDb, gene.id.column, display.column), class = "bb_assembly")
   if(!is.null(BSgenome)){
     object$BSgenome <- BSgenome
   }
