@@ -9,7 +9,7 @@
 #' @param zrange the range of interaction scores to plot, where extreme values will be set to the max or min; if null, zrange will be set to (0, max(data))
 #' @param norm hic data normalization; must be found in hic file
 #' @param res_scale resolution scale; options are "BP" and "FRAG"
-#' @param dataType type of data to be returned; options are "observed" and "oe"
+#' @param matrix type of matrix to output. Must be one of "observed" or "oe". "observed" is observed counts and "oe" is observed/expected counts.
 #' @param assembly desired genome assembly
 #' @param altchrom if looking at region between two different chromosomes, this is the specified alternative chromosome
 #' @param altchromstart if looking at region between two different chromosomes, start position of altchrom
@@ -20,7 +20,7 @@
 #' @export
 
 bb_readHic <- function(hic, chrom, params = NULL, chromstart = NULL, chromend = NULL, resolution = "auto", zrange = NULL,
-                       norm = "KR", res_scale = "BP", dataType = "observed", assembly = "hg19", altchrom = NULL, altchromstart = NULL, altchromend = NULL){
+                       norm = "KR", res_scale = "BP", matrix = "observed", assembly = "hg19", altchrom = NULL, altchromstart = NULL, altchromend = NULL){
 
 
   # ======================================================================================================================================================================================
@@ -324,7 +324,7 @@ bb_readHic <- function(hic, chrom, params = NULL, chromstart = NULL, chromend = 
   if(missing(norm)) norm <- NULL
   if(missing(res_scale)) res_scale <- NULL
   if(missing(assembly)) assembly <- NULL
-  if(missing(dataType)) dataType <- NULL
+  if(missing(matrix)) matrix <- NULL
 
   ## Check if hic/chrom arguments are missing (could be in object)
   if(!hasArg(hic)) hic <- NULL
@@ -332,7 +332,7 @@ bb_readHic <- function(hic, chrom, params = NULL, chromstart = NULL, chromend = 
 
   ## Compile all parameters into an internal object
   bb_rhic <- structure(list(hic = hic, chrom = chrom, chromstart = chromstart, chromend = chromend, resolution = resolution, zrange = zrange,
-                            norm = norm, res_scale = res_scale, assembly = assembly, dataType = dataType, altchrom = altchrom, altchromstart = altchromstart, altchromend = altchromend), class = "bb_rhic")
+                            norm = norm, res_scale = res_scale, assembly = assembly, matrix = matrix, altchrom = altchrom, altchromstart = altchromstart, altchromend = altchromend), class = "bb_rhic")
 
   bb_rhic <- parseParams(bb_params = params, object_params = bb_rhic)
 
@@ -341,7 +341,7 @@ bb_readHic <- function(hic, chrom, params = NULL, chromstart = NULL, chromend = 
   if(is.null(bb_rhic$norm)) bb_rhic$norm <- "KR"
   if(is.null(bb_rhic$res_scale)) bb_rhic$res_scale <- "BP"
   if(is.null(bb_rhic$assembly)) bb_rhic$assembly <- "hg19"
-  if(is.null(bb_rhic$dataType)) bb_rhic$dataType <- "observed"
+  if(is.null(bb_rhic$matrix)) bb_rhic$matrix <- "observed"
 
   if(is.null(bb_rhic$hic)) stop("argument \"hic\" is missing, with no default.", call. = FALSE)
   if(is.null(bb_rhic$chrom)) stop("argument \"chrom\" is missing, with no default.", call. = FALSE)
@@ -426,7 +426,7 @@ bb_readHic <- function(hic, chrom, params = NULL, chromstart = NULL, chromend = 
 
 
   upper <-
-    tryCatch(strawr::straw(bb_rhic$dataType, bb_rhic$norm, bb_rhic$hic, toString(chromRegion), toString(altchromRegion), bb_rhic$res_scale, bb_rhic$resolution),
+    tryCatch(strawr::straw(bb_rhic$matrix, bb_rhic$norm, bb_rhic$hic, toString(chromRegion), toString(altchromRegion), bb_rhic$res_scale, bb_rhic$resolution),
              error = errorFunction)
 
   # ======================================================================================================================================================================================

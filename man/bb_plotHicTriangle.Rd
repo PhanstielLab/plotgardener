@@ -22,7 +22,7 @@ bb_plotHicTriangle(
   norm = "KR",
   default.units = "inches",
   draw = T,
-  dataType = "observed"
+  matrix = "observed"
 )
 }
 \arguments{
@@ -61,7 +61,7 @@ dataframes, "auto" will attempt to detect the resolution the dataframe contains}
 
 \item{draw}{A logical value indicating whether graphics output should be produced}
 
-\item{dataType}{type of data to be returned; options are "observed" and "oe"}
+\item{matrix}{type of matrix to output. Must be one of "observed" or "oe". "observed" is observed counts and "oe" is observed/expected counts.}
 }
 \description{
 plots HiC interaction matrix in triangular format

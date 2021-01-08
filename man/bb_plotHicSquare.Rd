@@ -27,7 +27,7 @@ bb_plotHicSquare(
   altchromend = NULL,
   althalf = NULL,
   norm = "KR",
-  dataType = "observed"
+  matrix = "observed"
 )
 }
 \arguments{
@@ -76,7 +76,7 @@ dataframes, "auto" will attempt to detect the resolution the dataframe contains}
 
 \item{norm}{if giving .hic file, hic data normalization; must be found in hic file}
 
-\item{dataType}{type of data to be returned; options are "observed" and "oe"}
+\item{matrix}{type of matrix to output. Must be one of "observed" or "oe". "observed" is observed counts and "oe" is observed/expected counts.}
 }
 \value{
 Function will plot a HiC interaction matrix and return a bb_hic object

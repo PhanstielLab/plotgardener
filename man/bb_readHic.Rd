@@ -14,7 +14,7 @@ bb_readHic(
   zrange = NULL,
   norm = "KR",
   res_scale = "BP",
-  dataType = "observed",
+  matrix = "observed",
   assembly = "hg19",
   altchrom = NULL,
   altchromstart = NULL,
@@ -40,7 +40,7 @@ bb_readHic(
 
 \item{res_scale}{resolution scale; options are "BP" and "FRAG"}
 
-\item{dataType}{type of data to be returned; options are "observed" and "oe"}
+\item{matrix}{type of matrix to output. Must be one of "observed" or "oe". "observed" is observed counts and "oe" is observed/expected counts.}
 
 \item{assembly}{desired genome assembly}
 
@@ -55,10 +55,4 @@ Function will return a 3-column dataframe: chrom, altchrom, counts
 }
 \description{
 extracts Hi-C data from a .hic file
-}
-\examples{
-download.file("https://www.encodeproject.org/files/ENCFF606XNW/@download/ENCFF606XNW.hic", destfile = "ENCFF606XNW.hic", method = "auto")
-bb_readHic(hic = "./ENCFF606XNW.hic", chrom = "chr1")
-bb_readHic(hic = "./ENCFF606XNW.hic", chrom = "chr1", chromstart = 22500000, chromend = 23200000, zrange = c(0, 125))
-bb_readHic(hic = "./ENCFF606XNW.hic", chrom = "chr1", altchrom = "chr2")
 }

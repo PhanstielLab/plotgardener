@@ -23,7 +23,7 @@
 #' @param altchromend alternate chromosome end for off-diagonal plotting or interchromosomal plotting
 #' @param althalf if plotting altchrom region, which side off diagonal to plot; options are "top" or "bottom"
 #' @param norm if giving .hic file, hic data normalization; must be found in hic file
-#' @param dataType type of data to be returned; options are "observed" and "oe"
+#' @param matrix type of matrix to output. Must be one of "observed" or "oe". "observed" is observed counts and "oe" is observed/expected counts.
 #'
 #' @return Function will plot a HiC interaction matrix and return a bb_hic object
 #'
@@ -37,7 +37,7 @@
 bb_plotHicSquare <- function(hic, chrom, params = NULL, chromstart = NULL, chromend = NULL, half = "both", resolution = "auto", zrange = NULL,
                        palette = colorRampPalette(c("white", "dark red")), assembly = "hg19", width = NULL, height = NULL, x = NULL, y = NULL,
                        just = c("left", "top"), default.units = "inches", draw = TRUE, altchrom = NULL, altchromstart = NULL, altchromend = NULL, althalf = NULL,
-                       norm = "KR", dataType = "observed"){
+                       norm = "KR", matrix = "observed"){
 
   # ======================================================================================================================================================================================
   # FUNCTIONS
@@ -328,28 +328,10 @@ bb_plotHicSquare <- function(hic, chrom, params = NULL, chromstart = NULL, chrom
   ## Define a function that reads in hic data for bb_plothic
   read_data <- function(hic, hic_plot, norm, assembly, type){
 
-    # parse_chrom <- function(assembly, chrom){
-    #
-    #   if (assembly$Genome == "hg19"){
-    #     strawChrom <- gsub("chr", "", chrom)
-    #   } else {
-    #     strawChrom <- chrom
-    #   }
-    #
-    #   return(strawChrom)
-    # }
-
     ## if .hic file, read in with bb_rhic
     if (!("data.frame" %in% class(hic))){
 
       if (!is.null(hic_plot$chromstart) & !is.null(hic_plot$chromend)){
-
-        # strawChrom <- parse_chrom(assembly = assembly, chrom = hic_plot$chrom)
-        # if (!is.null(hic_plot$altchrom)){
-        #   strawaltChrom <- parse_chrom(assembly = assembly, chrom = hic_plot$altchrom)
-        # } else {
-        #   strawaltChrom <- NULL
-        # }
 
         readchromstart <- hic_plot$chromstart - hic_plot$resolution
         readchromend <- hic_plot$chromend + hic_plot$resolution
@@ -358,7 +340,7 @@ bb_plotHicSquare <- function(hic, chrom, params = NULL, chromstart = NULL, chrom
         hic <- suppressWarnings(bb_readHic(hic = hic, chrom = hic_plot$chrom, chromstart = readchromstart, chromend = readchromend,
                                            resolution = hic_plot$resolution, zrange = hic_plot$zrange, norm = norm,
                                            altchrom = hic_plot$altchrom, altchromstart = readaltchromstart,
-                                           altchromend = readaltchromend, dataType = type))
+                                           altchromend = readaltchromend, matrix = type))
       } else {
         hic <- data.frame(matrix(nrow = 0, ncol = 3))
       }
@@ -568,7 +550,7 @@ bb_plotHicSquare <- function(hic, chrom, params = NULL, chromstart = NULL, chrom
   if(missing(default.units)) default.units <- NULL
   if(missing(draw)) draw <- NULL
   if(missing(norm)) norm <- NULL
-  if(missing(dataType)) dataType <- NULL
+  if(missing(matrix)) matrix <- NULL
 
   ## Check if hic/chrom arguments are missing (could be in object)
   if(!hasArg(hic)) hic <- NULL
@@ -578,7 +560,7 @@ bb_plotHicSquare <- function(hic, chrom, params = NULL, chromstart = NULL, chrom
   bb_hicInternal <- structure(list(hic = hic, chrom = chrom, chromstart = chromstart, chromend = chromend, half = half, resolution = resolution,
                                    zrange = zrange, palette = palette, assembly = assembly, width = width, height = height, x = x, y = y, just = just,
                                    default.units = default.units, draw = draw, altchrom = altchrom, altchromstart = altchromstart, altchromend = altchromend,
-                                   althalf = althalf, norm = norm, dataType = dataType), class = "bb_hicInternal")
+                                   althalf = althalf, norm = norm, matrix = matrix), class = "bb_hicInternal")
 
   bb_hicInternal <- parseParams(bb_params = params, object_params = bb_hicInternal)
 
@@ -591,7 +573,7 @@ bb_plotHicSquare <- function(hic, chrom, params = NULL, chromstart = NULL, chrom
   if(is.null(bb_hicInternal$default.units)) bb_hicInternal$default.units <- "inches"
   if(is.null(bb_hicInternal$draw)) bb_hicInternal$draw <- TRUE
   if(is.null(bb_hicInternal$norm)) bb_hicInternal$norm <- "KR"
-  if(is.null(bb_hicInternal$dataType)) bb_hicInternal$dataType <- "observed"
+  if(is.null(bb_hicInternal$matrix)) bb_hicInternal$matrix <- "observed"
 
   if(is.null(bb_hicInternal$hic)) stop("argument \"hic\" is missing, with no default.", call. = FALSE)
   if(is.null(bb_hicInternal$chrom)) stop("argument \"chrom\" is missing, with no default.", call. = FALSE)
@@ -659,7 +641,7 @@ bb_plotHicSquare <- function(hic, chrom, params = NULL, chromstart = NULL, chrom
   # READ IN DATA
   # ======================================================================================================================================================================================
 
-  hic <- read_data(hic = bb_hicInternal$hic, hic_plot = hic_plot, norm = bb_hicInternal$norm, assembly = hic_plot$assembly, type = bb_hicInternal$dataType)
+  hic <- read_data(hic = bb_hicInternal$hic, hic_plot = hic_plot, norm = bb_hicInternal$norm, assembly = hic_plot$assembly, type = bb_hicInternal$matrix)
 
   # ======================================================================================================================================================================================
   # SUBSET DATA
