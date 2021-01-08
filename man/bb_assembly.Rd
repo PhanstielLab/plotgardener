@@ -5,6 +5,7 @@
 \title{Makes a bb_assembly object for alternate TxDB, OrgDb,and BSgenome packages}
 \usage{
 bb_assembly(
+  Genome,
   TxDb,
   OrgDb,
   gene.id.column = "ENTREZID",
@@ -13,6 +14,8 @@ bb_assembly(
 )
 }
 \arguments{
+\item{Genome}{string of genome assembly name}
+
 \item{TxDb}{string of the desired TxDb package}
 
 \item{OrgDb}{string of the desired OrgDb package}
