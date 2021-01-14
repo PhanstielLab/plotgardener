@@ -13,6 +13,8 @@
 #' @param assembly desired genome assembly
 #' @param ymax fraction of max y-value to set as height of plot
 #' @param scale A logical value indicating whether to include a data scale label in the top left corner
+#' @param bg background color
+#' @param baseline logical indicating whether to include baseline along the x-axis
 #' @param width A numeric or unit object specifying width
 #' @param height A numeric or unit object specifying height
 #' @param x A numeric or unit object specifying x-location
@@ -23,7 +25,7 @@
 #'
 #' @export
 bb_plotSignal <- function(signal, chrom, params = NULL, chromstart = NULL, chromend = NULL, range = NULL, linecolor = "grey",
-                          binSize = NA, binCap = TRUE, fillcolor = NULL, assembly = "hg19", ymax = 1, scale = FALSE, width = NULL,
+                          binSize = NA, binCap = TRUE, fillcolor = NULL, assembly = "hg19", ymax = 1, scale = FALSE, bg = NA, baseline = FALSE, width = NULL,
                            height = NULL, x = NULL, y = NULL, just = c("left", "top"), default.units = "inches", draw = TRUE, ...){
 
   # ======================================================================================================================================================================================
@@ -419,6 +421,8 @@ bb_plotSignal <- function(signal, chrom, params = NULL, chromstart = NULL, chrom
   if(missing(assembly)) assembly <- NULL
   if(missing(ymax)) ymax <- NULL
   if(missing(scale)) scale <- NULL
+  if(missing(bg)) bg <- NULL
+  if(missing(baseline)) baseline <- NULL
   if(missing(just)) just <- NULL
   if(missing(default.units)) default.units <- NULL
   if(missing(draw)) draw <- NULL
@@ -429,7 +433,7 @@ bb_plotSignal <- function(signal, chrom, params = NULL, chromstart = NULL, chrom
 
   ## Compile all parameters into an internal object
   bb_sigInternal <- structure(list(signal = signal, chrom = chrom, chromstart = chromstart, chromend = chromend, range = range, linecolor = linecolor, binSize = binSize,
-                                   binCap = binCap, fillcolor = fillcolor, assembly = assembly, ymax = ymax, scale = scale, width = width, height = height,
+                                   binCap = binCap, fillcolor = fillcolor, assembly = assembly, ymax = ymax, scale = scale, bg = bg, baseline = baseline, width = width, height = height,
                                    x = x, y = y, just = just, default.units = default.units, draw = draw), class = "bb_sigInternal")
 
   bb_sigInternal <- parseParams(bb_params = params, object_params = bb_sigInternal)
@@ -441,6 +445,8 @@ bb_plotSignal <- function(signal, chrom, params = NULL, chromstart = NULL, chrom
   if(is.null(bb_sigInternal$assembly)) bb_sigInternal$assembly <- "hg19"
   if(is.null(bb_sigInternal$ymax)) bb_sigInternal$ymax <- 1
   if(is.null(bb_sigInternal$scale)) bb_sigInternal$scale <- FALSE
+  if(is.null(bb_sigInternal$bg)) bb_sigInternal$bg <- NA
+  if(is.null(bb_sigInternal$baseline)) bb_sigInternal$baseline <- FALSE
   if(is.null(bb_sigInternal$just)) bb_sigInternal$just <- c("left", "top")
   if(is.null(bb_sigInternal$default.units)) bb_sigInternal$default.units <- "inches"
   if(is.null(bb_sigInternal$draw)) bb_sigInternal$draw <- TRUE
@@ -639,10 +645,11 @@ bb_plotSignal <- function(signal, chrom, params = NULL, chromstart = NULL, chrom
 
 
   # ======================================================================================================================================================================================
-  # INITIALIZE GTREE FOR GROBS
+  # INITIALIZE GTREE FOR GROBS WITH BACKGROUND
   # ======================================================================================================================================================================================
 
-  assign("signal_grobs", gTree(vp = vp), envir = bbEnv)
+  backgroundGrob <- rectGrob(gp = gpar(fill = bb_sigInternal$bg, col = NA), name = "background")
+  assign("signal_grobs", gTree(vp = vp, children = gList(backgroundGrob)), envir = bbEnv)
 
   # ======================================================================================================================================================================================
   # MAKE GROBS
@@ -703,6 +710,13 @@ bb_plotSignal <- function(signal, chrom, params = NULL, chromstart = NULL, chrom
     } else {
 
       if (nrow(posSignal) >= 2){
+
+        if(bb_sigInternal$baseline == TRUE){
+          baselineGrob <- segmentsGrob(x0 = unit(0, "npc"), x1 = unit(1, "npc"), y0 = 0, y1 = 0,
+                                   gp = gpar(col = gp$axis, lwd = 1.5), default.units = "native")
+          assign("signal_grobs", addGrob(gTree = get("signal_grobs", envir = bbEnv), child = baselineGrob), envir = bbEnv)
+        }
+
         sigGrob(signal = posSignal2, fillCol = bb_sigInternal$fillcolor[1], lineCol = bb_sigInternal$linecolor[1], gp = gp)
         ## Find and make cutoff lines
         cutoffGrobs(signal = posSignal2, signaltrack = signal_track, side = "top")

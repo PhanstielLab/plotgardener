@@ -16,7 +16,7 @@ bb_plotBedpeArches(
   arch = 5,
   position = "top",
   fillcolor = "lightgrey",
-  linecolor = NA,
+  linecolor = "grey",
   colorby = NULL,
   colorbyrange = NULL,
   assembly = "hg19",

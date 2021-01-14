@@ -13,6 +13,8 @@
 #' @param boxHeight A numeric or unit object specifying height of boxes at either end of bedpe element
 #' @param spaceHeight height of space between boxes of different bedpe elements
 #' @param spaceWidth width of spacing between bedpe elements, as a fraction of the plot's genomic range
+#' @param baseline logical indicating whether to include baseline along the x-axis
+#' @param bg background color
 #' @param x A numeric vector or unit object specifying x-location
 #' @param y A numeric vector or unit object specifying y-location
 #' @param width A numeric vector or unit object specifying width
@@ -24,7 +26,7 @@
 #' @export
 
 bb_plotBedpe <- function(bedpe, chrom, params = NULL, chromstart = NULL, chromend = NULL, fillcolor = "black", colorby = NULL, colorbyrange = NULL, linecolor = NA, assembly = "hg19",
-                         boxHeight = unit(2, "mm"), spaceHeight = 0.3, spaceWidth = 0.02, x = NULL, y = NULL, width = NULL, height = NULL,
+                         boxHeight = unit(2, "mm"), spaceHeight = 0.3, spaceWidth = 0.02, baseline = FALSE, bg = NA, x = NULL, y = NULL, width = NULL, height = NULL,
                          just = c("left", "top"), default.units = "inches", draw = TRUE, ...){
 
   # ======================================================================================================================================================================================
@@ -81,6 +83,8 @@ bb_plotBedpe <- function(bedpe, chrom, params = NULL, chromstart = NULL, chromen
   if(missing(boxHeight)) boxHeight <- NULL
   if(missing(spaceHeight)) spaceHeight <- NULL
   if(missing(spaceWidth)) spaceWidth <- NULL
+  if(missing(baseline)) baseline <- NULL
+  if(missing(bg)) bg <- NULL
   if(missing(just)) just <- NULL
   if(missing(default.units)) default.units <- NULL
   if(missing(draw)) draw <- NULL
@@ -92,7 +96,7 @@ bb_plotBedpe <- function(bedpe, chrom, params = NULL, chromstart = NULL, chromen
   ## Compile all parameters into an internal object
   bb_bedpeInternal <- structure(list(bedpe = bedpe, chrom = chrom, chromstart = chromstart, chromend = chromend,
                                      fillcolor = fillcolor, colorby = colorby, colorbyrange = colorbyrange, linecolor = linecolor,
-                                     assembly = assembly, boxHeight = boxHeight, spaceHeight = spaceHeight, spaceWidth = spaceWidth,
+                                     assembly = assembly, boxHeight = boxHeight, spaceHeight = spaceHeight, spaceWidth = spaceWidth, baseline = baseline, bg = bg,
                                      x = x, y = y, width = width, height = height, just = just, default.units = default.units, draw = draw), class = "bb_bedpeInternal")
 
   bb_bedpeInternal <- parseParams(bb_params = params, object_params = bb_bedpeInternal)
@@ -104,6 +108,8 @@ bb_plotBedpe <- function(bedpe, chrom, params = NULL, chromstart = NULL, chromen
   if(is.null(bb_bedpeInternal$boxHeight)) bb_bedpeInternal$boxHeight <- unit(2, "mm")
   if(is.null(bb_bedpeInternal$spaceHeight)) bb_bedpeInternal$spaceHeight <- 0.3
   if(is.null(bb_bedpeInternal$spaceWidth)) bb_bedpeInternal$spaceWidth <- 0.02
+  if(is.null(bb_bedpeInternal$baseline)) bb_bedpeInternal$baseline <- FALSE
+  if(is.null(bb_bedpeInternal$bg)) bb_bedpeInternal$bg <- NA
   if(is.null(bb_bedpeInternal$just)) bb_bedpeInternal$just <- c("left", "top")
   if(is.null(bb_bedpeInternal$default.units)) bb_bedpeInternal$default.units <- "inches"
   if(is.null(bb_bedpeInternal$draw)) bb_bedpeInternal$draw <- TRUE
@@ -112,7 +118,7 @@ bb_plotBedpe <- function(bedpe, chrom, params = NULL, chromstart = NULL, chromen
   # INITIALIZE OBJECT
   # ======================================================================================================================================================================================
 
-  bb_bedpe <- structure(list(chrom = bb_bedpeInternal$chrom, chromstart = bb_bedpeInternal$chromstart, chromend = bb_bedpeInternal$chromend, color_palette = NULL,
+  bb_bedpe <- structure(list(bedpe = NULL, chrom = bb_bedpeInternal$chrom, chromstart = bb_bedpeInternal$chromstart, chromend = bb_bedpeInternal$chromend, color_palette = NULL,
                                zrange = bb_bedpeInternal$colorbyrange, width = bb_bedpeInternal$width, height = bb_bedpeInternal$height, x = bb_bedpeInternal$x,
                                y = bb_bedpeInternal$y, justification = bb_bedpeInternal$just,
                                grobs = NULL, assembly = bb_bedpeInternal$assembly), class = "bb_bedpe")
@@ -225,6 +231,7 @@ bb_plotBedpe <- function(bedpe, chrom, params = NULL, chromstart = NULL, chromen
     bedpe <- data.frame(matrix(nrow = 0, ncol = 6))
   }
 
+  bb_bedpe$bedpe <- bedpe
   # ======================================================================================================================================================================================
   # GET BOX WIDTHS AND TOTAL DISTANCES
   # ======================================================================================================================================================================================
@@ -312,10 +319,11 @@ bb_plotBedpe <- function(bedpe, chrom, params = NULL, chromstart = NULL, chromen
   }
 
   # ======================================================================================================================================================================================
-  # INITIALIZE GTREE FOR GROBS
+  # INITIALIZE GTREE FOR GROBS WITH BACKGROUND
   # ======================================================================================================================================================================================
 
-  assign("bedpe_grobs", gTree(vp = vp), envir = bbEnv)
+  backgroundGrob <- rectGrob(gp = gpar(fill = bb_bedpeInternal$bg, col = NA), name = "background")
+  assign("bedpe_grobs", gTree(vp = vp, children = gList(backgroundGrob)), envir = bbEnv)
 
   # ======================================================================================================================================================================================
   # DETERMINE ROWS FOR EACH ELEMENT
@@ -413,6 +421,14 @@ bb_plotBedpe <- function(bedpe, chrom, params = NULL, chromstart = NULL, chromen
     # ======================================================================================================================================================================================
     # MAKE GROBS
     # ======================================================================================================================================================================================
+
+    if (bb_bedpeInternal$baseline == TRUE){
+      baselineGrob <- segmentsGrob(x0 = unit(0, "npc"), y0 = 0, x1 = unit(1, "npc"), y1 = 0, default.units = "native", gp = gpar(lwd = 1.5))
+      assign("bedpe_grobs", addGrob(gTree = get("bedpe_grobs", envir = bbEnv), child = baselineGrob), envir = bbEnv)
+    }
+
+
+
     bedpeRect1 <- rectGrob(x = rowBedpe$start1,
                            y = rowBedpe$y,
                            width = rowBedpe$width1,

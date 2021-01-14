@@ -13,6 +13,7 @@
 #' @param stroke numerical value indicating the stroke width for gene body outlines
 #' @param fontsize the size of gene label text (in points)
 #' @param strandLabels A logical value indicating whether to include +/- strand labels
+#' @param bg background color
 #' @param x A numeric or unit object specifying x-location
 #' @param y A numeric or unit object specifying y-location
 #' @param width A numeric or unit object specifying width
@@ -26,7 +27,7 @@
 #' @export
 bb_plotGenes <- function(chrom, params = NULL, assembly = "hg19", chromstart = NULL, chromend = NULL, fontcolors = c("#2929ff", "#ff3434"),
                          strandcolors = c("#8a8aff", "#ff7e7e"), geneOrder = NULL, geneHighlights = NULL, geneBackground = "grey",
-                         stroke = 0.1, fontsize = 8, strandLabels = TRUE, x = NULL, y = NULL, width = NULL, height = unit(0.6, "inches"),
+                         stroke = 0.1, fontsize = 8, strandLabels = TRUE, bg = NA, x = NULL, y = NULL, width = NULL, height = unit(0.6, "inches"),
                          just = c("left", "top"), default.units = "inches", draw = TRUE){
 
   # ======================================================================================================================================================================================
@@ -122,6 +123,7 @@ bb_plotGenes <- function(chrom, params = NULL, assembly = "hg19", chromstart = N
   if(missing(stroke)) stroke <- NULL
   if(missing(fontsize)) fontsize <- NULL
   if(missing(strandLabels)) strandLabels <- NULL
+  if(missing(bg)) bg <- NULL
   if(missing(height)) height <- NULL
   if(missing(just)) just <- NULL
   if(missing(default.units)) default.units <- NULL
@@ -133,7 +135,7 @@ bb_plotGenes <- function(chrom, params = NULL, assembly = "hg19", chromstart = N
   ## Compile all parameters into an internal object
   bb_genesInternal <- structure(list(assembly = assembly, chrom = chrom, chromstart = chromstart, chromend = chromend, fontcolors = fontcolors,
                                     strandcolors = strandcolors, geneOrder = geneOrder, geneHighlights = geneHighlights, geneBackground = geneBackground,
-                                    stroke = stroke, fontsize = fontsize, strandLabels = strandLabels, x = x, y = y, width = width, height = height,
+                                    stroke = stroke, fontsize = fontsize, strandLabels = strandLabels, bg = bg, x = x, y = y, width = width, height = height,
                                     just = just, default.units = default.units, draw = draw), class = "bb_genesInternal")
 
   bb_genesInternal <- parseParams(bb_params = params, object_params = bb_genesInternal)
@@ -146,6 +148,7 @@ bb_plotGenes <- function(chrom, params = NULL, assembly = "hg19", chromstart = N
   if(is.null(bb_genesInternal$stroke)) bb_genesInternal$stroke <- 0.1
   if(is.null(bb_genesInternal$fontsize)) bb_genesInternal$fontsize <- 8
   if(is.null(bb_genesInternal$strandLabels)) bb_genesInternal$strandLabels <- TRUE
+  if(is.null(bb_genesInternal$bg)) bb_genesInternal$bg <- NA
   if(is.null(bb_genesInternal$height)) bb_genesInternal$height <- unit(0.6, "inches")
   if(is.null(bb_genesInternal$just)) bb_genesInternal$just <- c("left", "top")
   if(is.null(bb_genesInternal$default.units)) bb_genesInternal$default.units <- "inches"
@@ -346,10 +349,11 @@ bb_plotGenes <- function(chrom, params = NULL, assembly = "hg19", chromstart = N
   }
 
   # ======================================================================================================================================================================================
-  # INITIALIZE GTREE FOR GROBS
+  # INITIALIZE GTREE FOR GROBS WITH BACKGROUND
   # ======================================================================================================================================================================================
 
-  assign("gene_grobs", gTree(), envir = bbEnv)
+  backgroundGrob <- rectGrob(gp = gpar(fill = bb_genesInternal$bg, col = NA), name = "background", vp = vp_gene)
+  assign("gene_grobs", gTree(children = gList(backgroundGrob)), envir = bbEnv)
 
   # ======================================================================================================================================================================================
   # MAKE GROBS

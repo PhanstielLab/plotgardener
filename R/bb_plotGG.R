@@ -1,6 +1,6 @@
 #' adds a plot created with ggplot2 to a BentoBox layout
 #'
-#' @param plot ggplot object
+#' @param plot ggplot object'
 #' @param x A numeric or unit object specifying x-location.
 #' @param y A numeric or unit object specifying y-location.
 #' @param width A numeric or unit object specifying width.

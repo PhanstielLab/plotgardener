@@ -1,6 +1,6 @@
 #' plots a legend
 #'
-#' @param legend single value or vector of legend text#'
+#' @param legend single value or vector of legend text
 #' @param params an optional "bb_params" object space containing relevant function parameters
 #' @param orientation "v" (vertical) or "h" (horizontal) orientation
 #' @param fillcolor if specified, this argument will produce boxes filled with the specified colors to appear beside the legend text

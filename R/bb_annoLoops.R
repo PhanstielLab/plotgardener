@@ -413,7 +413,7 @@ bb_annoLoops <- function(hic, loops, params = NULL, half = "inherit", shift = 4,
   ## Assuming loops are in first six columns only
   loops <- loops[,1:6]
 
-  loops_subset <- subset_loops(loops = loops, object = bb_loops)
+  loops_subset <- subset_loops(hic = bb_loopsInternal$hic, loops = loops, object = bb_loops)
 
   # ======================================================================================================================================================================================
   # VIEWPORTS

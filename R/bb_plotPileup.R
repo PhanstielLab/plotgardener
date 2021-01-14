@@ -14,6 +14,8 @@
 #' @param boxHeight A numeric or unit object specifying height of pileup element boxes
 #' @param spaceHeight height of spacing between pileup element boxes, as a fraction of boxHeight
 #' @param spaceWidth width of minimum spacing between pileup element boxes, as a fraction of the plot's genomic range
+#' @param bg background color
+#' @param baseline logical indicating whether to include baseline along the x-axis
 #' @param x A numeric or unit object specifying x-location
 #' @param y A numeric or unit object specifying y-location
 #' @param width A numeric or unit object specifying width
@@ -28,7 +30,7 @@
 
 bb_plotPileup <- function(bed, chrom, params = NULL, chromstart = NULL, chromend = NULL, assembly = "hg19", fillcolor = "black", linecolor = NA,
                           colorby = NULL, colorbyrange = NULL, strandSplit = FALSE, boxHeight =  unit(2, "mm"), spaceHeight = 0.3,
-                          spaceWidth = 0.02, x = NULL, y = NULL, width = NULL, height = NULL, just = c("left", "top"),
+                          spaceWidth = 0.02, bg = NA, baseline = FALSE, x = NULL, y = NULL, width = NULL, height = NULL, just = c("left", "top"),
                           default.units = "inches", draw = TRUE, ...){
 
   # ======================================================================================================================================================================================
@@ -101,6 +103,8 @@ bb_plotPileup <- function(bed, chrom, params = NULL, chromstart = NULL, chromend
   if(missing(boxHeight)) boxHeight <- NULL
   if(missing(spaceHeight)) spaceHeight <- NULL
   if(missing(spaceWidth)) spaceWidth <- NULL
+  if(missing(bg)) bg <- NULL
+  if(missing(baseline)) baseline <- NULL
   if(missing(just)) just <- NULL
   if(missing(default.units)) default.units <- NULL
   if(missing(draw)) draw <- NULL
@@ -111,8 +115,8 @@ bb_plotPileup <- function(bed, chrom, params = NULL, chromstart = NULL, chromend
 
   ## Compile all parameters into an internal object
   bb_pileInternal <- structure(list(bed = bed, chrom = chrom, chromstart = chromstart, chromend = chromend, assembly = assembly, fillcolor = fillcolor, linecolor = linecolor,
-                                    colorby = colorby, colorbyrange = colorbyrange, strandSplit = strandSplit, boxHeight = boxHeight, spaceHeight = spaceHeight, spaceWidth = spaceWidth,
-                                    x = x, y = y, width = width, height = height, just = just, default.units = default.units, draw = draw), class = "bb_pileInternal")
+                                    colorby = colorby, colorbyrange = colorbyrange, strandSplit = strandSplit, boxHeight = boxHeight, spaceHeight = spaceHeight, spaceWidth = spaceWidth, bg = bg,
+                                    baseline = baseline, x = x, y = y, width = width, height = height, just = just, default.units = default.units, draw = draw), class = "bb_pileInternal")
 
   bb_pileInternal <- parseParams(bb_params = params, object_params = bb_pileInternal)
 
@@ -124,6 +128,8 @@ bb_plotPileup <- function(bed, chrom, params = NULL, chromstart = NULL, chromend
   if(is.null(bb_pileInternal$boxHeight)) bb_pileInternal$boxHeight <- unit(2, "mm")
   if(is.null(bb_pileInternal$spaceHeight)) bb_pileInternal$spaceHeight <- 0.3
   if(is.null(bb_pileInternal$spaceWidth)) bb_pileInternal$spaceWidth <- 0.02
+  if(is.null(bb_pileInternal$bg)) bb_pileInternal$bg <- NA
+  if(is.null(bb_pileInternal$baseline)) bb_pileInternal$baseline <- FALSE
   if(is.null(bb_pileInternal$just)) bb_pileInternal$just <- c("left", "top")
   if(is.null(bb_pileInternal$default.units)) bb_pileInternal$default.units <- "inches"
   if(is.null(bb_pileInternal$draw)) bb_pileInternal$draw <- TRUE
@@ -336,10 +342,11 @@ bb_plotPileup <- function(bed, chrom, params = NULL, chromstart = NULL, chromend
 
 
   # ======================================================================================================================================================================================
-  # INITIALIZE GTREE FOR GROBS
+  # INITIALIZE GTREE FOR GROBS WITH BACKGROUND
   # ======================================================================================================================================================================================
 
-  assign("pileup_grobs", gTree(vp = vp), envir = bbEnv)
+  backgroundGrob <- rectGrob(gp = gpar(fill = bb_pileInternal$bg, col = NA), name = "background")
+  assign("pileup_grobs", gTree(vp = vp, children = gList(backgroundGrob)), envir = bbEnv)
 
   # ======================================================================================================================================================================================
   # DETERMINE ROWS FOR EACH ELEMENT
@@ -534,7 +541,7 @@ bb_plotPileup <- function(bed, chrom, params = NULL, chromstart = NULL, chromend
                          gp = gpar(fill = rowDF$color, col = bb_pileInternal$linecolor, alpha = alpha))
     assign("pileup_grobs", addGrob(gTree = get("pileup_grobs", envir = bbEnv), child = bedRects), envir = bbEnv)
 
-    if (bb_pileInternal$strandSplit == TRUE){
+    if (bb_pileInternal$strandSplit == TRUE | bb_pileInternal$baseline == TRUE){
 
       lineGrob <- segmentsGrob(x0 = unit(0, "npc"), x1 = unit(1, "npc"),
                                y0 = unit(0, "native"), y1 = unit(0, "native"),

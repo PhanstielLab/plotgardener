@@ -1,13 +1,13 @@
 #' plots a Manhattan plot
 #'
 #' @param bed data for Manhattan plot, can be any data in BED format or a GRanges
-#' @param pVals name of column in bedfile of corresponding p-values (will be converted to -log(10) space)
+#' @param pVals name of column in data of corresponding p-values (will be converted to -log(10) space)
 #' @param params an optional "bb_params" object space containing relevant function parameters
 #' @param chrom string of specific chromosome to zoom in on according to genome build (Ex: hg19 = "chr1"); if NULL all chromosomes found in data will be plotted
 #' @param chromstart if single chromosome specified, start of region to be plotted
 #' @param chromend if single chromosome specified, end of region to be plotted
 #' @param assembly default genome assembly as a string or a bb_assembly object
-#' @param colors single color, vector of colors, or color palette
+#' @param fillcolor single color, vector of colors, or color palette
 #' @param space the space between each chromsome as a fraction of the width of the plot
 #' @param cex number indiciating the amount by which points should be scaled relative to the default
 #' @param transp transparency of colors
@@ -16,6 +16,8 @@
 #' @param sigVal numeric indicating the significance level
 #' @param sigLine logical indicating whether to draw a line at the significance level
 #' @param sigCol single color for coloring significant values
+#' @param baseline logical indicating whether to include baseline along the x-axis
+#' @param bg background color
 #' @param x A numeric or unit object specifying x-location
 #' @param y A numeric or unit object specifying y-location
 #' @param width A numeric or unit object specifying width
@@ -26,7 +28,7 @@
 #'
 #' @export
 bb_plotManhattan <- function(bed, pVals, params = NULL, chrom = NULL, chromstart = NULL, chromend = NULL, assembly = "hg19", fillcolor = "black", pch = 19, space = 0.01,
-                             cex = 0.25, ymax = 1, range = NULL, sigVal = 5e-08, sigLine = F, sigCol = NULL, x = NULL, y = NULL, width = NULL, height = NULL, just = c("left", "top"),
+                             cex = 0.25, ymax = 1, range = NULL, sigVal = 5e-08, sigLine = F, sigCol = NULL, baseline = FALSE, bg = bg, x = NULL, y = NULL, width = NULL, height = NULL, just = c("left", "top"),
                              default.units = "inches", draw = T, ...){
 
   # ======================================================================================================================================================================================
@@ -261,6 +263,8 @@ bb_plotManhattan <- function(bed, pVals, params = NULL, chrom = NULL, chromstart
   if(missing(ymax)) ymax <- NULL
   if(missing(sigVal)) sigVal <- NULL
   if(missing(sigLine)) sigLine <- NULL
+  if(missing(bg)) bg <- NULL
+  if(missing(baseline)) baseline <- NULL
   if(missing(just)) just <- NULL
   if(missing(default.units)) default.units <- NULL
   if(missing(draw)) draw <- NULL
@@ -272,7 +276,7 @@ bb_plotManhattan <- function(bed, pVals, params = NULL, chrom = NULL, chromstart
   ## Compile all parameters into an internal object
   bb_manInternal <- structure(list(bed = bed, pVals = pVals, chrom = chrom, chromstart = chromstart, chromend = chromend, assembly = assembly,
                                    fillcolor = fillcolor, pch = pch, space = space, cex = cex, ymax = ymax, range = range, sigVal = sigVal,
-                                   sigLine = sigLine, sigCol = sigCol, x = x, y = y, width = width, height = height, just = just,
+                                   sigLine = sigLine, sigCol = sigCol, bg = bg, baseline = baseline, x = x, y = y, width = width, height = height, just = just,
                                    default.units = default.units, draw = draw), class = "bb_manInternal")
 
   bb_manInternal <- parseParams(bb_params = params, object_params = bb_manInternal)
@@ -286,6 +290,8 @@ bb_plotManhattan <- function(bed, pVals, params = NULL, chrom = NULL, chromstart
   if(is.null(bb_manInternal$ymax)) bb_manInternal$ymax <- 1
   if(is.null(bb_manInternal$sigVal)) bb_manInternal$sigVal <- 5e-08
   if(is.null(bb_manInternal$sigLine)) bb_manInternal$sigLine <- FALSE
+  if(is.null(bb_manInternal$bg)) bb_manInternal$bg <- NA
+  if(is.null(bb_manInternal$baseline)) bb_manInternal$baseline <- FALSE
   if(is.null(bb_manInternal$just)) bb_manInternal$just <- c("left", "top")
   if(is.null(bb_manInternal$default.units)) bb_manInternal$default.units <- "inches"
   if(is.null(bb_manInternal$draw)) bb_manInternal$draw <- TRUE
@@ -529,10 +535,10 @@ bb_plotManhattan <- function(bed, pVals, params = NULL, chrom = NULL, chromstart
   }
 
   # ======================================================================================================================================================================================
-  # INITIALIZE GTREE FOR GROBS
+  # INITIALIZE GTREE FOR GROBS WITH BACKGROUND
   # ======================================================================================================================================================================================
-
-  assign("manhattan_grobs", gTree(vp = vp), envir = bbEnv)
+  backgroundGrob <- rectGrob(gp = gpar(fill = bb_manInternal$bg, col = NA), name = "background")
+  assign("manhattan_grobs", gTree(vp = vp, children = gList(backgroundGrob)), envir = bbEnv)
 
   if (nrow(bed_data) > 0 & txdbChecks == TRUE){
 
@@ -567,6 +573,14 @@ bb_plotManhattan <- function(bed, pVals, params = NULL, chrom = NULL, chromstart
       assign("manhattan_grobs", addGrob(gTree = get("manhattan_grobs", envir = bbEnv), child = sigGrob), envir = bbEnv)
     }
 
+    if (bb_manInternal$baseline == TRUE){
+      gp$col <- gp$linecolor
+      gp$lwd <- 1.5
+      baselineGrob <- segmentsGrob(x0 = unit(0, "npc"), y0 = 0, x1 = unit(1, "npc"), y1 = 0,
+                              gp = gp, default.units = "native")
+      assign("manhattan_grobs", addGrob(gTree = get("manhattan_grobs", envir = bbEnv), child = baselineGrob), envir = bbEnv)
+
+    }
   }
 
   # ======================================================================================================================================================================================

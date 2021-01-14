@@ -26,7 +26,7 @@ bb_plotLegend(
 )
 }
 \arguments{
-\item{legend}{single value or vector of legend text#'}
+\item{legend}{single value or vector of legend text}
 
 \item{params}{an optional "bb_params" object space containing relevant function parameters}
 

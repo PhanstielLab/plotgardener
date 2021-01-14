@@ -34,7 +34,7 @@ bb_plotManhattan(
 \arguments{
 \item{bed}{data for Manhattan plot, can be any data in BED format or a GRanges}
 
-\item{pVals}{name of column in bedfile of corresponding p-values (will be converted to -log(10) space)}
+\item{pVals}{name of column in data of corresponding p-values (will be converted to -log(10) space)}
 
 \item{params}{an optional "bb_params" object space containing relevant function parameters}
 
@@ -45,6 +45,8 @@ bb_plotManhattan(
 \item{chromend}{if single chromosome specified, end of region to be plotted}
 
 \item{assembly}{default genome assembly as a string or a bb_assembly object}
+
+\item{fillcolor}{single color, vector of colors, or color palette}
 
 \item{space}{the space between each chromsome as a fraction of the width of the plot}
 
@@ -73,8 +75,6 @@ bb_plotManhattan(
 \item{default.units}{A string indicating the default units to use if x, y, width, or height are only given as numerics}
 
 \item{draw}{A logical value indicating whether graphics output should be produced}
-
-\item{colors}{single color, vector of colors, or color palette}
 
 \item{transp}{transparency of colors}
 }

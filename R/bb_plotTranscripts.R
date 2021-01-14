@@ -15,6 +15,7 @@
 #' @param fontsize the size of gene label text (in points)
 #' @param strandSplit logical indicating whether plus and minus-stranded elements should be separated
 #' @param stroke numerical value indicating the stroke width for transcript body outlines
+#' @param bg background color
 #' @param x A numeric or unit object specifying x-location
 #' @param y A numeric or unit object specifying y-location
 #' @param width A numeric or unit object specifying width
@@ -29,7 +30,7 @@
 
 bb_plotTranscripts <- function(chrom, params = NULL, assembly = "hg19", chromstart = NULL, chromend = NULL, boxHeight = unit(2, "mm"), spaceHeight = 0.3,
                                spaceWidth = 0.02, fillcolor = c("#8a8aff", "#ff7e7e"), colorbyStrand = TRUE, labels = "transcript",
-                               fontsize = 8, strandSplit = FALSE, stroke = 0.1, x = NULL, y = NULL, width = NULL, height = NULL,
+                               fontsize = 8, strandSplit = FALSE, stroke = 0.1, bg = NA, x = NULL, y = NULL, width = NULL, height = NULL,
                                just = c("left", "top"), default.units = "inches", draw = TRUE){
 
   # ======================================================================================================================================================================================
@@ -149,6 +150,7 @@ bb_plotTranscripts <- function(chrom, params = NULL, assembly = "hg19", chromsta
   if(missing(fontsize)) fontsize <- NULL
   if(missing(strandSplit)) strandSplit <- NULL
   if(missing(stroke)) stroke <- NULL
+  if(missing(bg)) bg <- NULL
   if(missing(just)) just <- NULL
   if(missing(default.units)) default.units <- NULL
   if(missing(draw)) draw <- NULL
@@ -159,7 +161,7 @@ bb_plotTranscripts <- function(chrom, params = NULL, assembly = "hg19", chromsta
   ## Compile all parameters into an internal object
   bb_transcriptsInternal <- structure(list(assembly = assembly, chrom = chrom, chromstart = chromstart, chromend = chromend, boxHeight = boxHeight, spaceHeight = spaceHeight,
                                      spaceWidth = spaceWidth, fillcolor = fillcolor, colorbyStrand = colorbyStrand, labels = labels, fontsize = fontsize,
-                                     strandSplit = strandSplit, stroke = stroke, x = x, y = y, width = width, height = height, just = just, default.units = default.units,
+                                     strandSplit = strandSplit, stroke = stroke, bg = bg, x = x, y = y, width = width, height = height, just = just, default.units = default.units,
                                      draw = draw), class = "bb_transcriptsInternal")
 
   bb_transcriptsInternal <- parseParams(bb_params = params, object_params = bb_transcriptsInternal)
@@ -175,6 +177,7 @@ bb_plotTranscripts <- function(chrom, params = NULL, assembly = "hg19", chromsta
   if(is.null(bb_transcriptsInternal$fontsize)) bb_transcriptsInternal$fontsize <- 8
   if(is.null(bb_transcriptsInternal$strandSplit)) bb_transcriptsInternal$strandSplit <- FALSE
   if(is.null(bb_transcriptsInternal$stroke)) bb_transcriptsInternal$stroke <- 0.1
+  if(is.null(bb_transcriptsInternal$bg)) bb_transcriptsInternal$bg <- NA
   if(is.null(bb_transcriptsInternal$just)) bb_transcriptsInternal$just <- c("left", "top")
   if(is.null(bb_transcriptsInternal$default.units)) bb_transcriptsInternal$default.units <- "inches"
   if(is.null(bb_transcriptsInternal$draw)) bb_transcriptsInternal$draw <- TRUE
@@ -341,10 +344,11 @@ bb_plotTranscripts <- function(chrom, params = NULL, assembly = "hg19", chromsta
   }
 
   # ======================================================================================================================================================================================
-  # INITIALIZE GTREE FOR GROBS
+  # INITIALIZE GTREE FOR GROBS WITH BACKGROUND
   # ======================================================================================================================================================================================
 
-  assign("transcript_grobs", gTree(vp = vp), envir = bbEnv)
+  backgroundGrob <- rectGrob(gp = gpar(fill = bb_transcriptsInternal$bg, col = NA), name = "background")
+  assign("transcript_grobs", gTree(vp = vp, children = gList(backgroundGrob)), envir = bbEnv)
 
   # ======================================================================================================================================================================================
   # DETERMINE ROWS FOR EACH ELEMENT
