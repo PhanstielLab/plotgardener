@@ -2,13 +2,13 @@
 % Please edit documentation in R/bb_plotGenomeLabel.R
 \name{bb_plotGenomeLabel}
 \alias{bb_plotGenomeLabel}
-\title{Plots genomic coordinates for the axis of a BentoBox plot}
+\title{Plots genomic coordinates for the x or y axis of a BentoBox plot}
 \usage{
 bb_plotGenomeLabel(
   x,
   y,
   plot = NULL,
-  width = NULL,
+  length = NULL,
   chrom = NULL,
   chromstart = NULL,
   chromend = NULL,
@@ -21,6 +21,7 @@ bb_plotGenomeLabel(
   linecolor = "black",
   commas = TRUE,
   sequence = TRUE,
+  axis = "x",
   boxWidth = 0.5,
   ticks = NULL,
   tcl = 0.5,
@@ -35,7 +36,7 @@ bb_plotGenomeLabel(
 
 \item{plot}{BentoBox plot to add genome label}
 
-\item{width}{if not specifying plot, width of genome label, as a numeric or unit object}
+\item{length}{if not specifying plot, length of genome label axis, as a numeric or unit object}
 
 \item{chrom}{if not specifying plot, chromosome of genome label}
 
@@ -60,18 +61,16 @@ the second value specifies vertical justification. Possible string values are: "
 
 \item{commas}{A logical value indicating whether to include commas in start and stop labels.}
 
-\item{sequence}{A logical value indicating whether to include sequence information above the label axis (only at appropriate resolutions).}
+\item{sequence}{A logical value indicating whether to include sequence information above the label of an x-axis (only at appropriate resolutions).}
+
+\item{axis}{"x" (x-axis) or "y" (y-axis). Sequence information will not be displayed along a y-axis.}
 
 \item{ticks}{A numeric vector of x-value locations for tick marks.}
 
 \item{tcl}{Length of tickmark as fraction of text height.}
 
 \item{default.units}{A string indicating the default units to use if x or y are only given as numerics.}
-
-\item{lwd}{Axis linewidth.}
-
-\item{fontfamily}{Text fontfamily.}
 }
 \description{
-Plots genomic coordinates for the axis of a BentoBox plot
+Plots genomic coordinates for the x or y axis of a BentoBox plot
 }

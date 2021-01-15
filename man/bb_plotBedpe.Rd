@@ -18,6 +18,8 @@ bb_plotBedpe(
   boxHeight = unit(2, "mm"),
   spaceHeight = 0.3,
   spaceWidth = 0.02,
+  baseline = FALSE,
+  bg = NA,
   x = NULL,
   y = NULL,
   width = NULL,
@@ -54,6 +56,10 @@ bb_plotBedpe(
 \item{spaceHeight}{height of space between boxes of different bedpe elements}
 
 \item{spaceWidth}{width of spacing between bedpe elements, as a fraction of the plot's genomic range}
+
+\item{baseline}{logical indicating whether to include baseline along the x-axis}
+
+\item{bg}{background color}
 
 \item{x}{A numeric vector or unit object specifying x-location}
 

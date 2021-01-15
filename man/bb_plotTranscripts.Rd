@@ -19,6 +19,7 @@ bb_plotTranscripts(
   fontsize = 8,
   strandSplit = FALSE,
   stroke = 0.1,
+  bg = NA,
   x = NULL,
   y = NULL,
   width = NULL,
@@ -57,6 +58,8 @@ or "both" for combined transcript and gene names}
 \item{strandSplit}{logical indicating whether plus and minus-stranded elements should be separated}
 
 \item{stroke}{numerical value indicating the stroke width for transcript body outlines}
+
+\item{bg}{background color}
 
 \item{x}{A numeric or unit object specifying x-location}
 

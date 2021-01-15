@@ -21,6 +21,8 @@ bb_plotManhattan(
   sigVal = 5e-08,
   sigLine = F,
   sigCol = NULL,
+  baseline = FALSE,
+  bg = bg,
   x = NULL,
   y = NULL,
   width = NULL,
@@ -61,6 +63,10 @@ bb_plotManhattan(
 \item{sigLine}{logical indicating whether to draw a line at the significance level}
 
 \item{sigCol}{single color for coloring significant values}
+
+\item{baseline}{logical indicating whether to include baseline along the x-axis}
+
+\item{bg}{background color}
 
 \item{x}{A numeric or unit object specifying x-location}
 

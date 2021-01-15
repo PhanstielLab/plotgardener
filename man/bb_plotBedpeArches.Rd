@@ -21,6 +21,8 @@ bb_plotBedpeArches(
   colorbyrange = NULL,
   assembly = "hg19",
   alpha = 0.4,
+  baseline = FALSE,
+  bg = NA,
   x = NULL,
   y = NULL,
   width = NULL,
@@ -64,6 +66,10 @@ when NULL, all arches will be the same height, filling up the given viewport}
 \item{assembly}{desired genome assembly}
 
 \item{alpha}{transparency of arches}
+
+\item{baseline}{logical indicating whether to include baseline along the x-axis}
+
+\item{bg}{background color}
 
 \item{x}{A numeric or unit object specifying x-location}
 

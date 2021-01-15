@@ -18,6 +18,7 @@ bb_plotGenes(
   stroke = 0.1,
   fontsize = 8,
   strandLabels = TRUE,
+  bg = NA,
   x = NULL,
   y = NULL,
   width = NULL,
@@ -53,6 +54,8 @@ bb_plotGenes(
 \item{fontsize}{the size of gene label text (in points)}
 
 \item{strandLabels}{A logical value indicating whether to include +/- strand labels}
+
+\item{bg}{background color}
 
 \item{x}{A numeric or unit object specifying x-location}
 

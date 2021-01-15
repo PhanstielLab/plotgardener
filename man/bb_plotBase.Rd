@@ -11,6 +11,7 @@ bb_plotBase(
   width,
   height,
   params = NULL,
+  bg = NA,
   just = c("left", "top"),
   default.units = "inches"
 )
@@ -27,6 +28,8 @@ bb_plotBase(
 \item{height}{A numeric or unit object specifying height.}
 
 \item{params}{an optional "bb_params" object space containing relevant function parameters}
+
+\item{bg}{background color}
 
 \item{just}{A string or numeric vector specifying the justification of the plot relative to its (x, y) location}
 

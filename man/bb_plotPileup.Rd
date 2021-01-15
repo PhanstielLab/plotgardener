@@ -19,6 +19,8 @@ bb_plotPileup(
   boxHeight = unit(2, "mm"),
   spaceHeight = 0.3,
   spaceWidth = 0.02,
+  bg = NA,
+  baseline = FALSE,
   x = NULL,
   y = NULL,
   width = NULL,
@@ -57,6 +59,10 @@ bb_plotPileup(
 \item{spaceHeight}{height of spacing between pileup element boxes, as a fraction of boxHeight}
 
 \item{spaceWidth}{width of minimum spacing between pileup element boxes, as a fraction of the plot's genomic range}
+
+\item{bg}{background color}
+
+\item{baseline}{logical indicating whether to include baseline along the x-axis}
 
 \item{x}{A numeric or unit object specifying x-location}
 

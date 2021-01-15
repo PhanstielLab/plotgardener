@@ -18,6 +18,8 @@ bb_plotSignal(
   assembly = "hg19",
   ymax = 1,
   scale = FALSE,
+  bg = NA,
+  baseline = FALSE,
   width = NULL,
   height = NULL,
   x = NULL,
@@ -54,6 +56,10 @@ bb_plotSignal(
 \item{ymax}{fraction of max y-value to set as height of plot}
 
 \item{scale}{A logical value indicating whether to include a data scale label in the top left corner}
+
+\item{bg}{background color}
+
+\item{baseline}{logical indicating whether to include baseline along the x-axis}
 
 \item{width}{A numeric or unit object specifying width}
 

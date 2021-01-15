@@ -2,16 +2,14 @@
 % Please edit documentation in R/bb_plotIdeogram.R
 \name{bb_plotIdeogram}
 \alias{bb_plotIdeogram}
-\title{plots and highlights a chromosome with its cytobands}
+\title{plots a chromosome ideogram with or without cytobands}
 \usage{
 bb_plotIdeogram(
   chrom,
   params = NULL,
   assembly = "hg19",
   orientation = "h",
-  start = NULL,
-  end = NULL,
-  highlightCol = "red",
+  showBands = TRUE,
   x = NULL,
   y = NULL,
   width = NULL,
@@ -31,11 +29,7 @@ bb_plotIdeogram(
 
 \item{orientation}{"v" (vertical) or "h" (horizontal) orientation}
 
-\item{start}{highlight start}
-
-\item{end}{highlight end}
-
-\item{highlightCol}{fillcolor and linecolor for highlight box}
+\item{showBands}{logical indicating whether to draw cytobands}
 
 \item{x}{A numeric or unit object specifying x-location}
 
@@ -55,5 +49,5 @@ bb_plotIdeogram(
 Function will return a bb_karyogram object
 }
 \description{
-plots and highlights a chromosome with its cytobands
+plots a chromosome ideogram with or without cytobands
 }
