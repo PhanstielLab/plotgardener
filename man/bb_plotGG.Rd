@@ -16,7 +16,7 @@ bb_plotGG(
 )
 }
 \arguments{
-\item{plot}{ggplot object}
+\item{plot}{ggplot object'}
 
 \item{x}{A numeric or unit object specifying x-location.}
 
