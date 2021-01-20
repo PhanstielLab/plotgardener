@@ -2,28 +2,46 @@
 % Please edit documentation in R/bb_annoYaxis.R
 \name{bb_annoYaxis}
 \alias{bb_annoYaxis}
-\title{wrapper function for plotting an y axis in its own viewport}
+\title{Add a y-axis to a plot}
 \usage{
-bb_annoYaxis(
-  plot,
-  params = NULL,
-  at = NULL,
-  label = TRUE,
-  main = TRUE,
-  gp = gpar()
-)
+bb_annoYaxis(plot)
 }
 \arguments{
-\item{plot}{plot to add axis to}
+\item{plot}{Plot object to annotate with y-axis.}
 
-\item{params}{an optional "bb_params" object space containing relevant function parameters}
+\item{at}{A numeric vector of y-value locations for tick marks.}
 
-\item{at}{a numeric vector of x-value locations for the tick marks}
+\item{label}{A logical value indicating whether to draw the labels on the tick marks, or an expression or character vector which specify the labels to use.
+If not logical, must be the same length as the \code{at} argument.}
 
-\item{label}{a logical value indicating whether to draw the labels on the tick marks, or an expression or character vector which specify the labels to use. If not logical, must be the same length as the at argument}
+\item{main}{A logical value indicating whether to draw the y-axis at the left of the plot. Default value is \code{main = TRUE}. Options are:
+\itemize{
+\item{\code{TRUE}:}{y-axis is drawn at the left of the plot.}
+\item{\code{FALSE}:}{y-axis is drawn at the right of the plot.}
+}}
 
-\item{main}{A logical value indicating whether to draw the axis at the left (TRUE) or at the right (FALSE) of the plot}
+\item{gp}{Grid graphical parameters. See \link[grid]{gpar}.}
+
+\item{params}{An optional \link[BentoBox]{bb_assembly} object containing relevant function parameters.}
+}
+\value{
+Returns a \code{bb_yaxis} object containing relevant \link[grid]{grob} information.
 }
 \description{
-wrapper function for plotting an y axis in its own viewport
+Add a y-axis to a plot
+}
+\examples{
+## Load Hi-C data
+data("bb_hicData")
+
+## Create BentoBox page
+bb_pageCreate(width = 4, height = 3.5, default.units = "inches", xgrid = 0, ygrid = 0)
+
+## Plot and place a square Hi-C plot
+hicPlot <- bb_plotHicSquare(hicData = bb_hicData, resolution = 10000, zrange = c(0, 70), chrom = "chr21", chromstart = 28000000, chromend = 30300000,
+x = 1, y = 0.5, width = 2.5, height = 2.5, just = c("left", "top"), default.units = "inches")
+
+## Add standard y-axis to Hi-C plot
+bb_annoYaxis(plot = hicPlot, at = c(28000000, 29000000, 30300000), gp = gpar(fontsize = 8))
+
 }

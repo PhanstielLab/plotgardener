@@ -2,67 +2,77 @@
 % Please edit documentation in R/bb_plotHicTriangle.R
 \name{bb_plotHicTriangle}
 \alias{bb_plotHicTriangle}
-\title{plots HiC interaction matrix in triangular format}
+\title{Plot a Hi-C interaction matrix in a triangular format}
 \usage{
-bb_plotHicTriangle(
-  hic,
-  chrom,
-  params = NULL,
-  chromstart = NULL,
-  chromend = NULL,
-  resolution = "auto",
-  zrange = NULL,
-  palette = colorRampPalette(c("white", "dark red")),
-  assembly = "hg19",
-  width = NULL,
-  height = NULL,
-  x = NULL,
-  y = NULL,
-  just = c("left", "top"),
-  norm = "KR",
-  default.units = "inches",
-  draw = T,
-  matrix = "observed"
-)
+bb_plotHicTriangle(hicData, chrom)
+bb_plotHicTriangle(hicData, chrom, x, y, width, height, just = c("left", "top"), default.units = "inches")
 }
 \arguments{
-\item{hic}{path to .hic file or 3 column dataframe of counts}
+\item{hicData}{Path to .hic file as a string or a 3-column dataframe of interaction counts in sparse upper triangular format.}
 
-\item{chrom}{chromosome of region to be plotted, based on build (i.e. for hg19 just a number, for hg38 string like "chr8")}
+\item{resolution}{A numeric specifying the width in basepairs of each pixel. For hic files, "auto" will attempt to choose a resolution based on the size of the region. For
+dataframes, "auto" will attempt to detect the resolution the dataframe contains.}
 
-\item{params}{an optional "bb_params" object space containing relevant function parameters}
+\item{zrange}{A numeric vector of length 2 specifying the range of interaction scores to plot, where extreme values will be set to the max or min.}
 
-\item{chromstart}{chromosome start of region to be plotted}
+\item{norm}{Character value specifying hic data normalization method, if giving .hic file. This value must be found in the .hic file. Default value is \code{norm = "KR"}.}
 
-\item{chromend}{chromosome end of region to be plotted}
+\item{matrix}{Character value indicating the type of matrix to output. Default value is \code{matrix = "observed"}. Options are:
+\itemize{
+\item{\code{"observed"}:}{Observed counts.}
+\item{\code{"oe"}:}{Observed/expected counts.}
+}}
 
-\item{resolution}{the width in bp of each pixel; for hic files, "auto" will attempt to choose a resolution based on the size of the region; for
-dataframes, "auto" will attempt to detect the resolution the dataframe contains}
+\item{chrom}{Chromosome of region to be plotted, as a string.}
 
-\item{zrange}{the range of interaction scores to plot, where extreme values will be set to the max or min}
+\item{chromstart}{Integer start position on chromosome to be plotted.}
 
-\item{palette}{ColorRamp palette to use for representing interaction scores}
+\item{chromend}{Integer end position on chromosome to be plotted.}
 
-\item{assembly}{desired genome assembly}
+\item{assembly}{Default genome assembly as a string or a \link[BentoBox]{bb_assembly} object. Default value is \code{assembly = "hg19"}.}
 
-\item{width}{A numeric or unit object specifying the bottom width of the triangle}
+\item{palette}{A function describing the color palette to use for representing scale of interaction scores. Default value is \code{palette = colorRampPalette(c("white", "dark red"))}.}
 
-\item{height}{A numeric or unit object specifying the height of the triangle}
+\item{x}{A numeric or unit object specifying triangle Hi-C plot x-location.}
 
-\item{x}{A numeric or unit object specifying x-location}
+\item{y}{A numeric or unit object specifying triangle Hi-C plot y-location.}
 
-\item{y}{A numeric or unit object specifying y-location}
+\item{width}{A numeric or unit object specifying the bottom width of the Hi-C plot triangle.}
 
-\item{just}{a string or numeric vector specifying the justification of the viewport relative to its (x, y) location}
+\item{height}{A numeric or unit object specifying the height of the Hi-C plot triangle.}
 
-\item{norm}{if giving .hic file, hic data normalization; must be found in hic file}
+\item{just}{Justification of triangle Hi-C plot relative to its (x, y) location. If there are two values, the first value specifies horizontal justification and the second value specifies vertical justification.
+Possible string values are: \code{"left"}, \code{"right"}, \code{"centre"}, \code{"center"}, \code{"bottom"}, and \code{"top"}. Default value is \code{just = c("left", "top")}.}
 
-\item{default.units}{A string indicating the default units to use if x, y, width, or height are only given as numerics}
+\item{default.units}{A string indicating the default units to use if \code{x}, \code{y}, \code{width}, or \code{height} are only given as numerics. Default value is \code{default.units = "inches"}.}
 
-\item{draw}{A logical value indicating whether graphics output should be produced}
+\item{draw}{A logical value indicating whether graphics output should be produced. Default value is \code{draw = TRUE}.}
 
-\item{matrix}{type of matrix to output. Must be one of "observed" or "oe". "observed" is observed counts and "oe" is observed/expected counts.}
+\item{params}{An optional \link[BentoBox]{bb_assembly} object containing relevant function parameters.}
+}
+\value{
+Returns a \code{bb_trianglehic} object containing relevant genomic region, Hi-C data, placement, and \link[grid]{grob} information.
 }
 \description{
-plots HiC interaction matrix in triangular format
+Plot a Hi-C interaction matrix in a triangular format
+}
+\details{
+If \code{height} is \eqn{<} \eqn{0.5 * sqrt(2)}, the top of the triangle will be cropped to the given \code{height}.
+}
+\examples{
+## Load Hi-C data
+data("bb_hicData")
+
+## Plot triangle Hi-C plot filling up entire graphic device
+bb_plotHicTriangle(hicData = bb_hicData, resolution = 10000, zrange = c(0, 70),
+chrom = "chr21", chromstart = 28000000, chromend = 30300000)
+
+## Plot and place triangle Hi-C plot on a BentoBox page
+bb_pageCreate(width = 4, height = 2.5, default.units = "inches", xgrid = 0, ygrid = 0)
+bb_plotHicTriangle(hicData = bb_hicData, resolution = 10000, zrange = c(0, 70), chrom = "chr21", chromstart = 28000000, chromend = 30300000,
+x = 2, y = 0.5, width = 3, height = 1.5, just = "top", default.units = "inches")
+
+}
+\seealso{
+\link[BentoBox]{bb_readHic}
 }

@@ -15,17 +15,17 @@
 #' gene coordinates. The buffer amount can be set manually with the \code{geneBuffer}
 #' parameter. Buffer extending beyond the length of the chromosome will be trimmed.
 #'
-#' @param gene (optional) string naming a gene used to set the chromosome, chromstart, and
+#' @param gene (optional) String naming a gene used to set the chromosome, chromstart, and
 #'   chromend arguments.
 #'
-#' @param geneBuffer (optional) integer base-pairs to extend the start and end of a gene
+#' @param geneBuffer (optional) Integer base-pairs to extend the start and end of a gene
 #'   defined by argument \code{gene}.
 #'
-#' @param assembly string defining the genome build. Default value is \code{assembly = "hg19"}.
+#' @param assembly String defining the genome build. Default value is \code{assembly = "hg19"}.
 #'
 #' @param ... This function will take any BentoBox function parameters and their values.
 #'
-#' @return Returns an object of class "bb_params" containing BentoBox function arguments.
+#' @return Returns an object of class \code{bb_params} containing BentoBox function arguments.
 #'
 #' @examples
 #' ## Define parameters

@@ -2,62 +2,72 @@
 % Please edit documentation in R/bb_plotLegend.R
 \name{bb_plotLegend}
 \alias{bb_plotLegend}
-\title{plots a legend}
+\title{Plot a legend}
 \usage{
-bb_plotLegend(
-  legend,
-  params = NULL,
-  orientation = "v",
-  fillcolor = NULL,
-  pch = NULL,
-  lty = NULL,
-  title = NULL,
-  fontsize = 10,
-  border = TRUE,
-  bg = NA,
-  x = NULL,
-  y = NULL,
-  width = NULL,
-  height = NULL,
-  just = c("left", "top"),
-  default.units = "inches",
-  draw = TRUE,
-  ...
-)
+bb_plotLegend(legend, x, y, width, height, just = c("left", "top"), default.units = "inches")
 }
 \arguments{
-\item{legend}{single value or vector of legend text}
+\item{legend}{A character or expression vector to appear in the legend.}
 
-\item{params}{an optional "bb_params" object space containing relevant function parameters}
+\item{fill}{If specified, this argument will produce boxes filled with the specified colors to appear beside the legend text.}
 
-\item{orientation}{"v" (vertical) or "h" (horizontal) orientation}
+\item{pch}{The plotting symbols appearing in the legend, as a numeric vector.}
 
-\item{fillcolor}{if specified, this argument will produce boxes filled with the specified colors to appear beside the legend text}
+\item{lty}{The line types for lines appearing in the legend.}
 
-\item{pch}{if specified, this argument will produce symbols to appear beside the legend text}
+\item{orientation}{A string specifying legend orientation. Default value is \code{orientation = "v"}. Options are:
+\itemize{
+\item{\code{"v"}:}{Vertical legend orientation.}
+\item{\code{"h"}:}{Horizontal legend orientation.}
+}}
 
-\item{lty}{if specified, this argument will produce line types to appear beside the legend text}
+\item{title}{A character value giving a title to be placed at the top of the legend.}
 
-\item{title}{legend title}
+\item{fontsize}{A numeric specifying text fontsize in points. Default value is \code{fontsize = 10}.}
 
-\item{border}{option to add border around legend}
+\item{border}{Logical value indicating whether to add a border around heatmap legend. Default value is \code{border = TRUE}.}
 
-\item{bg}{background color of legend}
+\item{bg}{Character value indicating background color. Default value is \code{bg = NA}.}
 
-\item{x}{A numeric vector or unit object specifying x-location}
+\item{x}{A numeric or unit object specifying legend x-location.}
 
-\item{y}{A numeric vector or unit object specifying y-location}
+\item{y}{A numeric or unit object specifying legend y-location.}
 
-\item{width}{A numeric vector or unit object specifying width}
+\item{width}{A numeric or unit object specifying legend width.}
 
-\item{height}{A numeric vector or unit object specifying height}
+\item{height}{A numeric or unit object specifying legend height.}
 
-\item{just}{justification of scale viewport}
+\item{just}{Justification of legend relative to its (x, y) location. If there are two values, the first value specifies horizontal justification and the second value specifies vertical justification.
+Possible string values are: \code{"left"}, \code{"right"}, \code{"centre"}, \code{"center"}, \code{"bottom"}, and \code{"top"}. Default value is \code{just = c("left", "top")}.}
 
-\item{default.units}{A string indicating the default units to use if x, y, width, or height are only given as numeric vectors}
+\item{default.units}{A string indicating the default units to use if \code{x}, \code{y}, \code{width}, or \code{height} are only given as numerics. Default value is \code{default.units = "inches"}.}
 
-\item{draw}{A logical value indicating whether graphics output should be produced}
+\item{draw}{A logical value indicating whether graphics output should be produced. Default value is \code{draw = TRUE}.}
+
+\item{params}{An optional \link[BentoBox]{bb_assembly} object containing relevant function parameters.}
+
+\item{...}{Additional grid graphical parameters. See \link[grid]{gpar}.}
+}
+\value{
+Returns a \code{bb_legend} object containing relevant placement and \link[grid]{grob} information.
 }
 \description{
-plots a legend
+Plot a legend
+}
+\examples{
+## Load BED data
+data("bb_bedData")
+
+## Create BentoBox page
+bb_pageCreate(width = 5, height = 5, default.units = "inches", xgrid = 0, ygrid = 0)
+
+## Plot a pileup plot, coloring elements by strand
+pileupPlot <- bb_plotPileup(data = bb_bedData, chrom = "chr21", chromstart = 29073000, chromend = 29074000,
+fill = c("red", "blue"), colorby = colorby("strand"), x = 0.5, y = 0.5, width = 3.5, height = 4, just = c("left", "top"), default.units = "inches")
+
+## Add a legend depicting strand colors
+
+legendPlot <- bb_plotLegend(legend = c("minus strand", "plus strand"), fill = c("red", "blue"), title = "Strands",
+x = 3.5, y = 1, width = 1.5, height = 1, just = c("left", "top"), default.units = "inches")
+
 }

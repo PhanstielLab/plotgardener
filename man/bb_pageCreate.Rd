@@ -2,39 +2,40 @@
 % Please edit documentation in R/bb_pageCreate.R
 \name{bb_pageCreate}
 \alias{bb_pageCreate}
-\title{Creates a page for a BentoBox layout}
+\title{Create a page for a BentoBox layout}
 \usage{
-bb_pageCreate(
-  params = NULL,
-  width = 8.5,
-  height = 11,
-  default.units = "inches",
-  showOutline = TRUE,
-  showRuler = TRUE,
-  showUnit = TRUE,
-  xgrid = 0.5,
-  ygrid = 0.5
-)
+bb_pageCreate(width = 8.5, height = 11, default.units = "inches")
 }
 \arguments{
-\item{params}{an optional "bb_params" object space containing relevant function parameters}
+\item{width}{A numeric or unit object specifying page width. Default value is \code{width = 8}.}
 
-\item{width}{A numeric or unit object specifying width}
+\item{height}{A numeric or unit object specifying page height. Default value is \code{height = 11}.}
 
-\item{height}{A numeric or unit object specifying height}
+\item{default.units}{A string indicating the default units to use if \code{width} or \code{height} are only given as numerics. Default value is \code{default.units = "inches"}.}
 
-\item{default.units}{A string indicating the default units to use if width or height are only given as numerics}
+\item{xgrid}{A numeric indicating the increment by which to place vertical gridlines. Default value is \code{xgrid = 0.5}.}
 
-\item{showOutline}{TRUE/FALSE indicating whether to draw a black outline around the entire page}
+\item{ygrid}{A numeric indicating the increment by which to place horizontal gridlines. Default value is \code{ygrid = 0.5}.}
 
-\item{showRuler}{TRUE/FALSE indicating whether to show guiding ruler along top and side of page}
+\item{showOutline}{A logical value indicating whether to draw a black border around the entire page. Default value is \code{showOutline = TRUE}.}
 
-\item{showUnit}{TRUE/FALSE indicating whether to show name of units in top left of page}
+\item{showRuler}{A logical value indicating whether to show guiding rulers along the top and left side of page. Default value is \code{showRuler = TRUE}.}
 
-\item{xgrid}{vertical gridlines}
+\item{showUnit}{A logical value indicating whether to show the name of units at the top left of the page. Default value is \code{showUnit = TRUE}.}
 
-\item{ygrid}{horizontal gridlines}
+\item{params}{An optional \link[BentoBox]{bb_assembly} object containing relevant function parameters.}
 }
 \description{
-Creates a page for a BentoBox layout
+Create a page for a BentoBox layout
+}
+\details{
+\code{width} and \code{height} must be specified in the same units.
+}
+\examples{
+## Create a 4-inch wide, 5-inch high BentoBox page
+bb_pageCreate(width = 4, height = 4, default.units = "inches")
+
+## Create a 10-cm wide, 12-cm high Bentobox page
+bb_pageCreate(width = 10, height = 10, default.units = "cm")
+
 }

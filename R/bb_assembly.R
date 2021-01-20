@@ -1,14 +1,24 @@
-#' Makes a bb_assembly object for alternate TxDB, OrgDb,and BSgenome packages
+#' Make a \code{bb_assembly} object for alternate TxDB, OrgDb,and BSgenome genomic annotation packages
 #'
-#' @param Genome string of genome assembly name
-#' @param TxDb string of the desired TxDb package
-#' @param OrgDb string of the desired OrgDb package
-#' @param gene.id.column string name of OrgDb column that refers to the given TxDb gene ID's
-#' @param display.column string name of OrgDb column that is the type of gene symbol to be displayed in plots
-#' @param BSgenome string of desired BSgenome package
+#' @usage bb_assembly(Genome, TxDb, OrgDb)
+#'
+#' @param Genome String indicating the name of the genome assembly.
+#' @param TxDb String of the desired TxDb package name.
+#' @param OrgDb String of the desired OrgDb package name.
+#' @param gene.id.column String of the TxDb column name that refers to the given TxDb gene IDs.
+#' Default value is \code{gene.id.column = "ENTREZID"}.
+#' @param display.column String of the OrgDb column name that refers to the type of gene symbol to be displayed in plots.
+#' Default value is \code{display.column = "SYMBOL"}.
+#' @param BSgenome String of the desired BSgenome package name.
+#'
+#' @return Returns a \code{bb_assembly} object containing all input parameters.
+#'
+#' @examples
+#' ## Create a custom bb_assembly object for hg38/GRCh38 packages
+#' newAssembly <- bb_assembly(Genome = "hg38_GRCh38", TxDb = "TxDb.Hsapiens.UCSC.hg38.knownGene",
+#' OrgDb = "org.Hs.eg.db", BSgenome = "BSgenome.Hsapiens.NCBI.GRCh38")
 #'
 #' @export
-
 bb_assembly <- function(Genome, TxDb, OrgDb, gene.id.column = "ENTREZID", display.column = "SYMBOL", BSgenome = NULL){
 
   object <- structure(list(Genome, TxDb, OrgDb, gene.id.column, display.column), class = "bb_assembly")

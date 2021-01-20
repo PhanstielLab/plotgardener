@@ -2,79 +2,73 @@
 % Please edit documentation in R/bb_plotBedpe.R
 \name{bb_plotBedpe}
 \alias{bb_plotBedpe}
-\title{plots paired-end data for a single chromosome}
+\title{Plot paired-end BEDPE data for a single chromosome}
 \usage{
-bb_plotBedpe(
-  bedpe,
-  chrom,
-  params = NULL,
-  chromstart = NULL,
-  chromend = NULL,
-  fillcolor = "black",
-  colorby = NULL,
-  colorbyrange = NULL,
-  linecolor = NA,
-  assembly = "hg19",
-  boxHeight = unit(2, "mm"),
-  spaceHeight = 0.3,
-  spaceWidth = 0.02,
-  baseline = FALSE,
-  bg = NA,
-  x = NULL,
-  y = NULL,
-  width = NULL,
-  height = NULL,
-  just = c("left", "top"),
-  default.units = "inches",
-  draw = TRUE,
-  ...
-)
+bb_plotBedpe(bedpeData, chrom)
+bb_plotBedpe(bedpeData, chrom, x, y, width, height, just = c("left", "top"), default.units = "inches")
 }
 \arguments{
-\item{bedpe}{bed paired end data to be plotted}
+\item{bedpeData}{A string specifying the BEDPE file path or a dataframe in BEDPE format specifying data to be plotted.}
 
-\item{chrom}{chromsome of region to be plotted}
+\item{chrom}{Chromosome of region to be plotted, as a string.}
 
-\item{params}{an optional "bb_params" object space containing relevant function parameters}
+\item{chromstart}{Integer start position on chromosome to be plotted.}
 
-\item{chromstart}{start position}
+\item{chromend}{Integer end position on chromosome to be plotted.}
 
-\item{chromend}{end position}
+\item{assembly}{Default genome assembly as a string or a \link[BentoBox]{bb_assembly} object. Default value is \code{assembly = "hg19"}.}
 
-\item{fillcolor}{single value, vector, or palette specifying colors of bedpe elements}
+\item{fill}{Character value(s) as a single value, vector, or palette specifying fill colors of BEDPE elements. Default value is \code{fill = "black"}.}
 
-\item{colorby}{name of column in bedpe data to scale fillcolors by}
+\item{colorby}{A "\link[BentoBox]{colorby}" object specifying information for scaling colors in data.}
 
-\item{colorbyrange}{the range of values to apply a colorby palette scale to, if colorby values are numeric}
+\item{linecolor}{A character value specifying the color of the lines outlining BEDPE elements. Default value is \code{linecolor = NA}.}
 
-\item{linecolor}{border color}
+\item{bg}{Character value indicating background color. Default value is \code{bg = NA}.}
 
-\item{assembly}{default genome assembly as a string or a bb_assembly object}
+\item{boxHeight}{A numeric or unit object specifying height of boxes at either end of BEDPE elements. Default value is \code{boxHeight = unit(2, "mm")}.}
 
-\item{boxHeight}{A numeric or unit object specifying height of boxes at either end of bedpe element}
+\item{spaceWidth}{A numeric specifying the width of spacing between BEDPE elements, as a fraction of the plot's genomic range. Default value is \code{spaceWidth = 0.02}.}
 
-\item{spaceHeight}{height of space between boxes of different bedpe elements}
+\item{spaceHeight}{A numeric specifying the height of space between boxes of BEDPE elements on different rows. Default value is \code{spaceHeight = 0.3}.}
 
-\item{spaceWidth}{width of spacing between bedpe elements, as a fraction of the plot's genomic range}
+\item{baseline}{Logical value indicating whether to include a baseline along the x-axis. Default value is \code{baseline = FALSE}.}
 
-\item{baseline}{logical indicating whether to include baseline along the x-axis}
+\item{x}{A numeric or unit object specifying BEDPE plot x-location.}
 
-\item{bg}{background color}
+\item{y}{A numeric or unit object specifying BEDPE plot y-location.}
 
-\item{x}{A numeric vector or unit object specifying x-location}
+\item{width}{A numeric or unit object specifying BEDPE plot width.}
 
-\item{y}{A numeric vector or unit object specifying y-location}
+\item{height}{A numeric or unit object specifying BEDPE plot height.}
 
-\item{width}{A numeric vector or unit object specifying width}
+\item{just}{Justification of BEDPE plot relative to its (x, y) location. If there are two values, the first value specifies horizontal justification and the second value specifies vertical justification.
+Possible string values are: \code{"left"}, \code{"right"}, \code{"centre"}, \code{"center"}, \code{"bottom"}, and \code{"top"}. Default value is \code{just = c("left", "top")}.}
 
-\item{height}{A numeric vector or unit object specifying height}
+\item{default.units}{A string indicating the default units to use if \code{x}, \code{y}, \code{width}, or \code{height} are only given as numerics. Default value is \code{default.units = "inches"}.}
 
-\item{just}{string or numeric vector specifying the justification of the viewport relative to its (x, y) location: "left", "right", "centre", "center", "bottom", "top"}
+\item{draw}{A logical value indicating whether graphics output should be produced.}
 
-\item{default.units}{A string indicating the default units to use if x, y, width, or height are only given as numeric vectors}
+\item{params}{An optional \link[BentoBox]{bb_assembly} object containing relevant function parameters.}
 
-\item{draw}{A logical value indicating whether graphics output should be produced}
+\item{...}{Additional grid graphical parameters. See \link[grid]{gpar}.}
+}
+\value{
+Returns a \code{bb_bedpe} object containing relevant genomic region, placement, and \link[grid]{grob} information.
 }
 \description{
-plots paired-end data for a single chromosome
+Plot paired-end BEDPE data for a single chromosome
+}
+\examples{
+## Load BEDPE data
+data("bb_bedpeData")
+
+## Plot BEDPE plot filling up entire graphic device
+bedpePlot <- bb_plotBedpe(bedpeData = bb_bedpeData, chrom = "chr21", chromstart = 28000000, chromend = 30300000)
+
+## Plot and place BEDPE plot on a BentoBox page
+bb_pageCreate(width = 5, height = 2, default.units = "inches", xgrid = 0, ygrid = 0)
+bedpePlot <- bb_plotBedpe(bedpeData = bb_bedpeData, chrom = "chr21", chromstart = 28000000, chromend = 30300000,
+x = 0.5, y = 0.5, width = 4, height = 1, just = c("left", "top"), default.units = "inches")
+
 }

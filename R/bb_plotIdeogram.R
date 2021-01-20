@@ -1,22 +1,47 @@
-#' plots a chromosome ideogram with or without cytobands
+#' Plot a chromosome ideogram with or without cytobands
 #'
-#' @param chrom chromsome to plot
-#' @param params an optional "bb_params" object space containing relevant function parameters
-#' @param assembly default genome assembly as a string or a bb_assembly object
-#' @param orientation "v" (vertical) or "h" (horizontal) orientation
-#' @param showBands logical indicating whether to draw cytobands
-#' @param x A numeric or unit object specifying x-location
-#' @param y A numeric or unit object specifying y-location
-#' @param width A numeric or unit object specifying width
-#' @param height A numeric or unit object specifying height
-#' @param just A string or numeric vector specifying the justification of the viewport relative to its (x, y) location: "left", "right", "centre", "center", "bottom", "top"
-#' @param default.units A string indicating the default units to use if x, y, width, or height are only given as numerics
-#' @param draw A logical value indicating whether graphics output should be produced
+#' @usage
+#' bb_plotIdeogram(chrom)
+#' bb_plotIdeogram(chrom, x, y, width, height, just = c("left", "top"), default.units = "inches")
 #'
-#' @return Function will return a bb_karyogram object
+#' @param chrom Chromosome to be plotted, as a string.
+#' @param assembly Default genome assembly as a string or a \link[BentoBox]{bb_assembly} object. Default value is \code{assembly = "hg19"}.
+#' @param orientation Character value indicating the orientation of the ideogram. Default value is \code{orientation = "h"}. Options are:
+#' \itemize{
+#' \item{\code{"v"}: }{Vertical ideogram orientation.}
+#' \item{\code{"h"}: }{Horizontal ideogram orientation.}
+#' }
+#' @param showBands Logical value indicating whether to draw colored cytobands within ideogram. Default value is \code{showBands = TRUE}.
+#' @param x A numeric or unit object specifying ideogram x-location.
+#' @param y A numeric or unit object specifying ideogram y-location.
+#' @param width A numeric or unit object specifying ideogram width.
+#' @param height A numeric or unit object specifying ideogram height.
+#' @param just Justification of ideogram relative to its (x, y) location. If there are two values, the first value specifies horizontal justification and the second value specifies vertical justification.
+#' Possible string values are: \code{"left"}, \code{"right"}, \code{"centre"}, \code{"center"}, \code{"bottom"}, and \code{"top"}. Default value is \code{just = c("left", "top")}.
+#' @param default.units A string indicating the default units to use if \code{x}, \code{y}, \code{width}, or \code{height} are only given as numerics. Default value is \code{default.units = "inches"}.
+#' @param draw A logical value indicating whether graphics output should be produced. Default value is \code{draw = TRUE}.
+#' @param params An optional \link[BentoBox]{bb_assembly} object containing relevant function parameters.
+#' @param ... Additional grid graphical parameters. See \link[grid]{gpar}.
+#'
+#' @return Returns a \code{bb_ideogram} object containing relevant genomic region, placement, and \link[grid]{grob} information.
+#'
+#' @examples
+#' ## Load Giemsa stain band information and genomic annotation data for hg19 genome assembly
+#' library("TxDb.Hsapiens.UCSC.hg19.knownGene")
+#' data("cytoBand.Hsapiens.UCSC.hg19")
+#'
+#' ## Plot ideogram filling up entire graphic device
+#' bb_plotIdeogram(chrom = "chr2", assembly = "hg19")
+#'
+#' ## Plot and place ideogram on a BentoBox page
+#' bb_pageCreate(width = 4, height = 1.5, default.units = "inches", xgrid = 0, ygrid = 0)
+#' bb_plotIdeogram(chrom = "chr2", assembly = "hg19", x = 0.25, y = 0.25, width = 3.5, height = 0.5, just = c("left", "top"), default.units = "inches")
+#'
+#' @details Giemsa stain band data from the UCSC Genome Browser is included with BentoBox.
+#'
 #' @export
-bb_plotIdeogram <- function(chrom, params = NULL, assembly = "hg19", orientation = "h", showBands = TRUE, x = NULL, y = NULL, width = NULL, height = NULL,
-                             just = c("left", "top"), default.units = "inches", draw = TRUE,...){
+bb_plotIdeogram <- function(chrom, assembly = "hg19", orientation = "h", showBands = TRUE, x = NULL, y = NULL, width = NULL, height = NULL,
+                             just = c("left", "top"), default.units = "inches", draw = TRUE, params = NULL, ...){
 
   # ======================================================================================================================================================================================
   # FUNCTIONS
@@ -224,8 +249,8 @@ bb_plotIdeogram <- function(chrom, params = NULL, assembly = "hg19", orientation
   # INITIALIZE OBJECT
   # ======================================================================================================================================================================================
 
-  ideogram_plot <- structure(list(chrom = bb_ideoInternal$chrom, width = bb_ideoInternal$width, height = bb_ideoInternal$height,
-                               x = bb_ideoInternal$x, y = bb_ideoInternal$y, justification = bb_ideoInternal$just, grobs = NULL, assembly = bb_ideoInternal$assembly), class = "bb_ideogram")
+  ideogram_plot <- structure(list(chrom = bb_ideoInternal$chrom, assembly = bb_ideoInternal$assembly, x = bb_ideoInternal$x, y = bb_ideoInternal$y,
+                                  width = bb_ideoInternal$width, height = bb_ideoInternal$height, just = bb_ideoInternal$just, grobs = NULL), class = "bb_ideogram")
   attr(x = ideogram_plot, which = "plotted") <- bb_ideoInternal$draw
 
   # ======================================================================================================================================================================================

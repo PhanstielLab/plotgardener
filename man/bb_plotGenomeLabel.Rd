@@ -2,75 +2,90 @@
 % Please edit documentation in R/bb_plotGenomeLabel.R
 \name{bb_plotGenomeLabel}
 \alias{bb_plotGenomeLabel}
-\title{Plots genomic coordinates for the x or y axis of a BentoBox plot}
+\title{Plot genomic coordinates along the x or y-axis of a BentoBox plot}
 \usage{
-bb_plotGenomeLabel(
-  x,
-  y,
-  plot = NULL,
-  length = NULL,
-  chrom = NULL,
-  chromstart = NULL,
-  chromend = NULL,
-  params = NULL,
-  just = c("left", "top"),
-  scale = "bp",
-  assembly = "hg19",
-  fontsize = 10,
-  fontcolor = "black",
-  linecolor = "black",
-  commas = TRUE,
-  sequence = TRUE,
-  axis = "x",
-  boxWidth = 0.5,
-  ticks = NULL,
-  tcl = 0.5,
-  default.units = "inches",
-  ...
-)
+bb_plotGenomeLabel(plot, x, y, just = c("left", "top"), default.units = "inches")
+bb_plotGenomeLabel(chrom, chromstart, chromend, x, y, length, just = c("left", "top"), default.units = "inches")
 }
 \arguments{
-\item{x}{A numeric or unit object specifying x-location.}
+\item{plot}{BentoBox plot object to add genome label.}
 
-\item{y}{A numeric or unit object specifying y-location.}
+\item{chrom}{If not specifying \code{plot}, chromosome of genome label, as a string.}
 
-\item{plot}{BentoBox plot to add genome label}
+\item{chromstart}{If not specifying \code{plot}, integer start of genome label.}
 
-\item{length}{if not specifying plot, length of genome label axis, as a numeric or unit object}
+\item{chromend}{If not specifying \code{plot}, integer end of genome label.}
 
-\item{chrom}{if not specifying plot, chromosome of genome label}
+\item{assembly}{Default genome assembly as a string or a \link[BentoBox]{bb_assembly} object. \code{assembly} will be inherited from \code{plot}, if provided.}
 
-\item{chromstart}{if not specifying plot, chromstart of genome label}
+\item{fontsize}{A numeric specifying text fontsize in points. Default value is \code{fontsize = 10}.}
 
-\item{chromend}{if not specifying plot, chromend of genome label}
+\item{fontcolor}{A character value indicating the color for text. Default value is \code{fontcolor = "black"}.}
 
-\item{params}{an optional "bb_params" object space containing relevant function parameters}
+\item{linecolor}{A character value indicating the color of the genome label axis. Default value is \code{linecolor = "black"}.}
 
-\item{just}{The justification of the label relative to its (x, y) location.If there are two values, the first specifies horizontal justification and
-the second value specifies vertical justification. Possible string values are: "left", "right", "centre", "center", "bottom", and "top".}
+\item{scale}{A character value indicating the scale of the coordinates along the genome label. Default value is \code{scale = "bp"}. Options are:
+\itemize{
+\item{\code{"bp"}:}{base pairs.}
+\item{\code{"Kb"}:}{kilobase pairs. 1 kilobase pair is equal to 1000 base pairs.}
+\item{\code{"Mb"}:}{megabase pairs. 1 megabase pair is equal to 1000000 base pairs.}
+}}
 
-\item{scale}{scale of the genome of the label. Options are "bp", "Kb", or "Mb"}
-
-\item{assembly}{default genome assembly as a string or a bb_assembly object (will be inherited from plot object if provided)}
-
-\item{fontsize}{Fontsize for labels (in points).}
-
-\item{fontcolor}{Color for all text and lines (with the exception of sequence information).}
-
-\item{linecolor}{Axis linecolor.}
-
-\item{commas}{A logical value indicating whether to include commas in start and stop labels.}
+\item{commas}{A logical value indicating whether to include commas in start and stop labels. Default value is \code{commas = TRUE}.}
 
 \item{sequence}{A logical value indicating whether to include sequence information above the label of an x-axis (only at appropriate resolutions).}
 
-\item{axis}{"x" (x-axis) or "y" (y-axis). Sequence information will not be displayed along a y-axis.}
+\item{boxWidth}{A numeric value indicating the width of the boxes representing sequence information at appropriate resolutions. Default value is \code{boxWidth = 0.5}.}
 
-\item{ticks}{A numeric vector of x-value locations for tick marks.}
+\item{axis}{A character value indicating along which axis to add genome label. Sequence information will not be displayed along a y-axis. Default value is \code{axis = "x"}.
+Options are:
+\itemize{
+\item{\code{"x"}:}{Genome label will be plotted along the x-axis.}
+\item{\code{"y"}:}{Genome label will be plotted along the y-axis.}
+}}
 
-\item{tcl}{Length of tickmark as fraction of text height.}
+\item{at}{A numeric vector of x-value locations for tick marks.}
 
-\item{default.units}{A string indicating the default units to use if x or y are only given as numerics.}
+\item{tcl}{A numeric specifying the length of tickmarks as a fraction of text height. Default value is \code{tcl = 0.5}.}
+
+\item{x}{A numeric or unit object specifying genome label x-location.}
+
+\item{y}{A numeric or unit object specifying genome label y-location.}
+
+\item{length}{A numeric or unit object specifying length of genome label axis.}
+
+\item{just}{Justification of genome label relative to its (x, y) location. If there are two values, the first value specifies horizontal justification and the second value specifies vertical justification.
+Possible string values are: \code{"left"}, \code{"right"}, \code{"centre"}, \code{"center"}, \code{"bottom"}, and \code{"top"}. Default value is \code{just = c("left", "top")}.}
+
+\item{default.units}{A string indicating the default units to use if \code{x}, \code{y}, or \code{length} are only given as numerics. Default value is \code{default.units = "inches"}.}
+
+\item{params}{An optional \link[BentoBox]{bb_assembly} object containing relevant function parameters.}
+
+\item{...}{Additional grid graphical parameters. See \link[grid]{gpar}.}
+}
+\value{
+Returns a \code{bb_genomeLabel} object containing relevant genomic region, placement, and \link[grid]{grob} information.
 }
 \description{
-Plots genomic coordinates for the x or y axis of a BentoBox plot
+Plot genomic coordinates along the x or y-axis of a BentoBox plot
+}
+\examples{
+## Load hg19 genomic annotation packages
+library("TxDb.Hsapiens.UCSC.hg19.knownGene")
+library("org.Hs.eg.db")
+
+## Create BentoBox page
+bb_pageCreate(width = 5, height = 4, default.units = "inches")
+
+## Plot and place gene track on a BentoBox page
+genesPlot <- bb_plotGenes(chrom = "chr8", chromstart = 1000000, chromend = 2000000, assembly = "hg19",
+x = 0.5, y = 0.5, width = 4, height = 1.5, just = c("left", "top"), default.units = "inches")
+
+## Add x-axis genome label with plot input
+bb_plotGenomeLabel(plot = genesPlot, scale = "Kb", x = 0.5, y = 2, just = c("left", "top"), default.units = "inches")
+
+## Add x-axis genome label with chrom/chromstart/chromend input
+bb_plotGenomeLabel(chrom = "chr8", chromstart = 1000000, chromend = 2000000, assembly = "hg19",
+x = 0.5, y = 2.5, length = 4, just = c("left", "top"), default.units = "inches")
+
 }

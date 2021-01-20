@@ -2,31 +2,55 @@
 % Please edit documentation in R/bb_annoLoops.R
 \name{bb_annoLoops}
 \alias{bb_annoLoops}
-\title{annotates loops in a Hi-C plot}
+\title{Annotate DNA loops in a Hi-C plot}
 \usage{
-bb_annoLoops(
-  hic,
-  loops,
-  params = NULL,
-  half = "inherit",
-  shift = 4,
-  type = "box",
-  ...
-)
+bb_annoLoops(hicPlot, bedpeData)
 }
 \arguments{
-\item{hic}{hic plot to annotate}
+\item{hicPlot}{Hi-C plot object from \code{bb_plotHicSquare} or \code{bb_plotHicTriangle} on which to annotate loops.}
 
-\item{loops}{bedpe file or dataframe in bedpe file format with loop positions}
+\item{bedpeData}{A string specifying the BEDPE file path or a dataframe in BEDPE format specifying loop positions.}
 
-\item{params}{an optional "bb_params" object space containing relevant function parameters}
+\item{type}{Character value specifying type of annotation. Default value is \code{type = "box"}. Options are:
+\itemize{
+\item{\code{"box"}:}{Boxes are drawn around each loop.}
+\item{\code{"circle"}:}{Circles are drawn around each loop.}
+\item{\code{"arrow"}:}{Arrows are drawn pointing to each loop.}
+}}
 
-\item{half}{which half of hic plots to annotate; default is "inherit", which will inherit whatever is plotted; other options are "both", "top", or "bottom"}
+\item{half}{Character value specifying which half of hic plots to annotate. Triangle Hi-C plots will always default to the entirety of the triangular plot. Default value is \code{half = "inherit"}. Options are:
+\itemize{
+\item{\code{"inherit"}:}{Loops will be annotated on the \code{half} inherited by the input Hi-C plot.}
+\item{\code{"both"}:}{Loops will be annotated on both halves of the diagonal of a square Hi-C plot.}
+\item{\code{"top"}:}{Loops will be annotated on the upper diagonal half of a square Hi-C plot.}
+\item{\code{"bottom"}:}{Loops will be annotated ont the bottom diagonal half of a square Hi-C plot.}
+}}
 
-\item{shift}{number of pixels on either end of loop in box/circle; number of pixels for length of arrow}
+\item{shift}{Numeric specifying the number of pixels on either end of loop in a box or circle. Numeric specifying number of pixels for the length of an arrow.}
 
-\item{type}{type of annotation; options are "box", "circle", or "arrow"}
+\item{params}{An optional \link[BentoBox]{bb_assembly} object containing relevant function parameters.}
+
+\item{...}{Additional grid graphical parameters. See \link[grid]{gpar}.}
+}
+\value{
+Returns a \code{bb_loops} object containing relevant genomic region, placement, and \link[grid]{grob} information.
 }
 \description{
-annotates loops in a Hi-C plot
+Annotate DNA loops in a Hi-C plot
+}
+\examples{
+## Load Hi-C data and BEDPE data
+data("bb_hicData")
+data("bb_bedpeData")
+
+## Create BentoBox page
+bb_pageCreate(width = 3, height = 3, default.units = "inches", xgrid = 0, ygrid = 0)
+
+## Plot and place a square Hi-C plot
+hicPlot <- bb_plotHicSquare(hicData = bb_hicData, resolution = 10000, zrange = c(0, 70), chrom = "chr21", chromstart = 28000000, chromend = 30300000,
+x = 0, y = 0, width = 3, height = 3, just = c("left", "top"), default.units = "inches")
+
+## Annotate loops of Hi-C plot
+bb_annoLoops(hicPlot = hicPlot, bedpeData = bb_bedpeData, type = "box", half = "both")
+
 }

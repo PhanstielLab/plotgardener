@@ -1,32 +1,53 @@
-#' plots signal track data
+#' Plot any kind of signal track data for a single chromosome
 #'
-#' @param signal signal track data to be plotted (bigwig file, bed format dataframe, or GRanges with "counts" metadata); can be one or a list of two
-#' @param chrom chromosome of region to be plotted as a string (i.e. "chr3")
-#' @param params an optional "bb_params" object space containing relevant function parameters
-#' @param chromstart start position
-#' @param chromend end position
-#' @param range y-range to plot (c(min, max))
-#' @param linecolor color(s) of line outlining signal track(s); if using fillcolor and no outline is desired, set to NA
-#' @param binSize the length of each bin in bp
-#' @param binCap TRUE/FALSE whether the function will limit the number of bins to 8,000
-#' @param fillcolor color(s) filling in signal track(s)
-#' @param assembly desired genome assembly
-#' @param ymax fraction of max y-value to set as height of plot
-#' @param scale A logical value indicating whether to include a data scale label in the top left corner
-#' @param bg background color
-#' @param baseline logical indicating whether to include baseline along the x-axis
-#' @param width A numeric or unit object specifying width
-#' @param height A numeric or unit object specifying height
-#' @param x A numeric or unit object specifying x-location
-#' @param y A numeric or unit object specifying y-location
-#' @param just a string or numeric vector specifying the justification of the viewport relative to its (x, y) location: "left", "right", "centre", "center", "bottom", "top"
-#' @param default.units A string indicating the default units to use if x, y, width, or height are only given as numerics
-#' @param draw A logical value indicating whether graphics output should be produced
+#' @usage
+#' bb_plotSignal(data, chrom)
+#' bb_plotSignal(data, chrom, x, y, width, height, just = c("left", "top"), default.units = "inches")
+#'
+#' @param data Data to be plotted as a character value specifying a bigwig file path, a dataframe in BED format, or a \link[GenomicRanges]{GRanges} object with metadata column \code{counts}.
+#' Either one \code{data} argument or a list of two can be provided, where the second \code{data} will be plotted below the x-axis.
+#' @param binSize A numeric specifying the length of each data bin in basepairs. Default value is \code{binSize = NA}.
+#' @param binCap A logical value indicating whether the function will limit the number of data bins to 8,000. Default value is \code{binCap = TRUE}.
+#' @param chrom Chromosome of region to be plotted, as a string.
+#' @param chromstart Integer start position on chromosome to be plotted.
+#' @param chromend Integer end position on chromosome to be plotted.
+#' @param assembly Default genome assembly as a string or a \link[BentoBox]{bb_assembly} object. Default value is \code{assembly = "hg19"}.
+#' @param linecolor A character value or vector of length 2 specifying the line color(s) outlining the signal track(s). Default value is \code{linecolor = "grey"}.
+#' @param fill A character value or vector of length 2 specifying the fill color(s) of the signal track(s).
+#' @param ymax A numeric specifying the fraction of the max y-value to set as the height of the plot. Default value is \code{ymax = 1}.
+#' @param range A numeric vector of length 2 specifying the y-range of data to plot (c(min, max)).
+#' @param scale A logical value indicating whether to include a data scale label in the top left corner of the plot. Default value is \code{scale = FALSE}.
+#' @param bg Character value indicating background color. Default value is \code{bg = NA}.
+#' @param baseline Logical value indicating whether to include a baseline along the x-axis. Default value is \code{baseline = FALSE}.
+#' @param x A numeric or unit object specifying signal plot x-location.
+#' @param y A numeric or unit object specifying signal plot y-location.
+#' @param width A numeric or unit object specifying signal plot width.
+#' @param height A numeric or unit object specifying signal plot height.
+#' @param just Justification of signal plot relative to its (x, y) location. If there are two values, the first value specifies horizontal justification and the second value specifies vertical justification.
+#' Possible string values are: \code{"left"}, \code{"right"}, \code{"centre"}, \code{"center"}, \code{"bottom"}, and \code{"top"}. Default value is \code{just = c("left", "top")}.
+#' @param default.units A string indicating the default units to use if \code{x}, \code{y}, \code{width}, or \code{height} are only given as numerics. Default value is \code{default.units = "inches"}.
+#' @param draw A logical value indicating whether graphics output should be produced. Default value \code{draw = TRUE}.
+#' @param params An optional \link[BentoBox]{bb_assembly} object containing relevant function parameters.
+#' @param ... Additional grid graphical parameters. See \link[grid]{gpar}.
+#'
+#' @return Returns a \code{bb_signal} object containing relevant genomic region, placement, and \link[grid]{grob} information.
+#'
+#' @examples
+#' ## Load signal data
+#' data("bb_signalData")
+#'
+#' ## Plot signal plot filling up entire graphic device
+#' bb_plotSignal(data = bb_signalData, chrom = "chr21", chromstart = 28000000, chromend = 30300000, fill = "grey")
+#'
+#' ## Plot and place signal plot on a BentoBox page
+#' bb_pageCreate(width = 4, height = 3, default.units = "inches", xgrid = 0, ygrid = 0)
+#' bb_plotSignal(data = bb_signalData, chrom = "chr21", chromstart = 28000000, chromend = 30300000, fill = "grey",
+#' x = 0.5, y = 1, width = 3, height = 1, just = c("left", "top"), default.units = "inches")
 #'
 #' @export
-bb_plotSignal <- function(signal, chrom, params = NULL, chromstart = NULL, chromend = NULL, range = NULL, linecolor = "grey",
-                          binSize = NA, binCap = TRUE, fillcolor = NULL, assembly = "hg19", ymax = 1, scale = FALSE, bg = NA, baseline = FALSE, width = NULL,
-                           height = NULL, x = NULL, y = NULL, just = c("left", "top"), default.units = "inches", draw = TRUE, ...){
+bb_plotSignal <- function(data, binSize = NA, binCap = TRUE, chrom, chromstart = NULL, chromend = NULL, assembly = "hg19", linecolor = "grey", fill = NULL,
+                          ymax = 1, range = NULL, scale = FALSE, bg = NA, baseline = FALSE, x = NULL, y = NULL, width = NULL, height = NULL,
+                          just = c("left", "top"), default.units = "inches", draw = TRUE, params = NULL, ...){
 
   # ======================================================================================================================================================================================
   # FUNCTIONS
@@ -125,7 +146,7 @@ bb_plotSignal <- function(signal, chrom, params = NULL, chromstart = NULL, chrom
     if (!"data.frame" %in% class(signal)){
 
       if (!"GRanges" %in% class(signal)){
-        signal <- bb_readBigwig(filename = signal, chrom = signaltrack$chrom, chromstart = signaltrack$chromstart, chromend = signaltrack$chromend)
+        signal <- bb_readBigwig(bigwigFile = signal, chrom = signaltrack$chrom, chromstart = signaltrack$chromstart, chromend = signaltrack$chromend)
       }
 
     }
@@ -427,13 +448,13 @@ bb_plotSignal <- function(signal, chrom, params = NULL, chromstart = NULL, chrom
   if(missing(default.units)) default.units <- NULL
   if(missing(draw)) draw <- NULL
 
-  ## Check if signal/chrom arguments are missing (could be in object)
-  if(!hasArg(signal)) signal <- NULL
+  ## Check if data/chrom arguments are missing (could be in object)
+  if(!hasArg(data)) data <- NULL
   if(!hasArg(chrom)) chrom <- NULL
 
   ## Compile all parameters into an internal object
-  bb_sigInternal <- structure(list(signal = signal, chrom = chrom, chromstart = chromstart, chromend = chromend, range = range, linecolor = linecolor, binSize = binSize,
-                                   binCap = binCap, fillcolor = fillcolor, assembly = assembly, ymax = ymax, scale = scale, bg = bg, baseline = baseline, width = width, height = height,
+  bb_sigInternal <- structure(list(data = data, chrom = chrom, chromstart = chromstart, chromend = chromend, range = range, linecolor = linecolor, binSize = binSize,
+                                   binCap = binCap, fill = fill, assembly = assembly, ymax = ymax, scale = scale, bg = bg, baseline = baseline, width = width, height = height,
                                    x = x, y = y, just = just, default.units = default.units, draw = draw), class = "bb_sigInternal")
 
   bb_sigInternal <- parseParams(bb_params = params, object_params = bb_sigInternal)
@@ -455,21 +476,21 @@ bb_plotSignal <- function(signal, chrom, params = NULL, chromstart = NULL, chrom
   # INITIALIZE OBJECT
   # ======================================================================================================================================================================================
 
-  signal_track <- structure(list(chrom = bb_sigInternal$chrom, chromstart = bb_sigInternal$chromstart, chromend = bb_sigInternal$chromend, range = bb_sigInternal$range,
-                                  binSize = bb_sigInternal$binSize, binNum = NULL, ymax = bb_sigInternal$ymax,
-                                  width = bb_sigInternal$width, height = bb_sigInternal$height, x = bb_sigInternal$x, y = bb_sigInternal$y,
-                                 justification = bb_sigInternal$just, grobs = NULL, assembly = bb_sigInternal$assembly), class = "bb_signal")
+  signal_track <- structure(list(chrom = bb_sigInternal$chrom, chromstart = bb_sigInternal$chromstart, chromend = bb_sigInternal$chromend, assembly = bb_sigInternal$assembly,
+                                 binSize = bb_sigInternal$binSize, binNum = NULL, range = bb_sigInternal$range, ymax = bb_sigInternal$ymax,
+                                 x = bb_sigInternal$x, y = bb_sigInternal$y, width = bb_sigInternal$width, height = bb_sigInternal$height,
+                                 just = bb_sigInternal$just, grobs = NULL), class = "bb_signal")
   attr(x = signal_track, which = "plotted") <- bb_sigInternal$draw
 
   # ======================================================================================================================================================================================
   # CATCH ERRORS
   # ======================================================================================================================================================================================
 
-  if(is.null(bb_sigInternal$signal)) stop("argument \"signal\" is missing, with no default.", call. = FALSE)
+  if(is.null(bb_sigInternal$data)) stop("argument \"data\" is missing, with no default.", call. = FALSE)
   if(is.null(bb_sigInternal$chrom)) stop("argument \"chrom\" is missing, with no default.", call. = FALSE)
 
   check_placement(object = signal_track)
-  errorcheck_bb_signaltrack(signal = bb_sigInternal$signal, signaltrack = signal_track)
+  errorcheck_bb_signaltrack(signal = bb_sigInternal$data, signaltrack = signal_track)
 
   # ======================================================================================================================================================================================
   # PARSE ASSEMBLY
@@ -535,9 +556,9 @@ bb_plotSignal <- function(signal, chrom, params = NULL, chromstart = NULL, chrom
   # READ IN, FORMAT, FILTER, BIN, LINK AND SORT DATA
   # ======================================================================================================================================================================================
 
-  if (length(class(bb_sigInternal$signal)) == 1 && class(bb_sigInternal$signal) == "list"){
+  if (length(class(bb_sigInternal$data)) == 1 && class(bb_sigInternal$data) == "list"){
 
-    signal <- lapply(bb_sigInternal$signal, read_signal, signaltrack = signal_track)
+    signal <- lapply(bb_sigInternal$data, read_signal, signaltrack = signal_track)
     signal <- lapply(signal, format_data, signaltrack = signal_track)
     posSignal <- signal[[1]]
     negSignal <- signal[[2]]
@@ -545,7 +566,7 @@ bb_plotSignal <- function(signal, chrom, params = NULL, chromstart = NULL, chrom
 
   } else {
 
-    signal <- read_signal(signal = bb_sigInternal$signal, signaltrack = signal_track)
+    signal <- read_signal(signal = bb_sigInternal$data, signaltrack = signal_track)
     signal <- format_data(signal = signal, signaltrack = signal_track)
 
     if (any(signal[,3] < 0)){
@@ -669,7 +690,7 @@ bb_plotSignal <- function(signal, chrom, params = NULL, chromstart = NULL, chrom
 
     if (split == TRUE){
 
-      fills <- parseColors(bb_sigInternal$fillcolor)
+      fills <- parseColors(bb_sigInternal$fill)
       lines <- parseColors(bb_sigInternal$linecolor)
 
       if (nrow(posSignal) >= 2){
@@ -717,7 +738,7 @@ bb_plotSignal <- function(signal, chrom, params = NULL, chromstart = NULL, chrom
           assign("signal_grobs", addGrob(gTree = get("signal_grobs", envir = bbEnv), child = baselineGrob), envir = bbEnv)
         }
 
-        sigGrob(signal = posSignal2, fillCol = bb_sigInternal$fillcolor[1], lineCol = bb_sigInternal$linecolor[1], gp = gp)
+        sigGrob(signal = posSignal2, fillCol = bb_sigInternal$fill[1], lineCol = bb_sigInternal$linecolor[1], gp = gp)
         ## Find and make cutoff lines
         cutoffGrobs(signal = posSignal2, signaltrack = signal_track, side = "top")
       } else {

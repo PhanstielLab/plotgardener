@@ -1,37 +1,64 @@
-#' plots gene transcripts in a pileup style
+#' Plot gene transcripts in a pileup style for a single chromosome
 #'
-#' @param chrom chromsome of region to be plotted
-#' @param params an optional "bb_params" object space containing relevant function parameters
-#' @param assembly desired genome assembly
-#' @param chromstart start position
-#' @param chromend end position
-#' @param boxHeight A numeric or unit object specifying total height of each transcript
-#' @param spaceHeight height of spacing between transcripts, as a fraction of boxHeight
-#' @param spaceWidth width of minimum spacing between transcripts, as a fraction of the plot's genomic range
-#' @param fillcolor single value or vector specifying colors of transcripts
-#' @param colorbyStrand a logical value indicating whether to color strands by the first two colors in a fillcolor vector
-#' @param labels how labels should be determined; options are NULL for no labels, "transcript" for transcript names, "gene" for gene names,
-#' or "both" for combined transcript and gene names
-#' @param fontsize the size of gene label text (in points)
-#' @param strandSplit logical indicating whether plus and minus-stranded elements should be separated
-#' @param stroke numerical value indicating the stroke width for transcript body outlines
-#' @param bg background color
-#' @param x A numeric or unit object specifying x-location
-#' @param y A numeric or unit object specifying y-location
-#' @param width A numeric or unit object specifying width
-#' @param height A numeric or unit object specifying height
-#' @param just string or numeric vector specifying the justification of the viewport relative to its (x, y) location: "left", "right", "centre", "center", "bottom", "top"
-#' @param default.units A string indicating the default units to use if x, y, width, or height are only given as numerics
-#' @param draw A logical value indicating whether graphics output should be produced
+#' @usage
+#' bb_plotTranscripts(chrom)
+#' bb_plotTranscripts(chrom, x, y, width, height, just = c("left", "top"), default.units = "inches")
 #'
-#' @return Function will plot a pileup of transcripts and return a bb_transcripts object
-
+#' @param chrom Chromosome of region to be plotted, as a string.
+#' @param chromstart Integer start position on chromosome to be plotted.
+#' @param chromend Integer end position on chromosome to be plotted.
+#' @param assembly Default genome assembly as a string or a \link[BentoBox]{bb_assembly} object. Default value is \code{assembly = "hg19"}.
+#' @param fill Character value(s) as a single value or vector specifying fill colors of transcripts. Default value is \code{fill = c("#8a8aff", "#ff7e7e")}.
+#' @param colorbyStrand A logical value indicating whether to color plus and minus strands by the first two colors in a \code{fill} vector, where plus strand transcripts will be colored by the first \code{fill} color and
+#' minus strand transcripts will be colored by the second \code{fill} color. Default value is \code{colorbyStrand = TRUE}.
+#' @param strandSplit A logical value indicating whether plus and minus-stranded transcripts should be separated, with plus strand transcripts plotted above the x-axis and minus strand transcripts plotted below the x-axis. Default value is \code{strandSplit = FALSE}.
+#' @param boxHeight A numeric or unit object specifying height of transcripts. Default value is \code{boxHeight = unit(2, "mm")}.
+#' @param spaceWidth A numeric value specifying the width of minimum spacing between transcripts, as a fraction of the plot's genomic range. Default value is \code{spaceWidth = 0.02}.
+#' @param spaceHeight A numeric value specifying the height of spacing between transcripts on different rows, as a fraction of \code{boxHeight}. Default value is \code{spaceHeight = 0.3}.
+#' @param fontsize A numeric specifying text fontsize in points. Default value is \code{fontsize = 8}.
+#' @param labels A character value describing the format of transcript text labels. Default value is \code{labels = "trancript"}. Options are:
+#' \itemize{
+#' \item{\code{NULL}: }{No labels.}
+#' \item{\code{"transcript"}: }{Transcript name labels.}
+#' \item{\code{"gene"}: }{Gene name labels.}
+#' \item{\code{"both"}: }{Combined transcript and gene name labels with the format "gene name:transcript name".}
+#' }
+#' @param stroke A numeric value indicating the stroke width for transcript body outlines. Default value is \code{stroke = 0.1}.
+#' @param bg Character value indicating background color. Default value is \code{bg = NA}.
+#' @param x A numeric or unit object specifying transcript plot x-location.
+#' @param y A numeric or unit object specifying transcript plot y-location.
+#' @param width A numeric or unit object specifying transcript plot width.
+#' @param height A numeric or unit object specifying transcript plot height.
+#' @param just Justification of transcript plot relative to its (x, y) location. If there are two values, the first value specifies horizontal justification and the second value specifies vertical justification.
+#' Possible string values are: \code{"left"}, \code{"right"}, \code{"centre"}, \code{"center"}, \code{"bottom"}, and \code{"top"}. Default value is \code{just = c("left", "top")}.
+#' @param default.units A string indicating the default units to use if \code{x}, \code{y}, \code{width}, or \code{height} are only given as numerics. Default value is \code{default.units = "inches"}.
+#' @param draw A logical value indicating whether graphics output should be produced. Default value is \code{draw = TRUE}.
+#' @param params An optional \link[BentoBox]{bb_assembly} object containing relevant function parameters.
+#'
+#' @return Returns a \code{bb_transcripts} object containing relevant genomic region, placement, and \link[grid]{grob} information.
+#'
+#' @examples
+#' ## Load hg19 genomic annotation packages
+#' library("TxDb.Hsapiens.UCSC.hg19.knownGene")
+#' library("org.Hs.eg.db")
+#'
+#' ## Plot transcripts filling up entire graphic device
+#' bb_plotTranscripts(chrom = "chr8", chromstart = 1000000, chromend = 2000000, assembly = "hg19")
+#'
+#' ## Plot and place transcripts on a BentoBox page
+#' bb_pageCreate(width = 4, height = 4, default.units = "inches", xgrid = 0, ygrid = 0)
+#' bb_plotTranscripts(chrom = "chr8", chromstart = 1000000, chromend = 2000000, assembly = "hg19", labels = "gene",
+#' x = 0.5, y = 0.5, width = 3, height = 2.5, just = c("left", "top"), default.units = "inches")
+#'
+#' @details Genomic annotation information is acquired through \link[GenomicFeatures]{TxDb} and \link[AnnotationDb]{OrgDb-class} packages, as determined
+#' through the \code{assembly} parameter.
+#'
+#' @seealso \link[BentoBox]{bb_assembly}, \link[BentoBox]{bb_genomes}, \link[BentoBox]{bb_defaultPackages}
+#'
 #' @export
-
-bb_plotTranscripts <- function(chrom, params = NULL, assembly = "hg19", chromstart = NULL, chromend = NULL, boxHeight = unit(2, "mm"), spaceHeight = 0.3,
-                               spaceWidth = 0.02, fillcolor = c("#8a8aff", "#ff7e7e"), colorbyStrand = TRUE, labels = "transcript",
-                               fontsize = 8, strandSplit = FALSE, stroke = 0.1, bg = NA, x = NULL, y = NULL, width = NULL, height = NULL,
-                               just = c("left", "top"), default.units = "inches", draw = TRUE){
+bb_plotTranscripts <- function(chrom, chromstart = NULL, chromend = NULL, assembly = "hg19", fill = c("#8a8aff", "#ff7e7e"), colorbyStrand = TRUE, strandSplit = FALSE,
+                               boxHeight = unit(2, "mm"), spaceWidth = 0.02, spaceHeight = 0.3, fontsize = 8, labels = "transcript", stroke = 0.1, bg = NA,
+                               x = NULL, y = NULL, width = NULL, height = NULL, just = c("left", "top"), default.units = "inches", draw = TRUE, params = NULL){
 
   # ======================================================================================================================================================================================
   # FUNCTIONS
@@ -144,7 +171,7 @@ bb_plotTranscripts <- function(chrom, params = NULL, assembly = "hg19", chromsta
   if(missing(boxHeight)) boxHeight <- NULL
   if(missing(spaceHeight)) spaceHeight <- NULL
   if(missing(spaceWidth)) spaceWidth <- NULL
-  if(missing(fillcolor)) fillcolor <- NULL
+  if(missing(fill)) fill <- NULL
   if(missing(colorbyStrand)) colorbyStrand <- NULL
   if(missing(labels)) labels <- NULL
   if(missing(fontsize)) fontsize <- NULL
@@ -160,7 +187,7 @@ bb_plotTranscripts <- function(chrom, params = NULL, assembly = "hg19", chromsta
 
   ## Compile all parameters into an internal object
   bb_transcriptsInternal <- structure(list(assembly = assembly, chrom = chrom, chromstart = chromstart, chromend = chromend, boxHeight = boxHeight, spaceHeight = spaceHeight,
-                                     spaceWidth = spaceWidth, fillcolor = fillcolor, colorbyStrand = colorbyStrand, labels = labels, fontsize = fontsize,
+                                     spaceWidth = spaceWidth, fill = fill, colorbyStrand = colorbyStrand, labels = labels, fontsize = fontsize,
                                      strandSplit = strandSplit, stroke = stroke, bg = bg, x = x, y = y, width = width, height = height, just = just, default.units = default.units,
                                      draw = draw), class = "bb_transcriptsInternal")
 
@@ -171,7 +198,7 @@ bb_plotTranscripts <- function(chrom, params = NULL, assembly = "hg19", chromsta
   if(is.null(bb_transcriptsInternal$boxHeight)) bb_transcriptsInternal$boxHeight <- unit(2, "mm")
   if(is.null(bb_transcriptsInternal$spaceHeight)) bb_transcriptsInternal$spaceHeight <- 0.3
   if(is.null(bb_transcriptsInternal$spaceWidth)) bb_transcriptsInternal$spaceWidth <- 0.02
-  if(is.null(bb_transcriptsInternal$fillcolor)) bb_transcriptsInternal$fillcolor <- c("#8a8aff", "#ff7e7e")
+  if(is.null(bb_transcriptsInternal$fill)) bb_transcriptsInternal$fill <- c("#8a8aff", "#ff7e7e")
   if(is.null(bb_transcriptsInternal$colorbyStrand)) bb_transcriptsInternal$colorbyStrand <- TRUE
   if(is.null(bb_transcriptsInternal$labels)) bb_transcriptsInternal$labels <- "transcript"
   if(is.null(bb_transcriptsInternal$fontsize)) bb_transcriptsInternal$fontsize <- 8
@@ -186,9 +213,9 @@ bb_plotTranscripts <- function(chrom, params = NULL, assembly = "hg19", chromsta
   # INITIALIZE OBJECT
   # ======================================================================================================================================================================================
 
-  bb_transcripts <- structure(list(chrom = bb_transcriptsInternal$chrom, chromstart = bb_transcriptsInternal$chromstart, chromend = bb_transcriptsInternal$chromend, width = bb_transcriptsInternal$width,
-                                height = bb_transcriptsInternal$height, x = bb_transcriptsInternal$x, y = bb_transcriptsInternal$y, justification = bb_transcriptsInternal$just, grobs = NULL,
-                                assembly = bb_transcriptsInternal$assembly), class = "bb_transcripts")
+  bb_transcripts <- structure(list(chrom = bb_transcriptsInternal$chrom, chromstart = bb_transcriptsInternal$chromstart, chromend = bb_transcriptsInternal$chromend, assembly = bb_transcriptsInternal$assembly,
+                                   x = bb_transcriptsInternal$x, y = bb_transcriptsInternal$y, width = bb_transcriptsInternal$width, height = bb_transcriptsInternal$height,
+                                   just = bb_transcriptsInternal$just, grobs = NULL), class = "bb_transcripts")
   attr(x = bb_transcripts, which = "plotted") <- bb_transcriptsInternal$draw
 
   # ======================================================================================================================================================================================
@@ -264,12 +291,12 @@ bb_plotTranscripts <- function(chrom, params = NULL, assembly = "hg19", chromsta
   # ======================================================================================================================================================================================
 
   if (bb_transcriptsInternal$colorbyStrand == TRUE){
-    if (length(bb_transcriptsInternal$fillcolor) == 1){
-      posCol <- bb_transcriptsInternal$fillcolor
-      negCol <- bb_transcriptsInternal$fillcolor
+    if (length(bb_transcriptsInternal$fill) == 1){
+      posCol <- bb_transcriptsInternal$fill
+      negCol <- bb_transcriptsInternal$fill
     } else {
-      posCol <- bb_transcriptsInternal$fillcolor[1]
-      negCol <- bb_transcriptsInternal$fillcolor[2]
+      posCol <- bb_transcriptsInternal$fill[1]
+      negCol <- bb_transcriptsInternal$fill[2]
     }
 
     pos <- data[which(data$TXSTRAND == "+"),]
@@ -280,7 +307,7 @@ bb_plotTranscripts <- function(chrom, params = NULL, assembly = "hg19", chromsta
 
   } else {
 
-    data$color <- rep(bb_transcriptsInternal$fillcolor[1], nrow(data))
+    data$color <- rep(bb_transcriptsInternal$fill[1], nrow(data))
   }
 
 
@@ -528,9 +555,9 @@ bb_plotTranscripts <- function(chrom, params = NULL, assembly = "hg19", chromsta
   # UPDATE COLORS IF NECESSARY
   # ======================================================================================================================================================================================
 
-  if (bb_transcriptsInternal$colorbyStrand == FALSE & length(bb_transcriptsInternal$fillcolor) > 1){
+  if (bb_transcriptsInternal$colorbyStrand == FALSE & length(bb_transcriptsInternal$fill) > 1){
 
-    colors <- rep(bb_transcriptsInternal$fillcolor, ceiling(maxRows/length(bb_transcriptsInternal$fillcolor)))[1:maxRows]
+    colors <- rep(bb_transcriptsInternal$fill, ceiling(maxRows/length(bb_transcriptsInternal$fill)))[1:maxRows]
     indeces <- rowData$row
     rowData$color <- colors[indeces]
 

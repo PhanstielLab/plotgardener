@@ -1,21 +1,37 @@
-#' places a plot that has been previously created but not drawn
+#' Place a BentoBox plot that has been previously created but not drawn
 #'
-#' @param plot plot to be placed
-#' @param params an optional "bb_params" object space containing relevant function parameters
-#' @param x A numeric or unit object specifying x-location.
-#' @param y A numeric or unit object specifying y-location.
-#' @param width A numeric or unit object specifying width.
-#' @param height A numeric or unit object specifying height.
-#' @param just A string or numeric vector specifying the justification of the plot relative to its (x, y) location
-#' @param default.units A string indicating the default units to use if x, y, width, or height are only given as numeric vectors
-#' @param draw A logical value indicating whether graphics output should be produced
+#' @usage
+#' bb_pagePlotPlace(plot, x, y, width, height, just = c("left", "top"), default.units = "inches")
 #'
-#' @return Function will update dimensions of an input plot and return an updated BentoBox plot object
+#' @param plot BentoBox plot object to be placed, defined by the output of a BentoBox plotting function.
+#' @param x A numeric or unit object specifying plot x-location.
+#' @param y A numeric or unit object specifying plot y-location.
+#' @param width A numeric or unit object specifying plot width.
+#' @param height A numeric or unit object specifying plot height.
+#' @param just Justification of plot relative to its (x, y) location. If there are two values, the first value specifies horizontal justification and the second value specifies vertical justification.
+#' Possible string values are: \code{"left"}, \code{"right"}, \code{"centre"}, \code{"center"}, \code{"bottom"}, and \code{"top"}. Default value is \code{just = c("left", "top")}.
+#' @param default.units A string indicating the default units to use if \code{x}, \code{y}, \code{width}, or \code{height} are only given as numerics. Default value is \code{default.units = "inches"}.
+#' @param draw A logical value indicating whether graphics output should be produced. Default value is \code{draw = TRUE}.
+#' @param params An optional \link[BentoBox]{bb_assembly} object containing relevant function parameters.
 #'
+#' @return Function will update dimensions of an input plot and return an updated BentoBox plot object.
+#'
+#' @examples
+#' ## Load Hi-C data
+#' data("bb_hicData")
+#'
+#' ## Create, but do not plot, square Hi-C plot
+#' hicPlot <- bb_plotHicSquare(hicData = bb_hicData, resolution = 10000, zrange = c(0, 70), chrom = "chr21", chromstart = 28000000, chromend = 30300000, draw = FALSE)
+#'
+#' ## Create BentoBox page
+#' bb_pageCreate(width = 4, height = 3.5, default.units = "inches", xgrid = 0, ygrid = 0)
+#'
+#' ## Place Hi-C plot on BentoBox page
+#' bb_pagePlotPlace(plot = hicPlot, x = 0.5, y = 0.5, width = 2.5, height = 2.5, just = c("left", "top"), default.units = "inches", draw = TRUE)
 #'
 #' @export
-bb_pagePlacePlot <- function(plot, params = NULL, x = NULL, y = NULL, width = NULL, height = NULL, just = c("left", "top"),
-                         default.units = "inches", draw = T){
+bb_pagePlotPlace <- function(plot, x = NULL, y = NULL, width = NULL, height = NULL, just = c("left", "top"), default.units = "inches",
+                             draw = TRUE, params = NULL){
 
   # ======================================================================================================================================================================================
   # FUNCTIONS

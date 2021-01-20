@@ -2,49 +2,60 @@
 % Please edit documentation in R/bb_annoHeatmapLegend.R
 \name{bb_annoHeatmapLegend}
 \alias{bb_annoHeatmapLegend}
-\title{adds color scale legend for heatmap plots}
+\title{Add a color scale legend for heatmap-style plots}
 \usage{
-bb_annoHeatmapLegend(
-  plot,
-  x,
-  y,
-  width,
-  height,
-  params = NULL,
-  border = FALSE,
-  orientation = "v",
-  fontsize = 8,
-  fontcolor = "dark grey",
-  just = c("left", "top"),
-  default.units = "inches",
-  ...
-)
+bb_annoHeatmapLegend(heatmapPlot, x, y, width, height, just = c("left", "top"), default.units = "inches")
 }
 \arguments{
-\item{plot}{plot to add heatmap legend for}
+\item{heatmapPlot}{Heatmap-style plot object to add heatmap legend for.}
 
-\item{x}{A numeric vector or unit object specifying x-location}
+\item{orientation}{A string specifying legend orientation. Default value is \code{orientation = "v"}. Options are:
+\itemize{
+\item{\code{"v"}:}{Vertical legend orientation.}
+\item{\code{"h"}:}{Horizontal legend orientation.}
+}}
 
-\item{y}{A numeric vector or unit object specifying y-location}
+\item{fontsize}{A numeric specifying text fontsize in points. Default value is \code{fontsize = 8}.}
 
-\item{width}{A numeric vector or unit object specifying width}
+\item{fontcolor}{Character value specfying text fontcolor. Default value is \code{fontcolor = "dark grey"}.}
 
-\item{height}{A numeric vector or unit object specifying height}
+\item{border}{Logical value indicating whether to add a border around heatmap legend. Default value is \code{border = FALSE}.}
 
-\item{params}{an optional "bb_params" object space containing relevant function parameters}
+\item{x}{A numeric or unit object specifying x-location of legend.}
 
-\item{border}{option to add border around heatmap legend}
+\item{y}{A numeric or unit object specifying y-location of legend.}
 
-\item{orientation}{"v" (vertical) or "h" (horizontal) orientation}
+\item{width}{A numeric or unit object specifying width of legend.}
 
-\item{fontsize}{fontsize for text}
+\item{height}{A numeric or unit object specifying height of legend.}
 
-\item{fontcolor}{fontcolor for text}
+\item{just}{Justification of heatmap legend relative to its (x, y) location. If there are two values, the first value specifies horizontal justification and the second value specifies vertical justification. Possible string values are: \code{"left"}, \code{"right"}, \code{"centre"}, \code{"center"}, \code{"bottom"}, and \code{"top"}.
+Default value is \code{just = c("left", "top")}.}
 
-\item{just}{justification of heatmap legend}
+\item{default.units}{A string indicating the default units to use if \code{x}, \code{y}, \code{width}, or \code{height} are only given as numerics. Default value is \code{default.units = "inches"}.}
 
-\item{default.units}{A string indicating the default units to use if x, y, width, or height are only given as numeric vectors}
+\item{params}{An optional \link[BentoBox]{bb_assembly} object containing relevant function parameters.}
+
+\item{...}{Additional grid graphical parameters. See \link[grid]{gpar}.}
+}
+\value{
+Returns a \code{bb_heatmapLegend} object with relevant color value, placement, and \link[grid]{grob} information.
 }
 \description{
-adds color scale legend for heatmap plots
+Add a color scale legend for heatmap-style plots
+}
+\examples{
+## Load Hi-C data
+data("bb_hicData")
+
+## Create BentoBox page
+bb_pageCreate(width = 4, height = 3.5, default.units = "inches", xgrid = 0, ygrid = 0)
+
+## Plot and place a square Hi-C plot
+hicPlot <- bb_plotHicSquare(hicData = bb_hicData, resolution = 10000, zrange = c(0, 70), chrom = "chr21", chromstart = 28000000, chromend = 30300000,
+x = 0.5, y = 0.5, width = 2.5, height = 2.5, just = c("left", "top"), default.units = "inches")
+
+## Add heatmap legend
+bb_annoHeatmapLegend(heatmapPlot = hicPlot, x = 3.2, y = 0.5, width = 0.25, height = 0.75, just = c("left", "top"), default.units = "inches")
+
 }

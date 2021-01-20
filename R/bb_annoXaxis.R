@@ -1,12 +1,37 @@
-#' wrapper function for plotting an x axis in its own viewport
+#' Add an x-axis to a plot
 #'
-#' @param plot plot to add axis to
-#' @param params an optional "bb_params" object space containing relevant function parameters
-#' @param at a numeric vector of x-value locations for the tick marks
-#' @param label a logical value indicating whether to draw the labels on the tick marks, or an expression or character vector which specify the labels to use. If not logical, must be the same length as the at argument
-#' @param main A logical value indicating whether to draw the axis at the bottom (TRUE) or at the top (FALSE) of the plot
+#' @usage bb_annoXaxis(plot)
+#'
+#' @param plot Plot object to annotate with x-axis.
+#' @param at A numeric vector of x-value locations for tick marks.
+#' @param label A logical value indicating whether to draw the labels on the tick marks, or an expression or character vector which specify the labels to use. If not logical, must be the same length as the \code{at} argument.
+#' @param main A logical value indicating whether to draw the x-axis at the bottom of the plot. Default value is \code{main = TRUE}. Options are:
+#' \itemize{
+#' \item{\code{TRUE}:}{x-axis is drawn at the bottom of the plot.}
+#' \item{\code{FALSE}:}{x-axis is drawn at the top of the plot.}
+#' }
+#' @param gp Grid graphical parameters. See \link[grid]{gpar}.
+#' @param params An optional \link[BentoBox]{bb_assembly} object containing relevant function parameters.
+#'
+#' @return Returns a \code{bb_xaxis} object containing relevant \link[grid]{grob} information.
+#'
+#' @examples
+#' ## Load transcript information
+#' library("TxDb.Hsapiens.UCSC.hg19.knownGene")
+#' library("org.Hs.eg.db")
+#'
+#' ## Create BentoBox page
+#' bb_pageCreate(width = 3, height = 2, default.units = "inches", xgrid = 0, ygrid = 0)
+#'
+#' ## Plot gene transcripts
+#' transcriptPlot <- bb_plotTranscripts(chrom = "chr1", chromstart = 1000000, chromend = 2000000,
+#' x = 0, y = 0, width = 3, height = 1.5, just = c("left", "top"), default.units = "inches")
+#'
+#' ## Add standard x-axis to transcript plot
+#' bb_annoXaxis(plot = transcriptPlot, at = c(1000000, 1250000, 1500000, 1750000, 2000000), gp = gpar(fontsize = 8))
+#'
 #' @export
-bb_annoXaxis <- function(plot, params = NULL, at = NULL, label = TRUE, main = TRUE, gp = gpar()){
+bb_annoXaxis <- function(plot, at = NULL, label = TRUE, main = TRUE, gp = gpar(), params = NULL){
 
   # ======================================================================================================================================================================================
   # PARSE PARAMETERS
@@ -45,6 +70,7 @@ bb_annoXaxis <- function(plot, params = NULL, at = NULL, label = TRUE, main = TR
   # CREATE GROB WITHOUT DRAWING
   # ======================================================================================================================================================================================
 
+  assign("bb_xInternal", bb_xInternal, envir = globalenv())
   xGrob <- xaxisGrob(at = bb_xInternal$at, label = bb_xInternal$label, main = bb_xInternal$main, gp = bb_xInternal$gp, vp = bb_xInternal$plot$grobs$vp)
 
   # ======================================================================================================================================================================================

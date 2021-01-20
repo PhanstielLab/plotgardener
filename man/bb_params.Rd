@@ -9,16 +9,16 @@ bb_params(
   altchrom = NULL,
   altchromend = NULL,
   altchromstart = NULL,
-  althalf = NULL,
-  arch = NULL,
   archHeight = NULL,
   assembly = "hg19",
   at = NULL,
   axis = NULL,
   baseline = NULL,
-  bed = NULL,
-  bedpe = NULL,
+  basePlot = NULL,
+  bedpeData = NULL,
+  bedpePlot = NULL,
   bg = NULL,
+  bigwigFile = NULL,
   binCap = NULL,
   binSize = NULL,
   border = NULL,
@@ -30,18 +30,17 @@ bb_params(
   chrom = NULL,
   chromend = NULL,
   chromstart = NULL,
-  col = NULL,
+  clip = NULL,
   colorby = NULL,
-  colorbyrange = NULL,
   colorbyStrand = NULL,
+  column = NULL,
   commas = NULL,
-  cutoffArches = NULL,
+  curvature = NULL,
+  data = NULL,
   default.units = NULL,
   display.column = NULL,
   draw = NULL,
-  filename = NULL,
   fill = NULL,
-  fillcolor = NULL,
   fontcolor = NULL,
   fontcolors = NULL,
   fontsize = NULL,
@@ -51,19 +50,21 @@ bb_params(
   geneBuffer = NULL,
   geneHighlights = NULL,
   geneOrder = NULL,
-  genome = NULL,
   Genome = NULL,
+  ggPlot = NULL,
   gp = NULL,
   half = NULL,
+  heatmapPlot = NULL,
   height = NULL,
-  hic = NULL,
+  hicData = NULL,
+  hicFile = NULL,
+  hicPlot = NULL,
   just = NULL,
   label = NULL,
   labels = NULL,
   legend = NULL,
   length = NULL,
   linecolor = NULL,
-  loops = NULL,
   lty = NULL,
   lwd = NULL,
   main = NULL,
@@ -90,7 +91,6 @@ bb_params(
   showUnit = NULL,
   sigCol = NULL,
   sigLine = NULL,
-  signal = NULL,
   sigVal = NULL,
   space = NULL,
   spaceHeight = NULL,
@@ -102,7 +102,6 @@ bb_params(
   stroke = NULL,
   style = NULL,
   tcl = NULL,
-  ticks = NULL,
   title = NULL,
   TxDb = NULL,
   type = NULL,
@@ -116,18 +115,18 @@ bb_params(
 )
 }
 \arguments{
-\item{assembly}{string defining the genome build. Default value is \code{assembly = "hg19"}.}
+\item{assembly}{String defining the genome build. Default value is \code{assembly = "hg19"}.}
 
-\item{gene}{(optional) string naming a gene used to set the chromosome, chromstart, and
+\item{gene}{(optional) String naming a gene used to set the chromosome, chromstart, and
 chromend arguments.}
 
-\item{geneBuffer}{(optional) integer base-pairs to extend the start and end of a gene
+\item{geneBuffer}{(optional) Integer base-pairs to extend the start and end of a gene
 defined by argument \code{gene}.}
 
 \item{...}{This function will take any BentoBox function parameters and their values.}
 }
 \value{
-Returns an object of class "bb_params" containing BentoBox function arguments.
+Returns an object of class \code{bb_params} containing BentoBox function arguments.
 }
 \description{
 Creates an object of class "bb_params" that can be used by BentoBox functions.

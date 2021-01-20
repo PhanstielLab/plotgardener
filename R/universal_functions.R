@@ -61,7 +61,6 @@ current_viewports <- function(){
 
 ## Define a function to convert viewport x and y into center based on justification
 adjust_vpCoords <- function(viewport){
-
   vp_y <- viewport$y
 
   if (length(viewport$justification == 2)){

@@ -2,79 +2,76 @@
 % Please edit documentation in R/bb_plotSignal.R
 \name{bb_plotSignal}
 \alias{bb_plotSignal}
-\title{plots signal track data}
+\title{Plot any kind of signal track data for a single chromosome}
 \usage{
-bb_plotSignal(
-  signal,
-  chrom,
-  params = NULL,
-  chromstart = NULL,
-  chromend = NULL,
-  range = NULL,
-  linecolor = "grey",
-  binSize = NA,
-  binCap = TRUE,
-  fillcolor = NULL,
-  assembly = "hg19",
-  ymax = 1,
-  scale = FALSE,
-  bg = NA,
-  baseline = FALSE,
-  width = NULL,
-  height = NULL,
-  x = NULL,
-  y = NULL,
-  just = c("left", "top"),
-  default.units = "inches",
-  draw = TRUE,
-  ...
-)
+bb_plotSignal(data, chrom)
+bb_plotSignal(data, chrom, x, y, width, height, just = c("left", "top"), default.units = "inches")
 }
 \arguments{
-\item{signal}{signal track data to be plotted (bigwig file, bed format dataframe, or GRanges with "counts" metadata); can be one or a list of two}
+\item{data}{Data to be plotted as a character value specifying a bigwig file path, a dataframe in BED format, or a \link[GenomicRanges]{GRanges} object with metadata column \code{counts}.
+Either one \code{data} argument or a list of two can be provided, where the second \code{data} will be plotted below the x-axis.}
 
-\item{chrom}{chromosome of region to be plotted as a string (i.e. "chr3")}
+\item{binSize}{A numeric specifying the length of each data bin in basepairs. Default value is \code{binSize = NA}.}
 
-\item{params}{an optional "bb_params" object space containing relevant function parameters}
+\item{binCap}{A logical value indicating whether the function will limit the number of data bins to 8,000. Default value is \code{binCap = TRUE}.}
 
-\item{chromstart}{start position}
+\item{chrom}{Chromosome of region to be plotted, as a string.}
 
-\item{chromend}{end position}
+\item{chromstart}{Integer start position on chromosome to be plotted.}
 
-\item{range}{y-range to plot (c(min, max))}
+\item{chromend}{Integer end position on chromosome to be plotted.}
 
-\item{linecolor}{color(s) of line outlining signal track(s); if using fillcolor and no outline is desired, set to NA}
+\item{assembly}{Default genome assembly as a string or a \link[BentoBox]{bb_assembly} object. Default value is \code{assembly = "hg19"}.}
 
-\item{binSize}{the length of each bin in bp}
+\item{linecolor}{A character value or vector of length 2 specifying the line color(s) outlining the signal track(s). Default value is \code{linecolor = "grey"}.}
 
-\item{binCap}{TRUE/FALSE whether the function will limit the number of bins to 8,000}
+\item{fill}{A character value or vector of length 2 specifying the fill color(s) of the signal track(s).}
 
-\item{fillcolor}{color(s) filling in signal track(s)}
+\item{ymax}{A numeric specifying the fraction of the max y-value to set as the height of the plot. Default value is \code{ymax = 1}.}
 
-\item{assembly}{desired genome assembly}
+\item{range}{A numeric vector of length 2 specifying the y-range of data to plot (c(min, max)).}
 
-\item{ymax}{fraction of max y-value to set as height of plot}
+\item{scale}{A logical value indicating whether to include a data scale label in the top left corner of the plot. Default value is \code{scale = FALSE}.}
 
-\item{scale}{A logical value indicating whether to include a data scale label in the top left corner}
+\item{bg}{Character value indicating background color. Default value is \code{bg = NA}.}
 
-\item{bg}{background color}
+\item{baseline}{Logical value indicating whether to include a baseline along the x-axis. Default value is \code{baseline = FALSE}.}
 
-\item{baseline}{logical indicating whether to include baseline along the x-axis}
+\item{x}{A numeric or unit object specifying signal plot x-location.}
 
-\item{width}{A numeric or unit object specifying width}
+\item{y}{A numeric or unit object specifying signal plot y-location.}
 
-\item{height}{A numeric or unit object specifying height}
+\item{width}{A numeric or unit object specifying signal plot width.}
 
-\item{x}{A numeric or unit object specifying x-location}
+\item{height}{A numeric or unit object specifying signal plot height.}
 
-\item{y}{A numeric or unit object specifying y-location}
+\item{just}{Justification of signal plot relative to its (x, y) location. If there are two values, the first value specifies horizontal justification and the second value specifies vertical justification.
+Possible string values are: \code{"left"}, \code{"right"}, \code{"centre"}, \code{"center"}, \code{"bottom"}, and \code{"top"}. Default value is \code{just = c("left", "top")}.}
 
-\item{just}{a string or numeric vector specifying the justification of the viewport relative to its (x, y) location: "left", "right", "centre", "center", "bottom", "top"}
+\item{default.units}{A string indicating the default units to use if \code{x}, \code{y}, \code{width}, or \code{height} are only given as numerics. Default value is \code{default.units = "inches"}.}
 
-\item{default.units}{A string indicating the default units to use if x, y, width, or height are only given as numerics}
+\item{draw}{A logical value indicating whether graphics output should be produced. Default value \code{draw = TRUE}.}
 
-\item{draw}{A logical value indicating whether graphics output should be produced}
+\item{params}{An optional \link[BentoBox]{bb_assembly} object containing relevant function parameters.}
+
+\item{...}{Additional grid graphical parameters. See \link[grid]{gpar}.}
+}
+\value{
+Returns a \code{bb_signal} object containing relevant genomic region, placement, and \link[grid]{grob} information.
 }
 \description{
-plots signal track data
+Plot any kind of signal track data for a single chromosome
+}
+\examples{
+## Load signal data
+data("bb_signalData")
+
+## Plot signal plot filling up entire graphic device
+bb_plotSignal(data = bb_signalData, chrom = "chr21", chromstart = 28000000, chromend = 30300000, fill = "grey")
+
+## Plot and place signal plot on a BentoBox page
+bb_pageCreate(width = 4, height = 3, default.units = "inches", xgrid = 0, ygrid = 0)
+bb_plotSignal(data = bb_signalData, chrom = "chr21", chromstart = 28000000, chromend = 30300000, fill = "grey",
+x = 0.5, y = 1, width = 3, height = 1, just = c("left", "top"), default.units = "inches")
+
 }

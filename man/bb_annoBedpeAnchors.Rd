@@ -2,42 +2,50 @@
 % Please edit documentation in R/bb_annoBedpeAnchors.R
 \name{bb_annoBedpeAnchors}
 \alias{bb_annoBedpeAnchors}
-\title{annotates vertical boxes at anchors of bedpe elements}
+\title{Annotate vertical boxes at anchors of BEDPE elements}
 \usage{
-bb_annoBedpeAnchors(
-  plot,
-  x,
-  y,
-  height,
-  params = NULL,
-  fillcolor = "lightgrey",
-  linecolor = NA,
-  alpha = 0.4,
-  just = c("left", "top"),
-  default.units = "inches"
-)
+bb_annoBedpeAnchors(bedpePlot, x, y, height, just = c("left", "top"), default.units = "inches")
 }
 \arguments{
-\item{plot}{bedpe plot to highlight bedpe anchors}
+\item{bedpePlot}{BEDPE plot object from \code{bb_plotBedpe} or \code{bb_plotBedpeArches} with which to highlight the anchors of BEDPE elements.}
 
-\item{x}{A numeric or unit object specifying x-location.}
+\item{fill}{Character value specifying fill color of highlight boxes. Default value is \code{fill = "lightgrey"}.}
 
-\item{y}{A numeric or unit object specifying y-location.}
+\item{linecolor}{Character value specifying linecolor of highlight boxes. Default value is \code{linecolor = NA}.}
 
-\item{height}{A numeric or unit object specifying height.}
+\item{alpha}{Numeric value specifying \code{fill} transparency. Default value is \code{alpha = 0.4}.}
 
-\item{params}{an optional "bb_params" object space containing relevant function parameters}
+\item{x}{A numeric or unit object specifying x-location of annotation.}
 
-\item{fillcolor}{character value specifying fillcolor of boxes}
+\item{y}{A numeric or unit object specifying y-location of annotation.}
 
-\item{linecolor}{character value specifying linecolor of boxes}
+\item{height}{A numeric or unit object specifying height of annotation.}
 
-\item{alpha}{numeric value specifying transparency}
+\item{just}{Justification of annotation relative to its (x, y) location. If there are two values, the first value specifies horizontal justification and the second value specifies vertical justification. Possible string values are: \code{"left"}, \code{"right"}, \code{"centre"}, \code{"center"}, \code{"bottom"}, and \code{"top"}.
+Default value is \code{just = c("left", "top")}.}
 
-\item{just}{justification of text relative to its (x, y) location}
+\item{default.units}{A string indicating the default units to use if \code{x}, \code{y}, or \code{height} are only given as numerics. Default value is \code{default.units = "inches"}.}
 
-\item{default.units}{A string indicating the default units to use if x or y are only given as numerics.}
+\item{params}{An optional \link[BentoBox]{bb_assembly} object containing relevant function parameters.}
+}
+\value{
+Returns a \code{bb_bedpeAnchor} object with relevant genomic region, placement, and \link[grid]{grob} information.
 }
 \description{
-annotates vertical boxes at anchors of bedpe elements
+Annotate vertical boxes at anchors of BEDPE elements
+}
+\examples{
+## Load BEDPE data
+data("bb_bedpeData")
+
+## Create BentoBox page
+bb_pageCreate(width = 4, height = 2.5, default.units = "inches", xgrid = 0, ygrid = 0)
+
+## Plot and place a BEDPE arches plot
+bedpeArches <- bb_plotBedpeArches(bedpeData = bb_bedpeData, chrom = "chr21", chromstart = 28000000, chromend = 30300000, linecolor = "black",
+x = 0.5, y = 0.5, width = 3, height = 1, just = c("left", "top"), default.units = "inches")
+
+## Annotate anchors
+bb_annoBedpeAnchors(bedpePlot = bedpeArches, fill = "steel blue", x = 0.5, y = 1.5, height = 0.5, default.units = "inches")
+
 }

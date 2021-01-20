@@ -2,85 +2,75 @@
 % Please edit documentation in R/bb_plotPileup.R
 \name{bb_plotPileup}
 \alias{bb_plotPileup}
-\title{plots data stored in BED format in a pileup style}
+\title{Plot data elements in a pileup style for a single chromosome}
 \usage{
-bb_plotPileup(
-  bed,
-  chrom,
-  params = NULL,
-  chromstart = NULL,
-  chromend = NULL,
-  assembly = "hg19",
-  fillcolor = "black",
-  linecolor = NA,
-  colorby = NULL,
-  colorbyrange = NULL,
-  strandSplit = FALSE,
-  boxHeight = unit(2, "mm"),
-  spaceHeight = 0.3,
-  spaceWidth = 0.02,
-  bg = NA,
-  baseline = FALSE,
-  x = NULL,
-  y = NULL,
-  width = NULL,
-  height = NULL,
-  just = c("left", "top"),
-  default.units = "inches",
-  draw = TRUE,
-  ...
-)
+bb_plotPileup(data, chrom)
+bb_plotPileup(data, chrom, x, y, width, height, just = c("left", "top"), default.units = "inches")
 }
 \arguments{
-\item{bed}{genomic data to be plotted; can be any data in BED format, a .bam file where a bam index file (.bam.bai) is in the same directory,  or a GRanges}
+\item{data}{Data to be plotted; as a character value specifying a BED file path, a data frame in BED format, a character value specifying a .bam file path where a bam index file (.bam.bai) is in the same directory, or a \link[GenomicRanges]{GRanges} object.}
 
-\item{chrom}{chromosome of region to be plotted}
+\item{chrom}{Chromosome of region to be plotted, as a string.}
 
-\item{params}{an optional "bb_params" object space containing relevant function parameters}
+\item{chromstart}{Integer start position on chromosome to be plotted.}
 
-\item{chromstart}{start position}
+\item{chromend}{Integer end position on chromosome to be plotted.}
 
-\item{chromend}{end position}
+\item{assembly}{Default genome assembly as a string or a \link[BentoBox]{bb_assembly} object. Default value is \code{assembly = "hg19"}.}
 
-\item{assembly}{desired genome assembly}
+\item{fill}{Character value(s) as a single value, vector, or palette specifying fill colors of pileup elements. Default value is \code{fill = "black"}.}
 
-\item{fillcolor}{single value, vector, or palette specifying colors of pileup elements}
+\item{colorby}{A "\link[BentoBox]{colorby}" object specifying information for scaling colors in data.}
 
-\item{linecolor}{linecolor of line outlining pileup elements}
+\item{linecolor}{A character value specifying the color of the lines outlining pileup elements. Default value is \code{linecolor = NA}.}
 
-\item{colorby}{name of column in bed data to scale colors by}
+\item{boxHeight}{A numeric or unit object specifying height of pileup element boxes. Default value is \code{boxHeight = unit(2, "mm")}.}
 
-\item{colorbyrange}{the range of values to apply a colorby palette scale to, if colorby values are numeric}
+\item{spaceWidth}{A numeric value specifying the width of minimum spacing between pileup element boxes, as a fraction of the plot's genomic range. Default value is \code{spaceWidth = 0.02}.}
 
-\item{strandSplit}{logical indicating whether plus and minus-stranded elements should be separated}
+\item{spaceHeight}{A numeric value specifying the height of spacing between pileup element boxes on different rows, as a fraction of boxHeight. Default value is \code{spaceHeight = 0.3}.}
 
-\item{boxHeight}{A numeric or unit object specifying height of pileup element boxes}
+\item{strandSplit}{A logical value indicating whether plus and minus-stranded elements should be separated. Elements can only be split by strand if a \code{strand} column is found in \code{data}. Default value is \code{strandSplit = FALSE}.}
 
-\item{spaceHeight}{height of spacing between pileup element boxes, as a fraction of boxHeight}
+\item{bg}{Character value indicating background color. Default value is \code{bg = NA}.}
 
-\item{spaceWidth}{width of minimum spacing between pileup element boxes, as a fraction of the plot's genomic range}
+\item{baseline}{Logical value indicating whether to include a baseline along the x-axis. Default value is \code{baseline = FALSE}.}
 
-\item{bg}{background color}
+\item{x}{A numeric or unit object specifying pileup plot x-location.}
 
-\item{baseline}{logical indicating whether to include baseline along the x-axis}
+\item{y}{A numeric or unit object specifying pileup plot y-location.}
 
-\item{x}{A numeric or unit object specifying x-location}
+\item{width}{A numeric or unit object specifying pileup plot width.}
 
-\item{y}{A numeric or unit object specifying y-location}
+\item{height}{A numeric or unit object specifying pileup plot height.}
 
-\item{width}{A numeric or unit object specifying width}
+\item{just}{Justification of pileup plot relative to its (x, y) location. If there are two values, the first value specifies horizontal justification and the second value specifies vertical justification.
+Possible string values are: \code{"left"}, \code{"right"}, \code{"centre"}, \code{"center"}, \code{"bottom"}, and \code{"top"}. Default value is \code{just = c("left", "top")}.}
 
-\item{height}{A numeric or unit object specifying height}
+\item{default.units}{A string indicating the default units to use if \code{x}, \code{y}, \code{width}, or \code{height} are only given as numerics. Default value is \code{default.units = "inches"}.}
 
-\item{just}{A string or numeric vector specifying the justification of the viewport relative to its (x, y) location: "left", "right", "centre", "center", "bottom", "top"}
+\item{draw}{A logical value indicating whether graphics output should be produced. Default value \code{draw = TRUE}.}
 
-\item{default.units}{A string indicating the default units to use if x, y, width, or height are only given as numerics}
+\item{params}{An optional \link[BentoBox]{bb_assembly} object containing relevant function parameters.}
 
-\item{draw}{A logical value indicating whether graphics output should be produced}
+\item{...}{Additional grid graphical parameters. See \link[grid]{gpar}.}
 }
 \value{
-Function will plot a pileup style plot and return a bb_pileup object
+Returns a \code{bb_pileup} object containing relevant genomic region, coloring data, placement, and \link[grid]{grob} information.
 }
 \description{
-plots data stored in BED format in a pileup style
+Plot data elements in a pileup style for a single chromosome
+}
+\examples{
+## Load BED data
+data("bb_bedData")
+
+## Plot pileup plot filling up entire graphic device
+bb_plotPileup(data = bb_bedData, chrom = "chr21", chromstart = 29073000, chromend = 29074000, fill = "grey")
+
+## Plot and place pileup plot on a BentoBox page
+bb_pageCreate(width = 5, height = 5, default.units = "inches", xgrid = 0, ygrid = 0)
+bb_plotPileup(data = bb_bedData, chrom = "chr21", chromstart = 29073000, chromend = 29074000, fill = "grey", baseline = TRUE,
+x = 0.5, y = 0.5, width = 4, height = 4, just = c("left", "top"), default.units = "inches")
+
 }

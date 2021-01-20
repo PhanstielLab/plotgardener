@@ -1,17 +1,32 @@
-#' adds a plot created with baseR to a BentoBox layout
+#' Plot a base R plot in a BentoBox layout
 #'
-#' @param plot plot formula of base R plotting functions; ex: p <- ~plot(1:10) + abline(v = 2)
-#' @param x A numeric or unit object specifying x-location.
-#' @param y A numeric or unit object specifying y-location.
-#' @param width A numeric or unit object specifying width.
-#' @param height A numeric or unit object specifying height.
-#' @param params an optional "bb_params" object space containing relevant function parameters
-#' @param bg background color
-#' @param just A string or numeric vector specifying the justification of the plot relative to its (x, y) location
-#' @param default.units A string indicating the default units to use if x, y, width, or height are only given as numeric vectors
+#' @usage bb_plotBase(basePlot, x, y, width, height, just = c("left", "top"), default.units = "inches")
+#'
+#' @param basePlot Plot formula of base R plotting functions.
+#' @param x A numeric or unit object specifying plot x-location.
+#' @param y A numeric or unit object specifying plot y-location.
+#' @param width A numeric or unit object specifying plot width.
+#' @param height A numeric or unit object specifying plot height.
+#' @param just Justification of base plot relative to its (x, y) location. If there are two values, the first value specifies horizontal justification and the second value specifies vertical justification.
+#' Possible string values are: \code{"left"}, \code{"right"}, \code{"centre"}, \code{"center"}, \code{"bottom"}, and \code{"top"}. Default value is \code{just = c("left", "top")}.
+#' @param default.units A string indicating the default units to use if \code{x}, \code{y}, \code{width}, or \code{height} are only given as numerics. Default value is \code{default.units = "inches"}.
+#' @param bg Character value indicating background color. Default value is \code{bg = NA}.
+#' @param params An optional \link[BentoBox]{bb_assembly} object containing relevant function parameters.
+#'
+#' @return Returns a \code{bb_base} object containing relevant placement and \link[grid]{grob} information.
+#'
+#' @examples
+#' ## Define base R plot
+#' p <- ~plot(1:10) + abline(v = 2)
+#'
+#' ## Create BentoBox page
+#' bb_pageCreate(width = 5, height = 5, default.units = "inches", xgrid = 0, ygrid = 0)
+#'
+#' ## Place base R plot in BentoBox page
+#' bb_plotBase(basePlot = p, x = 0.5, y = 0.5, width = 4, height = 4, just = c("left", "top"), default.units = "inches")
 #'
 #' @export
-bb_plotBase <- function(plot, x, y, width, height, params = NULL, bg = NA, just = c("left", "top"), default.units = "inches"){
+bb_plotBase <- function(basePlot, x, y, width, height, just = c("left", "top"), default.units = "inches", bg = NA, params = NULL){
 
   # ======================================================================================================================================================================================
   # PARSE PARAMETERS
@@ -23,14 +38,14 @@ bb_plotBase <- function(plot, x, y, width, height, params = NULL, bg = NA, just 
   if(missing(default.units)) default.units <- NULL
 
   ## Check if plot/x/y/width/height arguments are missing (could be in object)
-  if(!hasArg(plot)) plot <- NULL
+  if(!hasArg(basePlot)) basePlot <- NULL
   if(!hasArg(x)) x <- NULL
   if(!hasArg(y)) y <- NULL
   if(!hasArg(width)) width <- NULL
   if(!hasArg(height)) height <- NULL
 
   ## Compile all parameters into an internal object
-  bb_baseInternal <- structure(list(plot = plot, x = x, y = y, width = width, height = height, bg = bg,
+  bb_baseInternal <- structure(list(basePlot = basePlot, x = x, y = y, width = width, height = height, bg = bg,
                                      just = just, default.units = default.units), class = "bb_baseInternal")
 
   bb_baseInternal <- parseParams(bb_params = params, object_params = bb_baseInternal)
@@ -44,14 +59,14 @@ bb_plotBase <- function(plot, x, y, width, height, params = NULL, bg = NA, just 
   # INITIALIZE PLOT OBJECT
   # ======================================================================================================================================================================================
 
-  bb_base <- structure(list(width = bb_baseInternal$width, height = bb_baseInternal$height, x = bb_baseInternal$x, y = bb_baseInternal$y,
-                              justification = bb_baseInternal$just, grobs = NULL), class = "bb_base")
+  bb_base <- structure(list(x = bb_baseInternal$x, y = bb_baseInternal$y, width = bb_baseInternal$width, height = bb_baseInternal$height,
+                              just = bb_baseInternal$just, grobs = NULL), class = "bb_base")
 
   # ======================================================================================================================================================================================
   # CALL ERRORS
   # ======================================================================================================================================================================================
 
-  if(is.null(bb_baseInternal$plot)) stop("argument \"plot\" is missing, with no default.", call. = FALSE)
+  if(is.null(bb_baseInternal$basePlot)) stop("argument \"basePlot\" is missing, with no default.", call. = FALSE)
   if(is.null(bb_baseInternal$x)) stop("argument \"x\" is missing, with no default.", call. = FALSE)
   if(is.null(bb_baseInternal$y)) stop("argument \"y\" is missing, with no default.", call. = FALSE)
   if(is.null(bb_baseInternal$width)) stop("argument \"width\" is missing, with no default.", call. = FALSE)
@@ -85,7 +100,7 @@ bb_plotBase <- function(plot, x, y, width, height, params = NULL, bg = NA, just 
   # CONVERT PLOT TO A GROB
   # ======================================================================================================================================================================================
 
-  gtree <- ggplotify::base2grob(bb_baseInternal$plot)
+  gtree <- ggplotify::base2grob(bb_baseInternal$basePlot)
 
   # ======================================================================================================================================================================================
   # ASSIGN VIEWPORT TO GTREE

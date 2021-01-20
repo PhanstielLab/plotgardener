@@ -2,36 +2,43 @@
 % Please edit documentation in R/bb_plotGG.R
 \name{bb_plotGG}
 \alias{bb_plotGG}
-\title{adds a plot created with ggplot2 to a BentoBox layout}
+\title{Plot a ggplot2 plot in a BentoBox layout}
 \usage{
-bb_plotGG(
-  plot,
-  x,
-  y,
-  width,
-  height,
-  params = NULL,
-  just = c("left", "top"),
-  default.units = "inches"
-)
+bb_plotGG(ggPlot, x, y, width, height, just = c("left", "top"), default.units = "inches")
 }
 \arguments{
-\item{plot}{ggplot object'}
+\item{ggPlot}{ggplot object.}
 
-\item{x}{A numeric or unit object specifying x-location.}
+\item{x}{A numeric or unit object specifying ggplot x-location.}
 
-\item{y}{A numeric or unit object specifying y-location.}
+\item{y}{A numeric or unit object specifying ggplot y-location.}
 
-\item{width}{A numeric or unit object specifying width.}
+\item{width}{A numeric or unit object specifying ggplot width.}
 
-\item{height}{A numeric or unit object specifying height.}
+\item{height}{A numeric or unit object specifying ggplot height.}
 
-\item{params}{an optional "bb_params" object space containing relevant function parameters}
+\item{just}{Justification of ggplot relative to its (x, y) location. If there are two values, the first value specifies horizontal justification and the second value specifies vertical justification.
+Possible string values are: \code{"left"}, \code{"right"}, \code{"centre"}, \code{"center"}, \code{"bottom"}, and \code{"top"}. Default value is \code{just = c("left", "top")}.}
 
-\item{just}{A string or numeric vector specifying the justification of the plot relative to its (x, y) location}
+\item{default.units}{A string indicating the default units to use if \code{x}, \code{y}, \code{width}, or \code{height} are only given as numerics. Default value is \code{default.units = "inches"}.}
 
-\item{default.units}{A string indicating the default units to use if x, y, width, or height are only given as numeric vectors}
+\item{params}{An optional \link[BentoBox]{bb_assembly} object containing relevant function parameters.}
+}
+\value{
+Returns a \code{bb_gg} object containing relevant placement and \link[grid]{grob} information.
 }
 \description{
-adds a plot created with ggplot2 to a BentoBox layout
+Plot a ggplot2 plot in a BentoBox layout
+}
+\examples{
+## Create a plot using ggplot2
+library(ggplot2)
+p <- ggplot(mtcars) + geom_point(aes(mpg, disp))
+
+## Create a BentoBox page
+bb_pageCreate(width = 4, height = 4, default.units = "inches", xgrid = 0, ygrid = 0)
+
+## Place ggplot in BentoBox page
+bb_plotGG(ggPlot = p, x = 0.5, y = 0.5, width = 3, height = 3, just = c("left", "top"), default.units = "inches")
+
 }

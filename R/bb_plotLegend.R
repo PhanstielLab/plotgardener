@@ -1,26 +1,52 @@
-#' plots a legend
+#' Plot a legend
 #'
-#' @param legend single value or vector of legend text
-#' @param params an optional "bb_params" object space containing relevant function parameters
-#' @param orientation "v" (vertical) or "h" (horizontal) orientation
-#' @param fillcolor if specified, this argument will produce boxes filled with the specified colors to appear beside the legend text
-#' @param pch if specified, this argument will produce symbols to appear beside the legend text
-#' @param lty if specified, this argument will produce line types to appear beside the legend text
-#' @param title legend title
-#' @param border option to add border around legend
-#' @param bg background color of legend
-#' @param x A numeric vector or unit object specifying x-location
-#' @param y A numeric vector or unit object specifying y-location
-#' @param width A numeric vector or unit object specifying width
-#' @param height A numeric vector or unit object specifying height
-#' @param just justification of scale viewport
-#' @param default.units A string indicating the default units to use if x, y, width, or height are only given as numeric vectors
-#' @param draw A logical value indicating whether graphics output should be produced
-
+#' @usage bb_plotLegend(legend, x, y, width, height, just = c("left", "top"), default.units = "inches")
+#'
+#' @param legend A character or expression vector to appear in the legend.
+#' @param fill If specified, this argument will produce boxes filled with the specified colors to appear beside the legend text.
+#' @param pch The plotting symbols appearing in the legend, as a numeric vector.
+#' @param lty The line types for lines appearing in the legend.
+#' @param orientation A string specifying legend orientation. Default value is \code{orientation = "v"}. Options are:
+#' \itemize{
+#' \item{\code{"v"}:}{Vertical legend orientation.}
+#' \item{\code{"h"}:}{Horizontal legend orientation.}
+#' }
+#' @param title A character value giving a title to be placed at the top of the legend.
+#' @param fontsize A numeric specifying text fontsize in points. Default value is \code{fontsize = 10}.
+#' @param border Logical value indicating whether to add a border around heatmap legend. Default value is \code{border = TRUE}.
+#' @param bg Character value indicating background color. Default value is \code{bg = NA}.
+#' @param x A numeric or unit object specifying legend x-location.
+#' @param y A numeric or unit object specifying legend y-location.
+#' @param width A numeric or unit object specifying legend width.
+#' @param height A numeric or unit object specifying legend height.
+#' @param just Justification of legend relative to its (x, y) location. If there are two values, the first value specifies horizontal justification and the second value specifies vertical justification.
+#' Possible string values are: \code{"left"}, \code{"right"}, \code{"centre"}, \code{"center"}, \code{"bottom"}, and \code{"top"}. Default value is \code{just = c("left", "top")}.
+#' @param default.units A string indicating the default units to use if \code{x}, \code{y}, \code{width}, or \code{height} are only given as numerics. Default value is \code{default.units = "inches"}.
+#' @param draw A logical value indicating whether graphics output should be produced. Default value is \code{draw = TRUE}.
+#' @param params An optional \link[BentoBox]{bb_assembly} object containing relevant function parameters.
+#' @param ... Additional grid graphical parameters. See \link[grid]{gpar}.
+#'
+#' @return Returns a \code{bb_legend} object containing relevant placement and \link[grid]{grob} information.
+#'
+#' @examples
+#' ## Load BED data
+#' data("bb_bedData")
+#'
+#' ## Create BentoBox page
+#' bb_pageCreate(width = 5, height = 5, default.units = "inches", xgrid = 0, ygrid = 0)
+#'
+#' ## Plot a pileup plot, coloring elements by strand
+#' pileupPlot <- bb_plotPileup(data = bb_bedData, chrom = "chr21", chromstart = 29073000, chromend = 29074000,
+#' fill = c("red", "blue"), colorby = colorby("strand"), x = 0.5, y = 0.5, width = 3.5, height = 4, just = c("left", "top"), default.units = "inches")
+#'
+#' ## Add a legend depicting strand colors
+#'
+#' legendPlot <- bb_plotLegend(legend = c("minus strand", "plus strand"), fill = c("red", "blue"), title = "Strands",
+#' x = 3.5, y = 1, width = 1.5, height = 1, just = c("left", "top"), default.units = "inches")
+#'
 #' @export
-
-bb_plotLegend <- function(legend, params = NULL, orientation = "v", fillcolor = NULL, pch = NULL, lty = NULL, title = NULL, fontsize = 10, border = TRUE,
-                          bg = NA, x = NULL, y = NULL, width = NULL, height = NULL, just = c("left", "top"), default.units = "inches", draw = TRUE, ...){
+bb_plotLegend <- function(legend, fill = NULL, pch = NULL, lty = NULL, orientation = "v", title = NULL, fontsize = 10, border = TRUE,
+                          bg = NA, x = NULL, y = NULL, width = NULL, height = NULL, just = c("left", "top"), default.units = "inches", draw = TRUE, params = NULL, ...){
 
   # ======================================================================================================================================================================================
   # PARSE PARAMETERS
@@ -39,7 +65,7 @@ bb_plotLegend <- function(legend, params = NULL, orientation = "v", fillcolor = 
   if(!hasArg(legend)) legend <- NULL
 
   ## Compile all parameters into an internal object
-  bb_legInternal <- structure(list(legend = legend, orientation = orientation, fillcolor = fillcolor, pch = pch, lty = lty, title = title, fontsize = fontsize,
+  bb_legInternal <- structure(list(legend = legend, orientation = orientation, fill = fill, pch = pch, lty = lty, title = title, fontsize = fontsize,
                                    border = border, bg = bg, x = x, y = y, width = width, height = height, just = just, default.units = default.units, draw = draw), class = "bb_legInternal")
 
   bb_legInternal <- parseParams(bb_params = params, object_params = bb_legInternal)
@@ -57,8 +83,8 @@ bb_plotLegend <- function(legend, params = NULL, orientation = "v", fillcolor = 
   # INITIALIZE OBJECT
   # ======================================================================================================================================================================================
 
-  legend_plot <- structure(list(width = bb_legInternal$width, height = bb_legInternal$height, x = bb_legInternal$x, y = bb_legInternal$y,
-                                justification = bb_legInternal$just, grobs = NULL), class = "bb_legend")
+  legend_plot <- structure(list(x = bb_legInternal$x, y = bb_legInternal$y, width = bb_legInternal$width, height = bb_legInternal$height,
+                                just = bb_legInternal$just, grobs = NULL), class = "bb_legend")
   attr(x = legend_plot, which = "plotted") <- bb_legInternal$draw
 
   # ======================================================================================================================================================================================
@@ -186,7 +212,7 @@ bb_plotLegend <- function(legend, params = NULL, orientation = "v", fillcolor = 
 
   ## Colors
   ## Only take the first number of colors for the length of legend
-  fillcolors <- bb_legInternal$fillcolor[1:length(bb_legInternal$legend)]
+  fillcolors <- bb_legInternal$fill[1:length(bb_legInternal$legend)]
   ## Spacing and label coordinates
   spaceHeight <- remainingSpace/spaceNo
 

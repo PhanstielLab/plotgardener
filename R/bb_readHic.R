@@ -1,26 +1,37 @@
-#' extracts Hi-C data from a .hic file
+#' Read a .hic file and return Hi-C data as a dataframe
 #'
-#' @param hic path to .hic file
-#' @param chrom chromosome of desired region
-#' @param params an optional "bb_params" object space containing relevant function parameters
-#' @param chromstart start position
-#' @param chromend end position
-#' @param resolution the width of each pixel; "auto" will attempt to choose a resolution (in basepairs) based on the size of the region
-#' @param zrange the range of interaction scores to plot, where extreme values will be set to the max or min; if null, zrange will be set to (0, max(data))
-#' @param norm hic data normalization; must be found in hic file
-#' @param res_scale resolution scale; options are "BP" and "FRAG"
-#' @param matrix type of matrix to output. Must be one of "observed" or "oe". "observed" is observed counts and "oe" is observed/expected counts.
-#' @param assembly desired genome assembly
-#' @param altchrom if looking at region between two different chromosomes, this is the specified alternative chromosome
-#' @param altchromstart if looking at region between two different chromosomes, start position of altchrom
-#' @param altchromend if looking at region between two different chromsomes, end position of altchrom
+#' @usage bb_readHic(hicFile, chrom)
 #'
-#' @return Function will return a 3-column dataframe: chrom, altchrom, counts
+#' @param hicFile A character value specifying the path to the .hic file.
+#' @param chrom Chromosome of data, as a string.
+#' @param chromstart Integer start position on chromosome.
+#' @param chromend Integer end position on chromosome.
+#' @param altchrom Alternate chromosome for interchromosomal data, as a string.
+#' @param altchromstart Alternate chromosome integer start position for interchromosomal data.
+#' @param altchromend Alternate chromosome integer end position for interchromosomal data.
+#' @param assembly Default genome assembly as a string or a \link[BentoBox]{bb_assembly} object. Default value is \code{assembly = "hg19"}.
+#' @param resolution A numeric specifying the width of each pixel. "auto" will attempt to choose a resolution in basepairs based on the size of the region.
+#' @param res_scale A character value specifying the resolution scale. Default value is \code{res_scale = "BP"}. Options are:
+#' \itemize{
+#' \item{\code{"BP"}: }{Base pairs.}
+#' \item{\code{"FRAG"}: }{Fragments.}
+#' }
+#' @param zrange A numeric vector of length 2 specifying the range of interaction scores, where extreme values will be set to the max or min.
+#' @param norm Character value specifying hic data normalization method. This value must be found in the .hic file. Default value is \code{norm = "KR"}.
+#' @param matrix Character value indicating the type of matrix to output. Default value is \code{matrix = "observed"}. Options are:
+#' \itemize{
+#' \item{\code{"observed"}:}{Observed counts.}
+#' \item{\code{"oe"}:}{Observed/expected counts.}
+#' }
+#' @param params An optional \link[BentoBox]{bb_assembly} object containing relevant function parameters.
+#'
+#' @return Returns a 3-column dataframe in sparse upper triangular format with the following columns: chrom, altchrom, counts.
+#'
+#' @seealso \link[strawr]{straw}
 #'
 #' @export
-
-bb_readHic <- function(hic, chrom, params = NULL, chromstart = NULL, chromend = NULL, resolution = "auto", zrange = NULL,
-                       norm = "KR", res_scale = "BP", matrix = "observed", assembly = "hg19", altchrom = NULL, altchromstart = NULL, altchromend = NULL){
+bb_readHic <- function(hicFile, chrom, chromstart = NULL, chromend = NULL, altchrom = NULL, altchromstart = NULL, altchromend = NULL, assembly = "hg19", resolution = "auto", res_scale = "BP",
+                       zrange = NULL, norm = "KR",  matrix = "observed", params = NULL){
 
 
   # ======================================================================================================================================================================================
@@ -327,11 +338,11 @@ bb_readHic <- function(hic, chrom, params = NULL, chromstart = NULL, chromend = 
   if(missing(matrix)) matrix <- NULL
 
   ## Check if hic/chrom arguments are missing (could be in object)
-  if(!hasArg(hic)) hic <- NULL
+  if(!hasArg(hicFile)) hicFile <- NULL
   if(!hasArg(chrom)) chrom <- NULL
 
   ## Compile all parameters into an internal object
-  bb_rhic <- structure(list(hic = hic, chrom = chrom, chromstart = chromstart, chromend = chromend, resolution = resolution, zrange = zrange,
+  bb_rhic <- structure(list(hicFile = hicFile, chrom = chrom, chromstart = chromstart, chromend = chromend, resolution = resolution, zrange = zrange,
                             norm = norm, res_scale = res_scale, assembly = assembly, matrix = matrix, altchrom = altchrom, altchromstart = altchromstart, altchromend = altchromend), class = "bb_rhic")
 
   bb_rhic <- parseParams(bb_params = params, object_params = bb_rhic)
@@ -343,7 +354,7 @@ bb_readHic <- function(hic, chrom, params = NULL, chromstart = NULL, chromend = 
   if(is.null(bb_rhic$assembly)) bb_rhic$assembly <- "hg19"
   if(is.null(bb_rhic$matrix)) bb_rhic$matrix <- "observed"
 
-  if(is.null(bb_rhic$hic)) stop("argument \"hic\" is missing, with no default.", call. = FALSE)
+  if(is.null(bb_rhic$hicFile)) stop("argument \"hicFile\" is missing, with no default.", call. = FALSE)
   if(is.null(bb_rhic$chrom)) stop("argument \"chrom\" is missing, with no default.", call. = FALSE)
 
   # ======================================================================================================================================================================================
@@ -426,7 +437,7 @@ bb_readHic <- function(hic, chrom, params = NULL, chromstart = NULL, chromend = 
 
 
   upper <-
-    tryCatch(strawr::straw(bb_rhic$matrix, bb_rhic$norm, bb_rhic$hic, toString(chromRegion), toString(altchromRegion), bb_rhic$res_scale, bb_rhic$resolution),
+    tryCatch(strawr::straw(bb_rhic$matrix, bb_rhic$norm, bb_rhic$hicFile, toString(chromRegion), toString(altchromRegion), bb_rhic$res_scale, bb_rhic$resolution),
              error = errorFunction)
 
   # ======================================================================================================================================================================================

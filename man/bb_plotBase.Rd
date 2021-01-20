@@ -2,39 +2,44 @@
 % Please edit documentation in R/bb_plotBase.R
 \name{bb_plotBase}
 \alias{bb_plotBase}
-\title{adds a plot created with baseR to a BentoBox layout}
+\title{Plot a base R plot in a BentoBox layout}
 \usage{
-bb_plotBase(
-  plot,
-  x,
-  y,
-  width,
-  height,
-  params = NULL,
-  bg = NA,
-  just = c("left", "top"),
-  default.units = "inches"
-)
+bb_plotBase(basePlot, x, y, width, height, just = c("left", "top"), default.units = "inches")
 }
 \arguments{
-\item{plot}{plot formula of base R plotting functions; ex: p <- ~plot(1:10) + abline(v = 2)}
+\item{basePlot}{Plot formula of base R plotting functions.}
 
-\item{x}{A numeric or unit object specifying x-location.}
+\item{x}{A numeric or unit object specifying plot x-location.}
 
-\item{y}{A numeric or unit object specifying y-location.}
+\item{y}{A numeric or unit object specifying plot y-location.}
 
-\item{width}{A numeric or unit object specifying width.}
+\item{width}{A numeric or unit object specifying plot width.}
 
-\item{height}{A numeric or unit object specifying height.}
+\item{height}{A numeric or unit object specifying plot height.}
 
-\item{params}{an optional "bb_params" object space containing relevant function parameters}
+\item{just}{Justification of base plot relative to its (x, y) location. If there are two values, the first value specifies horizontal justification and the second value specifies vertical justification.
+Possible string values are: \code{"left"}, \code{"right"}, \code{"centre"}, \code{"center"}, \code{"bottom"}, and \code{"top"}. Default value is \code{just = c("left", "top")}.}
 
-\item{bg}{background color}
+\item{default.units}{A string indicating the default units to use if \code{x}, \code{y}, \code{width}, or \code{height} are only given as numerics. Default value is \code{default.units = "inches"}.}
 
-\item{just}{A string or numeric vector specifying the justification of the plot relative to its (x, y) location}
+\item{bg}{Character value indicating background color. Default value is \code{bg = NA}.}
 
-\item{default.units}{A string indicating the default units to use if x, y, width, or height are only given as numeric vectors}
+\item{params}{An optional \link[BentoBox]{bb_assembly} object containing relevant function parameters.}
+}
+\value{
+Returns a \code{bb_base} object containing relevant placement and \link[grid]{grob} information.
 }
 \description{
-adds a plot created with baseR to a BentoBox layout
+Plot a base R plot in a BentoBox layout
+}
+\examples{
+## Define base R plot
+p <- ~plot(1:10) + abline(v = 2)
+
+## Create BentoBox page
+bb_pageCreate(width = 5, height = 5, default.units = "inches", xgrid = 0, ygrid = 0)
+
+## Place base R plot in BentoBox page
+bb_plotBase(basePlot = p, x = 0.5, y = 0.5, width = 4, height = 4, just = c("left", "top"), default.units = "inches")
+
 }

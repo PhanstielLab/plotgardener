@@ -1,43 +1,65 @@
-#' plots HiC interaction matrix
+#' Plot a Hi-C interaction matrix in a square format
 #'
-#' @param hic path to .hic file or 3 column dataframe of counts
-#' @param chrom chromosome of region to be plotted
-#' @param params an optional "bb_params" object space containing relevant function parameters
-#' @param chromstart start position
-#' @param chromend end position
-#' @param half what sides of square plot; options are "both", top", or "bottom"
-#' @param resolution the width in bp of each pixel; for hic files, "auto" will attempt to choose a resolution based on the size of the region; for
-#' dataframes, "auto" will attempt to detect the resolution the dataframe contains
-#' @param zrange the range of interaction scores to plot, where extreme values will be set to the max or min
-#' @param palette ColorRamp palette to use for representing interaction scores
-#' @param assembly default genome assembly as a string or a bb_assembly object
-#' @param width A numeric or unit object specifying width
-#' @param height A numeric or unit object specifying height
-#' @param x A numeric or unit object specifying x-location
-#' @param y A numeric or unit object specifying y-location
-#' @param just a string or numeric vector specifying the justification of the viewport relative to its (x, y) location
-#' @param default.units A string indicating the default units to use if x, y, width, or height are only given as numeric vectors
-#' @param draw A logical value indicating whether graphics output should be produced
-#' @param altchrom alternate chromosome for off-diagonal plotting or interchromosomal plotting
-#' @param altchromstart alternate chromosome start for off-diagonal plotting or interchromosomal plotting
-#' @param altchromend alternate chromosome end for off-diagonal plotting or interchromosomal plotting
-#' @param althalf if plotting altchrom region, which side off diagonal to plot; options are "top" or "bottom"
-#' @param norm if giving .hic file, hic data normalization; must be found in hic file
-#' @param matrix type of matrix to output. Must be one of "observed" or "oe". "observed" is observed counts and "oe" is observed/expected counts.
+#' @usage
+#' bb_plotHicSquare(hicData, chrom)
+#' bb_plotHicSquare(hicData, chrom, x, y, width, height, just = c("left", "top"), default.units = "inches")
 #'
-#' @return Function will plot a HiC interaction matrix and return a bb_hic object
+#' @param hicData Path to .hic file as a string or a 3-column dataframe of interaction counts in sparse upper triangular format.
+#' @param resolution A numeric specifying the width in basepairs of each pixel. For hic files, "auto" will attempt to choose a resolution based on the size of the region. For
+#' dataframes, "auto" will attempt to detect the resolution the dataframe contains.
+#' @param zrange A numeric vector of length 2 specifying the range of interaction scores to plot, where extreme values will be set to the max or min.
+#' @param norm Character value specifying hic data normalization method, if giving .hic file. This value must be found in the .hic file. Default value is \code{norm = "KR"}.
+#' @param matrix Character value indicating the type of matrix to output. Default value is \code{matrix = "observed"}. Options are:
+#' \itemize{
+#' \item{\code{"observed"}:}{Observed counts.}
+#' \item{\code{"oe"}:}{Observed/expected counts.}
+#' }
+#' @param chrom Chromosome of region to be plotted, as a string.
+#' @param chromstart Integer start position on chromosome to be plotted.
+#' @param chromend Integer end position on chromosome to be plotted.
+#' @param altchrom Alternate chromosome for off-diagonal plotting or interchromosomal plotting, as a string.
+#' @param altchromstart Alternate chromosome integer start position for off-diagonal plotting or interchromosomal plotting.
+#' @param altchromend Alternate chromosome integer end position for off-diagonal plotting or interchromosomal plotting.
+#' @param assembly Default genome assembly as a string or a \link[BentoBox]{bb_assembly} object. Default value is \code{assembly = "hg19"}.
+#' @param palette A function describing the color palette to use for representing scale of interaction scores. Default value is \code{palette = colorRampPalette(c("white", "dark red"))}.
+#' @param half A character value indicating which diagonal regions to plot. For intrachromosomal plotting, options are \code{"both"}, \code{"top"}, or \code{"bottom"}. For off-diagonal or interchromosomal plotting, options are \code{"top"} or \code{"bottom"}. Default value is \code{half = "both"}.
+#' \itemize{
+#' \item{\code{"both"}:}{Both diagonal halves.}
+#' \item{\code{"top"}:}{Half above the diagonal.}
+#' \item{\code{"bottom"}:}{Half below the diagonal.}
+#' }
+#' @param x A numeric or unit object specifying square Hi-C plot x-location.
+#' @param y A numeric or unit object specifying square Hi-C plot y-location.
+#' @param width A numeric or unit object specifying square Hi-C plot width.
+#' @param height A numeric or unit object specifying square Hi-C plot height.
+#' @param just Justification of square Hi-C plot relative to its (x, y) location. If there are two values, the first value specifies horizontal justification and the second value specifies vertical justification.
+#' Possible string values are: \code{"left"}, \code{"right"}, \code{"centre"}, \code{"center"}, \code{"bottom"}, and \code{"top"}. Default value is \code{just = c("left", "top")}.
+#' @param default.units A string indicating the default units to use if \code{x}, \code{y}, \code{width}, or \code{height} are only given as numerics. Default value is \code{default.units = "inches"}.
+#' @param draw A logical value indicating whether graphics output should be produced. Default value is \code{draw = TRUE}.
+#' @param params An optional \link[BentoBox]{bb_assembly} object containing relevant function parameters.
 #'
+#' @return Returns a \code{bb_hic} object containing relevant genomic region, Hi-C data, placement, and \link[grid]{grob} information.
 #'
 #' @examples
+#' ## Load Hi-C data
+#' data("bb_hicData")
+#'
+#' ## Plot upper diagonal of square Hi-C plot filling up entire graphic device
+#' bb_plotHicSquare(hicData = bb_hicData, resolution = 10000, zrange = c(0, 70),
+#' chrom = "chr21", chromstart = 28000000, chromend = 30300000, half = "top")
+#'
+#' ## Plot and place both halves of square Hi-C plot on a BentoBox page
+#' bb_pageCreate(width = 3, height = 3, default.units = "inches", xgrid = 0, ygrid = 0)
+#' bb_plotHicSquare(hicData = bb_hicData, resolution = 10000, zrange = c(0, 70), chrom = "chr21", chromstart = 28000000, chromend = 30300000,
+#' x = 0.5, y = 0.5, width = 2, height = 2, just = c("left", "top"), default.units = "inches")
+#'
+#' @seealso \link[BentoBox]{bb_readHic}
 #'
 #' @export
-#'
-#'
-
-bb_plotHicSquare <- function(hic, chrom, params = NULL, chromstart = NULL, chromend = NULL, half = "both", resolution = "auto", zrange = NULL,
-                       palette = colorRampPalette(c("white", "dark red")), assembly = "hg19", width = NULL, height = NULL, x = NULL, y = NULL,
-                       just = c("left", "top"), default.units = "inches", draw = TRUE, altchrom = NULL, altchromstart = NULL, altchromend = NULL, althalf = NULL,
-                       norm = "KR", matrix = "observed"){
+bb_plotHicSquare <- function(hicData, resolution = "auto", zrange = NULL, norm = "KR", matrix = "observed", chrom, chromstart = NULL, chromend = NULL, altchrom = NULL,
+                             altchromstart = NULL, altchromend = NULL, assembly = "hg19", palette = colorRampPalette(c("white", "dark red")),
+                             half = "both", x = NULL, y = NULL, width = NULL, height = NULL, just = c("left", "top"), default.units = "inches",
+                             draw = TRUE, params = NULL){
 
   # ======================================================================================================================================================================================
   # FUNCTIONS
@@ -208,23 +230,12 @@ bb_plotHicSquare <- function(hic, chrom, params = NULL, chromstart = NULL, chrom
 
     } else {
 
-      if (is.null(hic_plot$althalf)){
 
-        stop("If specifying alternate chromosome, please provide \'althalf\'.", call. = FALSE)
-      }
+      if (!hic_plot$half %in% c("top", "bottom")){
 
-      if (!hic_plot$althalf %in% c("top", "bottom")){
-
-        stop("Invalid \'althalf\'.  Options are \'top\' or \'bottom\'.", call. = FALSE)
+        stop("Invalid \'half\' for off-diagonal and interchromosomal plotting.  Options are \'top\' or \'bottom\'.", call. = FALSE)
 
       }
-
-      if (!is.null(hic_plot$half)){
-
-        warning("\'half\' option is unused.  \'althalf\' option will be used.", call. = FALSE)
-
-      }
-
 
     }
 
@@ -337,7 +348,7 @@ bb_plotHicSquare <- function(hic, chrom, params = NULL, chromstart = NULL, chrom
         readchromend <- hic_plot$chromend + hic_plot$resolution
         readaltchromstart <- hic_plot$altchromstart - hic_plot$resolution
         readaltchromend <- hic_plot$altchromend + hic_plot$resolution
-        hic <- suppressWarnings(bb_readHic(hic = hic, chrom = hic_plot$chrom, chromstart = readchromstart, chromend = readchromend,
+        hic <- suppressWarnings(bb_readHic(hicFile = hic, chrom = hic_plot$chrom, chromstart = readchromstart, chromend = readchromend,
                                            resolution = hic_plot$resolution, zrange = hic_plot$zrange, norm = norm,
                                            altchrom = hic_plot$altchrom, altchromstart = readaltchromstart,
                                            altchromend = readaltchromend, matrix = type))
@@ -432,14 +443,14 @@ bb_plotHicSquare <- function(hic, chrom, params = NULL, chromstart = NULL, chrom
 
     } else {
 
-      if (hic_plot$althalf == "bottom"){
+      if (hic_plot$half == "bottom"){
 
         xscale <- c(hic_plot$chromstart, hic_plot$chromend)
         yscale <- c(hic_plot$altchromstart, hic_plot$altchromend)
 
       }
 
-      if (hic_plot$althalf == "top"){
+      if (hic_plot$half == "top"){
 
         xscale <- c(hic_plot$altchromstart, hic_plot$altchromend)
         yscale <- c(hic_plot$chromstart, hic_plot$chromend)
@@ -461,7 +472,7 @@ bb_plotHicSquare <- function(hic, chrom, params = NULL, chromstart = NULL, chrom
   }
 
   ## Define a function that subsets the hic dataframe into which will be squares and which will be triangles
-  hic_shapes <- function(hic, hic_plot){
+  hic_shapes <- function(hic, hic_plot, half){
 
     if (!is.null(hic_plot$altchrom)){
 
@@ -471,13 +482,13 @@ bb_plotHicSquare <- function(hic, chrom, params = NULL, chromstart = NULL, chrom
 
     } else {
 
-      if (hic_plot$half == "both"){
+      if (half == "both"){
 
         ## all squares
         squares <- hic
         triangles <- NULL
 
-      } else if (hic_plot$half == "top"){
+      } else if (half == "top"){
 
         ## squares for top half
         ## triangles for diagonal
@@ -485,7 +496,7 @@ bb_plotHicSquare <- function(hic, chrom, params = NULL, chromstart = NULL, chrom
         squares <- hic[which(hic[,2] > hic[,1]),]
         triangles <- hic[which(hic[,2] == hic[,1]),]
 
-      } else if (hic_plot$half == "bottom"){
+      } else if (half == "bottom"){
 
         ## squares for bottom half
         ## triangles for diagonal
@@ -503,7 +514,7 @@ bb_plotHicSquare <- function(hic, chrom, params = NULL, chromstart = NULL, chrom
   }
 
   ## Define a function that makes grobs for the hic diagonal
-  hic_diagonal <- function(hic, hic_plot){
+  hic_diagonal <- function(hic, hic_plot, half){
 
     col <- hic[4]
     x <- as.numeric(hic[1])
@@ -514,7 +525,7 @@ bb_plotHicSquare <- function(hic, chrom, params = NULL, chromstart = NULL, chrom
     ybottom = y
     ytop = y + hic_plot$resolution
 
-    if (hic_plot$half == "top"){
+    if (half == "top"){
 
       hic_triangle <- polygonGrob(x = c(xleft, xleft, xright),
                                   y = c(ybottom, ytop, ytop),
@@ -522,7 +533,7 @@ bb_plotHicSquare <- function(hic, chrom, params = NULL, chromstart = NULL, chrom
                                   default.units = "native")
 
 
-    } else if (hic_plot$half == "bottom"){
+    } else if (half == "bottom"){
 
 
       hic_triangle <- polygonGrob(x = c(xleft, xright, xright),
@@ -553,14 +564,14 @@ bb_plotHicSquare <- function(hic, chrom, params = NULL, chromstart = NULL, chrom
   if(missing(matrix)) matrix <- NULL
 
   ## Check if hic/chrom arguments are missing (could be in object)
-  if(!hasArg(hic)) hic <- NULL
+  if(!hasArg(hicData)) hicData <- NULL
   if(!hasArg(chrom)) chrom <- NULL
 
   ## Compile all parameters into an internal object
-  bb_hicInternal <- structure(list(hic = hic, chrom = chrom, chromstart = chromstart, chromend = chromend, half = half, resolution = resolution,
+  bb_hicInternal <- structure(list(hicData = hicData, chrom = chrom, chromstart = chromstart, chromend = chromend, half = half, resolution = resolution,
                                    zrange = zrange, palette = palette, assembly = assembly, width = width, height = height, x = x, y = y, just = just,
                                    default.units = default.units, draw = draw, altchrom = altchrom, altchromstart = altchromstart, altchromend = altchromend,
-                                   althalf = althalf, norm = norm, matrix = matrix), class = "bb_hicInternal")
+                                   norm = norm, matrix = matrix), class = "bb_hicInternal")
 
   bb_hicInternal <- parseParams(bb_params = params, object_params = bb_hicInternal)
 
@@ -575,7 +586,7 @@ bb_plotHicSquare <- function(hic, chrom, params = NULL, chromstart = NULL, chrom
   if(is.null(bb_hicInternal$norm)) bb_hicInternal$norm <- "KR"
   if(is.null(bb_hicInternal$matrix)) bb_hicInternal$matrix <- "observed"
 
-  if(is.null(bb_hicInternal$hic)) stop("argument \"hic\" is missing, with no default.", call. = FALSE)
+  if(is.null(bb_hicInternal$hicData)) stop("argument \"hicData\" is missing, with no default.", call. = FALSE)
   if(is.null(bb_hicInternal$chrom)) stop("argument \"chrom\" is missing, with no default.", call. = FALSE)
 
   # ======================================================================================================================================================================================
@@ -583,10 +594,9 @@ bb_plotHicSquare <- function(hic, chrom, params = NULL, chromstart = NULL, chrom
   # ======================================================================================================================================================================================
 
   hic_plot <- structure(list(chrom = bb_hicInternal$chrom, chromstart = bb_hicInternal$chromstart, chromend = bb_hicInternal$chromend, altchrom = bb_hicInternal$altchrom,
-                             altchromstart = bb_hicInternal$altchromstart, altchromend = bb_hicInternal$altchromend, x = bb_hicInternal$x, y = bb_hicInternal$y,
-                             width = bb_hicInternal$width, height = bb_hicInternal$height, justification = bb_hicInternal$just, zrange = bb_hicInternal$zrange,
-                             resolution = bb_hicInternal$resolution, half = bb_hicInternal$half, althalf = bb_hicInternal$althalf, color_palette = NULL, grobs = NULL,
-                             assembly = bb_hicInternal$assembly), class = "bb_hic")
+                             altchromstart = bb_hicInternal$altchromstart, altchromend = bb_hicInternal$altchromend, assembly = bb_hicInternal$assembly, resolution = bb_hicInternal$resolution,
+                             x = bb_hicInternal$x, y = bb_hicInternal$y, width = bb_hicInternal$width, height = bb_hicInternal$height, just = bb_hicInternal$just, color_palette = NULL, zrange = bb_hicInternal$zrange,
+                             half = bb_hicInternal$half, grobs = NULL), class = "bb_hic")
   attr(x = hic_plot, which = "plotted") <- bb_hicInternal$draw
 
   # ======================================================================================================================================================================================
@@ -600,7 +610,7 @@ bb_plotHicSquare <- function(hic, chrom, params = NULL, chromstart = NULL, chrom
   # ======================================================================================================================================================================================
 
   check_placement(object = hic_plot)
-  errorcheck_bb_plothic(hic = bb_hicInternal$hic, hic_plot = hic_plot, norm = bb_hicInternal$norm)
+  errorcheck_bb_plothic(hic = bb_hicInternal$hicData, hic_plot = hic_plot, norm = bb_hicInternal$norm)
 
   # ======================================================================================================================================================================================
   # PARSE UNITS
@@ -634,14 +644,14 @@ bb_plotHicSquare <- function(hic, chrom, params = NULL, chromstart = NULL, chrom
   # ======================================================================================================================================================================================
 
   if (hic_plot$resolution == "auto"){
-    hic_plot <- adjust_resolution(hic = bb_hicInternal$hic, hic_plot = hic_plot)
+    hic_plot <- adjust_resolution(hic = bb_hicInternal$hicData, hic_plot = hic_plot)
   }
 
   # ======================================================================================================================================================================================
   # READ IN DATA
   # ======================================================================================================================================================================================
 
-  hic <- read_data(hic = bb_hicInternal$hic, hic_plot = hic_plot, norm = bb_hicInternal$norm, assembly = hic_plot$assembly, type = bb_hicInternal$matrix)
+  hic <- read_data(hic = bb_hicInternal$hicData, hic_plot = hic_plot, norm = bb_hicInternal$norm, assembly = hic_plot$assembly, type = bb_hicInternal$matrix)
 
   # ======================================================================================================================================================================================
   # SUBSET DATA
@@ -736,7 +746,7 @@ bb_plotHicSquare <- function(hic, chrom, params = NULL, chromstart = NULL, chrom
     if (nrow(hic) > 0){
 
       ## Determine which grobs will be squares [[1]] and which will be triangles [[2]]
-      shapes <- hic_shapes(hic = hic, hic_plot = hic_plot)
+      shapes <- hic_shapes(hic = hic, hic_plot = hic_plot, half = bb_hicInternal$half)
 
       if (!is.null(shapes[[1]])){
 
@@ -756,7 +766,7 @@ bb_plotHicSquare <- function(hic, chrom, params = NULL, chromstart = NULL, chrom
       ## Make triangle grobs and add to grob gTree
       if (!is.null(shapes[[2]])){
 
-        invisible(apply(shapes[[2]], 1, hic_diagonal, hic_plot = hic_plot))
+        invisible(apply(shapes[[2]], 1, hic_diagonal, hic_plot = hic_plot, half = bb_hicInternal$half))
 
       }
 

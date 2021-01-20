@@ -2,92 +2,87 @@
 % Please edit documentation in R/bb_plotBedpeArches.R
 \name{bb_plotBedpeArches}
 \alias{bb_plotBedpeArches}
-\title{plots data stored in BEDPE format in a "ribbon arch" style}
+\title{Plot paired-end BEDPE data in an arch style}
 \usage{
-bb_plotBedpeArches(
-  bedpe,
-  chrom,
-  params = NULL,
-  chromstart = NULL,
-  chromend = NULL,
-  cutoffArches = FALSE,
-  archHeight = NULL,
-  style = "2D",
-  arch = 5,
-  position = "top",
-  fillcolor = "lightgrey",
-  linecolor = "grey",
-  colorby = NULL,
-  colorbyrange = NULL,
-  assembly = "hg19",
-  alpha = 0.4,
-  baseline = FALSE,
-  bg = NA,
-  x = NULL,
-  y = NULL,
-  width = NULL,
-  height = NULL,
-  just = c("left", "top"),
-  default.units = "inches",
-  draw = T,
-  ...
-)
+bb_plotBedpeArches(bedpeData, chrom)
+bb_plotBedpeArches(bedpeData, chrom, x, y, width, height, just = c("left", "top"), default.units = "inches")
 }
 \arguments{
-\item{bedpe}{bed paired end data to be plotted}
+\item{bedpeData}{A string specifying the BEDPE file path or a dataframe in BEDPE format specifying data to be plotted.}
 
-\item{chrom}{chromsome of region to be plotted}
+\item{chrom}{Chromosome of region to be plotted, as a string.}
 
-\item{params}{an optional "bb_params" object space containing relevant function parameters}
+\item{chromstart}{Integer start position on chromosome to be plotted.}
 
-\item{chromstart}{start position}
+\item{chromend}{Integer end position on chromosome to be plotted.}
 
-\item{chromend}{end position}
+\item{assembly}{Default genome assembly as a string or a \link[BentoBox]{bb_assembly} object. Default value is \code{assembly = "hg19"}.}
 
-\item{cutoffArches}{a logical value indicating whether to include arches that get cutoff in the region}
+\item{style}{Character value describing the style of arches. Default value is \code{style = "2D"}. Options are:
+\itemize{
+\item{\code{"2D"}:}{Arches will be drawn in a 2-dimensional style.}
+\item{\code{"3D"}:}{Arches will be drawn in a 3-dimensional style.}
+}}
 
-\item{archHeight}{single value or vector specifying the arch heights;
-when NULL, all arches will be the same height, filling up the given viewport}
+\item{position}{Character value indicating the position of arches relative to the x-axis. Default value is \code{position = "top"}. Options are:
+\itemize{
+\item{\code{"top"}:}{Arches will be drawn above the x-axis.}
+\item{\code{"bottom"}:}{Arches will be drawn reflected over and below the x-axis.}
+}}
 
-\item{style}{style of arches: "2D" or "3D"}
+\item{curvature}{Numeric indicating the number of points along the arch curvature. Default value is \code{curvature = 5}.}
 
-\item{arch}{arch curvature, determined by number of points along the curve}
+\item{archHeight}{Single numeric value or numeric vector specifying the arch heights. When NULL, all arches will be the same height, filling up the given plot area}
 
-\item{position}{position of arches above or below the x-axis: "top" or "bottom"}
+\item{fill}{Character value(s) as a single value, vector, or palette specifying fill colors of arches. Default value is \code{fill = "grey"}.}
 
-\item{fillcolor}{single value, vector, or palette specifying colors of arches}
+\item{colorby}{A "\link[BentoBox]{colorby}" object specifying information for scaling colors in data.}
 
-\item{linecolor}{linecolor of line outlining arches}
+\item{linecolor}{A character value specifying the color of the lines outlining arches. Default value is \code{linecolor = "grey"}.}
 
-\item{colorby}{name of column in bedpe data to scale colors by}
+\item{alpha}{Numeric value specifying transparency. Default value is \code{alpha = 0.4}.}
 
-\item{colorbyrange}{the range of values to apply a colorby palette scale to, if colorby values are numeric}
+\item{bg}{Character value indicating background color. Default value is \code{bg = NA}.}
 
-\item{assembly}{desired genome assembly}
+\item{clip}{A logical value indicating whether to clip any arches that get cutoff in the given genomic region. Default value is \code{clip = TRUE}.}
 
-\item{alpha}{transparency of arches}
+\item{baseline}{Logical value indicating whether to include a baseline along the x-axis. Default value is \code{baseline = FALSE}.}
 
-\item{baseline}{logical indicating whether to include baseline along the x-axis}
+\item{x}{A numeric or unit object specifying BEDPE arches plot x-location.}
 
-\item{bg}{background color}
+\item{y}{A numeric or unit object specifying BEDPE arches plot y-location.}
 
-\item{x}{A numeric or unit object specifying x-location}
+\item{width}{A numeric or unit object specifying BEDPE arches plot width.}
 
-\item{y}{A numeric or unit object specifying y-location}
+\item{height}{A numeric or unit object specifying BEDPE arches plot height.}
 
-\item{width}{A numeric or unit object specifying width}
+\item{just}{Justification of BEDPE arches plot relative to its (x, y) location. If there are two values, the first value specifies horizontal justification and the second value specifies vertical justification.
+Possible string values are: \code{"left"}, \code{"right"}, \code{"centre"}, \code{"center"}, \code{"bottom"}, and \code{"top"}. Default value is \code{just = c("left", "top")}.}
 
-\item{height}{A numeric or unit object specifying height}
+\item{default.units}{A string indicating the default units to use if \code{x}, \code{y}, \code{width}, or \code{height} are only given as numerics. Default value is \code{default.units = "inches"}.}
 
-\item{just}{A string or numeric vector specifying the justification of the viewport relative to its (x, y) location: "left", "right", "centre", "center", "bottom", "top"}
+\item{draw}{A logical value indicating whether graphics output should be produced. Default value is \code{draw = TRUE}.}
 
-\item{default.units}{A string indicating the default units to use if x, y, width, or height are only given as numerics}
+\item{params}{An optional \link[BentoBox]{bb_assembly} object containing relevant function parameters.}
 
-\item{draw}{A logical value indicating whether graphics output should be produced}
+\item{...}{Additional grid graphical parameters. See \link[grid]{gpar}.}
 }
 \value{
-Function will plot a ribbon arches plot and return a bb_arches object
+Returns a \code{bb_arches} object containing relevant genomic region, placement, and \link[grid]{grob} information.
 }
 \description{
-plots data stored in BEDPE format in a "ribbon arch" style
+Plot paired-end BEDPE data in an arch style
+}
+\examples{
+## Load BEDPE data
+data("bb_bedpeData")
+
+## Plot BEDPE arches plot filling up entire graphic device
+bedpeArchesPlot <- bb_plotBedpeArches(bedpeData = bb_bedpeData, chrom = "chr21", chromstart = 28000000, chromend = 30300000, fill = "black")
+
+## Plot and place BEDPE arches plot on a BentoBox page
+bb_pageCreate(width = 5, height = 2, default.units = "inches", xgrid = 0, ygrid = 0)
+bedpeArchesPlot <- bb_plotBedpeArches(bedpeData = bb_bedpeData, chrom = "chr21", chromstart = 28000000, chromend = 30300000, fill = "black",
+x = 0, y = 0.25, width = 5, height = 1.5, just = c("left", "top"), default.units = "inches")
+
 }

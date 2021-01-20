@@ -1,18 +1,33 @@
-#' wrapper to draw a textGrob based on BentoBox page coordinates and units
+#' Plot text within a BentoBox layout
 #'
-#' @param label character or expression
-#' @param x A numeric vector or unit object specifying x-location
-#' @param y A numeric vector or unit object specifying y-location
-#' @param params an optional "bb_params" object space containing relevant function parameters
-#' @param just justification of text relative to its (x, y) location
-#' @param fontcolor fontcolor
-#' @param fontsize the size of text (in points)
-#' @param rot the angle to rotate the song
-#' @param check.overlap A logical value to indicate whether to check for and omit overlapping text.
-#' @param default.units A string indicating the default units to use if x or y are only given as numeric vectors
+#' @usage bb_plotText(label, x, y, just = "center", default.units = "inches")
+#'
+#' @param label Character or expression of text to be plotted.
+#' @param fontcolor A character value specifying text fontcolor. Default value is \code{fontcolor = "black"}.
+#' @param fontsize A numeric specifying text fontsize in points. Default value is \code{fontsize = 12}.
+#' @param rot A numeric specifying the angle to rotate the text. Default value is \code{rot = 0}.
+#' @param check.overlap A logical value to indicate whether to check for and omit overlapping text. Default value is \code{check.overlap = FALSE}.
+#' @param x A numeric vector or unit object specifying text x-location.
+#' @param y A numeric vector or unit object specifying text y-location.
+#' @param just Justification of text relative to its (x, y) location. If there are two values, the first value specifies horizontal justification and the second value specifies vertical justification.
+#' Possible string values are: \code{"left"}, \code{"right"}, \code{"centre"}, \code{"center"}, \code{"bottom"}, and \code{"top"}. Default value is \code{just = "center"}.
+#' @param default.units A string indicating the default units to use if \code{x} or \code{y} are only given as numerics. Default value is \code{default.units = "inches"}.
+#' @param params An optional \link[BentoBox]{bb_assembly} object containing relevant function parameters.
+#' @param ... Additional grid graphical parameters. See \link[grid]{gpar}.
+#'
+#' @return Returns a \code{bb_text} object containing relevant placement and \link[grid]{grob} information.
+#'
+#' @examples
+#' ## Create a BentoBox page
+#' bb_pageCreate(width = 2, height = 2, default.units = "inches", xgrid = 0, ygrid = 0)
+#'
+#' ## Plot text
+#' bb_plotText(label = "BentoBox", fontsize = 14, x = 1, y = 1, just = "center", default.units = "inches")
+#'
+#' @seealso \link[grid]{grid.text}
 #'
 #' @export
-bb_plotText <- function(label, x, y, params = NULL, just = "center", fontcolor = "black", fontsize = 12, rot = 0, check.overlap = FALSE, default.units = "inches", ...){
+bb_plotText <- function(label, fontcolor = "black", fontsize = 12, rot = 0, check.overlap = FALSE, x, y, just = "center", default.units = "inches", params = NULL, ...){
 
 
   # ======================================================================================================================================================================================
@@ -34,7 +49,7 @@ bb_plotText <- function(label, x, y, params = NULL, just = "center", fontcolor =
 
   ## Compile all parameters into an internal object
   bb_textInternal <- structure(list(label = label, x = x, y = y, just = just, fontcolor = fontcolor,
-                                    fontsize = fontsize, rot = rot, check.overlap = check.overlap, default.units = default.units), class = "bb_textInternal")
+                                    fontsize = fontsize, rot = rot, check.overlap = check.overlap, default.units = default.units, gp = NULL), class = "bb_textInternal")
 
   bb_textInternal <- parseParams(bb_params = params, object_params = bb_textInternal)
 
@@ -46,12 +61,13 @@ bb_plotText <- function(label, x, y, params = NULL, just = "center", fontcolor =
   if(is.null(bb_textInternal$check.overlap)) bb_textInternal$check.overlap <- FALSE
   if(is.null(bb_textInternal$default.units)) bb_textInternal$default.units <- "inches"
 
+  bb_textInternal$gp <- gpar(col = bb_textInternal$fontcolor, fontsize = bb_textInternal$fontsize,...)
+
   # ======================================================================================================================================================================================
   # INITIALIZE OBJECT
   # ======================================================================================================================================================================================
 
-  bb_text <- structure(list(label = bb_textInternal$label, x = bb_textInternal$x, y = bb_textInternal$y, just = bb_textInternal$just, rot = bb_textInternal$rot, grobs = NULL,
-                            gp = gpar(col = bb_textInternal$fontcolor, fontsize = bb_textInternal$fontsize, ...)), class = "bb_text")
+  bb_text <- structure(list(label = bb_textInternal$label, x = bb_textInternal$x, y = bb_textInternal$y, just = bb_textInternal$just, grobs = NULL), class = "bb_text")
 
   # ======================================================================================================================================================================================
   # CATCH ERRORS
@@ -115,7 +131,7 @@ bb_plotText <- function(label, x, y, params = NULL, just = "center", fontcolor =
   # ======================================================================================================================================================================================
 
   text <- grid.text(label = bb_text$label, x = unit(new_x, page_units), y = unit(page_height - new_y, page_units), just = bb_text$just,
-            gp = bb_text$gp, rot = bb_text$rot, check.overlap = bb_textInternal$check.overlap)
+            gp = bb_textInternal$gp, rot = bb_textInternal$rot, check.overlap = bb_textInternal$check.overlap)
 
   # ======================================================================================================================================================================================
   # ADD GROB TO OBJECT
