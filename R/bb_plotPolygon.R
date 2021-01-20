@@ -1,9 +1,10 @@
 
-#' wrapper to draw a circleGrob based on BentoBox page coordinates and units
+#' wrapper to draw a polygonGrob based on BentoBox page coordinates and units
 #'
-#' @param x A numeric vector or unit object specifying x-location of the center of the circle
-#' @param y A numeric vector or unit object specifying y-location of the center of the circle
-#' @param r A numeric vector or unit object specifying radii
+#' @param x A numeric vector or unit object specifying x-location
+#' @param y A numeric vector or unit object specifying y-location
+#' @param id A numeric vector used to separate locations in x and y into multiple polygons. All locations with the same id belong to the same polygon.
+#' @param id.lengths A numeric vector used to separate locations in x and y into multiple polygons. Specifies consecutive blocks of locations which make up separate polygons.
 #' @param params an optional "bb_params" object space containing relevant function parameters
 #' @param linecolor line color
 #' @param fill fill color
@@ -13,7 +14,7 @@
 #' @param default.units A string indicating the default units to use if x or y are only given as numeric vectors
 #'
 #' @export
-bb_plotCircle <- function(x, y, r, params = NULL, linecolor = "black", fill = NA, lwd = 1, lty = 1, alpha = 1, default.units = "inches", ...){
+bb_plotPolygon <- function(x, y, id=NULL, id.lengths=NULL, params = NULL, linecolor = "black", fill = NA, lwd = 1, lty = 1, alpha = 0, default.units = "inches", ...){
   
   
   # ======================================================================================================================================================================================
@@ -21,6 +22,8 @@ bb_plotCircle <- function(x, y, r, params = NULL, linecolor = "black", fill = NA
   # ======================================================================================================================================================================================
   
   ## Check which defaults are not overwritten and set to NULL
+  if(missing(id)) id <- NULL
+  if(missing(id.lengths)) id.lengths <- NULL
   if(missing(linecolor)) linecolor <- NULL
   if(missing(fill)) fill <- NULL
   if(missing(lwd)) lwd <- NULL
@@ -31,38 +34,37 @@ bb_plotCircle <- function(x, y, r, params = NULL, linecolor = "black", fill = NA
   ## Check if label/x/y arguments are missing (could be in object)
   if(!hasArg(x)) x <- NULL
   if(!hasArg(y)) y <- NULL
-  if(!hasArg(r)) r <- NULL
   
   ## Compile all parameters into an internal object
-  bb_circleInternal <- structure(list(x = x, y = y, r = r, linecolor = linecolor, fill = fill,
-                                      lwd = lwd, lty = lty, alpha = alpha, default.units = default.units), class = "bb_circleInternal")
+  bb_polygonInternal <- structure(list(x = x, y = y, id = id, id.lengths = id.lengths, linecolor = linecolor, fill = fill,
+                                    lwd = lwd, lty = lty, alpha = alpha, default.units = default.units), class = "bb_polygonInternal")
   
-  bb_circleInternal <- parseParams(bb_params = params, object_params = bb_circleInternal)
+  bb_polygonInternal <- parseParams(bb_params = params, object_params = bb_polygonInternal)
   
   ## For any defaults that are still NULL, set back to default
-  if(is.null(bb_circleInternal$linecolor)) bb_circleInternal$linecolor <- "black"
-  if(is.null(bb_circleInternal$fill)) bb_circleInternal$fill <- NA
-  if(is.null(bb_circleInternal$lwd)) bb_circleInternal$lwd <- 1
-  if(is.null(bb_circleInternal$lty)) bb_circleInternal$lty <- 1
-  if(is.null(bb_circleInternal$alpha)) bb_circleInternal$alpha <- 1
-          if(is.null(bb_circleInternal$default.units)) bb_circleInternal$default.units <- "inches"
+  if(is.null(bb_polygonInternal$linecolor)) bb_polygonInternal$linecolor <- "black"
+  if(is.null(bb_polygonInternal$fill)) bb_polygonInternal$fill <- NA
+  if(is.null(bb_polygonInternal$lwd)) bb_polygonInternal$lwd <- 1
+  if(is.null(bb_polygonInternal$lty)) bb_polygonInternal$lty <- 1
+  if(is.null(bb_polygonInternal$alpha)) bb_polygonInternal$alpha <- 0
+  if(is.null(bb_polygonInternal$default.units)) bb_polygonInternal$default.units <- "inches"
   
   # ======================================================================================================================================================================================
   # INITIALIZE OBJECT
   # ======================================================================================================================================================================================
   
-  bb_circle <- structure(list(x = bb_circleInternal$x, y = bb_circleInternal$y, r = bb_circleInternal$r, grobs = NULL,
-                              gp = gpar(col = bb_circleInternal$linecolor, fill = bb_circleInternal$fill, lwd = bb_circleInternal$lwd, 
-                                        lty = bb_circleInternal$lty, alpha = bb_circleInternal$alpha, ...)), class = "bb_circle")
+  bb_polygon <- structure(list(x = bb_polygonInternal$x, y = bb_polygonInternal$y, id = bb_polygonInternal$id, id.lengths = bb_polygonInternal$id.lengths, 
+                            grobs = NULL, gp = gpar(col = bb_polygonInternal$linecolor, fill = bb_polygonInternal$fill, lwd = bb_polygonInternal$lwd, lty = bb_polygonInternal$lty, 
+                                                    alpha = bb_polygonInternal$alpha, ...)), class = "bb_polygon")
   
   # ======================================================================================================================================================================================
   # CATCH ERRORS
   # ======================================================================================================================================================================================
   
-  check_bbpage(error = "Cannot plot circle without a BentoBox page.")
-  if(is.null(bb_circle$x)) stop("argument \"x\" is missing, with no default.", call. = FALSE)
-  if(is.null(bb_circle$y)) stop("argument \"y\" is missing, with no default.", call. = FALSE)
-  if(is.null(bb_circle$r)) stop("argument \"r\" is missing, with no default.", call. = FALSE)
+  check_bbpage(error = "Cannot plot polygon without a BentoBox page.")
+  if(is.null(bb_polygon$x)) stop("argument \"x\" is missing, with no default.", call. = FALSE)
+  if(is.null(bb_polygon$y)) stop("argument \"y\" is missing, with no default.", call. = FALSE)
+  
   
   # ======================================================================================================================================================================================
   # DEFINE PARAMETERS
@@ -72,83 +74,62 @@ bb_plotCircle <- function(x, y, r, params = NULL, linecolor = "black", fill = NA
   page_height <- get("page_height", envir = bbEnv)
   page_units <- get("page_units", envir = bbEnv)
   
-  if (!"unit" %in% class(bb_circle$x)){
+  if (!"unit" %in% class(bb_polygon$x)){
     
-    if (!is.numeric(bb_circle$x)){
+    if (!is.numeric(bb_polygon$x)){
       
-      stop("x-coordinate is neither a unit object or a numeric value. Cannot plot circle.", call. = FALSE)
+      stop("x-coordinate is neither a unit object or a numeric value. Cannot plot polygon.", call. = FALSE)
       
     }
     
-    if (is.null(bb_circleInternal$default.units)){
+    if (is.null(bb_polygonInternal$default.units)){
       
       stop("x-coordinate detected as numeric.\'default.units\' must be specified.", call. = FALSE)
       
     }
     
-    bb_circle$x <- unit(bb_circle$x, bb_circleInternal$default.units)
+    bb_polygon$x <- unit(bb_polygon$x, bb_polygonInternal$default.units)
     
   }
   
-  if (!"unit" %in% class(bb_circle$y)){
+  if (!"unit" %in% class(bb_polygon$y)){
     
-    if (!is.numeric(bb_circle$y)){
+    if (!is.numeric(bb_polygon$y)){
       
-      stop("y-coordinate is neither a unit object or a numeric value. Cannot plot circle.", call. = FALSE)
+      stop("y-coordinate is neither a unit object or a numeric value. Cannot plot polygon.", call. = FALSE)
       
     }
     
-    if (is.null(bb_circleInternal$default.units)){
+    if (is.null(bb_polygon$default.units)){
       
       stop("y-coordinate detected as numeric.\'default.units\' must be specified.", call. = FALSE)
       
     }
     
-    bb_circle$y <- unit(bb_circle$y, bb_circleInternal$default.units)
-    
-  }
-  
-  if (!"unit" %in% class(bb_circle$r)){
-    
-    if (!is.numeric(bb_circle$r)){
-      
-      stop("Radius is neither a unit object or a numeric value. Cannot plot circle.", call. = FALSE)
-      
-    }
-    
-    if (is.null(bb_circleInternal$default.units)){
-      
-      stop("Radius detected as numeric.\'default.units\' must be specified.", call. = FALSE)
-      
-    }
-    
-    bb_circle$r <- unit(bb_circle$r, bb_circleInternal$default.units)
+    bb_polygon$y <- unit(bb_polygon$y, bb_polygonInternal$default.units)
     
   }
   
   ## Convert coordinates to page_units
-  new_x <- convertX(bb_circle$x, unitTo = page_units, valueOnly = TRUE)
-  new_y <- convertY(bb_circle$y, unitTo = page_units, valueOnly = TRUE)
+  new_x <- convertX(bb_polygon$x, unitTo = page_units, valueOnly = TRUE)
+  new_y <- convertY(bb_polygon$y, unitTo = page_units, valueOnly = TRUE)
   
   # ======================================================================================================================================================================================
   # MAKE GROB
   # ======================================================================================================================================================================================
   
-  circle <- grid.circle(x = unit(new_x, page_units), y = unit(page_height - new_y, page_units), r = bb_circle$r,
-                        gp = bb_circle$gp)
+  polygon <- grid.polygon(x = unit(new_x, page_units), y = unit(page_height - new_y, page_units), id = bb_polygon$id, 
+                          id.lengths = bb_polygon$id.lengths, gp = bb_polygon$gp)
   
   # ======================================================================================================================================================================================
   # ADD GROB TO OBJECT
   # ======================================================================================================================================================================================
   
-  bb_circle$grobs <- circle
+  bb_polygon$grobs <- polygon
   
   # ======================================================================================================================================================================================
   # RETURN OBJECT
   # ======================================================================================================================================================================================
   
-  return(bb_circle)
+  return(bb_polygon)
 }
-
-
-

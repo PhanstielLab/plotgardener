@@ -15,7 +15,7 @@
 #' @param default.units A string indicating the default units to use if x or y are only given as numeric vectors
 #'
 #' @export
-bb_plotRect <- function(x, y, width, height, just = "center", params = NULL, linecolor = "black", fill = NA, lwd = 1, lty = 1, alpha = 1, default.units = "inches", ...){
+bb_plotRect <- function(x, y, width, height, just = "center", params = NULL, linecolor = "black", fill = NA, lwd = 1, lty = 1, alpha = 0, default.units = "inches", ...){
   
   
   # ======================================================================================================================================================================================
@@ -23,13 +23,13 @@ bb_plotRect <- function(x, y, width, height, just = "center", params = NULL, lin
   # ======================================================================================================================================================================================
   
   ## Check which defaults are not overwritten and set to NULL
-  #if(missing(just)) just <- NULL
-  #if(missing(linecolor)) linecolor <- NULL
-  #if(missing(fill)) fill <- NULL
-  #if(missing(lwd)) lwd <- NULL
-  #if(missing(lty)) lty <- NULL
-  #if(missing(alpha)) alpha <- NULL
-  #if(missing(default.units)) default.units <- NULL
+  if(missing(just)) just <- NULL
+  if(missing(linecolor)) linecolor <- NULL
+  if(missing(fill)) fill <- NULL
+  if(missing(lwd)) lwd <- NULL
+  if(missing(lty)) lty <- NULL
+  if(missing(alpha)) alpha <- NULL
+  if(missing(default.units)) default.units <- NULL
   
   ## Check if label/x/y arguments are missing (could be in object)
   if(!hasArg(x)) x <- NULL
@@ -44,13 +44,13 @@ bb_plotRect <- function(x, y, width, height, just = "center", params = NULL, lin
   bb_rectInternal <- parseParams(bb_params = params, object_params = bb_rectInternal)
   
   ## For any defaults that are still NULL, set back to default
-  #if(is.null(bb_rectInternal$just)) bb_rectInternal$just <- "center"
-  #if(is.null(bb_rectInternal$linecolor)) bb_rectInternal$linecolor <- "black"
-  #if(is.null(bb_rectInternal$fill)) bb_rectInternal$fill <- NA
-  #if(is.null(bb_rectInternal$lwd)) bb_rectInternal$lwd <- 1
-  #if(is.null(bb_rectInternal$lty)) bb_rectInternal$lty <- 1
-  #if(is.null(bb_rectInternal$alpha)) bb_rectInternal$alpha <- 0
-  #if(is.null(bb_rectInternal$default.units)) bb_rectInternal$default.units <- "inches"
+  if(is.null(bb_rectInternal$just)) bb_rectInternal$just <- "center"
+  if(is.null(bb_rectInternal$linecolor)) bb_rectInternal$linecolor <- "black"
+  if(is.null(bb_rectInternal$fill)) bb_rectInternal$fill <- NA
+  if(is.null(bb_rectInternal$lwd)) bb_rectInternal$lwd <- 1
+  if(is.null(bb_rectInternal$lty)) bb_rectInternal$lty <- 1
+  if(is.null(bb_rectInternal$alpha)) bb_rectInternal$alpha <- 0
+  if(is.null(bb_rectInternal$default.units)) bb_rectInternal$default.units <- "inches"
   
   # ======================================================================================================================================================================================
   # INITIALIZE OBJECT
