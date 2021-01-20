@@ -1,6 +1,7 @@
-#' Reshows guides drawn with bb_makePage()
+#' Reshow guides drawn with \code{bb_pageCreate}, \code{bb_pageGuideHorizontal}, and \code{bb_pageGuideVertical}
+#'
 #' @export
-bb_pageShowGuides <- function(){
+bb_pageGuideShow <- function(){
 
   ## Errors
   ## Get the names of the current viewports

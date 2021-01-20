@@ -1,7 +1,8 @@
-#' Removes guides from a BentoBox page
-#' @export
+#' Remove guides from a BentoBox page
 #'
-bb_pageHideGuides <- function(){
+#'
+#' @export
+bb_pageGuideHide <- function(){
 
 
   if (length(get("guide_grobs", envir = bbEnv)$children) == 0) {
