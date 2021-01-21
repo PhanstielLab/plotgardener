@@ -1,5 +1,7 @@
 #' Reshow guides drawn with \code{bb_pageCreate}, \code{bb_pageGuideHorizontal}, and \code{bb_pageGuideVertical}
 #'
+#'
+#' @seealso \link[BentoBox]{bb_pageCreate}, \link[BentoBox]{bb_pageGuideHorizontal}, \link[BentoBox]{bb_pageGuideVertical}
 #' @export
 bb_pageGuideShow <- function(){
 
