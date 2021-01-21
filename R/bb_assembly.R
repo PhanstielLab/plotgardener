@@ -1,4 +1,4 @@
-#' Make a \code{bb_assembly} object for alternate TxDB, OrgDb,and BSgenome genomic annotation packages
+#' Make a \code{bb_assembly} object for alternate TxDb, OrgDb,and BSgenome genomic annotation packages
 #'
 #' @usage bb_assembly(Genome, TxDb, OrgDb)
 #'
@@ -15,8 +15,12 @@
 #'
 #' @examples
 #' ## Create a custom bb_assembly object for hg38/GRCh38 packages
-#' newAssembly <- bb_assembly(Genome = "hg38_GRCh38", TxDb = "TxDb.Hsapiens.UCSC.hg38.knownGene",
-#' OrgDb = "org.Hs.eg.db", BSgenome = "BSgenome.Hsapiens.NCBI.GRCh38")
+#' newAssembly <- bb_assembly(Genome = "hg38_GRCh38",
+#'                            TxDb = "TxDb.Hsapiens.UCSC.hg38.knownGene",
+#'                            OrgDb = "org.Hs.eg.db",
+#'                            BSgenome = "BSgenome.Hsapiens.NCBI.GRCh38")
+#'
+#' @seealso \link[GenomicFeatures]{TxDb}, \link[AnnotationDb]{OrgDb-class}, \link[BSgenome]{BSgenome}
 #'
 #' @export
 bb_assembly <- function(Genome, TxDb, OrgDb, gene.id.column = "ENTREZID", display.column = "SYMBOL", BSgenome = NULL){

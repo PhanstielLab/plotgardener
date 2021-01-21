@@ -16,8 +16,8 @@ If not logical, must be the same length as the \code{at} argument.}
 
 \item{main}{A logical value indicating whether to draw the y-axis at the left of the plot. Default value is \code{main = TRUE}. Options are:
 \itemize{
-\item{\code{TRUE}:}{y-axis is drawn at the left of the plot.}
-\item{\code{FALSE}:}{y-axis is drawn at the right of the plot.}
+\item{\code{TRUE}: }{y-axis is drawn at the left of the plot.}
+\item{\code{FALSE}: }{y-axis is drawn at the right of the plot.}
 }}
 
 \item{gp}{Grid graphical parameters. See \link[grid]{gpar}.}
@@ -39,7 +39,7 @@ bb_pageCreate(width = 4, height = 3.5, default.units = "inches", xgrid = 0, ygri
 
 ## Plot and place a square Hi-C plot
 hicPlot <- bb_plotHicSquare(hicData = bb_hicData, resolution = 10000, zrange = c(0, 70), chrom = "chr21", chromstart = 28000000, chromend = 30300000,
-x = 1, y = 0.5, width = 2.5, height = 2.5, just = c("left", "top"), default.units = "inches")
+                            x = 1, y = 0.5, width = 2.5, height = 2.5, just = c("left", "top"), default.units = "inches")
 
 ## Add standard y-axis to Hi-C plot
 bb_annoYaxis(plot = hicPlot, at = c(28000000, 29000000, 30300000), gp = gpar(fontsize = 8))

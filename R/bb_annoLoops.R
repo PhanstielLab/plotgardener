@@ -6,16 +6,16 @@
 #' @param bedpeData A string specifying the BEDPE file path or a dataframe in BEDPE format specifying loop positions.
 #' @param type Character value specifying type of annotation. Default value is \code{type = "box"}. Options are:
 #' \itemize{
-#' \item{\code{"box"}:}{Boxes are drawn around each loop.}
-#' \item{\code{"circle"}:}{Circles are drawn around each loop.}
-#' \item{\code{"arrow"}:}{Arrows are drawn pointing to each loop.}
+#' \item{\code{"box"}: }{Boxes are drawn around each loop.}
+#' \item{\code{"circle"}: }{Circles are drawn around each loop.}
+#' \item{\code{"arrow"}: }{Arrows are drawn pointing to each loop.}
 #' }
 #' @param half Character value specifying which half of hic plots to annotate. Triangle Hi-C plots will always default to the entirety of the triangular plot. Default value is \code{half = "inherit"}. Options are:
 #' \itemize{
-#' \item{\code{"inherit"}:}{Loops will be annotated on the \code{half} inherited by the input Hi-C plot.}
-#' \item{\code{"both"}:}{Loops will be annotated on both halves of the diagonal of a square Hi-C plot.}
-#' \item{\code{"top"}:}{Loops will be annotated on the upper diagonal half of a square Hi-C plot.}
-#' \item{\code{"bottom"}:}{Loops will be annotated ont the bottom diagonal half of a square Hi-C plot.}
+#' \item{\code{"inherit"}: }{Loops will be annotated on the \code{half} inherited by the input Hi-C plot.}
+#' \item{\code{"both"}: }{Loops will be annotated on both halves of the diagonal of a square Hi-C plot.}
+#' \item{\code{"top"}: }{Loops will be annotated on the upper diagonal half of a square Hi-C plot.}
+#' \item{\code{"bottom"}: }{Loops will be annotated ont the bottom diagonal half of a square Hi-C plot.}
 #' }
 #' @param shift Numeric specifying the number of pixels on either end of loop in a box or circle. Numeric specifying number of pixels for the length of an arrow.
 #' @param params An optional \link[BentoBox]{bb_assembly} object containing relevant function parameters.
@@ -32,8 +32,9 @@
 #' bb_pageCreate(width = 3, height = 3, default.units = "inches", xgrid = 0, ygrid = 0)
 #'
 #' ## Plot and place a square Hi-C plot
-#' hicPlot <- bb_plotHicSquare(hicData = bb_hicData, resolution = 10000, zrange = c(0, 70), chrom = "chr21", chromstart = 28000000, chromend = 30300000,
-#' x = 0, y = 0, width = 3, height = 3, just = c("left", "top"), default.units = "inches")
+#' hicPlot <- bb_plotHicSquare(hicData = bb_hicData, resolution = 10000, zrange = c(0, 70),
+#'                             chrom = "chr21", chromstart = 28000000, chromend = 30300000,
+#'                             x = 0, y = 0, width = 3, height = 3, just = c("left", "top"), default.units = "inches")
 #'
 #' ## Annotate loops of Hi-C plot
 #' bb_annoLoops(hicPlot = hicPlot, bedpeData = bb_bedpeData, type = "box", half = "both")
@@ -53,9 +54,9 @@ bb_annoLoops <- function(hicPlot, bedpeData, type = "box", half = "inherit", shi
     ###### hic #####
 
     ## check type of input for hic
-    if (!class(hic) %in% c("bb_hic", "bb_trianglehic" )){
+    if (!class(hic) %in% c("bb_hicSquare", "bb_hicTriangle" )){
 
-      stop("Input plot must be a plot of class \'bb_hic\' or \'bb_trianglehic\'.", call. = FALSE)
+      stop("Input plot must be a plot of class \'bb_hicSquare\' or \'bb_hicTriangle\'.", call. = FALSE)
 
     }
 
@@ -64,7 +65,7 @@ bb_annoLoops <- function(hicPlot, bedpeData, type = "box", half = "inherit", shi
     ## if loops is a dataframe or datatable, it needs to be properly formatted
     if ("data.frame" %in% class(loops) && ncol(loops) < 6){
 
-      stop("Invalid dataframe format. Dataframe must be in bedpe format.", call. = FALSE)
+      stop("Invalid dataframe format. Dataframe must be in BEDPE format.", call. = FALSE)
 
     }
 
@@ -140,11 +141,11 @@ bb_annoLoops <- function(hicPlot, bedpeData, type = "box", half = "inherit", shi
 
       }
 
-    } else if (class(hic) == "bb_trianglehic"){
+    } else if (class(hic) == "bb_hicTriangle"){
 
       if (half == "both" | half == "bottom"){
 
-        warning("Plot of class \'bb_trianglehic\' detected.  Loops will automatically be annotated in the upper triangular of the plot.", call. = FALSE)
+        warning("Plot of class \'bb_hicTriangle\' detected.  Loops will automatically be annotated in the upper triangular of the plot.", call. = FALSE)
 
       }
 
@@ -167,7 +168,7 @@ bb_annoLoops <- function(hicPlot, bedpeData, type = "box", half = "inherit", shi
     ## chrom always in col1
     ## altchrom always in col4
     ## triangle hic plots will not have altchrom parameters
-    if (class(hic) == "bb_trianglehic"){
+    if (class(hic) == "bb_hicTriangle"){
       loops_subset <- loops[which(loops[,1] == object$chrom & loops[,4] == object$chrom & loops[,2] >= object$chromstart & loops[,3] <= object$chromend
                                   & loops[,5] >= object$chromstart & loops[,6] <= object$chromend),]
     } else {
@@ -182,7 +183,7 @@ bb_annoLoops <- function(hicPlot, bedpeData, type = "box", half = "inherit", shi
   ## Define a function that parses an inherited half
   inherit_half <- function(hic){
 
-    if (class(hic) == "bb_hic"){
+    if (class(hic) == "bb_hicSquare"){
 
       if (is.null(hic$althalf)){
 
@@ -194,7 +195,7 @@ bb_annoLoops <- function(hicPlot, bedpeData, type = "box", half = "inherit", shi
 
       }
 
-    } else if (class(hic) == "bb_trianglehic"){
+    } else if (class(hic) == "bb_hicTriangle"){
 
       half <- "top"
 
@@ -398,7 +399,7 @@ bb_annoLoops <- function(hicPlot, bedpeData, type = "box", half = "inherit", shi
 
   }
 
-  if (class(bb_loopsInternal$hicPlot) == "bb_trianglehic"){
+  if (class(bb_loopsInternal$hicPlot) == "bb_hicTriangle"){
 
     half <- "top"
 
@@ -455,7 +456,7 @@ bb_annoLoops <- function(hicPlot, bedpeData, type = "box", half = "inherit", shi
   vp_name <- paste0("bb_loopAnnotation", length(grep(pattern = "bb_loopAnnotation", x = currentViewports)) + 1)
 
   ## Make viewport based on hic input viewport
-  if (class(bb_loopsInternal$hicPlot) == "bb_hic"){
+  if (class(bb_loopsInternal$hicPlot) == "bb_hicSquare"){
 
     vp <- viewport(height = bb_loopsInternal$hicPlot$grobs$vp$height, width = bb_loopsInternal$hicPlot$grobs$vp$width,
                    x = bb_loopsInternal$hicPlot$grobs$vp$x, y = bb_loopsInternal$hicPlot$grobs$vp$y,
@@ -464,7 +465,7 @@ bb_annoLoops <- function(hicPlot, bedpeData, type = "box", half = "inherit", shi
                    yscale = bb_loopsInternal$hicPlot$grobs$vp$yscale,
                    just = bb_loopsInternal$hicPlot$grobs$vp$justification,
                    name = vp_name)
-  } else if (class(bb_loopsInternal$hicPlot) == "bb_trianglehic"){
+  } else if (class(bb_loopsInternal$hicPlot) == "bb_hicTriangle"){
 
 
     width <- convertUnit(bb_loopsInternal$hicPlot$outsideVP$width, unitTo = get("page_units", bbEnv), valueOnly = T)

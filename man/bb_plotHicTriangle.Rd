@@ -5,7 +5,9 @@
 \title{Plot a Hi-C interaction matrix in a triangular format}
 \usage{
 bb_plotHicTriangle(hicData, chrom)
-bb_plotHicTriangle(hicData, chrom, x, y, width, height, just = c("left", "top"), default.units = "inches")
+bb_plotHicTriangle(hicData, chrom, x, y, width, height,
+                   just = c("left", "top"),
+                   default.units = "inches")
 }
 \arguments{
 \item{hicData}{Path to .hic file as a string or a 3-column dataframe of interaction counts in sparse upper triangular format.}
@@ -19,8 +21,8 @@ dataframes, "auto" will attempt to detect the resolution the dataframe contains.
 
 \item{matrix}{Character value indicating the type of matrix to output. Default value is \code{matrix = "observed"}. Options are:
 \itemize{
-\item{\code{"observed"}:}{Observed counts.}
-\item{\code{"oe"}:}{Observed/expected counts.}
+\item{\code{"observed"}: }{Observed counts.}
+\item{\code{"oe"}: }{Observed/expected counts.}
 }}
 
 \item{chrom}{Chromosome of region to be plotted, as a string.}
@@ -51,7 +53,7 @@ Possible string values are: \code{"left"}, \code{"right"}, \code{"centre"}, \cod
 \item{params}{An optional \link[BentoBox]{bb_assembly} object containing relevant function parameters.}
 }
 \value{
-Returns a \code{bb_trianglehic} object containing relevant genomic region, Hi-C data, placement, and \link[grid]{grob} information.
+Returns a \code{bb_hicTriangle} object containing relevant genomic region, Hi-C data, placement, and \link[grid]{grob} information.
 }
 \description{
 Plot a Hi-C interaction matrix in a triangular format
@@ -65,12 +67,13 @@ data("bb_hicData")
 
 ## Plot triangle Hi-C plot filling up entire graphic device
 bb_plotHicTriangle(hicData = bb_hicData, resolution = 10000, zrange = c(0, 70),
-chrom = "chr21", chromstart = 28000000, chromend = 30300000)
+                   chrom = "chr21", chromstart = 28000000, chromend = 30300000)
 
 ## Plot and place triangle Hi-C plot on a BentoBox page
 bb_pageCreate(width = 4, height = 2.5, default.units = "inches", xgrid = 0, ygrid = 0)
-bb_plotHicTriangle(hicData = bb_hicData, resolution = 10000, zrange = c(0, 70), chrom = "chr21", chromstart = 28000000, chromend = 30300000,
-x = 2, y = 0.5, width = 3, height = 1.5, just = "top", default.units = "inches")
+bb_plotHicTriangle(hicData = bb_hicData, resolution = 10000, zrange = c(0, 70),
+                   chrom = "chr21", chromstart = 28000000, chromend = 30300000,
+                   x = 2, y = 0.5, width = 3, height = 1.5, just = "top", default.units = "inches")
 
 }
 \seealso{

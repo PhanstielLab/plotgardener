@@ -2,52 +2,63 @@
 % Please edit documentation in R/bb_plotSegments.R
 \name{bb_plotSegments}
 \alias{bb_plotSegments}
-\title{wrapper to draw a segmentsGrob based on BentoBox page coordinates and units}
+\title{Draw a line segment within a BentoBox layout}
 \usage{
-bb_plotSegments(
-  x0,
-  y0,
-  x1,
-  y1,
-  params = NULL,
-  arrow = NULL,
-  linecolor = "black",
-  lwd = 1,
-  lty = 1,
-  lineend = "butt",
-  linejoin = "mitre",
-  alpha = 1,
-  default.units = "inches",
-  ...
-)
+bb_plotSegments(x0, y0, x1, y1, default.units = "inches")
 }
 \arguments{
-\item{x0}{Numeric indicating the starting x-values of the line segments}
+\item{x0}{A numeric vector or unit object indicating the starting x-values of the line segments.}
 
-\item{y0}{Numeric indicating the starting y-values of the line segments}
+\item{y0}{A numeric vector or unit object indicating the starting y-values of the line segments.}
 
-\item{x1}{Numeric indicating the stopping x-values of the line segments}
+\item{x1}{A numeric vector or unit object indicating the stopping x-values of the line segments.}
 
-\item{y1}{Numeric indicating the stopping y-values of the line segments}
+\item{y1}{A numeric vector or unit object indicating the stopping y-values of the line segments.}
 
-\item{params}{an optional "bb_params" object space containing relevant function parameters}
+\item{default.units}{A string indicating the default units to use if \code{x0}, \code{y0}, \code{x1}, or \code{y1} are only given as numeric vectors. Default value is \code{default.units = "inches"}.}
 
-\item{arrow}{A list describing arrow heads to place at either end of the line segments, as produced by the arrow function}
+\item{linecolor}{A character value specifying segment line color. Default value is \code{linecolor = "black"}.}
 
-\item{linecolor}{line color}
+\item{alpha}{Numeric value specifying color transparency. Default value is \code{alpha = 1}.}
 
-\item{lwd}{line width}
+\item{lwd}{A numeric specifying segment line width. Default value is \code{lwd = 1}.}
 
-\item{lty}{line type}
+\item{lty}{A numeric specifying segment line type. Default value is \code{lty = 1}.}
 
-\item{lineend}{Line end style (round, butt, square)}
+\item{lineend}{A character value specifying line end style. Default value is \code{lineend = "butt"}. Options are:
+\itemize{
+\item{\code{"round"}: Segment ends are rounded.}
+\item{\code{"butt"}: Segment ends end exactly where ended.}
+\item{\code{"square"}: Segment ends are squared.}
+}}
 
-\item{linejoin}{Line join style (round, mitre, bevel)}
+\item{linejoin}{A character value specifying line join style. Default value is \code{linejoin = "mitre"}. Options are:
+\itemize{
+\item{\code{"round"}: }{Line joins are rounded.}
+\item{\code{"mitre"}: }{Line joins are sharp corners.}
+\item{\code{"bevel"}: }{Line joins are flattened corners.}
+}}
 
-\item{alpha}{color transparency}
+\item{arrow}{A list describing arrow heads to place at either end of the line segments, as produced by the \link[grid]{arrow} function.}
 
-\item{default.units}{A string indicating the default units to use if x or y are only given as numeric vectors}
+\item{params}{An optional \link[BentoBox]{bb_assembly} object containing relevant function parameters.}
+
+\item{...}{Additional grid graphical parameters. See \link[grid]{gpar}.}
+}
+\value{
+Returns a \code{bb_segments} object containing relevant placement and \link[grid]{grob} information.
 }
 \description{
-wrapper to draw a segmentsGrob based on BentoBox page coordinates and units
+Draw a line segment within a BentoBox layout
+}
+\examples{
+## Create a BentoBox page
+bb_pageCreate(width = 2, height = 2, default.units = "inches", xgrid = 0, ygrid = 0)
+
+## Plot a line segment
+bb_plotSegments(x0 = 0.5, y0 = 0.25, x1 = 1.5, y1 = 1.75, default.units = "inches")
+
+}
+\seealso{
+\link[grid]{grid.segments}
 }

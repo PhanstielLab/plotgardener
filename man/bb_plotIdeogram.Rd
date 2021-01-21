@@ -5,7 +5,9 @@
 \title{Plot a chromosome ideogram with or without cytobands}
 \usage{
 bb_plotIdeogram(chrom)
-bb_plotIdeogram(chrom, x, y, width, height, just = c("left", "top"), default.units = "inches")
+bb_plotIdeogram(chrom, x, y, width, height,
+                just = c("left", "top"),
+                default.units = "inches")
 }
 \arguments{
 \item{chrom}{Chromosome to be plotted, as a string.}
@@ -58,6 +60,7 @@ bb_plotIdeogram(chrom = "chr2", assembly = "hg19")
 
 ## Plot and place ideogram on a BentoBox page
 bb_pageCreate(width = 4, height = 1.5, default.units = "inches", xgrid = 0, ygrid = 0)
-bb_plotIdeogram(chrom = "chr2", assembly = "hg19", x = 0.25, y = 0.25, width = 3.5, height = 0.5, just = c("left", "top"), default.units = "inches")
+bb_plotIdeogram(chrom = "chr2", assembly = "hg19",
+                x = 0.25, y = 0.25, width = 3.5, height = 0.5, just = c("left", "top"), default.units = "inches")
 
 }

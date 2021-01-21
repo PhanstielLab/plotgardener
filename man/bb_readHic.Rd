@@ -37,14 +37,14 @@ bb_readHic(hicFile, chrom)
 
 \item{matrix}{Character value indicating the type of matrix to output. Default value is \code{matrix = "observed"}. Options are:
 \itemize{
-\item{\code{"observed"}:}{Observed counts.}
-\item{\code{"oe"}:}{Observed/expected counts.}
+\item{\code{"observed"}: }{Observed counts.}
+\item{\code{"oe"}: }{Observed/expected counts.}
 }}
 
 \item{params}{An optional \link[BentoBox]{bb_assembly} object containing relevant function parameters.}
 }
 \value{
-Returns a 3-column dataframe in sparse upper triangular format with the following columns: chrom, altchrom, counts.
+Returns a 3-column dataframe in sparse upper triangular format with the following columns: \code{chrom}, \code{altchrom}, \code{counts}.
 }
 \description{
 Read a .hic file and return Hi-C data as a dataframe

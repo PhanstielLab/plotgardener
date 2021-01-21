@@ -5,7 +5,9 @@
 \title{Plot a Manhattan plot}
 \usage{
 bb_plotManhattan(data, pVals)
-bb_plotManhattan(data, pVals, x, y, width, height, just = c("left", "top"), default.units = "inches")
+bb_plotManhattan(data, pVals, x, y, width, height,
+                 just = c("left", "top"),
+                 default.units = "inches")
 }
 \arguments{
 \item{data}{Data to be plotted; as a character value specifying a BED file path, a dataframe in BED format, or a \link[GenomicRanges]{GRanges} object.}
@@ -75,6 +77,6 @@ bb_plotManhattan(data = bb_gwasData, pVals = "pVal", chrom = "chr21", chromstart
 ## Plot and place Manhattan plot on a BentoBox page
 bb_pageCreate(width = 5, height = 2, default.units = "inches", xgrid = 0, ygrid = 0)
 bb_plotManhattan(data = bb_gwasData, pVals = "pVal", chrom = "chr21", chromstart = 28000000, chromend = 30300000, ymax = 1.1, cex = 0.20,
-x = 0.5, y = 0.5, width = 4, height = 1.5, just = c("left", "top"), default.units = "inches")
+                 x = 0.5, y = 0.5, width = 4, height = 1.5, just = c("left", "top"), default.units = "inches")
 
 }

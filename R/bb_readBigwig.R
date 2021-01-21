@@ -8,7 +8,7 @@
 #' @param chrom Chromosome of data as a string, if data for a specific chromosome is desired.
 #' @param chromstart Integer start position on chromosome.
 #' @param chromend Integer end position on chromosome.
-#' @param strand A character value specifying strand. Default value is \code{strand = "*"}.Options are:
+#' @param strand A character value specifying strand. Default value is \code{strand = "*"}. Options are:
 #' \itemize{
 #' \item{\code{"+"}: }{Plus strand.}
 #' \item{\code{"-"}: }{Minus strand.}

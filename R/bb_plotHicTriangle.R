@@ -2,7 +2,9 @@
 #'
 #' @usage
 #' bb_plotHicTriangle(hicData, chrom)
-#' bb_plotHicTriangle(hicData, chrom, x, y, width, height, just = c("left", "top"), default.units = "inches")
+#' bb_plotHicTriangle(hicData, chrom, x, y, width, height,
+#'                    just = c("left", "top"),
+#'                    default.units = "inches")
 #'
 #' @param hicData Path to .hic file as a string or a 3-column dataframe of interaction counts in sparse upper triangular format.
 #' @param resolution A numeric specifying the width in basepairs of each pixel. For hic files, "auto" will attempt to choose a resolution based on the size of the region. For
@@ -11,8 +13,8 @@
 #' @param norm Character value specifying hic data normalization method, if giving .hic file. This value must be found in the .hic file. Default value is \code{norm = "KR"}.
 #' @param matrix Character value indicating the type of matrix to output. Default value is \code{matrix = "observed"}. Options are:
 #' \itemize{
-#' \item{\code{"observed"}:}{Observed counts.}
-#' \item{\code{"oe"}:}{Observed/expected counts.}
+#' \item{\code{"observed"}: }{Observed counts.}
+#' \item{\code{"oe"}: }{Observed/expected counts.}
 #' }
 #' @param chrom Chromosome of region to be plotted, as a string.
 #' @param chromstart Integer start position on chromosome to be plotted.
@@ -29,7 +31,7 @@
 #' @param draw A logical value indicating whether graphics output should be produced. Default value is \code{draw = TRUE}.
 #' @param params An optional \link[BentoBox]{bb_assembly} object containing relevant function parameters.
 #'
-#' @return Returns a \code{bb_trianglehic} object containing relevant genomic region, Hi-C data, placement, and \link[grid]{grob} information.
+#' @return Returns a \code{bb_hicTriangle} object containing relevant genomic region, Hi-C data, placement, and \link[grid]{grob} information.
 #'
 #' @examples
 #' ## Load Hi-C data
@@ -37,12 +39,13 @@
 #'
 #' ## Plot triangle Hi-C plot filling up entire graphic device
 #' bb_plotHicTriangle(hicData = bb_hicData, resolution = 10000, zrange = c(0, 70),
-#' chrom = "chr21", chromstart = 28000000, chromend = 30300000)
+#'                    chrom = "chr21", chromstart = 28000000, chromend = 30300000)
 #'
 #' ## Plot and place triangle Hi-C plot on a BentoBox page
 #' bb_pageCreate(width = 4, height = 2.5, default.units = "inches", xgrid = 0, ygrid = 0)
-#' bb_plotHicTriangle(hicData = bb_hicData, resolution = 10000, zrange = c(0, 70), chrom = "chr21", chromstart = 28000000, chromend = 30300000,
-#' x = 2, y = 0.5, width = 3, height = 1.5, just = "top", default.units = "inches")
+#' bb_plotHicTriangle(hicData = bb_hicData, resolution = 10000, zrange = c(0, 70),
+#'                    chrom = "chr21", chromstart = 28000000, chromend = 30300000,
+#'                    x = 2, y = 0.5, width = 3, height = 1.5, just = "top", default.units = "inches")
 #'
 #' @details If \code{height} is \eqn{<} \eqn{0.5 * sqrt(2)}, the top of the triangle will be cropped to the given \code{height}.
 #'
@@ -582,7 +585,7 @@ bb_plotHicTriangle <- function(hicData, resolution = "auto", zrange = NULL, norm
   hic_plot <- structure(list(chrom = bb_thicInternal$chrom, chromstart = bb_thicInternal$chromstart, chromend = bb_thicInternal$chromend, altchrom = bb_thicInternal$chrom,
                              altchromstart = bb_thicInternal$chromstart, altchromend = bb_thicInternal$chromend, assembly = bb_thicInternal$assembly, resolution = bb_thicInternal$resolution,
                              x = bb_thicInternal$x, y = bb_thicInternal$y, width = bb_thicInternal$width, height = bb_thicInternal$height, just = NULL,
-                             color_palette = NULL, zrange = bb_thicInternal$zrange, outsideVP = NULL, grobs = NULL), class = "bb_trianglehic")
+                             color_palette = NULL, zrange = bb_thicInternal$zrange, outsideVP = NULL, grobs = NULL), class = "bb_hicTriangle")
   attr(x = hic_plot, which = "plotted") <- bb_thicInternal$draw
 
   # ======================================================================================================================================================================================

@@ -2,7 +2,9 @@
 #'
 #' @usage
 #' bb_plotBedpe(bedpeData, chrom)
-#' bb_plotBedpe(bedpeData, chrom, x, y, width, height, just = c("left", "top"), default.units = "inches")
+#' bb_plotBedpe(bedpeData, chrom, x, y, width, height,
+#'              just = c("left", "top"),
+#'              default.units = "inches")
 #'
 #' @param bedpeData A string specifying the BEDPE file path or a dataframe in BEDPE format specifying data to be plotted.
 #' @param chrom Chromosome of region to be plotted, as a string.
@@ -40,7 +42,7 @@
 #' ## Plot and place BEDPE plot on a BentoBox page
 #' bb_pageCreate(width = 5, height = 2, default.units = "inches", xgrid = 0, ygrid = 0)
 #' bedpePlot <- bb_plotBedpe(bedpeData = bb_bedpeData, chrom = "chr21", chromstart = 28000000, chromend = 30300000,
-#' x = 0.5, y = 0.5, width = 4, height = 1, just = c("left", "top"), default.units = "inches")
+#'                           x = 0.5, y = 0.5, width = 4, height = 1, just = c("left", "top"), default.units = "inches")
 #'
 #' @export
 bb_plotBedpe <- function(bedpeData, chrom, chromstart = NULL, chromend = NULL, assembly = "hg19", fill = "black", colorby = NULL, linecolor = NA,

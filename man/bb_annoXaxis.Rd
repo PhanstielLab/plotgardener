@@ -15,8 +15,8 @@ bb_annoXaxis(plot)
 
 \item{main}{A logical value indicating whether to draw the x-axis at the bottom of the plot. Default value is \code{main = TRUE}. Options are:
 \itemize{
-\item{\code{TRUE}:}{x-axis is drawn at the bottom of the plot.}
-\item{\code{FALSE}:}{x-axis is drawn at the top of the plot.}
+\item{\code{TRUE}: }{x-axis is drawn at the bottom of the plot.}
+\item{\code{FALSE}: }{x-axis is drawn at the top of the plot.}
 }}
 
 \item{gp}{Grid graphical parameters. See \link[grid]{gpar}.}
@@ -39,7 +39,7 @@ bb_pageCreate(width = 3, height = 2, default.units = "inches", xgrid = 0, ygrid 
 
 ## Plot gene transcripts
 transcriptPlot <- bb_plotTranscripts(chrom = "chr1", chromstart = 1000000, chromend = 2000000,
-x = 0, y = 0, width = 3, height = 1.5, just = c("left", "top"), default.units = "inches")
+                                     x = 0, y = 0, width = 3, height = 1.5, just = c("left", "top"), default.units = "inches")
 
 ## Add standard x-axis to transcript plot
 bb_annoXaxis(plot = transcriptPlot, at = c(1000000, 1250000, 1500000, 1750000, 2000000), gp = gpar(fontsize = 8))

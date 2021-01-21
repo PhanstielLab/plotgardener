@@ -1,6 +1,7 @@
 #' Plot text within a BentoBox layout
 #'
-#' @usage bb_plotText(label, x, y, just = "center", default.units = "inches")
+#' @usage bb_plotText(label, x, y, just = "center",
+#'                    default.units = "inches")
 #'
 #' @param label Character or expression of text to be plotted.
 #' @param fontcolor A character value specifying text fontcolor. Default value is \code{fontcolor = "black"}.
@@ -11,7 +12,7 @@
 #' @param y A numeric vector or unit object specifying text y-location.
 #' @param just Justification of text relative to its (x, y) location. If there are two values, the first value specifies horizontal justification and the second value specifies vertical justification.
 #' Possible string values are: \code{"left"}, \code{"right"}, \code{"centre"}, \code{"center"}, \code{"bottom"}, and \code{"top"}. Default value is \code{just = "center"}.
-#' @param default.units A string indicating the default units to use if \code{x} or \code{y} are only given as numerics. Default value is \code{default.units = "inches"}.
+#' @param default.units A string indicating the default units to use if \code{x} or \code{y} are only given as numerics or numeric vectors. Default value is \code{default.units = "inches"}.
 #' @param params An optional \link[BentoBox]{bb_assembly} object containing relevant function parameters.
 #' @param ... Additional grid graphical parameters. See \link[grid]{gpar}.
 #'
@@ -22,7 +23,8 @@
 #' bb_pageCreate(width = 2, height = 2, default.units = "inches", xgrid = 0, ygrid = 0)
 #'
 #' ## Plot text
-#' bb_plotText(label = "BentoBox", fontsize = 14, x = 1, y = 1, just = "center", default.units = "inches")
+#' bb_plotText(label = "BentoBox", fontsize = 14,
+#'             x = 1, y = 1, just = "center", default.units = "inches")
 #'
 #' @seealso \link[grid]{grid.text}
 #'

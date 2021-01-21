@@ -2,43 +2,47 @@
 % Please edit documentation in R/bb_plotCircle.R
 \name{bb_plotCircle}
 \alias{bb_plotCircle}
-\title{wrapper to draw a circleGrob based on BentoBox page coordinates and units}
+\title{Plot a circle within a BentoBox layout}
 \usage{
-bb_plotCircle(
-  x,
-  y,
-  r,
-  params = NULL,
-  linecolor = "black",
-  fill = NA,
-  lwd = 1,
-  lty = 1,
-  alpha = 1,
-  default.units = "inches",
-  ...
-)
+bb_plotCircle(r, x, y, default.units = "inches")
 }
 \arguments{
-\item{x}{A numeric vector or unit object specifying x-location of the center of the circle}
+\item{r}{A numeric vector or unit object specifying radii.}
 
-\item{y}{A numeric vector or unit object specifying y-location of the center of the circle}
+\item{x}{A numeric vector or unit object specifying circle x-locations relative to center.}
 
-\item{r}{A numeric vector or unit object specifying radii}
+\item{y}{A numeric vector or unit object specifying circle y-locations relative to center.}
 
-\item{params}{an optional "bb_params" object space containing relevant function parameters}
+\item{default.units}{A string indicating the default units to use if \code{r}, \code{x}, or \code{y} are only given as numerics or numeric vectors. Default value is \code{default.units = "inches"}.}
 
-\item{linecolor}{line color}
+\item{linecolor}{A character value specifying circle line color. Default value is \code{linecolor = "black"}.}
 
-\item{fill}{fill color}
+\item{lwd}{A numeric specifying circle line width. Default value is \code{lwd = 1}.}
 
-\item{lwd}{line width}
+\item{lty}{A numeric specifying circle line type. Default value is \code{lty = 1}.}
 
-\item{lty}{line type}
+\item{fill}{A character value specifying circle fill color. Default value is \code{fill = NA}.}
 
-\item{alpha}{color transparency}
+\item{alpha}{Numeric value specifying color transparency. Default value is \code{alpha = 1}.}
 
-\item{default.units}{A string indicating the default units to use if x or y are only given as numeric vectors}
+\item{params}{An optional \link[BentoBox]{bb_assembly} object containing relevant function parameters.}
+
+\item{...}{Additional grid graphical parameters. See \link[grid]{gpar}.}
+}
+\value{
+Returns a \code{bb_circle} object containing relevant placement and \link[grid]{grob} information.
 }
 \description{
-wrapper to draw a circleGrob based on BentoBox page coordinates and units
+Plot a circle within a BentoBox layout
+}
+\examples{
+## Create a BentoBox page
+bb_pageCreate(width = 2, height = 2, default.units = "inches", xgrid = 0, ygrid = 0)
+
+## Plot a circle
+bb_plotCircle(r = 0.3, x = 1, y = 1.2, default.units = "inches")
+
+}
+\seealso{
+\link[grid]{grid.circle}
 }

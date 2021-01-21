@@ -5,7 +5,9 @@
 \title{Plot paired-end BEDPE data in an arch style}
 \usage{
 bb_plotBedpeArches(bedpeData, chrom)
-bb_plotBedpeArches(bedpeData, chrom, x, y, width, height, just = c("left", "top"), default.units = "inches")
+bb_plotBedpeArches(bedpeData, chrom, x, y, width,
+                   height, just = c("left", "top"),
+                   default.units = "inches")
 }
 \arguments{
 \item{bedpeData}{A string specifying the BEDPE file path or a dataframe in BEDPE format specifying data to be plotted.}
@@ -20,14 +22,14 @@ bb_plotBedpeArches(bedpeData, chrom, x, y, width, height, just = c("left", "top"
 
 \item{style}{Character value describing the style of arches. Default value is \code{style = "2D"}. Options are:
 \itemize{
-\item{\code{"2D"}:}{Arches will be drawn in a 2-dimensional style.}
-\item{\code{"3D"}:}{Arches will be drawn in a 3-dimensional style.}
+\item{\code{"2D"}: }{Arches will be drawn in a 2-dimensional style.}
+\item{\code{"3D"}: }{Arches will be drawn in a 3-dimensional style.}
 }}
 
 \item{position}{Character value indicating the position of arches relative to the x-axis. Default value is \code{position = "top"}. Options are:
 \itemize{
-\item{\code{"top"}:}{Arches will be drawn above the x-axis.}
-\item{\code{"bottom"}:}{Arches will be drawn reflected over and below the x-axis.}
+\item{\code{"top"}: }{Arches will be drawn above the x-axis.}
+\item{\code{"bottom"}: }{Arches will be drawn reflected over and below the x-axis.}
 }}
 
 \item{curvature}{Numeric indicating the number of points along the arch curvature. Default value is \code{curvature = 5}.}
@@ -83,6 +85,6 @@ bedpeArchesPlot <- bb_plotBedpeArches(bedpeData = bb_bedpeData, chrom = "chr21",
 ## Plot and place BEDPE arches plot on a BentoBox page
 bb_pageCreate(width = 5, height = 2, default.units = "inches", xgrid = 0, ygrid = 0)
 bedpeArchesPlot <- bb_plotBedpeArches(bedpeData = bb_bedpeData, chrom = "chr21", chromstart = 28000000, chromend = 30300000, fill = "black",
-x = 0, y = 0.25, width = 5, height = 1.5, just = c("left", "top"), default.units = "inches")
+                                      x = 0, y = 0.25, width = 5, height = 1.5, just = c("left", "top"), default.units = "inches")
 
 }

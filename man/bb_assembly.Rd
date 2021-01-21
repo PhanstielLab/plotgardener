@@ -2,7 +2,7 @@
 % Please edit documentation in R/bb_assembly.R
 \name{bb_assembly}
 \alias{bb_assembly}
-\title{Make a \code{bb_assembly} object for alternate TxDB, OrgDb,and BSgenome genomic annotation packages}
+\title{Make a \code{bb_assembly} object for alternate TxDb, OrgDb,and BSgenome genomic annotation packages}
 \usage{
 bb_assembly(Genome, TxDb, OrgDb)
 }
@@ -25,11 +25,16 @@ Default value is \code{display.column = "SYMBOL"}.}
 Returns a \code{bb_assembly} object containing all input parameters.
 }
 \description{
-Make a \code{bb_assembly} object for alternate TxDB, OrgDb,and BSgenome genomic annotation packages
+Make a \code{bb_assembly} object for alternate TxDb, OrgDb,and BSgenome genomic annotation packages
 }
 \examples{
 ## Create a custom bb_assembly object for hg38/GRCh38 packages
-newAssembly <- bb_assembly(Genome = "hg38_GRCh38", TxDb = "TxDb.Hsapiens.UCSC.hg38.knownGene",
-OrgDb = "org.Hs.eg.db", BSgenome = "BSgenome.Hsapiens.NCBI.GRCh38")
+newAssembly <- bb_assembly(Genome = "hg38_GRCh38",
+                           TxDb = "TxDb.Hsapiens.UCSC.hg38.knownGene",
+                           OrgDb = "org.Hs.eg.db",
+                           BSgenome = "BSgenome.Hsapiens.NCBI.GRCh38")
 
+}
+\seealso{
+\link[GenomicFeatures]{TxDb}, \link[AnnotationDb]{OrgDb-class}, \link[BSgenome]{BSgenome}
 }

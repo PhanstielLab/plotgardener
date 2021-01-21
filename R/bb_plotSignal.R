@@ -2,7 +2,9 @@
 #'
 #' @usage
 #' bb_plotSignal(data, chrom)
-#' bb_plotSignal(data, chrom, x, y, width, height, just = c("left", "top"), default.units = "inches")
+#' bb_plotSignal(data, chrom, x, y, width, height,
+#'               just = c("left", "top"),
+#'               default.units = "inches")
 #'
 #' @param data Data to be plotted as a character value specifying a bigwig file path, a dataframe in BED format, or a \link[GenomicRanges]{GRanges} object with metadata column \code{counts}.
 #' Either one \code{data} argument or a list of two can be provided, where the second \code{data} will be plotted below the x-axis.
@@ -42,7 +44,7 @@
 #' ## Plot and place signal plot on a BentoBox page
 #' bb_pageCreate(width = 4, height = 3, default.units = "inches", xgrid = 0, ygrid = 0)
 #' bb_plotSignal(data = bb_signalData, chrom = "chr21", chromstart = 28000000, chromend = 30300000, fill = "grey",
-#' x = 0.5, y = 1, width = 3, height = 1, just = c("left", "top"), default.units = "inches")
+#'               x = 0.5, y = 1, width = 3, height = 1, just = c("left", "top"), default.units = "inches")
 #'
 #' @export
 bb_plotSignal <- function(data, binSize = NA, binCap = TRUE, chrom, chromstart = NULL, chromend = NULL, assembly = "hg19", linecolor = "grey", fill = NULL,

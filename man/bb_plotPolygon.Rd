@@ -2,46 +2,49 @@
 % Please edit documentation in R/bb_plotPolygon.R
 \name{bb_plotPolygon}
 \alias{bb_plotPolygon}
-\title{wrapper to draw a polygonGrob based on BentoBox page coordinates and units}
+\title{Plot a polygon within a BentoBox layout}
 \usage{
-bb_plotPolygon(
-  x,
-  y,
-  id = NULL,
-  id.lengths = NULL,
-  params = NULL,
-  linecolor = "black",
-  fill = NA,
-  lwd = 1,
-  lty = 1,
-  alpha = 0,
-  default.units = "inches",
-  ...
-)
+bb_plotPolygon(x, y, default.units = "inches")
 }
 \arguments{
-\item{x}{A numeric vector or unit object specifying x-location}
+\item{x}{A numeric vector or unit object specifying polygon vertex x-locations.}
 
-\item{y}{A numeric vector or unit object specifying y-location}
+\item{y}{A numeric vector or unit object specifying polygon vertex y-locations.}
 
-\item{id}{A numeric vector used to separate locations in x and y into multiple polygons. All locations with the same id belong to the same polygon.}
+\item{default.units}{A string indicating the default units to use if \code{x} or \code{y} are only given as numeric vectors. Default value is \code{default.units = "inches"}.}
 
-\item{id.lengths}{A numeric vector used to separate locations in x and y into multiple polygons. Specifies consecutive blocks of locations which make up separate polygons.}
+\item{linecolor}{A character value specifying polygon line color. Default value is \code{linecolor = "black"}.}
 
-\item{params}{an optional "bb_params" object space containing relevant function parameters}
+\item{lwd}{A numeric specifying polygon line width. Default value is \code{lwd = 1}.}
 
-\item{linecolor}{line color}
+\item{lty}{A numeric specifying polygon line type. Default value is \code{lty = 1}.}
 
-\item{fill}{fill color}
+\item{fill}{A character value specifying polygon fill color. Default value is \code{fill = NA}.}
 
-\item{lwd}{line width}
+\item{alpha}{Numeric value specifying color transparency. Default value is \code{alpha = 1}.}
 
-\item{lty}{line type}
+\item{id}{A numeric vector used to separate locations in \code{x} and \code{y} into multiple polygons. All locations with the same \code{id} belong to the same polygon.}
 
-\item{alpha}{color transparency}
+\item{id.lengths}{A numeric vector used to separate locations in \code{x} and \code{y} into multiple polygons. Specifies consecutive blocks of locations which make up separate polygons.}
 
-\item{default.units}{A string indicating the default units to use if x or y are only given as numeric vectors}
+\item{params}{An optional \link[BentoBox]{bb_assembly} object containing relevant function parameters.}
+
+\item{...}{Additional grid graphical parameters. See \link[grid]{gpar}.}
+}
+\value{
+Returns a \code{bb_polygon} object containing relevant placement and \link[grid]{grob} information.
 }
 \description{
-wrapper to draw a polygonGrob based on BentoBox page coordinates and units
+Plot a polygon within a BentoBox layout
+}
+\examples{
+## Create a BentoBox page
+bb_pageCreate(width = 2, height = 2, default.units = "inches", xgrid = 0, ygrid = 0)
+
+## Plot a 5-sided polygon
+bb_plotPolygon(x = c(0.5, 1, 1.5, 1.25, 0.75), y = c(0.5, 0.25, 0.5, 1.25, 1.25), default.units = "inches")
+
+}
+\seealso{
+\link[grid]{grid.polygon}
 }

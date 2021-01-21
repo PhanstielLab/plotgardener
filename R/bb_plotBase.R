@@ -1,6 +1,9 @@
 #' Plot a base R plot in a BentoBox layout
 #'
-#' @usage bb_plotBase(basePlot, x, y, width, height, just = c("left", "top"), default.units = "inches")
+#' @usage
+#' bb_plotBase(basePlot, x, y, width, height,
+#'             just = c("left", "top"),
+#'             default.units = "inches")
 #'
 #' @param basePlot Plot formula of base R plotting functions.
 #' @param x A numeric or unit object specifying plot x-location.
@@ -23,7 +26,8 @@
 #' bb_pageCreate(width = 5, height = 5, default.units = "inches", xgrid = 0, ygrid = 0)
 #'
 #' ## Place base R plot in BentoBox page
-#' bb_plotBase(basePlot = p, x = 0.5, y = 0.5, width = 4, height = 4, just = c("left", "top"), default.units = "inches")
+#' bb_plotBase(basePlot = p,
+#'             x = 0.5, y = 0.5, width = 4, height = 4, just = c("left", "top"), default.units = "inches")
 #'
 #' @export
 bb_plotBase <- function(basePlot, x, y, width, height, just = c("left", "top"), default.units = "inches", bg = NA, params = NULL){

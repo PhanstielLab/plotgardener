@@ -4,8 +4,13 @@
 \alias{bb_plotGenomeLabel}
 \title{Plot genomic coordinates along the x or y-axis of a BentoBox plot}
 \usage{
-bb_plotGenomeLabel(plot, x, y, just = c("left", "top"), default.units = "inches")
-bb_plotGenomeLabel(chrom, chromstart, chromend, x, y, length, just = c("left", "top"), default.units = "inches")
+bb_plotGenomeLabel(plot, x, y,
+                   just = c("left", "top"),
+                   default.units = "inches")
+bb_plotGenomeLabel(chrom, chromstart, chromend,
+                   x, y, length,
+                   just = c("left", "top"),
+                   default.units = "inches")
 }
 \arguments{
 \item{plot}{BentoBox plot object to add genome label.}
@@ -26,9 +31,9 @@ bb_plotGenomeLabel(chrom, chromstart, chromend, x, y, length, just = c("left", "
 
 \item{scale}{A character value indicating the scale of the coordinates along the genome label. Default value is \code{scale = "bp"}. Options are:
 \itemize{
-\item{\code{"bp"}:}{base pairs.}
-\item{\code{"Kb"}:}{kilobase pairs. 1 kilobase pair is equal to 1000 base pairs.}
-\item{\code{"Mb"}:}{megabase pairs. 1 megabase pair is equal to 1000000 base pairs.}
+\item{\code{"bp"}: }{base pairs.}
+\item{\code{"Kb"}: }{kilobase pairs. 1 kilobase pair is equal to 1000 base pairs.}
+\item{\code{"Mb"}: }{megabase pairs. 1 megabase pair is equal to 1000000 base pairs.}
 }}
 
 \item{commas}{A logical value indicating whether to include commas in start and stop labels. Default value is \code{commas = TRUE}.}
@@ -40,8 +45,8 @@ bb_plotGenomeLabel(chrom, chromstart, chromend, x, y, length, just = c("left", "
 \item{axis}{A character value indicating along which axis to add genome label. Sequence information will not be displayed along a y-axis. Default value is \code{axis = "x"}.
 Options are:
 \itemize{
-\item{\code{"x"}:}{Genome label will be plotted along the x-axis.}
-\item{\code{"y"}:}{Genome label will be plotted along the y-axis.}
+\item{\code{"x"}: }{Genome label will be plotted along the x-axis.}
+\item{\code{"y"}: }{Genome label will be plotted along the y-axis.}
 }}
 
 \item{at}{A numeric vector of x-value locations for tick marks.}
@@ -79,13 +84,14 @@ bb_pageCreate(width = 5, height = 4, default.units = "inches")
 
 ## Plot and place gene track on a BentoBox page
 genesPlot <- bb_plotGenes(chrom = "chr8", chromstart = 1000000, chromend = 2000000, assembly = "hg19",
-x = 0.5, y = 0.5, width = 4, height = 1.5, just = c("left", "top"), default.units = "inches")
+                          x = 0.5, y = 0.5, width = 4, height = 1.5, just = c("left", "top"), default.units = "inches")
 
 ## Add x-axis genome label with plot input
-bb_plotGenomeLabel(plot = genesPlot, scale = "Kb", x = 0.5, y = 2, just = c("left", "top"), default.units = "inches")
+bb_plotGenomeLabel(plot = genesPlot, scale = "Kb",
+                   x = 0.5, y = 2, just = c("left", "top"), default.units = "inches")
 
 ## Add x-axis genome label with chrom/chromstart/chromend input
 bb_plotGenomeLabel(chrom = "chr8", chromstart = 1000000, chromend = 2000000, assembly = "hg19",
-x = 0.5, y = 2.5, length = 4, just = c("left", "top"), default.units = "inches")
+                   x = 0.5, y = 2.5, length = 4, just = c("left", "top"), default.units = "inches")
 
 }

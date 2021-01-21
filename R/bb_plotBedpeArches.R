@@ -2,7 +2,9 @@
 #'
 #' @usage
 #' bb_plotBedpeArches(bedpeData, chrom)
-#' bb_plotBedpeArches(bedpeData, chrom, x, y, width, height, just = c("left", "top"), default.units = "inches")
+#' bb_plotBedpeArches(bedpeData, chrom, x, y, width,
+#'                    height, just = c("left", "top"),
+#'                    default.units = "inches")
 #'
 #' @param bedpeData A string specifying the BEDPE file path or a dataframe in BEDPE format specifying data to be plotted.
 #' @param chrom Chromosome of region to be plotted, as a string.
@@ -11,13 +13,13 @@
 #' @param assembly Default genome assembly as a string or a \link[BentoBox]{bb_assembly} object. Default value is \code{assembly = "hg19"}.
 #' @param style Character value describing the style of arches. Default value is \code{style = "2D"}. Options are:
 #' \itemize{
-#' \item{\code{"2D"}:}{Arches will be drawn in a 2-dimensional style.}
-#' \item{\code{"3D"}:}{Arches will be drawn in a 3-dimensional style.}
+#' \item{\code{"2D"}: }{Arches will be drawn in a 2-dimensional style.}
+#' \item{\code{"3D"}: }{Arches will be drawn in a 3-dimensional style.}
 #' }
 #' @param position Character value indicating the position of arches relative to the x-axis. Default value is \code{position = "top"}. Options are:
 #' \itemize{
-#' \item{\code{"top"}:}{Arches will be drawn above the x-axis.}
-#' \item{\code{"bottom"}:}{Arches will be drawn reflected over and below the x-axis.}
+#' \item{\code{"top"}: }{Arches will be drawn above the x-axis.}
+#' \item{\code{"bottom"}: }{Arches will be drawn reflected over and below the x-axis.}
 #' }
 #' @param curvature Numeric indicating the number of points along the arch curvature. Default value is \code{curvature = 5}.
 #' @param archHeight Single numeric value or numeric vector specifying the arch heights. When NULL, all arches will be the same height, filling up the given plot area
@@ -51,7 +53,7 @@
 #' ## Plot and place BEDPE arches plot on a BentoBox page
 #' bb_pageCreate(width = 5, height = 2, default.units = "inches", xgrid = 0, ygrid = 0)
 #' bedpeArchesPlot <- bb_plotBedpeArches(bedpeData = bb_bedpeData, chrom = "chr21", chromstart = 28000000, chromend = 30300000, fill = "black",
-#' x = 0, y = 0.25, width = 5, height = 1.5, just = c("left", "top"), default.units = "inches")
+#'                                       x = 0, y = 0.25, width = 5, height = 1.5, just = c("left", "top"), default.units = "inches")
 #'
 #' @export
 bb_plotBedpeArches <- function(bedpeData, chrom, chromstart = NULL, chromend = NULL, assembly = "hg19", style = "2D", position = "top", curvature = 5, archHeight = NULL,

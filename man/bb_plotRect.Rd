@@ -2,49 +2,54 @@
 % Please edit documentation in R/bb_plotRect.R
 \name{bb_plotRect}
 \alias{bb_plotRect}
-\title{wrapper to draw a rectGrob based on BentoBox page coordinates and units}
+\title{Plot a rectangle within a BentoBox layout}
 \usage{
-bb_plotRect(
-  x,
-  y,
-  width,
-  height,
-  just = "center",
-  params = NULL,
-  linecolor = "black",
-  fill = NA,
-  lwd = 1,
-  lty = 1,
-  alpha = 0,
-  default.units = "inches",
-  ...
-)
+bb_plotRect(x, y, width, height,
+            just = "center",
+            default.units = "inches")
 }
 \arguments{
-\item{x}{A numeric vector or unit object specifying x-location}
+\item{x}{A numeric vector or unit object specifying rectangle x-locations.}
 
-\item{y}{A numeric vector or unit object specifying y-location}
+\item{y}{A numeric vector or unit object specifying rectangle y-locations.}
 
-\item{width}{A numeric vector or unit object specifying width}
+\item{width}{A numeric vector or unit object specifying rectangle widths.}
 
-\item{height}{A numeric vector or unit object specifying height}
+\item{height}{A numeric vector or unit object specifying rectangle heights.}
 
-\item{just}{The justification of the rectangle relative to its (x,y) location}
+\item{just}{Justification of rectangle relative to its (x, y) location. If there are two values, the first value specifies horizontal justification and the second value specifies vertical justification.
+Possible string values are: \code{"left"}, \code{"right"}, \code{"centre"}, \code{"center"}, \code{"bottom"}, and \code{"top"}. Default value is \code{just = "center"}.}
 
-\item{params}{an optional "bb_params" object space containing relevant function parameters}
+\item{default.units}{A string indicating the default units to use if \code{x}, \code{y}, \code{width}, and \code{height} are only given as numerics or numeric vectors. Default value is \code{default.units = "inches"}.}
 
-\item{linecolor}{line color}
+\item{linecolor}{A character value specifying rectangle line color. Default value is \code{linecolor = "black"}.}
 
-\item{fill}{fill color}
+\item{lwd}{A numeric specifying rectangle line width. Default value is \code{lwd = 1}.}
 
-\item{lwd}{line width}
+\item{lty}{A numeric specifying rectangle line type. Default value is \code{lty = 1}.}
 
-\item{lty}{line type}
+\item{fill}{A character value specifying rectangle fill color. Default value is \code{fill = NA}.}
 
-\item{alpha}{color transparency}
+\item{alpha}{Numeric value specifying color transparency. Default value is \code{alpha = 1}.}
 
-\item{default.units}{A string indicating the default units to use if x or y are only given as numeric vectors}
+\item{params}{An optional \link[BentoBox]{bb_assembly} object containing relevant function parameters.}
+
+\item{...}{Additional grid graphical parameters. See \link[grid]{gpar}.}
+}
+\value{
+Returns a \code{bb_rect} object containing relevant placement and \link[grid]{grob} information.
 }
 \description{
-wrapper to draw a rectGrob based on BentoBox page coordinates and units
+Plot a rectangle within a BentoBox layout
+}
+\examples{
+## Create a BentoBox page
+bb_pageCreate(width = 2, height = 2, default.units = "inches", xgrid = 0, ygrid = 0)
+
+## Plot a rectangle
+bb_plotRect(x = 1, y = 1, width = 0.75, height = 0.25, just = "center", default.units = "inches")
+
+}
+\seealso{
+\link[grid]{grid.rect}
 }

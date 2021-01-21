@@ -5,7 +5,9 @@
 \title{Plot a Hi-C interaction matrix in a square format}
 \usage{
 bb_plotHicSquare(hicData, chrom)
-bb_plotHicSquare(hicData, chrom, x, y, width, height, just = c("left", "top"), default.units = "inches")
+bb_plotHicSquare(hicData, chrom, x, y, width, height,
+                 just = c("left", "top"),
+                 default.units = "inches")
 }
 \arguments{
 \item{hicData}{Path to .hic file as a string or a 3-column dataframe of interaction counts in sparse upper triangular format.}
@@ -19,8 +21,8 @@ dataframes, "auto" will attempt to detect the resolution the dataframe contains.
 
 \item{matrix}{Character value indicating the type of matrix to output. Default value is \code{matrix = "observed"}. Options are:
 \itemize{
-\item{\code{"observed"}:}{Observed counts.}
-\item{\code{"oe"}:}{Observed/expected counts.}
+\item{\code{"observed"}: }{Observed counts.}
+\item{\code{"oe"}: }{Observed/expected counts.}
 }}
 
 \item{chrom}{Chromosome of region to be plotted, as a string.}
@@ -41,9 +43,9 @@ dataframes, "auto" will attempt to detect the resolution the dataframe contains.
 
 \item{half}{A character value indicating which diagonal regions to plot. For intrachromosomal plotting, options are \code{"both"}, \code{"top"}, or \code{"bottom"}. For off-diagonal or interchromosomal plotting, options are \code{"top"} or \code{"bottom"}. Default value is \code{half = "both"}.
 \itemize{
-\item{\code{"both"}:}{Both diagonal halves.}
-\item{\code{"top"}:}{Half above the diagonal.}
-\item{\code{"bottom"}:}{Half below the diagonal.}
+\item{\code{"both"}: }{Both diagonal halves.}
+\item{\code{"top"}: }{Half above the diagonal.}
+\item{\code{"bottom"}: }{Half below the diagonal.}
 }}
 
 \item{x}{A numeric or unit object specifying square Hi-C plot x-location.}
@@ -64,7 +66,7 @@ Possible string values are: \code{"left"}, \code{"right"}, \code{"centre"}, \cod
 \item{params}{An optional \link[BentoBox]{bb_assembly} object containing relevant function parameters.}
 }
 \value{
-Returns a \code{bb_hic} object containing relevant genomic region, Hi-C data, placement, and \link[grid]{grob} information.
+Returns a \code{bb_hicSquare} object containing relevant genomic region, Hi-C data, placement, and \link[grid]{grob} information.
 }
 \description{
 Plot a Hi-C interaction matrix in a square format
@@ -75,12 +77,13 @@ data("bb_hicData")
 
 ## Plot upper diagonal of square Hi-C plot filling up entire graphic device
 bb_plotHicSquare(hicData = bb_hicData, resolution = 10000, zrange = c(0, 70),
-chrom = "chr21", chromstart = 28000000, chromend = 30300000, half = "top")
+                 chrom = "chr21", chromstart = 28000000, chromend = 30300000, half = "top")
 
 ## Plot and place both halves of square Hi-C plot on a BentoBox page
 bb_pageCreate(width = 3, height = 3, default.units = "inches", xgrid = 0, ygrid = 0)
-bb_plotHicSquare(hicData = bb_hicData, resolution = 10000, zrange = c(0, 70), chrom = "chr21", chromstart = 28000000, chromend = 30300000,
-x = 0.5, y = 0.5, width = 2, height = 2, just = c("left", "top"), default.units = "inches")
+bb_plotHicSquare(hicData = bb_hicData, resolution = 10000, zrange = c(0, 70),
+                 chrom = "chr21", chromstart = 28000000, chromend = 30300000,
+                 x = 0.5, y = 0.5, width = 2, height = 2, just = c("left", "top"), default.units = "inches")
 
 }
 \seealso{

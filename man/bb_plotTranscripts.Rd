@@ -5,7 +5,9 @@
 \title{Plot gene transcripts in a pileup style for a single chromosome}
 \usage{
 bb_plotTranscripts(chrom)
-bb_plotTranscripts(chrom, x, y, width, height, just = c("left", "top"), default.units = "inches")
+bb_plotTranscripts(chrom, x, y, width, height,
+                   just = c("left", "top"),
+                   default.units = "inches")
 }
 \arguments{
 \item{chrom}{Chromosome of region to be plotted, as a string.}
@@ -81,7 +83,7 @@ bb_plotTranscripts(chrom = "chr8", chromstart = 1000000, chromend = 2000000, ass
 ## Plot and place transcripts on a BentoBox page
 bb_pageCreate(width = 4, height = 4, default.units = "inches", xgrid = 0, ygrid = 0)
 bb_plotTranscripts(chrom = "chr8", chromstart = 1000000, chromend = 2000000, assembly = "hg19", labels = "gene",
-x = 0.5, y = 0.5, width = 3, height = 2.5, just = c("left", "top"), default.units = "inches")
+                   x = 0.5, y = 0.5, width = 3, height = 2.5, just = c("left", "top"), default.units = "inches")
 
 }
 \seealso{

@@ -16,7 +16,7 @@ bb_readBigwig(bigwigFile, chrom, chromstart, chromend)
 
 \item{chromend}{Integer end position on chromosome.}
 
-\item{strand}{A character value specifying strand. Default value is \code{strand = "*"}.Options are:
+\item{strand}{A character value specifying strand. Default value is \code{strand = "*"}. Options are:
 \itemize{
 \item{\code{"+"}: }{Plus strand.}
 \item{\code{"-"}: }{Minus strand.}

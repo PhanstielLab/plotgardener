@@ -4,7 +4,9 @@
 \alias{bb_plotLegend}
 \title{Plot a legend}
 \usage{
-bb_plotLegend(legend, x, y, width, height, just = c("left", "top"), default.units = "inches")
+bb_plotLegend(legend, x, y, width, height,
+              just = c("left", "top"),
+              default.units = "inches")
 }
 \arguments{
 \item{legend}{A character or expression vector to appear in the legend.}
@@ -17,8 +19,8 @@ bb_plotLegend(legend, x, y, width, height, just = c("left", "top"), default.unit
 
 \item{orientation}{A string specifying legend orientation. Default value is \code{orientation = "v"}. Options are:
 \itemize{
-\item{\code{"v"}:}{Vertical legend orientation.}
-\item{\code{"h"}:}{Horizontal legend orientation.}
+\item{\code{"v"}: }{Vertical legend orientation.}
+\item{\code{"h"}: }{Horizontal legend orientation.}
 }}
 
 \item{title}{A character value giving a title to be placed at the top of the legend.}
@@ -63,11 +65,11 @@ bb_pageCreate(width = 5, height = 5, default.units = "inches", xgrid = 0, ygrid 
 
 ## Plot a pileup plot, coloring elements by strand
 pileupPlot <- bb_plotPileup(data = bb_bedData, chrom = "chr21", chromstart = 29073000, chromend = 29074000,
-fill = c("red", "blue"), colorby = colorby("strand"), x = 0.5, y = 0.5, width = 3.5, height = 4, just = c("left", "top"), default.units = "inches")
+                            fill = c("red", "blue"), colorby = colorby("strand"),
+                            x = 0.5, y = 0.5, width = 3.5, height = 4, just = c("left", "top"), default.units = "inches")
 
 ## Add a legend depicting strand colors
-
 legendPlot <- bb_plotLegend(legend = c("minus strand", "plus strand"), fill = c("red", "blue"), title = "Strands",
-x = 3.5, y = 1, width = 1.5, height = 1, just = c("left", "top"), default.units = "inches")
+                             x = 3.5, y = 1, width = 1.5, height = 1, just = c("left", "top"), default.units = "inches")
 
 }

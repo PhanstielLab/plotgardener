@@ -2,7 +2,9 @@
 #'
 #' @usage
 #' bb_plotHicSquare(hicData, chrom)
-#' bb_plotHicSquare(hicData, chrom, x, y, width, height, just = c("left", "top"), default.units = "inches")
+#' bb_plotHicSquare(hicData, chrom, x, y, width, height,
+#'                  just = c("left", "top"),
+#'                  default.units = "inches")
 #'
 #' @param hicData Path to .hic file as a string or a 3-column dataframe of interaction counts in sparse upper triangular format.
 #' @param resolution A numeric specifying the width in basepairs of each pixel. For hic files, "auto" will attempt to choose a resolution based on the size of the region. For
@@ -11,8 +13,8 @@
 #' @param norm Character value specifying hic data normalization method, if giving .hic file. This value must be found in the .hic file. Default value is \code{norm = "KR"}.
 #' @param matrix Character value indicating the type of matrix to output. Default value is \code{matrix = "observed"}. Options are:
 #' \itemize{
-#' \item{\code{"observed"}:}{Observed counts.}
-#' \item{\code{"oe"}:}{Observed/expected counts.}
+#' \item{\code{"observed"}: }{Observed counts.}
+#' \item{\code{"oe"}: }{Observed/expected counts.}
 #' }
 #' @param chrom Chromosome of region to be plotted, as a string.
 #' @param chromstart Integer start position on chromosome to be plotted.
@@ -24,9 +26,9 @@
 #' @param palette A function describing the color palette to use for representing scale of interaction scores. Default value is \code{palette = colorRampPalette(c("white", "dark red"))}.
 #' @param half A character value indicating which diagonal regions to plot. For intrachromosomal plotting, options are \code{"both"}, \code{"top"}, or \code{"bottom"}. For off-diagonal or interchromosomal plotting, options are \code{"top"} or \code{"bottom"}. Default value is \code{half = "both"}.
 #' \itemize{
-#' \item{\code{"both"}:}{Both diagonal halves.}
-#' \item{\code{"top"}:}{Half above the diagonal.}
-#' \item{\code{"bottom"}:}{Half below the diagonal.}
+#' \item{\code{"both"}: }{Both diagonal halves.}
+#' \item{\code{"top"}: }{Half above the diagonal.}
+#' \item{\code{"bottom"}: }{Half below the diagonal.}
 #' }
 #' @param x A numeric or unit object specifying square Hi-C plot x-location.
 #' @param y A numeric or unit object specifying square Hi-C plot y-location.
@@ -38,7 +40,7 @@
 #' @param draw A logical value indicating whether graphics output should be produced. Default value is \code{draw = TRUE}.
 #' @param params An optional \link[BentoBox]{bb_assembly} object containing relevant function parameters.
 #'
-#' @return Returns a \code{bb_hic} object containing relevant genomic region, Hi-C data, placement, and \link[grid]{grob} information.
+#' @return Returns a \code{bb_hicSquare} object containing relevant genomic region, Hi-C data, placement, and \link[grid]{grob} information.
 #'
 #' @examples
 #' ## Load Hi-C data
@@ -46,12 +48,13 @@
 #'
 #' ## Plot upper diagonal of square Hi-C plot filling up entire graphic device
 #' bb_plotHicSquare(hicData = bb_hicData, resolution = 10000, zrange = c(0, 70),
-#' chrom = "chr21", chromstart = 28000000, chromend = 30300000, half = "top")
+#'                  chrom = "chr21", chromstart = 28000000, chromend = 30300000, half = "top")
 #'
 #' ## Plot and place both halves of square Hi-C plot on a BentoBox page
 #' bb_pageCreate(width = 3, height = 3, default.units = "inches", xgrid = 0, ygrid = 0)
-#' bb_plotHicSquare(hicData = bb_hicData, resolution = 10000, zrange = c(0, 70), chrom = "chr21", chromstart = 28000000, chromend = 30300000,
-#' x = 0.5, y = 0.5, width = 2, height = 2, just = c("left", "top"), default.units = "inches")
+#' bb_plotHicSquare(hicData = bb_hicData, resolution = 10000, zrange = c(0, 70),
+#'                  chrom = "chr21", chromstart = 28000000, chromend = 30300000,
+#'                  x = 0.5, y = 0.5, width = 2, height = 2, just = c("left", "top"), default.units = "inches")
 #'
 #' @seealso \link[BentoBox]{bb_readHic}
 #'
@@ -596,7 +599,7 @@ bb_plotHicSquare <- function(hicData, resolution = "auto", zrange = NULL, norm =
   hic_plot <- structure(list(chrom = bb_hicInternal$chrom, chromstart = bb_hicInternal$chromstart, chromend = bb_hicInternal$chromend, altchrom = bb_hicInternal$altchrom,
                              altchromstart = bb_hicInternal$altchromstart, altchromend = bb_hicInternal$altchromend, assembly = bb_hicInternal$assembly, resolution = bb_hicInternal$resolution,
                              x = bb_hicInternal$x, y = bb_hicInternal$y, width = bb_hicInternal$width, height = bb_hicInternal$height, just = bb_hicInternal$just, color_palette = NULL, zrange = bb_hicInternal$zrange,
-                             half = bb_hicInternal$half, grobs = NULL), class = "bb_hic")
+                             half = bb_hicInternal$half, grobs = NULL), class = "bb_hicSquare")
   attr(x = hic_plot, which = "plotted") <- bb_hicInternal$draw
 
   # ======================================================================================================================================================================================

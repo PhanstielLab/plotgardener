@@ -12,8 +12,9 @@
 #' bb_pageCreate(width = 4, height = 3.5, default.units = "inches", xgrid = 0, ygrid = 0)
 #'
 #' ## Plot and place a square Hi-C plot
-#' hicPlot <- bb_plotHicSquare(hicData = bb_hicData, resolution = 10000, zrange = c(0, 70), chrom = "chr21", chromstart = 28000000, chromend = 30300000,
-#' x = 0.5, y = 0.5, width = 2.5, height = 2.5, just = c("left", "top"), default.units = "inches")
+#' hicPlot <- bb_plotHicSquare(hicData = bb_hicData, resolution = 10000, zrange = c(0, 70),
+#'                             chrom = "chr21", chromstart = 28000000, chromend = 30300000,
+#'                             x = 0.5, y = 0.5, width = 2.5, height = 2.5, just = c("left", "top"), default.units = "inches")
 #'
 #' ## Remove square Hi-C plot from page
 #' bb_pagePlotRemove(plot = hicPlot)
@@ -25,8 +26,8 @@ bb_pagePlotRemove <- function(plot){
   grid.remove(gPath(plot$grobs$name))
 
 
-  ## Need to remove outer viewport of bb_trianglehic plot
-  if (class(plot) == "bb_trianglehic"){
+  ## Need to remove outer viewport of bb_hicTriangle plot
+  if (class(plot) == "bb_hicTriangle"){
     vp_name <- plot$grobs$vp$name
     vp_name <- gsub("inside", "outside", vp_name)
     seekViewport(vp_name)

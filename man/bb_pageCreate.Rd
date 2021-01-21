@@ -4,7 +4,8 @@
 \alias{bb_pageCreate}
 \title{Create a page for a BentoBox layout}
 \usage{
-bb_pageCreate(width = 8.5, height = 11, default.units = "inches")
+bb_pageCreate(width = 8.5, height = 11,
+              default.units = "inches")
 }
 \arguments{
 \item{width}{A numeric or unit object specifying page width. Default value is \code{width = 8}.}

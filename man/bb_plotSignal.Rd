@@ -5,7 +5,9 @@
 \title{Plot any kind of signal track data for a single chromosome}
 \usage{
 bb_plotSignal(data, chrom)
-bb_plotSignal(data, chrom, x, y, width, height, just = c("left", "top"), default.units = "inches")
+bb_plotSignal(data, chrom, x, y, width, height,
+              just = c("left", "top"),
+              default.units = "inches")
 }
 \arguments{
 \item{data}{Data to be plotted as a character value specifying a bigwig file path, a dataframe in BED format, or a \link[GenomicRanges]{GRanges} object with metadata column \code{counts}.
@@ -72,6 +74,6 @@ bb_plotSignal(data = bb_signalData, chrom = "chr21", chromstart = 28000000, chro
 ## Plot and place signal plot on a BentoBox page
 bb_pageCreate(width = 4, height = 3, default.units = "inches", xgrid = 0, ygrid = 0)
 bb_plotSignal(data = bb_signalData, chrom = "chr21", chromstart = 28000000, chromend = 30300000, fill = "grey",
-x = 0.5, y = 1, width = 3, height = 1, just = c("left", "top"), default.units = "inches")
+              x = 0.5, y = 1, width = 3, height = 1, just = c("left", "top"), default.units = "inches")
 
 }

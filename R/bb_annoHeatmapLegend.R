@@ -1,12 +1,15 @@
 #' Add a color scale legend for heatmap-style plots
 #'
-#' @usage bb_annoHeatmapLegend(heatmapPlot, x, y, width, height, just = c("left", "top"), default.units = "inches")
+#' @usage
+#' bb_annoHeatmapLegend(heatmapPlot, x, y, width,
+#'                      height, just = c("left", "top"),
+#'                      default.units = "inches")
 #'
 #' @param heatmapPlot Heatmap-style plot object to add heatmap legend for.
 #' @param orientation A string specifying legend orientation. Default value is \code{orientation = "v"}. Options are:
 #' \itemize{
-#' \item{\code{"v"}:}{Vertical legend orientation.}
-#' \item{\code{"h"}:}{Horizontal legend orientation.}
+#' \item{\code{"v"}: }{Vertical legend orientation.}
+#' \item{\code{"h"}: }{Horizontal legend orientation.}
 #' }
 #' @param fontsize A numeric specifying text fontsize in points. Default value is \code{fontsize = 8}.
 #' @param fontcolor Character value specfying text fontcolor. Default value is \code{fontcolor = "dark grey"}.
@@ -31,8 +34,9 @@
 #' bb_pageCreate(width = 4, height = 3.5, default.units = "inches", xgrid = 0, ygrid = 0)
 #'
 #' ## Plot and place a square Hi-C plot
-#' hicPlot <- bb_plotHicSquare(hicData = bb_hicData, resolution = 10000, zrange = c(0, 70), chrom = "chr21", chromstart = 28000000, chromend = 30300000,
-#' x = 0.5, y = 0.5, width = 2.5, height = 2.5, just = c("left", "top"), default.units = "inches")
+#' hicPlot <- bb_plotHicSquare(hicData = bb_hicData, resolution = 10000, zrange = c(0, 70),
+#'                             chrom = "chr21", chromstart = 28000000, chromend = 30300000,
+#'                             x = 0.5, y = 0.5, width = 2.5, height = 2.5, just = c("left", "top"), default.units = "inches")
 #'
 #' ## Add heatmap legend
 #' bb_annoHeatmapLegend(heatmapPlot = hicPlot, x = 3.2, y = 0.5, width = 0.25, height = 0.75, just = c("left", "top"), default.units = "inches")

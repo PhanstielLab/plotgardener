@@ -4,7 +4,8 @@
 \alias{bb_plotText}
 \title{Plot text within a BentoBox layout}
 \usage{
-bb_plotText(label, x, y, just = "center", default.units = "inches")
+bb_plotText(label, x, y, just = "center",
+                   default.units = "inches")
 }
 \arguments{
 \item{label}{Character or expression of text to be plotted.}
@@ -24,7 +25,7 @@ bb_plotText(label, x, y, just = "center", default.units = "inches")
 \item{just}{Justification of text relative to its (x, y) location. If there are two values, the first value specifies horizontal justification and the second value specifies vertical justification.
 Possible string values are: \code{"left"}, \code{"right"}, \code{"centre"}, \code{"center"}, \code{"bottom"}, and \code{"top"}. Default value is \code{just = "center"}.}
 
-\item{default.units}{A string indicating the default units to use if \code{x} or \code{y} are only given as numerics. Default value is \code{default.units = "inches"}.}
+\item{default.units}{A string indicating the default units to use if \code{x} or \code{y} are only given as numerics or numeric vectors. Default value is \code{default.units = "inches"}.}
 
 \item{params}{An optional \link[BentoBox]{bb_assembly} object containing relevant function parameters.}
 
@@ -41,7 +42,8 @@ Plot text within a BentoBox layout
 bb_pageCreate(width = 2, height = 2, default.units = "inches", xgrid = 0, ygrid = 0)
 
 ## Plot text
-bb_plotText(label = "BentoBox", fontsize = 14, x = 1, y = 1, just = "center", default.units = "inches")
+bb_plotText(label = "BentoBox", fontsize = 14,
+            x = 1, y = 1, just = "center", default.units = "inches")
 
 }
 \seealso{

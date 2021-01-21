@@ -1,6 +1,9 @@
 #' Plot a ggplot2 plot in a BentoBox layout
 #'
-#' @usage bb_plotGG(ggPlot, x, y, width, height, just = c("left", "top"), default.units = "inches")
+#' @usage
+#' bb_plotGG(ggPlot, x, y, width, height,
+#'           just = c("left", "top"),
+#'           default.units = "inches")
 #'
 #' @param ggPlot ggplot object.
 #' @param x A numeric or unit object specifying ggplot x-location.
@@ -13,6 +16,8 @@
 #' @param params An optional \link[BentoBox]{bb_assembly} object containing relevant function parameters.
 #'
 #' @return Returns a \code{bb_gg} object containing relevant placement and \link[grid]{grob} information.
+#'
+#' @seealso \link[ggplot2]{ggplot}
 #'
 #' @examples
 #' ## Create a plot using ggplot2

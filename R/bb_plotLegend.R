@@ -1,6 +1,9 @@
 #' Plot a legend
 #'
-#' @usage bb_plotLegend(legend, x, y, width, height, just = c("left", "top"), default.units = "inches")
+#' @usage
+#' bb_plotLegend(legend, x, y, width, height,
+#'               just = c("left", "top"),
+#'               default.units = "inches")
 #'
 #' @param legend A character or expression vector to appear in the legend.
 #' @param fill If specified, this argument will produce boxes filled with the specified colors to appear beside the legend text.
@@ -8,8 +11,8 @@
 #' @param lty The line types for lines appearing in the legend.
 #' @param orientation A string specifying legend orientation. Default value is \code{orientation = "v"}. Options are:
 #' \itemize{
-#' \item{\code{"v"}:}{Vertical legend orientation.}
-#' \item{\code{"h"}:}{Horizontal legend orientation.}
+#' \item{\code{"v"}: }{Vertical legend orientation.}
+#' \item{\code{"h"}: }{Horizontal legend orientation.}
 #' }
 #' @param title A character value giving a title to be placed at the top of the legend.
 #' @param fontsize A numeric specifying text fontsize in points. Default value is \code{fontsize = 10}.
@@ -37,12 +40,12 @@
 #'
 #' ## Plot a pileup plot, coloring elements by strand
 #' pileupPlot <- bb_plotPileup(data = bb_bedData, chrom = "chr21", chromstart = 29073000, chromend = 29074000,
-#' fill = c("red", "blue"), colorby = colorby("strand"), x = 0.5, y = 0.5, width = 3.5, height = 4, just = c("left", "top"), default.units = "inches")
+#'                             fill = c("red", "blue"), colorby = colorby("strand"),
+#'                             x = 0.5, y = 0.5, width = 3.5, height = 4, just = c("left", "top"), default.units = "inches")
 #'
 #' ## Add a legend depicting strand colors
-#'
 #' legendPlot <- bb_plotLegend(legend = c("minus strand", "plus strand"), fill = c("red", "blue"), title = "Strands",
-#' x = 3.5, y = 1, width = 1.5, height = 1, just = c("left", "top"), default.units = "inches")
+#'                              x = 3.5, y = 1, width = 1.5, height = 1, just = c("left", "top"), default.units = "inches")
 #'
 #' @export
 bb_plotLegend <- function(legend, fill = NULL, pch = NULL, lty = NULL, orientation = "v", title = NULL, fontsize = 10, border = TRUE,
