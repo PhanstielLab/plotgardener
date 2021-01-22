@@ -1,0 +1,658 @@
+---
+title: "getting_started"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{getting_started}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(BentoBox)
+```
+
+
+```{r}
+### Name: bb_annoBedpeAnchors
+### Title: Annotate vertical boxes at anchors of BEDPE elements
+### Aliases: bb_annoBedpeAnchors
+
+### ** Examples
+
+## Load BEDPE data
+data("bb_bedpeData")
+
+## Create BentoBox page
+bb_pageCreate(width = 4, height = 2.5, default.units = "inches", xgrid = 0, ygrid = 0)
+
+## Plot and place a BEDPE arches plot
+bedpeArches <- bb_plotBedpeArches(bedpeData = bb_bedpeData, chrom = "chr21", chromstart = 28000000, chromend = 30300000,
+                                  linecolor = "black", x = 0.5, y = 0.5, width = 3, height = 1,
+                                  just = c("left", "top"), default.units = "inches")
+
+## Annotate anchors
+bb_annoBedpeAnchors(bedpePlot = bedpeArches, fill = "steel blue",
+                    x = 0.5, y = 1.5, height = 0.5, default.units = "inches")
+```
+
+
+```{r}
+### Name: bb_annoHeatmapLegend
+### Title: Add a color scale legend for heatmap-style plots
+### Aliases: bb_annoHeatmapLegend
+
+### ** Examples
+
+## Load Hi-C data
+data("bb_hicData")
+
+## Create BentoBox page
+bb_pageCreate(width = 4, height = 3.5, default.units = "inches", xgrid = 0, ygrid = 0)
+
+## Plot and place a square Hi-C plot
+hicPlot <- bb_plotHicSquare(hicData = bb_hicData, resolution = 10000, zrange = c(0, 70),
+                            chrom = "chr21", chromstart = 28000000, chromend = 30300000,
+                            x = 0.5, y = 0.5, width = 2.5, height = 2.5, just = c("left", "top"), default.units = "inches")
+
+## Add heatmap legend
+bb_annoHeatmapLegend(heatmapPlot = hicPlot, x = 3.2, y = 0.5, width = 0.25, height = 0.75, just = c("left", "top"), default.units = "inches")
+```
+
+
+```{r}
+### Name: bb_annoLoops
+### Title: Annotate DNA loops in a Hi-C plot
+### Aliases: bb_annoLoops
+
+### ** Examples
+
+## Load Hi-C data and BEDPE data
+data("bb_hicData")
+data("bb_bedpeData")
+
+## Create BentoBox page
+bb_pageCreate(width = 3, height = 3, default.units = "inches", xgrid = 0, ygrid = 0)
+
+## Plot and place a square Hi-C plot
+hicPlot <- bb_plotHicSquare(hicData = bb_hicData, resolution = 10000, zrange = c(0, 70),
+                            chrom = "chr21", chromstart = 28000000, chromend = 30300000,
+                            x = 0, y = 0, width = 3, height = 3, just = c("left", "top"), default.units = "inches")
+
+## Annotate loops of Hi-C plot
+bb_annoLoops(hicPlot = hicPlot, bedpeData = bb_bedpeData, type = "box", half = "both")
+```
+
+
+```{r}
+### Name: bb_annoXaxis
+### Title: Add an x-axis to a plot
+### Aliases: bb_annoXaxis
+
+### ** Examples
+
+## Load transcript information
+library("TxDb.Hsapiens.UCSC.hg19.knownGene")
+library("org.Hs.eg.db")
+
+## Create BentoBox page
+bb_pageCreate(width = 3, height = 2, default.units = "inches", xgrid = 0, ygrid = 0)
+
+## Plot gene transcripts
+transcriptPlot <- bb_plotTranscripts(chrom = "chr1", chromstart = 1000000, chromend = 2000000,
+                                     x = 0, y = 0, width = 3, height = 1.5, just = c("left", "top"), default.units = "inches")
+
+## Add standard x-axis to transcript plot
+bb_annoXaxis(plot = transcriptPlot, at = c(1000000, 1250000, 1500000, 1750000, 2000000), gp = gpar(fontsize = 8))
+```
+
+
+```{r}
+### Name: bb_annoYaxis
+### Title: Add a y-axis to a plot
+### Aliases: bb_annoYaxis
+
+### ** Examples
+
+## Load Hi-C data
+data("bb_hicData")
+
+## Create BentoBox page
+bb_pageCreate(width = 4, height = 3.5, default.units = "inches", xgrid = 0, ygrid = 0)
+
+## Plot and place a square Hi-C plot
+hicPlot <- bb_plotHicSquare(hicData = bb_hicData, resolution = 10000, zrange = c(0, 70), chrom = "chr21", chromstart = 28000000, chromend = 30300000,
+                            x = 1, y = 0.5, width = 2.5, height = 2.5, just = c("left", "top"), default.units = "inches")
+
+## Add standard y-axis to Hi-C plot
+bb_annoYaxis(plot = hicPlot, at = c(28000000, 29000000, 30300000), gp = gpar(fontsize = 8))
+```
+
+
+```{r}
+### Name: bb_assembly
+### Title: Make a 'bb_assembly' object for alternate TxDb, OrgDb,and
+###   BSgenome genomic annotation packages
+### Aliases: bb_assembly
+
+### ** Examples
+
+## Create a custom bb_assembly object for hg38/GRCh38 packages
+newAssembly <- bb_assembly(Genome = "hg38_GRCh38",
+                           TxDb = "TxDb.Hsapiens.UCSC.hg38.knownGene",
+                           OrgDb = "org.Hs.eg.db",
+                           BSgenome = "BSgenome.Hsapiens.NCBI.GRCh38")
+```
+
+
+```{r}
+### Name: bb_defaultPackages
+### Title: Display the default genomic annotation packages associated with
+###   a genome build
+### Aliases: bb_defaultPackages
+
+### ** Examples
+
+## View default genomic annotation packages associated with "hg19"
+bb_defaultPackages(Genome = "hg19")
+
+## View default genomic annotation packages associated with "mm9"
+bb_defaultPackages(Genome = "mm9")
+```
+
+
+```{r}
+### Name: bb_pageCreate
+### Title: Create a page for a BentoBox layout
+### Aliases: bb_pageCreate
+
+### ** Examples
+
+## Create a 4-inch wide, 5-inch high BentoBox page
+bb_pageCreate(width = 4, height = 4, default.units = "inches")
+
+## Create a 10-cm wide, 12-cm high Bentobox page
+bb_pageCreate(width = 10, height = 10, default.units = "cm")
+```
+
+
+```{r}
+### Name: bb_pageGuideHorizontal
+### Title: Draw a horizontal guideline at a specified y-coordinate on a
+###   BentoBox page
+### Aliases: bb_pageGuideHorizontal
+
+### ** Examples
+
+## Create a BentoBox page
+bb_pageCreate(width = 4, height = 4, default.units = "inches")
+
+## Add red horizontal guideline at y = 2.5 inches
+bb_pageGuideHorizontal(y = 2.5, linecolor = "red")
+```
+
+
+```{r}
+### Name: bb_pageGuideVertical
+### Title: Draw a vertical guideline at a specified x-coordinate on a
+###   BentoBox page
+### Aliases: bb_pageGuideVertical
+
+### ** Examples
+
+## Create a BentoBox page
+bb_pageCreate(width = 4, height = 4, default.units = "inches")
+
+## Add blue vertical guideline at x = 1.7 inches
+bb_pageGuideVertical(x = 1.7, linecolor = "blue")
+```
+
+
+```{r}
+### Name: bb_pagePlotPlace
+### Title: Place a BentoBox plot that has been previously created but not
+###   drawn
+### Aliases: bb_pagePlotPlace
+
+### ** Examples
+
+## Load Hi-C data
+data("bb_hicData")
+
+## Create, but do not plot, square Hi-C plot
+hicPlot <- bb_plotHicSquare(hicData = bb_hicData, resolution = 10000, zrange = c(0, 70),
+                            chrom = "chr21", chromstart = 28000000, chromend = 30300000, draw = FALSE)
+
+## Create BentoBox page
+bb_pageCreate(width = 4, height = 3.5, default.units = "inches", xgrid = 0, ygrid = 0)
+
+## Place Hi-C plot on BentoBox page
+bb_pagePlotPlace(plot = hicPlot,
+                 x = 0.5, y = 0.5, width = 2.5, height = 2.5, just = c("left", "top"), default.units = "inches", draw = TRUE)
+```
+
+
+```{r}
+### Name: bb_pagePlotRemove
+### Title: Remove BentoBox plots and annotations
+### Aliases: bb_pagePlotRemove
+
+### ** Examples
+
+## Load Hi-C data
+data("bb_hicData")
+
+## Create BentoBox page
+bb_pageCreate(width = 4, height = 3.5, default.units = "inches", xgrid = 0, ygrid = 0)
+
+## Plot and place a square Hi-C plot
+hicPlot <- bb_plotHicSquare(hicData = bb_hicData, resolution = 10000, zrange = c(0, 70),
+                            chrom = "chr21", chromstart = 28000000, chromend = 30300000,
+                            x = 0.5, y = 0.5, width = 2.5, height = 2.5, just = c("left", "top"), default.units = "inches")
+
+## Remove square Hi-C plot from page
+bb_pagePlotRemove(plot = hicPlot)
+```
+
+
+```{r}
+### Name: bb_params
+### Title: bb_params: BentoBox parameters object
+### Aliases: bb_params
+
+### ** Examples
+
+## Define parameters
+p1 <- bb_params(gene = "IL1B", assembly = "hg19")
+
+## Optionally add more parameters
+p2 <- bb_params(fontsize = 10)
+
+## Combine parameters and pass them to a BentoBox function
+bb_plotGenes(params = c(p1, p2))
+```
+
+
+```{r}
+### Name: bb_plotBase
+### Title: Plot a base R plot in a BentoBox layout
+### Aliases: bb_plotBase
+
+### ** Examples
+
+## Define base R plot
+p <- ~plot(1:10) + abline(v = 2)
+
+## Create BentoBox page
+bb_pageCreate(width = 5, height = 5, default.units = "inches", xgrid = 0, ygrid = 0)
+
+## Place base R plot in BentoBox page
+bb_plotBase(basePlot = p,
+            x = 0.5, y = 0.5, width = 4, height = 4, just = c("left", "top"), default.units = "inches")
+```
+
+
+```{r}
+### Name: bb_plotBedpeArches
+### Title: Plot paired-end BEDPE data in an arch style
+### Aliases: bb_plotBedpeArches
+
+### ** Examples
+
+## Load BEDPE data
+data("bb_bedpeData")
+
+## Plot BEDPE arches plot filling up entire graphic device
+bedpeArchesPlot <- bb_plotBedpeArches(bedpeData = bb_bedpeData, chrom = "chr21", chromstart = 28000000, chromend = 30300000, fill = "black")
+
+## Plot and place BEDPE arches plot on a BentoBox page
+bb_pageCreate(width = 5, height = 2, default.units = "inches", xgrid = 0, ygrid = 0)
+bedpeArchesPlot <- bb_plotBedpeArches(bedpeData = bb_bedpeData, chrom = "chr21", chromstart = 28000000, chromend = 30300000, fill = "black",
+                                      x = 0, y = 0.25, width = 5, height = 1.5, just = c("left", "top"), default.units = "inches")
+```
+
+
+```{r}
+### Name: bb_plotBedpe
+### Title: Plot paired-end BEDPE data for a single chromosome
+### Aliases: bb_plotBedpe
+
+### ** Examples
+
+## Load BEDPE data
+data("bb_bedpeData")
+
+## Plot BEDPE plot filling up entire graphic device
+bedpePlot <- bb_plotBedpe(bedpeData = bb_bedpeData, chrom = "chr21", chromstart = 28000000, chromend = 30300000)
+
+## Plot and place BEDPE plot on a BentoBox page
+bb_pageCreate(width = 5, height = 2, default.units = "inches", xgrid = 0, ygrid = 0)
+bedpePlot <- bb_plotBedpe(bedpeData = bb_bedpeData, chrom = "chr21", chromstart = 28000000, chromend = 30300000,
+                          x = 0.5, y = 0.5, width = 4, height = 1, just = c("left", "top"), default.units = "inches")
+```
+
+
+```{r}
+### Name: bb_plotCircle
+### Title: Plot a circle within a BentoBox layout
+### Aliases: bb_plotCircle
+
+### ** Examples
+
+## Create a BentoBox page
+bb_pageCreate(width = 2, height = 2, default.units = "inches", xgrid = 0, ygrid = 0)
+
+## Plot a circle
+bb_plotCircle(r = 0.3, x = 1, y = 1.2, default.units = "inches")
+```
+
+
+```{r}
+### Name: bb_plotGenes
+### Title: Plot a gene track for a specified genomic region
+### Aliases: bb_plotGenes
+
+### ** Examples
+
+## Load hg19 genomic annotation packages
+library("TxDb.Hsapiens.UCSC.hg19.knownGene")
+library("org.Hs.eg.db")
+
+## Plot gene track filling up entire graphic device
+bb_plotGenes(chrom = "chr8", chromstart = 1000000, chromend = 2000000, assembly = "hg19")
+
+## Plot and place gene track on a BentoBox page
+bb_pageCreate(width = 5, height = 2, default.units = "inches", xgrid = 0, ygrid = 0)
+bb_plotGenes(chrom = "chr8", chromstart = 1000000, chromend = 2000000, assembly = "hg19",
+x = 0.5, y = 0.25, width = 4.5, height = 1.5, just = c("left", "top"), default.units = "inches")
+```
+
+
+```{r}
+### Name: bb_plotGenomeLabel
+### Title: Plot genomic coordinates along the x or y-axis of a BentoBox
+###   plot
+### Aliases: bb_plotGenomeLabel
+
+### ** Examples
+
+## Load hg19 genomic annotation packages
+library("TxDb.Hsapiens.UCSC.hg19.knownGene")
+library("org.Hs.eg.db")
+
+## Create BentoBox page
+bb_pageCreate(width = 5, height = 4, default.units = "inches")
+
+## Plot and place gene track on a BentoBox page
+genesPlot <- bb_plotGenes(chrom = "chr8", chromstart = 1000000, chromend = 2000000, assembly = "hg19",
+                          x = 0.5, y = 0.5, width = 4, height = 1.5, just = c("left", "top"), default.units = "inches")
+
+## Add x-axis genome label with plot input
+bb_plotGenomeLabel(plot = genesPlot, scale = "Kb",
+                   x = 0.5, y = 2, just = c("left", "top"), default.units = "inches")
+
+## Add x-axis genome label with chrom/chromstart/chromend input
+bb_plotGenomeLabel(chrom = "chr8", chromstart = 1000000, chromend = 2000000, assembly = "hg19",
+                   x = 0.5, y = 2.5, length = 4, just = c("left", "top"), default.units = "inches")
+```
+
+
+```{r}
+### Name: bb_plotGG
+### Title: Plot a ggplot2 plot in a BentoBox layout
+### Aliases: bb_plotGG
+
+### ** Examples
+
+## Create a plot using ggplot2
+library(ggplot2)
+p <- ggplot(mtcars) + geom_point(aes(mpg, disp))
+
+## Create a BentoBox page
+bb_pageCreate(width = 4, height = 4, default.units = "inches", xgrid = 0, ygrid = 0)
+
+## Place ggplot in BentoBox page
+bb_plotGG(ggPlot = p, x = 0.5, y = 0.5, width = 3, height = 3, just = c("left", "top"), default.units = "inches")
+```
+
+
+```{r}
+### Name: bb_plotHicSquare
+### Title: Plot a Hi-C interaction matrix in a square format
+### Aliases: bb_plotHicSquare
+
+### ** Examples
+
+## Load Hi-C data
+data("bb_hicData")
+
+## Plot upper diagonal of square Hi-C plot filling up entire graphic device
+bb_plotHicSquare(hicData = bb_hicData, resolution = 10000, zrange = c(0, 70),
+                 chrom = "chr21", chromstart = 28000000, chromend = 30300000, half = "top")
+
+## Plot and place both halves of square Hi-C plot on a BentoBox page
+bb_pageCreate(width = 3, height = 3, default.units = "inches", xgrid = 0, ygrid = 0)
+bb_plotHicSquare(hicData = bb_hicData, resolution = 10000, zrange = c(0, 70),
+                 chrom = "chr21", chromstart = 28000000, chromend = 30300000,
+                 x = 0.5, y = 0.5, width = 2, height = 2, just = c("left", "top"), default.units = "inches")
+```
+
+
+```{r}
+### Name: bb_plotHicTriangle
+### Title: Plot a Hi-C interaction matrix in a triangular format
+### Aliases: bb_plotHicTriangle
+
+### ** Examples
+
+## Load Hi-C data
+data("bb_hicData")
+
+## Plot triangle Hi-C plot filling up entire graphic device
+bb_plotHicTriangle(hicData = bb_hicData, resolution = 10000, zrange = c(0, 70),
+                   chrom = "chr21", chromstart = 28000000, chromend = 30300000)
+
+## Plot and place triangle Hi-C plot on a BentoBox page
+bb_pageCreate(width = 4, height = 2.5, default.units = "inches", xgrid = 0, ygrid = 0)
+bb_plotHicTriangle(hicData = bb_hicData, resolution = 10000, zrange = c(0, 70),
+                   chrom = "chr21", chromstart = 28000000, chromend = 30300000,
+                   x = 2, y = 0.5, width = 3, height = 1.5, just = "top", default.units = "inches")
+```
+
+
+```{r}
+### Name: bb_plotIdeogram
+### Title: Plot a chromosome ideogram with or without cytobands
+### Aliases: bb_plotIdeogram
+
+### ** Examples
+
+## Load Giemsa stain band information and genomic annotation data for hg19 genome assembly
+library("TxDb.Hsapiens.UCSC.hg19.knownGene")
+data("cytoBand.Hsapiens.UCSC.hg19")
+
+## Plot ideogram filling up entire graphic device
+bb_plotIdeogram(chrom = "chr2", assembly = "hg19")
+
+## Plot and place ideogram on a BentoBox page
+bb_pageCreate(width = 4, height = 1.5, default.units = "inches", xgrid = 0, ygrid = 0)
+bb_plotIdeogram(chrom = "chr2", assembly = "hg19",
+                x = 0.25, y = 0.25, width = 3.5, height = 0.5, just = c("left", "top"), default.units = "inches")
+```
+
+
+```{r}
+### Name: bb_plotLegend
+### Title: Plot a legend
+### Aliases: bb_plotLegend
+
+### ** Examples
+
+## Load BED data
+data("bb_bedData")
+
+## Create BentoBox page
+bb_pageCreate(width = 5, height = 5, default.units = "inches", xgrid = 0, ygrid = 0)
+
+## Plot a pileup plot, coloring elements by strand
+pileupPlot <- bb_plotPileup(data = bb_bedData, chrom = "chr21", chromstart = 29073000, chromend = 29074000,
+                            fill = c("red", "blue"), colorby = colorby("strand"),
+                            x = 0.5, y = 0.5, width = 3.5, height = 4, just = c("left", "top"), default.units = "inches")
+
+## Add a legend depicting strand colors
+legendPlot <- bb_plotLegend(legend = c("minus strand", "plus strand"), fill = c("red", "blue"), title = "Strands",
+                             x = 3.5, y = 1, width = 1.5, height = 1, just = c("left", "top"), default.units = "inches")
+```
+
+
+```{r}
+### Name: bb_plotManhattan
+### Title: Plot a Manhattan plot
+### Aliases: bb_plotManhattan
+
+### ** Examples
+
+## Load GWAS data
+data("bb_gwasData")
+
+## Plot Manhattan plot filling up entire graphic device
+bb_plotManhattan(data = bb_gwasData, pVals = "pVal", chrom = "chr21", chromstart = 28000000, chromend = 30300000, ymax = 1.1, cex = 0.20)
+
+## Plot and place Manhattan plot on a BentoBox page
+bb_pageCreate(width = 5, height = 2, default.units = "inches", xgrid = 0, ygrid = 0)
+bb_plotManhattan(data = bb_gwasData, pVals = "pVal", chrom = "chr21", chromstart = 28000000, chromend = 30300000, ymax = 1.1, cex = 0.20,
+                 x = 0.5, y = 0.5, width = 4, height = 1.5, just = c("left", "top"), default.units = "inches")
+```
+
+
+```{r}
+### Name: bb_plotPileup
+### Title: Plot data elements in a pileup style for a single chromosome
+### Aliases: bb_plotPileup
+
+### ** Examples
+
+## Load BED data
+data("bb_bedData")
+
+## Plot pileup plot filling up entire graphic device
+bb_plotPileup(data = bb_bedData, chrom = "chr21", chromstart = 29073000, chromend = 29074000, fill = "grey")
+
+## Plot and place pileup plot on a BentoBox page
+bb_pageCreate(width = 5, height = 5, default.units = "inches", xgrid = 0, ygrid = 0)
+bb_plotPileup(data = bb_bedData, chrom = "chr21", chromstart = 29073000, chromend = 29074000, fill = "grey", baseline = TRUE,
+             x = 0.5, y = 0.5, width = 4, height = 4, just = c("left", "top"), default.units = "inches")
+```
+
+
+```{r}
+### Name: bb_plotPolygon
+### Title: Plot a polygon within a BentoBox layout
+### Aliases: bb_plotPolygon
+
+### ** Examples
+
+## Create a BentoBox page
+bb_pageCreate(width = 2, height = 2, default.units = "inches", xgrid = 0, ygrid = 0)
+
+## Plot a 5-sided polygon
+bb_plotPolygon(x = c(0.5, 1, 1.5, 1.25, 0.75), y = c(0.5, 0.25, 0.5, 1.25, 1.25), default.units = "inches")
+```
+
+
+```{r}
+### Name: bb_plotRect
+### Title: Plot a rectangle within a BentoBox layout
+### Aliases: bb_plotRect
+
+### ** Examples
+
+## Create a BentoBox page
+bb_pageCreate(width = 2, height = 2, default.units = "inches", xgrid = 0, ygrid = 0)
+
+## Plot a rectangle
+bb_plotRect(x = 1, y = 1, width = 0.75, height = 0.25, just = "center", default.units = "inches")
+```
+
+
+```{r}
+### Name: bb_plotSegments
+### Title: Draw a line segment within a BentoBox layout
+### Aliases: bb_plotSegments
+
+### ** Examples
+
+## Create a BentoBox page
+bb_pageCreate(width = 2, height = 2, default.units = "inches", xgrid = 0, ygrid = 0)
+
+## Plot a line segment
+bb_plotSegments(x0 = 0.5, y0 = 0.25, x1 = 1.5, y1 = 1.75, default.units = "inches")
+```
+
+
+```{r}
+### Name: bb_plotSignal
+### Title: Plot any kind of signal track data for a single chromosome
+### Aliases: bb_plotSignal
+
+### ** Examples
+
+## Load signal data
+data("bb_signalData")
+
+## Plot signal plot filling up entire graphic device
+bb_plotSignal(data = bb_signalData, chrom = "chr21", chromstart = 28000000, chromend = 30300000, fill = "grey")
+
+## Plot and place signal plot on a BentoBox page
+bb_pageCreate(width = 4, height = 3, default.units = "inches", xgrid = 0, ygrid = 0)
+bb_plotSignal(data = bb_signalData, chrom = "chr21", chromstart = 28000000, chromend = 30300000, fill = "grey",
+              x = 0.5, y = 1, width = 3, height = 1, just = c("left", "top"), default.units = "inches")
+```
+
+
+```{r}
+### Name: bb_plotText
+### Title: Plot text within a BentoBox layout
+### Aliases: bb_plotText
+
+### ** Examples
+
+## Create a BentoBox page
+bb_pageCreate(width = 2, height = 2, default.units = "inches", xgrid = 0, ygrid = 0)
+
+## Plot text
+bb_plotText(label = "BentoBox", fontsize = 14,
+            x = 1, y = 1, just = "center", default.units = "inches")
+```
+
+
+```{r}
+### Name: bb_plotTranscripts
+### Title: Plot gene transcripts in a pileup style for a single chromosome
+### Aliases: bb_plotTranscripts
+
+### ** Examples
+
+## Load hg19 genomic annotation packages
+library("TxDb.Hsapiens.UCSC.hg19.knownGene")
+library("org.Hs.eg.db")
+
+## Plot transcripts filling up entire graphic device
+bb_plotTranscripts(chrom = "chr8", chromstart = 1000000, chromend = 2000000, assembly = "hg19")
+
+## Plot and place transcripts on a BentoBox page
+bb_pageCreate(width = 4, height = 4, default.units = "inches", xgrid = 0, ygrid = 0)
+bb_plotTranscripts(chrom = "chr8", chromstart = 1000000, chromend = 2000000, assembly = "hg19", labels = "gene",
+                   x = 0.5, y = 0.5, width = 3, height = 2.5, just = c("left", "top"), default.units = "inches")
+
+
+
+
+
+```
