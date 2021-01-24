@@ -8,12 +8,19 @@
 
 <title>bb_params: BentoBox parameters object — bb_params • BentoBox</title>
 
+<!-- favicons -->
+<link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
+<link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png" />
+<link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png" />
+<link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png" />
+<link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png" />
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.4.0/cosmo/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous" />
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script>
 
@@ -43,6 +50,7 @@
 <meta property="og:description" content="Creates an object of class &quot;bb_params&quot; that can be used by BentoBox functions.
 bb_params can be used to set a set of parameters to be shared across multiple
 functions." />
+<meta property="og:image" content="https://phanstiellab.github.io/bentobox/logo.png" />
 
 
 
@@ -87,11 +95,31 @@ functions." />
   </a>
 </li>
 <li>
+  <a href="../articles/our_philosophy.html">Our Philosophy</a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Vignettes
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="../articles/introduction_to_bentobox.html">Introduction to BentoBox</a>
+    </li>
+  </ul>
+</li>
+<li>
   <a href="../reference/index.html">Reference</a>
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
-        
+        <li>
+  <a href="https://github.com/PhanstielLab/BentoBox">
+    <span class="fab fa-github fa-lg"></span>
+     
+  </a>
+</li>
       </ul>
       
     </div><!--/.nav-collapse -->
@@ -106,7 +134,7 @@ functions." />
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>bb_params: BentoBox parameters object</h1>
-    
+    <small class="dont-index">Source: <a href='https://github.com/PhanstielLab/BentoBox/blob/master/R/bb_params.R'><code>R/bb_params.R</code></a></small>
     <div class="hidden name"><code>bb_params.Rd</code></div>
     </div>
 
@@ -117,6 +145,10 @@ functions.</p>
     </div>
 
     <pre class="usage"><span class='fu'>bb_params</span><span class='op'>(</span>
+  BSgenome <span class='op'>=</span> <span class='cn'>NULL</span>,
+  Genome <span class='op'>=</span> <span class='cn'>NULL</span>,
+  OrgDb <span class='op'>=</span> <span class='cn'>NULL</span>,
+  TxDb <span class='op'>=</span> <span class='cn'>NULL</span>,
   alpha <span class='op'>=</span> <span class='cn'>NULL</span>,
   altchrom <span class='op'>=</span> <span class='cn'>NULL</span>,
   altchromend <span class='op'>=</span> <span class='cn'>NULL</span>,
@@ -126,8 +158,8 @@ functions.</p>
   assembly <span class='op'>=</span> <span class='st'>"hg19"</span>,
   at <span class='op'>=</span> <span class='cn'>NULL</span>,
   axis <span class='op'>=</span> <span class='cn'>NULL</span>,
-  baseline <span class='op'>=</span> <span class='cn'>NULL</span>,
   basePlot <span class='op'>=</span> <span class='cn'>NULL</span>,
+  baseline <span class='op'>=</span> <span class='cn'>NULL</span>,
   bedpeData <span class='op'>=</span> <span class='cn'>NULL</span>,
   bedpePlot <span class='op'>=</span> <span class='cn'>NULL</span>,
   bg <span class='op'>=</span> <span class='cn'>NULL</span>,
@@ -137,7 +169,6 @@ functions.</p>
   border <span class='op'>=</span> <span class='cn'>NULL</span>,
   boxHeight <span class='op'>=</span> <span class='cn'>NULL</span>,
   boxWidth <span class='op'>=</span> <span class='cn'>NULL</span>,
-  BSgenome <span class='op'>=</span> <span class='cn'>NULL</span>,
   cex <span class='op'>=</span> <span class='cn'>NULL</span>,
   check.overlap <span class='op'>=</span> <span class='cn'>NULL</span>,
   chrom <span class='op'>=</span> <span class='cn'>NULL</span>,
@@ -163,7 +194,6 @@ functions.</p>
   geneBuffer <span class='op'>=</span> <span class='cn'>NULL</span>,
   geneHighlights <span class='op'>=</span> <span class='cn'>NULL</span>,
   geneOrder <span class='op'>=</span> <span class='cn'>NULL</span>,
-  Genome <span class='op'>=</span> <span class='cn'>NULL</span>,
   ggPlot <span class='op'>=</span> <span class='cn'>NULL</span>,
   gp <span class='op'>=</span> <span class='cn'>NULL</span>,
   half <span class='op'>=</span> <span class='cn'>NULL</span>,
@@ -187,13 +217,12 @@ functions.</p>
   main <span class='op'>=</span> <span class='cn'>NULL</span>,
   matrix <span class='op'>=</span> <span class='cn'>NULL</span>,
   norm <span class='op'>=</span> <span class='cn'>NULL</span>,
-  OrgDb <span class='op'>=</span> <span class='cn'>NULL</span>,
   orientation <span class='op'>=</span> <span class='cn'>NULL</span>,
+  pVals <span class='op'>=</span> <span class='cn'>NULL</span>,
   palette <span class='op'>=</span> <span class='cn'>NULL</span>,
   pch <span class='op'>=</span> <span class='cn'>NULL</span>,
   plot <span class='op'>=</span> <span class='cn'>NULL</span>,
   position <span class='op'>=</span> <span class='cn'>NULL</span>,
-  pVals <span class='op'>=</span> <span class='cn'>NULL</span>,
   r <span class='op'>=</span> <span class='cn'>NULL</span>,
   range <span class='op'>=</span> <span class='cn'>NULL</span>,
   res_scale <span class='op'>=</span> <span class='cn'>NULL</span>,
@@ -213,14 +242,13 @@ functions.</p>
   spaceHeight <span class='op'>=</span> <span class='cn'>NULL</span>,
   spaceWidth <span class='op'>=</span> <span class='cn'>NULL</span>,
   strand <span class='op'>=</span> <span class='cn'>NULL</span>,
-  strandcolors <span class='op'>=</span> <span class='cn'>NULL</span>,
   strandLabels <span class='op'>=</span> <span class='cn'>NULL</span>,
   strandSplit <span class='op'>=</span> <span class='cn'>NULL</span>,
+  strandcolors <span class='op'>=</span> <span class='cn'>NULL</span>,
   stroke <span class='op'>=</span> <span class='cn'>NULL</span>,
   style <span class='op'>=</span> <span class='cn'>NULL</span>,
   tcl <span class='op'>=</span> <span class='cn'>NULL</span>,
   title <span class='op'>=</span> <span class='cn'>NULL</span>,
-  TxDb <span class='op'>=</span> <span class='cn'>NULL</span>,
   type <span class='op'>=</span> <span class='cn'>NULL</span>,
   width <span class='op'>=</span> <span class='cn'>NULL</span>,
   x <span class='op'>=</span> <span class='cn'>NULL</span>,
@@ -296,7 +324,7 @@ parameter. Buffer extending beyond the length of the chromosome will be trimmed.
 
       <footer>
       <div class="copyright">
-  <p>Developed by Nicole Kramer.</p>
+  <p>Developed by <a href='https://github.com/nekramer'>Nicole Kramer</a>, <a href='https://github.com/EricSDavis'>Eric S. Davis</a>, <a href='https://github.com/cwenger'>Craig Wenger</a>, <a href='https://github.com/dphansti'>Douglas H. Phanstiel</a>.</p>
 </div>
 
 <div class="pkgdown">

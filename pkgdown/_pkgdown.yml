@@ -1,0 +1,69 @@
+url: https://phanstiellab.github.io/bentobox
+
+template:
+  params:
+    bootswatch: cosmo
+
+authors:
+  Nicole Kramer:
+    href: https://github.com/nekramer
+  Eric S. Davis:
+    href: https://github.com/EricSDavis
+  Craig Wenger:
+    href: https://github.com/cwenger
+  Sarah Parker:
+    href: https://github.com/sarmapar
+  Douglas H. Phanstiel:
+    href: https://github.com/dphansti
+
+navbar:
+  type: default
+  left:
+    - icon: fa-home fa-lg
+      href: index.html
+    - text: Our Philosophy
+      href: articles/our_philosophy.html
+    - text: Vignettes
+      menu:
+        - text: Introduction to BentoBox
+          href: articles/introduction_to_bentobox.html
+    - text: Reference
+      href: reference/index.html
+  right:
+    - icon: fab fa-github fa-lg
+      href: https://github.com/PhanstielLab/BentoBox
+
+reference:
+  - title: "About BentoBox"
+    contents:
+      - BentoBox
+
+  - title: "Page layout functions"
+    contents:
+      - starts_with("bb_page")
+
+  - title: "Reading functions"
+    contents:
+      - starts_with("bb_read")
+
+  - title: "Plotting functions"
+    contents:
+      - starts_with("bb_plot")
+
+  - title: "Annotation function"
+    contents:
+      - starts_with("bb_anno")
+
+  - title: "Meta functions"
+    contents:
+      - bb_assembly
+      - bb_defaultPackages
+      - bb_genomes
+      - bb_params
+
+  - title: "Datasets"
+    contents:
+      - ends_with("Data")
+      - starts_with("cytoBand")
+
+
