@@ -70,7 +70,6 @@ bb_annoXaxis <- function(plot, at = NULL, label = TRUE, main = TRUE, gp = gpar()
   # CREATE GROB WITHOUT DRAWING
   # ======================================================================================================================================================================================
 
-  assign("bb_xInternal", bb_xInternal, envir = globalenv())
   xGrob <- xaxisGrob(at = bb_xInternal$at, label = bb_xInternal$label, main = bb_xInternal$main, gp = bb_xInternal$gp, vp = bb_xInternal$plot$grobs$vp)
 
   # ======================================================================================================================================================================================
