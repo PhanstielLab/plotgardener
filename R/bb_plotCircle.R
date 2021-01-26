@@ -45,7 +45,7 @@ bb_plotCircle <- function(x, y, r, params = NULL, linecolor = "black", fill = NA
   if(is.null(bb_circleInternal$lwd)) bb_circleInternal$lwd <- 1
   if(is.null(bb_circleInternal$lty)) bb_circleInternal$lty <- 1
   if(is.null(bb_circleInternal$alpha)) bb_circleInternal$alpha <- 1
-          if(is.null(bb_circleInternal$default.units)) bb_circleInternal$default.units <- "inches"
+  if(is.null(bb_circleInternal$default.units)) bb_circleInternal$default.units <- "inches"
   
   # ======================================================================================================================================================================================
   # INITIALIZE OBJECT

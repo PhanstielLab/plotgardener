@@ -14,7 +14,7 @@
 #' @param default.units A string indicating the default units to use if x or y are only given as numeric vectors
 #'
 #' @export
-bb_plotPolygon <- function(x, y, id=NULL, id.lengths=NULL, params = NULL, linecolor = "black", fill = NA, lwd = 1, lty = 1, alpha = 0, default.units = "inches", ...){
+bb_plotPolygon <- function(x, y, id=NULL, id.lengths=NULL, params = NULL, linecolor = "black", fill = NA, lwd = 1, lty = 1, alpha = 1, default.units = "inches", ...){
   
   
   # ======================================================================================================================================================================================
@@ -46,7 +46,7 @@ bb_plotPolygon <- function(x, y, id=NULL, id.lengths=NULL, params = NULL, lineco
   if(is.null(bb_polygonInternal$fill)) bb_polygonInternal$fill <- NA
   if(is.null(bb_polygonInternal$lwd)) bb_polygonInternal$lwd <- 1
   if(is.null(bb_polygonInternal$lty)) bb_polygonInternal$lty <- 1
-  if(is.null(bb_polygonInternal$alpha)) bb_polygonInternal$alpha <- 0
+  if(is.null(bb_polygonInternal$alpha)) bb_polygonInternal$alpha <- 1
   if(is.null(bb_polygonInternal$default.units)) bb_polygonInternal$default.units <- "inches"
   
   # ======================================================================================================================================================================================
@@ -84,7 +84,7 @@ bb_plotPolygon <- function(x, y, id=NULL, id.lengths=NULL, params = NULL, lineco
     
     if (is.null(bb_polygonInternal$default.units)){
       
-      stop("x-coordinate detected as numeric.\'default.units\' must be specified.", call. = FALSE)
+      stop("x-coordinate detected as numeric. \'default.units\' must be specified.", call. = FALSE)
       
     }
     
@@ -100,9 +100,9 @@ bb_plotPolygon <- function(x, y, id=NULL, id.lengths=NULL, params = NULL, lineco
       
     }
     
-    if (is.null(bb_polygon$default.units)){
-      
-      stop("y-coordinate detected as numeric.\'default.units\' must be specified.", call. = FALSE)
+    if (is.null(bb_polygonInternal$default.units)){
+
+      stop("y-coordinate detected as numeric. \'default.units\' must be specified.", call. = FALSE)
       
     }
     

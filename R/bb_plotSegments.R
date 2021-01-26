@@ -12,11 +12,10 @@
 #' @param lty line type
 #' @param lineend Line end style (round, butt, square)
 #' @param linejoin Line join style (round, mitre, bevel)
-#' @param alpha color transparency 
 #' @param default.units A string indicating the default units to use if x or y are only given as numeric vectors
 #'
 #' @export
-bb_plotSegments <- function(x0, y0, x1, y1, params = NULL, arrow=NULL, linecolor = "black", lwd = 1, lty = 1, lineend = "butt", linejoin = "mitre", alpha = 1, default.units = "inches", ...){
+bb_plotSegments <- function(x0, y0, x1, y1, params = NULL, arrow=NULL, linecolor = "black", lwd = 1, lty = 1, lineend = "butt", linejoin = "mitre", default.units = "inches", ...){
   
   
   # ======================================================================================================================================================================================
@@ -30,7 +29,6 @@ bb_plotSegments <- function(x0, y0, x1, y1, params = NULL, arrow=NULL, linecolor
   if(missing(lty)) lty <- NULL
   if(missing(lineend)) lineend <- NULL
   if(missing(linejoin)) linejoin <- NULL
-  if(missing(alpha)) alpha <- NULL
   if(missing(default.units)) default.units <- NULL
   
   ## Check if x0/y0/x1/y1 arguments are missing (could be in object)
@@ -40,8 +38,8 @@ bb_plotSegments <- function(x0, y0, x1, y1, params = NULL, arrow=NULL, linecolor
   if(!hasArg(y1)) y1 <- NULL
   
   ## Compile all parameters into an internal object
-  bb_segmentsInternal <- structure(list(x0 = x0, y0 = y0, x1 = x1, y0 = y0, y1 = y1, arrow = arrow, linecolor = linecolor,
-                                      lwd = lwd, lty = lty, lineend = lineend, linejoin = linejoin, alpha = alpha, default.units = default.units), class = "bb_segmentsInternal")
+  bb_segmentsInternal <- structure(list(x0 = x0, y0 = y0, x1 = x1, y1 = y1, arrow = arrow, linecolor = linecolor,
+                                      lwd = lwd, lty = lty, lineend = lineend, linejoin = linejoin, default.units = default.units), class = "bb_segmentsInternal")
   
   bb_segmentsInternal <- parseParams(bb_params = params, object_params = bb_segmentsInternal)
   
@@ -52,7 +50,6 @@ bb_plotSegments <- function(x0, y0, x1, y1, params = NULL, arrow=NULL, linecolor
   if(is.null(bb_segmentsInternal$lty)) bb_segmentsInternal$lty <- 1
   if(is.null(bb_segmentsInternal$lineend)) bb_segmentsInternal$lineend <- "butt"
   if(is.null(bb_segmentsInternal$linejoin)) bb_segmentsInternal$linejoin <- "mitre"
-  if(is.null(bb_segmentsInternal$alpha)) bb_segmentsInternal$alpha <- 1
   if(is.null(bb_segmentsInternal$default.units)) bb_segmentsInternal$default.units <- "inches"
   
   # ======================================================================================================================================================================================
@@ -62,7 +59,7 @@ bb_plotSegments <- function(x0, y0, x1, y1, params = NULL, arrow=NULL, linecolor
   bb_segments <- structure(list(x0 = bb_segmentsInternal$x0, y0 = bb_segmentsInternal$y0, x1 = bb_segmentsInternal$x1, y1 = bb_segmentsInternal$y1, 
                                 arrow = bb_segmentsInternal$arrow, grobs = NULL, 
                                 gp = gpar(col = bb_segmentsInternal$linecolor, lwd = bb_segmentsInternal$lwd,lty = bb_segmentsInternal$lty, lineend = bb_segmentsInternal$lineend, 
-                                          linejoin = bb_segmentsInternal$linejoin, alpha = bb_segmentsInternal$alpha, ...)), class = "bb_segmentsInternal")
+                                          linejoin = bb_segmentsInternal$linejoin, ...)), class = "bb_segmentsInternal")
   
   # ======================================================================================================================================================================================
   # CATCH ERRORS
@@ -163,7 +160,7 @@ bb_plotSegments <- function(x0, y0, x1, y1, params = NULL, arrow=NULL, linecolor
   # MAKE GROB
   # ======================================================================================================================================================================================
   
-   segments <- grid.segments(x0 = unit(new_x0, page_units), y0 = unit(page_height - new_y0, page_units), x1 = unit(page_height - new_x1, page_units), 
+   segments <- grid.segments(x0 = unit(new_x0, page_units), y0 = unit(page_height - new_y0, page_units), x1 = unit(new_x1, page_units), 
                              y1 = unit(page_height - new_y1, page_units), gp = bb_segments$gp)
   
   # ======================================================================================================================================================================================

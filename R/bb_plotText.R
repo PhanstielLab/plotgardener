@@ -90,17 +90,17 @@ bb_plotText <- function(label, x, y, params = NULL, just = "center", fontcolor =
 
   if (!"unit" %in% class(bb_text$y)){
 
-    if (!is.numeric(bb_text$y)){
+    #if (!is.numeric(bb_text$y)){
 
-      stop("y-coordinate is neither a unit object or a numeric value. Cannot plot text.", call. = FALSE)
+      #stop("y-coordinate is neither a unit object or a numeric value. Cannot plot text.", call. = FALSE)
 
-    }
+    #}
 
-    if (is.null(bb_textInternal$default.units)){
+    #if (is.null(bb_textInternal$default.units)){
 
-      stop("y-coordinate detected as numeric.\'default.units\' must be specified.", call. = FALSE)
+      #stop("y-coordinate detected as numeric.\'default.units\' must be specified.", call. = FALSE)
 
-    }
+    #}
 
     bb_text$y <- unit(bb_text$y, bb_textInternal$default.units)
 
