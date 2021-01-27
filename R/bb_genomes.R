@@ -1,4 +1,4 @@
-#' Displays the included available default genome assemblies
+#' Display the included available default genome assemblies
 #'
 #' @export
 bb_genomes <- function(){
