@@ -1,17 +1,30 @@
-#' Creates a page for a BentoBox layout
+#' Create a page for a BentoBox layout
 #'
-#' @param params an optional "bb_params" object space containing relevant function parameters
-#' @param width A numeric or unit object specifying width
-#' @param height A numeric or unit object specifying height
-#' @param default.units A string indicating the default units to use if width or height are only given as numerics
-#' @param showOutline TRUE/FALSE indicating whether to draw a black outline around the entire page
-#' @param showRuler TRUE/FALSE indicating whether to show guiding ruler along top and side of page
-#' @param showUnit TRUE/FALSE indicating whether to show name of units in top left of page
-#' @param xgrid vertical gridlines
-#' @param ygrid horizontal gridlines
+#' @usage
+#' bb_pageCreate(width = 8.5, height = 11,
+#'               default.units = "inches")
+#'
+#' @param width A numeric or unit object specifying page width. Default value is \code{width = 8}.
+#' @param height A numeric or unit object specifying page height. Default value is \code{height = 11}.
+#' @param default.units A string indicating the default units to use if \code{width} or \code{height} are only given as numerics. Default value is \code{default.units = "inches"}.
+#' @param xgrid A numeric indicating the increment by which to place vertical gridlines. Default value is \code{xgrid = 0.5}.
+#' @param ygrid A numeric indicating the increment by which to place horizontal gridlines. Default value is \code{ygrid = 0.5}.
+#' @param showOutline A logical value indicating whether to draw a black border around the entire page. Default value is \code{showOutline = TRUE}.
+#' @param showRuler A logical value indicating whether to show guiding rulers along the top and left side of page. Default value is \code{showRuler = TRUE}.
+#' @param showUnit A logical value indicating whether to show the name of units at the top left of the page. Default value is \code{showUnit = TRUE}.
+#' @param params An optional \link[BentoBox]{bb_assembly} object containing relevant function parameters.
+#'
+#' @examples
+#' ## Create a 4-inch wide, 5-inch high BentoBox page
+#' bb_pageCreate(width = 4, height = 4, default.units = "inches")
+#'
+#' ## Create a 10-cm wide, 12-cm high Bentobox page
+#' bb_pageCreate(width = 10, height = 10, default.units = "cm")
+#'
+#' @details \code{width} and \code{height} must be specified in the same units.
+#'
 #' @export
-
-bb_pageCreate <- function(params = NULL, width = 8.5, height = 11, default.units = "inches", showOutline = TRUE, showRuler = TRUE, showUnit = TRUE, xgrid = 0.5, ygrid = 0.5){
+bb_pageCreate <- function(width = 8.5, height = 11, default.units = "inches", xgrid = 0.5, ygrid = 0.5, showOutline = TRUE, showRuler = TRUE, showUnit = TRUE, params = NULL){
 
   # ======================================================================================================================================================================================
   # FUNCTION

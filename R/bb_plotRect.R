@@ -1,21 +1,33 @@
-
-#' wrapper to draw a rectGrob based on BentoBox page coordinates and units
+#' Plot a rectangle within a BentoBox layout
 #'
-#' @param x A numeric vector or unit object specifying x-location
-#' @param y A numeric vector or unit object specifying y-location
-#' @param width A numeric vector or unit object specifying width
-#' @param height A numeric vector or unit object specifying height
-#' @param just The justification of the rectangle relative to its (x,y) location. If there are 2 values, the first specifies horizontal justification and the second specifies vertical justification. Options: "left","right","center","bottom", and "top". Numerically, 0 means left alignment and 1 means right alignment.
-#' @param params an optional "bb_params" object space containing relevant function parameters
-#' @param linecolor line color
-#' @param fill fill color
-#' @param lwd line width
-#' @param lty line type
-#' @param alpha color transparency 
-#' @param default.units A string indicating the default units to use if x or y are only given as numeric vectors
+#' @param x A numeric vector or unit object specifying rectangle x-locations.
+#' @param y A numeric vector or unit object specifying rectangle y-locations.
+#' @param width A numeric vector or unit object specifying rectangle widths.
+#' @param height A numeric vector or unit object specifying rectangle heights.
+#' @param just Justification of rectangle relative to its (x, y) location. If there are two values, the first value specifies horizontal justification and the second value specifies vertical justification.
+#' Possible string values are: \code{"left"}, \code{"right"}, \code{"centre"}, \code{"center"}, \code{"bottom"}, and \code{"top"}. Default value is \code{just = "center"}.
+#' @param default.units A string indicating the default units to use if \code{x}, \code{y}, \code{width}, and \code{height} are only given as numerics or numeric vectors. Default value is \code{default.units = "inches"}.
+#' @param linecolor A character value specifying rectangle line color. Default value is \code{linecolor = "black"}.
+#' @param lwd A numeric specifying rectangle line width. Default value is \code{lwd = 1}.
+#' @param lty A numeric specifying rectangle line type. Default value is \code{lty = 1}.
+#' @param fill A character value specifying rectangle fill color. Default value is \code{fill = NA}.
+#' @param alpha Numeric value specifying color transparency. Default value is \code{alpha = 1}.
+#' @param params An optional \link[BentoBox]{bb_assembly} object containing relevant function parameters.
+#' @param ... Additional grid graphical parameters. See \link[grid]{gpar}.
+#'
+#' @return Returns a \code{bb_rect} object containing relevant placement and \link[grid]{grob} information.
+#'
+#' @examples
+#' ## Create a BentoBox page
+#' bb_pageCreate(width = 2, height = 2, default.units = "inches", xgrid = 0, ygrid = 0)
+#'
+#' ## Plot a rectangle
+#' bb_plotRect(x = 1, y = 1, width = 0.75, height = 0.25, just = "center", default.units = "inches")
+#'
+#' @seealso \link[grid]{grid.rect}
 #'
 #' @export
-bb_plotRect <- function(x, y, width, height, just = "center", params = NULL, linecolor = "black", fill = NA, lwd = 1, lty = 1, alpha = 1, default.units = "inches", ...){
+bb_plotRect <- function(x, y, width, height, just = "center", default.units = "inches", linecolor = "black", lwd = 1, lty = 1, fill = NA, alpha = 1, params = NULL, ...){
   
   
   # ======================================================================================================================================================================================
@@ -173,6 +185,3 @@ bb_plotRect <- function(x, y, width, height, just = "center", params = NULL, lin
   
   return(bb_rect)
 }
-
-
-

@@ -1,21 +1,42 @@
-
-#' wrapper to draw a segmentsGrob based on BentoBox page coordinates and units
+#' Draw a line segment within a BentoBox layout
 #'
-#' @param x0 Numeric indicating the starting x-values of the line segments
-#' @param y0 Numeric indicating the starting y-values of the line segments
-#' @param x1 Numeric indicating the stopping x-values of the line segments
-#' @param y1 Numeric indicating the stopping y-values of the line segments
-#' @param params an optional "bb_params" object space containing relevant function parameters
-#' @param arrow A list describing arrow heads to place at either end of the line segments, as produced by the arrow function
-#' @param linecolor line color
-#' @param lwd line width
-#' @param lty line type
-#' @param lineend Line end style (round, butt, square)
-#' @param linejoin Line join style (round, mitre, bevel)
-#' @param default.units A string indicating the default units to use if x or y are only given as numeric vectors
+#' @param x0 A numeric vector or unit object indicating the starting x-values of the line segments.
+#' @param y0 A numeric vector or unit object indicating the starting y-values of the line segments.
+#' @param x1 A numeric vector or unit object indicating the stopping x-values of the line segments.
+#' @param y1 A numeric vector or unit object indicating the stopping y-values of the line segments.
+#' @param default.units A string indicating the default units to use if \code{x0}, \code{y0}, \code{x1}, or \code{y1} are only given as numeric vectors. Default value is \code{default.units = "inches"}.
+#' @param linecolor A character value specifying segment line color. Default value is \code{linecolor = "black"}.
+#' @param lwd A numeric specifying segment line width. Default value is \code{lwd = 1}.
+#' @param lty A numeric specifying segment line type. Default value is \code{lty = 1}.
+#' @param lineend A character value specifying line end style. Default value is \code{lineend = "butt"}. Options are:
+#' \itemize{
+#' \item{\code{"round"}: Segment ends are rounded.}
+#' \item{\code{"butt"}: Segment ends end exactly where ended.}
+#' \item{\code{"square"}: Segment ends are squared.}
+#' }
+#' @param linejoin A character value specifying line join style. Default value is \code{linejoin = "mitre"}. Options are:
+#' \itemize{
+#' \item{\code{"round"}: }{Line joins are rounded.}
+#' \item{\code{"mitre"}: }{Line joins are sharp corners.}
+#' \item{\code{"bevel"}: }{Line joins are flattened corners.}
+#' }
+#' @param arrow A list describing arrow heads to place at either end of the line segments, as produced by the \link[grid]{arrow} function.
+#' @param params An optional \link[BentoBox]{bb_assembly} object containing relevant function parameters.
+#' @param ... Additional grid graphical parameters. See \link[grid]{gpar}.
+#'
+#' @return Returns a \code{bb_segments} object containing relevant placement and \link[grid]{grob} information.
+#'
+#' @examples
+#' ## Create a BentoBox page
+#' bb_pageCreate(width = 2, height = 2, default.units = "inches", xgrid = 0, ygrid = 0)
+#'
+#' ## Plot a line segment
+#' bb_plotSegments(x0 = 0.5, y0 = 0.25, x1 = 1.5, y1 = 1.75, default.units = "inches")
+#'
+#' @seealso \link[grid]{grid.segments}
 #'
 #' @export
-bb_plotSegments <- function(x0, y0, x1, y1, params = NULL, arrow=NULL, linecolor = "black", lwd = 1, lty = 1, lineend = "butt", linejoin = "mitre", default.units = "inches", ...){
+bb_plotSegments <- function(x0, y0, x1, y1, default.units = "inches", linecolor = "black", lwd = 1, lty = 1, lineend = "butt", linejoin = "mitre", arrow = NULL, params = NULL, ...){
   
   
   # ======================================================================================================================================================================================

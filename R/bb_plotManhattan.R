@@ -1,33 +1,56 @@
-#' plots a Manhattan plot
+#' Plot a Manhattan plot
 #'
-#' @param bed bedfile for Manhattan plot, either .bed file or dataframe in bed format
-#' @param pVals name of column in bedfile of corresponding p-values (will be converted to -log(10) space)
-#' @param params an optional "bb_params" object space containing relevant function parameters
-#' @param chrom string of specific chromosome to zoom in on according to genome build (Ex: hg19 = "chr1"); if NULL all chromosomes found in data will be plotted
-#' @param chromstart if single chromosome specified, start of region to be plotted
-#' @param chromend if single chromosome specified, end of region to be plotted
-#' @param assembly default genome assembly as a string or a bb_assembly object
-#' @param colors single color, vector of colors, or color palette
-#' @param space the space between each chromsome as a fraction of the width of the plot
-#' @param cex number indiciating the amount by which points should be scaled relative to the default
-#' @param transp transparency of colors
-#' @param ymax fraction of max y value to set as height of plot
-#' @param range y-range of p-values to plot (c(min, max))
-#' @param sigVal numeric indicating the significance level
-#' @param sigLine logical indicating whether to draw a line at the significance level
-#' @param sigCol single color for coloring significant values
-#' @param x A numeric or unit object specifying x-location
-#' @param y A numeric or unit object specifying y-location
-#' @param width A numeric or unit object specifying width
-#' @param height A numeric or unit object specifying height
-#' @param just A string or numeric vector specifying the justification of the viewport relative to its (x, y) location: "left", "right", "centre", "center", "bottom", "top"
-#' @param default.units A string indicating the default units to use if x, y, width, or height are only given as numerics
-#' @param draw A logical value indicating whether graphics output should be produced
+#' @usage
+#' bb_plotManhattan(data, pVals)
+#' bb_plotManhattan(data, pVals, x, y, width, height,
+#'                  just = c("left", "top"),
+#'                  default.units = "inches")
+#'
+#' @param data Data to be plotted; as a character value specifying a BED file path, a dataframe in BED format, or a \link[GenomicRanges]{GRanges} object.
+#' @param pVals Character value specifying the name of the \code{data} column of corresponding p-values (will be converted to -log(10) space).
+#' @param chrom Chromosome of region to be plotted, as a string.
+#' @param chromstart Integer start position on chromosome to be plotted.
+#' @param chromend Integer end position on chromosome to be plotted.
+#' @param assembly Default genome assembly as a string or a \link[BentoBox]{bb_assembly} object. Default value is \code{assembly = "hg19"}.
+#' @param sigLine Logical value indicating whether to draw a line at the significance level indicated with \code{sigVal}. Default value is \code{sigLine = FALSE}.
+#' @param sigCol Single character value specifying the color of significant data points.
+#' @param fill Character value(s) as a single value, vector, or palette specifying fill colors of data points. Default value is \code{fill = "black"}.
+#' @param pch A numeric specifying point symbols. Default value is \code{pch = 19}.
+#' @param cex A numeric indiciating the amount by which points should be scaled relative to the default. Default value is \code{cex = 0.25}.
+#' @param ymax A numeric specifying the fraction of the max y-value to set as the height of the plot. Default value is \code{ymax = 1}.
+#' @param range A numeric vector of length 2 specifying the y-range of p-values to plot (c(min, max)).
+#' @param space A numeric value indicating the space between each chromsome as a fraction of the width of the plot, if plotting multiple chromosomes. Default value is \code{space = 0.01}.
+#' @param bg Character value indicating background color. Default value is \code{bg = NA}.
+#' @param baseline Logical value indicating whether to include a baseline along the x-axis. Default value is \code{baseline = FALSE}.
+#' @param x A numeric or unit object specifying Manhattan plot x-location.
+#' @param y A numeric or unit object specifying Manhattan plot y-location.
+#' @param width A numeric or unit object specifying Manhattan plot width.
+#' @param height A numeric or unit object specifying Manhattan plot height.
+#' @param just Justification of Manhattan plot relative to its (x, y) location. If there are two values, the first value specifies horizontal justification and the second value specifies vertical justification.
+#' Possible string values are: \code{"left"}, \code{"right"}, \code{"centre"}, \code{"center"}, \code{"bottom"}, and \code{"top"}. Default value is \code{just = c("left", "top")}.
+#' @param default.units A string indicating the default units to use if \code{x}, \code{y}, \code{width}, or \code{height} are only given as numerics. Default value is \code{default.units = "inches"}.
+#' @param draw A logical value indicating whether graphics output should be produced. Default value is \code{draw = TRUE}.
+#' @param params An optional \link[BentoBox]{bb_assembly} object containing relevant function parameters.
+#' @param ... Additional grid graphical parameters. See \link[grid]{gpar}.
+#'
+#' @return Returns a \code{bb_manhattan} object containing relevant genomic region, placement, and \link[grid]{grob} information.
+#'
+#' @examples
+#' ## Load GWAS data
+#' data("bb_gwasData")
+#'
+#' ## Plot Manhattan plot filling up entire graphic device
+#' bb_plotManhattan(data = bb_gwasData, pVals = "pVal", chrom = "chr21", chromstart = 28000000, chromend = 30300000, ymax = 1.1, cex = 0.20)
+#'
+#' ## Plot and place Manhattan plot on a BentoBox page
+#' bb_pageCreate(width = 5, height = 2, default.units = "inches", xgrid = 0, ygrid = 0)
+#' bb_plotManhattan(data = bb_gwasData, pVals = "pVal", chrom = "chr21", chromstart = 28000000, chromend = 30300000, ymax = 1.1, cex = 0.20,
+#'                  x = 0.5, y = 0.5, width = 4, height = 1.5, just = c("left", "top"), default.units = "inches")
 #'
 #' @export
-bb_plotManhattan <- function(bed, pVals, params = NULL, chrom = NULL, chromstart = NULL, chromend = NULL, assembly = "hg19", fillcolor = "black", pch = 19, space = 0.01,
-                             cex = 0.25, ymax = 1, range = NULL, sigVal = 5e-08, sigLine = F, sigCol = NULL, x = NULL, y = NULL, width = NULL, height = NULL, just = c("left", "top"),
-                             default.units = "inches", draw = T, ...){
+bb_plotManhattan <- function(data, pVals, sigVal = 5e-08, chrom = NULL, chromstart = NULL, chromend = NULL, assembly = "hg19", sigLine = FALSE, sigCol = NULL, fill = "black", pch = 19,
+                             cex = 0.25, ymax = 1, range = NULL, space = 0.01, bg = NA, baseline = FALSE, x = NULL, y = NULL, width = NULL, height = NULL, just = c("left", "top"),
+                             default.units = "inches", draw = TRUE, params = NULL, ...){
 
   # ======================================================================================================================================================================================
   # FUNCTIONS
@@ -254,38 +277,42 @@ bb_plotManhattan <- function(bed, pVals, params = NULL, chrom = NULL, chromstart
 
   ## Check which defaults are not overwritten and set to NULL
   if(missing(assembly)) assembly <- NULL
-  if(missing(fillcolor)) fillcolor <- NULL
+  if(missing(fill)) fill <- NULL
   if(missing(pch)) pch <- NULL
   if(missing(space)) space <- NULL
   if(missing(cex)) cex <- NULL
   if(missing(ymax)) ymax <- NULL
   if(missing(sigVal)) sigVal <- NULL
   if(missing(sigLine)) sigLine <- NULL
+  if(missing(bg)) bg <- NULL
+  if(missing(baseline)) baseline <- NULL
   if(missing(just)) just <- NULL
   if(missing(default.units)) default.units <- NULL
   if(missing(draw)) draw <- NULL
 
   ## Check if bed/pVals arguments are missing (could be in object)
-  if(!hasArg(bed)) bed <- NULL
+  if(!hasArg(data)) data <- NULL
   if(!hasArg(pVals)) pVals <- NULL
 
   ## Compile all parameters into an internal object
-  bb_manInternal <- structure(list(bed = bed, pVals = pVals, chrom = chrom, chromstart = chromstart, chromend = chromend, assembly = assembly,
-                                   fillcolor = fillcolor, pch = pch, space = space, cex = cex, ymax = ymax, range = range, sigVal = sigVal,
-                                   sigLine = sigLine, sigCol = sigCol, x = x, y = y, width = width, height = height, just = just,
+  bb_manInternal <- structure(list(data = data, pVals = pVals, chrom = chrom, chromstart = chromstart, chromend = chromend, assembly = assembly,
+                                   fill = fill, pch = pch, space = space, cex = cex, ymax = ymax, range = range, sigVal = sigVal,
+                                   sigLine = sigLine, sigCol = sigCol, bg = bg, baseline = baseline, x = x, y = y, width = width, height = height, just = just,
                                    default.units = default.units, draw = draw), class = "bb_manInternal")
 
   bb_manInternal <- parseParams(bb_params = params, object_params = bb_manInternal)
 
   ## For any defaults that are still NULL, set back to default
   if(is.null(bb_manInternal$assembly)) bb_manInternal$assembly <- "hg19"
-  if(is.null(bb_manInternal$fillcolor)) bb_manInternal$fillcolor <- "black"
+  if(is.null(bb_manInternal$fill)) bb_manInternal$fill <- "black"
   if(is.null(bb_manInternal$pch)) bb_manInternal$pch <- 19
   if(is.null(bb_manInternal$space)) bb_manInternal$space <- 0.01
   if(is.null(bb_manInternal$cex)) bb_manInternal$cex <- 0.25
   if(is.null(bb_manInternal$ymax)) bb_manInternal$ymax <- 1
   if(is.null(bb_manInternal$sigVal)) bb_manInternal$sigVal <- 5e-08
   if(is.null(bb_manInternal$sigLine)) bb_manInternal$sigLine <- FALSE
+  if(is.null(bb_manInternal$bg)) bb_manInternal$bg <- NA
+  if(is.null(bb_manInternal$baseline)) bb_manInternal$baseline <- FALSE
   if(is.null(bb_manInternal$just)) bb_manInternal$just <- c("left", "top")
   if(is.null(bb_manInternal$default.units)) bb_manInternal$default.units <- "inches"
   if(is.null(bb_manInternal$draw)) bb_manInternal$draw <- TRUE
@@ -294,16 +321,16 @@ bb_plotManhattan <- function(bed, pVals, params = NULL, chrom = NULL, chromstart
   # INITIALIZE OBJECT
   # ======================================================================================================================================================================================
 
-  man_plot <- structure(list(chrom = bb_manInternal$chrom, chromstart = bb_manInternal$chromstart, chromend = bb_manInternal$chromend, range = bb_manInternal$range, ymax = bb_manInternal$ymax, space = bb_manInternal$space,
-                             width = bb_manInternal$width, height = bb_manInternal$height, x = bb_manInternal$x, y = bb_manInternal$y,
-                             justification = bb_manInternal$just, grobs = NULL, assembly = NULL), class = "bb_manhattan")
+  man_plot <- structure(list(chrom = bb_manInternal$chrom, chromstart = bb_manInternal$chromstart, chromend = bb_manInternal$chromend, assembly = NULL,
+                             range = bb_manInternal$range, ymax = bb_manInternal$ymax, space = bb_manInternal$space, x = bb_manInternal$x, y = bb_manInternal$y,
+                             width = bb_manInternal$width, height = bb_manInternal$height, just = bb_manInternal$just, grobs = NULL), class = "bb_manhattan")
   attr(x = man_plot, which = "plotted") <- bb_manInternal$draw
 
   # ======================================================================================================================================================================================
   # CATCH MISSING ARGUMENT AND PLACEMENT ERRORS
   # ======================================================================================================================================================================================
 
-  if(is.null(bb_manInternal$bed)) stop("argument \"bed\" is missing, with no default.", call. = FALSE)
+  if(is.null(bb_manInternal$data)) stop("argument \"data\" is missing, with no default.", call. = FALSE)
   if(is.null(bb_manInternal$pVals)) stop("argument \"pVals\" is missing, with no default.", call. = FALSE)
 
   check_placement(object = man_plot)
@@ -312,10 +339,13 @@ bb_plotManhattan <- function(bed, pVals, params = NULL, chrom = NULL, chromstart
   # READ IN DATA
   # ======================================================================================================================================================================================
 
-  bedfile <- bb_manInternal$bed
+  bedfile <- bb_manInternal$data
   ## Read in data if it's not a dataframe or data.table
   if (!"data.frame" %in% class(bedfile)){
-    bedfile <- fread(bedfile)
+    if (!"GRanges" %in% class(bedfile)){
+      bedfile <- fread(bedfile)
+    }
+
   }
 
   bedfile <- as.data.frame(bedfile)
@@ -326,7 +356,7 @@ bb_plotManhattan <- function(bed, pVals, params = NULL, chrom = NULL, chromstart
 
   errorcheck_bb_plotmanhattan(bedfile = bedfile, chrom = man_plot$chrom, chromstart = man_plot$chromstart, chromend = man_plot$chromend,
                               pVals = bb_manInternal$pVals, object = man_plot,
-                              fillcolor = bb_manInternal$fillcolor)
+                              fillcolor = bb_manInternal$fill)
 
   # ======================================================================================================================================================================================
   # PARSE ASSEMBLY
@@ -451,7 +481,7 @@ bb_plotManhattan <- function(bed, pVals, params = NULL, chrom = NULL, chromstart
       # COLORS
       # ======================================================================================================================================================================================
 
-      color_nonsig <- parse_color(fillcolor = bb_manInternal$fillcolor, offsetAssembly = offsetAssembly, bedData = nonsigBed)
+      color_nonsig <- parse_color(fillcolor = bb_manInternal$fill, offsetAssembly = offsetAssembly, bedData = nonsigBed)
 
       if (!is.null(bb_manInternal$sigCol)){
 
@@ -459,7 +489,7 @@ bb_plotManhattan <- function(bed, pVals, params = NULL, chrom = NULL, chromstart
 
       } else {
 
-        color_sig <- parse_color(fillcolor = bb_manInternal$fillcolor, offsetAssembly = offsetAssembly, bedData = sigBed)
+        color_sig <- parse_color(fillcolor = bb_manInternal$fill, offsetAssembly = offsetAssembly, bedData = sigBed)
       }
 
 
@@ -526,10 +556,10 @@ bb_plotManhattan <- function(bed, pVals, params = NULL, chrom = NULL, chromstart
   }
 
   # ======================================================================================================================================================================================
-  # INITIALIZE GTREE FOR GROBS
+  # INITIALIZE GTREE FOR GROBS WITH BACKGROUND
   # ======================================================================================================================================================================================
-
-  assign("manhattan_grobs", gTree(vp = vp), envir = bbEnv)
+  backgroundGrob <- rectGrob(gp = gpar(fill = bb_manInternal$bg, col = NA), name = "background")
+  assign("manhattan_grobs", gTree(vp = vp, children = gList(backgroundGrob)), envir = bbEnv)
 
   if (nrow(bed_data) > 0 & txdbChecks == TRUE){
 
@@ -564,6 +594,14 @@ bb_plotManhattan <- function(bed, pVals, params = NULL, chrom = NULL, chromstart
       assign("manhattan_grobs", addGrob(gTree = get("manhattan_grobs", envir = bbEnv), child = sigGrob), envir = bbEnv)
     }
 
+    if (bb_manInternal$baseline == TRUE){
+      gp$col <- gp$linecolor
+      gp$lwd <- 1.5
+      baselineGrob <- segmentsGrob(x0 = unit(0, "npc"), y0 = 0, x1 = unit(1, "npc"), y1 = 0,
+                              gp = gp, default.units = "native")
+      assign("manhattan_grobs", addGrob(gTree = get("manhattan_grobs", envir = bbEnv), child = baselineGrob), envir = bbEnv)
+
+    }
   }
 
   # ======================================================================================================================================================================================

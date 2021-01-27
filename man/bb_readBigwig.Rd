@@ -2,33 +2,32 @@
 % Please edit documentation in R/bb_readBigwig.R
 \name{bb_readBigwig}
 \alias{bb_readBigwig}
-\title{Reads a bigwig file and returns it as a data frame.}
+\title{Read a bigwig file and return it as a data frame}
 \usage{
-bb_readBigwig(
-  filename,
-  params = NULL,
-  chrom = NULL,
-  chromstart = 1,
-  chromend = .Machine$integer.max,
-  strand = "*"
-)
+bb_readBigwig(bigwigFile)
+bb_readBigwig(bigwigFile, chrom, chromstart, chromend)
 }
 \arguments{
-\item{filename}{bigwig filename}
+\item{bigwigFile}{A character value specifying the path to the bigwig file.}
 
-\item{params}{an optional "bb_params" object space containing relevant function parameters}
+\item{chrom}{Chromosome of data as a string, if data for a specific chromosome is desired.}
 
-\item{chrom}{chromosome as a string, e.g. "chr3"}
+\item{chromstart}{Integer start position on chromosome.}
 
-\item{chromstart}{first base number to consider}
+\item{chromend}{Integer end position on chromosome.}
 
-\item{chromend}{last base number to consider}
+\item{strand}{A character value specifying strand. Default value is \code{strand = "*"}. Options are:
+\itemize{
+\item{\code{"+"}: }{Plus strand.}
+\item{\code{"-"}: }{Minus strand.}
+\item{\code{"*"}: }{Plus and minus strands.}
+}}
 
-\item{strand}{strand, i.e. '+', '-', or '*'}
+\item{params}{An optional \link[BentoBox]{bb_assembly} object containing relevant function parameters.}
 }
 \value{
-Function will return a 6-column dataframe of bigwig information.
+Returns a 6-column dataframe of bigwig information.
 }
 \description{
-Reads a bigwig file and returns it as a data frame.
+Read a bigwig file and return it as a data frame
 }

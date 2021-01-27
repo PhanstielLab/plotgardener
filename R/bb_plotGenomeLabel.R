@@ -1,46 +1,81 @@
-#' Plots genomic coordinates for the axis of a BentoBox plot
+#' Plot genomic coordinates along the x or y-axis of a BentoBox plot
 #'
-#' @param plot BentoBox plot to add genome label
-#' @param x A numeric or unit object specifying x-location.
-#' @param y A numeric or unit object specifying y-location.
-#' @param params an optional "bb_params" object space containing relevant function parameters
-#' @param just The justification of the label relative to its (x, y) location.If there are two values, the first specifies horizontal justification and
-#' the second value specifies vertical justification. Possible string values are: "left", "right", "centre", "center", "bottom", and "top".
-#' @param scale scale of the genome of the label. Options are "bp", "Kb", or "Mb"
-#' @param fontsize Fontsize for labels (in points).
-#' @param fontcolor Color for all text and lines (with the exception of sequence information).
-#' @param linecolor Axis linecolor.
-#' @param lwd Axis linewidth.
-#' @param fontfamily Text fontfamily.
-#' @param commas A logical value indicating whether to include commas in start and stop labels.
-#' @param sequence A logical value indicating whether to include sequence information above the label axis (only at appropriate resolutions).
-#' @param ticks A numeric vector of x-value locations for tick marks.
-#' @param tcl Length of tickmark as fraction of text height.
-#' @param default.units A string indicating the default units to use if x or y are only given as numerics.
+#' @usage
+#' bb_plotGenomeLabel(plot, x, y,
+#'                    just = c("left", "top"),
+#'                    default.units = "inches")
+#' bb_plotGenomeLabel(chrom, chromstart, chromend,
+#'                    x, y, length,
+#'                    just = c("left", "top"),
+#'                    default.units = "inches")
+#'
+#' @param plot BentoBox plot object to add genome label.
+#' @param chrom If not specifying \code{plot}, chromosome of genome label, as a string.
+#' @param chromstart If not specifying \code{plot}, integer start of genome label.
+#' @param chromend If not specifying \code{plot}, integer end of genome label.
+#' @param assembly Default genome assembly as a string or a \link[BentoBox]{bb_assembly} object. \code{assembly} will be inherited from \code{plot}, if provided.
+#' @param fontsize A numeric specifying text fontsize in points. Default value is \code{fontsize = 10}.
+#' @param fontcolor A character value indicating the color for text. Default value is \code{fontcolor = "black"}.
+#' @param linecolor A character value indicating the color of the genome label axis. Default value is \code{linecolor = "black"}.
+#' @param scale A character value indicating the scale of the coordinates along the genome label. Default value is \code{scale = "bp"}. Options are:
+#' \itemize{
+#' \item{\code{"bp"}: }{base pairs.}
+#' \item{\code{"Kb"}: }{kilobase pairs. 1 kilobase pair is equal to 1000 base pairs.}
+#' \item{\code{"Mb"}: }{megabase pairs. 1 megabase pair is equal to 1000000 base pairs.}
+#' }
+#' @param commas A logical value indicating whether to include commas in start and stop labels. Default value is \code{commas = TRUE}.
+#' @param sequence A logical value indicating whether to include sequence information above the label of an x-axis (only at appropriate resolutions).
+#' @param boxWidth A numeric value indicating the width of the boxes representing sequence information at appropriate resolutions. Default value is \code{boxWidth = 0.5}.
+#' @param axis A character value indicating along which axis to add genome label. Sequence information will not be displayed along a y-axis. Default value is \code{axis = "x"}.
+#' Options are:
+#' \itemize{
+#' \item{\code{"x"}: }{Genome label will be plotted along the x-axis.}
+#' \item{\code{"y"}: }{Genome label will be plotted along the y-axis.}
+#' }
+#' @param at A numeric vector of x-value locations for tick marks.
+#' @param tcl A numeric specifying the length of tickmarks as a fraction of text height. Default value is \code{tcl = 0.5}.
+#' @param x A numeric or unit object specifying genome label x-location.
+#' @param y A numeric or unit object specifying genome label y-location.
+#' @param length A numeric or unit object specifying length of genome label axis.
+#' @param just Justification of genome label relative to its (x, y) location. If there are two values, the first value specifies horizontal justification and the second value specifies vertical justification.
+#' Possible string values are: \code{"left"}, \code{"right"}, \code{"centre"}, \code{"center"}, \code{"bottom"}, and \code{"top"}. Default value is \code{just = c("left", "top")}.
+#' @param default.units A string indicating the default units to use if \code{x}, \code{y}, or \code{length} are only given as numerics. Default value is \code{default.units = "inches"}.
+#' @param params An optional \link[BentoBox]{bb_assembly} object containing relevant function parameters.
+#' @param ... Additional grid graphical parameters. See \link[grid]{gpar}.
+#'
+#' @return Returns a \code{bb_genomeLabel} object containing relevant genomic region, placement, and \link[grid]{grob} information.
+#'
+#' @examples
+#' ## Load hg19 genomic annotation packages
+#' library("TxDb.Hsapiens.UCSC.hg19.knownGene")
+#' library("org.Hs.eg.db")
+#'
+#' ## Create BentoBox page
+#' bb_pageCreate(width = 5, height = 4, default.units = "inches")
+#'
+#' ## Plot and place gene track on a BentoBox page
+#' genesPlot <- bb_plotGenes(chrom = "chr8", chromstart = 1000000, chromend = 2000000, assembly = "hg19",
+#'                           x = 0.5, y = 0.5, width = 4, height = 1.5, just = c("left", "top"), default.units = "inches")
+#'
+#' ## Add x-axis genome label with plot input
+#' bb_plotGenomeLabel(plot = genesPlot, scale = "Kb",
+#'                    x = 0.5, y = 2, just = c("left", "top"), default.units = "inches")
+#'
+#' ## Add x-axis genome label with chrom/chromstart/chromend input
+#' bb_plotGenomeLabel(chrom = "chr8", chromstart = 1000000, chromend = 2000000, assembly = "hg19",
+#'                    x = 0.5, y = 2.5, length = 4, just = c("left", "top"), default.units = "inches")
+#'
 #' @export
-
-bb_plotGenomeLabel <- function(plot, x, y, params = NULL, just = c("left", "top"), scale = "bp", fontsize = 10, fontcolor = "black",
-                           linecolor = "black", commas = TRUE, sequence = TRUE, boxWidth = 0.5, ticks = NULL, tcl = 0.5, default.units = "inches", ...){
+bb_plotGenomeLabel <- function(plot = NULL, chrom = NULL, chromstart = NULL, chromend = NULL, assembly = "hg19", fontsize = 10, fontcolor = "black", linecolor = "black",
+                               scale = "bp", commas = TRUE, sequence = TRUE, boxWidth = 0.5, axis = "x", at = NULL, tcl = 0.5, x, y, length = NULL, just = c("left", "top"),
+                               default.units = "inches", params = NULL, ...){
 
   # ======================================================================================================================================================================================
   # FUNCTIONS
   # ======================================================================================================================================================================================
 
   ## Define a function that catches errors for bb_labelgenome
-  errorcheck_bb_genomeLabel <- function(plot, scale, ticks, object){
-
-    ## Check that input plot is a valid type of plot to be annotated
-    if (class(plot) != "bb_manhattan"){
-
-      ## Manhattan plots can do whole genome assembly but other plots can't
-      inputNames <- attributes(plot)$names
-      if (!("chrom" %in% inputNames) | !("chromstart" %in% inputNames) | !("chromend" %in% inputNames)){
-
-        stop("Invalid input plot. Please input a plot that has genomic coordinates associated with it.")
-
-      }
-
-    }
+  errorcheck_bb_genomeLabel <- function(scale, ticks, object, axis){
 
     ## Check that scale is an appropriate value
     if (!scale %in% c("bp", "Kb", "Mb")){
@@ -67,6 +102,10 @@ bb_plotGenomeLabel <- function(plot, x, y, params = NULL, just = c("left", "top"
 
     }
 
+    if(!axis %in% c("x", "y")){
+      stop("Invalid \'axis\'. Options are \'x\' or \'y\'.", call. = FALSE)
+    }
+
   }
 
   ## Define a function that adds commas to chromstart/chromend labels
@@ -89,28 +128,31 @@ bb_plotGenomeLabel <- function(plot, x, y, params = NULL, just = c("left", "top"
   }
 
   ## Define a function that parses the viewport for genome assembly vs. chrom/chromstart/chromend label w/ or w/o sequence viewport
-  parse_viewport <- function(plot, object, height, sequence, seqType, seqHeight, vp_name, just){
+  parse_viewport <- function(plot, object, length, depth, seqType, seqHeight, vp_name, just, axis){
 
-    convertedPageCoords <- convert_page(object = object)
-    convertedViewport <- viewport(width = convertedPageCoords$width, height = convertedPageCoords$height,
+    ## No matter the orientation, convert length, depth, x, and y to page units
+    convertedPageCoords <- convert_page(object = structure(list(width = length, height = unit(depth, get("page_units", envir = bbEnv)), x = object$x, y = object$y), class = "bb_genomeLabelInternal"))
+    ## Add "length" and "depth" into converted dimensions for better understanding
+    convertedPageCoords$length <- convertedPageCoords$width
+    convertedPageCoords$depth <- convertedPageCoords$height
+
+    ## Compile new dimensions into a new dummy viewport, where the default is along the x-axis
+    convertedViewport <- viewport(width = convertedPageCoords$length, height = convertedPageCoords$depth,
                                   x = convertedPageCoords$x, y = convertedPageCoords$y, just = just)
-
-    ## Get x and y coordinates of top left of what would be the entire viewport
-    topLeftViewport <- vp_topLeft(viewport = convertedViewport)
-
-    seq_height <- unit(seqHeight, get("page_units", envir = bbEnv))
-
     if (length(object$chrom) == 1){
 
-      if (sequence == TRUE & !is.null(seqType)){
+      if (!is.null(seqType)){
 
+        ## Get x and y coordinates of top left of what would be the entire viewport
+        topLeftViewport <- vp_topLeft(viewport = convertedViewport)
+        seq_height <- unit(seqHeight, get("page_units", envir = bbEnv))
         ## One vp for genome
-        vp1 <- viewport(width = convertedPageCoords$width, height = unit(height, get("page_units", envir = bbEnv)),
+        vp1 <- viewport(width = convertedPageCoords$width, height = unit(depth, get("page_units", envir = bbEnv)),
                         x = topLeftViewport[[1]], y = topLeftViewport[[2]] - seq_height,
                         just = c("left", "top"),
                         name = paste0(vp_name, "_01"),
                         xscale = c(object$chromstart, object$chromend),
-                        yscale = c(0, height))
+                        yscale = c(0, depth))
         ## One vp for sequence
         vp2 <- viewport(width = convertedPageCoords$width, height = seq_height,
                         x = topLeftViewport[[1]], y = topLeftViewport[[2]],
@@ -124,12 +166,34 @@ bb_plotGenomeLabel <- function(plot, x, y, params = NULL, just = c("left", "top"
 
       } else {
 
-        vp <- viewport(width = convertedPageCoords$width, height = convertedPageCoords$height,
-                        x = convertedPageCoords$x, y = convertedPageCoords$y,
-                        just = just,
-                        name = vp_name,
-                        xscale = c(object$chromstart, object$chromend),
-                        yscale = c(0, height))
+        if (axis == "y"){
+
+
+          ## Update converted viewport for y-axis
+          convertedViewport <- viewport(width = convertedPageCoords$depth, height = convertedPageCoords$length,
+                                        x = convertedPageCoords$x, y = convertedPageCoords$y, just = just)
+          ## Get x and y coordinates of bottom right to rotate x-axis viewport
+          bottomRightViewport <- vp_bottomRight(viewport = convertedViewport)
+
+          ## Make x-axis equivalent viewport and rotate into dimensions of given y-axis viewport
+          vp <- viewport(width = convertedPageCoords$length, height = convertedPageCoords$depth,
+                         x = bottomRightViewport[[1]], y = bottomRightViewport[[2]] + convertedPageCoords$length,
+                         just = c("left", "top"),
+                         name = vp_name,
+                         xscale = c(object$chromstart, object$chromend),
+                         yscale = c(0, depth),
+                         angle = -90)
+
+        } else {
+          vp <- viewport(width = convertedPageCoords$width, height = convertedPageCoords$height,
+                         x = convertedPageCoords$x, y = convertedPageCoords$y,
+                         just = just,
+                         name = vp_name,
+                         xscale = c(object$chromstart, object$chromend),
+                         yscale = c(0, depth))
+        }
+
+
       }
 
 
@@ -153,22 +217,40 @@ bb_plotGenomeLabel <- function(plot, x, y, params = NULL, just = c("left", "top"
       }
 
 
+      if (axis == "y"){
+        ## Update converted viewport for y-axis
+        convertedViewport <- viewport(width = convertedPageCoords$depth, height = convertedPageCoords$length,
+                                      x = convertedPageCoords$x, y = convertedPageCoords$y, just = just)
+        ## Get x and y coordinates of bottom right to rotate x-axis viewport
+        bottomRightViewport <- vp_bottomRight(viewport = convertedViewport)
+        ## Make x-axis equivalent viewport and rotate into dimensions of given y-axis viewport
+        vp <- viewport(width = convertedPageCoords$length, height = convertedPageCoords$depth,
+                       x = bottomRightViewport[[1]], y = bottomRightViewport[[2]] + convertedPageCoords$length,
+                       just = c("left", "top"),
+                       name = vp_name,
+                       xscale = c(object$chromstart, object$chromend),
+                       yscale = c(0, depth),
+                       angle = -90)
 
-      vp <- viewport(width = convertedPageCoords$width, height = convertedPageCoords$height,
-                     x = convertedPageCoords$x, y = convertedPageCoords$y,
-                     just = just,
-                     name = vp_name,
-                     xscale = xscale,
-                     yscale = c(0, height))
+      } else {
+        vp <- viewport(width = convertedPageCoords$width, height = convertedPageCoords$height,
+                       x = convertedPageCoords$x, y = convertedPageCoords$y,
+                       just = just,
+                       name = vp_name,
+                       xscale = xscale,
+                       yscale = c(0, depth))
+      }
+
+
     }
 
     return(vp)
   }
 
   ## Define a function that makes tick, line, and text grobs for chrom/chromstart/chromend labels
-  chrom_grobs <- function(tgH, ticks, tickHeight, sequence, seqType, scale, chromLabel, startLabel, endLabel, height, object, vp){
+  chrom_grobs <- function(tgH, ticks, tickHeight, seqType, scale, chromLabel, startLabel, endLabel, height, object, vp){
 
-    if (sequence == TRUE & !is.null(seqType)){
+    if (!is.null(seqType)){
       assign("genomeLabel_grobs", gTree(), envir = bbEnv)
       chrom_vp <- vp[[1]]
 
@@ -285,7 +367,7 @@ bb_plotGenomeLabel <- function(plot, x, y, params = NULL, just = c("left", "top"
   }
 
   ## Define a function that makes line and text grobs for whole assembly labels
-  genome_grobs <- function(plot, object, tgH, vp){
+  genome_grobs <- function(plot, object, tgH, vp, gp){
 
     ## Initialize gTree
     assign("genomeLabel_grobs", gTree(vp = vp), envir = bbEnv)
@@ -304,11 +386,11 @@ bb_plotGenomeLabel <- function(plot, x, y, params = NULL, just = c("left", "top"
 
       tgH <- convertHeight(tgH, unitTo = get("page_units", envir = bbEnv), valueOnly = T)
 
-      line <- segmentsGrob(x0 = unit(0, "npc"), x1 = unit(1, "npc"), y0 = tgH, y1 = tgH, gp = object$gp,
+      line <- segmentsGrob(x0 = unit(0, "npc"), x1 = unit(1, "npc"), y0 = tgH, y1 = tgH, gp = gp,
                            default.units = "native")
-      object$gp$col <- object$gp$fontcolor
+      gp$col <- gp$fontcolor
       labels <- textGrob(label = gsub("chr", "", offsetAssembly[,1]), x = chromCenters, y = unit(0, "npc"), just = c("center", "bottom"),
-                         gp = object$gp,
+                         gp = gp,
                          default.units = "native")
       assign("genomeLabel_grobs", setChildren(get("genomeLabel_grobs", envir = bbEnv), children = gList(line, labels)), envir = bbEnv)
 
@@ -364,157 +446,114 @@ bb_plotGenomeLabel <- function(plot, x, y, params = NULL, just = c("left", "top"
   ## Check which defaults are not overwritten and set to NULL
   if(missing(just)) just <- NULL
   if(missing(scale)) scale <- NULL
+  if(missing(assembly)) assembly <- NULL
   if(missing(fontsize)) fontsize <- NULL
   if(missing(fontcolor)) fontcolor <- NULL
   if(missing(linecolor)) linecolor <- NULL
   if(missing(commas)) commas <- NULL
   if(missing(sequence)) sequence <- NULL
+  if(missing(axis)) axis <- NULL
   if(missing(boxWidth)) boxWidth <- NULL
   if(missing(tcl)) tcl <- NULL
   if(missing(default.units)) default.units <- NULL
 
-  ## Check if plot/x/y arguments are missing (could be in object)
-  if(!hasArg(plot)) plot <- NULL
+  ## Check if x/y arguments are missing (could be in object)
   if(!hasArg(x)) x <- NULL
   if(!hasArg(y)) y <- NULL
 
   ## Compile all parameters into an internal object
-  bb_genomeLabelInternal <- structure(list(plot = plot, x = x, y = y, just = just, scale = scale, fontsize = fontsize, fontcolor = fontcolor,
-                                      linecolor = linecolor, commas = commas, sequence = sequence, boxWidth = boxWidth,
-                                      ticks = ticks, tcl = tcl, default.units = default.units), class = "bb_genomeLabelInternal")
+  bb_genomeLabelInternal <- structure(list(x = x, y = y, length = length, plot = plot, chrom = chrom, chromstart = chromstart, chromend = chromend, just = just, scale = scale,
+                                           assembly = assembly, fontsize = fontsize, fontcolor = fontcolor, linecolor = linecolor, commas = commas,
+                                           sequence = sequence, axis = axis, boxWidth = boxWidth, at = at, tcl = tcl, default.units = default.units, gp = NULL), class = "bb_genomeLabelInternal")
   bb_genomeLabelInternal <- parseParams(bb_params = params, object_params = bb_genomeLabelInternal)
 
   ## For any defaults that are still NULL, set back to default
   if(is.null(bb_genomeLabelInternal$just)) bb_genomeLabelInternal$just <- c("left", "top")
   if(is.null(bb_genomeLabelInternal$scale)) bb_genomeLabelInternal$scale <- "bp"
+  if(is.null(bb_genomeLabelInternal$assembly)) bb_genomeLabelInternal$assembly <- "hg19"
   if(is.null(bb_genomeLabelInternal$fontsize)) bb_genomeLabelInternal$fontsize <- 10
   if(is.null(bb_genomeLabelInternal$fontcolor)) bb_genomeLabelInternal$fontcolor <- "black"
   if(is.null(bb_genomeLabelInternal$linecolor)) bb_genomeLabelInternal$linecolor <- "black"
   if(is.null(bb_genomeLabelInternal$commas)) bb_genomeLabelInternal$commas <- TRUE
   if(is.null(bb_genomeLabelInternal$sequence)) bb_genomeLabelInternal$sequence <- TRUE
+  if(is.null(bb_genomeLabelInternal$axis)) bb_genomeLabelInternal$axis <- "x"
   if(is.null(bb_genomeLabelInternal$boxWidth)) bb_genomeLabelInternal$boxWidth <- 0.5
   if(is.null(bb_genomeLabelInternal$tcl)) bb_genomeLabelInternal$tcl <- 0.5
   if(is.null(bb_genomeLabelInternal$default.units)) bb_genomeLabelInternal$default.units <- "inches"
 
+  bb_genomeLabelInternal$gp <- gpar(fontsize = bb_genomeLabelInternal$fontsize, col = bb_genomeLabelInternal$linecolor, fontcolor = bb_genomeLabelInternal$fontcolor, ...)
   # ======================================================================================================================================================================================
   # INITIALIZE OBJECT
   # ======================================================================================================================================================================================
 
-  bb_genomeLabel <- structure(list(assembly = plot$assembly, chrom = plot$chrom, chromstart = plot$chromstart, chromend = plot$chromend, x = bb_genomeLabelInternal$x, y = bb_genomeLabelInternal$y,
-                                   width = NULL, height = NULL, just = bb_genomeLabelInternal$just, scale = bb_genomeLabelInternal$scale, grobs = NULL,
-                                    gp = gpar(fontsize = bb_genomeLabelInternal$fontsize, col = bb_genomeLabelInternal$linecolor, fontcolor = bb_genomeLabelInternal$fontcolor, ...)), class = "bb_genomeLabel")
+  bb_genomeLabel <- structure(list(chrom = NULL, chromstart = NULL, chromend = NULL,
+                                   assembly = NULL, x = bb_genomeLabelInternal$x, y = bb_genomeLabelInternal$y,
+                                   width = NULL, height = NULL, just = bb_genomeLabelInternal$just, grobs = NULL), class = "bb_genomeLabel")
 
   # ======================================================================================================================================================================================
   # CATCH ERRORS
   # ======================================================================================================================================================================================
 
-  if(is.null(bb_genomeLabelInternal$plot)) stop("argument \"plot\" is missing, with no default.", call. = FALSE)
   if(is.null(bb_genomeLabel$x)) stop("argument \"x\" is missing, with no default.", call. = FALSE)
   if(is.null(bb_genomeLabel$y)) stop("argument \"y\" is missing, with no default.", call. = FALSE)
 
+
+  if(is.null(bb_genomeLabelInternal$plot)){
+    if (is.null(bb_genomeLabelInternal$chrom)){
+      stop("Neither `plot` nor `chrom` arguments specified.", call. = FALSE)
+    }
+
+    if(is.null(bb_genomeLabelInternal$chromstart)){
+      stop("Neither `plot` nor `chromstart` arguments specified.", call. = FALSE)
+    }
+
+    if(is.null(bb_genomeLabelInternal$chromend)){
+      stop("Neither `plot` nor `chromend` arguments specified.", call. = FALSE)
+    }
+
+    if (is.null(bb_genomeLabelInternal$length)){
+      stop("If not specifying `plot` input, please provide `length`.", call. = FALSE)
+    }
+
+    bb_genomeLabel$chrom <- bb_genomeLabelInternal$chrom
+    bb_genomeLabel$chromstart <- bb_genomeLabelInternal$chromstart
+    bb_genomeLabel$chromend <- bb_genomeLabelInternal$chromend
+    bb_genomeLabel$assembly <- bb_genomeLabelInternal$assembly
+
+  } else {
+
+    ## Check that input plot is a valid type of plot to be annotated
+    if (class(bb_genomeLabelInternal$plot) != "bb_manhattan"){
+
+      ## Manhattan plots can do whole genome assembly but other plots can't
+      inputNames <- attributes(bb_genomeLabelInternal$plot)$names
+      if (!("chrom" %in% inputNames) | !("chromstart" %in% inputNames) | !("chromend" %in% inputNames)){
+
+        stop("Invalid input plot. Please input a plot that has genomic coordinates associated with it.", call. = FALSE)
+
+      }
+
+    }
+
+    bb_genomeLabel$chrom <- bb_genomeLabelInternal$plot$chrom
+    bb_genomeLabel$chromstart <- bb_genomeLabelInternal$plot$chromstart
+    bb_genomeLabel$chromend <- bb_genomeLabelInternal$plot$chromend
+    bb_genomeLabel$assembly <- bb_genomeLabelInternal$plot$assembly
+    bb_genomeLabelInternal$length <- bb_genomeLabelInternal$plot$width
+    if (bb_genomeLabelInternal$axis == "y"){
+      bb_genomeLabelInternal$length <- bb_genomeLabelInternal$plot$height
+    }
+
+  }
+
   check_bbpage(error = "Cannot plot a genome label without a BentoBox page.")
-  errorcheck_bb_genomeLabel(plot = bb_genomeLabelInternal$plot, scale = bb_genomeLabel$scale, ticks = bb_genomeLabelInternal$ticks, object = bb_genomeLabel)
+  errorcheck_bb_genomeLabel(scale = bb_genomeLabelInternal$scale, ticks = bb_genomeLabelInternal$at, object = bb_genomeLabel, axis = bb_genomeLabelInternal$axis)
 
   # ======================================================================================================================================================================================
   # PARSE ASSEMBLY
   # ======================================================================================================================================================================================
 
   bb_genomeLabel$assembly <- parse_bbAssembly(assembly = bb_genomeLabel$assembly)
-
-  # ======================================================================================================================================================================================
-  # SET UP PAGE/SCALE
-  # ======================================================================================================================================================================================
-
-  ## Determine scale of labels
-  if (bb_genomeLabel$scale == "bp"){
-    fact = 1
-    format = "d"
-  }
-  if (bb_genomeLabel$scale == "Mb"){
-    fact = 1000000
-    format = NULL
-    warning("Chromosome start and stop will be rounded.", call. = FALSE)
-  }
-  if (bb_genomeLabel$scale == "Kb"){
-    fact = 1000
-    format = "d"
-    warning("Chromosome start and stop will be rounded.", call. = FALSE)
-  }
-
-  tgH <- convertHeight(heightDetails(textGrob(label = bb_genomeLabel$scale, x = 0.5, y = 0.5, default.units = "npc", gp = bb_genomeLabel$gp)),
-                       unitTo = get("page_units", envir = bbEnv))
-  seq_height <- heightDetails(textGrob(label = "A", x = 0.5, y = 0.5, default.units = "npc", gp = gpar(fontsize = bb_genomeLabel$gp$fontsize - 2)))
-  seq_height <- convertHeight(seq_height + 0.05*seq_height, unitTo = get("page_units", envir = bbEnv))
-
-  # ======================================================================================================================================================================================
-  # SET PARAMETERS
-  # ======================================================================================================================================================================================
-  ## If single chrom/chromstart/chromend label - comma parsing
-  if (length(bb_genomeLabel$chrom) == 1){
-
-    commaLabels <- comma_labels(object = bb_genomeLabel, commas = bb_genomeLabelInternal$commas, format = format, fact = fact)
-    chromstartlabel <- commaLabels[[1]]
-    chromendlabel <- commaLabels[[2]]
-
-  }
-
-  ## Total label dimensions, taking into account tick and sequence height
-  bb_genomeLabel$width <- bb_genomeLabelInternal$plot$width
-  if (!is.null(bb_genomeLabelInternal$ticks)){
-    tick_height <- tgH*(bb_genomeLabelInternal$tcl)
-    height <- convertHeight(tgH + tick_height + 0.5*tgH, unitTo = get("page_units", envir = bbEnv), valueOnly = T)
-
-  } else {
-    tick_height <- NULL
-    height <- convertHeight(tgH, unitTo = get("page_units", envir = bbEnv), valueOnly = T)
-  }
-
-  if (bb_genomeLabelInternal$sequence == TRUE){
-
-    seq_height <- convertHeight(seq_height, unitTo = get("page_units", envir = bbEnv), valueOnly = T)
-    bb_genomeLabel$height <- unit(height + seq_height, get("page_units", envir = bbEnv))
-
-  } else {
-
-    bb_genomeLabel$height <- unit(height, get("page_units", envir = bbEnv))
-  }
-
-  ## Determine appropriate scaling of nucleotides and check for BSgenome packages
-  if (length(bb_genomeLabel$chrom) == 1){
-
-    seqType <- NULL
-
-    if (!is.null(bb_genomeLabel$assembly$BSgenome)){
-
-      bsChecks <- check_loadedPackage(package = bb_genomeLabel$assembly$BSgenome, message = paste(paste0("`", bb_genomeLabel$assembly$BSgenome,"`"), "not loaded. Sequence information will not be displayed."))
-      if (bsChecks == TRUE){
-
-        labelWidth <- convertWidth(bb_genomeLabel$width, unitTo = "inches", valueOnly = T)
-        bpWidth <- convertWidth(widthDetails(textGrob(label = "A", x = 0.5, y = 0.5, default.units = "npc",
-                                                      gp = gpar(fontsize = bb_genomeLabel$gp$fontsize - 2))),
-                                unitTo = "inches", valueOnly = T)
-        seqRange <- bb_genomeLabel$chromend - bb_genomeLabel$chromstart
-        seqWidth <- bpWidth*seqRange
-
-
-        if (seqWidth <= labelWidth){
-          seqType <- "letters"
-        } else if (seqWidth/labelWidth <= 9){
-          seqType <- "boxes"
-        } else {
-          seqType <- NULL
-        }
-
-      }
-
-    } else {
-
-      warning("No `BSgenome` package found for the input assembly. Sequence information cannot be displayed.", call. = FALSE)
-
-    }
-
-
-  }
 
   # ======================================================================================================================================================================================
   # PARSE UNITS
@@ -555,6 +594,122 @@ bb_plotGenomeLabel <- function(plot, x, y, params = NULL, just = c("left", "top"
 
   }
 
+
+  if (!"unit" %in% class(bb_genomeLabelInternal$length)){
+
+    if (!is.numeric(bb_genomeLabelInternal$length)){
+
+      stop("Length is neither a unit object or a numeric value. Cannot place object.", call. = FALSE)
+
+    }
+
+    if (is.null(bb_genomeLabelInternal$default.units)){
+
+      stop("Length detected as numeric.\'default.units\' must be specified.", call. = FALSE)
+
+    }
+
+    bb_genomeLabelInternal$length <- unit(bb_genomeLabelInternal$length, bb_genomeLabelInternal$default.units)
+
+  }
+
+
+  # ======================================================================================================================================================================================
+  # SET UP PAGE/SCALE
+  # ======================================================================================================================================================================================
+
+  ## Determine scale of labels
+  if (bb_genomeLabelInternal$scale == "bp"){
+    fact = 1
+    format = "d"
+  }
+  if (bb_genomeLabelInternal$scale == "Mb"){
+    fact = 1000000
+    format = NULL
+    warning("Chromosome start and stop will be rounded.", call. = FALSE)
+  }
+  if (bb_genomeLabelInternal$scale == "Kb"){
+    fact = 1000
+    format = "d"
+    warning("Chromosome start and stop will be rounded.", call. = FALSE)
+  }
+
+  tgH <- convertHeight(heightDetails(textGrob(label = bb_genomeLabelInternal$scale, x = 0.5, y = 0.5, default.units = "npc", gp = bb_genomeLabelInternal$gp)),
+                       unitTo = get("page_units", envir = bbEnv))
+  seq_height <- heightDetails(textGrob(label = "A", x = 0.5, y = 0.5, default.units = "npc", gp = gpar(fontsize = bb_genomeLabelInternal$gp$fontsize - 2)))
+  seq_height <- convertHeight(seq_height + 0.05*seq_height, unitTo = get("page_units", envir = bbEnv))
+
+  # ======================================================================================================================================================================================
+  # SET PARAMETERS
+  # ======================================================================================================================================================================================
+  ########## If single chrom/chromstart/chromend label - comma parsing
+  if (length(bb_genomeLabel$chrom) == 1){
+
+    commaLabels <- comma_labels(object = bb_genomeLabel, commas = bb_genomeLabelInternal$commas, format = format, fact = fact)
+    chromstartlabel <- commaLabels[[1]]
+    chromendlabel <- commaLabels[[2]]
+
+  }
+  ########## END comma parsing
+
+  ########## Determine appropriate scaling of nucleotides
+  seqType <- NULL
+  if (length(bb_genomeLabel$chrom) == 1 & bb_genomeLabelInternal$sequence == TRUE){
+
+    if (bb_genomeLabelInternal$axis == "x"){
+      labelWidth <- convertWidth(bb_genomeLabelInternal$length, unitTo = "inches", valueOnly = T)
+      bpWidth <- convertWidth(widthDetails(textGrob(label = "A", x = 0.5, y = 0.5, default.units = "npc",
+                                                    gp = gpar(fontsize = bb_genomeLabelInternal$gp$fontsize - 2))),
+                              unitTo = "inches", valueOnly = T)
+      seqRange <- bb_genomeLabel$chromend - bb_genomeLabel$chromstart
+      seqWidth <- bpWidth*seqRange
+
+
+      if (seqWidth <= labelWidth){
+        seqType <- "letters"
+      } else if (seqWidth/labelWidth <= 9){
+        seqType <- "boxes"
+      }
+    }
+  }
+  ########## END nucleotide scaling
+
+  ########## Check for BSgenome packages and reset seqType if necessary
+  if (!is.null(seqType)){
+    if (!is.null(bb_genomeLabel$assembly$BSgenome)){
+      bsChecks <- check_loadedPackage(package = bb_genomeLabel$assembly$BSgenome, message = paste(paste0("`", bb_genomeLabel$assembly$BSgenome,"`"), "not loaded. Sequence information will not be displayed."))
+      if (bsChecks == FALSE){
+        seqType <- NULL
+      }
+    } else {
+      warning("No `BSgenome` package found for the input assembly. Sequence information cannot be displayed.", call. = FALSE)
+      seqType <- NULL
+    }
+  }
+  ########## END check for BSgenome packages
+
+  ##########  Total label dimensions, taking into account tick and sequence height
+  if (!is.null(bb_genomeLabelInternal$at)){
+    tick_height <- tgH*(bb_genomeLabelInternal$tcl)
+    depth <- convertHeight(tgH + tick_height + 0.5*tgH, unitTo = get("page_units", envir = bbEnv), valueOnly = T)
+
+  } else {
+    tick_height <- NULL
+    depth <- convertHeight(tgH, unitTo = get("page_units", envir = bbEnv), valueOnly = T)
+  }
+
+  if (!is.null(seqType)){
+
+    seq_height <- convertHeight(seq_height, unitTo = get("page_units", envir = bbEnv), valueOnly = T)
+    bb_genomeLabelInternal$depth <- unit(depth + seq_height, get("page_units", envir = bbEnv))
+
+  } else {
+
+    bb_genomeLabelInternal$depth <- unit(depth, get("page_units", envir = bbEnv))
+  }
+  ##########  END label length and depth
+
+
   # ======================================================================================================================================================================================
   # VIEWPORTS
   # ======================================================================================================================================================================================
@@ -563,8 +718,8 @@ bb_plotGenomeLabel <- function(plot, x, y, params = NULL, just = c("left", "top"
   vp_name <- paste0("bb_genomeLabel", length(grep(pattern = "bb_genomeLabel", x = currentViewports)) + 1)
 
   ## Make viewport
-  vp <- parse_viewport(plot = bb_genomeLabelInternal$plot, object = bb_genomeLabel, height = height, sequence = bb_genomeLabelInternal$sequence, seqType = seqType, seqHeight = seq_height,
-                       vp_name = vp_name, just = bb_genomeLabel$just)
+  vp <- parse_viewport(plot = bb_genomeLabelInternal$plot, object = bb_genomeLabel, length = bb_genomeLabelInternal$length, depth = depth, seqType = seqType,
+                       seqHeight = seq_height, vp_name = vp_name, just = bb_genomeLabel$just, axis = bb_genomeLabelInternal$axis)
 
   # ======================================================================================================================================================================================
   # GROBS AND GTREE
@@ -573,12 +728,12 @@ bb_plotGenomeLabel <- function(plot, x, y, params = NULL, just = c("left", "top"
   ## Chrom/chromstart/chromend grobs
   if (length(bb_genomeLabel$chrom) == 1){
 
-    chrom_grobs(tgH = tgH, ticks = bb_genomeLabelInternal$ticks, tickHeight = tick_height, sequence = bb_genomeLabelInternal$sequence, seqType = seqType, scale = bb_genomeLabel$scale,
+    chrom_grobs(tgH = tgH, ticks = bb_genomeLabelInternal$at, tickHeight = tick_height, seqType = seqType, scale = bb_genomeLabelInternal$scale,
                 chromLabel = bb_genomeLabel$chrom,
-                startLabel = chromstartlabel, endLabel = chromendlabel, height = height, object = bb_genomeLabel, vp = vp)
+                startLabel = chromstartlabel, endLabel = chromendlabel, height = depth, object = bb_genomeLabelInternal, vp = vp)
 
-    ## Sequence grobs
-    if (bb_genomeLabelInternal$sequence == TRUE & !is.null(seqType)){
+    ## Sequence grobs if applicable
+    if (!is.null(seqType)){
 
       seq_grobs(object = bb_genomeLabel, seqHeight = seq_height, seqType = seqType, assembly = bb_genomeLabel$assembly, chromLabel = bb_genomeLabel$chrom, vp = vp,
                 boxWidth = bb_genomeLabelInternal$boxWidth)
@@ -586,8 +741,8 @@ bb_plotGenomeLabel <- function(plot, x, y, params = NULL, just = c("left", "top"
     }
 
   } else {
-    ## Whole genome grobs
-    genome_grobs(plot = bb_genomeLabelInternal$plot, object = bb_genomeLabel, tgH = tgH, vp = vp)
+    ## Whole genome grobs for input Manhattan plot
+    genome_grobs(plot = bb_genomeLabelInternal$plot, object = bb_genomeLabel, tgH = tgH, vp = vp, gp = bb_genomeLabelInternal$gp)
 
   }
 
@@ -599,6 +754,17 @@ bb_plotGenomeLabel <- function(plot, x, y, params = NULL, just = c("left", "top"
 
   bb_genomeLabel$grobs <- get("genomeLabel_grobs", envir = bbEnv)
   grid.draw(bb_genomeLabel$grobs)
+
+  # ======================================================================================================================================================================================
+  # ASSIGN DIMENSIONS BASED ON AXIS
+  # ======================================================================================================================================================================================
+
+  bb_genomeLabel$width <- bb_genomeLabelInternal$length
+  bb_genomeLabel$height <- bb_genomeLabelInternal$depth
+  if (bb_genomeLabelInternal$axis == "y"){
+    bb_genomeLabel$width <- bb_genomeLabelInternal$depth
+    bb_genomeLabel$height <- bb_genomeLabelInternal$length
+  }
 
   # ======================================================================================================================================================================================
   # RETURN OBJECT

@@ -1,19 +1,30 @@
-
-#' wrapper to draw a circleGrob based on BentoBox page coordinates and units
+#' Plot a circle within a BentoBox layout
 #'
-#' @param x A numeric vector or unit object specifying x-location of the center of the circle
-#' @param y A numeric vector or unit object specifying y-location of the center of the circle
-#' @param r A numeric vector or unit object specifying radii
-#' @param params an optional "bb_params" object space containing relevant function parameters
-#' @param linecolor line color
-#' @param fill fill color
-#' @param lwd line width
-#' @param lty line type
-#' @param alpha color transparency 
-#' @param default.units A string indicating the default units to use if x or y are only given as numeric vectors
+#' @param x A numeric vector or unit object specifying circle x-locations relative to center.
+#' @param y A numeric vector or unit object specifying circle y-locations relative to center.
+#' @param r A numeric vector or unit object specifying radii.
+#' @param default.units A string indicating the default units to use if \code{r}, \code{x}, or \code{y} are only given as numerics or numeric vectors. Default value is \code{default.units = "inches"}.
+#' @param linecolor A character value specifying circle line color. Default value is \code{linecolor = "black"}.
+#' @param lwd A numeric specifying circle line width. Default value is \code{lwd = 1}.
+#' @param lty A numeric specifying circle line type. Default value is \code{lty = 1}.
+#' @param fill A character value specifying circle fill color. Default value is \code{fill = NA}.
+#' @param alpha Numeric value specifying color transparency. Default value is \code{alpha = 1}.
+#' @param params An optional \link[BentoBox]{bb_assembly} object containing relevant function parameters.
+#' @param ... Additional grid graphical parameters. See \link[grid]{gpar}.
+#'
+#' @return Returns a \code{bb_circle} object containing relevant placement and \link[grid]{grob} information.
+#'
+#' @examples
+#' ## Create a BentoBox page
+#' bb_pageCreate(width = 2, height = 2, default.units = "inches", xgrid = 0, ygrid = 0)
+#'
+#' ## Plot a circle
+#' bb_plotCircle(r = 0.3, x = 1, y = 1.2, default.units = "inches")
+#'
+#' @seealso \link[grid]{grid.circle}
 #'
 #' @export
-bb_plotCircle <- function(x, y, r, params = NULL, linecolor = "black", fill = NA, lwd = 1, lty = 1, alpha = 1, default.units = "inches", ...){
+bb_plotCircle <- function(x, y, r, default.units = "inches", linecolor = "black",  lwd = 1, lty = 1, fill = NA, alpha = 1, params = NULL, ...){
   
   
   # ======================================================================================================================================================================================
@@ -149,6 +160,3 @@ bb_plotCircle <- function(x, y, r, params = NULL, linecolor = "black", fill = NA
   
   return(bb_circle)
 }
-
-
-

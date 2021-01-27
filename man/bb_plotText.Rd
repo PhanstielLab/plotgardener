@@ -2,43 +2,50 @@
 % Please edit documentation in R/bb_plotText.R
 \name{bb_plotText}
 \alias{bb_plotText}
-\title{wrapper to draw a textGrob based on BentoBox page coordinates and units}
+\title{Plot text within a BentoBox layout}
 \usage{
-bb_plotText(
-  label,
-  x,
-  y,
-  params = NULL,
-  just = "center",
-  fontcolor = "black",
-  fontsize = 12,
-  rot = 0,
-  check.overlap = FALSE,
-  default.units = "inches",
-  ...
-)
+bb_plotText(label, x, y, just = "center",
+                   default.units = "inches")
 }
 \arguments{
-\item{label}{character or expression}
+\item{label}{Character or expression of text to be plotted.}
 
-\item{x}{A numeric vector or unit object specifying x-location}
+\item{fontcolor}{A character value specifying text fontcolor. Default value is \code{fontcolor = "black"}.}
 
-\item{y}{A numeric vector or unit object specifying y-location}
+\item{fontsize}{A numeric specifying text fontsize in points. Default value is \code{fontsize = 12}.}
 
-\item{params}{an optional "bb_params" object space containing relevant function parameters}
+\item{rot}{A numeric specifying the angle to rotate the text. Default value is \code{rot = 0}.}
 
-\item{just}{justification of text relative to its (x, y) location}
+\item{check.overlap}{A logical value to indicate whether to check for and omit overlapping text. Default value is \code{check.overlap = FALSE}.}
 
-\item{fontcolor}{fontcolor}
+\item{x}{A numeric vector or unit object specifying text x-location.}
 
-\item{fontsize}{the size of text (in points)}
+\item{y}{A numeric vector or unit object specifying text y-location.}
 
-\item{rot}{the angle to rotate the song}
+\item{just}{Justification of text relative to its (x, y) location. If there are two values, the first value specifies horizontal justification and the second value specifies vertical justification.
+Possible string values are: \code{"left"}, \code{"right"}, \code{"centre"}, \code{"center"}, \code{"bottom"}, and \code{"top"}. Default value is \code{just = "center"}.}
 
-\item{check.overlap}{A logical value to indicate whether to check for and omit overlapping text.}
+\item{default.units}{A string indicating the default units to use if \code{x} or \code{y} are only given as numerics or numeric vectors. Default value is \code{default.units = "inches"}.}
 
-\item{default.units}{A string indicating the default units to use if x or y are only given as numeric vectors}
+\item{params}{An optional \link[BentoBox]{bb_assembly} object containing relevant function parameters.}
+
+\item{...}{Additional grid graphical parameters. See \link[grid]{gpar}.}
+}
+\value{
+Returns a \code{bb_text} object containing relevant placement and \link[grid]{grob} information.
 }
 \description{
-wrapper to draw a textGrob based on BentoBox page coordinates and units
+Plot text within a BentoBox layout
+}
+\examples{
+## Create a BentoBox page
+bb_pageCreate(width = 2, height = 2, default.units = "inches", xgrid = 0, ygrid = 0)
+
+## Plot text
+bb_plotText(label = "BentoBox", fontsize = 14,
+            x = 1, y = 1, just = "center", default.units = "inches")
+
+}
+\seealso{
+\link[grid]{grid.text}
 }

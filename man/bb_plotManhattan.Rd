@@ -2,82 +2,81 @@
 % Please edit documentation in R/bb_plotManhattan.R
 \name{bb_plotManhattan}
 \alias{bb_plotManhattan}
-\title{plots a Manhattan plot}
+\title{Plot a Manhattan plot}
 \usage{
-bb_plotManhattan(
-  bed,
-  pVals,
-  params = NULL,
-  chrom = NULL,
-  chromstart = NULL,
-  chromend = NULL,
-  assembly = "hg19",
-  fillcolor = "black",
-  pch = 19,
-  space = 0.01,
-  cex = 0.25,
-  ymax = 1,
-  range = NULL,
-  sigVal = 5e-08,
-  sigLine = F,
-  sigCol = NULL,
-  x = NULL,
-  y = NULL,
-  width = NULL,
-  height = NULL,
-  just = c("left", "top"),
-  default.units = "inches",
-  draw = T,
-  ...
-)
+bb_plotManhattan(data, pVals)
+bb_plotManhattan(data, pVals, x, y, width, height,
+                 just = c("left", "top"),
+                 default.units = "inches")
 }
 \arguments{
-\item{bed}{bedfile for Manhattan plot, either .bed file or dataframe in bed format}
+\item{data}{Data to be plotted; as a character value specifying a BED file path, a dataframe in BED format, or a \link[GenomicRanges]{GRanges} object.}
 
-\item{pVals}{name of column in bedfile of corresponding p-values (will be converted to -log(10) space)}
+\item{pVals}{Character value specifying the name of the \code{data} column of corresponding p-values (will be converted to -log(10) space).}
 
-\item{params}{an optional "bb_params" object space containing relevant function parameters}
+\item{chrom}{Chromosome of region to be plotted, as a string.}
 
-\item{chrom}{string of specific chromosome to zoom in on according to genome build (Ex: hg19 = "chr1"); if NULL all chromosomes found in data will be plotted}
+\item{chromstart}{Integer start position on chromosome to be plotted.}
 
-\item{chromstart}{if single chromosome specified, start of region to be plotted}
+\item{chromend}{Integer end position on chromosome to be plotted.}
 
-\item{chromend}{if single chromosome specified, end of region to be plotted}
+\item{assembly}{Default genome assembly as a string or a \link[BentoBox]{bb_assembly} object. Default value is \code{assembly = "hg19"}.}
 
-\item{assembly}{default genome assembly as a string or a bb_assembly object}
+\item{sigLine}{Logical value indicating whether to draw a line at the significance level indicated with \code{sigVal}. Default value is \code{sigLine = FALSE}.}
 
-\item{space}{the space between each chromsome as a fraction of the width of the plot}
+\item{sigCol}{Single character value specifying the color of significant data points.}
 
-\item{cex}{number indiciating the amount by which points should be scaled relative to the default}
+\item{fill}{Character value(s) as a single value, vector, or palette specifying fill colors of data points. Default value is \code{fill = "black"}.}
 
-\item{ymax}{fraction of max y value to set as height of plot}
+\item{pch}{A numeric specifying point symbols. Default value is \code{pch = 19}.}
 
-\item{range}{y-range of p-values to plot (c(min, max))}
+\item{cex}{A numeric indiciating the amount by which points should be scaled relative to the default. Default value is \code{cex = 0.25}.}
 
-\item{sigVal}{numeric indicating the significance level}
+\item{ymax}{A numeric specifying the fraction of the max y-value to set as the height of the plot. Default value is \code{ymax = 1}.}
 
-\item{sigLine}{logical indicating whether to draw a line at the significance level}
+\item{range}{A numeric vector of length 2 specifying the y-range of p-values to plot (c(min, max)).}
 
-\item{sigCol}{single color for coloring significant values}
+\item{space}{A numeric value indicating the space between each chromsome as a fraction of the width of the plot, if plotting multiple chromosomes. Default value is \code{space = 0.01}.}
 
-\item{x}{A numeric or unit object specifying x-location}
+\item{bg}{Character value indicating background color. Default value is \code{bg = NA}.}
 
-\item{y}{A numeric or unit object specifying y-location}
+\item{baseline}{Logical value indicating whether to include a baseline along the x-axis. Default value is \code{baseline = FALSE}.}
 
-\item{width}{A numeric or unit object specifying width}
+\item{x}{A numeric or unit object specifying Manhattan plot x-location.}
 
-\item{height}{A numeric or unit object specifying height}
+\item{y}{A numeric or unit object specifying Manhattan plot y-location.}
 
-\item{just}{A string or numeric vector specifying the justification of the viewport relative to its (x, y) location: "left", "right", "centre", "center", "bottom", "top"}
+\item{width}{A numeric or unit object specifying Manhattan plot width.}
 
-\item{default.units}{A string indicating the default units to use if x, y, width, or height are only given as numerics}
+\item{height}{A numeric or unit object specifying Manhattan plot height.}
 
-\item{draw}{A logical value indicating whether graphics output should be produced}
+\item{just}{Justification of Manhattan plot relative to its (x, y) location. If there are two values, the first value specifies horizontal justification and the second value specifies vertical justification.
+Possible string values are: \code{"left"}, \code{"right"}, \code{"centre"}, \code{"center"}, \code{"bottom"}, and \code{"top"}. Default value is \code{just = c("left", "top")}.}
 
-\item{colors}{single color, vector of colors, or color palette}
+\item{default.units}{A string indicating the default units to use if \code{x}, \code{y}, \code{width}, or \code{height} are only given as numerics. Default value is \code{default.units = "inches"}.}
 
-\item{transp}{transparency of colors}
+\item{draw}{A logical value indicating whether graphics output should be produced. Default value is \code{draw = TRUE}.}
+
+\item{params}{An optional \link[BentoBox]{bb_assembly} object containing relevant function parameters.}
+
+\item{...}{Additional grid graphical parameters. See \link[grid]{gpar}.}
+}
+\value{
+Returns a \code{bb_manhattan} object containing relevant genomic region, placement, and \link[grid]{grob} information.
 }
 \description{
-plots a Manhattan plot
+Plot a Manhattan plot
+}
+\examples{
+## Load GWAS data
+data("bb_gwasData")
+
+## Plot Manhattan plot filling up entire graphic device
+bb_plotManhattan(data = bb_gwasData, pVals = "pVal", chrom = "chr21", chromstart = 28000000, chromend = 30300000, ymax = 1.1, cex = 0.20)
+
+## Plot and place Manhattan plot on a BentoBox page
+bb_pageCreate(width = 5, height = 2, default.units = "inches", xgrid = 0, ygrid = 0)
+bb_plotManhattan(data = bb_gwasData, pVals = "pVal", chrom = "chr21", chromstart = 28000000, chromend = 30300000, ymax = 1.1, cex = 0.20,
+                 x = 0.5, y = 0.5, width = 4, height = 1.5, just = c("left", "top"), default.units = "inches")
+
 }

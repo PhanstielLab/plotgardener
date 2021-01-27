@@ -2,60 +2,53 @@
 % Please edit documentation in R/bb_readHic.R
 \name{bb_readHic}
 \alias{bb_readHic}
-\title{extracts Hi-C data from a .hic file}
+\title{Read a .hic file and return Hi-C data as a dataframe}
 \usage{
-bb_readHic(
-  hic,
-  chrom,
-  params = NULL,
-  chromstart = NULL,
-  chromend = NULL,
-  resolution = "auto",
-  zrange = NULL,
-  norm = "KR",
-  res_scale = "BP",
-  assembly = "hg19",
-  altchrom = NULL,
-  altchromstart = NULL,
-  altchromend = NULL
-)
+bb_readHic(hicFile, chrom)
 }
 \arguments{
-\item{hic}{path to .hic file}
+\item{hicFile}{A character value specifying the path to the .hic file.}
 
-\item{chrom}{chromosome of desired region}
+\item{chrom}{Chromosome of data, as a string.}
 
-\item{params}{an optional "bb_params" object space containing relevant function parameters}
+\item{chromstart}{Integer start position on chromosome.}
 
-\item{chromstart}{start position}
+\item{chromend}{Integer end position on chromosome.}
 
-\item{chromend}{end position}
+\item{altchrom}{Alternate chromosome for interchromosomal data, as a string.}
 
-\item{resolution}{the width of each pixel; "auto" will attempt to choose a resolution (in basepairs) based on the size of the region}
+\item{altchromstart}{Alternate chromosome integer start position for interchromosomal data.}
 
-\item{zrange}{the range of interaction scores to plot, where extreme values will be set to the max or min; if null, zrange will be set to (0, max(data))}
+\item{altchromend}{Alternate chromosome integer end position for interchromosomal data.}
 
-\item{norm}{hic data normalization; must be found in hic file}
+\item{assembly}{Default genome assembly as a string or a \link[BentoBox]{bb_assembly} object. Default value is \code{assembly = "hg19"}.}
 
-\item{res_scale}{resolution scale; options are "BP" and "FRAG"}
+\item{resolution}{A numeric specifying the width of each pixel. "auto" will attempt to choose a resolution in basepairs based on the size of the region.}
 
-\item{assembly}{desired genome assembly}
+\item{res_scale}{A character value specifying the resolution scale. Default value is \code{res_scale = "BP"}. Options are:
+\itemize{
+\item{\code{"BP"}: }{Base pairs.}
+\item{\code{"FRAG"}: }{Fragments.}
+}}
 
-\item{altchrom}{if looking at region between two different chromosomes, this is the specified alternative chromosome}
+\item{zrange}{A numeric vector of length 2 specifying the range of interaction scores, where extreme values will be set to the max or min.}
 
-\item{altchromstart}{if looking at region between two different chromosomes, start position of altchrom}
+\item{norm}{Character value specifying hic data normalization method. This value must be found in the .hic file. Default value is \code{norm = "KR"}.}
 
-\item{altchromend}{if looking at region between two different chromsomes, end position of altchrom}
+\item{matrix}{Character value indicating the type of matrix to output. Default value is \code{matrix = "observed"}. Options are:
+\itemize{
+\item{\code{"observed"}: }{Observed counts.}
+\item{\code{"oe"}: }{Observed/expected counts.}
+}}
+
+\item{params}{An optional \link[BentoBox]{bb_assembly} object containing relevant function parameters.}
 }
 \value{
-Function will return a 3-column dataframe: chrom, altchrom, counts
+Returns a 3-column dataframe in sparse upper triangular format with the following columns: \code{chrom}, \code{altchrom}, \code{counts}.
 }
 \description{
-extracts Hi-C data from a .hic file
+Read a .hic file and return Hi-C data as a dataframe
 }
-\examples{
-download.file("https://www.encodeproject.org/files/ENCFF606XNW/@download/ENCFF606XNW.hic", destfile = "ENCFF606XNW.hic", method = "auto")
-bb_readHic(hic = "./ENCFF606XNW.hic", chrom = "chr1")
-bb_readHic(hic = "./ENCFF606XNW.hic", chrom = "chr1", chromstart = 22500000, chromend = 23200000, zrange = c(0, 125))
-bb_readHic(hic = "./ENCFF606XNW.hic", chrom = "chr1", altchrom = "chr2")
+\seealso{
+\link[strawr]{straw}
 }

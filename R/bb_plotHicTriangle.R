@@ -1,30 +1,60 @@
-#' plots HiC interaction matrix in triangular format
+#' Plot a Hi-C interaction matrix in a triangular format
 #'
-#' @param hic path to .hic file or 3 column dataframe of counts
-#' @param chrom chromosome of region to be plotted, based on build (i.e. for hg19 just a number, for hg38 string like "chr8")
-#' @param params an optional "bb_params" object space containing relevant function parameters
-#' @param chromstart chromosome start of region to be plotted
-#' @param chromend chromosome end of region to be plotted
-#' @param resolution the width in bp of each pixel; for hic files, "auto" will attempt to choose a resolution based on the size of the region; for
-#' dataframes, "auto" will attempt to detect the resolution the dataframe contains
-#' @param zrange the range of interaction scores to plot, where extreme values will be set to the max or min
-#' @param palette ColorRamp palette to use for representing interaction scores
-#' @param assembly desired genome assembly
-#' @param width A numeric or unit object specifying the bottom width of the triangle
-#' @param height A numeric or unit object specifying the height of the triangle
-#' @param x A numeric or unit object specifying x-location
-#' @param y A numeric or unit object specifying y-location
-#' @param just a string or numeric vector specifying the justification of the viewport relative to its (x, y) location
-#' @param draw A logical value indicating whether graphics output should be produced
-#' @param default.units A string indicating the default units to use if x, y, width, or height are only given as numerics
-#' @param norm if giving .hic file, hic data normalization; must be found in hic file
+#' @usage
+#' bb_plotHicTriangle(hicData, chrom)
+#' bb_plotHicTriangle(hicData, chrom, x, y, width, height,
+#'                    just = c("left", "top"),
+#'                    default.units = "inches")
+#'
+#' @param hicData Path to .hic file as a string or a 3-column dataframe of interaction counts in sparse upper triangular format.
+#' @param resolution A numeric specifying the width in basepairs of each pixel. For hic files, "auto" will attempt to choose a resolution based on the size of the region. For
+#' dataframes, "auto" will attempt to detect the resolution the dataframe contains.
+#' @param zrange A numeric vector of length 2 specifying the range of interaction scores to plot, where extreme values will be set to the max or min.
+#' @param norm Character value specifying hic data normalization method, if giving .hic file. This value must be found in the .hic file. Default value is \code{norm = "KR"}.
+#' @param matrix Character value indicating the type of matrix to output. Default value is \code{matrix = "observed"}. Options are:
+#' \itemize{
+#' \item{\code{"observed"}: }{Observed counts.}
+#' \item{\code{"oe"}: }{Observed/expected counts.}
+#' }
+#' @param chrom Chromosome of region to be plotted, as a string.
+#' @param chromstart Integer start position on chromosome to be plotted.
+#' @param chromend Integer end position on chromosome to be plotted.
+#' @param assembly Default genome assembly as a string or a \link[BentoBox]{bb_assembly} object. Default value is \code{assembly = "hg19"}.
+#' @param palette A function describing the color palette to use for representing scale of interaction scores. Default value is \code{palette = colorRampPalette(c("white", "dark red"))}.
+#' @param x A numeric or unit object specifying triangle Hi-C plot x-location.
+#' @param y A numeric or unit object specifying triangle Hi-C plot y-location.
+#' @param width A numeric or unit object specifying the bottom width of the Hi-C plot triangle.
+#' @param height A numeric or unit object specifying the height of the Hi-C plot triangle.
+#' @param just Justification of triangle Hi-C plot relative to its (x, y) location. If there are two values, the first value specifies horizontal justification and the second value specifies vertical justification.
+#' Possible string values are: \code{"left"}, \code{"right"}, \code{"centre"}, \code{"center"}, \code{"bottom"}, and \code{"top"}. Default value is \code{just = c("left", "top")}.
+#' @param default.units A string indicating the default units to use if \code{x}, \code{y}, \code{width}, or \code{height} are only given as numerics. Default value is \code{default.units = "inches"}.
+#' @param draw A logical value indicating whether graphics output should be produced. Default value is \code{draw = TRUE}.
+#' @param params An optional \link[BentoBox]{bb_assembly} object containing relevant function parameters.
+#'
+#' @return Returns a \code{bb_hicTriangle} object containing relevant genomic region, Hi-C data, placement, and \link[grid]{grob} information.
+#'
+#' @examples
+#' ## Load Hi-C data
+#' data("bb_hicData")
+#'
+#' ## Plot triangle Hi-C plot filling up entire graphic device
+#' bb_plotHicTriangle(hicData = bb_hicData, resolution = 10000, zrange = c(0, 70),
+#'                    chrom = "chr21", chromstart = 28000000, chromend = 30300000)
+#'
+#' ## Plot and place triangle Hi-C plot on a BentoBox page
+#' bb_pageCreate(width = 4, height = 2.5, default.units = "inches", xgrid = 0, ygrid = 0)
+#' bb_plotHicTriangle(hicData = bb_hicData, resolution = 10000, zrange = c(0, 70),
+#'                    chrom = "chr21", chromstart = 28000000, chromend = 30300000,
+#'                    x = 2, y = 0.5, width = 3, height = 1.5, just = "top", default.units = "inches")
+#'
+#' @details If \code{height} is \eqn{<} \eqn{0.5 * sqrt(2)}, the top of the triangle will be cropped to the given \code{height}.
+#'
+#' @seealso \link[BentoBox]{bb_readHic}
 #'
 #' @export
-#'
-#'
-bb_plotHicTriangle <- function(hic, chrom, params = NULL, chromstart = NULL, chromend = NULL, resolution = "auto", zrange = NULL,
-                               palette = colorRampPalette(c("white", "dark red")), assembly = "hg19", width = NULL, height = NULL,
-                               x = NULL, y = NULL, just = c("left", "top"), norm = "KR", default.units = "inches", draw = T){
+bb_plotHicTriangle <- function(hicData, resolution = "auto", zrange = NULL, norm = "KR", matrix = "observed", chrom,  chromstart = NULL, chromend = NULL, assembly = "hg19",
+                               palette = colorRampPalette(c("white", "dark red")), x = NULL, y = NULL, width = NULL, height = NULL,
+                               just = c("left", "top"), default.units = "inches", draw = TRUE, params = NULL){
 
   # ======================================================================================================================================================================================
   # FUNCTIONS
@@ -63,7 +93,7 @@ bb_plotHicTriangle <- function(hic, chrom, params = NULL, chromstart = NULL, chr
   }
 
   ## Define a function that catches errors for bb_plotTriangleHic
-  errorcheck_bb_plotTriangleHic <- function(hic, hic_plot, norm){
+  errorcheck_bb_plotTriangleHic <- function(hic, hic_plot, norm, assembly){
 
     ###### hic/norm #####
 
@@ -108,6 +138,17 @@ bb_plotHicTriangle <- function(hic, chrom, params = NULL, chromstart = NULL, chr
       stop("Cannot have one \'NULL\' \'chromstart\' or \'chromend\'.", call. = FALSE)
 
     }
+
+    ## Even though straw technically works without "chr" for hg19, will not accept for consistency purposes
+    if (assembly == "hg19"){
+
+      if (grepl("chr", hic_plot$chrom) == FALSE){
+
+        stop(paste(paste0("'",hic_plot$chrom, "'"), "is an invalid input for an hg19 chromsome. Please specify chromosome as", paste0("'chr", hic_plot$chrom, "'.")), call. = FALSE)
+      }
+
+    }
+
 
     if (!is.null(hic_plot$chromstart) & !is.null(hic_plot$chromend)){
       ## Chromstart should be smaller than chromend
@@ -224,33 +265,18 @@ bb_plotHicTriangle <- function(hic, chrom, params = NULL, chromstart = NULL, chr
   }
 
   ## Define a function that reads in hic data
-  read_data <- function(hic, hic_plot, norm, assembly){
-
-    parse_chrom <- function(assembly, chrom){
-
-      assemblyName <- unlist(strsplit(assembly$TxDb, split = "[.]"))
-
-      if ("hg19" %in% assemblyName){
-        strawChrom <- as.numeric(gsub("chr", "", chrom))
-      } else {
-        strawChrom <- chrom
-      }
-
-      return(strawChrom)
-    }
+  read_data <- function(hic, hic_plot, norm, assembly, type){
 
     ## if .hic file, read in with bb_rhic
     if (!("data.frame" %in% class(hic))){
 
       if (!is.null(hic_plot$chromstart) & !is.null(hic_plot$chromend)){
 
-        strawChrom <- parse_chrom(assembly = assembly, chrom = hic_plot$chrom)
-
         readchromstart <- hic_plot$chromstart - hic_plot$resolution
         readchromend <- hic_plot$chromend + hic_plot$resolution
 
-        hic <- bb_readHic(hic = hic, chrom = strawChrom, chromstart = readchromstart, chromend = readchromend,
-                          resolution = hic_plot$resolution, zrange = hic_plot$zrange, norm = norm)
+        hic <- bb_readHic(hicFile = hic, chrom = hic_plot$chrom, chromstart = readchromstart, chromend = readchromend,
+                          resolution = hic_plot$resolution, zrange = hic_plot$zrange, norm = norm, matrix = type)
 
       } else {
         hic <- data.frame(matrix(nrow = 0, ncol = 3))
@@ -530,15 +556,16 @@ bb_plotHicTriangle <- function(hic, chrom, params = NULL, chromstart = NULL, chr
   if(missing(norm)) norm <- NULL
   if(missing(default.units)) default.units <- NULL
   if(missing(draw)) draw <- NULL
+  if(missing(matrix)) matrix <- NULL
 
   ## Check if hic/chrom arguments are missing (could be in object)
-  if(!hasArg(hic)) hic <- NULL
+  if(!hasArg(hicData)) hicData <- NULL
   if(!hasArg(chrom)) chrom <- NULL
 
   ## Compile all parameters into an internal object
-  bb_thicInternal <- structure(list(hic = hic, chrom = chrom, chromstart = chromstart, chromend = chromend, resolution = resolution,
+  bb_thicInternal <- structure(list(hicData = hicData, chrom = chrom, chromstart = chromstart, chromend = chromend, resolution = resolution,
                                     zrange = zrange, palette = palette, assembly = assembly, width = width, height = height, x = x,
-                                    y = y, just = just, norm = norm, default.units = default.units, draw = draw), class = "bb_thicInternal")
+                                    y = y, just = just, norm = norm, default.units = default.units, draw = draw, matrix = matrix), class = "bb_thicInternal")
 
   bb_thicInternal <- parseParams(bb_params = params, object_params = bb_thicInternal)
 
@@ -550,22 +577,22 @@ bb_plotHicTriangle <- function(hic, chrom, params = NULL, chromstart = NULL, chr
   if(is.null(bb_thicInternal$norm)) bb_thicInternal$norm <- "KR"
   if(is.null(bb_thicInternal$default.units)) bb_thicInternal$default.units <- "inches"
   if(is.null(bb_thicInternal$draw)) bb_thicInternal$draw <- TRUE
-
+  if(is.null(bb_thicInternal$matrix)) bb_thicInternal$matrix <- "observed"
   # ======================================================================================================================================================================================
   # INITIALIZE OBJECT
   # ======================================================================================================================================================================================
 
-  hic_plot <- structure(list(chrom = bb_thicInternal$chrom, chromstart = bb_thicInternal$chromstart, chromend = bb_thicInternal$chromend,
-                             x = bb_thicInternal$x, y = bb_thicInternal$y, width = bb_thicInternal$width, height = bb_thicInternal$height, justification = NULL,
-                             zrange = bb_thicInternal$zrange, altchrom = bb_thicInternal$chrom, altchromstart = bb_thicInternal$chromstart, altchromend = bb_thicInternal$chromend,
-                             resolution = bb_thicInternal$resolution, color_palette = NULL, grobs = NULL, outsideVP = NULL, assembly = bb_thicInternal$assembly), class = "bb_trianglehic")
+  hic_plot <- structure(list(chrom = bb_thicInternal$chrom, chromstart = bb_thicInternal$chromstart, chromend = bb_thicInternal$chromend, altchrom = bb_thicInternal$chrom,
+                             altchromstart = bb_thicInternal$chromstart, altchromend = bb_thicInternal$chromend, assembly = bb_thicInternal$assembly, resolution = bb_thicInternal$resolution,
+                             x = bb_thicInternal$x, y = bb_thicInternal$y, width = bb_thicInternal$width, height = bb_thicInternal$height, just = NULL,
+                             color_palette = NULL, zrange = bb_thicInternal$zrange, outsideVP = NULL, grobs = NULL), class = "bb_hicTriangle")
   attr(x = hic_plot, which = "plotted") <- bb_thicInternal$draw
 
   # ======================================================================================================================================================================================
   # CHECK PLACEMENT/ARGUMENT ERRORS
   # ======================================================================================================================================================================================
 
-  if(is.null(bb_thicInternal$hic)) stop("argument \"hic\" is missing, with no default.", call. = FALSE)
+  if(is.null(bb_thicInternal$hicData)) stop("argument \"hicData\" is missing, with no default.", call. = FALSE)
   if(is.null(bb_thicInternal$chrom)) stop("argument \"chrom\" is missing, with no default.", call. = FALSE)
   check_placement(object = hic_plot)
 
@@ -585,7 +612,7 @@ bb_plotHicTriangle <- function(hic, chrom, params = NULL, chromstart = NULL, chr
   # CATCH ERRORS
   # ======================================================================================================================================================================================
 
-  errorcheck_bb_plotTriangleHic(hic = bb_thicInternal$hic, hic_plot = hic_plot, norm = bb_thicInternal$norm)
+  errorcheck_bb_plotTriangleHic(hic = bb_thicInternal$hicData, hic_plot = hic_plot, norm = bb_thicInternal$norm, assembly = hic_plot$assembly$Genome)
 
   # ======================================================================================================================================================================================
   # JUSTIFICATION OF PLOT
@@ -630,14 +657,14 @@ bb_plotHicTriangle <- function(hic, chrom, params = NULL, chromstart = NULL, chr
   # ======================================================================================================================================================================================
 
   if (bb_thicInternal$resolution == "auto"){
-    hic_plot <- adjust_resolution(hic = bb_thicInternal$hic, hic_plot = hic_plot)
+    hic_plot <- adjust_resolution(hic = bb_thicInternal$hicData, hic_plot = hic_plot)
   }
 
   # ======================================================================================================================================================================================
   # READ IN DATA
   # ======================================================================================================================================================================================
 
-  hic <- read_data(hic = bb_thicInternal$hic, hic_plot = hic_plot, norm = bb_thicInternal$norm, assembly = hic_plot$assembly)
+  hic <- read_data(hic = bb_thicInternal$hicData, hic_plot = hic_plot, norm = bb_thicInternal$norm, assembly = hic_plot$assembly, type = bb_thicInternal$matrix)
 
   # ======================================================================================================================================================================================
   # SUBSET DATA
@@ -661,8 +688,7 @@ bb_plotHicTriangle <- function(hic, chrom, params = NULL, chromstart = NULL, chr
   if (!is.null(hic_plot$zrange) & length(unique(hic_plot$zrange)) == 2){
 
     hic$color <- bb_maptocolors(hic$counts, col = bb_thicInternal$palette, num = 100, range = hic_plot$zrange)
-    sorted_colors <- unique(hic[order(hic$counts),]$color)
-    hic_plot$color_palette <- sorted_colors
+    hic_plot$color_palette <- bb_thicInternal$palette
 
     }
 

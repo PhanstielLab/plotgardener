@@ -1,16 +1,37 @@
-#' adds a plot created with ggplot2 to a BentoBox layout
+#' Plot a ggplot2 plot in a BentoBox layout
 #'
-#' @param plot ggplot object
-#' @param x A numeric or unit object specifying x-location.
-#' @param y A numeric or unit object specifying y-location.
-#' @param width A numeric or unit object specifying width.
-#' @param height A numeric or unit object specifying height.
-#' @param params an optional "bb_params" object space containing relevant function parameters
-#' @param just A string or numeric vector specifying the justification of the plot relative to its (x, y) location
-#' @param default.units A string indicating the default units to use if x, y, width, or height are only given as numeric vectors
+#' @usage
+#' bb_plotGG(ggPlot, x, y, width, height,
+#'           just = c("left", "top"),
+#'           default.units = "inches")
+#'
+#' @param ggPlot ggplot object.
+#' @param x A numeric or unit object specifying ggplot x-location.
+#' @param y A numeric or unit object specifying ggplot y-location.
+#' @param width A numeric or unit object specifying ggplot width.
+#' @param height A numeric or unit object specifying ggplot height.
+#' @param just Justification of ggplot relative to its (x, y) location. If there are two values, the first value specifies horizontal justification and the second value specifies vertical justification.
+#' Possible string values are: \code{"left"}, \code{"right"}, \code{"centre"}, \code{"center"}, \code{"bottom"}, and \code{"top"}. Default value is \code{just = c("left", "top")}.
+#' @param default.units A string indicating the default units to use if \code{x}, \code{y}, \code{width}, or \code{height} are only given as numerics. Default value is \code{default.units = "inches"}.
+#' @param params An optional \link[BentoBox]{bb_assembly} object containing relevant function parameters.
+#'
+#' @return Returns a \code{bb_gg} object containing relevant placement and \link[grid]{grob} information.
+#'
+#' @seealso \link[ggplot2]{ggplot}
+#'
+#' @examples
+#' ## Create a plot using ggplot2
+#' library(ggplot2)
+#' p <- ggplot(mtcars) + geom_point(aes(mpg, disp))
+#'
+#' ## Create a BentoBox page
+#' bb_pageCreate(width = 4, height = 4, default.units = "inches", xgrid = 0, ygrid = 0)
+#'
+#' ## Place ggplot in BentoBox page
+#' bb_plotGG(ggPlot = p, x = 0.5, y = 0.5, width = 3, height = 3, just = c("left", "top"), default.units = "inches")
 #'
 #' @export
-bb_plotGG <- function(plot, x, y, width, height, params = NULL, just = c("left", "top"), default.units = "inches"){
+bb_plotGG <- function(ggPlot, x, y, width, height, just = c("left", "top"), default.units = "inches", params = NULL){
 
 
   # ======================================================================================================================================================================================
@@ -22,14 +43,14 @@ bb_plotGG <- function(plot, x, y, width, height, params = NULL, just = c("left",
   if(missing(default.units)) default.units <- NULL
 
   ## Check if plot/x/y/width/height arguments are missing (could be in object)
-  if(!hasArg(plot)) plot <- NULL
+  if(!hasArg(ggPlot)) ggPlot <- NULL
   if(!hasArg(x)) x <- NULL
   if(!hasArg(y)) y <- NULL
   if(!hasArg(width)) width <- NULL
   if(!hasArg(height)) height <- NULL
 
   ## Compile all parameters into an internal object
-  bb_ggInternal <- structure(list(plot = plot, x = x, y = y, width = width, height = height,
+  bb_ggInternal <- structure(list(ggPlot = ggPlot, x = x, y = y, width = width, height = height,
                                      just = just, default.units = default.units), class = "bb_ggInternal")
 
   bb_ggInternal <- parseParams(bb_params = params, object_params = bb_ggInternal)
@@ -42,7 +63,7 @@ bb_plotGG <- function(plot, x, y, width, height, params = NULL, just = c("left",
   # ERRORS
   # ======================================================================================================================================================================================
 
-  if (is.null(bb_ggInternal$plot)) stop("argument \"plot\" is missing, with no default.", call. = FALSE)
+  if (is.null(bb_ggInternal$ggPlot)) stop("argument \"ggPlot\" is missing, with no default.", call. = FALSE)
   if (is.null(bb_ggInternal$x)) stop("argument \"x\" is missing, with no default.", call. = FALSE)
   if (is.null(bb_ggInternal$y)) stop("argument \"y\" is missing, with no default.", call. = FALSE)
   if (is.null(bb_ggInternal$width)) stop("argument \"width\" is missing, with no default.", call. = FALSE)
@@ -53,7 +74,7 @@ bb_plotGG <- function(plot, x, y, width, height, params = NULL, just = c("left",
   # ======================================================================================================================================================================================
 
   gg_plot <- structure(list(width = bb_ggInternal$width, height = bb_ggInternal$height, x = bb_ggInternal$x, y = bb_ggInternal$y,
-                            justification = bb_ggInternal$just), class = "bb_gg")
+                            just = bb_ggInternal$just, grobs = NULL), class = "bb_gg")
 
   # ======================================================================================================================================================================================
   # PARSE UNITS
@@ -81,7 +102,10 @@ bb_plotGG <- function(plot, x, y, width, height, params = NULL, just = c("left",
   # PRINT GGPLOT
   # ======================================================================================================================================================================================
 
-  print(bb_ggInternal$plot, vp = vp)
+  gg_plot$grobs <- as.grob(bb_ggInternal$ggPlot)
+  gg_plot$grobs$vp <- vp
+
+  grid.draw(gg_plot$grobs)
 
   # ======================================================================================================================================================================================
   # RETURN OBJECT

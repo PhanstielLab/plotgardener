@@ -6,20 +6,24 @@
 \usage{
 bb_params(
   BSgenome = NULL,
+  Genome = NULL,
   OrgDb = NULL,
   TxDb = NULL,
   alpha = NULL,
   altchrom = NULL,
   altchromend = NULL,
   altchromstart = NULL,
-  althalf = NULL,
-  arch = NULL,
   archHeight = NULL,
+  arrow = NULL,
   assembly = "hg19",
   at = NULL,
-  bed = NULL,
-  bedpe = NULL,
+  axis = NULL,
+  basePlot = NULL,
+  baseline = NULL,
+  bedpeData = NULL,
+  bedpePlot = NULL,
   bg = NULL,
+  bigwigFile = NULL,
   binCap = NULL,
   binSize = NULL,
   border = NULL,
@@ -30,18 +34,17 @@ bb_params(
   chrom = NULL,
   chromend = NULL,
   chromstart = NULL,
-  col = NULL,
+  clip = NULL,
   colorby = NULL,
   colorbyStrand = NULL,
-  colorbyrange = NULL,
+  column = NULL,
   commas = NULL,
-  cutoffArches = NULL,
+  curvature = NULL,
+  data = NULL,
   default.units = NULL,
   display.column = NULL,
   draw = NULL,
-  end = NULL,
-  filename = NULL,
-  fillcolor = NULL,
+  fill = NULL,
   fontcolor = NULL,
   fontcolors = NULL,
   fontsize = NULL,
@@ -51,20 +54,28 @@ bb_params(
   geneBuffer = NULL,
   geneHighlights = NULL,
   geneOrder = NULL,
-  genome = NULL,
+  ggPlot = NULL,
   gp = NULL,
   half = NULL,
+  heatmapPlot = NULL,
   height = NULL,
-  hic = NULL,
-  highlightCol = NULL,
+  hicData = NULL,
+  hicFile = NULL,
+  hicPlot = NULL,
+  id = NULL,
+  id.lengths = NULL,
   just = NULL,
   label = NULL,
   labels = NULL,
   legend = NULL,
+  length = NULL,
   linecolor = NULL,
-  loops = NULL,
+  lineend = NULL,
+  linejoin = NULL,
   lty = NULL,
+  lwd = NULL,
   main = NULL,
+  matrix = NULL,
   norm = NULL,
   orientation = NULL,
   pVals = NULL,
@@ -72,6 +83,7 @@ bb_params(
   pch = NULL,
   plot = NULL,
   position = NULL,
+  r = NULL,
   range = NULL,
   res_scale = NULL,
   resolution = NULL,
@@ -79,17 +91,16 @@ bb_params(
   scale = NULL,
   sequence = NULL,
   shift = NULL,
+  showBands = NULL,
   showOutline = NULL,
   showRuler = NULL,
   showUnit = NULL,
   sigCol = NULL,
   sigLine = NULL,
   sigVal = NULL,
-  signal = NULL,
   space = NULL,
   spaceHeight = NULL,
   spaceWidth = NULL,
-  start = NULL,
   strand = NULL,
   strandLabels = NULL,
   strandSplit = NULL,
@@ -97,31 +108,34 @@ bb_params(
   stroke = NULL,
   style = NULL,
   tcl = NULL,
-  ticks = NULL,
   title = NULL,
   type = NULL,
   width = NULL,
   x = NULL,
+  x0 = NULL,
+  x1 = NULL,
   xgrid = NULL,
   y = NULL,
+  y0 = NULL,
+  y1 = NULL,
   ygrid = NULL,
   ymax = NULL,
   zrange = NULL
 )
 }
 \arguments{
-\item{assembly}{string defining the genome build. Default value is \code{assembly = "hg19"}.}
+\item{assembly}{String defining the genome build. Default value is \code{assembly = "hg19"}.}
 
-\item{gene}{(optional) string naming a gene used to set the chromosome, chromstart, and
+\item{gene}{(optional) String naming a gene used to set the chromosome, chromstart, and
 chromend arguments.}
 
-\item{geneBuffer}{(optional) integer base-pairs to extend the start and end of a gene
+\item{geneBuffer}{(optional) Integer base-pairs to extend the start and end of a gene
 defined by argument \code{gene}.}
 
 \item{...}{This function will take any BentoBox function parameters and their values.}
 }
 \value{
-Returns an object of class "bb_params" containing BentoBox function arguments.
+Returns an object of class \code{bb_params} containing BentoBox function arguments.
 }
 \description{
 Creates an object of class "bb_params" that can be used by BentoBox functions.
@@ -145,7 +159,7 @@ parameter. Buffer extending beyond the length of the chromosome will be trimmed.
 p1 <- bb_params(gene = "IL1B", assembly = "hg19")
 
 ## Optionally add more parameters
-p2 <- bb_params(geneBuffer = 10000)
+p2 <- bb_params(fontsize = 10)
 
 ## Combine parameters and pass them to a BentoBox function
 bb_plotGenes(params = c(p1, p2))

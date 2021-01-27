@@ -1,30 +1,37 @@
-#' extracts Hi-C data from a .hic file
+#' Read a .hic file and return Hi-C data as a dataframe
 #'
-#' @param hic path to .hic file
-#' @param chrom chromosome of desired region
-#' @param params an optional "bb_params" object space containing relevant function parameters
-#' @param chromstart start position
-#' @param chromend end position
-#' @param resolution the width of each pixel; "auto" will attempt to choose a resolution (in basepairs) based on the size of the region
-#' @param zrange the range of interaction scores to plot, where extreme values will be set to the max or min; if null, zrange will be set to (0, max(data))
-#' @param norm hic data normalization; must be found in hic file
-#' @param res_scale resolution scale; options are "BP" and "FRAG"
-#' @param assembly desired genome assembly
-#' @param altchrom if looking at region between two different chromosomes, this is the specified alternative chromosome
-#' @param altchromstart if looking at region between two different chromosomes, start position of altchrom
-#' @param altchromend if looking at region between two different chromsomes, end position of altchrom
+#' @usage bb_readHic(hicFile, chrom)
 #'
-#' @return Function will return a 3-column dataframe: chrom, altchrom, counts
+#' @param hicFile A character value specifying the path to the .hic file.
+#' @param chrom Chromosome of data, as a string.
+#' @param chromstart Integer start position on chromosome.
+#' @param chromend Integer end position on chromosome.
+#' @param altchrom Alternate chromosome for interchromosomal data, as a string.
+#' @param altchromstart Alternate chromosome integer start position for interchromosomal data.
+#' @param altchromend Alternate chromosome integer end position for interchromosomal data.
+#' @param assembly Default genome assembly as a string or a \link[BentoBox]{bb_assembly} object. Default value is \code{assembly = "hg19"}.
+#' @param resolution A numeric specifying the width of each pixel. "auto" will attempt to choose a resolution in basepairs based on the size of the region.
+#' @param res_scale A character value specifying the resolution scale. Default value is \code{res_scale = "BP"}. Options are:
+#' \itemize{
+#' \item{\code{"BP"}: }{Base pairs.}
+#' \item{\code{"FRAG"}: }{Fragments.}
+#' }
+#' @param zrange A numeric vector of length 2 specifying the range of interaction scores, where extreme values will be set to the max or min.
+#' @param norm Character value specifying hic data normalization method. This value must be found in the .hic file. Default value is \code{norm = "KR"}.
+#' @param matrix Character value indicating the type of matrix to output. Default value is \code{matrix = "observed"}. Options are:
+#' \itemize{
+#' \item{\code{"observed"}: }{Observed counts.}
+#' \item{\code{"oe"}: }{Observed/expected counts.}
+#' }
+#' @param params An optional \link[BentoBox]{bb_assembly} object containing relevant function parameters.
 #'
-#' @examples
-#' download.file("https://www.encodeproject.org/files/ENCFF606XNW/@@download/ENCFF606XNW.hic", destfile = "ENCFF606XNW.hic", method = "auto")
-#' bb_readHic(hic = "./ENCFF606XNW.hic", chrom = "chr1")
-#' bb_readHic(hic = "./ENCFF606XNW.hic", chrom = "chr1", chromstart = 22500000, chromend = 23200000, zrange = c(0, 125))
-#' bb_readHic(hic = "./ENCFF606XNW.hic", chrom = "chr1", altchrom = "chr2")
+#' @return Returns a 3-column dataframe in sparse upper triangular format with the following columns: \code{chrom}, \code{altchrom}, \code{counts}.
+#'
+#' @seealso \link[strawr]{straw}
+#'
 #' @export
-
-bb_readHic <- function(hic, chrom, params = NULL, chromstart = NULL, chromend = NULL, resolution = "auto", zrange = NULL,
-                       norm = "KR", res_scale = "BP", assembly = "hg19", altchrom = NULL, altchromstart = NULL, altchromend = NULL){
+bb_readHic <- function(hicFile, chrom, chromstart = NULL, chromend = NULL, altchrom = NULL, altchromstart = NULL, altchromend = NULL, assembly = "hg19", resolution = "auto", res_scale = "BP",
+                       zrange = NULL, norm = "KR",  matrix = "observed", params = NULL){
 
 
   # ======================================================================================================================================================================================
@@ -32,7 +39,7 @@ bb_readHic <- function(hic, chrom, params = NULL, chromstart = NULL, chromend = 
   # ======================================================================================================================================================================================
 
   ## Define a function that catches errors for bb_rhic
-  errorcheck_bb_rhic <- function(hic, chrom, chromstart, chromend, zrange, altchrom, altchromstart, altchromend, norm, res_scale){
+  errorcheck_bb_rhic <- function(hic, chrom, chromstart, chromend, zrange, altchrom, altchromstart, altchromend, norm, res_scale, assembly){
 
     ## hic input needs to be a path to a .hic file
     if (class(hic) != "character"){
@@ -60,6 +67,24 @@ bb_readHic <- function(hic, chrom, params = NULL, chromstart = NULL, chromend = 
 
     }
 
+    ## Not supporting chrM
+    if (chrom == "chrM"){
+
+      stop("chrM not supported.", call. = FALSE)
+
+    }
+
+    ## Even though straw technically works without "chr" for hg19, will not accept for consistency purposes
+    if (assembly == "hg19"){
+
+      if (grepl("chr", chrom) == FALSE){
+
+        stop(paste(paste0("'",chrom, "'"), "is an invalid input for an hg19 chromsome. Please specify chromosome as", paste0("'chr", chrom, "'.")), call. = FALSE)
+      }
+
+    }
+
+
     if (!is.null(chromstart) & !is.null(chromend)){
 
       ## Chromstart should be smaller than chromend
@@ -69,20 +94,22 @@ bb_readHic <- function(hic, chrom, params = NULL, chromstart = NULL, chromend = 
 
       }
 
-
-      ## Not supporting chrM
-      if (chrom == "chrM"){
-
-        stop("chrM not supported.", call. = FALSE)
-
-      }
-
     }
 
     if (!is.null(altchrom)){
 
       if (altchrom == "chrM"){
         stop("chrM not supported.", call. = FALSE)
+
+      }
+
+      ## Even though straw technically works without "chr" for hg19, will not accept for consistency purposes
+      if (assembly == "hg19"){
+
+        if (grepl("chr", altchrom) == FALSE){
+
+          stop(paste(paste0("'",altchrom, "'"), "is an invalid input for an hg19 chromsome. Please specify chromosome as", paste0("'chr", altchrom, "'.")), call. = FALSE)
+        }
 
       }
 
@@ -198,8 +225,7 @@ bb_readHic <- function(hic, chrom, params = NULL, chromstart = NULL, chromend = 
   ## Define a function to parse chromsome/region for Straw
   parse_region <- function(chrom, chromstart, chromend, assembly){
 
-    assemblyName <- unlist(strsplit(assembly$TxDb, split = "[.]"))
-    if ("hg19" %in% assemblyName){
+    if (assembly == "hg19"){
       strawChrom <- gsub("chr", "", chrom)
     } else {
       strawChrom <- chrom
@@ -226,8 +252,7 @@ bb_readHic <- function(hic, chrom, params = NULL, chromstart = NULL, chromend = 
   ## Define a function to reorder chromsomes to put "chrom" input in col1
   orderChroms <- function(hic, chrom, altchrom, assembly){
 
-    assemblyName <- unlist(strsplit(assembly$TxDb, split = "[.]"))
-    if ("hg19" %in% assemblyName){
+    if (assembly == "hg19"){
       chrom <- gsub("chr", "", chrom)
       altchrom <- gsub("chr", "", altchrom)
     }
@@ -310,14 +335,15 @@ bb_readHic <- function(hic, chrom, params = NULL, chromstart = NULL, chromend = 
   if(missing(norm)) norm <- NULL
   if(missing(res_scale)) res_scale <- NULL
   if(missing(assembly)) assembly <- NULL
+  if(missing(matrix)) matrix <- NULL
 
   ## Check if hic/chrom arguments are missing (could be in object)
-  if(!hasArg(hic)) hic <- NULL
+  if(!hasArg(hicFile)) hicFile <- NULL
   if(!hasArg(chrom)) chrom <- NULL
 
   ## Compile all parameters into an internal object
-  bb_rhic <- structure(list(hic = hic, chrom = chrom, chromstart = chromstart, chromend = chromend, resolution = resolution, zrange = zrange,
-                            norm = norm, res_scale = res_scale, assembly = assembly, altchrom = altchrom, altchromstart = altchromstart, altchromend = altchromend), class = "bb_rhic")
+  bb_rhic <- structure(list(hicFile = hicFile, chrom = chrom, chromstart = chromstart, chromend = chromend, resolution = resolution, zrange = zrange,
+                            norm = norm, res_scale = res_scale, assembly = assembly, matrix = matrix, altchrom = altchrom, altchromstart = altchromstart, altchromend = altchromend), class = "bb_rhic")
 
   bb_rhic <- parseParams(bb_params = params, object_params = bb_rhic)
 
@@ -326,21 +352,23 @@ bb_readHic <- function(hic, chrom, params = NULL, chromstart = NULL, chromend = 
   if(is.null(bb_rhic$norm)) bb_rhic$norm <- "KR"
   if(is.null(bb_rhic$res_scale)) bb_rhic$res_scale <- "BP"
   if(is.null(bb_rhic$assembly)) bb_rhic$assembly <- "hg19"
+  if(is.null(bb_rhic$matrix)) bb_rhic$matrix <- "observed"
 
-  # ======================================================================================================================================================================================
-  # CATCH ERRORS
-  # ======================================================================================================================================================================================
-  if(is.null(bb_rhic$hic)) stop("argument \"hic\" is missing, with no default.", call. = FALSE)
+  if(is.null(bb_rhic$hicFile)) stop("argument \"hicFile\" is missing, with no default.", call. = FALSE)
   if(is.null(bb_rhic$chrom)) stop("argument \"chrom\" is missing, with no default.", call. = FALSE)
-
-  errorcheck_bb_rhic(hic = bb_rhic$hic, chrom = bb_rhic$chrom, chromstart = bb_rhic$chromstart, chromend = bb_rhic$chromend, zrange = bb_rhic$zrange, altchrom = bb_rhic$altchrom,
-                     altchromstart = bb_rhic$altchromstart, altchromend = bb_rhic$altchromend, norm = bb_rhic$norm, res_scale = bb_rhic$res_scale)
 
   # ======================================================================================================================================================================================
   # PARSE ASSEMBLY
   # ======================================================================================================================================================================================
 
   bb_rhic$assembly <- parse_bbAssembly(assembly = bb_rhic$assembly)
+
+  # ======================================================================================================================================================================================
+  # CATCH ERRORS
+  # ======================================================================================================================================================================================
+
+  errorcheck_bb_rhic(hic = bb_rhic$hic, chrom = bb_rhic$chrom, chromstart = bb_rhic$chromstart, chromend = bb_rhic$chromend, zrange = bb_rhic$zrange, altchrom = bb_rhic$altchrom,
+                     altchromstart = bb_rhic$altchromstart, altchromend = bb_rhic$altchromend, norm = bb_rhic$norm, res_scale = bb_rhic$res_scale, assembly = bb_rhic$assembly$Genome)
 
   # ======================================================================================================================================================================================
   # SET PARAMETERS
@@ -368,7 +396,7 @@ bb_readHic <- function(hic, chrom, params = NULL, chromstart = NULL, chromend = 
   # PARSE REGIONS
   # ======================================================================================================================================================================================
 
-  chromRegion <- parse_region(chrom = bb_rhic$chrom, chromstart = parse_chromstart, chromend = parse_chromend, assembly = bb_rhic$assembly)
+  chromRegion <- parse_region(chrom = bb_rhic$chrom, chromstart = parse_chromstart, chromend = parse_chromend, assembly = bb_rhic$assembly$Genome)
 
   if (is.null(bb_rhic$altchrom)){
 
@@ -382,7 +410,7 @@ bb_readHic <- function(hic, chrom, params = NULL, chromstart = NULL, chromend = 
 
     } else {
 
-      altchromRegion <- parse_region(chrom = bb_rhic$altchrom, chromstart = parse_altchromstart, chromend = parse_altchromend, assembly = bb_rhic$assembly)
+      altchromRegion <- parse_region(chrom = bb_rhic$altchrom, chromstart = parse_altchromstart, chromend = parse_altchromend, assembly = bb_rhic$assembly$Genome)
 
     }
 
@@ -409,7 +437,7 @@ bb_readHic <- function(hic, chrom, params = NULL, chromstart = NULL, chromend = 
 
 
   upper <-
-    tryCatch(strawr::straw(bb_rhic$norm, bb_rhic$hic, toString(chromRegion), toString(altchromRegion), bb_rhic$res_scale, bb_rhic$resolution),
+    tryCatch(strawr::straw(bb_rhic$matrix, bb_rhic$norm, bb_rhic$hicFile, toString(chromRegion), toString(altchromRegion), bb_rhic$res_scale, bb_rhic$resolution),
              error = errorFunction)
 
   # ======================================================================================================================================================================================
@@ -418,7 +446,7 @@ bb_readHic <- function(hic, chrom, params = NULL, chromstart = NULL, chromend = 
 
   if (!is.null(bb_rhic$altchrom)){
 
-    upper <- orderChroms(hic = upper, chrom = bb_rhic$chrom, altchrom = bb_rhic$altchrom, assembly = bb_rhic$assembly)
+    upper <- orderChroms(hic = upper, chrom = bb_rhic$chrom, altchrom = bb_rhic$altchrom, assembly = bb_rhic$assembly$Genome)
     colnames(upper) <- c("x", "y", "counts")
   }
 

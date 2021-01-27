@@ -2,10 +2,10 @@
 % Please edit documentation in R/bb_genomes.R
 \name{bb_genomes}
 \alias{bb_genomes}
-\title{Displays the included available default genome assemblies}
+\title{Display the included available default genome assemblies}
 \usage{
 bb_genomes()
 }
 \description{
-Displays the included available default genome assemblies
+Display the included available default genome assemblies
 }

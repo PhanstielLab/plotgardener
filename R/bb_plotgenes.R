@@ -1,33 +1,59 @@
-#' plots a gene track for a specified region
+#' Plot a gene track for a specified genomic region
 #'
-#' @param chrom chromsome of region to be plotted
-#' @param params an optional "bb_params" object space containing relevant function parameters
-#' @param assembly desired genome assembly
-#' @param chromstart start position
-#' @param chromend end position
-#' @param fontcolors a vector indicating the font colors for the plus strand and minus strand gene labels
-#' @param strandcolors a vector indicating the strand colors for the plus strand and minus strand
-#' @param geneOrder an ordered vector of gene names to prioritize labeling
-#' @param geneHighlights a two-column dataframe with gene names to highlight and their corresponding highlight color
-#' @param geneBackground if geneHighlights is given, background color for genes that are not highlighted
-#' @param stroke numerical value indicating the stroke width for gene body outlines
-#' @param fontsize the size of gene label text (in points)
-#' @param strandLabels A logical value indicating whether to include +/- strand labels
-#' @param x A numeric or unit object specifying x-location
-#' @param y A numeric or unit object specifying y-location
-#' @param width A numeric or unit object specifying width
-#' @param height A numeric or unit object specifying height
-#' @param just string or numeric vector specifying the justification of the viewport relative to its (x, y) location: "left", "right", "centre", "center", "bottom", "top"
-#' @param default.units A string indicating the default units to use if x, y, width, or height are only given as numerics
-#' @param draw A logical value indicating whether graphics output should be produced
+#' @usage
+#' bb_plotGenes(chrom)
+#' bb_plotGenes(chrom, x, y, width, height, just = c("left", "top"), default.units = "inches")
 #'
-#' @return Function will plot a gene track and return a bb_genes object
+#' @param chrom Chromosome of region to be plotted, as a string.
+#' @param chromstart Integer start position on chromosome to be plotted.
+#' @param chromend Integer end position on chromosome to be plotted.
+#' @param assembly Default genome assembly as a string or a \link[BentoBox]{bb_assembly} object. Default value is \code{assembly = "hg19"}.
+#' @param fontsize A numeric specifying text fontsize in points. Default value is \code{fontsize = 8}.
+#' @param fontcolors A character vector of length 2 indicating the font colors for the plus strand and minus strand gene labels. The first value will color the plus strand gene labels and
+#' the second value will color the minus strand gene labels. Default value is \code{fontcolors = c("#2929ff", "#ff3434")}.
+#' @param strandcolors A character vector of length 2 indicating the strand colors for the plus strand and minus strand plot elements. The first value will color the plus strand plot elements and
+#' the second label will color the minus strand plot elements. Default value is \code{strandcolors = c("#8a8aff", "#ff7e7e")}.
+#' @param geneOrder An ordered character vector of gene names to prioritize when labeling genes.
+#' @param geneHighlights A two-column dataframe with the first column containing gene names as strings to highlight and the second column containing corresponding highlight colors.
+#' @param geneBackground If \code{geneHighlights} is given, a character value indicating the color for genes that are not highlighted.
+#' @param strandLabels A logical value indicating whether to include + and - strand labels to the left of the gene track.
+#' @param stroke A numeric value indicating the stroke width for gene body outlines. Default value is \code{stroke = 0.1}.
+#' @param bg Character value indicating background color. Default value is \code{bg = NA}.
+#' @param x A numeric or unit object specifying genes plot x-location.
+#' @param y A numeric or unit object specifying genes plot y-location.
+#' @param width A numeric or unit object specifying genes plot width.
+#' @param height A numeric or unit object specifying genes plot height.
+#' @param just Justification of genes plot relative to its (x, y) location. If there are two values, the first value specifies horizontal justification and the second value specifies vertical justification.
+#' Possible string values are: \code{"left"}, \code{"right"}, \code{"centre"}, \code{"center"}, \code{"bottom"}, and \code{"top"}. Default value is \code{just = c("left", "top")}.
+#' @param default.units A string indicating the default units to use if \code{x}, \code{y}, \code{width}, or \code{height} are only given as numerics. Default value is \code{default.units = "inches"}.
+#' @param draw A logical value indicating whether graphics output should be produced. Default value is \code{draw = TRUE}.
+#' @param params An optional \link[BentoBox]{bb_assembly} object containing relevant function parameters.
+#'
+#' @return Returns a \code{bb_genes} object containing relevant genomic region, placement, and \link[grid]{grob} information.
+#'
+#' @examples
+#' ## Load hg19 genomic annotation packages
+#' library("TxDb.Hsapiens.UCSC.hg19.knownGene")
+#' library("org.Hs.eg.db")
+#'
+#' ## Plot gene track filling up entire graphic device
+#' bb_plotGenes(chrom = "chr8", chromstart = 1000000, chromend = 2000000, assembly = "hg19")
+#'
+#' ## Plot and place gene track on a BentoBox page
+#' bb_pageCreate(width = 5, height = 2, default.units = "inches", xgrid = 0, ygrid = 0)
+#' bb_plotGenes(chrom = "chr8", chromstart = 1000000, chromend = 2000000, assembly = "hg19",
+#' x = 0.5, y = 0.25, width = 4.5, height = 1.5, just = c("left", "top"), default.units = "inches")
+#'
+#' @details Genomic annotation information is acquired through \link[GenomicFeatures]{TxDb} and \link[AnnotationDb]{OrgDb-class} packages, as determined
+#' through the \code{assembly} parameter. To avoid overcrowding of gene name labels, plotted gene labels are by default prioritized according to citation counts.
+#'
+#' @seealso \link[BentoBox]{bb_assembly}, \link[BentoBox]{bb_genomes}, \link[BentoBox]{bb_defaultPackages}
 #'
 #' @export
-bb_plotGenes <- function(chrom, params = NULL, assembly = "hg19", chromstart = NULL, chromend = NULL, fontcolors = c("#2929ff", "#ff3434"),
-                         strandcolors = c("#8a8aff", "#ff7e7e"), geneOrder = NULL, geneHighlights = NULL, geneBackground = "grey",
-                         stroke = 0.1, fontsize = 8, strandLabels = T, x = NULL, y = NULL, width = NULL, height = unit(0.6, "inches"),
-                         just = c("left", "top"), default.units = "inches", draw = T){
+bb_plotGenes <- function(chrom, chromstart = NULL, chromend = NULL, assembly = "hg19", fontsize = 8, fontcolors = c("#2929ff", "#ff3434"),
+                         strandcolors = c("#8a8aff", "#ff7e7e"), geneOrder = NULL, geneHighlights = NULL, geneBackground = "grey", strandLabels = TRUE,
+                         stroke = 0.1, bg = NA, x = NULL, y = NULL, width = NULL, height = unit(0.6, "inches"),
+                         just = c("left", "top"), default.units = "inches", draw = TRUE, params = NULL){
 
   # ======================================================================================================================================================================================
   # FUNCTIONS
@@ -122,6 +148,7 @@ bb_plotGenes <- function(chrom, params = NULL, assembly = "hg19", chromstart = N
   if(missing(stroke)) stroke <- NULL
   if(missing(fontsize)) fontsize <- NULL
   if(missing(strandLabels)) strandLabels <- NULL
+  if(missing(bg)) bg <- NULL
   if(missing(height)) height <- NULL
   if(missing(just)) just <- NULL
   if(missing(default.units)) default.units <- NULL
@@ -133,7 +160,7 @@ bb_plotGenes <- function(chrom, params = NULL, assembly = "hg19", chromstart = N
   ## Compile all parameters into an internal object
   bb_genesInternal <- structure(list(assembly = assembly, chrom = chrom, chromstart = chromstart, chromend = chromend, fontcolors = fontcolors,
                                     strandcolors = strandcolors, geneOrder = geneOrder, geneHighlights = geneHighlights, geneBackground = geneBackground,
-                                    stroke = stroke, fontsize = fontsize, strandLabels = strandLabels, x = x, y = y, width = width, height = height,
+                                    stroke = stroke, fontsize = fontsize, strandLabels = strandLabels, bg = bg, x = x, y = y, width = width, height = height,
                                     just = just, default.units = default.units, draw = draw), class = "bb_genesInternal")
 
   bb_genesInternal <- parseParams(bb_params = params, object_params = bb_genesInternal)
@@ -146,6 +173,7 @@ bb_plotGenes <- function(chrom, params = NULL, assembly = "hg19", chromstart = N
   if(is.null(bb_genesInternal$stroke)) bb_genesInternal$stroke <- 0.1
   if(is.null(bb_genesInternal$fontsize)) bb_genesInternal$fontsize <- 8
   if(is.null(bb_genesInternal$strandLabels)) bb_genesInternal$strandLabels <- TRUE
+  if(is.null(bb_genesInternal$bg)) bb_genesInternal$bg <- NA
   if(is.null(bb_genesInternal$height)) bb_genesInternal$height <- unit(0.6, "inches")
   if(is.null(bb_genesInternal$just)) bb_genesInternal$just <- c("left", "top")
   if(is.null(bb_genesInternal$default.units)) bb_genesInternal$default.units <- "inches"
@@ -155,9 +183,8 @@ bb_plotGenes <- function(chrom, params = NULL, assembly = "hg19", chromstart = N
   # INITIALIZE OBJECT
   # ======================================================================================================================================================================================
 
-  bb_genes <- structure(list(chrom = bb_genesInternal$chrom, chromstart = bb_genesInternal$chromstart, chromend = bb_genesInternal$chromend, width = bb_genesInternal$width,
-                               height = bb_genesInternal$height, x = bb_genesInternal$x, y = bb_genesInternal$y, justification = bb_genesInternal$just, grobs = NULL,
-                               assembly = bb_genesInternal$assembly), class = "bb_genes")
+  bb_genes <- structure(list(chrom = bb_genesInternal$chrom, chromstart = bb_genesInternal$chromstart, chromend = bb_genesInternal$chromend, assembly = bb_genesInternal$assembly,
+                             x = bb_genesInternal$x, y = bb_genesInternal$y, width = bb_genesInternal$width, height = bb_genesInternal$height, just = bb_genesInternal$just, grobs = NULL), class = "bb_genes")
   attr(x = bb_genes, which = "plotted") <- bb_genesInternal$draw
 
   # ======================================================================================================================================================================================
@@ -346,10 +373,11 @@ bb_plotGenes <- function(chrom, params = NULL, assembly = "hg19", chromstart = N
   }
 
   # ======================================================================================================================================================================================
-  # INITIALIZE GTREE FOR GROBS
+  # INITIALIZE GTREE FOR GROBS WITH BACKGROUND
   # ======================================================================================================================================================================================
 
-  assign("gene_grobs", gTree(), envir = bbEnv)
+  backgroundGrob <- rectGrob(gp = gpar(fill = bb_genesInternal$bg, col = NA), name = "background", vp = vp_gene)
+  assign("gene_grobs", gTree(children = gList(backgroundGrob)), envir = bbEnv)
 
   # ======================================================================================================================================================================================
   # MAKE GROBS
