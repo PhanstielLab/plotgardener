@@ -8,12 +8,19 @@
 
 <title>Function reference • BentoBox</title>
 
+<!-- favicons -->
+<link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
+<link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png" />
+<link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png" />
+<link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png" />
+<link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png" />
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.4.0/cosmo/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous" />
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script>
 
@@ -40,6 +47,7 @@
 
 
 <meta property="og:title" content="Function reference" />
+<meta property="og:image" content="https://phanstiellab.github.io/bentobox/logo.png" />
 
 
 
@@ -84,11 +92,31 @@
   </a>
 </li>
 <li>
+  <a href="../articles/our_philosophy.html">Our Philosophy</a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Vignettes
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="../articles/introduction_to_bentobox.html">Introduction to BentoBox</a>
+    </li>
+  </ul>
+</li>
+<li>
   <a href="../reference/index.html">Reference</a>
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
-        
+        <li>
+  <a href="https://github.com/PhanstielLab/BentoBox">
+    <span class="fab fa-github fa-lg"></span>
+     
+  </a>
+</li>
       </ul>
       
     </div><!--/.nav-collapse -->
@@ -116,7 +144,7 @@
     <tbody>
       <tr>
         <th colspan="2">
-          <h2 id="section-all-functions" class="hasAnchor"><a href="#section-all-functions" class="anchor"></a>All functions</h2>
+          <h2 id="section-about-bentobox" class="hasAnchor"><a href="#section-about-bentobox" class="anchor"></a>About BentoBox</h2>
           <p class="section-desc"></p>
         </th>
       </tr>
@@ -128,82 +156,23 @@
       <tr>
         
         <td>
-          <p><code><a href="bb_annoBedpeAnchors.html">bb_annoBedpeAnchors()</a></code> </p>
+          <p><code><a href="BentoBox.html">BentoBox</a></code> </p>
         </td>
-        <td><p>Annotate vertical boxes at anchors of BEDPE elements</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="bb_annoHeatmapLegend.html">bb_annoHeatmapLegend()</a></code> </p>
-        </td>
-        <td><p>Add a color scale legend for heatmap-style plots</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="bb_annoLoops.html">bb_annoLoops()</a></code> </p>
-        </td>
-        <td><p>Annotate DNA loops in a Hi-C plot</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="bb_annoXaxis.html">bb_annoXaxis()</a></code> </p>
-        </td>
-        <td><p>Add an x-axis to a plot</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="bb_annoYaxis.html">bb_annoYaxis()</a></code> </p>
-        </td>
-        <td><p>Add a y-axis to a plot</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="bb_assembly.html">bb_assembly()</a></code> </p>
-        </td>
-        <td><p>Make a <code>bb_assembly</code> object for alternate TxDb, OrgDb,and BSgenome genomic annotation packages</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="bb_bedData.html">bb_bedData</a></code> </p>
-        </td>
-        <td><p>BentoBox example BED data</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="bb_bedpeData.html">bb_bedpeData</a></code> </p>
-        </td>
-        <td><p>BentoBox example BEDPE data</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="bb_defaultPackages.html">bb_defaultPackages()</a></code> </p>
-        </td>
-        <td><p>Display the default genomic annotation packages associated with a genome build</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="bb_genomes.html">bb_genomes()</a></code> </p>
-        </td>
-        <td><p>Display the included available default genome assemblies</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="bb_gwasData.html">bb_gwasData</a></code> </p>
-        </td>
-        <td><p>BentoBox example GWAS data</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="bb_hicData.html">bb_hicData</a></code> </p>
-        </td>
-        <td><p>BentoBox example Hi-C data</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="bb_maptocolors.html">bb_maptocolors()</a></code> </p>
-        </td>
-        <td><p>Maps numeric vector to color palette</p></td>
-      </tr><tr>
+        <td><p>BentoBox: Coordinate-based Genomic Visualization Package for R</p></td>
+      </tr>
+    </tbody><tbody>
+      <tr>
+        <th colspan="2">
+          <h2 id="section-page-layout-functions" class="hasAnchor"><a href="#section-page-layout-functions" class="anchor"></a>Page layout functions</h2>
+          <p class="section-desc"></p>
+        </th>
+      </tr>
+      
+      
+    </tbody><tbody>
+      
+      
+      <tr>
         
         <td>
           <p><code><a href="bb_pageCreate.html">bb_pageCreate()</a></code> </p>
@@ -245,13 +214,45 @@
           <p><code><a href="bb_pagePlotRemove.html">bb_pagePlotRemove()</a></code> </p>
         </td>
         <td><p>Remove BentoBox plots and annotations</p></td>
+      </tr>
+    </tbody><tbody>
+      <tr>
+        <th colspan="2">
+          <h2 id="section-reading-functions" class="hasAnchor"><a href="#section-reading-functions" class="anchor"></a>Reading functions</h2>
+          <p class="section-desc"></p>
+        </th>
+      </tr>
+      
+      
+    </tbody><tbody>
+      
+      
+      <tr>
+        
+        <td>
+          <p><code><a href="bb_readBigwig.html">bb_readBigwig()</a></code> <code><a href="bb_readBigwig.html">bb_readBigwig()</a></code> </p>
+        </td>
+        <td><p>Read a bigwig file and return it as a data frame</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="bb_params.html">bb_params()</a></code> </p>
+          <p><code><a href="bb_readHic.html">bb_readHic()</a></code> </p>
         </td>
-        <td><p>bb_params: BentoBox parameters object</p></td>
-      </tr><tr>
+        <td><p>Read a .hic file and return Hi-C data as a dataframe</p></td>
+      </tr>
+    </tbody><tbody>
+      <tr>
+        <th colspan="2">
+          <h2 id="section-plotting-functions" class="hasAnchor"><a href="#section-plotting-functions" class="anchor"></a>Plotting functions</h2>
+          <p class="section-desc"></p>
+        </th>
+      </tr>
+      
+      
+    </tbody><tbody>
+      
+      
+      <tr>
         
         <td>
           <p><code><a href="bb_plotBase.html">bb_plotBase()</a></code> </p>
@@ -365,30 +366,129 @@
           <p><code><a href="bb_plotTranscripts.html">bb_plotTranscripts()</a></code> <code><a href="bb_plotTranscripts.html">bb_plotTranscripts()</a></code> </p>
         </td>
         <td><p>Plot gene transcripts in a pileup style for a single chromosome</p></td>
+      </tr>
+    </tbody><tbody>
+      <tr>
+        <th colspan="2">
+          <h2 id="section-annotation-function" class="hasAnchor"><a href="#section-annotation-function" class="anchor"></a>Annotation function</h2>
+          <p class="section-desc"></p>
+        </th>
+      </tr>
+      
+      
+    </tbody><tbody>
+      
+      
+      <tr>
+        
+        <td>
+          <p><code><a href="bb_annoBedpeAnchors.html">bb_annoBedpeAnchors()</a></code> </p>
+        </td>
+        <td><p>Annotate vertical boxes at anchors of BEDPE elements</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="bb_readBigwig.html">bb_readBigwig()</a></code> <code><a href="bb_readBigwig.html">bb_readBigwig()</a></code> </p>
+          <p><code><a href="bb_annoHeatmapLegend.html">bb_annoHeatmapLegend()</a></code> </p>
         </td>
-        <td><p>Read a bigwig file and return it as a data frame</p></td>
+        <td><p>Add a color scale legend for heatmap-style plots</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="bb_readHic.html">bb_readHic()</a></code> </p>
+          <p><code><a href="bb_annoLoops.html">bb_annoLoops()</a></code> </p>
         </td>
-        <td><p>Read a .hic file and return Hi-C data as a dataframe</p></td>
+        <td><p>Annotate DNA loops in a Hi-C plot</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="bb_annoXaxis.html">bb_annoXaxis()</a></code> </p>
+        </td>
+        <td><p>Add an x-axis to a plot</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="bb_annoYaxis.html">bb_annoYaxis()</a></code> </p>
+        </td>
+        <td><p>Add a y-axis to a plot</p></td>
+      </tr>
+    </tbody><tbody>
+      <tr>
+        <th colspan="2">
+          <h2 id="section-meta-functions" class="hasAnchor"><a href="#section-meta-functions" class="anchor"></a>Meta functions</h2>
+          <p class="section-desc"></p>
+        </th>
+      </tr>
+      
+      
+    </tbody><tbody>
+      
+      
+      <tr>
+        
+        <td>
+          <p><code><a href="bb_assembly.html">bb_assembly()</a></code> </p>
+        </td>
+        <td><p>Make a <code>bb_assembly</code> object for alternate TxDb, OrgDb,and BSgenome genomic annotation packages</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="bb_defaultPackages.html">bb_defaultPackages()</a></code> </p>
+        </td>
+        <td><p>Display the default genomic annotation packages associated with a genome build</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="bb_genomes.html">bb_genomes()</a></code> </p>
+        </td>
+        <td><p>Display the included available default genome assemblies</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="bb_params.html">bb_params()</a></code> </p>
+        </td>
+        <td><p>bb_params: BentoBox parameters object</p></td>
+      </tr>
+    </tbody><tbody>
+      <tr>
+        <th colspan="2">
+          <h2 id="section-datasets" class="hasAnchor"><a href="#section-datasets" class="anchor"></a>Datasets</h2>
+          <p class="section-desc"></p>
+        </th>
+      </tr>
+      
+      
+    </tbody><tbody>
+      
+      
+      <tr>
+        
+        <td>
+          <p><code><a href="bb_bedData.html">bb_bedData</a></code> </p>
+        </td>
+        <td><p>BentoBox example BED data</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="bb_bedpeData.html">bb_bedpeData</a></code> </p>
+        </td>
+        <td><p>BentoBox example BEDPE data</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="bb_gwasData.html">bb_gwasData</a></code> </p>
+        </td>
+        <td><p>BentoBox example GWAS data</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="bb_hicData.html">bb_hicData</a></code> </p>
+        </td>
+        <td><p>BentoBox example Hi-C data</p></td>
       </tr><tr>
         
         <td>
           <p><code><a href="bb_signalData.html">bb_signalData</a></code> </p>
         </td>
         <td><p>BentoBox example H3K27ac signal data</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="colorby.html">colorby()</a></code> </p>
-        </td>
-        <td><p>Handle BentoBox color scaling parameters</p></td>
       </tr><tr>
         
         <td>
@@ -458,7 +558,7 @@
 
       <footer>
       <div class="copyright">
-  <p>Developed by Nicole Kramer.</p>
+  <p>Developed by <a href='https://github.com/nekramer'>Nicole Kramer</a>, <a href='https://github.com/EricSDavis'>Eric S. Davis</a>, <a href='https://github.com/cwenger'>Craig Wenger</a>, <a href='https://github.com/dphansti'>Douglas H. Phanstiel</a>.</p>
 </div>
 
 <div class="pkgdown">

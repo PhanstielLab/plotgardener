@@ -1,8 +1,5 @@
 #' Plot text within a BentoBox layout
 #'
-#' @usage bb_plotText(label, x, y, just = "center",
-#'                    default.units = "inches")
-#'
 #' @param label Character or expression of text to be plotted.
 #' @param fontcolor A character value specifying text fontcolor. Default value is \code{fontcolor = "black"}.
 #' @param fontsize A numeric specifying text fontsize in points. Default value is \code{fontsize = 12}.
@@ -35,7 +32,7 @@ bb_plotText <- function(label, fontcolor = "black", fontsize = 12, rot = 0, chec
   # ======================================================================================================================================================================================
   # PARSE PARAMETERS
   # ======================================================================================================================================================================================
-
+  
   ## Check which defaults are not overwritten and set to NULL
   if(missing(just)) just <- NULL
   if(missing(fontcolor)) fontcolor <- NULL
@@ -51,7 +48,7 @@ bb_plotText <- function(label, fontcolor = "black", fontsize = 12, rot = 0, chec
 
   ## Compile all parameters into an internal object
   bb_textInternal <- structure(list(label = label, x = x, y = y, just = just, fontcolor = fontcolor,
-                                    fontsize = fontsize, rot = rot, check.overlap = check.overlap, default.units = default.units, gp = NULL), class = "bb_textInternal")
+                                    fontsize = fontsize, rot = rot, check.overlap = check.overlap, default.units = default.units), class = "bb_textInternal")
 
   bb_textInternal <- parseParams(bb_params = params, object_params = bb_textInternal)
 
