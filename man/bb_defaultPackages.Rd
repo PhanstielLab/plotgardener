@@ -2,13 +2,24 @@
 % Please edit documentation in R/bb_defaultPackages.R
 \name{bb_defaultPackages}
 \alias{bb_defaultPackages}
-\title{Displays the default data packages associated with a genome build}
+\title{Display the default genomic annotation packages associated with a genome build}
 \usage{
-bb_defaultPackages(genome)
+bb_defaultPackages(Genome)
 }
 \arguments{
-\item{genome}{string indicating the genome assembly}
+\item{Genome}{String indicating the name of the genome assembly.}
+}
+\value{
+Returns a list of the default data packages for a genome build.
 }
 \description{
-Displays the default data packages associated with a genome build
+Display the default genomic annotation packages associated with a genome build
+}
+\examples{
+## View default genomic annotation packages associated with "hg19"
+bb_defaultPackages(Genome = "hg19")
+
+## View default genomic annotation packages associated with "mm9"
+bb_defaultPackages(Genome = "mm9")
+
 }
