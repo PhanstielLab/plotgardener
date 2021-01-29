@@ -41,7 +41,7 @@ Default value is \code{default.units = "inches"}.}
 \item{...}{Additional grid graphical parameters. See \link[grid]{gpar}.}
 }
 \value{
-Returns a \code{bb_rast} object containing relevant placement and \link[grid]{grob} information.
+Returns a \code{bb_raster} object containing relevant placement and \link[grid]{grob} information.
 }
 \description{
 Plot a raster object within a BentoBox layout
