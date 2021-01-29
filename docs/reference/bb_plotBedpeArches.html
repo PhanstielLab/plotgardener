@@ -140,16 +140,39 @@
     <p>Plot paired-end BEDPE data in an arch style</p>
     </div>
 
-    <pre class="usage"><span class='fu'>bb_plotBedpeArches</span><span class='op'>(</span><span class='va'>bedpeData</span>, <span class='va'>chrom</span><span class='op'>)</span>
-<span class='fu'>bb_plotBedpeArches</span><span class='op'>(</span><span class='va'>bedpeData</span>, <span class='va'>chrom</span>, <span class='va'>x</span>, <span class='va'>y</span>, <span class='va'>width</span>,
-                   <span class='va'>height</span>, just <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"left"</span>, <span class='st'>"top"</span><span class='op'>)</span>,
-                   default.units <span class='op'>=</span> <span class='st'>"inches"</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>bb_plotBedpeArches</span><span class='op'>(</span>
+  <span class='va'>data</span>,
+  <span class='va'>chrom</span>,
+  chromstart <span class='op'>=</span> <span class='cn'>NULL</span>,
+  chromend <span class='op'>=</span> <span class='cn'>NULL</span>,
+  assembly <span class='op'>=</span> <span class='st'>"hg19"</span>,
+  style <span class='op'>=</span> <span class='st'>"2D"</span>,
+  position <span class='op'>=</span> <span class='st'>"top"</span>,
+  curvature <span class='op'>=</span> <span class='fl'>5</span>,
+  archHeight <span class='op'>=</span> <span class='cn'>NULL</span>,
+  fill <span class='op'>=</span> <span class='st'>"grey"</span>,
+  colorby <span class='op'>=</span> <span class='cn'>NULL</span>,
+  linecolor <span class='op'>=</span> <span class='st'>"grey"</span>,
+  alpha <span class='op'>=</span> <span class='fl'>0.4</span>,
+  bg <span class='op'>=</span> <span class='cn'>NA</span>,
+  clip <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  baseline <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  x <span class='op'>=</span> <span class='cn'>NULL</span>,
+  y <span class='op'>=</span> <span class='cn'>NULL</span>,
+  width <span class='op'>=</span> <span class='cn'>NULL</span>,
+  height <span class='op'>=</span> <span class='cn'>NULL</span>,
+  just <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"left"</span>, <span class='st'>"top"</span><span class='op'>)</span>,
+  default.units <span class='op'>=</span> <span class='st'>"inches"</span>,
+  draw <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  params <span class='op'>=</span> <span class='cn'>NULL</span>,
+  <span class='va'>...</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>bedpeData</th>
+      <th>data</th>
       <td><p>A string specifying the BEDPE file path or a dataframe in BEDPE format specifying data to be plotted.</p></td>
     </tr>
     <tr>
@@ -260,20 +283,37 @@ Possible string values are: <code>"left"</code>, <code>"right"</code>, <code>"ce
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>Returns a <code>bb_arches</code> object containing relevant genomic region, placement, and <a href='https://rdrr.io/r/grid/grid.grob.html'>grob</a> information.</p>
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>This function can be used to quickly plot a BEDPE Arches plot by ignoring plot placement parameters:</p><pre>
+<span class='fu'>bb_plotBedpeArches</span><span class='op'>(</span><span class='va'>data</span>, <span class='va'>chrom</span>,
+                   chromstart <span class='op'>=</span> <span class='cn'>NULL</span>, chromend <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span>
+</pre><p>A BEDPE Arches plot can be placed on a BentoBox coordinate page by providing plot placement parameters:</p><pre>
+bb_plotBedpeArches(data chrom,
+                   chromstart = NULL, chromend = NULL,
+                   x, y, width, height, just = c("left", "top"),
+                   default.units = "inches")
+</pre>
+
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><span class='co'>## Load BEDPE data</span>
+    <pre class="examples"><div class='input'><span class='co'>## Load BEDPE data</span>
 <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='st'>"bb_bedpeData"</span><span class='op'>)</span>
 
 <span class='co'>## Plot BEDPE arches plot filling up entire graphic device</span>
-<span class='va'>bedpeArchesPlot</span> <span class='op'>&lt;-</span> <span class='fu'>bb_plotBedpeArches</span><span class='op'>(</span>bedpeData <span class='op'>=</span> <span class='va'>bb_bedpeData</span>, chrom <span class='op'>=</span> <span class='st'>"chr21"</span>, chromstart <span class='op'>=</span> <span class='fl'>28000000</span>, chromend <span class='op'>=</span> <span class='fl'>30300000</span>, fill <span class='op'>=</span> <span class='st'>"black"</span><span class='op'>)</span>
-
+<span class='va'>bedpeArchesPlot</span> <span class='op'>&lt;-</span> <span class='fu'>bb_plotBedpeArches</span><span class='op'>(</span>data <span class='op'>=</span> <span class='va'>bb_bedpeData</span>, chrom <span class='op'>=</span> <span class='st'>"chr21"</span>,
+                                      chromstart <span class='op'>=</span> <span class='fl'>28000000</span>, chromend <span class='op'>=</span> <span class='fl'>30300000</span>,
+                                      fill <span class='op'>=</span> <span class='st'>"black"</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='message'>bb_arches[bb_arches1]</span></div><div class='img'><img src='bb_plotBedpeArches-1.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'>## Plot and place BEDPE arches plot on a BentoBox page</span>
 <span class='fu'><a href='bb_pageCreate.html'>bb_pageCreate</a></span><span class='op'>(</span>width <span class='op'>=</span> <span class='fl'>5</span>, height <span class='op'>=</span> <span class='fl'>2</span>, default.units <span class='op'>=</span> <span class='st'>"inches"</span>, xgrid <span class='op'>=</span> <span class='fl'>0</span>, ygrid <span class='op'>=</span> <span class='fl'>0</span><span class='op'>)</span>
-<span class='va'>bedpeArchesPlot</span> <span class='op'>&lt;-</span> <span class='fu'>bb_plotBedpeArches</span><span class='op'>(</span>bedpeData <span class='op'>=</span> <span class='va'>bb_bedpeData</span>, chrom <span class='op'>=</span> <span class='st'>"chr21"</span>, chromstart <span class='op'>=</span> <span class='fl'>28000000</span>, chromend <span class='op'>=</span> <span class='fl'>30300000</span>, fill <span class='op'>=</span> <span class='st'>"black"</span>,
-                                      x <span class='op'>=</span> <span class='fl'>0</span>, y <span class='op'>=</span> <span class='fl'>0.25</span>, width <span class='op'>=</span> <span class='fl'>5</span>, height <span class='op'>=</span> <span class='fl'>1.5</span>, just <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"left"</span>, <span class='st'>"top"</span><span class='op'>)</span>, default.units <span class='op'>=</span> <span class='st'>"inches"</span><span class='op'>)</span>
-
-</pre>
+</div><div class='input'><span class='va'>bedpeArchesPlot</span> <span class='op'>&lt;-</span> <span class='fu'>bb_plotBedpeArches</span><span class='op'>(</span>data <span class='op'>=</span> <span class='va'>bb_bedpeData</span>, chrom <span class='op'>=</span> <span class='st'>"chr21"</span>,
+                                      chromstart <span class='op'>=</span> <span class='fl'>28000000</span>, chromend <span class='op'>=</span> <span class='fl'>30300000</span>,
+                                      fill <span class='op'>=</span> <span class='st'>"black"</span>,
+                                      x <span class='op'>=</span> <span class='fl'>0</span>, y <span class='op'>=</span> <span class='fl'>0.25</span>, width <span class='op'>=</span> <span class='fl'>5</span>, height <span class='op'>=</span> <span class='fl'>1.5</span>,
+                                      just <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"left"</span>, <span class='st'>"top"</span><span class='op'>)</span>, default.units <span class='op'>=</span> <span class='st'>"inches"</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='message'>bb_arches[bb_arches1]</span></div><div class='img'><img src='bb_plotBedpeArches-2.png' alt='' width='700' height='433' /></div><div class='input'>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

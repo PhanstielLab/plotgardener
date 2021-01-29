@@ -22,8 +22,8 @@
 #'
 #' ## Place base R plot in BentoBox page
 #' bb_plotBase(plot = p,
-#'             x = 0.5, y = 0.5, width = 4, height = 4, j
-#'             ust = c("left", "top"), default.units = "inches")
+#'             x = 0.5, y = 0.5, width = 4, height = 4,
+#'             just = c("left", "top"), default.units = "inches")
 #'
 #' @export
 bb_plotBase <- function(plot, x, y, width, height, just = c("left", "top"), default.units = "inches", bg = NA, params = NULL){

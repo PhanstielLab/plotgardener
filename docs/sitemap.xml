@@ -10,6 +10,9 @@
     <loc>https://phanstiellab.github.io/bentobox/reference/bb_annoBedpeAnchors.html</loc>
   </url>
   <url>
+    <loc>https://phanstiellab.github.io/bentobox/reference/bb_annoGenomeLabel.html</loc>
+  </url>
+  <url>
     <loc>https://phanstiellab.github.io/bentobox/reference/bb_annoHeatmapLegend.html</loc>
   </url>
   <url>
@@ -41,9 +44,6 @@
   </url>
   <url>
     <loc>https://phanstiellab.github.io/bentobox/reference/bb_hicData.html</loc>
-  </url>
-  <url>
-    <loc>https://phanstiellab.github.io/bentobox/reference/bb_maptocolors.html</loc>
   </url>
   <url>
     <loc>https://phanstiellab.github.io/bentobox/reference/bb_pageCreate.html</loc>
@@ -110,6 +110,9 @@
   </url>
   <url>
     <loc>https://phanstiellab.github.io/bentobox/reference/bb_plotPolygon.html</loc>
+  </url>
+  <url>
+    <loc>https://phanstiellab.github.io/bentobox/reference/bb_plotRaster.html</loc>
   </url>
   <url>
     <loc>https://phanstiellab.github.io/bentobox/reference/bb_plotRect.html</loc>
