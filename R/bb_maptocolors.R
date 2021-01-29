@@ -1,9 +1,8 @@
-#' Maps numeric vector to color palette
-#'
-#' @param vec numeric vector to map to color
-#' @param col color palette to map to
-#' @param num number of bins of colors
-#' @param range range of values to map
+# Maps numeric vector to color palette
+# vec: numeric vector to map to color
+# col: color palette to map to
+# num: number of bins of colors
+# range: range of values to map
 bb_maptocolors <- function(vec, col, num = 100, range = NULL){
 
   if (is.null(range) == TRUE){
