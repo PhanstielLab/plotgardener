@@ -41,7 +41,7 @@ package.version("BentoBox")
 
 We can use any of the plotting functions to quickly plot a single data
 type by simply ignoring the arguments that define the plotting location
-(i.e. `x`, `y`, `width`, `height`, `just`, `default.units`).
+(i.e. `x`, `y`, `width`, `height`, `just`, `default.units`).
 
 Lets demonstrate this by plotting the example Hi-C data included in
 bb\_hicData (chr21:28000000-30300000):
@@ -54,7 +54,7 @@ library(BentoBox)
 data("bb_hicData")
 
 ## Quick plot Hi-C data
-hicPlot <- bb_plotHicSquare(hicData = bb_hicData,
+hicPlot <- bb_plotHicSquare(data = bb_hicData,
                             chrom = "chr21", chromstart = 28000000, chromend = 30300000)
 ```
 
@@ -137,8 +137,8 @@ print(hicPlot)
 ##         rgb(x[, 1L], x[, 2L], x[, 3L], x[, 4L], maxColorValue = 255)
 ##     else rgb(x[, 1L], x[, 2L], x[, 3L], maxColorValue = 255)
 ## }
-## <bytecode: 0x7fe033efec00>
-## <environment: 0x7fe033efd690>
+## <bytecode: 0x7fd59705e550>
+## <environment: 0x7fd597061318>
 ## 
 ## $zrange
 ## [1]  0 70
@@ -199,12 +199,12 @@ data("bb_hicData")
 bb_pageCreate(width = 3.25, height = 3.25, default.units = "inches")
 
 ## Plot Hi-C data with placing information
-hicPlot <- bb_plotHicSquare(hicData = bb_hicData,
+hicPlot <- bb_plotHicSquare(data = bb_hicData,
                             chrom = "chr21", chromstart = 28000000, chromend = 30300000,
                             x = 0.25, y = 0.25, width = 2.5, height = 2.5, default.units = "inches")
 
 ## Add color scale annotation
-bb_annoHeatmapLegend(heatmapPlot = hicPlot,
+bb_annoHeatmapLegend(plot = hicPlot,
                      x = 2.85, y = 0.25, width = 0.1, height = 1.25, default.units = "inches")
 ```
 
@@ -246,12 +246,12 @@ params <- bb_params(x = 0.25, width = 2.5, default.units = "inches")
 bb_pageCreate(width = 3.25, height = 4, default.units = "inches")
 
 ## Plot Hi-C data with combined bb_params objects
-hicPlot <- bb_plotHicSquare(hicData = bb_hicData,
+hicPlot <- bb_plotHicSquare(data = bb_hicData,
                             params = c(region, params),
                             y = 0.25, height = params$width)
 
 ## Add color scale annotation
-bb_annoHeatmapLegend(heatmapPlot = hicPlot,
+bb_annoHeatmapLegend(plot = hicPlot,
                      x = 2.85, y = 0.25, width = 0.1, height = 1.25, default.units = "inches")
 
 ## Plot H3K27Ac signal track
