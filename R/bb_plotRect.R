@@ -184,5 +184,6 @@ bb_plotRect <- function(x, y, width, height, just = "center", default.units = "i
   # RETURN OBJECT
   # ======================================================================================================================================================================================
 
-  return(bb_rect)
+  message(paste0("bb_rect[", rect$name, "]"))
+  invisible(bb_rect)
 }

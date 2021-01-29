@@ -379,7 +379,8 @@ bb_pagePlotPlace <- function(plot, x = NULL, y = NULL, width = NULL, height = NU
   # RETURN UPDATED OBJECT
   # ======================================================================================================================================================================================
 
-  return(object)
+  message(paste0(gsub(pattern = "[0-9]", replacement = "", x = vp_name),"[", vp_name, "]"))
+  invisible(object)
 
 
 }

@@ -107,6 +107,7 @@ bb_plotGG <- function(plot, x, y, width, height, just = c("left", "top"), defaul
   # RETURN OBJECT
   # ======================================================================================================================================================================================
 
-  return(gg_plot)
+  message(paste0("bb_gg[", vp_name, "]"))
+  invisible(gg_plot)
 
 }

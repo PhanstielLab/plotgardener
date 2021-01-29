@@ -707,7 +707,7 @@ bb_plotHicTriangle <- function(data, resolution = "auto", zrange = NULL, norm = 
 
   ## Get viewport name
   currentViewports <- current_viewports()
-  vp_name <- paste0("bb_trianglehic", length(grep(pattern = "bb_trianglehic", x = currentViewports)) + 1)
+  vp_name <- paste0("bb_hicTriangle", length(grep(pattern = "bb_hicTriangle", x = currentViewports)) + 1)
 
   if (is.null(hic_plot$x) & is.null(hic_plot$y)){
 
@@ -843,6 +843,7 @@ bb_plotHicTriangle <- function(data, resolution = "auto", zrange = NULL, norm = 
   # RETURN OBJECT
   # ======================================================================================================================================================================================
 
-  return(hic_plot)
+  message(paste0("bb_hicTriangle[", vp_name, "]"))
+  invisible(hic_plot)
 
 }

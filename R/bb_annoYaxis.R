@@ -115,6 +115,7 @@ bb_annoYaxis <- function(plot, at = NULL, label = TRUE, main = TRUE, gp = gpar()
   # RETURN OBJECT
   # ======================================================================================================================================================================================
 
-  return(yAxis)
+  message(paste0("bb_yaxis[", vp_name, "]"))
+  invisible(yAxis)
 
 }

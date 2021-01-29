@@ -729,5 +729,6 @@ bb_plotGenomeLabel <- function(chrom, chromstart = NULL, chromend = NULL, assemb
   # RETURN OBJECT
   # ======================================================================================================================================================================================
 
-  return(bb_genomeLabel)
+  message(paste0("bb_genomeLabel[", vp_name, "]"))
+  invisible(bb_genomeLabel)
 }

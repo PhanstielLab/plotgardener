@@ -13,7 +13,7 @@
 #' @param params An optional \link[BentoBox]{bb_assembly} object containing relevant function parameters.
 #' @param ... Additional grid graphical parameters. See \link[grid]{gpar}.
 #'
-#' @return Returns a \code{bb_rast} object containing relevant placement and \link[grid]{grob} information.
+#' @return Returns a \code{bb_raster} object containing relevant placement and \link[grid]{grob} information.
 #'
 #' @examples
 #' library(jpeg)
@@ -64,7 +64,7 @@ bb_plotRaster <- function(image, x, y, width, height, just = "center", default.u
   # ======================================================================================================================================================================================
 
   bb_rast <- structure(list(image = bb_rastInternal$image, x = bb_rastInternal$x, y = bb_rastInternal$y, width = bb_rastInternal$width, height = bb_rastInternal$height, just = bb_rastInternal$just,
-                            interpolate = bb_rastInternal$interpolate, grobs = NULL, gp = gpar()), class = "bb_rast")
+                            interpolate = bb_rastInternal$interpolate, grobs = NULL, gp = gpar()), class = "bb_raster")
 
   # ======================================================================================================================================================================================
   # CATCH ERRORS
@@ -178,7 +178,8 @@ bb_plotRaster <- function(image, x, y, width, height, just = "center", default.u
   # RETURN OBJECT
   # ======================================================================================================================================================================================
 
-  return(bb_rast)
+  message(paste0("bb_raster[", rast$name, "]"))
+  invisible(bb_rast)
 }
 
 

@@ -516,6 +516,11 @@ bb_plotBedpeArches <- function(data, chrom, chromstart = NULL, chromend = NULL, 
   # RETURN OBJECT
   # ======================================================================================================================================================================================
 
-  return(arches_plot)
+  message(paste0("bb_arches[", vp_name, "]"))
+  invisible(arches_plot)
 
 }
+
+
+
+

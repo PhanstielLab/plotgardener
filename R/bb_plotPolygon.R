@@ -143,5 +143,6 @@ bb_plotPolygon <- function(x, y, default.units = "inches", linecolor = "black", 
   # RETURN OBJECT
   # ======================================================================================================================================================================================
 
-  return(bb_polygon)
+  message(paste0("bb_polygon[", polygon$name, "]"))
+  invisible(bb_polygon)
 }

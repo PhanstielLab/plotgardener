@@ -709,7 +709,7 @@ bb_plotHicSquare <- function(data, resolution = "auto", zrange = NULL, norm = "K
 
   ## Get viewport name
   currentViewports <- current_viewports()
-  vp_name <- paste0("bb_hic", length(grep(pattern = "bb_hic", x = currentViewports)) + 1)
+  vp_name <- paste0("bb_hicSquare", length(grep(pattern = "bb_hicSquare", x = currentViewports)) + 1)
 
   ## If placing information is provided but plot == TRUE, set up it's own viewport separate from bb_makepage
   ## Not translating into page_coordinates
@@ -819,6 +819,7 @@ bb_plotHicSquare <- function(data, resolution = "auto", zrange = NULL, norm = "K
 
   }
 
-  return(hic_plot)
+  message(paste0("bb_hicSquare[", vp_name, "]"))
+  invisible(hic_plot)
 
-  }
+}

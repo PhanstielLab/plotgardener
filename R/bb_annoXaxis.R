@@ -114,6 +114,7 @@ bb_annoXaxis <- function(plot, at = NULL, label = TRUE, main = TRUE, gp = gpar()
   # RETURN OBJECT
   # ======================================================================================================================================================================================
 
-  return(xAxis)
+  message(paste0("bb_xaxis[", vp_name, "]"))
+  invisible(xAxis)
 
 }

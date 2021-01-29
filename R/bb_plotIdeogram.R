@@ -636,6 +636,7 @@ bb_plotIdeogram <- function(chrom, assembly = "hg19", orientation = "h", showBan
   # RETURN OBJECT
   # ======================================================================================================================================================================================
 
-  return(ideogram_plot)
+  message(paste0("bb_ideogram[", vp_name, "]"))
+  invisible(ideogram_plot)
 
 }

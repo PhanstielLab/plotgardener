@@ -153,6 +153,6 @@ bb_annoGenomeLabel <- function(plot, fontsize = 10, fontcolor = "black", linecol
   # RETURN OBJECT
   # ======================================================================================================================================================================================
 
-  return(bb_genomeLabel)
+  invisible(bb_genomeLabel)
 
 }

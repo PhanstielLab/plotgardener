@@ -452,7 +452,7 @@ bb_annoLoops <- function(plot, data, type = "box", half = "inherit", shift = 4, 
 
   ## Name viewport
   currentViewports <- current_viewports()
-  vp_name <- paste0("bb_loopAnnotation", length(grep(pattern = "bb_loopAnnotation", x = currentViewports)) + 1)
+  vp_name <- paste0("bb_loops", length(grep(pattern = "bb_loops", x = currentViewports)) + 1)
 
   ## Make viewport based on hic input viewport
   if (class(bb_loopsInternal$plot) == "bb_hicSquare"){
@@ -531,6 +531,7 @@ bb_annoLoops <- function(plot, data, type = "box", half = "inherit", shift = 4, 
   # RETURN OBJECT
   # ======================================================================================================================================================================================
 
-  return(bb_loops)
+  message(paste0("bb_loops[", vp_name, "]"))
+  invisible(bb_loops)
 
 }

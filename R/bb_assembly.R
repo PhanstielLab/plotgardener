@@ -28,6 +28,6 @@ bb_assembly <- function(Genome, TxDb, OrgDb, gene.id.column = "ENTREZID", displa
     object$BSgenome <- BSgenome
   }
 
-  return(object)
+  invisible(object)
 
 }

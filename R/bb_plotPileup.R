@@ -618,5 +618,6 @@ bb_plotPileup <- function(data, chrom, chromstart = NULL, chromend = NULL, assem
   # RETURN OBJECT
   # ======================================================================================================================================================================================
 
-  return(pileup_plot)
+  message(paste0("bb_pileup[", vp_name, "]"))
+  invisible(pileup_plot)
 }

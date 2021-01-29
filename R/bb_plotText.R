@@ -32,7 +32,7 @@ bb_plotText <- function(label, fontcolor = "black", fontsize = 12, rot = 0, chec
   # ======================================================================================================================================================================================
   # PARSE PARAMETERS
   # ======================================================================================================================================================================================
-  
+
   ## Check which defaults are not overwritten and set to NULL
   if(missing(just)) just <- NULL
   if(missing(fontcolor)) fontcolor <- NULL
@@ -142,5 +142,6 @@ bb_plotText <- function(label, fontcolor = "black", fontsize = 12, rot = 0, chec
   # RETURN OBJECT
   # ======================================================================================================================================================================================
 
-  return(bb_text)
+  message(paste0("bb_text[", text$name, "]"))
+  invisible(bb_text)
 }

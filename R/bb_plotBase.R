@@ -133,6 +133,7 @@ bb_plotBase <- function(plot, x, y, width, height, just = c("left", "top"), defa
   # RETURN OBJECT
   # ======================================================================================================================================================================================
 
-  return(bb_base)
+  message(paste0("bb_base[", vp_name, "]"))
+  invisible(bb_base)
 
 }

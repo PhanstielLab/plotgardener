@@ -29,7 +29,7 @@
 #' bb_pageCreate(width = 4, height = 3.5, default.units = "inches", xgrid = 0, ygrid = 0)
 #'
 #' ## Plot and place a square Hi-C plot
-#' hicPlot <- bb_plotHicSquare(hicData = bb_hicData, resolution = 10000, zrange = c(0, 70),
+#' hicPlot <- bb_plotHicSquare(data = bb_hicData, resolution = 10000, zrange = c(0, 70),
 #'                             chrom = "chr21", chromstart = 28000000, chromend = 30300000,
 #'                             x = 0.5, y = 0.5, width = 2.5, height = 2.5,
 #'                             just = c("left", "top"), default.units = "inches")
@@ -280,6 +280,7 @@ bb_annoHeatmapLegend <- function(plot, orientation = "v", fontsize = 8, fontcolo
   # RETURN OBJECT
   # ======================================================================================================================================================================================
 
-  return(bb_heatmapLegend)
+  message(paste0("bb_heatmapLegend[", vp_name, "]"))
+  invisible(bb_heatmapLegend)
 
 }
