@@ -1,11 +1,6 @@
 #' Plot a base R plot in a BentoBox layout
 #'
-#' @usage
-#' bb_plotBase(basePlot, x, y, width, height,
-#'             just = c("left", "top"),
-#'             default.units = "inches")
-#'
-#' @param basePlot Plot formula of base R plotting functions.
+#' @param plot Plot formula of base R plotting functions.
 #' @param x A numeric or unit object specifying plot x-location.
 #' @param y A numeric or unit object specifying plot y-location.
 #' @param width A numeric or unit object specifying plot width.
@@ -26,11 +21,12 @@
 #' bb_pageCreate(width = 5, height = 5, default.units = "inches", xgrid = 0, ygrid = 0)
 #'
 #' ## Place base R plot in BentoBox page
-#' bb_plotBase(basePlot = p,
-#'             x = 0.5, y = 0.5, width = 4, height = 4, just = c("left", "top"), default.units = "inches")
+#' bb_plotBase(plot = p,
+#'             x = 0.5, y = 0.5, width = 4, height = 4, j
+#'             ust = c("left", "top"), default.units = "inches")
 #'
 #' @export
-bb_plotBase <- function(basePlot, x, y, width, height, just = c("left", "top"), default.units = "inches", bg = NA, params = NULL){
+bb_plotBase <- function(plot, x, y, width, height, just = c("left", "top"), default.units = "inches", bg = NA, params = NULL){
 
   # ======================================================================================================================================================================================
   # PARSE PARAMETERS
@@ -42,14 +38,14 @@ bb_plotBase <- function(basePlot, x, y, width, height, just = c("left", "top"), 
   if(missing(default.units)) default.units <- NULL
 
   ## Check if plot/x/y/width/height arguments are missing (could be in object)
-  if(!hasArg(basePlot)) basePlot <- NULL
+  if(!hasArg(plot)) plot <- NULL
   if(!hasArg(x)) x <- NULL
   if(!hasArg(y)) y <- NULL
   if(!hasArg(width)) width <- NULL
   if(!hasArg(height)) height <- NULL
 
   ## Compile all parameters into an internal object
-  bb_baseInternal <- structure(list(basePlot = basePlot, x = x, y = y, width = width, height = height, bg = bg,
+  bb_baseInternal <- structure(list(plot = plot, x = x, y = y, width = width, height = height, bg = bg,
                                      just = just, default.units = default.units), class = "bb_baseInternal")
 
   bb_baseInternal <- parseParams(bb_params = params, object_params = bb_baseInternal)
@@ -70,7 +66,7 @@ bb_plotBase <- function(basePlot, x, y, width, height, just = c("left", "top"), 
   # CALL ERRORS
   # ======================================================================================================================================================================================
 
-  if(is.null(bb_baseInternal$basePlot)) stop("argument \"basePlot\" is missing, with no default.", call. = FALSE)
+  if(is.null(bb_baseInternal$plot)) stop("argument \"plot\" is missing, with no default.", call. = FALSE)
   if(is.null(bb_baseInternal$x)) stop("argument \"x\" is missing, with no default.", call. = FALSE)
   if(is.null(bb_baseInternal$y)) stop("argument \"y\" is missing, with no default.", call. = FALSE)
   if(is.null(bb_baseInternal$width)) stop("argument \"width\" is missing, with no default.", call. = FALSE)
@@ -104,7 +100,7 @@ bb_plotBase <- function(basePlot, x, y, width, height, just = c("left", "top"), 
   # CONVERT PLOT TO A GROB
   # ======================================================================================================================================================================================
 
-  gtree <- ggplotify::base2grob(bb_baseInternal$basePlot)
+  gtree <- ggplotify::base2grob(bb_baseInternal$plot)
 
   # ======================================================================================================================================================================================
   # ASSIGN VIEWPORT TO GTREE

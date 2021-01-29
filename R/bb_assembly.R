@@ -1,7 +1,5 @@
 #' Make a \code{bb_assembly} object for alternate TxDb, OrgDb,and BSgenome genomic annotation packages
 #'
-#' @usage bb_assembly(Genome, TxDb, OrgDb)
-#'
 #' @param Genome String indicating the name of the genome assembly.
 #' @param TxDb String of the desired TxDb package name.
 #' @param OrgDb String of the desired OrgDb package name.

@@ -1,10 +1,6 @@
 #' Read a bigwig file and return it as a data frame
 #'
-#' @usage
-#' bb_readBigwig(bigwigFile)
-#' bb_readBigwig(bigwigFile, chrom, chromstart, chromend)
-#'
-#' @param bigwigFile A character value specifying the path to the bigwig file.
+#' @param file A character value specifying the path to the bigwig file.
 #' @param chrom Chromosome of data as a string, if data for a specific chromosome is desired.
 #' @param chromstart Integer start position on chromosome.
 #' @param chromend Integer end position on chromosome.
@@ -19,7 +15,7 @@
 #' @return Returns a 6-column dataframe of bigwig information.
 #'
 #' @export
-bb_readBigwig <- function(bigwigFile, chrom = NULL, chromstart = 1, chromend = .Machine$integer.max, strand = '*', params = NULL) {
+bb_readBigwig <- function(file, chrom = NULL, chromstart = 1, chromend = .Machine$integer.max, strand = '*', params = NULL) {
 
   # ======================================================================================================================================================================================
   # PARSE PARAMETERS
@@ -33,10 +29,10 @@ bb_readBigwig <- function(bigwigFile, chrom = NULL, chromstart = 1, chromend = .
   if(missing(strand)) strand <- NULL
 
   ## Check if filename argument is missing (could be in object)
-  if(!hasArg(bigwigFile)) bigwigFile <- NULL
+  if(!hasArg(file)) file <- NULL
 
   ## Compile all parameters into an internal object
-  bb_bigwig <- structure(list(bigwigFile = bigwigFile, chrom = chrom, chromstart = chromstart, chromend = chromend, strand = strand), class = "bb_bigwig")
+  bb_bigwig <- structure(list(file = file, chrom = chrom, chromstart = chromstart, chromend = chromend, strand = strand), class = "bb_bigwig")
 
   bb_bigwig <- parseParams(bb_params = params, object_params = bb_bigwig)
 
@@ -49,7 +45,7 @@ bb_readBigwig <- function(bigwigFile, chrom = NULL, chromstart = 1, chromend = .
   # ERRORS
   # ======================================================================================================================================================================================
 
-  if (is.null(bb_bigwig$bigwigFile)) stop("argument \"bigwigFile\" is missing, with no default.", call. = FALSE)
+  if (is.null(bb_bigwig$file)) stop("argument \"file\" is missing, with no default.", call. = FALSE)
 
   if (bb_bigwig$chromend < bb_bigwig$chromstart - 1) {
 
@@ -62,8 +58,8 @@ bb_readBigwig <- function(bigwigFile, chrom = NULL, chromstart = 1, chromend = .
   # ======================================================================================================================================================================================
 
   if(!is.null(bb_bigwig$chrom)) {
-    as.data.frame(rtracklayer::import.bw(bb_bigwig$bigwigFile, which=GenomicRanges::GRanges(paste0(bb_bigwig$chrom, ':', bb_bigwig$chromstart, '-', bb_bigwig$chromend, ':', bb_bigwig$strand))))
+    as.data.frame(rtracklayer::import.bw(bb_bigwig$file, which=GenomicRanges::GRanges(paste0(bb_bigwig$chrom, ':', bb_bigwig$chromstart, '-', bb_bigwig$chromend, ':', bb_bigwig$strand))))
   } else {
-    as.data.frame(rtracklayer::import.bw(bb_bigwig$bigwigFile))
+    as.data.frame(rtracklayer::import.bw(bb_bigwig$file))
   }
 }

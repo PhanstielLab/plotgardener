@@ -1,7 +1,5 @@
 #' Add a y-axis to a plot
 #'
-#' @usage bb_annoYaxis(plot)
-#'
 #' @param plot Plot object to annotate with y-axis.
 #' @param at A numeric vector of y-value locations for tick marks.
 #' @param label A logical value indicating whether to draw the labels on the tick marks, or an expression or character vector which specify the labels to use.
@@ -24,11 +22,14 @@
 #' bb_pageCreate(width = 4, height = 3.5, default.units = "inches", xgrid = 0, ygrid = 0)
 #'
 #' ## Plot and place a square Hi-C plot
-#' hicPlot <- bb_plotHicSquare(hicData = bb_hicData, resolution = 10000, zrange = c(0, 70), chrom = "chr21", chromstart = 28000000, chromend = 30300000,
-#'                             x = 1, y = 0.5, width = 2.5, height = 2.5, just = c("left", "top"), default.units = "inches")
+#' hicPlot <- bb_plotHicSquare(hicData = bb_hicData, resolution = 10000, zrange = c(0, 70),
+#'                             chrom = "chr21", chromstart = 28000000, chromend = 30300000,
+#'                             x = 1, y = 0.5, width = 2.5, height = 2.5,
+#'                             just = c("left", "top"), default.units = "inches")
 #'
 #' ## Add standard y-axis to Hi-C plot
-#' bb_annoYaxis(plot = hicPlot, at = c(28000000, 29000000, 30300000), gp = gpar(fontsize = 8))
+#' bb_annoYaxis(plot = hicPlot, at = c(28000000, 29000000, 30300000),
+#'              gp = gpar(fontsize = 8))
 #'
 #' @export
 bb_annoYaxis <- function(plot, at = NULL, label = TRUE, main = TRUE, gp = gpar(), params = NULL){

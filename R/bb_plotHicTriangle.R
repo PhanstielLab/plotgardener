@@ -1,12 +1,6 @@
 #' Plot a Hi-C interaction matrix in a triangular format
 #'
-#' @usage
-#' bb_plotHicTriangle(hicData, chrom)
-#' bb_plotHicTriangle(hicData, chrom, x, y, width, height,
-#'                    just = c("left", "top"),
-#'                    default.units = "inches")
-#'
-#' @param hicData Path to .hic file as a string or a 3-column dataframe of interaction counts in sparse upper triangular format.
+#' @param data Path to .hic file as a string or a 3-column dataframe of interaction counts in sparse upper triangular format.
 #' @param resolution A numeric specifying the width in basepairs of each pixel. For hic files, "auto" will attempt to choose a resolution based on the size of the region. For
 #' dataframes, "auto" will attempt to detect the resolution the dataframe contains.
 #' @param zrange A numeric vector of length 2 specifying the range of interaction scores to plot, where extreme values will be set to the max or min.
@@ -38,21 +32,36 @@
 #' data("bb_hicData")
 #'
 #' ## Plot triangle Hi-C plot filling up entire graphic device
-#' bb_plotHicTriangle(hicData = bb_hicData, resolution = 10000, zrange = c(0, 70),
+#' bb_plotHicTriangle(data = bb_hicData, resolution = 10000, zrange = c(0, 70),
 #'                    chrom = "chr21", chromstart = 28000000, chromend = 30300000)
 #'
 #' ## Plot and place triangle Hi-C plot on a BentoBox page
 #' bb_pageCreate(width = 4, height = 2.5, default.units = "inches", xgrid = 0, ygrid = 0)
-#' bb_plotHicTriangle(hicData = bb_hicData, resolution = 10000, zrange = c(0, 70),
+#' bb_plotHicTriangle(data = bb_hicData, resolution = 10000, zrange = c(0, 70),
 #'                    chrom = "chr21", chromstart = 28000000, chromend = 30300000,
-#'                    x = 2, y = 0.5, width = 3, height = 1.5, just = "top", default.units = "inches")
+#'                    x = 2, y = 0.5, width = 3, height = 1.5,
+#'                    just = "top", default.units = "inches")
 #'
-#' @details If \code{height} is \eqn{<} \eqn{0.5 * sqrt(2)}, the top of the triangle will be cropped to the given \code{height}.
+#' @details
+#' This function can be used to quickly plot a triangle Hi-C plot by ignoring plot placement parameters:
+#' \preformatted{
+#' bb_plotHicTriangle(data, chrom,
+#'                    chromstart = NULL, chromend = NULL)
+#' }
+#' A triangle Hi-C plot can be placed on a BentoBox coordinate page by providing plot placement parameters:
+#' \preformatted{
+#' bb_plotHicTriangle(data, chrom,
+#'                    chromstart = NULL, chromend = NULL,
+#'                    x, y, width, height, just = c("left", "top"),
+#'                    default.units = "inches")
+#' }
+#'
+#' If \code{height} is \eqn{<} \eqn{0.5 * sqrt(2)}, the top of the triangle will be cropped to the given \code{height}.
 #'
 #' @seealso \link[BentoBox]{bb_readHic}
 #'
 #' @export
-bb_plotHicTriangle <- function(hicData, resolution = "auto", zrange = NULL, norm = "KR", matrix = "observed", chrom,  chromstart = NULL, chromend = NULL, assembly = "hg19",
+bb_plotHicTriangle <- function(data, resolution = "auto", zrange = NULL, norm = "KR", matrix = "observed", chrom,  chromstart = NULL, chromend = NULL, assembly = "hg19",
                                palette = colorRampPalette(c("white", "dark red")), x = NULL, y = NULL, width = NULL, height = NULL,
                                just = c("left", "top"), default.units = "inches", draw = TRUE, params = NULL){
 
@@ -275,7 +284,7 @@ bb_plotHicTriangle <- function(hicData, resolution = "auto", zrange = NULL, norm
         readchromstart <- hic_plot$chromstart - hic_plot$resolution
         readchromend <- hic_plot$chromend + hic_plot$resolution
 
-        hic <- bb_readHic(hicFile = hic, chrom = hic_plot$chrom, chromstart = readchromstart, chromend = readchromend,
+        hic <- bb_readHic(file = hic, chrom = hic_plot$chrom, chromstart = readchromstart, chromend = readchromend,
                           resolution = hic_plot$resolution, zrange = hic_plot$zrange, norm = norm, matrix = type)
 
       } else {
@@ -559,11 +568,11 @@ bb_plotHicTriangle <- function(hicData, resolution = "auto", zrange = NULL, norm
   if(missing(matrix)) matrix <- NULL
 
   ## Check if hic/chrom arguments are missing (could be in object)
-  if(!hasArg(hicData)) hicData <- NULL
+  if(!hasArg(data)) data <- NULL
   if(!hasArg(chrom)) chrom <- NULL
 
   ## Compile all parameters into an internal object
-  bb_thicInternal <- structure(list(hicData = hicData, chrom = chrom, chromstart = chromstart, chromend = chromend, resolution = resolution,
+  bb_thicInternal <- structure(list(data = data, chrom = chrom, chromstart = chromstart, chromend = chromend, resolution = resolution,
                                     zrange = zrange, palette = palette, assembly = assembly, width = width, height = height, x = x,
                                     y = y, just = just, norm = norm, default.units = default.units, draw = draw, matrix = matrix), class = "bb_thicInternal")
 
@@ -592,7 +601,7 @@ bb_plotHicTriangle <- function(hicData, resolution = "auto", zrange = NULL, norm
   # CHECK PLACEMENT/ARGUMENT ERRORS
   # ======================================================================================================================================================================================
 
-  if(is.null(bb_thicInternal$hicData)) stop("argument \"hicData\" is missing, with no default.", call. = FALSE)
+  if(is.null(bb_thicInternal$data)) stop("argument \"data\" is missing, with no default.", call. = FALSE)
   if(is.null(bb_thicInternal$chrom)) stop("argument \"chrom\" is missing, with no default.", call. = FALSE)
   check_placement(object = hic_plot)
 
@@ -612,7 +621,7 @@ bb_plotHicTriangle <- function(hicData, resolution = "auto", zrange = NULL, norm
   # CATCH ERRORS
   # ======================================================================================================================================================================================
 
-  errorcheck_bb_plotTriangleHic(hic = bb_thicInternal$hicData, hic_plot = hic_plot, norm = bb_thicInternal$norm, assembly = hic_plot$assembly$Genome)
+  errorcheck_bb_plotTriangleHic(hic = bb_thicInternal$data, hic_plot = hic_plot, norm = bb_thicInternal$norm, assembly = hic_plot$assembly$Genome)
 
   # ======================================================================================================================================================================================
   # JUSTIFICATION OF PLOT
@@ -657,14 +666,14 @@ bb_plotHicTriangle <- function(hicData, resolution = "auto", zrange = NULL, norm
   # ======================================================================================================================================================================================
 
   if (bb_thicInternal$resolution == "auto"){
-    hic_plot <- adjust_resolution(hic = bb_thicInternal$hicData, hic_plot = hic_plot)
+    hic_plot <- adjust_resolution(hic = bb_thicInternal$data, hic_plot = hic_plot)
   }
 
   # ======================================================================================================================================================================================
   # READ IN DATA
   # ======================================================================================================================================================================================
 
-  hic <- read_data(hic = bb_thicInternal$hicData, hic_plot = hic_plot, norm = bb_thicInternal$norm, assembly = hic_plot$assembly, type = bb_thicInternal$matrix)
+  hic <- read_data(hic = bb_thicInternal$data, hic_plot = hic_plot, norm = bb_thicInternal$norm, assembly = hic_plot$assembly, type = bb_thicInternal$matrix)
 
   # ======================================================================================================================================================================================
   # SUBSET DATA

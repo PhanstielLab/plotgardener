@@ -1,12 +1,6 @@
 #' Plot a Hi-C interaction matrix in a square format
 #'
-#' @usage
-#' bb_plotHicSquare(hicData, chrom)
-#' bb_plotHicSquare(hicData, chrom, x, y, width, height,
-#'                  just = c("left", "top"),
-#'                  default.units = "inches")
-#'
-#' @param hicData Path to .hic file as a string or a 3-column dataframe of interaction counts in sparse upper triangular format.
+#' @param data Path to .hic file as a string or a 3-column dataframe of interaction counts in sparse upper triangular format.
 #' @param resolution A numeric specifying the width in basepairs of each pixel. For hic files, "auto" will attempt to choose a resolution based on the size of the region. For
 #' dataframes, "auto" will attempt to detect the resolution the dataframe contains.
 #' @param zrange A numeric vector of length 2 specifying the range of interaction scores to plot, where extreme values will be set to the max or min.
@@ -47,19 +41,34 @@
 #' data("bb_hicData")
 #'
 #' ## Plot upper diagonal of square Hi-C plot filling up entire graphic device
-#' bb_plotHicSquare(hicData = bb_hicData, resolution = 10000, zrange = c(0, 70),
+#' bb_plotHicSquare(data = bb_hicData, resolution = 10000, zrange = c(0, 70),
 #'                  chrom = "chr21", chromstart = 28000000, chromend = 30300000, half = "top")
 #'
 #' ## Plot and place both halves of square Hi-C plot on a BentoBox page
 #' bb_pageCreate(width = 3, height = 3, default.units = "inches", xgrid = 0, ygrid = 0)
-#' bb_plotHicSquare(hicData = bb_hicData, resolution = 10000, zrange = c(0, 70),
+#' bb_plotHicSquare(data = bb_hicData, resolution = 10000, zrange = c(0, 70),
 #'                  chrom = "chr21", chromstart = 28000000, chromend = 30300000,
-#'                  x = 0.5, y = 0.5, width = 2, height = 2, just = c("left", "top"), default.units = "inches")
+#'                  x = 0.5, y = 0.5, width = 2, height = 2,
+#'                  just = c("left", "top"), default.units = "inches")
+#'
+#' @details
+#' This function can be used to quickly plot a square Hi-C plot by ignoring plot placement parameters:
+#' \preformatted{
+#' bb_plotHicSquare(data, chrom,
+#'                  chromstart = NULL, chromend = NULL)
+#' }
+#' A square Hi-C plot can be placed on a BentoBox coordinate page by providing plot placement parameters:
+#' \preformatted{
+#' bb_plotHicSquare(data, chrom,
+#'                  chromstart = NULL, chromend = NULL,
+#'                  x, y, width, height, just = c("left", "top"),
+#'                  default.units = "inches")
+#' }
 #'
 #' @seealso \link[BentoBox]{bb_readHic}
 #'
 #' @export
-bb_plotHicSquare <- function(hicData, resolution = "auto", zrange = NULL, norm = "KR", matrix = "observed", chrom, chromstart = NULL, chromend = NULL, altchrom = NULL,
+bb_plotHicSquare <- function(data, resolution = "auto", zrange = NULL, norm = "KR", matrix = "observed", chrom, chromstart = NULL, chromend = NULL, altchrom = NULL,
                              altchromstart = NULL, altchromend = NULL, assembly = "hg19", palette = colorRampPalette(c("white", "dark red")),
                              half = "both", x = NULL, y = NULL, width = NULL, height = NULL, just = c("left", "top"), default.units = "inches",
                              draw = TRUE, params = NULL){
@@ -351,7 +360,7 @@ bb_plotHicSquare <- function(hicData, resolution = "auto", zrange = NULL, norm =
         readchromend <- hic_plot$chromend + hic_plot$resolution
         readaltchromstart <- hic_plot$altchromstart - hic_plot$resolution
         readaltchromend <- hic_plot$altchromend + hic_plot$resolution
-        hic <- suppressWarnings(bb_readHic(hicFile = hic, chrom = hic_plot$chrom, chromstart = readchromstart, chromend = readchromend,
+        hic <- suppressWarnings(bb_readHic(file = hic, chrom = hic_plot$chrom, chromstart = readchromstart, chromend = readchromend,
                                            resolution = hic_plot$resolution, zrange = hic_plot$zrange, norm = norm,
                                            altchrom = hic_plot$altchrom, altchromstart = readaltchromstart,
                                            altchromend = readaltchromend, matrix = type))
@@ -567,11 +576,11 @@ bb_plotHicSquare <- function(hicData, resolution = "auto", zrange = NULL, norm =
   if(missing(matrix)) matrix <- NULL
 
   ## Check if hic/chrom arguments are missing (could be in object)
-  if(!hasArg(hicData)) hicData <- NULL
+  if(!hasArg(data)) data <- NULL
   if(!hasArg(chrom)) chrom <- NULL
 
   ## Compile all parameters into an internal object
-  bb_hicInternal <- structure(list(hicData = hicData, chrom = chrom, chromstart = chromstart, chromend = chromend, half = half, resolution = resolution,
+  bb_hicInternal <- structure(list(data = data, chrom = chrom, chromstart = chromstart, chromend = chromend, half = half, resolution = resolution,
                                    zrange = zrange, palette = palette, assembly = assembly, width = width, height = height, x = x, y = y, just = just,
                                    default.units = default.units, draw = draw, altchrom = altchrom, altchromstart = altchromstart, altchromend = altchromend,
                                    norm = norm, matrix = matrix), class = "bb_hicInternal")
@@ -589,7 +598,7 @@ bb_plotHicSquare <- function(hicData, resolution = "auto", zrange = NULL, norm =
   if(is.null(bb_hicInternal$norm)) bb_hicInternal$norm <- "KR"
   if(is.null(bb_hicInternal$matrix)) bb_hicInternal$matrix <- "observed"
 
-  if(is.null(bb_hicInternal$hicData)) stop("argument \"hicData\" is missing, with no default.", call. = FALSE)
+  if(is.null(bb_hicInternal$data)) stop("argument \"data\" is missing, with no default.", call. = FALSE)
   if(is.null(bb_hicInternal$chrom)) stop("argument \"chrom\" is missing, with no default.", call. = FALSE)
 
   # ======================================================================================================================================================================================
@@ -613,7 +622,7 @@ bb_plotHicSquare <- function(hicData, resolution = "auto", zrange = NULL, norm =
   # ======================================================================================================================================================================================
 
   check_placement(object = hic_plot)
-  errorcheck_bb_plothic(hic = bb_hicInternal$hicData, hic_plot = hic_plot, norm = bb_hicInternal$norm)
+  errorcheck_bb_plothic(hic = bb_hicInternal$data, hic_plot = hic_plot, norm = bb_hicInternal$norm)
 
   # ======================================================================================================================================================================================
   # PARSE UNITS
@@ -647,14 +656,14 @@ bb_plotHicSquare <- function(hicData, resolution = "auto", zrange = NULL, norm =
   # ======================================================================================================================================================================================
 
   if (hic_plot$resolution == "auto"){
-    hic_plot <- adjust_resolution(hic = bb_hicInternal$hicData, hic_plot = hic_plot)
+    hic_plot <- adjust_resolution(hic = bb_hicInternal$data, hic_plot = hic_plot)
   }
 
   # ======================================================================================================================================================================================
   # READ IN DATA
   # ======================================================================================================================================================================================
 
-  hic <- read_data(hic = bb_hicInternal$hicData, hic_plot = hic_plot, norm = bb_hicInternal$norm, assembly = hic_plot$assembly, type = bb_hicInternal$matrix)
+  hic <- read_data(hic = bb_hicInternal$data, hic_plot = hic_plot, norm = bb_hicInternal$norm, assembly = hic_plot$assembly, type = bb_hicInternal$matrix)
 
   # ======================================================================================================================================================================================
   # SUBSET DATA

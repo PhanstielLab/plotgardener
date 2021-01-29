@@ -4,10 +4,25 @@
 \alias{bb_readHic}
 \title{Read a .hic file and return Hi-C data as a dataframe}
 \usage{
-bb_readHic(hicFile, chrom)
+bb_readHic(
+  file,
+  chrom,
+  chromstart = NULL,
+  chromend = NULL,
+  altchrom = NULL,
+  altchromstart = NULL,
+  altchromend = NULL,
+  assembly = "hg19",
+  resolution = "auto",
+  res_scale = "BP",
+  zrange = NULL,
+  norm = "KR",
+  matrix = "observed",
+  params = NULL
+)
 }
 \arguments{
-\item{hicFile}{A character value specifying the path to the .hic file.}
+\item{file}{A character value specifying the path to the .hic file.}
 
 \item{chrom}{Chromosome of data, as a string.}
 

@@ -4,7 +4,13 @@
 \alias{bb_pageGuideHorizontal}
 \title{Draw a horizontal guideline at a specified y-coordinate on a BentoBox page}
 \usage{
-bb_pageGuideHorizontal(y, default.units = "inches")
+bb_pageGuideHorizontal(
+  y,
+  default.units = "inches",
+  linecolor = "grey55",
+  params = NULL,
+  ...
+)
 }
 \arguments{
 \item{y}{A numeric or unit object specifying y-coordinate of guide.}

@@ -1,11 +1,5 @@
 #' Plot a chromosome ideogram with or without cytobands
 #'
-#' @usage
-#' bb_plotIdeogram(chrom)
-#' bb_plotIdeogram(chrom, x, y, width, height,
-#'                 just = c("left", "top"),
-#'                 default.units = "inches")
-#'
 #' @param chrom Chromosome to be plotted, as a string.
 #' @param assembly Default genome assembly as a string or a \link[BentoBox]{bb_assembly} object. Default value is \code{assembly = "hg19"}.
 #' @param orientation Character value indicating the orientation of the ideogram. Default value is \code{orientation = "h"}. Options are:
@@ -38,9 +32,22 @@
 #' ## Plot and place ideogram on a BentoBox page
 #' bb_pageCreate(width = 4, height = 1.5, default.units = "inches", xgrid = 0, ygrid = 0)
 #' bb_plotIdeogram(chrom = "chr2", assembly = "hg19",
-#'                 x = 0.25, y = 0.25, width = 3.5, height = 0.5, just = c("left", "top"), default.units = "inches")
+#'                 x = 0.25, y = 0.25, width = 3.5, height = 0.5,
+#'                 just = c("left", "top"), default.units = "inches")
 #'
-#' @details Giemsa stain band data from the UCSC Genome Browser is included with BentoBox.
+#' @details
+#' This function can be used to quickly plot an ideogram by ignoring plot placement parameters:
+#' \preformatted{
+#' bb_plotIdeogram(chrom)
+#' }
+#' An ideogram can be placed on a BentoBox coordinate page by providing plot placement parameters:
+#' \preformatted{
+#' bb_plotIdeogram(chrom,
+#'                 x, y, width, height, just = c("left", "top"),
+#'                 default.units = "inches")
+#' }
+#'
+#' Giemsa stain band data from the UCSC Genome Browser is included with BentoBox.
 #'
 #' @export
 bb_plotIdeogram <- function(chrom, assembly = "hg19", orientation = "h", showBands = TRUE, x = NULL, y = NULL, width = NULL, height = NULL,

@@ -4,7 +4,13 @@
 \alias{bb_pageGuideVertical}
 \title{Draw a vertical guideline at a specified x-coordinate on a BentoBox page}
 \usage{
-bb_pageGuideVertical(x, default.units = "inches")
+bb_pageGuideVertical(
+  x,
+  default.units = "inches",
+  linecolor = "grey55",
+  params = NULL,
+  ...
+)
 }
 \arguments{
 \item{x}{A numeric or unit object specifying x-coordinate of guide.}

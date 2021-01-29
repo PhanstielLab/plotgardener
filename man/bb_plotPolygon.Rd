@@ -4,7 +4,20 @@
 \alias{bb_plotPolygon}
 \title{Plot a polygon within a BentoBox layout}
 \usage{
-bb_plotPolygon(x, y, default.units = "inches")
+bb_plotPolygon(
+  x,
+  y,
+  default.units = "inches",
+  linecolor = "black",
+  lwd = 1,
+  lty = 1,
+  fill = NA,
+  alpha = 1,
+  id = NULL,
+  id.lengths = NULL,
+  params = NULL,
+  ...
+)
 }
 \arguments{
 \item{x}{A numeric vector or unit object specifying polygon vertex x-locations.}
@@ -42,7 +55,8 @@ Plot a polygon within a BentoBox layout
 bb_pageCreate(width = 2, height = 2, default.units = "inches", xgrid = 0, ygrid = 0)
 
 ## Plot a 5-sided polygon
-bb_plotPolygon(x = c(0.5, 1, 1.5, 1.25, 0.75), y = c(0.5, 0.25, 0.5, 1.25, 1.25), default.units = "inches")
+bb_plotPolygon(x = c(0.5, 1, 1.5, 1.25, 0.75), y = c(0.5, 0.25, 0.5, 1.25, 1.25),
+               default.units = "inches")
 
 }
 \seealso{

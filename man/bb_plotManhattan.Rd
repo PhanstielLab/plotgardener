@@ -4,10 +4,34 @@
 \alias{bb_plotManhattan}
 \title{Plot a Manhattan plot}
 \usage{
-bb_plotManhattan(data, pVals)
-bb_plotManhattan(data, pVals, x, y, width, height,
-                 just = c("left", "top"),
-                 default.units = "inches")
+bb_plotManhattan(
+  data,
+  pVals,
+  sigVal = 5e-08,
+  chrom = NULL,
+  chromstart = NULL,
+  chromend = NULL,
+  assembly = "hg19",
+  sigLine = FALSE,
+  sigCol = NULL,
+  fill = "black",
+  pch = 19,
+  cex = 0.25,
+  ymax = 1,
+  range = NULL,
+  space = 0.01,
+  bg = NA,
+  baseline = FALSE,
+  x = NULL,
+  y = NULL,
+  width = NULL,
+  height = NULL,
+  just = c("left", "top"),
+  default.units = "inches",
+  draw = TRUE,
+  params = NULL,
+  ...
+)
 }
 \arguments{
 \item{data}{Data to be plotted; as a character value specifying a BED file path, a dataframe in BED format, or a \link[GenomicRanges]{GRanges} object.}
@@ -67,16 +91,35 @@ Returns a \code{bb_manhattan} object containing relevant genomic region, placeme
 \description{
 Plot a Manhattan plot
 }
+\details{
+This function can be used to quickly plot a Manhattan plot by ignoring plot placement parameters:
+\preformatted{
+bb_plotManhattan(data, pVals,
+                 chrom = NULL,
+                 chromstart = NULL, chromend = NULL)
+}
+A Manhattan plot can be placed on a BentoBox coordinate page by providing plot placement parameters:
+\preformatted{
+bb_plotManhattan(data, pVals,
+                 chrom = NULL,
+                 chromstart = NULL, chromend = NULL,
+                 x, y, width, height, just = c("left", "top"),
+                 default.units = "inches")
+}
+}
 \examples{
 ## Load GWAS data
 data("bb_gwasData")
 
 ## Plot Manhattan plot filling up entire graphic device
-bb_plotManhattan(data = bb_gwasData, pVals = "pVal", chrom = "chr21", chromstart = 28000000, chromend = 30300000, ymax = 1.1, cex = 0.20)
+bb_plotManhattan(data = bb_gwasData, pVals = "pVal", chrom = "chr21",
+                 chromstart = 28000000, chromend = 30300000, ymax = 1.1, cex = 0.20)
 
 ## Plot and place Manhattan plot on a BentoBox page
 bb_pageCreate(width = 5, height = 2, default.units = "inches", xgrid = 0, ygrid = 0)
-bb_plotManhattan(data = bb_gwasData, pVals = "pVal", chrom = "chr21", chromstart = 28000000, chromend = 30300000, ymax = 1.1, cex = 0.20,
-                 x = 0.5, y = 0.5, width = 4, height = 1.5, just = c("left", "top"), default.units = "inches")
+bb_plotManhattan(data = bb_gwasData, pVals = "pVal", chrom = "chr21",
+                 chromstart = 28000000, chromend = 30300000, ymax = 1.1, cex = 0.20,
+                 x = 0.5, y = 0.5, width = 4, height = 1.5,
+                 just = c("left", "top"), default.units = "inches")
 
 }

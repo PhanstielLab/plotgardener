@@ -4,12 +4,21 @@
 \alias{bb_annoBedpeAnchors}
 \title{Annotate vertical boxes at anchors of BEDPE elements}
 \usage{
-bb_annoBedpeAnchors(bedpePlot, x, y, height,
-                    just = c("left", "top"),
-                    default.units = "inches")
+bb_annoBedpeAnchors(
+  plot,
+  fill = "lightgrey",
+  linecolor = NA,
+  alpha = 0.4,
+  x,
+  y,
+  height,
+  just = c("left", "top"),
+  default.units = "inches",
+  params = NULL
+)
 }
 \arguments{
-\item{bedpePlot}{BEDPE plot object from \code{bb_plotBedpe} or \code{bb_plotBedpeArches} with which to highlight the anchors of BEDPE elements.}
+\item{plot}{BEDPE plot object from \code{bb_plotBedpe} or \code{bb_plotBedpeArches} with which to highlight the anchors of BEDPE elements.}
 
 \item{fill}{Character value specifying fill color of highlight boxes. Default value is \code{fill = "lightgrey"}.}
 
@@ -44,12 +53,14 @@ data("bb_bedpeData")
 bb_pageCreate(width = 4, height = 2.5, default.units = "inches", xgrid = 0, ygrid = 0)
 
 ## Plot and place a BEDPE arches plot
-bedpeArches <- bb_plotBedpeArches(bedpeData = bb_bedpeData, chrom = "chr21", chromstart = 28000000, chromend = 30300000,
-                                  linecolor = "black", x = 0.5, y = 0.5, width = 3, height = 1,
+bedpeArches <- bb_plotBedpeArches(bedpeData = bb_bedpeData, chrom = "chr21",
+                                  chromstart = 28000000, chromend = 30300000,
+                                  linecolor = "black",
+                                  x = 0.5, y = 0.5, width = 3, height = 1,
                                   just = c("left", "top"), default.units = "inches")
 
 ## Annotate anchors
-bb_annoBedpeAnchors(bedpePlot = bedpeArches, fill = "steel blue",
+bb_annoBedpeAnchors(plot = bedpeArches, fill = "steel blue",
                     x = 0.5, y = 1.5, height = 0.5, default.units = "inches")
 
 }

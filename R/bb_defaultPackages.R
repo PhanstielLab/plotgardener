@@ -1,7 +1,5 @@
 #' Display the default genomic annotation packages associated with a genome build
 #'
-#' @usage bb_defaultPackages(Genome)
-#'
 #' @param Genome String indicating the name of the genome assembly.
 #'
 #' @return Returns a list of the default data packages for a genome build.

@@ -4,10 +4,31 @@
 \alias{bb_plotPileup}
 \title{Plot data elements in a pileup style for a single chromosome}
 \usage{
-bb_plotPileup(data, chrom)
-bb_plotPileup(data, chrom, x, y, width, height,
-              just = c("left", "top"),
-              default.units = "inches")
+bb_plotPileup(
+  data,
+  chrom,
+  chromstart = NULL,
+  chromend = NULL,
+  assembly = "hg19",
+  fill = "black",
+  colorby = NULL,
+  linecolor = NA,
+  boxHeight = unit(2, "mm"),
+  spaceWidth = 0.02,
+  spaceHeight = 0.3,
+  strandSplit = FALSE,
+  bg = NA,
+  baseline = FALSE,
+  x = NULL,
+  y = NULL,
+  width = NULL,
+  height = NULL,
+  just = c("left", "top"),
+  default.units = "inches",
+  draw = TRUE,
+  params = NULL,
+  ...
+)
 }
 \arguments{
 \item{data}{Data to be plotted; as a character value specifying a BED file path, a data frame in BED format, a character value specifying a .bam file path where a bam index file (.bam.bai) is in the same directory, or a \link[GenomicRanges]{GRanges} object.}
@@ -63,16 +84,33 @@ Returns a \code{bb_pileup} object containing relevant genomic region, coloring d
 \description{
 Plot data elements in a pileup style for a single chromosome
 }
+\details{
+This function can be used to quickly plot a pileup plot by ignoring plot placement parameters:
+\preformatted{
+bb_plotPileup(data, chrom,
+              chromstart = NULL, chromend = NULL)
+}
+A pileup plot can be placed on a BentoBox coordinate page by providing plot placement parameters:
+\preformatted{
+bb_plotPileup(data, chrom,
+              chromstart = NULL, chromend = NULL,
+              x, y, width, height, just = c("left", "top"),
+              default.units = "inches")
+}
+}
 \examples{
 ## Load BED data
 data("bb_bedData")
 
 ## Plot pileup plot filling up entire graphic device
-bb_plotPileup(data = bb_bedData, chrom = "chr21", chromstart = 29073000, chromend = 29074000, fill = "grey")
+bb_plotPileup(data = bb_bedData, chrom = "chr21", chromstart = 29073000, chromend = 29074000,
+              fill = "grey")
 
 ## Plot and place pileup plot on a BentoBox page
 bb_pageCreate(width = 5, height = 5, default.units = "inches", xgrid = 0, ygrid = 0)
-bb_plotPileup(data = bb_bedData, chrom = "chr21", chromstart = 29073000, chromend = 29074000, fill = "grey", baseline = TRUE,
-             x = 0.5, y = 0.5, width = 4, height = 4, just = c("left", "top"), default.units = "inches")
+bb_plotPileup(data = bb_bedData, chrom = "chr21", chromstart = 29073000, chromend = 29074000,
+              fill = "grey", baseline = TRUE,
+              x = 0.5, y = 0.5, width = 4, height = 4,
+              just = c("left", "top"), default.units = "inches")
 
 }

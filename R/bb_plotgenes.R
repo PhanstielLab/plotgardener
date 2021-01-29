@@ -1,9 +1,5 @@
 #' Plot a gene track for a specified genomic region
 #'
-#' @usage
-#' bb_plotGenes(chrom)
-#' bb_plotGenes(chrom, x, y, width, height, just = c("left", "top"), default.units = "inches")
-#'
 #' @param chrom Chromosome of region to be plotted, as a string.
 #' @param chromstart Integer start position on chromosome to be plotted.
 #' @param chromend Integer end position on chromosome to be plotted.
@@ -42,9 +38,22 @@
 #' ## Plot and place gene track on a BentoBox page
 #' bb_pageCreate(width = 5, height = 2, default.units = "inches", xgrid = 0, ygrid = 0)
 #' bb_plotGenes(chrom = "chr8", chromstart = 1000000, chromend = 2000000, assembly = "hg19",
-#' x = 0.5, y = 0.25, width = 4.5, height = 1.5, just = c("left", "top"), default.units = "inches")
+#'              x = 0.5, y = 0.25, width = 4.5, height = 1.5,
+#'              just = c("left", "top"), default.units = "inches")
 #'
-#' @details Genomic annotation information is acquired through \link[GenomicFeatures]{TxDb} and \link[AnnotationDb]{OrgDb-class} packages, as determined
+#' @details
+#' This function can be used to quickly plot a gene track by ignoring plot placement parameters:
+#' \preformatted{
+#' bb_plotGenes(chrom, chromstart = NULL, chromend = NULL)
+#' }
+#' A gene track can be placed on a BentoBox coordinate page by providing plot placement parameters:
+#' \preformatted{
+#' bb_plotGenes(chrom, chromstart = NULL, chromend = NULL,
+#'              x, y, width, height, just = c("left", "top"),
+#'              default.units = "inches")
+#' }
+#'
+#' Genomic annotation information is acquired through \link[GenomicFeatures]{TxDb} and \link[AnnotationDbi]{OrgDb-class} packages, as determined
 #' through the \code{assembly} parameter. To avoid overcrowding of gene name labels, plotted gene labels are by default prioritized according to citation counts.
 #'
 #' @seealso \link[BentoBox]{bb_assembly}, \link[BentoBox]{bb_genomes}, \link[BentoBox]{bb_defaultPackages}

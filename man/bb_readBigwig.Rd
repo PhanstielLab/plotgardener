@@ -4,11 +4,17 @@
 \alias{bb_readBigwig}
 \title{Read a bigwig file and return it as a data frame}
 \usage{
-bb_readBigwig(bigwigFile)
-bb_readBigwig(bigwigFile, chrom, chromstart, chromend)
+bb_readBigwig(
+  file,
+  chrom = NULL,
+  chromstart = 1,
+  chromend = .Machine$integer.max,
+  strand = "*",
+  params = NULL
+)
 }
 \arguments{
-\item{bigwigFile}{A character value specifying the path to the bigwig file.}
+\item{file}{A character value specifying the path to the bigwig file.}
 
 \item{chrom}{Chromosome of data as a string, if data for a specific chromosome is desired.}
 

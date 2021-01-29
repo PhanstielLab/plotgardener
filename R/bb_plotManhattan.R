@@ -1,11 +1,5 @@
 #' Plot a Manhattan plot
 #'
-#' @usage
-#' bb_plotManhattan(data, pVals)
-#' bb_plotManhattan(data, pVals, x, y, width, height,
-#'                  just = c("left", "top"),
-#'                  default.units = "inches")
-#'
 #' @param data Data to be plotted; as a character value specifying a BED file path, a dataframe in BED format, or a \link[GenomicRanges]{GRanges} object.
 #' @param pVals Character value specifying the name of the \code{data} column of corresponding p-values (will be converted to -log(10) space).
 #' @param chrom Chromosome of region to be plotted, as a string.
@@ -40,12 +34,31 @@
 #' data("bb_gwasData")
 #'
 #' ## Plot Manhattan plot filling up entire graphic device
-#' bb_plotManhattan(data = bb_gwasData, pVals = "pVal", chrom = "chr21", chromstart = 28000000, chromend = 30300000, ymax = 1.1, cex = 0.20)
+#' bb_plotManhattan(data = bb_gwasData, pVals = "pVal", chrom = "chr21",
+#'                  chromstart = 28000000, chromend = 30300000, ymax = 1.1, cex = 0.20)
 #'
 #' ## Plot and place Manhattan plot on a BentoBox page
 #' bb_pageCreate(width = 5, height = 2, default.units = "inches", xgrid = 0, ygrid = 0)
-#' bb_plotManhattan(data = bb_gwasData, pVals = "pVal", chrom = "chr21", chromstart = 28000000, chromend = 30300000, ymax = 1.1, cex = 0.20,
-#'                  x = 0.5, y = 0.5, width = 4, height = 1.5, just = c("left", "top"), default.units = "inches")
+#' bb_plotManhattan(data = bb_gwasData, pVals = "pVal", chrom = "chr21",
+#'                  chromstart = 28000000, chromend = 30300000, ymax = 1.1, cex = 0.20,
+#'                  x = 0.5, y = 0.5, width = 4, height = 1.5,
+#'                  just = c("left", "top"), default.units = "inches")
+#'
+#' @details
+#' This function can be used to quickly plot a Manhattan plot by ignoring plot placement parameters:
+#' \preformatted{
+#' bb_plotManhattan(data, pVals,
+#'                  chrom = NULL,
+#'                  chromstart = NULL, chromend = NULL)
+#' }
+#' A Manhattan plot can be placed on a BentoBox coordinate page by providing plot placement parameters:
+#' \preformatted{
+#' bb_plotManhattan(data, pVals,
+#'                  chrom = NULL,
+#'                  chromstart = NULL, chromend = NULL,
+#'                  x, y, width, height, just = c("left", "top"),
+#'                  default.units = "inches")
+#' }
 #'
 #' @export
 bb_plotManhattan <- function(data, pVals, sigVal = 5e-08, chrom = NULL, chromstart = NULL, chromend = NULL, assembly = "hg19", sigLine = FALSE, sigCol = NULL, fill = "black", pch = 19,

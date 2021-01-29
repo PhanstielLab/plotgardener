@@ -4,12 +4,20 @@
 \alias{bb_annoLoops}
 \title{Annotate DNA loops in a Hi-C plot}
 \usage{
-bb_annoLoops(hicPlot, bedpeData)
+bb_annoLoops(
+  plot,
+  data,
+  type = "box",
+  half = "inherit",
+  shift = 4,
+  params = NULL,
+  ...
+)
 }
 \arguments{
-\item{hicPlot}{Hi-C plot object from \code{bb_plotHicSquare} or \code{bb_plotHicTriangle} on which to annotate loops.}
+\item{plot}{Hi-C plot object from \code{bb_plotHicSquare} or \code{bb_plotHicTriangle} on which to annotate loops.}
 
-\item{bedpeData}{A string specifying the BEDPE file path or a dataframe in BEDPE format specifying loop positions.}
+\item{data}{A string specifying the BEDPE file path or a dataframe in BEDPE format specifying loop positions.}
 
 \item{type}{Character value specifying type of annotation. Default value is \code{type = "box"}. Options are:
 \itemize{
@@ -47,11 +55,12 @@ data("bb_bedpeData")
 bb_pageCreate(width = 3, height = 3, default.units = "inches", xgrid = 0, ygrid = 0)
 
 ## Plot and place a square Hi-C plot
-hicPlot <- bb_plotHicSquare(hicData = bb_hicData, resolution = 10000, zrange = c(0, 70),
+hicPlot <- bb_plotHicSquare(data = bb_hicData, resolution = 10000, zrange = c(0, 70),
                             chrom = "chr21", chromstart = 28000000, chromend = 30300000,
-                            x = 0, y = 0, width = 3, height = 3, just = c("left", "top"), default.units = "inches")
+                            x = 0, y = 0, width = 3, height = 3, just = c("left", "top"),
+                            default.units = "inches")
 
 ## Annotate loops of Hi-C plot
-bb_annoLoops(hicPlot = hicPlot, bedpeData = bb_bedpeData, type = "box", half = "both")
+bb_annoLoops(plot = hicPlot, data = bb_bedpeData, type = "box", half = "both")
 
 }

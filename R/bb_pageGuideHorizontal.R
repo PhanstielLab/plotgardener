@@ -1,7 +1,5 @@
 #' Draw a horizontal guideline at a specified y-coordinate on a BentoBox page
 #'
-#' @usage bb_pageGuideHorizontal(y, default.units = "inches")
-#'
 #' @param y A numeric or unit object specifying y-coordinate of guide.
 #' @param default.units A string indicating the default units to use if \code{y} is only given as a numeric. Default value is \code{default.units = "inches"}.
 #' @param linecolor Character value indicating color of guideline. Default value is \code{linecolor = "grey55"}.

@@ -1,9 +1,7 @@
 #' Annotate DNA loops in a Hi-C plot
 #'
-#' @usage bb_annoLoops(hicPlot, bedpeData)
-#'
-#' @param hicPlot Hi-C plot object from \code{bb_plotHicSquare} or \code{bb_plotHicTriangle} on which to annotate loops.
-#' @param bedpeData A string specifying the BEDPE file path or a dataframe in BEDPE format specifying loop positions.
+#' @param plot Hi-C plot object from \code{bb_plotHicSquare} or \code{bb_plotHicTriangle} on which to annotate loops.
+#' @param data A string specifying the BEDPE file path or a dataframe in BEDPE format specifying loop positions.
 #' @param type Character value specifying type of annotation. Default value is \code{type = "box"}. Options are:
 #' \itemize{
 #' \item{\code{"box"}: }{Boxes are drawn around each loop.}
@@ -32,15 +30,16 @@
 #' bb_pageCreate(width = 3, height = 3, default.units = "inches", xgrid = 0, ygrid = 0)
 #'
 #' ## Plot and place a square Hi-C plot
-#' hicPlot <- bb_plotHicSquare(hicData = bb_hicData, resolution = 10000, zrange = c(0, 70),
+#' hicPlot <- bb_plotHicSquare(data = bb_hicData, resolution = 10000, zrange = c(0, 70),
 #'                             chrom = "chr21", chromstart = 28000000, chromend = 30300000,
-#'                             x = 0, y = 0, width = 3, height = 3, just = c("left", "top"), default.units = "inches")
+#'                             x = 0, y = 0, width = 3, height = 3, just = c("left", "top"),
+#'                             default.units = "inches")
 #'
 #' ## Annotate loops of Hi-C plot
-#' bb_annoLoops(hicPlot = hicPlot, bedpeData = bb_bedpeData, type = "box", half = "both")
+#' bb_annoLoops(plot = hicPlot, data = bb_bedpeData, type = "box", half = "both")
 #'
 #' @export
-bb_annoLoops <- function(hicPlot, bedpeData, type = "box", half = "inherit", shift = 4, params = NULL, ...){
+bb_annoLoops <- function(plot, data, type = "box", half = "inherit", shift = 4, params = NULL, ...){
 
   # ======================================================================================================================================================================================
   # FUNCTIONS
@@ -354,11 +353,11 @@ bb_annoLoops <- function(hicPlot, bedpeData, type = "box", half = "inherit", shi
   if(missing(type)) type <- NULL
 
   ## Check if hic/loops arguments are missing (could be in object)
-  if(!hasArg(hicPlot)) hicPlot <- NULL
-  if(!hasArg(bedpeData)) bedpeData <- NULL
+  if(!hasArg(plot)) plot <- NULL
+  if(!hasArg(data)) data <- NULL
 
   ## Compile all parameters into an internal object
-  bb_loopsInternal <- structure(list(hicPlot = hicPlot, bedpeData = bedpeData, half = half, shift = shift, type = type, gp = gpar(...)), class = "bb_loopsInternal")
+  bb_loopsInternal <- structure(list(plot = plot, data = data, half = half, shift = shift, type = type, gp = gpar(...)), class = "bb_loopsInternal")
 
   bb_loopsInternal <- parseParams(bb_params = params, object_params = bb_loopsInternal)
 
@@ -371,21 +370,21 @@ bb_annoLoops <- function(hicPlot, bedpeData, type = "box", half = "inherit", shi
   # INITIALIZE OBJECT: GET REGION/DIMENSIONS FROM HIC PLOT INPUT
   # ======================================================================================================================================================================================
 
-  bb_loops <- structure(list(chrom = bb_loopsInternal$hicPlot$chrom, chromstart = bb_loopsInternal$hicPlot$chromstart, chromend = bb_loopsInternal$hicPlot$chromend, altchrom = bb_loopsInternal$hicPlot$altchrom,
-                             altchromstart = bb_loopsInternal$hicPlot$altchromstart, altchromend = bb_loopsInternal$hicPlot$altchromend, assembly = bb_loopsInternal$hicPlot$assembly,
-                             x = bb_loopsInternal$hicPlot$x, y = bb_loopsInternal$hicPlot$y, width = bb_loopsInternal$hicPlot$width, height = bb_loopsInternal$hicPlot$height,
-                             just = bb_loopsInternal$hicPlot$just, grobs = NULL), class = "bb_loops")
+  bb_loops <- structure(list(chrom = bb_loopsInternal$plot$chrom, chromstart = bb_loopsInternal$plot$chromstart, chromend = bb_loopsInternal$plot$chromend, altchrom = bb_loopsInternal$plot$altchrom,
+                             altchromstart = bb_loopsInternal$plot$altchromstart, altchromend = bb_loopsInternal$plot$altchromend, assembly = bb_loopsInternal$plot$assembly,
+                             x = bb_loopsInternal$plot$x, y = bb_loopsInternal$plot$y, width = bb_loopsInternal$plot$width, height = bb_loopsInternal$plot$height,
+                             just = bb_loopsInternal$plot$just, grobs = NULL), class = "bb_loops")
 
   # ======================================================================================================================================================================================
   # CATCH ERRORS
   # ======================================================================================================================================================================================
 
   check_bbpage(error = "Cannot annotate Hi-C loops without a BentoBox page.")
-  if(is.null(bb_loopsInternal$hicPlot)) stop("argument \"hicPlot\" is missing, with no default.", call. = FALSE)
-  if(is.null(bb_loopsInternal$bedpeData)) stop("argument \"bedpeData\" is missing, with no default.", call. = FALSE)
+  if(is.null(bb_loopsInternal$plot)) stop("argument \"plot\" is missing, with no default.", call. = FALSE)
+  if(is.null(bb_loopsInternal$data)) stop("argument \"data\" is missing, with no default.", call. = FALSE)
 
 
-  errorcheck_bb_annoLoops(hic = bb_loopsInternal$hicPlot, loops = bb_loopsInternal$bedpeData,
+  errorcheck_bb_annoLoops(hic = bb_loopsInternal$plot, loops = bb_loopsInternal$data,
                               half = bb_loopsInternal$half, type = bb_loopsInternal$type)
 
   # ======================================================================================================================================================================================
@@ -395,11 +394,11 @@ bb_annoLoops <- function(hicPlot, bedpeData, type = "box", half = "inherit", shi
   half <- bb_loopsInternal$half
   if (half == "inherit"){
 
-    half <- inherit_half(hic = bb_loopsInternal$hicPlot)
+    half <- inherit_half(hic = bb_loopsInternal$plot)
 
   }
 
-  if (class(bb_loopsInternal$hicPlot) == "bb_hicTriangle"){
+  if (class(bb_loopsInternal$plot) == "bb_hicTriangle"){
 
     half <- "top"
 
@@ -409,7 +408,7 @@ bb_annoLoops <- function(hicPlot, bedpeData, type = "box", half = "inherit", shi
   # READ IN FILE OR DATAFRAME
   # ======================================================================================================================================================================================
 
-  loops <- bb_loopsInternal$bedpeData
+  loops <- bb_loopsInternal$data
   if (!"data.frame" %in% class(loops)){
 
     loops <- as.data.frame(data.table::fread(loops))
@@ -445,7 +444,7 @@ bb_annoLoops <- function(hicPlot, bedpeData, type = "box", half = "inherit", shi
   ## Assuming loops are in first six columns only
   loops <- loops[,1:6]
 
-  loops_subset <- subset_loops(hic = bb_loopsInternal$hicPlot, loops = loops, object = bb_loops)
+  loops_subset <- subset_loops(hic = bb_loopsInternal$plot, loops = loops, object = bb_loops)
 
   # ======================================================================================================================================================================================
   # VIEWPORTS
@@ -456,25 +455,25 @@ bb_annoLoops <- function(hicPlot, bedpeData, type = "box", half = "inherit", shi
   vp_name <- paste0("bb_loopAnnotation", length(grep(pattern = "bb_loopAnnotation", x = currentViewports)) + 1)
 
   ## Make viewport based on hic input viewport
-  if (class(bb_loopsInternal$hicPlot) == "bb_hicSquare"){
+  if (class(bb_loopsInternal$plot) == "bb_hicSquare"){
 
-    vp <- viewport(height = bb_loopsInternal$hicPlot$grobs$vp$height, width = bb_loopsInternal$hicPlot$grobs$vp$width,
-                   x = bb_loopsInternal$hicPlot$grobs$vp$x, y = bb_loopsInternal$hicPlot$grobs$vp$y,
+    vp <- viewport(height = bb_loopsInternal$plot$grobs$vp$height, width = bb_loopsInternal$plot$grobs$vp$width,
+                   x = bb_loopsInternal$plot$grobs$vp$x, y = bb_loopsInternal$plot$grobs$vp$y,
                    clip = "on",
-                   xscale = bb_loopsInternal$hicPlot$grobs$vp$xscale,
-                   yscale = bb_loopsInternal$hicPlot$grobs$vp$yscale,
-                   just = bb_loopsInternal$hicPlot$grobs$vp$justification,
+                   xscale = bb_loopsInternal$plot$grobs$vp$xscale,
+                   yscale = bb_loopsInternal$plot$grobs$vp$yscale,
+                   just = bb_loopsInternal$plot$grobs$vp$justification,
                    name = vp_name)
-  } else if (class(bb_loopsInternal$hicPlot) == "bb_hicTriangle"){
+  } else if (class(bb_loopsInternal$plot) == "bb_hicTriangle"){
 
 
-    width <- convertUnit(bb_loopsInternal$hicPlot$outsideVP$width, unitTo = get("page_units", bbEnv), valueOnly = T)
+    width <- convertUnit(bb_loopsInternal$plot$outsideVP$width, unitTo = get("page_units", bbEnv), valueOnly = T)
 
     vp <- viewport(height = unit(width/sqrt(two), get("page_units", bbEnv)), width = unit(width/sqrt(two), get("page_units", bbEnv)),
-                   x = bb_loopsInternal$hicPlot$outsideVP$x, y = bb_loopsInternal$hicPlot$outsideVP$y,
-                   xscale = bb_loopsInternal$hicPlot$grobs$vp$xscale,
-                   yscale = bb_loopsInternal$hicPlot$grobs$vp$yscale,
-                   just = bb_loopsInternal$hicPlot$outsideVP$justification,
+                   x = bb_loopsInternal$plot$outsideVP$x, y = bb_loopsInternal$plot$outsideVP$y,
+                   xscale = bb_loopsInternal$plot$grobs$vp$xscale,
+                   yscale = bb_loopsInternal$plot$grobs$vp$yscale,
+                   just = bb_loopsInternal$plot$outsideVP$justification,
                    name = vp_name,
                    angle = -45)
 
@@ -496,11 +495,11 @@ bb_annoLoops <- function(hicPlot, bedpeData, type = "box", half = "inherit", shi
     if (bb_loopsInternal$type == "box"){
 
       bb_loopsInternal$gp$fill <- NA
-      invisible(apply(loops_subset, 1, boxAnnotation, hic = bb_loopsInternal$hicPlot, object = bb_loopsInternal, shift = bb_loopsInternal$shift, half = half))
+      invisible(apply(loops_subset, 1, boxAnnotation, hic = bb_loopsInternal$plot, object = bb_loopsInternal, shift = bb_loopsInternal$shift, half = half))
 
     } else if (bb_loopsInternal$type == "circle"){
       bb_loopsInternal$gp$fill <- NA
-      invisible(apply(loops_subset, 1, circleAnnotation, hic = bb_loopsInternal$hicPlot, object = bb_loopsInternal, shift = bb_loopsInternal$shift, half = half))
+      invisible(apply(loops_subset, 1, circleAnnotation, hic = bb_loopsInternal$plot, object = bb_loopsInternal, shift = bb_loopsInternal$shift, half = half))
 
     } else if (bb_loopsInternal$type == "arrow"){
       if (is.null(bb_loopsInternal$gp$col) & is.null(bb_loopsInternal$gp$fill)){
@@ -511,7 +510,7 @@ bb_annoLoops <- function(hicPlot, bedpeData, type = "box", half = "inherit", shi
         }
       }
 
-      invisible(apply(loops_subset, 1, arrowAnnotation, hic = bb_loopsInternal$hicPlot, object = bb_loopsInternal, shift = bb_loopsInternal$shift, half = half))
+      invisible(apply(loops_subset, 1, arrowAnnotation, hic = bb_loopsInternal$plot, object = bb_loopsInternal, shift = bb_loopsInternal$shift, half = half))
 
     }
 

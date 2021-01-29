@@ -4,10 +4,30 @@
 \alias{bb_plotTranscripts}
 \title{Plot gene transcripts in a pileup style for a single chromosome}
 \usage{
-bb_plotTranscripts(chrom)
-bb_plotTranscripts(chrom, x, y, width, height,
-                   just = c("left", "top"),
-                   default.units = "inches")
+bb_plotTranscripts(
+  chrom,
+  chromstart = NULL,
+  chromend = NULL,
+  assembly = "hg19",
+  fill = c("#8a8aff", "#ff7e7e"),
+  colorbyStrand = TRUE,
+  strandSplit = FALSE,
+  boxHeight = unit(2, "mm"),
+  spaceWidth = 0.02,
+  spaceHeight = 0.3,
+  fontsize = 8,
+  labels = "transcript",
+  stroke = 0.1,
+  bg = NA,
+  x = NULL,
+  y = NULL,
+  width = NULL,
+  height = NULL,
+  just = c("left", "top"),
+  default.units = "inches",
+  draw = TRUE,
+  params = NULL
+)
 }
 \arguments{
 \item{chrom}{Chromosome of region to be plotted, as a string.}
@@ -69,7 +89,18 @@ Returns a \code{bb_transcripts} object containing relevant genomic region, place
 Plot gene transcripts in a pileup style for a single chromosome
 }
 \details{
-Genomic annotation information is acquired through \link[GenomicFeatures]{TxDb} and \link[AnnotationDb]{OrgDb-class} packages, as determined
+This function can be used to quickly plot a transcripts plot by ignoring plot placement parameters:
+\preformatted{
+bb_plotTranscripts(chrom, chromstart = NULL, chromend = NULL)
+}
+A transcripts plot can be placed on a BentoBox coordinate page by providing plot placement parameters:
+\preformatted{
+bb_plotTranscripts(chrom, chromstart = NULL, chromend = NULL,
+                   x, y, width, height, just = c("left", "top"),
+                   default.units = "inches")
+}
+
+Genomic annotation information is acquired through \link[GenomicFeatures]{TxDb} and \link[AnnotationDbi]{OrgDb-class} packages, as determined
 through the \code{assembly} parameter.
 }
 \examples{
@@ -78,12 +109,15 @@ library("TxDb.Hsapiens.UCSC.hg19.knownGene")
 library("org.Hs.eg.db")
 
 ## Plot transcripts filling up entire graphic device
-bb_plotTranscripts(chrom = "chr8", chromstart = 1000000, chromend = 2000000, assembly = "hg19")
+bb_plotTranscripts(chrom = "chr8", chromstart = 1000000, chromend = 2000000,
+                   assembly = "hg19")
 
 ## Plot and place transcripts on a BentoBox page
 bb_pageCreate(width = 4, height = 4, default.units = "inches", xgrid = 0, ygrid = 0)
-bb_plotTranscripts(chrom = "chr8", chromstart = 1000000, chromend = 2000000, assembly = "hg19", labels = "gene",
-                   x = 0.5, y = 0.5, width = 3, height = 2.5, just = c("left", "top"), default.units = "inches")
+bb_plotTranscripts(chrom = "chr8", chromstart = 1000000, chromend = 2000000,
+                   assembly = "hg19", labels = "gene",
+                   x = 0.5, y = 0.5, width = 3, height = 2.5,
+                   just = c("left", "top"), default.units = "inches")
 
 }
 \seealso{

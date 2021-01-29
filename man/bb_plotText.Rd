@@ -4,8 +4,19 @@
 \alias{bb_plotText}
 \title{Plot text within a BentoBox layout}
 \usage{
-bb_plotText(label, x, y, just = "center",
-                   default.units = "inches")
+bb_plotText(
+  label,
+  fontcolor = "black",
+  fontsize = 12,
+  rot = 0,
+  check.overlap = FALSE,
+  x,
+  y,
+  just = "center",
+  default.units = "inches",
+  params = NULL,
+  ...
+)
 }
 \arguments{
 \item{label}{Character or expression of text to be plotted.}

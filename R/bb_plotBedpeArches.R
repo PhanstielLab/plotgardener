@@ -1,12 +1,6 @@
 #' Plot paired-end BEDPE data in an arch style
 #'
-#' @usage
-#' bb_plotBedpeArches(bedpeData, chrom)
-#' bb_plotBedpeArches(bedpeData, chrom, x, y, width,
-#'                    height, just = c("left", "top"),
-#'                    default.units = "inches")
-#'
-#' @param bedpeData A string specifying the BEDPE file path or a dataframe in BEDPE format specifying data to be plotted.
+#' @param data A string specifying the BEDPE file path or a dataframe in BEDPE format specifying data to be plotted.
 #' @param chrom Chromosome of region to be plotted, as a string.
 #' @param chromstart Integer start position on chromosome to be plotted.
 #' @param chromend Integer end position on chromosome to be plotted.
@@ -48,15 +42,34 @@
 #' data("bb_bedpeData")
 #'
 #' ## Plot BEDPE arches plot filling up entire graphic device
-#' bedpeArchesPlot <- bb_plotBedpeArches(bedpeData = bb_bedpeData, chrom = "chr21", chromstart = 28000000, chromend = 30300000, fill = "black")
+#' bedpeArchesPlot <- bb_plotBedpeArches(data = bb_bedpeData, chrom = "chr21",
+#'                                       chromstart = 28000000, chromend = 30300000,
+#'                                       fill = "black")
 #'
 #' ## Plot and place BEDPE arches plot on a BentoBox page
 #' bb_pageCreate(width = 5, height = 2, default.units = "inches", xgrid = 0, ygrid = 0)
-#' bedpeArchesPlot <- bb_plotBedpeArches(bedpeData = bb_bedpeData, chrom = "chr21", chromstart = 28000000, chromend = 30300000, fill = "black",
-#'                                       x = 0, y = 0.25, width = 5, height = 1.5, just = c("left", "top"), default.units = "inches")
+#' bedpeArchesPlot <- bb_plotBedpeArches(data = bb_bedpeData, chrom = "chr21",
+#'                                       chromstart = 28000000, chromend = 30300000,
+#'                                       fill = "black",
+#'                                       x = 0, y = 0.25, width = 5, height = 1.5,
+#'                                       just = c("left", "top"), default.units = "inches")
+#'
+#' @details
+#' This function can be used to quickly plot a BEDPE Arches plot by ignoring plot placement parameters:
+#' \preformatted{
+#' bb_plotBedpeArches(data, chrom,
+#'                    chromstart = NULL, chromend = NULL)
+#' }
+#' A BEDPE Arches plot can be placed on a BentoBox coordinate page by providing plot placement parameters:
+#' \preformatted{
+#' bb_plotBedpeArches(data chrom,
+#'                    chromstart = NULL, chromend = NULL,
+#'                    x, y, width, height, just = c("left", "top"),
+#'                    default.units = "inches")
+#' }
 #'
 #' @export
-bb_plotBedpeArches <- function(bedpeData, chrom, chromstart = NULL, chromend = NULL, assembly = "hg19", style = "2D", position = "top", curvature = 5, archHeight = NULL,
+bb_plotBedpeArches <- function(data, chrom, chromstart = NULL, chromend = NULL, assembly = "hg19", style = "2D", position = "top", curvature = 5, archHeight = NULL,
                                fill = "grey", colorby = NULL, linecolor = "grey", alpha = 0.4, bg = NA, clip = TRUE, baseline = FALSE, x = NULL,
                                y = NULL, width = NULL, height = NULL, just = c("left", "top"), default.units = "inches", draw = TRUE, params = NULL, ...){
 
@@ -213,11 +226,11 @@ bb_plotBedpeArches <- function(bedpeData, chrom, chromstart = NULL, chromend = N
   if(missing(draw)) draw <- NULL
 
   ## Check if bedpe/chrom arguments are missing (could be in object)
-  if(!hasArg(bedpeData)) bedpeData <- NULL
+  if(!hasArg(data)) data <- NULL
   if(!hasArg(chrom)) chrom <- NULL
 
   ## Compile all parameters into an internal object
-  bb_archInternal <- structure(list(bedpeData = bedpeData, chrom = chrom, chromstart = chromstart, chromend = chromend, clip = clip, archHeight = archHeight, style = style,
+  bb_archInternal <- structure(list(data = data, chrom = chrom, chromstart = chromstart, chromend = chromend, clip = clip, archHeight = archHeight, style = style,
                                     curvature = curvature, position = position, fill = fill, linecolor = linecolor, colorby = colorby,
                                     assembly = assembly, alpha = alpha, baseline = baseline, bg = bg, x = x, y = y, width = width, height = height, just = just,
                                     default.units = default.units, draw = draw), class = "bb_archInternal")
@@ -248,7 +261,7 @@ bb_plotBedpeArches <- function(bedpeData, chrom, chromstart = NULL, chromend = N
     }
   }
 
-  if(is.null(bb_archInternal$bedpeData)) stop("argument \"bedpeData\" is missing, with no default.", call. = FALSE)
+  if(is.null(bb_archInternal$data)) stop("argument \"data\" is missing, with no default.", call. = FALSE)
   if(is.null(bb_archInternal$chrom)) stop("argument \"chrom\" is missing, with no default.", call. = FALSE)
   # ======================================================================================================================================================================================
   # INITIALIZE OBJECT
@@ -281,10 +294,10 @@ bb_plotBedpeArches <- function(bedpeData, chrom, chromstart = NULL, chromend = N
   # READ IN FILE OR DATAFRAME
   # ======================================================================================================================================================================================
 
-  if ("data.frame" %in% class(bb_archInternal$bedpeData)){
-    bedpe <- as.data.frame(bb_archInternal$bedpeData)
+  if ("data.frame" %in% class(bb_archInternal$data)){
+    bedpe <- as.data.frame(bb_archInternal$data)
   } else {
-    bedpe <- as.data.frame(data.table::fread(bb_archInternal$bedpeData))
+    bedpe <- as.data.frame(data.table::fread(bb_archInternal$data))
   }
 
   # ======================================================================================================================================================================================

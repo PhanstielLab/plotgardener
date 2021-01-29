@@ -4,12 +4,19 @@
 \alias{bb_plotGG}
 \title{Plot a ggplot2 plot in a BentoBox layout}
 \usage{
-bb_plotGG(ggPlot, x, y, width, height,
-          just = c("left", "top"),
-          default.units = "inches")
+bb_plotGG(
+  plot,
+  x,
+  y,
+  width,
+  height,
+  just = c("left", "top"),
+  default.units = "inches",
+  params = NULL
+)
 }
 \arguments{
-\item{ggPlot}{ggplot object.}
+\item{plot}{ggplot object.}
 
 \item{x}{A numeric or unit object specifying ggplot x-location.}
 
@@ -41,7 +48,8 @@ p <- ggplot(mtcars) + geom_point(aes(mpg, disp))
 bb_pageCreate(width = 4, height = 4, default.units = "inches", xgrid = 0, ygrid = 0)
 
 ## Place ggplot in BentoBox page
-bb_plotGG(ggPlot = p, x = 0.5, y = 0.5, width = 3, height = 3, just = c("left", "top"), default.units = "inches")
+bb_plotGG(plot = p, x = 0.5, y = 0.5, width = 3, height = 3,
+          just = c("left", "top"), default.units = "inches")
 
 }
 \seealso{

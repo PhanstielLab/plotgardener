@@ -4,13 +4,33 @@
 \alias{bb_plotHicSquare}
 \title{Plot a Hi-C interaction matrix in a square format}
 \usage{
-bb_plotHicSquare(hicData, chrom)
-bb_plotHicSquare(hicData, chrom, x, y, width, height,
-                 just = c("left", "top"),
-                 default.units = "inches")
+bb_plotHicSquare(
+  data,
+  resolution = "auto",
+  zrange = NULL,
+  norm = "KR",
+  matrix = "observed",
+  chrom,
+  chromstart = NULL,
+  chromend = NULL,
+  altchrom = NULL,
+  altchromstart = NULL,
+  altchromend = NULL,
+  assembly = "hg19",
+  palette = colorRampPalette(c("white", "dark red")),
+  half = "both",
+  x = NULL,
+  y = NULL,
+  width = NULL,
+  height = NULL,
+  just = c("left", "top"),
+  default.units = "inches",
+  draw = TRUE,
+  params = NULL
+)
 }
 \arguments{
-\item{hicData}{Path to .hic file as a string or a 3-column dataframe of interaction counts in sparse upper triangular format.}
+\item{data}{Path to .hic file as a string or a 3-column dataframe of interaction counts in sparse upper triangular format.}
 
 \item{resolution}{A numeric specifying the width in basepairs of each pixel. For hic files, "auto" will attempt to choose a resolution based on the size of the region. For
 dataframes, "auto" will attempt to detect the resolution the dataframe contains.}
@@ -71,19 +91,34 @@ Returns a \code{bb_hicSquare} object containing relevant genomic region, Hi-C da
 \description{
 Plot a Hi-C interaction matrix in a square format
 }
+\details{
+This function can be used to quickly plot a square Hi-C plot by ignoring plot placement parameters:
+\preformatted{
+bb_plotHicSquare(data, chrom,
+                 chromstart = NULL, chromend = NULL)
+}
+A square Hi-C plot can be placed on a BentoBox coordinate page by providing plot placement parameters:
+\preformatted{
+bb_plotHicSquare(data, chrom,
+                 chromstart = NULL, chromend = NULL,
+                 x, y, width, height, just = c("left", "top"),
+                 default.units = "inches")
+}
+}
 \examples{
 ## Load Hi-C data
 data("bb_hicData")
 
 ## Plot upper diagonal of square Hi-C plot filling up entire graphic device
-bb_plotHicSquare(hicData = bb_hicData, resolution = 10000, zrange = c(0, 70),
+bb_plotHicSquare(data = bb_hicData, resolution = 10000, zrange = c(0, 70),
                  chrom = "chr21", chromstart = 28000000, chromend = 30300000, half = "top")
 
 ## Plot and place both halves of square Hi-C plot on a BentoBox page
 bb_pageCreate(width = 3, height = 3, default.units = "inches", xgrid = 0, ygrid = 0)
-bb_plotHicSquare(hicData = bb_hicData, resolution = 10000, zrange = c(0, 70),
+bb_plotHicSquare(data = bb_hicData, resolution = 10000, zrange = c(0, 70),
                  chrom = "chr21", chromstart = 28000000, chromend = 30300000,
-                 x = 0.5, y = 0.5, width = 2, height = 2, just = c("left", "top"), default.units = "inches")
+                 x = 0.5, y = 0.5, width = 2, height = 2,
+                 just = c("left", "top"), default.units = "inches")
 
 }
 \seealso{

@@ -1,10 +1,5 @@
 #' Place a BentoBox plot that has been previously created but not drawn
 #'
-#' @usage
-#' bb_pagePlotPlace(plot, x, y, width, height,
-#'                  just = c("left", "top"),
-#'                  default.units = "inches")
-#'
 #' @param plot BentoBox plot object to be placed, defined by the output of a BentoBox plotting function.
 #' @param x A numeric or unit object specifying plot x-location.
 #' @param y A numeric or unit object specifying plot y-location.
@@ -24,14 +19,16 @@
 #'
 #' ## Create, but do not plot, square Hi-C plot
 #' hicPlot <- bb_plotHicSquare(hicData = bb_hicData, resolution = 10000, zrange = c(0, 70),
-#'                             chrom = "chr21", chromstart = 28000000, chromend = 30300000, draw = FALSE)
+#'                             chrom = "chr21", chromstart = 28000000, chromend = 30300000,
+#'                             draw = FALSE)
 #'
 #' ## Create BentoBox page
 #' bb_pageCreate(width = 4, height = 3.5, default.units = "inches", xgrid = 0, ygrid = 0)
 #'
 #' ## Place Hi-C plot on BentoBox page
 #' bb_pagePlotPlace(plot = hicPlot,
-#'                  x = 0.5, y = 0.5, width = 2.5, height = 2.5, just = c("left", "top"), default.units = "inches", draw = TRUE)
+#'                  x = 0.5, y = 0.5, width = 2.5, height = 2.5,
+#'                  just = c("left", "top"), default.units = "inches", draw = TRUE)
 #'
 #' @export
 bb_pagePlotPlace <- function(plot, x = NULL, y = NULL, width = NULL, height = NULL, just = c("left", "top"), default.units = "inches",
