@@ -1,6 +1,5 @@
 #' Remove guides from a BentoBox page
 #'
-#'
 #' @export
 bb_pageGuideHide <- function(){
 
