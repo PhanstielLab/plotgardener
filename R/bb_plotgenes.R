@@ -638,6 +638,6 @@ bb_plotGenes <- function(chrom, chromstart = NULL, chromend = NULL, assembly = "
   # RETURN OBJECT
   # ======================================================================================================================================================================================
 
-  message(paste0("bb_genes[", vp_name, "]"))
+  message(paste0("bb_genes[", vp_gene$name, "]"))
   invisible(bb_genes)
 }

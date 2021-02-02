@@ -329,7 +329,7 @@ bb_plotLegend <- function(legend, fill = NULL, pch = NULL, lty = NULL, orientati
   # RETURN OBJECT
   # ======================================================================================================================================================================================
 
-  message(paste0("bb_legend[", vp_name, "]"))
+  message(paste0("bb_legend[", vp$name, "]"))
   invisible(legend_plot)
 
 }

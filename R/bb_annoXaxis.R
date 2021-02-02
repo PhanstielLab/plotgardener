@@ -73,11 +73,23 @@ bb_annoXaxis <- function(plot, at = NULL, label = TRUE, main = TRUE, gp = gpar()
   xGrob <- xaxisGrob(at = bb_xInternal$at, label = bb_xInternal$label, main = bb_xInternal$main, gp = bb_xInternal$gp, vp = bb_xInternal$plot$grobs$vp)
 
   # ======================================================================================================================================================================================
-  # GET CENTER OF INPUT PLOT VIEWPORT BASED ON JUSTIFICATION
+  # GET CENTER OF INPUT PLOT VIEWPORT BASED ON INPUT PLOT TYPE AND JUSTIFICATION
   # ======================================================================================================================================================================================
 
-  adjusted_vp <- adjust_vpCoords(viewport = bb_xInternal$plot$grobs$vp)
+  if (class(bb_xInternal$plot) == "bb_genes"){
 
+    plotVP <- bb_xInternal$plot$grobs$children$background$vp
+
+  } else if (class(bb_xInternal$plot) == "bb_hicTriangle"){
+
+    plotVP <- bb_xInternal$plot$outsideVP
+
+  } else {
+
+    plotVP <- bb_xInternal$plot$grobs$vp
+
+  }
+  adjusted_vp <- adjust_vpCoords(viewport = plotVP)
   # ======================================================================================================================================================================================
   # VIEWPORTS
   # ======================================================================================================================================================================================
@@ -89,16 +101,16 @@ bb_annoXaxis <- function(plot, at = NULL, label = TRUE, main = TRUE, gp = gpar()
   ## Define viewport
   if (bb_xInternal$main == TRUE){
 
-    vp <- viewport(width = bb_xInternal$plot$grobs$vp$width, height = heightDetails(xGrob),
-                   x = adjusted_vp[[1]] - 0.5 * (bb_xInternal$plot$grobs$vp$width), y = adjusted_vp[[2]] - 0.5 * (bb_xInternal$plot$grobs$vp$height),
-                   just = c("left", "top"), xscale = bb_xInternal$plot$grobs$vp$xscale, name = vp_name)
+    vp <- viewport(width = plotVP$width, height = heightDetails(xGrob),
+                   x = adjusted_vp[[1]] - 0.5 * (plotVP$width), y = adjusted_vp[[2]] - 0.5 * (plotVP$height),
+                   just = c("left", "top"), xscale = plotVP$xscale, name = vp_name)
 
 
   } else if (bb_xInternal$main == FALSE){
 
-    vp <- viewport(width = bb_xInternal$plot$grobs$vp$width, height = heightDetails(xGrob),
-                   x = adjusted_vp[[1]] - 0.5 * (bb_xInternal$plot$grobs$vp$width), y = adjusted_vp[[2]] + 0.5 * (bb_xInternal$plot$grobs$vp$height),
-                   just = c("left", "bottom"), xscale = bb_xInternal$plot$grobs$vp$xscale, name = vp_name)
+    vp <- viewport(width = plotVP$width, height = heightDetails(xGrob),
+                   x = adjusted_vp[[1]] - 0.5 * (plotVP$width), y = adjusted_vp[[2]] + 0.5 * (plotVP$height),
+                   just = c("left", "bottom"), xscale = plotVP$xscale, name = vp_name)
 
   }
 

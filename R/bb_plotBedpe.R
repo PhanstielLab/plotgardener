@@ -525,7 +525,7 @@ bb_plotBedpe <- function(data, chrom, chromstart = NULL, chromend = NULL, assemb
   # RETURN OBJECT
   # ======================================================================================================================================================================================
 
-  message(paste0("bb_bedpe[", vp_name, "]"))
+  message(paste0("bb_bedpe[", vp$name, "]"))
   invisible(bb_bedpe)
 
 }

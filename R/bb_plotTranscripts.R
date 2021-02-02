@@ -711,7 +711,7 @@ bb_plotTranscripts <- function(chrom, chromstart = NULL, chromend = NULL, assemb
   # RETURN OBJECT
   # ======================================================================================================================================================================================
 
-  message(paste0("bb_transcripts[", vp_name, "]"))
+  message(paste0("bb_transcripts[", vp$name, "]"))
   invisible(bb_transcripts)
 
 }

@@ -724,7 +724,7 @@ bb_plotHicSquare <- function(data, resolution = "auto", zrange = NULL, norm = "K
 
     if (bb_hicInternal$draw == TRUE){
 
-      vp$name <- "bb_hic1"
+      vp$name <- "bb_hicSquare1"
       grid.newpage()
 
     }
@@ -819,7 +819,7 @@ bb_plotHicSquare <- function(data, resolution = "auto", zrange = NULL, norm = "K
 
   }
 
-  message(paste0("bb_hicSquare[", vp_name, "]"))
+  message(paste0("bb_hicSquare[", vp$name, "]"))
   invisible(hic_plot)
 
 }

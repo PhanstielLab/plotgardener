@@ -803,7 +803,7 @@ bb_plotSignal <- function(data, binSize = NA, binCap = TRUE, chrom, chromstart =
   # RETURN OBJECT
   # ======================================================================================================================================================================================
 
-  message(paste0("bb_signal[", vp_name, "]"))
+  message(paste0("bb_signal[", vp$name, "]"))
   invisible(signal_track)
 
 }

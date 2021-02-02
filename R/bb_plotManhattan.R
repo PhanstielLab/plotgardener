@@ -637,7 +637,7 @@ bb_plotManhattan <- function(data, pVals, sigVal = 5e-08, chrom = NULL, chromsta
   # RETURN OBJECT
   # ======================================================================================================================================================================================
 
-  message(paste0("bb_manhattan[", vp_name, "]"))
+  message(paste0("bb_manhattan[", vp$name, "]"))
   invisible(man_plot)
 
 }

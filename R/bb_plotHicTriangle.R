@@ -731,8 +731,9 @@ bb_plotHicTriangle <- function(data, resolution = "auto", zrange = NULL, norm = 
 
     if (bb_thicInternal$draw == TRUE){
 
-      inside_vp$name <- "bb_trianglehic1_inside"
-      outside_vp$name <- "bb_trianglehic1_outside"
+      vp_name <- "bb_hicTriangle1"
+      inside_vp$name <- "bb_hicTriangle1_inside"
+      outside_vp$name <- "bb_hicTriangle1_outside"
       grid.newpage()
 
     }
