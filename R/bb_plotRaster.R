@@ -142,13 +142,15 @@ bb_plotRaster <- function(image, x, y, width, height, just = "center", interpola
   ## Convert coordinates to page_units
   new_x <- convertX(bb_rast$x, unitTo = page_units, valueOnly = TRUE)
   new_y <- convertY(bb_rast$y, unitTo = page_units, valueOnly = TRUE)
+  new_width <- convertWidth(bb_rast$width, unitTo = page_units, valueOnly = TRUE)
+  new_height <- convertHeight(bb_rast$height, unitTo = page_units, valueOnly = TRUE)
   
   # ======================================================================================================================================================================================
   # MAKE GROB
   # ======================================================================================================================================================================================
   
-  rast <- grid.raster(image = bb_rast$image, x = unit(new_x, page_units), y = unit(page_height - new_y, page_units), width = bb_rast$width, height = bb_rast$height, 
-                    just = bb_rast$just, interpolate = bb_rast$interpolate, gp = bb_rast$gp)
+  rast <- grid.raster(image = bb_rast$image, x = unit(new_x, page_units), y = unit(page_height - new_y, page_units), width = unit(new_width, page_units), 
+                      height = unit(new_height, page_units), just = bb_rast$just, interpolate = bb_rast$interpolate, gp = bb_rast$gp)
   
   # ======================================================================================================================================================================================
   # ADD GROB TO OBJECT

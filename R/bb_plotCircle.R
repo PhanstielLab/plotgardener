@@ -140,12 +140,13 @@ bb_plotCircle <- function(x, y, r, default.units = "inches", linecolor = "black"
   ## Convert coordinates to page_units
   new_x <- convertX(bb_circle$x, unitTo = page_units, valueOnly = TRUE)
   new_y <- convertY(bb_circle$y, unitTo = page_units, valueOnly = TRUE)
+  new_r <- convertUnit(bb_circle$r, unitTo = page_units, valueOnly = TRUE)
   
   # ======================================================================================================================================================================================
   # MAKE GROB
   # ======================================================================================================================================================================================
   
-  circle <- grid.circle(x = unit(new_x, page_units), y = unit(page_height - new_y, page_units), r = bb_circle$r,
+  circle <- grid.circle(x = unit(new_x, page_units), y = unit(page_height - new_y, page_units), r = unit(new_r, page_units),
                         gp = bb_circle$gp)
   
   # ======================================================================================================================================================================================

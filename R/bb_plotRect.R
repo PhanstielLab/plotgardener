@@ -165,13 +165,15 @@ bb_plotRect <- function(x, y, width, height, just = "center", default.units = "i
   ## Convert coordinates to page_units
   new_x <- convertX(bb_rect$x, unitTo = page_units, valueOnly = TRUE)
   new_y <- convertY(bb_rect$y, unitTo = page_units, valueOnly = TRUE)
+  new_width <- convertWidth(bb_rect$width, unitTo = page_units, valueOnly = TRUE)
+  new_height <- convertHeight(bb_rect$height, unitTo = page_units, valueOnly = TRUE)
   
   # ======================================================================================================================================================================================
   # MAKE GROB
   # ======================================================================================================================================================================================
   
-  rect <- grid.rect(x = unit(new_x, page_units), y = unit(page_height - new_y, page_units), width = bb_rect$width, height = bb_rect$height, 
-                        just = bb_rect$just, gp = bb_rect$gp)
+  rect <- grid.rect(x = unit(new_x, page_units), y = unit(page_height - new_y, page_units), width = unit(new_width, page_units), 
+                    height = unit(new_height, page_units), just = bb_rect$just, gp = bb_rect$gp)
   
   # ======================================================================================================================================================================================
   # ADD GROB TO OBJECT
