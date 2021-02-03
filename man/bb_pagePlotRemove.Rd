@@ -22,7 +22,8 @@ bb_pageCreate(width = 4, height = 3.5, default.units = "inches", xgrid = 0, ygri
 ## Plot and place a square Hi-C plot
 hicPlot <- bb_plotHicSquare(hicData = bb_hicData, resolution = 10000, zrange = c(0, 70),
                             chrom = "chr21", chromstart = 28000000, chromend = 30300000,
-                            x = 0.5, y = 0.5, width = 2.5, height = 2.5, just = c("left", "top"), default.units = "inches")
+                            x = 0.5, y = 0.5, width = 2.5, height = 2.5,
+                            just = c("left", "top"), default.units = "inches")
 
 ## Remove square Hi-C plot from page
 bb_pagePlotRemove(plot = hicPlot)
