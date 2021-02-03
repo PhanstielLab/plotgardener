@@ -50,7 +50,7 @@ reference:
     contents:
       - starts_with("bb_plot")
 
-  - title: "Annotation function"
+  - title: "Annotation functions"
     contents:
       - starts_with("bb_anno")
 
@@ -60,10 +60,15 @@ reference:
       - bb_defaultPackages
       - bb_genomes
       - bb_params
+      - colorby
 
   - title: "Datasets"
     contents:
       - ends_with("Data")
       - starts_with("cytoBand")
+
+figures:
+  fig.height: 5
+  fig.asp: ~
 
 

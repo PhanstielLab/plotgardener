@@ -17,7 +17,7 @@
 #' @param altchromstart Alternate chromosome integer start position for off-diagonal plotting or interchromosomal plotting.
 #' @param altchromend Alternate chromosome integer end position for off-diagonal plotting or interchromosomal plotting.
 #' @param assembly Default genome assembly as a string or a \link[BentoBox]{bb_assembly} object. Default value is \code{assembly = "hg19"}.
-#' @param palette A function describing the color palette to use for representing scale of interaction scores. Default value is \code{palette = colorRampPalette(c("white", "dark red"))}.
+#' @param palette A function describing the color palette to use for representing scale of interaction scores. Default value is \code{palette =  colorRampPalette(brewer.pal(n = 9, "YlGnBu"))}.
 #' @param half A character value indicating which diagonal regions to plot. For intrachromosomal plotting, options are \code{"both"}, \code{"top"}, or \code{"bottom"}. For off-diagonal or interchromosomal plotting, options are \code{"top"} or \code{"bottom"}. Default value is \code{half = "both"}.
 #' \itemize{
 #' \item{\code{"both"}: }{Both diagonal halves.}
@@ -69,7 +69,7 @@
 #'
 #' @export
 bb_plotHicSquare <- function(data, resolution = "auto", zrange = NULL, norm = "KR", matrix = "observed", chrom, chromstart = NULL, chromend = NULL, altchrom = NULL,
-                             altchromstart = NULL, altchromend = NULL, assembly = "hg19", palette = colorRampPalette(c("white", "dark red")),
+                             altchromstart = NULL, altchromend = NULL, assembly = "hg19", palette = colorRampPalette(brewer.pal(n = 9,"YlGnBu")),
                              half = "both", x = NULL, y = NULL, width = NULL, height = NULL, just = c("left", "top"), default.units = "inches",
                              draw = TRUE, params = NULL){
 
@@ -590,7 +590,7 @@ bb_plotHicSquare <- function(data, resolution = "auto", zrange = NULL, norm = "K
   ## For any defaults that are still NULL, set back to default
   if(is.null(bb_hicInternal$half)) bb_hicInternal$half <- "both"
   if(is.null(bb_hicInternal$resolution)) bb_hicInternal$resolution <- "auto"
-  if(is.null(bb_hicInternal$palette)) bb_hicInternal$palette <- colorRampPalette(c("white", "dark red"))
+  if(is.null(bb_hicInternal$palette)) bb_hicInternal$palette <- colorRampPalette(brewer.pal(n=9,"YlGnBu"))
   if(is.null(bb_hicInternal$assembly)) bb_hicInternal$assembly <- "hg19"
   if(is.null(bb_hicInternal$just)) bb_hicInternal$just <- c("left", "top")
   if(is.null(bb_hicInternal$default.units)) bb_hicInternal$default.units <- "inches"

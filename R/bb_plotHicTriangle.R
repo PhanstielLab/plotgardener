@@ -14,7 +14,7 @@
 #' @param chromstart Integer start position on chromosome to be plotted.
 #' @param chromend Integer end position on chromosome to be plotted.
 #' @param assembly Default genome assembly as a string or a \link[BentoBox]{bb_assembly} object. Default value is \code{assembly = "hg19"}.
-#' @param palette A function describing the color palette to use for representing scale of interaction scores. Default value is \code{palette = colorRampPalette(c("white", "dark red"))}.
+#' @param palette A function describing the color palette to use for representing scale of interaction scores. Default value is \code{palette =  colorRampPalette(brewer.pal(n = 9, "YlGnBu"))}.
 #' @param x A numeric or unit object specifying triangle Hi-C plot x-location.
 #' @param y A numeric or unit object specifying triangle Hi-C plot y-location.
 #' @param width A numeric or unit object specifying the bottom width of the Hi-C plot triangle.
@@ -62,7 +62,7 @@
 #'
 #' @export
 bb_plotHicTriangle <- function(data, resolution = "auto", zrange = NULL, norm = "KR", matrix = "observed", chrom,  chromstart = NULL, chromend = NULL, assembly = "hg19",
-                               palette = colorRampPalette(c("white", "dark red")), x = NULL, y = NULL, width = NULL, height = NULL,
+                               palette = colorRampPalette(brewer.pal(n = 9, "YlGnBu")), x = NULL, y = NULL, width = NULL, height = NULL,
                                just = c("left", "top"), default.units = "inches", draw = TRUE, params = NULL){
 
   # ======================================================================================================================================================================================
@@ -580,7 +580,7 @@ bb_plotHicTriangle <- function(data, resolution = "auto", zrange = NULL, norm = 
 
   ## For any defaults that are still NULL, set back to default
   if(is.null(bb_thicInternal$resolution)) bb_thicInternal$resolution <- "auto"
-  if(is.null(bb_thicInternal$palette)) bb_thicInternal$palette <- colorRampPalette(c("white", "dark red"))
+  if(is.null(bb_thicInternal$palette)) bb_thicInternal$palette <- colorRampPalette(brewer.pal(n=9,"YlGnBu"))
   if(is.null(bb_thicInternal$assembly)) bb_thicInternal$assembly <- "hg19"
   if(is.null(bb_thicInternal$just)) bb_thicInternal$just <- c("left", "top")
   if(is.null(bb_thicInternal$norm)) bb_thicInternal$norm <- "KR"

@@ -2,7 +2,8 @@ Package: BentoBox
 Title: Coordinate-based Genomic Visualization Package for R
 Version: 0.1.0
 Date: 2021-01-23
-Authors@R: c(person("Nicole", "Kramer", email = "nekramer@live.unc.edu", role = c("aut", "cre")),
+Authors@R: c(person("Nicole", "Kramer", email = "nekramer@live.unc.edu", role = c("aut", "cre"),
+             comment = c(ORCID = "0000-0001-9617-9671")),
              person(c("Eric", "S."), "Davis", email = "esdavis@live.unc.edu", role = c("aut"),
              comment = c(ORCID = "0000-0003-4051-3217")),
              person("Craig", "Wenger", email = "craig.wenger@gmail.com", role = c("aut")),
@@ -15,7 +16,7 @@ Description: >
     the ability to programmatically produce complex, multi-paneled figures. Tailored for
     genomics, BentoBox allows users to visualize large complex genomic datasets and
     provides exquisite control over how plots are placed and arranged on a page. 
-Depends: R (>= 3.5.0), tools, grid, data.table, tidyr, dplyr, ggplotify, Rmpfr, purrr
+Depends: R (>= 3.5.0), tools, grid, data.table, tidyr, dplyr, ggplotify, Rmpfr, purrr, RColorBrewer
 License: GPL (>= 2)
 URL: https://phanstiellab.github.io/bentobox, https://github.com/PhanstielLab/BentoBox
 Encoding: UTF-8
