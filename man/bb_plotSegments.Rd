@@ -4,7 +4,21 @@
 \alias{bb_plotSegments}
 \title{Draw a line segment within a BentoBox layout}
 \usage{
-bb_plotSegments(x0, y0, x1, y1, default.units = "inches")
+bb_plotSegments(
+  x0,
+  y0,
+  x1,
+  y1,
+  default.units = "inches",
+  linecolor = "black",
+  lwd = 1,
+  lty = 1,
+  lineend = "butt",
+  linejoin = "mitre",
+  arrow = NULL,
+  params = NULL,
+  ...
+)
 }
 \arguments{
 \item{x0}{A numeric vector or unit object indicating the starting x-values of the line segments.}
@@ -18,8 +32,6 @@ bb_plotSegments(x0, y0, x1, y1, default.units = "inches")
 \item{default.units}{A string indicating the default units to use if \code{x0}, \code{y0}, \code{x1}, or \code{y1} are only given as numeric vectors. Default value is \code{default.units = "inches"}.}
 
 \item{linecolor}{A character value specifying segment line color. Default value is \code{linecolor = "black"}.}
-
-\item{alpha}{Numeric value specifying color transparency. Default value is \code{alpha = 1}.}
 
 \item{lwd}{A numeric specifying segment line width. Default value is \code{lwd = 1}.}
 

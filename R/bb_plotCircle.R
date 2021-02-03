@@ -19,7 +19,7 @@
 #' bb_pageCreate(width = 2, height = 2, default.units = "inches", xgrid = 0, ygrid = 0)
 #'
 #' ## Plot a circle
-#' bb_plotCircle(r = 0.3, x = 1, y = 1.2, default.units = "inches")
+#' bb_plotCircle(x = 1, y = 1.2, r = 0.3, default.units = "inches")
 #'
 #' @seealso \link[grid]{grid.circle}
 #'
@@ -159,5 +159,6 @@ bb_plotCircle <- function(x, y, r, default.units = "inches", linecolor = "black"
   # RETURN OBJECT
   # ======================================================================================================================================================================================
   
-  return(bb_circle)
+  message(paste0("bb_circle[", circle$name, "]"))
+  invisible(bb_circle)
 }

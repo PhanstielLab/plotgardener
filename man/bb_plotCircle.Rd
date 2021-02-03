@@ -4,14 +4,26 @@
 \alias{bb_plotCircle}
 \title{Plot a circle within a BentoBox layout}
 \usage{
-bb_plotCircle(r, x, y, default.units = "inches")
+bb_plotCircle(
+  x,
+  y,
+  r,
+  default.units = "inches",
+  linecolor = "black",
+  lwd = 1,
+  lty = 1,
+  fill = NA,
+  alpha = 1,
+  params = NULL,
+  ...
+)
 }
 \arguments{
-\item{r}{A numeric vector or unit object specifying radii.}
-
 \item{x}{A numeric vector or unit object specifying circle x-locations relative to center.}
 
 \item{y}{A numeric vector or unit object specifying circle y-locations relative to center.}
+
+\item{r}{A numeric vector or unit object specifying radii.}
 
 \item{default.units}{A string indicating the default units to use if \code{r}, \code{x}, or \code{y} are only given as numerics or numeric vectors. Default value is \code{default.units = "inches"}.}
 

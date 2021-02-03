@@ -4,7 +4,14 @@
 \alias{bb_annoXaxis}
 \title{Add an x-axis to a plot}
 \usage{
-bb_annoXaxis(plot)
+bb_annoXaxis(
+  plot,
+  at = NULL,
+  label = TRUE,
+  main = TRUE,
+  gp = gpar(),
+  params = NULL
+)
 }
 \arguments{
 \item{plot}{Plot object to annotate with x-axis.}
@@ -39,9 +46,11 @@ bb_pageCreate(width = 3, height = 2, default.units = "inches", xgrid = 0, ygrid 
 
 ## Plot gene transcripts
 transcriptPlot <- bb_plotTranscripts(chrom = "chr1", chromstart = 1000000, chromend = 2000000,
-                                     x = 0, y = 0, width = 3, height = 1.5, just = c("left", "top"), default.units = "inches")
+                                     x = 0, y = 0, width = 3, height = 1.5,
+                                     just = c("left", "top"), default.units = "inches")
 
 ## Add standard x-axis to transcript plot
-bb_annoXaxis(plot = transcriptPlot, at = c(1000000, 1250000, 1500000, 1750000, 2000000), gp = gpar(fontsize = 8))
+bb_annoXaxis(plot = transcriptPlot, at = c(1000000, 1250000, 1500000, 1750000, 2000000),
+             gp = gpar(fontsize = 8))
 
 }

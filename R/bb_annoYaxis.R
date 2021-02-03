@@ -1,7 +1,5 @@
 #' Add a y-axis to a plot
 #'
-#' @usage bb_annoYaxis(plot)
-#'
 #' @param plot Plot object to annotate with y-axis.
 #' @param at A numeric vector of y-value locations for tick marks.
 #' @param label A logical value indicating whether to draw the labels on the tick marks, or an expression or character vector which specify the labels to use.
@@ -24,11 +22,14 @@
 #' bb_pageCreate(width = 4, height = 3.5, default.units = "inches", xgrid = 0, ygrid = 0)
 #'
 #' ## Plot and place a square Hi-C plot
-#' hicPlot <- bb_plotHicSquare(hicData = bb_hicData, resolution = 10000, zrange = c(0, 70), chrom = "chr21", chromstart = 28000000, chromend = 30300000,
-#'                             x = 1, y = 0.5, width = 2.5, height = 2.5, just = c("left", "top"), default.units = "inches")
+#' hicPlot <- bb_plotHicSquare(hicData = bb_hicData, resolution = 10000, zrange = c(0, 70),
+#'                             chrom = "chr21", chromstart = 28000000, chromend = 30300000,
+#'                             x = 1, y = 0.5, width = 2.5, height = 2.5,
+#'                             just = c("left", "top"), default.units = "inches")
 #'
 #' ## Add standard y-axis to Hi-C plot
-#' bb_annoYaxis(plot = hicPlot, at = c(28000000, 29000000, 30300000), gp = gpar(fontsize = 8))
+#' bb_annoYaxis(plot = hicPlot, at = c(28000000, 29000000, 30300000),
+#'              gp = gpar(fontsize = 8))
 #'
 #' @export
 bb_annoYaxis <- function(plot, at = NULL, label = TRUE, main = TRUE, gp = gpar(), params = NULL){
@@ -73,10 +74,24 @@ bb_annoYaxis <- function(plot, at = NULL, label = TRUE, main = TRUE, gp = gpar()
   yGrob <- yaxisGrob(at = bb_yInternal$at, label = bb_yInternal$label, main = bb_yInternal$main, gp = bb_yInternal$gp, vp = bb_yInternal$plot$grobs$vp)
 
   # ======================================================================================================================================================================================
-  # GET CENTER OF INPUT PLOT VIEWPORT BASED ON JUSTIFICATION
+  # GET CENTER OF INPUT PLOT VIEWPORT BASED ON INPUT PLOT TYPE AND JUSTIFICATION
   # ======================================================================================================================================================================================
 
-  adjusted_vp <- adjust_vpCoords(viewport = bb_yInternal$plot$grobs$vp)
+  if (class(bb_yInternal$plot) == "bb_genes"){
+
+    plotVP <- bb_yInternal$plot$grobs$children$background$vp
+
+  } else if (class(bb_yInternal$plot) == "bb_hicTriangle"){
+
+    plotVP <- bb_yInternal$plot$outsideVP
+
+  } else {
+
+    plotVP <- bb_yInternal$plot$grobs$vp
+
+  }
+
+  adjusted_vp <- adjust_vpCoords(viewport = plotVP)
 
   # ======================================================================================================================================================================================
   # VIEWPORTS
@@ -89,16 +104,16 @@ bb_annoYaxis <- function(plot, at = NULL, label = TRUE, main = TRUE, gp = gpar()
   ## Define viewport
   if (bb_yInternal$main == TRUE){
 
-    vp <- viewport(width = widthDetails(yGrob), height = bb_yInternal$plot$grobs$vp$height,
-                   x = adjusted_vp[[1]] - 0.5 * (bb_yInternal$plot$grobs$vp$width), y = adjusted_vp[[2]] - 0.5 * (bb_yInternal$plot$grobs$vp$height),
-                   just = c("right", "bottom"), yscale = bb_yInternal$plot$grobs$vp$yscale, name = vp_name)
+    vp <- viewport(width = widthDetails(yGrob), height = plotVP$height,
+                   x = adjusted_vp[[1]] - 0.5 * (plotVP$width), y = adjusted_vp[[2]] - 0.5 * (plotVP$height),
+                   just = c("right", "bottom"), yscale = plotVP$yscale, name = vp_name)
 
 
   } else if (bb_yInternal$main == FALSE){
 
-    vp <- viewport(width = widthDetails(yGrob), height = bb_yInternal$plot$grobs$vp$height,
-                   x = adjusted_vp[[1]] + 0.5 * (bb_yInternal$plot$grobs$vp$width), y = adjusted_vp[[2]] - 0.5 * (bb_yInternal$plot$grobs$vp$height),
-                   just = c("left", "bottom"), yscale = bb_yInternal$plot$grobs$vp$yscale, name = vp_name)
+    vp <- viewport(width = widthDetails(yGrob), height = plotVP$height,
+                   x = adjusted_vp[[1]] + 0.5 * (plotVP$width), y = adjusted_vp[[2]] - 0.5 * (plotVP$height),
+                   just = c("left", "bottom"), yscale = plotVP$yscale, name = vp_name)
 
   }
 
@@ -114,6 +129,7 @@ bb_annoYaxis <- function(plot, at = NULL, label = TRUE, main = TRUE, gp = gpar()
   # RETURN OBJECT
   # ======================================================================================================================================================================================
 
-  return(yAxis)
+  message(paste0("bb_yaxis[", vp_name, "]"))
+  invisible(yAxis)
 
 }

@@ -1,12 +1,6 @@
 #' Plot paired-end BEDPE data for a single chromosome
 #'
-#' @usage
-#' bb_plotBedpe(bedpeData, chrom)
-#' bb_plotBedpe(bedpeData, chrom, x, y, width, height,
-#'              just = c("left", "top"),
-#'              default.units = "inches")
-#'
-#' @param bedpeData A string specifying the BEDPE file path or a dataframe in BEDPE format specifying data to be plotted.
+#' @param data A string specifying the BEDPE file path or a dataframe in BEDPE format specifying data to be plotted.
 #' @param chrom Chromosome of region to be plotted, as a string.
 #' @param chromstart Integer start position on chromosome to be plotted.
 #' @param chromend Integer end position on chromosome to be plotted.
@@ -37,15 +31,32 @@
 #' data("bb_bedpeData")
 #'
 #' ## Plot BEDPE plot filling up entire graphic device
-#' bedpePlot <- bb_plotBedpe(bedpeData = bb_bedpeData, chrom = "chr21", chromstart = 28000000, chromend = 30300000)
+#' bedpePlot <- bb_plotBedpe(data = bb_bedpeData, chrom = "chr21",
+#'                           chromstart = 28000000, chromend = 30300000)
 #'
 #' ## Plot and place BEDPE plot on a BentoBox page
 #' bb_pageCreate(width = 5, height = 2, default.units = "inches", xgrid = 0, ygrid = 0)
-#' bedpePlot <- bb_plotBedpe(bedpeData = bb_bedpeData, chrom = "chr21", chromstart = 28000000, chromend = 30300000,
-#'                           x = 0.5, y = 0.5, width = 4, height = 1, just = c("left", "top"), default.units = "inches")
+#' bedpePlot <- bb_plotBedpe(data = bb_bedpeData, chrom = "chr21",
+#'                           chromstart = 28000000, chromend = 30300000,
+#'                           x = 0.5, y = 0.5, width = 4, height = 1,
+#'                           just = c("left", "top"), default.units = "inches")
+#'
+#' @details
+#' This function can be used to quickly plot a BEDPE plot by ignoring plot placement parameters:
+#' \preformatted{
+#' bb_plotBedpe(data, chrom,
+#'              chromstart = NULL, chromend = NULL)
+#' }
+#' A BEDPE plot can be placed on a BentoBox coordinate page by providing plot placement parameters:
+#' \preformatted{
+#' bb_plotBedpe(data, chrom,
+#'              chromstart = NULL, chromend = NULL,
+#'              x, y, width, height, just = c("left", "top"),
+#'              default.units = "inches")
+#' }
 #'
 #' @export
-bb_plotBedpe <- function(bedpeData, chrom, chromstart = NULL, chromend = NULL, assembly = "hg19", fill = "black", colorby = NULL, linecolor = NA,
+bb_plotBedpe <- function(data, chrom, chromstart = NULL, chromend = NULL, assembly = "hg19", fill = "black", colorby = NULL, linecolor = NA,
                          bg = NA, boxHeight = unit(2, "mm"), spaceWidth = 0.02, spaceHeight = 0.3, baseline = FALSE, x = NULL, y = NULL, width = NULL, height = NULL,
                          just = c("left", "top"), default.units = "inches", draw = TRUE, params = NULL, ...){
 
@@ -113,11 +124,11 @@ bb_plotBedpe <- function(bedpeData, chrom, chromstart = NULL, chromend = NULL, a
   if(missing(draw)) draw <- NULL
 
   ## Check if bedpe/chrom arguments are missing (could be in object)
-  if(!hasArg(bedpeData)) bedpeData <- NULL
+  if(!hasArg(data)) data <- NULL
   if(!hasArg(chrom)) chrom <- NULL
 
   ## Compile all parameters into an internal object
-  bb_bedpeInternal <- structure(list(bedpeData = bedpeData, chrom = chrom, chromstart = chromstart, chromend = chromend,
+  bb_bedpeInternal <- structure(list(data = data, chrom = chrom, chromstart = chromstart, chromend = chromend,
                                      fill = fill, colorby = colorby, linecolor = linecolor,
                                      assembly = assembly, boxHeight = boxHeight, spaceHeight = spaceHeight, spaceWidth = spaceWidth, baseline = baseline, bg = bg,
                                      x = x, y = y, width = width, height = height, just = just, default.units = default.units, draw = draw), class = "bb_bedpeInternal")
@@ -140,7 +151,7 @@ bb_plotBedpe <- function(bedpeData, chrom, chromstart = NULL, chromend = NULL, a
   # ======================================================================================================================================================================================
   # CHECK ARGUMENT ERRORS
   # ======================================================================================================================================================================================
-  if(is.null(bb_bedpeInternal$bedpeData)) stop("argument \"bedpeData\" is missing, with no default.", call. = FALSE)
+  if(is.null(bb_bedpeInternal$data)) stop("argument \"data\" is missing, with no default.", call. = FALSE)
   if(is.null(bb_bedpeInternal$chrom)) stop("argument \"chrom\" is missing, with no default.", call. = FALSE)
 
   if (!is.null(bb_bedpeInternal$colorby)){
@@ -195,10 +206,10 @@ bb_plotBedpe <- function(bedpeData, chrom, chromstart = NULL, chromend = NULL, a
   # READ IN FILE OR DATAFRAME
   # ======================================================================================================================================================================================
 
-  if (!"data.frame" %in% class(bb_bedpeInternal$bedpeData)){
-    bedpe <- as.data.frame(data.table::fread(bb_bedpeInternal$bedpeData))
+  if (!"data.frame" %in% class(bb_bedpeInternal$data)){
+    bedpe <- as.data.frame(data.table::fread(bb_bedpeInternal$data))
   } else {
-    bedpe <- as.data.frame(bb_bedpeInternal$bedpeData)
+    bedpe <- as.data.frame(bb_bedpeInternal$data)
   }
 
   # ======================================================================================================================================================================================
@@ -514,6 +525,7 @@ bb_plotBedpe <- function(bedpeData, chrom, chromstart = NULL, chromend = NULL, a
   # RETURN OBJECT
   # ======================================================================================================================================================================================
 
-  return(bb_bedpe)
+  message(paste0("bb_bedpe[", vp$name, "]"))
+  invisible(bb_bedpe)
 
 }

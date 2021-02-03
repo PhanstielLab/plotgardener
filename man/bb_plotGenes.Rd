@@ -4,8 +4,29 @@
 \alias{bb_plotGenes}
 \title{Plot a gene track for a specified genomic region}
 \usage{
-bb_plotGenes(chrom)
-bb_plotGenes(chrom, x, y, width, height, just = c("left", "top"), default.units = "inches")
+bb_plotGenes(
+  chrom,
+  chromstart = NULL,
+  chromend = NULL,
+  assembly = "hg19",
+  fontsize = 8,
+  fontcolors = c("#2929ff", "#ff3434"),
+  strandcolors = c("#8a8aff", "#ff7e7e"),
+  geneOrder = NULL,
+  geneHighlights = NULL,
+  geneBackground = "grey",
+  strandLabels = TRUE,
+  stroke = 0.1,
+  bg = NA,
+  x = NULL,
+  y = NULL,
+  width = NULL,
+  height = unit(0.6, "inches"),
+  just = c("left", "top"),
+  default.units = "inches",
+  draw = TRUE,
+  params = NULL
+)
 }
 \arguments{
 \item{chrom}{Chromosome of region to be plotted, as a string.}
@@ -60,7 +81,18 @@ Returns a \code{bb_genes} object containing relevant genomic region, placement, 
 Plot a gene track for a specified genomic region
 }
 \details{
-Genomic annotation information is acquired through \link[GenomicFeatures]{TxDb} and \link[AnnotationDb]{OrgDb-class} packages, as determined
+This function can be used to quickly plot a gene track by ignoring plot placement parameters:
+\preformatted{
+bb_plotGenes(chrom, chromstart = NULL, chromend = NULL)
+}
+A gene track can be placed on a BentoBox coordinate page by providing plot placement parameters:
+\preformatted{
+bb_plotGenes(chrom, chromstart = NULL, chromend = NULL,
+             x, y, width, height, just = c("left", "top"),
+             default.units = "inches")
+}
+
+Genomic annotation information is acquired through \link[GenomicFeatures]{TxDb} and \link[AnnotationDbi]{OrgDb-class} packages, as determined
 through the \code{assembly} parameter. To avoid overcrowding of gene name labels, plotted gene labels are by default prioritized according to citation counts.
 }
 \examples{
@@ -74,7 +106,8 @@ bb_plotGenes(chrom = "chr8", chromstart = 1000000, chromend = 2000000, assembly 
 ## Plot and place gene track on a BentoBox page
 bb_pageCreate(width = 5, height = 2, default.units = "inches", xgrid = 0, ygrid = 0)
 bb_plotGenes(chrom = "chr8", chromstart = 1000000, chromend = 2000000, assembly = "hg19",
-x = 0.5, y = 0.25, width = 4.5, height = 1.5, just = c("left", "top"), default.units = "inches")
+             x = 0.5, y = 0.25, width = 4.5, height = 1.5,
+             just = c("left", "top"), default.units = "inches")
 
 }
 \seealso{

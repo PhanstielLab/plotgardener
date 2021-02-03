@@ -1,11 +1,5 @@
 #' Plot any kind of signal track data for a single chromosome
 #'
-#' @usage
-#' bb_plotSignal(data, chrom)
-#' bb_plotSignal(data, chrom, x, y, width, height,
-#'               just = c("left", "top"),
-#'               default.units = "inches")
-#'
 #' @param data Data to be plotted as a character value specifying a bigwig file path, a dataframe in BED format, or a \link[GenomicRanges]{GRanges} object with metadata column \code{counts}.
 #' Either one \code{data} argument or a list of two can be provided, where the second \code{data} will be plotted below the x-axis.
 #' @param binSize A numeric specifying the length of each data bin in basepairs. Default value is \code{binSize = NA}.
@@ -39,12 +33,29 @@
 #' data("bb_signalData")
 #'
 #' ## Plot signal plot filling up entire graphic device
-#' bb_plotSignal(data = bb_signalData, chrom = "chr21", chromstart = 28000000, chromend = 30300000, fill = "grey")
+#' bb_plotSignal(data = bb_signalData, chrom = "chr21",
+#'              chromstart = 28000000, chromend = 30300000, fill = "grey")
 #'
 #' ## Plot and place signal plot on a BentoBox page
 #' bb_pageCreate(width = 4, height = 3, default.units = "inches", xgrid = 0, ygrid = 0)
-#' bb_plotSignal(data = bb_signalData, chrom = "chr21", chromstart = 28000000, chromend = 30300000, fill = "grey",
-#'               x = 0.5, y = 1, width = 3, height = 1, just = c("left", "top"), default.units = "inches")
+#' bb_plotSignal(data = bb_signalData, chrom = "chr21",
+#'               chromstart = 28000000, chromend = 30300000, fill = "grey",
+#'               x = 0.5, y = 1, width = 3, height = 1,
+#'               just = c("left", "top"), default.units = "inches")
+#'
+#' @details
+#' This function can be used to quickly plot a signal track by ignoring plot placement parameters:
+#' \preformatted{
+#' bb_plotSignal(data, chrom,
+#'               chromstart = NULL, chromend = NULL)
+#' }
+#' A signal track can be placed on a BentoBox coordinate page by providing plot placement parameters:
+#' \preformatted{
+#' bb_plotSignal(data, chrom,
+#'               chromstart = NULL, chromend = NULL,
+#'               x, y, width, height, just = c("left", "top"),
+#'               default.units = "inches")
+#' }
 #'
 #' @export
 bb_plotSignal <- function(data, binSize = NA, binCap = TRUE, chrom, chromstart = NULL, chromend = NULL, assembly = "hg19", linecolor = "grey", fill = NULL,
@@ -148,7 +159,7 @@ bb_plotSignal <- function(data, binSize = NA, binCap = TRUE, chrom, chromstart =
     if (!"data.frame" %in% class(signal)){
 
       if (!"GRanges" %in% class(signal)){
-        signal <- bb_readBigwig(bigwigFile = signal, chrom = signaltrack$chrom, chromstart = signaltrack$chromstart, chromend = signaltrack$chromend)
+        signal <- bb_readBigwig(file = signal, chrom = signaltrack$chrom, chromstart = signaltrack$chromstart, chromend = signaltrack$chromend)
       }
 
     }
@@ -792,7 +803,8 @@ bb_plotSignal <- function(data, binSize = NA, binCap = TRUE, chrom, chromstart =
   # RETURN OBJECT
   # ======================================================================================================================================================================================
 
-  return(signal_track)
+  message(paste0("bb_signal[", vp$name, "]"))
+  invisible(signal_track)
 
 }
 

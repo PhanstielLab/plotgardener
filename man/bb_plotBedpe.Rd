@@ -4,13 +4,33 @@
 \alias{bb_plotBedpe}
 \title{Plot paired-end BEDPE data for a single chromosome}
 \usage{
-bb_plotBedpe(bedpeData, chrom)
-bb_plotBedpe(bedpeData, chrom, x, y, width, height,
-             just = c("left", "top"),
-             default.units = "inches")
+bb_plotBedpe(
+  data,
+  chrom,
+  chromstart = NULL,
+  chromend = NULL,
+  assembly = "hg19",
+  fill = "black",
+  colorby = NULL,
+  linecolor = NA,
+  bg = NA,
+  boxHeight = unit(2, "mm"),
+  spaceWidth = 0.02,
+  spaceHeight = 0.3,
+  baseline = FALSE,
+  x = NULL,
+  y = NULL,
+  width = NULL,
+  height = NULL,
+  just = c("left", "top"),
+  default.units = "inches",
+  draw = TRUE,
+  params = NULL,
+  ...
+)
 }
 \arguments{
-\item{bedpeData}{A string specifying the BEDPE file path or a dataframe in BEDPE format specifying data to be plotted.}
+\item{data}{A string specifying the BEDPE file path or a dataframe in BEDPE format specifying data to be plotted.}
 
 \item{chrom}{Chromosome of region to be plotted, as a string.}
 
@@ -61,16 +81,33 @@ Returns a \code{bb_bedpe} object containing relevant genomic region, placement, 
 \description{
 Plot paired-end BEDPE data for a single chromosome
 }
+\details{
+This function can be used to quickly plot a BEDPE plot by ignoring plot placement parameters:
+\preformatted{
+bb_plotBedpe(data, chrom,
+             chromstart = NULL, chromend = NULL)
+}
+A BEDPE plot can be placed on a BentoBox coordinate page by providing plot placement parameters:
+\preformatted{
+bb_plotBedpe(data, chrom,
+             chromstart = NULL, chromend = NULL,
+             x, y, width, height, just = c("left", "top"),
+             default.units = "inches")
+}
+}
 \examples{
 ## Load BEDPE data
 data("bb_bedpeData")
 
 ## Plot BEDPE plot filling up entire graphic device
-bedpePlot <- bb_plotBedpe(bedpeData = bb_bedpeData, chrom = "chr21", chromstart = 28000000, chromend = 30300000)
+bedpePlot <- bb_plotBedpe(data = bb_bedpeData, chrom = "chr21",
+                          chromstart = 28000000, chromend = 30300000)
 
 ## Plot and place BEDPE plot on a BentoBox page
 bb_pageCreate(width = 5, height = 2, default.units = "inches", xgrid = 0, ygrid = 0)
-bedpePlot <- bb_plotBedpe(bedpeData = bb_bedpeData, chrom = "chr21", chromstart = 28000000, chromend = 30300000,
-                          x = 0.5, y = 0.5, width = 4, height = 1, just = c("left", "top"), default.units = "inches")
+bedpePlot <- bb_plotBedpe(data = bb_bedpeData, chrom = "chr21",
+                          chromstart = 28000000, chromend = 30300000,
+                          x = 0.5, y = 0.5, width = 4, height = 1,
+                          just = c("left", "top"), default.units = "inches")
 
 }

@@ -4,9 +4,21 @@
 \alias{bb_plotRect}
 \title{Plot a rectangle within a BentoBox layout}
 \usage{
-bb_plotRect(x, y, width, height,
-            just = "center",
-            default.units = "inches")
+bb_plotRect(
+  x,
+  y,
+  width,
+  height,
+  just = "center",
+  default.units = "inches",
+  linecolor = "black",
+  lwd = 1,
+  lty = 1,
+  fill = NA,
+  alpha = 1,
+  params = NULL,
+  ...
+)
 }
 \arguments{
 \item{x}{A numeric vector or unit object specifying rectangle x-locations.}
@@ -47,7 +59,8 @@ Plot a rectangle within a BentoBox layout
 bb_pageCreate(width = 2, height = 2, default.units = "inches", xgrid = 0, ygrid = 0)
 
 ## Plot a rectangle
-bb_plotRect(x = 1, y = 1, width = 0.75, height = 0.25, just = "center", default.units = "inches")
+bb_plotRect(x = 1, y = 1, width = 0.75, height = 0.25, just = "center",
+            default.units = "inches")
 
 }
 \seealso{

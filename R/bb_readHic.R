@@ -1,8 +1,6 @@
 #' Read a .hic file and return Hi-C data as a dataframe
 #'
-#' @usage bb_readHic(hicFile, chrom)
-#'
-#' @param hicFile A character value specifying the path to the .hic file.
+#' @param file A character value specifying the path to the .hic file.
 #' @param chrom Chromosome of data, as a string.
 #' @param chromstart Integer start position on chromosome.
 #' @param chromend Integer end position on chromosome.
@@ -30,7 +28,7 @@
 #' @seealso \link[strawr]{straw}
 #'
 #' @export
-bb_readHic <- function(hicFile, chrom, chromstart = NULL, chromend = NULL, altchrom = NULL, altchromstart = NULL, altchromend = NULL, assembly = "hg19", resolution = "auto", res_scale = "BP",
+bb_readHic <- function(file, chrom, chromstart = NULL, chromend = NULL, altchrom = NULL, altchromstart = NULL, altchromend = NULL, assembly = "hg19", resolution = "auto", res_scale = "BP",
                        zrange = NULL, norm = "KR",  matrix = "observed", params = NULL){
 
 
@@ -338,11 +336,11 @@ bb_readHic <- function(hicFile, chrom, chromstart = NULL, chromend = NULL, altch
   if(missing(matrix)) matrix <- NULL
 
   ## Check if hic/chrom arguments are missing (could be in object)
-  if(!hasArg(hicFile)) hicFile <- NULL
+  if(!hasArg(file)) file <- NULL
   if(!hasArg(chrom)) chrom <- NULL
 
   ## Compile all parameters into an internal object
-  bb_rhic <- structure(list(hicFile = hicFile, chrom = chrom, chromstart = chromstart, chromend = chromend, resolution = resolution, zrange = zrange,
+  bb_rhic <- structure(list(file = file, chrom = chrom, chromstart = chromstart, chromend = chromend, resolution = resolution, zrange = zrange,
                             norm = norm, res_scale = res_scale, assembly = assembly, matrix = matrix, altchrom = altchrom, altchromstart = altchromstart, altchromend = altchromend), class = "bb_rhic")
 
   bb_rhic <- parseParams(bb_params = params, object_params = bb_rhic)
@@ -354,7 +352,7 @@ bb_readHic <- function(hicFile, chrom, chromstart = NULL, chromend = NULL, altch
   if(is.null(bb_rhic$assembly)) bb_rhic$assembly <- "hg19"
   if(is.null(bb_rhic$matrix)) bb_rhic$matrix <- "observed"
 
-  if(is.null(bb_rhic$hicFile)) stop("argument \"hicFile\" is missing, with no default.", call. = FALSE)
+  if(is.null(bb_rhic$file)) stop("argument \"file\" is missing, with no default.", call. = FALSE)
   if(is.null(bb_rhic$chrom)) stop("argument \"chrom\" is missing, with no default.", call. = FALSE)
 
   # ======================================================================================================================================================================================
@@ -367,7 +365,7 @@ bb_readHic <- function(hicFile, chrom, chromstart = NULL, chromend = NULL, altch
   # CATCH ERRORS
   # ======================================================================================================================================================================================
 
-  errorcheck_bb_rhic(hic = bb_rhic$hic, chrom = bb_rhic$chrom, chromstart = bb_rhic$chromstart, chromend = bb_rhic$chromend, zrange = bb_rhic$zrange, altchrom = bb_rhic$altchrom,
+  errorcheck_bb_rhic(hic = bb_rhic$file, chrom = bb_rhic$chrom, chromstart = bb_rhic$chromstart, chromend = bb_rhic$chromend, zrange = bb_rhic$zrange, altchrom = bb_rhic$altchrom,
                      altchromstart = bb_rhic$altchromstart, altchromend = bb_rhic$altchromend, norm = bb_rhic$norm, res_scale = bb_rhic$res_scale, assembly = bb_rhic$assembly$Genome)
 
   # ======================================================================================================================================================================================
@@ -437,7 +435,7 @@ bb_readHic <- function(hicFile, chrom, chromstart = NULL, chromend = NULL, altch
 
 
   upper <-
-    tryCatch(strawr::straw(bb_rhic$matrix, bb_rhic$norm, bb_rhic$hicFile, toString(chromRegion), toString(altchromRegion), bb_rhic$res_scale, bb_rhic$resolution),
+    tryCatch(strawr::straw(bb_rhic$matrix, bb_rhic$norm, bb_rhic$file, toString(chromRegion), toString(altchromRegion), bb_rhic$res_scale, bb_rhic$resolution),
              error = errorFunction)
 
   # ======================================================================================================================================================================================

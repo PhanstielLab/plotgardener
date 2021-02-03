@@ -1,18 +1,36 @@
-
-#' wrapper to draw a rasterGrob based on BentoBox page coordinates and units
+#' Plot a raster object within a BentoBox layout
 #'
-#' @param image Any R object that can be coerced to a raster object
-#' @param x A numeric vector or unit object specifying x-location
-#' @param y A numeric vector or unit object specifying y-location
-#' @param width A numeric vector or unit object specifying width
-#' @param height A numeric vector or unit object specifying height
-#' @param just The justification of the raster relative to its (x,y) location. If there are 2 values, the first specifies horizontal justification and the second specifies vertical justification. Options: "left","right","center","bottom", and "top". Numerically, 0 means left alignment and 1 means right alignment.
-#' @param interpolate A logical value indicating whether to linearly interpolate the image
-#' @param params an optional "bb_params" object space containing relevant function parameters
-#' @param default.units A string indicating the default units to use if x or y are only given as numeric vectors
+#' @param image Any R object that can be coerced to a raster object.
+#' @param x A numeric vector or unit object specifying raster x-locations.
+#' @param y A numeric vector or unit object specifying raster y-locations
+#' @param width A numeric vector or unit object specifying raster widths.
+#' @param height A numeric vector or unit object specifying raster heights.
+#' @param just Justification of text relative to its (x, y) location. If there are two values, the first value specifies horizontal justification and the second value specifies vertical justification.
+#' Possible string values are: \code{"left"}, \code{"right"}, \code{"centre"}, \code{"center"}, \code{"bottom"}, and \code{"top"}. Default value is \code{just = "center"}.
+#' @param default.units A string indicating the default units to use if \code{x}, \code{y}, \code{width}, or \code{height} are only given as numerics or numeric vectors.
+#' Default value is \code{default.units = "inches"}.
+#' @param interpolate A logical value indicating whether to linearly interpolate the image. Default value is \code{interpolate = TRUE}.
+#' @param params An optional \link[BentoBox]{bb_assembly} object containing relevant function parameters.
+#' @param ... Additional grid graphical parameters. See \link[grid]{gpar}.
+#'
+#' @return Returns a \code{bb_raster} object containing relevant placement and \link[grid]{grob} information.
+#'
+#' @examples
+#' library(jpeg)
+#' ## Create a BentoBox page
+#' bb_pageCreate(width = 3, height = 3, default.units = "inches", xgrid = 0, ygrid = 0)
+#'
+#' ## Read in R logo image
+#' bb_image <- readJPEG(system.file("img", "Rlogo.jpg", package="jpeg"))
+#'
+#' ## Plot image as a raster
+#' bb_plotRaster(image = bb_image, x = 0.5, y = 0.5, width = 1, height = 1,
+#'               default.units = "inches")
+#'
+#' @seealso \link[grid]{grid.raster}
 #'
 #' @export
-bb_plotRaster <- function(image, x, y, width, height, just = "center", interpolate = TRUE, params = NULL, default.units = "inches", ...){
+bb_plotRaster <- function(image, x, y, width, height, just = "center", default.units = "inches", interpolate = TRUE, params = NULL, ...){
   
   
   # ======================================================================================================================================================================================
@@ -46,7 +64,7 @@ bb_plotRaster <- function(image, x, y, width, height, just = "center", interpola
   # ======================================================================================================================================================================================
   
   bb_rast <- structure(list(image = bb_rastInternal$image, x = bb_rastInternal$x, y = bb_rastInternal$y, width = bb_rastInternal$width, height = bb_rastInternal$height, just = bb_rastInternal$just, 
-                            interpolate = bb_rastInternal$interpolate, grobs = NULL, gp = gpar()), class = "bb_rast")
+                            interpolate = bb_rastInternal$interpolate, grobs = NULL, gp = gpar()), class = "bb_raster")
   
   # ======================================================================================================================================================================================
   # CATCH ERRORS
@@ -162,8 +180,6 @@ bb_plotRaster <- function(image, x, y, width, height, just = "center", interpola
   # RETURN OBJECT
   # ======================================================================================================================================================================================
   
-  return(bb_rast)
+  message(paste0("bb_raster[", rast$name, "]"))
+  invisible(bb_rast)
 }
-
-
-

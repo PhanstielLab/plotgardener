@@ -4,13 +4,36 @@
 \alias{bb_plotBedpeArches}
 \title{Plot paired-end BEDPE data in an arch style}
 \usage{
-bb_plotBedpeArches(bedpeData, chrom)
-bb_plotBedpeArches(bedpeData, chrom, x, y, width,
-                   height, just = c("left", "top"),
-                   default.units = "inches")
+bb_plotBedpeArches(
+  data,
+  chrom,
+  chromstart = NULL,
+  chromend = NULL,
+  assembly = "hg19",
+  style = "2D",
+  position = "top",
+  curvature = 5,
+  archHeight = NULL,
+  fill = "grey",
+  colorby = NULL,
+  linecolor = "grey",
+  alpha = 0.4,
+  bg = NA,
+  clip = TRUE,
+  baseline = FALSE,
+  x = NULL,
+  y = NULL,
+  width = NULL,
+  height = NULL,
+  just = c("left", "top"),
+  default.units = "inches",
+  draw = TRUE,
+  params = NULL,
+  ...
+)
 }
 \arguments{
-\item{bedpeData}{A string specifying the BEDPE file path or a dataframe in BEDPE format specifying data to be plotted.}
+\item{data}{A string specifying the BEDPE file path or a dataframe in BEDPE format specifying data to be plotted.}
 
 \item{chrom}{Chromosome of region to be plotted, as a string.}
 
@@ -75,16 +98,35 @@ Returns a \code{bb_arches} object containing relevant genomic region, placement,
 \description{
 Plot paired-end BEDPE data in an arch style
 }
+\details{
+This function can be used to quickly plot a BEDPE Arches plot by ignoring plot placement parameters:
+\preformatted{
+bb_plotBedpeArches(data, chrom,
+                   chromstart = NULL, chromend = NULL)
+}
+A BEDPE Arches plot can be placed on a BentoBox coordinate page by providing plot placement parameters:
+\preformatted{
+bb_plotBedpeArches(data chrom,
+                   chromstart = NULL, chromend = NULL,
+                   x, y, width, height, just = c("left", "top"),
+                   default.units = "inches")
+}
+}
 \examples{
 ## Load BEDPE data
 data("bb_bedpeData")
 
 ## Plot BEDPE arches plot filling up entire graphic device
-bedpeArchesPlot <- bb_plotBedpeArches(bedpeData = bb_bedpeData, chrom = "chr21", chromstart = 28000000, chromend = 30300000, fill = "black")
+bedpeArchesPlot <- bb_plotBedpeArches(data = bb_bedpeData, chrom = "chr21",
+                                      chromstart = 28000000, chromend = 30300000,
+                                      fill = "black")
 
 ## Plot and place BEDPE arches plot on a BentoBox page
 bb_pageCreate(width = 5, height = 2, default.units = "inches", xgrid = 0, ygrid = 0)
-bedpeArchesPlot <- bb_plotBedpeArches(bedpeData = bb_bedpeData, chrom = "chr21", chromstart = 28000000, chromend = 30300000, fill = "black",
-                                      x = 0, y = 0.25, width = 5, height = 1.5, just = c("left", "top"), default.units = "inches")
+bedpeArchesPlot <- bb_plotBedpeArches(data = bb_bedpeData, chrom = "chr21",
+                                      chromstart = 28000000, chromend = 30300000,
+                                      fill = "black",
+                                      x = 0, y = 0.25, width = 5, height = 1.5,
+                                      just = c("left", "top"), default.units = "inches")
 
 }

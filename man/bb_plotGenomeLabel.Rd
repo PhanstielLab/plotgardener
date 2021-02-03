@@ -4,24 +4,38 @@
 \alias{bb_plotGenomeLabel}
 \title{Plot genomic coordinates along the x or y-axis of a BentoBox plot}
 \usage{
-bb_plotGenomeLabel(plot, x, y,
-                   just = c("left", "top"),
-                   default.units = "inches")
-bb_plotGenomeLabel(chrom, chromstart, chromend,
-                   x, y, length,
-                   just = c("left", "top"),
-                   default.units = "inches")
+bb_plotGenomeLabel(
+  chrom,
+  chromstart = NULL,
+  chromend = NULL,
+  assembly = "hg19",
+  fontsize = 10,
+  fontcolor = "black",
+  linecolor = "black",
+  scale = "bp",
+  commas = TRUE,
+  sequence = TRUE,
+  boxWidth = 0.5,
+  axis = "x",
+  at = NULL,
+  tcl = 0.5,
+  x,
+  y,
+  length,
+  just = c("left", "top"),
+  default.units = "inches",
+  params = NULL,
+  ...
+)
 }
 \arguments{
-\item{plot}{BentoBox plot object to add genome label.}
+\item{chrom}{Chromosome of genome label, as a string, or a character vector of chromosomes for a whole genome Manhattan plot.}
 
-\item{chrom}{If not specifying \code{plot}, chromosome of genome label, as a string.}
+\item{chromstart}{Integer start of genome label.}
 
-\item{chromstart}{If not specifying \code{plot}, integer start of genome label.}
+\item{chromend}{Integer end of genome label.}
 
-\item{chromend}{If not specifying \code{plot}, integer end of genome label.}
-
-\item{assembly}{Default genome assembly as a string or a \link[BentoBox]{bb_assembly} object. \code{assembly} will be inherited from \code{plot}, if provided.}
+\item{assembly}{Default genome assembly as a string or a \link[BentoBox]{bb_assembly} object.}
 
 \item{fontsize}{A numeric specifying text fontsize in points. Default value is \code{fontsize = 10}.}
 
@@ -46,7 +60,7 @@ bb_plotGenomeLabel(chrom, chromstart, chromend,
 Options are:
 \itemize{
 \item{\code{"x"}: }{Genome label will be plotted along the x-axis.}
-\item{\code{"y"}: }{Genome label will be plotted along the y-axis.}
+\item{\code{"y"}: }{Genome label will be plotted along the y-axis. This is typically used for a square Hi-C plot made with \code{bb_plotHicSquare}.}
 }}
 
 \item{at}{A numeric vector of x-value locations for tick marks.}
@@ -83,15 +97,14 @@ library("org.Hs.eg.db")
 bb_pageCreate(width = 5, height = 4, default.units = "inches")
 
 ## Plot and place gene track on a BentoBox page
-genesPlot <- bb_plotGenes(chrom = "chr8", chromstart = 1000000, chromend = 2000000, assembly = "hg19",
-                          x = 0.5, y = 0.5, width = 4, height = 1.5, just = c("left", "top"), default.units = "inches")
+genesPlot <- bb_plotGenes(chrom = "chr8", chromstart = 1000000, chromend = 2000000,
+                          assembly = "hg19",
+                          x = 0.5, y = 0.5, width = 4, height = 1.5, just = c("left", "top"),
+                          default.units = "inches")
 
-## Add x-axis genome label with plot input
-bb_plotGenomeLabel(plot = genesPlot, scale = "Kb",
-                   x = 0.5, y = 2, just = c("left", "top"), default.units = "inches")
-
-## Add x-axis genome label with chrom/chromstart/chromend input
+## Plot x-axis genome label
 bb_plotGenomeLabel(chrom = "chr8", chromstart = 1000000, chromend = 2000000, assembly = "hg19",
-                   x = 0.5, y = 2.5, length = 4, just = c("left", "top"), default.units = "inches")
+                   x = 0.5, y = 2.5, length = 4, just = c("left", "top"),
+                   default.units = "inches")
 
 }

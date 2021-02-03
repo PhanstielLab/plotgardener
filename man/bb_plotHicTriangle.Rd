@@ -4,13 +4,29 @@
 \alias{bb_plotHicTriangle}
 \title{Plot a Hi-C interaction matrix in a triangular format}
 \usage{
-bb_plotHicTriangle(hicData, chrom)
-bb_plotHicTriangle(hicData, chrom, x, y, width, height,
-                   just = c("left", "top"),
-                   default.units = "inches")
+bb_plotHicTriangle(
+  data,
+  resolution = "auto",
+  zrange = NULL,
+  norm = "KR",
+  matrix = "observed",
+  chrom,
+  chromstart = NULL,
+  chromend = NULL,
+  assembly = "hg19",
+  palette = colorRampPalette(c("white", "dark red")),
+  x = NULL,
+  y = NULL,
+  width = NULL,
+  height = NULL,
+  just = c("left", "top"),
+  default.units = "inches",
+  draw = TRUE,
+  params = NULL
+)
 }
 \arguments{
-\item{hicData}{Path to .hic file as a string or a 3-column dataframe of interaction counts in sparse upper triangular format.}
+\item{data}{Path to .hic file as a string or a 3-column dataframe of interaction counts in sparse upper triangular format.}
 
 \item{resolution}{A numeric specifying the width in basepairs of each pixel. For hic files, "auto" will attempt to choose a resolution based on the size of the region. For
 dataframes, "auto" will attempt to detect the resolution the dataframe contains.}
@@ -59,6 +75,19 @@ Returns a \code{bb_hicTriangle} object containing relevant genomic region, Hi-C 
 Plot a Hi-C interaction matrix in a triangular format
 }
 \details{
+This function can be used to quickly plot a triangle Hi-C plot by ignoring plot placement parameters:
+\preformatted{
+bb_plotHicTriangle(data, chrom,
+                   chromstart = NULL, chromend = NULL)
+}
+A triangle Hi-C plot can be placed on a BentoBox coordinate page by providing plot placement parameters:
+\preformatted{
+bb_plotHicTriangle(data, chrom,
+                   chromstart = NULL, chromend = NULL,
+                   x, y, width, height, just = c("left", "top"),
+                   default.units = "inches")
+}
+
 If \code{height} is \eqn{<} \eqn{0.5 * sqrt(2)}, the top of the triangle will be cropped to the given \code{height}.
 }
 \examples{
@@ -66,14 +95,15 @@ If \code{height} is \eqn{<} \eqn{0.5 * sqrt(2)}, the top of the triangle will be
 data("bb_hicData")
 
 ## Plot triangle Hi-C plot filling up entire graphic device
-bb_plotHicTriangle(hicData = bb_hicData, resolution = 10000, zrange = c(0, 70),
+bb_plotHicTriangle(data = bb_hicData, resolution = 10000, zrange = c(0, 70),
                    chrom = "chr21", chromstart = 28000000, chromend = 30300000)
 
 ## Plot and place triangle Hi-C plot on a BentoBox page
 bb_pageCreate(width = 4, height = 2.5, default.units = "inches", xgrid = 0, ygrid = 0)
-bb_plotHicTriangle(hicData = bb_hicData, resolution = 10000, zrange = c(0, 70),
+bb_plotHicTriangle(data = bb_hicData, resolution = 10000, zrange = c(0, 70),
                    chrom = "chr21", chromstart = 28000000, chromend = 30300000,
-                   x = 2, y = 0.5, width = 3, height = 1.5, just = "top", default.units = "inches")
+                   x = 2, y = 0.5, width = 3, height = 1.5,
+                   just = "top", default.units = "inches")
 
 }
 \seealso{

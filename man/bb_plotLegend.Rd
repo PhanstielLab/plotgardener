@@ -4,9 +4,26 @@
 \alias{bb_plotLegend}
 \title{Plot a legend}
 \usage{
-bb_plotLegend(legend, x, y, width, height,
-              just = c("left", "top"),
-              default.units = "inches")
+bb_plotLegend(
+  legend,
+  fill = NULL,
+  pch = NULL,
+  lty = NULL,
+  orientation = "v",
+  title = NULL,
+  fontsize = 10,
+  border = TRUE,
+  bg = NA,
+  x = NULL,
+  y = NULL,
+  width = NULL,
+  height = NULL,
+  just = c("left", "top"),
+  default.units = "inches",
+  draw = TRUE,
+  params = NULL,
+  ...
+)
 }
 \arguments{
 \item{legend}{A character or expression vector to appear in the legend.}
@@ -64,12 +81,16 @@ data("bb_bedData")
 bb_pageCreate(width = 5, height = 5, default.units = "inches", xgrid = 0, ygrid = 0)
 
 ## Plot a pileup plot, coloring elements by strand
-pileupPlot <- bb_plotPileup(data = bb_bedData, chrom = "chr21", chromstart = 29073000, chromend = 29074000,
+pileupPlot <- bb_plotPileup(data = bb_bedData, chrom = "chr21",
+                            chromstart = 29073000, chromend = 29074000,
                             fill = c("red", "blue"), colorby = colorby("strand"),
-                            x = 0.5, y = 0.5, width = 3.5, height = 4, just = c("left", "top"), default.units = "inches")
+                            x = 0.5, y = 0.5, width = 3.5, height = 4,
+                            just = c("left", "top"), default.units = "inches")
 
 ## Add a legend depicting strand colors
-legendPlot <- bb_plotLegend(legend = c("minus strand", "plus strand"), fill = c("red", "blue"), title = "Strands",
-                             x = 3.5, y = 1, width = 1.5, height = 1, just = c("left", "top"), default.units = "inches")
+legendPlot <- bb_plotLegend(legend = c("minus strand", "plus strand"), fill = c("red", "blue"),
+                            title = "Strands",
+                            x = 3.5, y = 1, width = 1.5, height = 1,
+                            just = c("left", "top"), default.units = "inches")
 
 }

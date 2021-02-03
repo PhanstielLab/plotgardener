@@ -1,7 +1,5 @@
 #' Add an x-axis to a plot
 #'
-#' @usage bb_annoXaxis(plot)
-#'
 #' @param plot Plot object to annotate with x-axis.
 #' @param at A numeric vector of x-value locations for tick marks.
 #' @param label A logical value indicating whether to draw the labels on the tick marks, or an expression or character vector which specify the labels to use. If not logical, must be the same length as the \code{at} argument.
@@ -25,10 +23,12 @@
 #'
 #' ## Plot gene transcripts
 #' transcriptPlot <- bb_plotTranscripts(chrom = "chr1", chromstart = 1000000, chromend = 2000000,
-#'                                      x = 0, y = 0, width = 3, height = 1.5, just = c("left", "top"), default.units = "inches")
+#'                                      x = 0, y = 0, width = 3, height = 1.5,
+#'                                      just = c("left", "top"), default.units = "inches")
 #'
 #' ## Add standard x-axis to transcript plot
-#' bb_annoXaxis(plot = transcriptPlot, at = c(1000000, 1250000, 1500000, 1750000, 2000000), gp = gpar(fontsize = 8))
+#' bb_annoXaxis(plot = transcriptPlot, at = c(1000000, 1250000, 1500000, 1750000, 2000000),
+#'              gp = gpar(fontsize = 8))
 #'
 #' @export
 bb_annoXaxis <- function(plot, at = NULL, label = TRUE, main = TRUE, gp = gpar(), params = NULL){
@@ -73,11 +73,23 @@ bb_annoXaxis <- function(plot, at = NULL, label = TRUE, main = TRUE, gp = gpar()
   xGrob <- xaxisGrob(at = bb_xInternal$at, label = bb_xInternal$label, main = bb_xInternal$main, gp = bb_xInternal$gp, vp = bb_xInternal$plot$grobs$vp)
 
   # ======================================================================================================================================================================================
-  # GET CENTER OF INPUT PLOT VIEWPORT BASED ON JUSTIFICATION
+  # GET CENTER OF INPUT PLOT VIEWPORT BASED ON INPUT PLOT TYPE AND JUSTIFICATION
   # ======================================================================================================================================================================================
 
-  adjusted_vp <- adjust_vpCoords(viewport = bb_xInternal$plot$grobs$vp)
+  if (class(bb_xInternal$plot) == "bb_genes"){
 
+    plotVP <- bb_xInternal$plot$grobs$children$background$vp
+
+  } else if (class(bb_xInternal$plot) == "bb_hicTriangle"){
+
+    plotVP <- bb_xInternal$plot$outsideVP
+
+  } else {
+
+    plotVP <- bb_xInternal$plot$grobs$vp
+
+  }
+  adjusted_vp <- adjust_vpCoords(viewport = plotVP)
   # ======================================================================================================================================================================================
   # VIEWPORTS
   # ======================================================================================================================================================================================
@@ -89,16 +101,16 @@ bb_annoXaxis <- function(plot, at = NULL, label = TRUE, main = TRUE, gp = gpar()
   ## Define viewport
   if (bb_xInternal$main == TRUE){
 
-    vp <- viewport(width = bb_xInternal$plot$grobs$vp$width, height = heightDetails(xGrob),
-                   x = adjusted_vp[[1]] - 0.5 * (bb_xInternal$plot$grobs$vp$width), y = adjusted_vp[[2]] - 0.5 * (bb_xInternal$plot$grobs$vp$height),
-                   just = c("left", "top"), xscale = bb_xInternal$plot$grobs$vp$xscale, name = vp_name)
+    vp <- viewport(width = plotVP$width, height = heightDetails(xGrob),
+                   x = adjusted_vp[[1]] - 0.5 * (plotVP$width), y = adjusted_vp[[2]] - 0.5 * (plotVP$height),
+                   just = c("left", "top"), xscale = plotVP$xscale, name = vp_name)
 
 
   } else if (bb_xInternal$main == FALSE){
 
-    vp <- viewport(width = bb_xInternal$plot$grobs$vp$width, height = heightDetails(xGrob),
-                   x = adjusted_vp[[1]] - 0.5 * (bb_xInternal$plot$grobs$vp$width), y = adjusted_vp[[2]] + 0.5 * (bb_xInternal$plot$grobs$vp$height),
-                   just = c("left", "bottom"), xscale = bb_xInternal$plot$grobs$vp$xscale, name = vp_name)
+    vp <- viewport(width = plotVP$width, height = heightDetails(xGrob),
+                   x = adjusted_vp[[1]] - 0.5 * (plotVP$width), y = adjusted_vp[[2]] + 0.5 * (plotVP$height),
+                   just = c("left", "bottom"), xscale = plotVP$xscale, name = vp_name)
 
   }
 
@@ -114,6 +126,7 @@ bb_annoXaxis <- function(plot, at = NULL, label = TRUE, main = TRUE, gp = gpar()
   # RETURN OBJECT
   # ======================================================================================================================================================================================
 
-  return(xAxis)
+  message(paste0("bb_xaxis[", vp_name, "]"))
+  invisible(xAxis)
 
 }

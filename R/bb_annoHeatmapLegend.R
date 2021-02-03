@@ -1,11 +1,6 @@
 #' Add a color scale legend for heatmap-style plots
 #'
-#' @usage
-#' bb_annoHeatmapLegend(heatmapPlot, x, y, width,
-#'                      height, just = c("left", "top"),
-#'                      default.units = "inches")
-#'
-#' @param heatmapPlot Heatmap-style plot object to add heatmap legend for.
+#' @param plot Heatmap-style plot object to add heatmap legend for.
 #' @param orientation A string specifying legend orientation. Default value is \code{orientation = "v"}. Options are:
 #' \itemize{
 #' \item{\code{"v"}: }{Vertical legend orientation.}
@@ -34,15 +29,18 @@
 #' bb_pageCreate(width = 4, height = 3.5, default.units = "inches", xgrid = 0, ygrid = 0)
 #'
 #' ## Plot and place a square Hi-C plot
-#' hicPlot <- bb_plotHicSquare(hicData = bb_hicData, resolution = 10000, zrange = c(0, 70),
+#' hicPlot <- bb_plotHicSquare(data = bb_hicData, resolution = 10000, zrange = c(0, 70),
 #'                             chrom = "chr21", chromstart = 28000000, chromend = 30300000,
-#'                             x = 0.5, y = 0.5, width = 2.5, height = 2.5, just = c("left", "top"), default.units = "inches")
+#'                             x = 0.5, y = 0.5, width = 2.5, height = 2.5,
+#'                             just = c("left", "top"), default.units = "inches")
 #'
 #' ## Add heatmap legend
-#' bb_annoHeatmapLegend(heatmapPlot = hicPlot, x = 3.2, y = 0.5, width = 0.25, height = 0.75, just = c("left", "top"), default.units = "inches")
+#' bb_annoHeatmapLegend(plot = hicPlot,
+#'                      x = 3.2, y = 0.5, width = 0.25, height = 0.75,
+#'                      just = c("left", "top"), default.units = "inches")
 #'
 #' @export
-bb_annoHeatmapLegend <- function(heatmapPlot, orientation = "v", fontsize = 8, fontcolor = "dark grey", border = FALSE, x, y, width, height,
+bb_annoHeatmapLegend <- function(plot, orientation = "v", fontsize = 8, fontcolor = "dark grey", border = FALSE, x, y, width, height,
                                  just = c("left", "top"), default.units = "inches", params = NULL, ...){
 
   # ======================================================================================================================================================================================
@@ -81,14 +79,14 @@ bb_annoHeatmapLegend <- function(heatmapPlot, orientation = "v", fontsize = 8, f
   if(missing(default.units)) default.units <- NULL
 
   ## Check if plot/x/y/width/height arguments are missing (could be in object)
-  if(!hasArg(heatmapPlot)) heatmapPlot <- NULL
+  if(!hasArg(plot)) plot <- NULL
   if(!hasArg(x)) x <- NULL
   if(!hasArg(y)) y <- NULL
   if(!hasArg(width)) width <- NULL
   if(!hasArg(height)) height <- NULL
 
   ## Compile all parameters into an internal object
-  bb_heatmapLegendInternal <- structure(list(heatmapPlot = heatmapPlot, border = border, x = x, y = y, width = width, height = height,
+  bb_heatmapLegendInternal <- structure(list(plot = plot, border = border, x = x, y = y, width = width, height = height,
                                      orientation = orientation, fontsize = fontsize, fontcolor = fontcolor,
                                      just = just, default.units = default.units, gp = NULL), class = "bb_heatmapLegendInternal")
 
@@ -106,17 +104,17 @@ bb_annoHeatmapLegend <- function(heatmapPlot, orientation = "v", fontsize = 8, f
   # INITIAL ERRORS
   # ======================================================================================================================================================================================
 
-  if(is.null(bb_heatmapLegendInternal$heatmapPlot)){
-    stop("argument \"heatmapPlot\" is missing, with no default.", call. = FALSE)
+  if(is.null(bb_heatmapLegendInternal$plot)){
+    stop("argument \"plot\" is missing, with no default.", call. = FALSE)
   }
 
-  if (is.null(bb_heatmapLegendInternal$heatmapPlot$color_palette)){
+  if (is.null(bb_heatmapLegendInternal$plot$color_palette)){
 
     stop("Cannot add heatmap legend to an input plot that does not have a color palette.", call. = FALSE)
 
   }
 
-  if (is.null(bb_heatmapLegendInternal$heatmapPlot$zrange)){
+  if (is.null(bb_heatmapLegendInternal$plot$zrange)){
 
     stop("Cannot add heatmap legend to an input plot that does not have a zrange.", call. = FALSE)
 
@@ -126,8 +124,8 @@ bb_annoHeatmapLegend <- function(heatmapPlot, orientation = "v", fontsize = 8, f
   # INITIALIZE OBJECT
   # ======================================================================================================================================================================================
 
-  bb_heatmapLegend <- structure(list(color_palette = bb_heatmapLegendInternal$heatmapPlot$color_palette, min_val = bb_heatmapLegendInternal$heatmapPlot$zrange[1],
-                                     max_val = bb_heatmapLegendInternal$heatmapPlot$zrange[2], x = bb_heatmapLegendInternal$x, y = bb_heatmapLegendInternal$y, width = bb_heatmapLegendInternal$width,
+  bb_heatmapLegend <- structure(list(color_palette = bb_heatmapLegendInternal$plot$color_palette, min_val = bb_heatmapLegendInternal$plot$zrange[1],
+                                     max_val = bb_heatmapLegendInternal$plot$zrange[2], x = bb_heatmapLegendInternal$x, y = bb_heatmapLegendInternal$y, width = bb_heatmapLegendInternal$width,
                                      height = bb_heatmapLegendInternal$height, just = bb_heatmapLegendInternal$just, grobs = NULL), class = "bb_heatmapLegend")
 
   # ======================================================================================================================================================================================
@@ -282,6 +280,7 @@ bb_annoHeatmapLegend <- function(heatmapPlot, orientation = "v", fontsize = 8, f
   # RETURN OBJECT
   # ======================================================================================================================================================================================
 
-  return(bb_heatmapLegend)
+  message(paste0("bb_heatmapLegend[", vp_name, "]"))
+  invisible(bb_heatmapLegend)
 
 }

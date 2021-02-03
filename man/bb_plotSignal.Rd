@@ -4,10 +4,31 @@
 \alias{bb_plotSignal}
 \title{Plot any kind of signal track data for a single chromosome}
 \usage{
-bb_plotSignal(data, chrom)
-bb_plotSignal(data, chrom, x, y, width, height,
-              just = c("left", "top"),
-              default.units = "inches")
+bb_plotSignal(
+  data,
+  binSize = NA,
+  binCap = TRUE,
+  chrom,
+  chromstart = NULL,
+  chromend = NULL,
+  assembly = "hg19",
+  linecolor = "grey",
+  fill = NULL,
+  ymax = 1,
+  range = NULL,
+  scale = FALSE,
+  bg = NA,
+  baseline = FALSE,
+  x = NULL,
+  y = NULL,
+  width = NULL,
+  height = NULL,
+  just = c("left", "top"),
+  default.units = "inches",
+  draw = TRUE,
+  params = NULL,
+  ...
+)
 }
 \arguments{
 \item{data}{Data to be plotted as a character value specifying a bigwig file path, a dataframe in BED format, or a \link[GenomicRanges]{GRanges} object with metadata column \code{counts}.
@@ -64,16 +85,33 @@ Returns a \code{bb_signal} object containing relevant genomic region, placement,
 \description{
 Plot any kind of signal track data for a single chromosome
 }
+\details{
+This function can be used to quickly plot a signal track by ignoring plot placement parameters:
+\preformatted{
+bb_plotSignal(data, chrom,
+              chromstart = NULL, chromend = NULL)
+}
+A signal track can be placed on a BentoBox coordinate page by providing plot placement parameters:
+\preformatted{
+bb_plotSignal(data, chrom,
+              chromstart = NULL, chromend = NULL,
+              x, y, width, height, just = c("left", "top"),
+              default.units = "inches")
+}
+}
 \examples{
 ## Load signal data
 data("bb_signalData")
 
 ## Plot signal plot filling up entire graphic device
-bb_plotSignal(data = bb_signalData, chrom = "chr21", chromstart = 28000000, chromend = 30300000, fill = "grey")
+bb_plotSignal(data = bb_signalData, chrom = "chr21",
+             chromstart = 28000000, chromend = 30300000, fill = "grey")
 
 ## Plot and place signal plot on a BentoBox page
 bb_pageCreate(width = 4, height = 3, default.units = "inches", xgrid = 0, ygrid = 0)
-bb_plotSignal(data = bb_signalData, chrom = "chr21", chromstart = 28000000, chromend = 30300000, fill = "grey",
-              x = 0.5, y = 1, width = 3, height = 1, just = c("left", "top"), default.units = "inches")
+bb_plotSignal(data = bb_signalData, chrom = "chr21",
+              chromstart = 28000000, chromend = 30300000, fill = "grey",
+              x = 0.5, y = 1, width = 3, height = 1,
+              just = c("left", "top"), default.units = "inches")
 
 }

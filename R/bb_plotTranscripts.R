@@ -1,11 +1,5 @@
 #' Plot gene transcripts in a pileup style for a single chromosome
 #'
-#' @usage
-#' bb_plotTranscripts(chrom)
-#' bb_plotTranscripts(chrom, x, y, width, height,
-#'                    just = c("left", "top"),
-#'                    default.units = "inches")
-#'
 #' @param chrom Chromosome of region to be plotted, as a string.
 #' @param chromstart Integer start position on chromosome to be plotted.
 #' @param chromend Integer end position on chromosome to be plotted.
@@ -45,14 +39,29 @@
 #' library("org.Hs.eg.db")
 #'
 #' ## Plot transcripts filling up entire graphic device
-#' bb_plotTranscripts(chrom = "chr8", chromstart = 1000000, chromend = 2000000, assembly = "hg19")
+#' bb_plotTranscripts(chrom = "chr8", chromstart = 1000000, chromend = 2000000,
+#'                    assembly = "hg19")
 #'
 #' ## Plot and place transcripts on a BentoBox page
 #' bb_pageCreate(width = 4, height = 4, default.units = "inches", xgrid = 0, ygrid = 0)
-#' bb_plotTranscripts(chrom = "chr8", chromstart = 1000000, chromend = 2000000, assembly = "hg19", labels = "gene",
-#'                    x = 0.5, y = 0.5, width = 3, height = 2.5, just = c("left", "top"), default.units = "inches")
+#' bb_plotTranscripts(chrom = "chr8", chromstart = 1000000, chromend = 2000000,
+#'                    assembly = "hg19", labels = "gene",
+#'                    x = 0.5, y = 0.5, width = 3, height = 2.5,
+#'                    just = c("left", "top"), default.units = "inches")
 #'
-#' @details Genomic annotation information is acquired through \link[GenomicFeatures]{TxDb} and \link[AnnotationDb]{OrgDb-class} packages, as determined
+#' @details
+#' This function can be used to quickly plot a transcripts plot by ignoring plot placement parameters:
+#' \preformatted{
+#' bb_plotTranscripts(chrom, chromstart = NULL, chromend = NULL)
+#' }
+#' A transcripts plot can be placed on a BentoBox coordinate page by providing plot placement parameters:
+#' \preformatted{
+#' bb_plotTranscripts(chrom, chromstart = NULL, chromend = NULL,
+#'                    x, y, width, height, just = c("left", "top"),
+#'                    default.units = "inches")
+#' }
+#'
+#' Genomic annotation information is acquired through \link[GenomicFeatures]{TxDb} and \link[AnnotationDbi]{OrgDb-class} packages, as determined
 #' through the \code{assembly} parameter.
 #'
 #' @seealso \link[BentoBox]{bb_assembly}, \link[BentoBox]{bb_genomes}, \link[BentoBox]{bb_defaultPackages}
@@ -702,6 +711,7 @@ bb_plotTranscripts <- function(chrom, chromstart = NULL, chromend = NULL, assemb
   # RETURN OBJECT
   # ======================================================================================================================================================================================
 
-  return(bb_transcripts)
+  message(paste0("bb_transcripts[", vp$name, "]"))
+  invisible(bb_transcripts)
 
 }

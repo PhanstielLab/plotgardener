@@ -1,11 +1,6 @@
 #' Annotate vertical boxes at anchors of BEDPE elements
 #'
-#' @usage
-#' bb_annoBedpeAnchors(bedpePlot, x, y, height,
-#'                     just = c("left", "top"),
-#'                     default.units = "inches")
-#'
-#' @param bedpePlot BEDPE plot object from \code{bb_plotBedpe} or \code{bb_plotBedpeArches} with which to highlight the anchors of BEDPE elements.
+#' @param plot BEDPE plot object from \code{bb_plotBedpe} or \code{bb_plotBedpeArches} with which to highlight the anchors of BEDPE elements.
 #' @param fill Character value specifying fill color of highlight boxes. Default value is \code{fill = "lightgrey"}.
 #' @param linecolor Character value specifying linecolor of highlight boxes. Default value is \code{linecolor = NA}.
 #' @param alpha Numeric value specifying \code{fill} transparency. Default value is \code{alpha = 0.4}.
@@ -27,16 +22,18 @@
 #' bb_pageCreate(width = 4, height = 2.5, default.units = "inches", xgrid = 0, ygrid = 0)
 #'
 #' ## Plot and place a BEDPE arches plot
-#' bedpeArches <- bb_plotBedpeArches(bedpeData = bb_bedpeData, chrom = "chr21", chromstart = 28000000, chromend = 30300000,
-#'                                   linecolor = "black", x = 0.5, y = 0.5, width = 3, height = 1,
+#' bedpeArches <- bb_plotBedpeArches(data = bb_bedpeData, chrom = "chr21",
+#'                                   chromstart = 28000000, chromend = 30300000,
+#'                                   linecolor = "black",
+#'                                   x = 0.5, y = 0.5, width = 3, height = 1,
 #'                                   just = c("left", "top"), default.units = "inches")
 #'
 #' ## Annotate anchors
-#' bb_annoBedpeAnchors(bedpePlot = bedpeArches, fill = "steel blue",
+#' bb_annoBedpeAnchors(plot = bedpeArches, fill = "steel blue",
 #'                     x = 0.5, y = 1.5, height = 0.5, default.units = "inches")
 #'
 #' @export
-bb_annoBedpeAnchors <- function(bedpePlot, fill = "lightgrey", linecolor = NA, alpha = 0.4, x, y, height, just = c("left", "top"), default.units = "inches", params = NULL){
+bb_annoBedpeAnchors <- function(plot, fill = "lightgrey", linecolor = NA, alpha = 0.4, x, y, height, just = c("left", "top"), default.units = "inches", params = NULL){
 
   # ======================================================================================================================================================================================
   # FUNCTIONS
@@ -61,13 +58,13 @@ bb_annoBedpeAnchors <- function(bedpePlot, fill = "lightgrey", linecolor = NA, a
   if(missing(default.units)) default.units <- NULL
 
   ## Check if arguments are missing (could be in object)
-  if(!hasArg(bedpePlot)) bedpePlot <- NULL
+  if(!hasArg(plot)) plot <- NULL
   if(!hasArg(x)) x <- NULL
   if(!hasArg(y)) y <- NULL
   if(!hasArg(height)) height <- NULL
 
   ## Compile all parameters into an internal object
-  bb_bedpeHighlightInternal <- structure(list(bedpePlot = bedpePlot, x = x, y = y, height = height, fill = fill, linecolor = linecolor, alpha = alpha,
+  bb_bedpeHighlightInternal <- structure(list(plot = plot, x = x, y = y, height = height, fill = fill, linecolor = linecolor, alpha = alpha,
                                               just = just, default.units = default.units), class = "bb_bedpeHighlightInternal")
 
   bb_bedpeHighlightInternal <- parseParams(bb_params = params, object_params = bb_bedpeHighlightInternal)
@@ -84,19 +81,19 @@ bb_annoBedpeAnchors <- function(bedpePlot, fill = "lightgrey", linecolor = NA, a
   # INITIALIZE OBJECT
   # ======================================================================================================================================================================================
 
-  bb_bedpeAnchor <- structure(list(chrom = bb_bedpeHighlightInternal$bedpePlot$chrom, chromstart = bb_bedpeHighlightInternal$bedpePlot$chromstart, chromend = bb_bedpeHighlightInternal$bedpePlot$chromend,
-                                   assembly = bb_bedpeHighlightInternal$bedpePlot$assembly, x = bb_bedpeHighlightInternal$x, y = bb_bedpeHighlightInternal$y,
-                                   width = bb_bedpeHighlightInternal$bedpePlot$width, height = bb_bedpeHighlightInternal$height, just = bb_bedpeHighlightInternal$just, grobs = NULL), class = "bb_bedpeAnchor")
+  bb_bedpeAnchor <- structure(list(chrom = bb_bedpeHighlightInternal$plot$chrom, chromstart = bb_bedpeHighlightInternal$plot$chromstart, chromend = bb_bedpeHighlightInternal$plot$chromend,
+                                   assembly = bb_bedpeHighlightInternal$plot$assembly, x = bb_bedpeHighlightInternal$x, y = bb_bedpeHighlightInternal$y,
+                                   width = bb_bedpeHighlightInternal$plot$width, height = bb_bedpeHighlightInternal$height, just = bb_bedpeHighlightInternal$just, grobs = NULL), class = "bb_bedpeAnchor")
 
   # ======================================================================================================================================================================================
   # CHECK ERROS
   # ======================================================================================================================================================================================
   check_bbpage(error = "Cannot annotate bedpe anchors without a BentoBox page.")
-  if(is.null(bb_bedpeHighlightInternal$bedpePlot)) stop("argument \"bedpePlot\" is missing, with no default.", call. = FALSE)
+  if(is.null(bb_bedpeHighlightInternal$plot)) stop("argument \"plot\" is missing, with no default.", call. = FALSE)
   if(is.null(bb_bedpeHighlightInternal$y)) stop("argument \"y\" is missing, with no default.", call. = FALSE)
   if(is.null(bb_bedpeHighlightInternal$height)) stop("argument \"height\" is missing, with no default.", call. = FALSE)
 
-  bb_errorcheck_annoBedpeAnchors(plot = bb_bedpeHighlightInternal$bedpePlot)
+  bb_errorcheck_annoBedpeAnchors(plot = bb_bedpeHighlightInternal$plot)
   # ======================================================================================================================================================================================
   # PARSE UNITS
   # ======================================================================================================================================================================================
@@ -169,7 +166,7 @@ bb_annoBedpeAnchors <- function(bedpePlot, fill = "lightgrey", linecolor = NA, a
   vp <- viewport(height = page_coords$height, width = page_coords$width,
                  x = page_coords$x, y = page_coords$y,
                  clip = "on",
-                 xscale = bb_bedpeHighlightInternal$bedpePlot$grobs$vp$xscale,
+                 xscale = bb_bedpeHighlightInternal$plot$grobs$vp$xscale,
                  just = bb_bedpeHighlightInternal$just,
                  name = vp_name)
 
@@ -177,7 +174,7 @@ bb_annoBedpeAnchors <- function(bedpePlot, fill = "lightgrey", linecolor = NA, a
   # GROBS
   # ======================================================================================================================================================================================
   ## Get data from input bedpe object
-  bedpe <- bb_bedpeHighlightInternal$bedpePlot$bedpe
+  bedpe <- bb_bedpeHighlightInternal$plot$bedpe
 
   if (nrow(bedpe) > 0){
     ## Add loop shading from each anchor
@@ -198,6 +195,7 @@ bb_annoBedpeAnchors <- function(bedpePlot, fill = "lightgrey", linecolor = NA, a
   # RETURN OBJECT
   # ======================================================================================================================================================================================
 
-  return(bb_bedpeAnchor)
+  message(paste0("bb_bedpeAnchor[", vp_name, "]"))
+  invisible(bb_bedpeAnchor)
 
 }

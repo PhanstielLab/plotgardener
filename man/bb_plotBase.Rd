@@ -4,12 +4,20 @@
 \alias{bb_plotBase}
 \title{Plot a base R plot in a BentoBox layout}
 \usage{
-bb_plotBase(basePlot, x, y, width, height,
-            just = c("left", "top"),
-            default.units = "inches")
+bb_plotBase(
+  plot,
+  x,
+  y,
+  width,
+  height,
+  just = c("left", "top"),
+  default.units = "inches",
+  bg = NA,
+  params = NULL
+)
 }
 \arguments{
-\item{basePlot}{Plot formula of base R plotting functions.}
+\item{plot}{Plot formula of base R plotting functions.}
 
 \item{x}{A numeric or unit object specifying plot x-location.}
 
@@ -42,7 +50,8 @@ p <- ~plot(1:10) + abline(v = 2)
 bb_pageCreate(width = 5, height = 5, default.units = "inches", xgrid = 0, ygrid = 0)
 
 ## Place base R plot in BentoBox page
-bb_plotBase(basePlot = p,
-            x = 0.5, y = 0.5, width = 4, height = 4, just = c("left", "top"), default.units = "inches")
+bb_plotBase(plot = p,
+            x = 0.5, y = 0.5, width = 4, height = 4,
+            just = c("left", "top"), default.units = "inches")
 
 }

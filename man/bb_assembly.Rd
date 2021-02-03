@@ -4,7 +4,14 @@
 \alias{bb_assembly}
 \title{Make a \code{bb_assembly} object for alternate TxDb, OrgDb,and BSgenome genomic annotation packages}
 \usage{
-bb_assembly(Genome, TxDb, OrgDb)
+bb_assembly(
+  Genome,
+  TxDb,
+  OrgDb,
+  gene.id.column = "ENTREZID",
+  display.column = "SYMBOL",
+  BSgenome = NULL
+)
 }
 \arguments{
 \item{Genome}{String indicating the name of the genome assembly.}

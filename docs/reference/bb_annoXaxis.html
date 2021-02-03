@@ -140,7 +140,14 @@
     <p>Add an x-axis to a plot</p>
     </div>
 
-    <pre class="usage"><span class='fu'>bb_annoXaxis</span><span class='op'>(</span><span class='va'>plot</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>bb_annoXaxis</span><span class='op'>(</span>
+  <span class='va'>plot</span>,
+  at <span class='op'>=</span> <span class='cn'>NULL</span>,
+  label <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  main <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  gp <span class='op'>=</span> <span class='fu'>gpar</span><span class='op'>(</span><span class='op'>)</span>,
+  params <span class='op'>=</span> <span class='cn'>NULL</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -179,21 +186,23 @@
     <p>Returns a <code>bb_xaxis</code> object containing relevant <a href='https://rdrr.io/r/grid/grid.grob.html'>grob</a> information.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><span class='co'>## Load transcript information</span>
+    <pre class="examples"><div class='input'><span class='co'>## Load transcript information</span>
 <span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='st'>"TxDb.Hsapiens.UCSC.hg19.knownGene"</span><span class='op'>)</span>
 <span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='st'>"org.Hs.eg.db"</span><span class='op'>)</span>
 
 <span class='co'>## Create BentoBox page</span>
 <span class='fu'><a href='bb_pageCreate.html'>bb_pageCreate</a></span><span class='op'>(</span>width <span class='op'>=</span> <span class='fl'>3</span>, height <span class='op'>=</span> <span class='fl'>2</span>, default.units <span class='op'>=</span> <span class='st'>"inches"</span>, xgrid <span class='op'>=</span> <span class='fl'>0</span>, ygrid <span class='op'>=</span> <span class='fl'>0</span><span class='op'>)</span>
-
+</div><div class='input'>
 <span class='co'>## Plot gene transcripts</span>
 <span class='va'>transcriptPlot</span> <span class='op'>&lt;-</span> <span class='fu'><a href='bb_plotTranscripts.html'>bb_plotTranscripts</a></span><span class='op'>(</span>chrom <span class='op'>=</span> <span class='st'>"chr1"</span>, chromstart <span class='op'>=</span> <span class='fl'>1000000</span>, chromend <span class='op'>=</span> <span class='fl'>2000000</span>,
-                                     x <span class='op'>=</span> <span class='fl'>0</span>, y <span class='op'>=</span> <span class='fl'>0</span>, width <span class='op'>=</span> <span class='fl'>3</span>, height <span class='op'>=</span> <span class='fl'>1.5</span>, just <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"left"</span>, <span class='st'>"top"</span><span class='op'>)</span>, default.units <span class='op'>=</span> <span class='st'>"inches"</span><span class='op'>)</span>
-
+                                     x <span class='op'>=</span> <span class='fl'>0</span>, y <span class='op'>=</span> <span class='fl'>0</span>, width <span class='op'>=</span> <span class='fl'>3</span>, height <span class='op'>=</span> <span class='fl'>1.5</span>,
+                                     just <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"left"</span>, <span class='st'>"top"</span><span class='op'>)</span>, default.units <span class='op'>=</span> <span class='st'>"inches"</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='warning'>Warning: Not all transcripts shown.</span></div><div class='output co'>#&gt; <span class='message'>bb_transcripts[bb_transcripts1]</span></div><div class='input'>
 <span class='co'>## Add standard x-axis to transcript plot</span>
-<span class='fu'>bb_annoXaxis</span><span class='op'>(</span>plot <span class='op'>=</span> <span class='va'>transcriptPlot</span>, at <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1000000</span>, <span class='fl'>1250000</span>, <span class='fl'>1500000</span>, <span class='fl'>1750000</span>, <span class='fl'>2000000</span><span class='op'>)</span>, gp <span class='op'>=</span> <span class='fu'>gpar</span><span class='op'>(</span>fontsize <span class='op'>=</span> <span class='fl'>8</span><span class='op'>)</span><span class='op'>)</span>
-
-</pre>
+<span class='fu'>bb_annoXaxis</span><span class='op'>(</span>plot <span class='op'>=</span> <span class='va'>transcriptPlot</span>, at <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1000000</span>, <span class='fl'>1250000</span>, <span class='fl'>1500000</span>, <span class='fl'>1750000</span>, <span class='fl'>2000000</span><span class='op'>)</span>,
+             gp <span class='op'>=</span> <span class='fu'>gpar</span><span class='op'>(</span>fontsize <span class='op'>=</span> <span class='fl'>8</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='message'>bb_xaxis[bb_xaxis1]</span></div><div class='img'><img src='bb_annoXaxis-1.png' alt='' width='700' height='433' /></div><div class='input'>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

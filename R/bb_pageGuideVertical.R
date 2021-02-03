@@ -1,7 +1,5 @@
 #' Draw a vertical guideline at a specified x-coordinate on a BentoBox page
 #'
-#' @usage bb_pageGuideVertical(x, default.units = "inches")
-#'
 #' @param x A numeric or unit object specifying x-coordinate of guide.
 #' @param default.units A string indicating the default units to use if \code{x} is only given as a numeric. Default value is \code{default.units = "inches"}.
 #' @param linecolor Character value indicating color of guideline. Default value is \code{linecolor = "grey55"}.
