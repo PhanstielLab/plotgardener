@@ -28,10 +28,13 @@
 #'
 #' @examples
 #' ## Create a BentoBox page
-#' bb_pageCreate(width = 2, height = 2, default.units = "inches", xgrid = 0, ygrid = 0)
+#' bb_pageCreate(width = 2, height = 2, default.units = "inches")
 #'
 #' ## Plot a line segment
 #' bb_plotSegments(x0 = 0.5, y0 = 0.25, x1 = 1.5, y1 = 1.75, default.units = "inches")
+#'
+#' ## Hide page guides
+#' bb_pageGuideHide()
 #'
 #' @seealso \link[grid]{grid.segments}
 #'

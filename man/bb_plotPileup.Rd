@@ -106,11 +106,18 @@ data("bb_bedData")
 bb_plotPileup(data = bb_bedData, chrom = "chr21", chromstart = 29073000, chromend = 29074000,
               fill = "grey")
 
-## Plot and place pileup plot on a BentoBox page
-bb_pageCreate(width = 5, height = 5, default.units = "inches", xgrid = 0, ygrid = 0)
-bb_plotPileup(data = bb_bedData, chrom = "chr21", chromstart = 29073000, chromend = 29074000,
-              fill = "grey", baseline = TRUE,
-              x = 0.5, y = 0.5, width = 4, height = 4,
-              just = c("left", "top"), default.units = "inches")
+## Plot and place a pileup plot on a BentoBox page
+bb_pageCreate(width = 5, height = 5, default.units = "inches")
+pileupPlot <- bb_plotPileup(data = bb_bedData, chrom = "chr21",
+                            chromstart = 29073000, chromend = 29074000,
+                            fill = "grey", strandSplit = TRUE,
+                            x = 0.5, y = 0.5, width = 4, height = 4,
+                            just = c("left", "top"), default.units = "inches")
+
+## Annotate genome label
+bb_annoGenomeLabel(plot = pileupPlot, x = 0.5, y = 4.5, just = c("left", "top"))
+
+## Hide page guides
+bb_pageGuideHide()
 
 }

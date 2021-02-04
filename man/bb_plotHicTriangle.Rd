@@ -14,7 +14,7 @@ bb_plotHicTriangle(
   chromstart = NULL,
   chromend = NULL,
   assembly = "hg19",
-  palette = colorRampPalette(c("white", "dark red")),
+  palette = colorRampPalette(brewer.pal(n = 9, "YlGnBu")),
   x = NULL,
   y = NULL,
   width = NULL,
@@ -49,7 +49,7 @@ dataframes, "auto" will attempt to detect the resolution the dataframe contains.
 
 \item{assembly}{Default genome assembly as a string or a \link[BentoBox]{bb_assembly} object. Default value is \code{assembly = "hg19"}.}
 
-\item{palette}{A function describing the color palette to use for representing scale of interaction scores. Default value is \code{palette = colorRampPalette(c("white", "dark red"))}.}
+\item{palette}{A function describing the color palette to use for representing scale of interaction scores. Default value is \code{palette =  colorRampPalette(brewer.pal(n = 9, "YlGnBu"))}.}
 
 \item{x}{A numeric or unit object specifying triangle Hi-C plot x-location.}
 
@@ -99,11 +99,21 @@ bb_plotHicTriangle(data = bb_hicData, resolution = 10000, zrange = c(0, 70),
                    chrom = "chr21", chromstart = 28000000, chromend = 30300000)
 
 ## Plot and place triangle Hi-C plot on a BentoBox page
-bb_pageCreate(width = 4, height = 2.5, default.units = "inches", xgrid = 0, ygrid = 0)
-bb_plotHicTriangle(data = bb_hicData, resolution = 10000, zrange = c(0, 70),
-                   chrom = "chr21", chromstart = 28000000, chromend = 30300000,
-                   x = 2, y = 0.5, width = 3, height = 1.5,
-                   just = "top", default.units = "inches")
+bb_pageCreate(width = 4, height = 2.5, default.units = "inches")
+hicPlot <- bb_plotHicTriangle(data = bb_hicData, resolution = 10000, zrange = c(0, 70),
+                              chrom = "chr21", chromstart = 28000000, chromend = 30300000,
+                              x = 2, y = 0.5, width = 3, height = 1.5,
+                              just = "top", default.units = "inches")
+
+## Annotate x-axis genome label
+bb_annoGenomeLabel(plot = hicPlot, scale = "Mb", x = 0.5, y = 2, just = c("left", "top"))
+
+## Annotate heatmap legend
+bb_annoHeatmapLegend(plot = hicPlot, x = 3, y = 0.5, width = 0.13, height = 0.6,
+                     just = c("left", "top"))
+
+## Hide page guides
+bb_pageGuideHide()
 
 }
 \seealso{

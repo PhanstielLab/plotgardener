@@ -52,15 +52,21 @@ data("bb_hicData")
 data("bb_bedpeData")
 
 ## Create BentoBox page
-bb_pageCreate(width = 3, height = 3, default.units = "inches", xgrid = 0, ygrid = 0)
+bb_pageCreate(width = 4, height = 4, default.units = "inches")
 
 ## Plot and place a square Hi-C plot
 hicPlot <- bb_plotHicSquare(data = bb_hicData, resolution = 10000, zrange = c(0, 70),
                             chrom = "chr21", chromstart = 28000000, chromend = 30300000,
-                            x = 0, y = 0, width = 3, height = 3, just = c("left", "top"),
+                            x = 0.5, y = 0.5, width = 3, height = 3, just = c("left", "top"),
                             default.units = "inches")
 
 ## Annotate loops of Hi-C plot
 bb_annoLoops(plot = hicPlot, data = bb_bedpeData, type = "box", half = "both")
+
+## Annotate genome label
+bb_annoGenomeLabel(plot = hicPlot, x = 0.5, y = 3.6, scale = "Mb", just = c("left", "top"))
+
+## Hide page guides
+bb_pageGuideHide()
 
 }

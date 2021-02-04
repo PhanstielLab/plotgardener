@@ -78,19 +78,26 @@ Plot a legend
 data("bb_bedData")
 
 ## Create BentoBox page
-bb_pageCreate(width = 5, height = 5, default.units = "inches", xgrid = 0, ygrid = 0)
+bb_pageCreate(width = 5, height = 4, default.units = "inches")
 
 ## Plot a pileup plot, coloring elements by strand
 pileupPlot <- bb_plotPileup(data = bb_bedData, chrom = "chr21",
                             chromstart = 29073000, chromend = 29074000,
-                            fill = c("red", "blue"), colorby = colorby("strand"),
-                            x = 0.5, y = 0.5, width = 3.5, height = 4,
-                            just = c("left", "top"), default.units = "inches")
+                            fill = c("steel blue", "light salmon"),
+                            colorby = colorby("strand"),
+                            x = 0.5, y = 3.5, width = 3.5, height = 3.5,
+                            just = c("left", "bottom"), default.units = "inches")
 
 ## Add a legend depicting strand colors
-legendPlot <- bb_plotLegend(legend = c("minus strand", "plus strand"), fill = c("red", "blue"),
-                            title = "Strands",
-                            x = 3.5, y = 1, width = 1.5, height = 1,
+legendPlot <- bb_plotLegend(legend = c("minus strand", "plus strand"),
+                            fill = c("steel blue", "light salmon"),
+                            x = 3.5, y = 1, width = 1.5, height = 0.7,
                             just = c("left", "top"), default.units = "inches")
+
+## Annotate genome label
+bb_annoGenomeLabel(plot = pileupPlot, x = 0.5, y = 3.5, just = c("left", "top"))
+
+## Hide page guides
+bb_pageGuideHide()
 
 }

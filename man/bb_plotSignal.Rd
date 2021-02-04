@@ -108,10 +108,18 @@ bb_plotSignal(data = bb_signalData, chrom = "chr21",
              chromstart = 28000000, chromend = 30300000, fill = "grey")
 
 ## Plot and place signal plot on a BentoBox page
-bb_pageCreate(width = 4, height = 3, default.units = "inches", xgrid = 0, ygrid = 0)
+bb_pageCreate(width = 4, height = 3, default.units = "inches")
 bb_plotSignal(data = bb_signalData, chrom = "chr21",
-              chromstart = 28000000, chromend = 30300000, fill = "grey",
+              chromstart = 28000000, chromend = 30300000, fill = "steel blue",
+              linecolor = "steel blue",
               x = 0.5, y = 1, width = 3, height = 1,
               just = c("left", "top"), default.units = "inches")
+
+## Plot genome label
+bb_plotGenomeLabel(chrom = "chr21", chromstart = 28000000, chromend = 30300000,
+                   x = 0.5, y = 2.1, length = 3, default.units = "inches")
+
+## Hide page guides
+bb_pageGuideHide()
 
 }

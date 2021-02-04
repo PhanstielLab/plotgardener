@@ -19,7 +19,7 @@
 #' data("bb_bedpeData")
 #'
 #' ## Create BentoBox page
-#' bb_pageCreate(width = 4, height = 2.5, default.units = "inches", xgrid = 0, ygrid = 0)
+#' bb_pageCreate(width = 4, height = 2.5, default.units = "inches")
 #'
 #' ## Plot and place a BEDPE arches plot
 #' bedpeArches <- bb_plotBedpeArches(data = bb_bedpeData, chrom = "chr21",
@@ -28,9 +28,15 @@
 #'                                   x = 0.5, y = 0.5, width = 3, height = 1,
 #'                                   just = c("left", "top"), default.units = "inches")
 #'
+#' ## Annotate genome label
+#' bb_annoGenomeLabel(plot = bedpeArches, x = 0.5, y = 1.5, just = c("left", "top"))
+#'
 #' ## Annotate anchors
 #' bb_annoBedpeAnchors(plot = bedpeArches, fill = "steel blue",
-#'                     x = 0.5, y = 1.5, height = 0.5, default.units = "inches")
+#'                     x = 0.5, y = 1.7, height = 0.5, default.units = "inches")
+#'
+#' ## Hide page guides
+#' bb_pageGuideHide()
 #'
 #' @export
 bb_annoBedpeAnchors <- function(plot, fill = "lightgrey", linecolor = NA, alpha = 0.4, x, y, height, just = c("left", "top"), default.units = "inches", params = NULL){

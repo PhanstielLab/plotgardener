@@ -122,11 +122,17 @@ bedpeArchesPlot <- bb_plotBedpeArches(data = bb_bedpeData, chrom = "chr21",
                                       fill = "black")
 
 ## Plot and place BEDPE arches plot on a BentoBox page
-bb_pageCreate(width = 5, height = 2, default.units = "inches", xgrid = 0, ygrid = 0)
+bb_pageCreate(width = 5, height = 2, default.units = "inches")
 bedpeArchesPlot <- bb_plotBedpeArches(data = bb_bedpeData, chrom = "chr21",
                                       chromstart = 28000000, chromend = 30300000,
                                       fill = "black",
                                       x = 0, y = 0.25, width = 5, height = 1.5,
                                       just = c("left", "top"), default.units = "inches")
+
+## Annotate genome label
+bb_annoGenomeLabel(plot = bedpeArchesPlot, x = 0, y = 1.75, just = c("left", "top"))
+
+## Hide page guides
+bb_pageGuideHide()
 
 }

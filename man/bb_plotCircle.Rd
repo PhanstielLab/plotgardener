@@ -49,10 +49,19 @@ Plot a circle within a BentoBox layout
 }
 \examples{
 ## Create a BentoBox page
-bb_pageCreate(width = 2, height = 2, default.units = "inches", xgrid = 0, ygrid = 0)
+bb_pageCreate(width = 2, height = 2, default.units = "inches")
 
-## Plot a circle
-bb_plotCircle(r = 0.3, x = 1, y = 1.2, default.units = "inches")
+## Plot two circles, one at a time
+bb_plotCircle(x = 0.6, y = 0.5, r = 0.1, fill = "black", default.units = "inches")
+bb_plotCircle(x = 1.4, y = 0.5, r = 0.1, fill = "black", default.units = "inches")
+
+## Plot a vector of circles
+xVals <- 1 + (0.5*cos(seq(0, pi, pi/8)))
+yVals <- 1 + (0.5*sin(seq(0, pi, pi/8)))
+bb_plotCircle(x = xVals, y = yVals, r = 0.05, default.units = "inches")
+
+## Hide page guides
+bb_pageGuideHide()
 
 }
 \seealso{

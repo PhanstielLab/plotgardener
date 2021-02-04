@@ -19,7 +19,7 @@
 #' library("org.Hs.eg.db")
 #'
 #' ## Create BentoBox page
-#' bb_pageCreate(width = 3, height = 2, default.units = "inches", xgrid = 0, ygrid = 0)
+#' bb_pageCreate(width = 3, height = 2, default.units = "inches")
 #'
 #' ## Plot gene transcripts
 #' transcriptPlot <- bb_plotTranscripts(chrom = "chr1", chromstart = 1000000, chromend = 2000000,
@@ -29,6 +29,9 @@
 #' ## Add standard x-axis to transcript plot
 #' bb_annoXaxis(plot = transcriptPlot, at = c(1000000, 1250000, 1500000, 1750000, 2000000),
 #'              gp = gpar(fontsize = 8))
+#'
+#' ## Hide page guides
+#' bb_pageGuideHide()
 #'
 #' @export
 bb_annoXaxis <- function(plot, at = NULL, label = TRUE, main = TRUE, gp = gpar(), params = NULL){

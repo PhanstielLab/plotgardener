@@ -47,12 +47,18 @@
 #'                                       fill = "black")
 #'
 #' ## Plot and place BEDPE arches plot on a BentoBox page
-#' bb_pageCreate(width = 5, height = 2, default.units = "inches", xgrid = 0, ygrid = 0)
+#' bb_pageCreate(width = 5, height = 2, default.units = "inches")
 #' bedpeArchesPlot <- bb_plotBedpeArches(data = bb_bedpeData, chrom = "chr21",
 #'                                       chromstart = 28000000, chromend = 30300000,
 #'                                       fill = "black",
 #'                                       x = 0, y = 0.25, width = 5, height = 1.5,
 #'                                       just = c("left", "top"), default.units = "inches")
+#'
+#' ## Annotate genome label
+#' bb_annoGenomeLabel(plot = bedpeArchesPlot, x = 0, y = 1.75, just = c("left", "top"))
+#'
+#' ## Hide page guides
+#' bb_pageGuideHide()
 #'
 #' @details
 #' This function can be used to quickly plot a BEDPE Arches plot by ignoring plot placement parameters:
@@ -367,7 +373,7 @@ bb_plotBedpeArches <- function(data, chrom, chromstart = NULL, chromend = NULL, 
     colorbyCol <- bedpe[,colorbyCol]
 
     ## if the associated column isn't numbers, convert unique values to a set of numbers
-    if (class(colorbyCol) != "numeric" | class(colorbyCol) != "integer"){
+    if (class(colorbyCol) != "numeric" & class(colorbyCol) != "integer"){
       colorbyCol <- factor(colorbyCol)
       colorbyCol <- as.numeric(colorbyCol)
     }

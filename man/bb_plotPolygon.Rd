@@ -52,11 +52,14 @@ Plot a polygon within a BentoBox layout
 }
 \examples{
 ## Create a BentoBox page
-bb_pageCreate(width = 2, height = 2, default.units = "inches", xgrid = 0, ygrid = 0)
+bb_pageCreate(width = 2, height = 2, default.units = "inches")
 
 ## Plot a 5-sided polygon
 bb_plotPolygon(x = c(0.5, 1, 1.5, 1.25, 0.75), y = c(0.5, 0.25, 0.5, 1.25, 1.25),
                default.units = "inches")
+
+## Hide page guides
+bb_pageGuideHide()
 
 }
 \seealso{

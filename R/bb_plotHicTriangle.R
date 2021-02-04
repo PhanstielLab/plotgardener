@@ -36,11 +36,21 @@
 #'                    chrom = "chr21", chromstart = 28000000, chromend = 30300000)
 #'
 #' ## Plot and place triangle Hi-C plot on a BentoBox page
-#' bb_pageCreate(width = 4, height = 2.5, default.units = "inches", xgrid = 0, ygrid = 0)
-#' bb_plotHicTriangle(data = bb_hicData, resolution = 10000, zrange = c(0, 70),
-#'                    chrom = "chr21", chromstart = 28000000, chromend = 30300000,
-#'                    x = 2, y = 0.5, width = 3, height = 1.5,
-#'                    just = "top", default.units = "inches")
+#' bb_pageCreate(width = 4, height = 2.5, default.units = "inches")
+#' hicPlot <- bb_plotHicTriangle(data = bb_hicData, resolution = 10000, zrange = c(0, 70),
+#'                               chrom = "chr21", chromstart = 28000000, chromend = 30300000,
+#'                               x = 2, y = 0.5, width = 3, height = 1.5,
+#'                               just = "top", default.units = "inches")
+#'
+#' ## Annotate x-axis genome label
+#' bb_annoGenomeLabel(plot = hicPlot, scale = "Mb", x = 0.5, y = 2, just = c("left", "top"))
+#'
+#' ## Annotate heatmap legend
+#' bb_annoHeatmapLegend(plot = hicPlot, x = 3, y = 0.5, width = 0.13, height = 0.6,
+#'                      just = c("left", "top"))
+#'
+#' ## Hide page guides
+#' bb_pageGuideHide()
 #'
 #' @details
 #' This function can be used to quickly plot a triangle Hi-C plot by ignoring plot placement parameters:

@@ -35,11 +35,21 @@
 #' ## Plot gene track filling up entire graphic device
 #' bb_plotGenes(chrom = "chr8", chromstart = 1000000, chromend = 2000000, assembly = "hg19")
 #'
-#' ## Plot and place gene track on a BentoBox page
-#' bb_pageCreate(width = 5, height = 2, default.units = "inches", xgrid = 0, ygrid = 0)
-#' bb_plotGenes(chrom = "chr8", chromstart = 1000000, chromend = 2000000, assembly = "hg19",
-#'              x = 0.5, y = 0.25, width = 4.5, height = 1.5,
-#'              just = c("left", "top"), default.units = "inches")
+#' ## Plot and place gene track with a highlighted gene on a BentoBox page
+#' bb_pageCreate(width = 5, height = 2, default.units = "inches")
+#' genesPlot <- bb_plotGenes(chrom = "chr8", chromstart = 1000000, chromend = 2000000,
+#'                           assembly = "hg19",
+#'                           geneHighlights = data.frame("gene" = c("DLGAP2"),
+#'                                                       "color" = c("steel blue")),
+#'                           geneBackground = "grey",
+#'                           x = 0.5, y = 0.25, width = 4.5, height = 1.5,
+#'                           just = c("left", "top"), default.units = "inches")
+#'
+#' ## Annotate genome label
+#' bb_annoGenomeLabel(plot = genesPlot, x = 0.5, y = 1.6, scale = "Mb", just = c("left", "top"))
+#'
+#' ## Hide page guides
+#' bb_pageGuideHide()
 #'
 #' @details
 #' This function can be used to quickly plot a gene track by ignoring plot placement parameters:
@@ -315,7 +325,7 @@ bb_plotGenes <- function(chrom, chromstart = NULL, chromend = NULL, assembly = "
 
   ## Name viewport
   currentViewports <- current_viewports()
-  vp_name <- paste0("bb_genes", length(grep(pattern = "bb_genes", x = currentViewports)) + 1)
+  vp_name <- paste0("bb_genes", length(intersect(grep(pattern = "bb_genes", x = currentViewports), grep(pattern = "label", x = currentViewports, invert = TRUE))) + 1)
 
   if (is.null(bb_genes$x) & is.null(bb_genes$y)){
 

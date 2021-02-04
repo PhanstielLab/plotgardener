@@ -45,11 +45,17 @@ library(ggplot2)
 p <- ggplot(mtcars) + geom_point(aes(mpg, disp))
 
 ## Create a BentoBox page
-bb_pageCreate(width = 4, height = 4, default.units = "inches", xgrid = 0, ygrid = 0)
+bb_pageCreate(width = 4, height = 4, default.units = "inches")
 
 ## Place ggplot in BentoBox page
 bb_plotGG(plot = p, x = 0.5, y = 0.5, width = 3, height = 3,
           just = c("left", "top"), default.units = "inches")
+
+## Add title
+bb_plotText(label = "mtcars", fontsize = 14, fontface = "bold", x = 1, y = 0.35)
+
+## Hide page guides
+bb_pageGuideHide()
 
 }
 \seealso{

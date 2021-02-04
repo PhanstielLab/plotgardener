@@ -17,11 +17,14 @@
 #'
 #' @examples
 #' ## Create a BentoBox page
-#' bb_pageCreate(width = 2, height = 2, default.units = "inches", xgrid = 0, ygrid = 0)
+#' bb_pageCreate(width = 2, height = 2, default.units = "inches")
 #'
 #' ## Plot text
 #' bb_plotText(label = "BentoBox", fontsize = 14,
 #'             x = 1, y = 1, just = "center", default.units = "inches")
+#'
+#' ## Hide page guides
+#' bb_pageGuideHide()
 #'
 #' @seealso \link[grid]{grid.text}
 #'

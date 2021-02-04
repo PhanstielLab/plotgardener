@@ -94,17 +94,30 @@ library("TxDb.Hsapiens.UCSC.hg19.knownGene")
 library("org.Hs.eg.db")
 
 ## Create BentoBox page
-bb_pageCreate(width = 5, height = 4, default.units = "inches")
+bb_pageCreate(width = 5, height = 2, default.units = "inches")
 
 ## Plot and place gene track on a BentoBox page
 genesPlot <- bb_plotGenes(chrom = "chr8", chromstart = 1000000, chromend = 2000000,
-                          assembly = "hg19",
-                          x = 0.5, y = 0.5, width = 4, height = 1.5, just = c("left", "top"),
+                          assembly = "hg19", strandcolors = c("grey", "grey"),
+                          fontcolors = c("grey", "grey"),
+                          x = 0.5, y = 0.25, width = 4, height = 1, just = c("left", "top"),
                           default.units = "inches")
 
-## Plot x-axis genome label
+## Plot x-axis genome labels at different scales
 bb_plotGenomeLabel(chrom = "chr8", chromstart = 1000000, chromend = 2000000, assembly = "hg19",
-                   x = 0.5, y = 2.5, length = 4, just = c("left", "top"),
+                   scale = "Mb",
+                   x = 0.5, y = 1.25, length = 4, just = c("left", "top"),
                    default.units = "inches")
+bb_plotGenomeLabel(chrom = "chr8", chromstart = 1000000, chromend = 2000000, assembly = "hg19",
+                   scale = "Kb",
+                   x = 0.5, y = 1.5, length = 4, just = c("left", "top"),
+                   default.units = "inches")
+bb_plotGenomeLabel(chrom = "chr8", chromstart = 1000000, chromend = 2000000, assembly = "hg19",
+                   scale = "bp",
+                   x = 0.5, y = 1.75, length = 4, just = c("left", "top"),
+                   default.units = "inches")
+
+## Hide page guides
+bb_pageGuideHide()
 
 }

@@ -20,7 +20,7 @@ Useful links:
 
 }
 \author{
-\strong{Maintainer}: Nicole Kramer \email{nekramer@live.unc.edu}
+\strong{Maintainer}: Nicole Kramer \email{nekramer@live.unc.edu} (\href{https://orcid.org/0000-0001-9617-9671}{ORCID})
 
 Authors:
 \itemize{

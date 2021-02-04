@@ -43,11 +43,22 @@
 #'                    assembly = "hg19")
 #'
 #' ## Plot and place transcripts on a BentoBox page
-#' bb_pageCreate(width = 4, height = 4, default.units = "inches", xgrid = 0, ygrid = 0)
+#' bb_pageCreate(width = 4, height = 4, default.units = "inches")
 #' bb_plotTranscripts(chrom = "chr8", chromstart = 1000000, chromend = 2000000,
 #'                    assembly = "hg19", labels = "gene",
 #'                    x = 0.5, y = 0.5, width = 3, height = 2.5,
 #'                    just = c("left", "top"), default.units = "inches")
+#'
+#' ## Plot genome label
+#' bb_plotGenomeLabel(chrom = "chr8", chromstart = 1000000, chromend = 2000000,
+#'                    x = 0.5, y = 3, length = 3, default.units = "inches")
+#'
+#' ## Plot a legend
+#' bb_plotLegend(legend = c("+", "-"), fill = c("#8a8aff", "#ff7e7e"), border = FALSE,
+#'               x = 0.5, y = 1.5, width = 1, height = 0.5, just = c("left", "top"))
+#'
+#' ## Hide page guides
+#' bb_pageGuideHide()
 #'
 #' @details
 #' This function can be used to quickly plot a transcripts plot by ignoring plot placement parameters:

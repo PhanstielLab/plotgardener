@@ -99,15 +99,31 @@ bb_plotBedpe(data, chrom,
 ## Load BEDPE data
 data("bb_bedpeData")
 
-## Plot BEDPE plot filling up entire graphic device
+## Plot a BEDPE plot filling up entire graphic device
 bedpePlot <- bb_plotBedpe(data = bb_bedpeData, chrom = "chr21",
                           chromstart = 28000000, chromend = 30300000)
 
 ## Plot and place BEDPE plot on a BentoBox page
-bb_pageCreate(width = 5, height = 2, default.units = "inches", xgrid = 0, ygrid = 0)
+bb_pageCreate(width = 5, height = 1.6, default.units = "inches")
+
+## Add example "score" column to color data by
+bb_bedpeData$score <- sample(1:4, 16, replace = T)
 bedpePlot <- bb_plotBedpe(data = bb_bedpeData, chrom = "chr21",
                           chromstart = 28000000, chromend = 30300000,
-                          x = 0.5, y = 0.5, width = 4, height = 1,
+                          fill = colorRampPalette(c("light grey", "black")),
+                          colorby = colorby("score"),
+                          x = 0.5, y = 0.25, width = 4, height = 1,
                           just = c("left", "top"), default.units = "inches")
+
+## Annotate genome label
+bb_annoGenomeLabel(plot = bedpePlot, x = 0.5, y = 1.35, just = c("left", "top"))
+
+## Annotate heatmap legend
+bb_annoHeatmapLegend(plot = bedpePlot, fontcolor = "black", x = 0.25, y = 0.4,
+                     width = 0.12, height = 0.5, just = c("left", "top"))
+bb_plotText(label = "score", fontsize = 7, rot = 90, x = 0.15, y = 0.65)
+
+## Hide page guides
+bb_pageGuideHide()
 
 }

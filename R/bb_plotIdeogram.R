@@ -30,10 +30,16 @@
 #' bb_plotIdeogram(chrom = "chr2", assembly = "hg19")
 #'
 #' ## Plot and place ideogram on a BentoBox page
-#' bb_pageCreate(width = 4, height = 1.5, default.units = "inches", xgrid = 0, ygrid = 0)
-#' bb_plotIdeogram(chrom = "chr2", assembly = "hg19",
-#'                 x = 0.25, y = 0.25, width = 3.5, height = 0.5,
-#'                 just = c("left", "top"), default.units = "inches")
+#' bb_pageCreate(width = 4, height = 1.5, default.units = "inches")
+#' ideogramPlot <- bb_plotIdeogram(chrom = "chr2", assembly = "hg19",
+#'                                 x = 0.25, y = 0.25, width = 3.5, height = 0.5,
+#'                                just = c("left", "top"), default.units = "inches")
+#'
+#' ## Annotate genome label
+#' bb_annoGenomeLabel(plot = ideogramPlot, x = 0.25, y = 1, scale = "Mb")
+#'
+#' ## Hide page guides
+#' bb_pageGuideHide()
 #'
 #' @details
 #' This function can be used to quickly plot an ideogram by ignoring plot placement parameters:
@@ -259,7 +265,7 @@ bb_plotIdeogram <- function(chrom, assembly = "hg19", orientation = "h", showBan
   # INITIALIZE OBJECT
   # ======================================================================================================================================================================================
 
-  ideogram_plot <- structure(list(chrom = bb_ideoInternal$chrom, assembly = bb_ideoInternal$assembly, x = bb_ideoInternal$x, y = bb_ideoInternal$y,
+  ideogram_plot <- structure(list(chrom = bb_ideoInternal$chrom, chromstart = 1, chromend = NULL, assembly = bb_ideoInternal$assembly, x = bb_ideoInternal$x, y = bb_ideoInternal$y,
                                   width = bb_ideoInternal$width, height = bb_ideoInternal$height, just = bb_ideoInternal$just, grobs = NULL), class = "bb_ideogram")
   attr(x = ideogram_plot, which = "plotted") <- bb_ideoInternal$draw
 
@@ -313,6 +319,7 @@ bb_plotIdeogram <- function(chrom, assembly = "hg19", orientation = "h", showBan
       data$name <- as.character(data$name)
       data$gieStain <- as.character(data$gieStain)
       chromLength <- seqlengths(genome)[[ideogram_plot$chrom]]
+      ideogram_plot$chromend <- chromLength
 
       # ======================================================================================================================================================================================
       # ASSIGN COLORS

@@ -38,11 +38,22 @@
 #'                  chromstart = 28000000, chromend = 30300000, ymax = 1.1, cex = 0.20)
 #'
 #' ## Plot and place Manhattan plot on a BentoBox page
-#' bb_pageCreate(width = 5, height = 2, default.units = "inches", xgrid = 0, ygrid = 0)
-#' bb_plotManhattan(data = bb_gwasData, pVals = "pVal", chrom = "chr21",
-#'                  chromstart = 28000000, chromend = 30300000, ymax = 1.1, cex = 0.20,
-#'                  x = 0.5, y = 0.5, width = 4, height = 1.5,
-#'                  just = c("left", "top"), default.units = "inches")
+#' bb_pageCreate(width = 5, height = 2, default.units = "inches")
+#' manhattanPlot <- bb_plotManhattan(data = bb_gwasData, pVals = "pVal", chrom = "chr21",
+#'                                   chromstart = 28000000, chromend = 30300000,
+#'                                   ymax = 1.1, cex = 0.20,
+#'                                   x = 0.5, y = 1.75, width = 4, height = 1.5,
+#'                                   just = c("left", "bottom"), default.units = "inches")
+#'
+#' ## Annotate genome label
+#' bb_annoGenomeLabel(plot = manhattanPlot, x = 0.5, y = 1.8)
+#'
+#' ## Annotate y-axis
+#' bb_annoYaxis(plot = manhattanPlot, at = c(2, 4, 6), gp = gpar(fontsize = 10))
+#' bb_plotText(label = "-log10(pVal)", fontsize = 8, rot = 90, x = 0.1, y = 0.75)
+#'
+#' ## Hide page guides
+#' bb_pageGuideHide()
 #'
 #' @details
 #' This function can be used to quickly plot a Manhattan plot by ignoring plot placement parameters:

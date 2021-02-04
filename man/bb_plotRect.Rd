@@ -56,11 +56,14 @@ Plot a rectangle within a BentoBox layout
 }
 \examples{
 ## Create a BentoBox page
-bb_pageCreate(width = 2, height = 2, default.units = "inches", xgrid = 0, ygrid = 0)
+bb_pageCreate(width = 2, height = 2, default.units = "inches")
 
 ## Plot a rectangle
 bb_plotRect(x = 1, y = 1, width = 0.75, height = 0.25, just = "center",
             default.units = "inches")
+
+## Hide page guides
+bb_pageGuideHide()
 
 }
 \seealso{

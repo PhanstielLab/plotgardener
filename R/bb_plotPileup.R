@@ -35,12 +35,19 @@
 #' bb_plotPileup(data = bb_bedData, chrom = "chr21", chromstart = 29073000, chromend = 29074000,
 #'               fill = "grey")
 #'
-#' ## Plot and place pileup plot on a BentoBox page
-#' bb_pageCreate(width = 5, height = 5, default.units = "inches", xgrid = 0, ygrid = 0)
-#' bb_plotPileup(data = bb_bedData, chrom = "chr21", chromstart = 29073000, chromend = 29074000,
-#'               fill = "grey", baseline = TRUE,
-#'               x = 0.5, y = 0.5, width = 4, height = 4,
-#'               just = c("left", "top"), default.units = "inches")
+#' ## Plot and place a pileup plot on a BentoBox page
+#' bb_pageCreate(width = 5, height = 5, default.units = "inches")
+#' pileupPlot <- bb_plotPileup(data = bb_bedData, chrom = "chr21",
+#'                             chromstart = 29073000, chromend = 29074000,
+#'                             fill = "grey", strandSplit = TRUE,
+#'                             x = 0.5, y = 0.5, width = 4, height = 4,
+#'                             just = c("left", "top"), default.units = "inches")
+#'
+#' ## Annotate genome label
+#' bb_annoGenomeLabel(plot = pileupPlot, x = 0.5, y = 4.5, just = c("left", "top"))
+#'
+#' ## Hide page guides
+#' bb_pageGuideHide()
 #'
 #' @details
 #' This function can be used to quickly plot a pileup plot by ignoring plot placement parameters:
@@ -300,7 +307,7 @@ bb_plotPileup <- function(data, chrom, chromstart = NULL, chromend = NULL, assem
     colorbyCol <- bed[,colorbyCol]
 
     ## if the associated column isn't numbers, convert unique values to a set of numbers
-    if (class(colorbyCol) != "numeric" | class(colorbyCol) != "integer"){
+    if (class(colorbyCol) != "numeric" & class(colorbyCol) != "integer"){
       colorbyCol <- factor(colorbyCol)
       bed$colorby <- as.numeric(colorbyCol)
     } else {

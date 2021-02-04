@@ -47,12 +47,12 @@ Place a BentoBox plot that has been previously created but not drawn
 data("bb_hicData")
 
 ## Create, but do not plot, square Hi-C plot
-hicPlot <- bb_plotHicSquare(hicData = bb_hicData, resolution = 10000, zrange = c(0, 70),
+hicPlot <- bb_plotHicSquare(data = bb_hicData, resolution = 10000, zrange = c(0, 70),
                             chrom = "chr21", chromstart = 28000000, chromend = 30300000,
                             draw = FALSE)
 
 ## Create BentoBox page
-bb_pageCreate(width = 4, height = 3.5, default.units = "inches", xgrid = 0, ygrid = 0)
+bb_pageCreate(width = 4, height = 3.5, default.units = "inches")
 
 ## Place Hi-C plot on BentoBox page
 bb_pagePlotPlace(plot = hicPlot,

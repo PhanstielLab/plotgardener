@@ -68,7 +68,7 @@ reference:
       - starts_with("cytoBand")
 
 figures:
-  fig.height: 5
+  fig.height: 6
   fig.asp: ~
 
 

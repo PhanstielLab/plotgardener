@@ -45,11 +45,24 @@
 #'                  chrom = "chr21", chromstart = 28000000, chromend = 30300000, half = "top")
 #'
 #' ## Plot and place both halves of square Hi-C plot on a BentoBox page
-#' bb_pageCreate(width = 3, height = 3, default.units = "inches", xgrid = 0, ygrid = 0)
-#' bb_plotHicSquare(data = bb_hicData, resolution = 10000, zrange = c(0, 70),
-#'                  chrom = "chr21", chromstart = 28000000, chromend = 30300000,
-#'                  x = 0.5, y = 0.5, width = 2, height = 2,
-#'                  just = c("left", "top"), default.units = "inches")
+#' bb_pageCreate(width = 3, height = 3, default.units = "inches")
+#' hicPlot <- bb_plotHicSquare(data = bb_hicData, resolution = 10000, zrange = c(0, 70),
+#'                             chrom = "chr21", chromstart = 28000000, chromend = 30300000,
+#'                             x = 0.5, y = 0.5, width = 2, height = 2,
+#'                             just = c("left", "top"), default.units = "inches")
+#'
+#' ## Annotate heatmap legend
+#' bb_annoHeatmapLegend(plot = hicPlot, x = 2.6, y = 0.5, width = 0.12, height = 0.6,
+#'                      just = c("left", "top"), default.units = "inches")
+#'
+#' ## Annotate x-axis and y-axis genome labels
+#' bb_annoGenomeLabel(plot = hicPlot, scale = "Mb", axis = "x",
+#'                    x = 0.5, y = 2.5, just = c("left", "top"))
+#' bb_annoGenomeLabel(plot = hicPlot, scale = "Mb", axis = "y",
+#'                    x = 0.5, y = 0.5, just = c("right", "top"))
+#'
+#' ## Hide page guides
+#' bb_pageGuideHide()
 #'
 #' @details
 #' This function can be used to quickly plot a square Hi-C plot by ignoring plot placement parameters:

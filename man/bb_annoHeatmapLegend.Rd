@@ -63,7 +63,7 @@ Add a color scale legend for heatmap-style plots
 data("bb_hicData")
 
 ## Create BentoBox page
-bb_pageCreate(width = 4, height = 3.5, default.units = "inches", xgrid = 0, ygrid = 0)
+bb_pageCreate(width = 4, height = 3.5, default.units = "inches")
 
 ## Plot and place a square Hi-C plot
 hicPlot <- bb_plotHicSquare(data = bb_hicData, resolution = 10000, zrange = c(0, 70),
@@ -75,5 +75,11 @@ hicPlot <- bb_plotHicSquare(data = bb_hicData, resolution = 10000, zrange = c(0,
 bb_annoHeatmapLegend(plot = hicPlot,
                      x = 3.2, y = 0.5, width = 0.25, height = 0.75,
                      just = c("left", "top"), default.units = "inches")
+
+## Annotate genome label
+bb_annoGenomeLabel(plot = hicPlot, x = 0.5, y = 3.1, scale = "Mb", just = c("left", "top"))
+
+## Hide page guides
+bb_pageGuideHide()
 
 }

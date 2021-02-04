@@ -11,10 +11,10 @@
 #' @param params An optional \link[BentoBox]{bb_assembly} object containing relevant function parameters.
 #'
 #' @examples
-#' ## Create a 4-inch wide, 5-inch high BentoBox page
-#' bb_pageCreate(width = 4, height = 4, default.units = "inches")
+#' ## Create a 5-inch wide, 4-inch high BentoBox page
+#' bb_pageCreate(width = 5, height = 4, default.units = "inches")
 #'
-#' ## Create a 10-cm wide, 12-cm high Bentobox page
+#' ## Create a 10-cm wide, 10-cm high Bentobox page
 #' bb_pageCreate(width = 10, height = 10, default.units = "cm")
 #'
 #' @details \code{width} and \code{height} must be specified in the same units.

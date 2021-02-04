@@ -17,7 +17,7 @@ bb_plotHicSquare(
   altchromstart = NULL,
   altchromend = NULL,
   assembly = "hg19",
-  palette = colorRampPalette(c("white", "dark red")),
+  palette = colorRampPalette(brewer.pal(n = 9, "YlGnBu")),
   half = "both",
   x = NULL,
   y = NULL,
@@ -59,7 +59,7 @@ dataframes, "auto" will attempt to detect the resolution the dataframe contains.
 
 \item{assembly}{Default genome assembly as a string or a \link[BentoBox]{bb_assembly} object. Default value is \code{assembly = "hg19"}.}
 
-\item{palette}{A function describing the color palette to use for representing scale of interaction scores. Default value is \code{palette = colorRampPalette(c("white", "dark red"))}.}
+\item{palette}{A function describing the color palette to use for representing scale of interaction scores. Default value is \code{palette =  colorRampPalette(brewer.pal(n = 9, "YlGnBu"))}.}
 
 \item{half}{A character value indicating which diagonal regions to plot. For intrachromosomal plotting, options are \code{"both"}, \code{"top"}, or \code{"bottom"}. For off-diagonal or interchromosomal plotting, options are \code{"top"} or \code{"bottom"}. Default value is \code{half = "both"}.
 \itemize{
@@ -114,11 +114,24 @@ bb_plotHicSquare(data = bb_hicData, resolution = 10000, zrange = c(0, 70),
                  chrom = "chr21", chromstart = 28000000, chromend = 30300000, half = "top")
 
 ## Plot and place both halves of square Hi-C plot on a BentoBox page
-bb_pageCreate(width = 3, height = 3, default.units = "inches", xgrid = 0, ygrid = 0)
-bb_plotHicSquare(data = bb_hicData, resolution = 10000, zrange = c(0, 70),
-                 chrom = "chr21", chromstart = 28000000, chromend = 30300000,
-                 x = 0.5, y = 0.5, width = 2, height = 2,
-                 just = c("left", "top"), default.units = "inches")
+bb_pageCreate(width = 3, height = 3, default.units = "inches")
+hicPlot <- bb_plotHicSquare(data = bb_hicData, resolution = 10000, zrange = c(0, 70),
+                            chrom = "chr21", chromstart = 28000000, chromend = 30300000,
+                            x = 0.5, y = 0.5, width = 2, height = 2,
+                            just = c("left", "top"), default.units = "inches")
+
+## Annotate heatmap legend
+bb_annoHeatmapLegend(plot = hicPlot, x = 2.6, y = 0.5, width = 0.12, height = 0.6,
+                     just = c("left", "top"), default.units = "inches")
+
+## Annotate x-axis and y-axis genome labels
+bb_annoGenomeLabel(plot = hicPlot, scale = "Mb", axis = "x",
+                   x = 0.5, y = 2.5, just = c("left", "top"))
+bb_annoGenomeLabel(plot = hicPlot, scale = "Mb", axis = "y",
+                   x = 0.5, y = 0.5, just = c("right", "top"))
+
+## Hide page guides
+bb_pageGuideHide()
 
 }
 \seealso{
