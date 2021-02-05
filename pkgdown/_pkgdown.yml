@@ -3,6 +3,7 @@ url: https://phanstiellab.github.io/bentobox
 template:
   params:
     bootswatch: lumen
+  package: BentoBox
 
 authors:
   Nicole Kramer:

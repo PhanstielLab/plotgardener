@@ -1,9 +1,5 @@
 
-<h2>
-<center>
-<img src="man/figures/bento-logotype-singleline-black.png" height="100px" style="background-color:white;border=transparent" />
-</center>
-</h2>
+# <img src="man/figures/bento-logotype-singleline-black.png" width="400px" style="background-color:white;border=transparent" /> <img src="man/figures/logo.png" align="right" width="140px" style="padding-left:20px; background-color:white" />
 
 `BentoBox` is a genomic data vizualization package for R. Using `grid`
 graphics, `BentoBox` empowers users to programmatically and flexibly
@@ -141,8 +137,8 @@ print(hicPlot)
 ##         rgb(x[, 1L], x[, 2L], x[, 3L], x[, 4L], maxColorValue = 255)
 ##     else rgb(x[, 1L], x[, 2L], x[, 3L], maxColorValue = 255)
 ## }
-## <bytecode: 0x7fb7e20fc168>
-## <environment: 0x7fb7e20f9ad8>
+## <bytecode: 0x7fd629903b70>
+## <environment: 0x7fd629901320>
 ## 
 ## $zrange
 ## [1]  0 70
