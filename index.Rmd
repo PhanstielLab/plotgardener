@@ -9,7 +9,8 @@ knitr::opts_chunk$set(
   fig.path = "man/figures/")
 ```
 
-<img src="man/figures/bento-logotype.png" height="100px" style="background-color:white;border=transparent" />
+ 
+<h2><center><img src="man/figures/bento-logotype-singleline-black.png" height="100px" style="background-color:white;border=transparent" /></center></h2>
 
 `BentoBox` is a genomic data vizualization package for R. Using `grid` graphics, `BentoBox` empowers users to programmatically and flexibly generate multi-panel figures. `BentoBox` accomplishes these goals by utilizing 1) a coordinate-based plotting system, and 2) edge-to-edge containerized data visualization. The coordinate-based plotting system grants users precise control over the size, position, and arrangement of plots. Its edge-to-edge plotting functions preserve the mapping between user-specified containers and the represented data. This allows users to stack plots with confidence that vertically aligned data will correspond to the same regions. For more information about BenoBox's philosophy and design, check out the `Our Philosophy` page.
 
