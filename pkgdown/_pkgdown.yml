@@ -2,7 +2,7 @@ url: https://phanstiellab.github.io/bentobox
 
 template:
   params:
-    bootswatch: cosmo
+    bootswatch: simplex
 
 authors:
   Nicole Kramer:
