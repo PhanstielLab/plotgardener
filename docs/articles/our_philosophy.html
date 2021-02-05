@@ -147,7 +147,7 @@
 <span class="co">## Hide page guides</span>
 <span class="fu"><a href="../reference/bb_pageGuideHide.html">bb_pageGuideHide</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <p>they will generate the <strong>exact same</strong> visualization:</p>
-<p><img src="../../../../../../Phanstiel%20Lab%20Dropbox/Nicole%20Kramer/BentoBox/development/BentoBox/vignettes/man/figures/philosophy_1-1.png" width="576" style="display: block; margin: auto;"></p>
+<p><img src="our_philosophy_files/figure-html/philosophy_1-1.png" width="576" style="display: block; margin: auto;"></p>
 <p>Not only does this make visualizations entirely reproducible with code, but it also makes it easy to change data ranges and aesthetics with simple pieces of code:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co">## Change colors while maintaining plot layout</span>
@@ -161,7 +161,7 @@
                           strandcolors <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"grey"</span>, <span class="st">"grey"</span><span class="op">)</span>, fontcolors <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"black"</span>, <span class="st">"black"</span><span class="op">)</span>,
                           x <span class="op">=</span> <span class="fl">0.5</span>, y <span class="op">=</span> <span class="fl">2.25</span>, width <span class="op">=</span> <span class="fl">3</span>, height <span class="op">=</span> <span class="fl">0.5</span>,
                           just <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"left"</span>, <span class="st">"top"</span><span class="op">)</span>, default.units <span class="op">=</span> <span class="st">"inches"</span><span class="op">)</span></code></pre></div>
-<p><img src="../../../../../../Phanstiel%20Lab%20Dropbox/Nicole%20Kramer/BentoBox/development/BentoBox/vignettes/man/figures/philosophy_2-1.png" width="576" style="display: block; margin: auto;"></p>
+<p><img src="our_philosophy_files/figure-html/philosophy_2-1.png" width="576" style="display: block; margin: auto;"></p>
 </div>
 <div id="coordinate-based-plot-placement" class="section level2">
 <h2 class="hasAnchor">
@@ -169,11 +169,11 @@
 <p>A coordinate-based plotting system provides users with exquisite control over plot sizes and arrangements through a user-defined page and common units of measurement. This system makes the <code>BentoBox</code> plotting process intuitive and absolute, meaning that plots cannot be squished and stretched based on their <em>relative</em> sizes and placements. Users can create a page in their preferred size and unit of measurement:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/bb_pageCreate.html">bb_pageCreate</a></span><span class="op">(</span>width <span class="op">=</span> <span class="fl">3</span>, height <span class="op">=</span> <span class="fl">3</span>, default.units <span class="op">=</span> <span class="st">"inches"</span><span class="op">)</span></code></pre></div>
-<p><img src="../../../../../../Phanstiel%20Lab%20Dropbox/Nicole%20Kramer/BentoBox/development/BentoBox/vignettes/man/figures/philosophy_3-1.png" width="576" style="display: block; margin: auto;"></p>
+<p><img src="our_philosophy_files/figure-html/philosophy_3-1.png" width="576" style="display: block; margin: auto;"></p>
 <p>and then make and precisely arrange plots within this defined landscape. If users want the top, left corner of their plot to be 0.5 inches down from the top of this page and 0.5 inches from the left:</p>
-<p><img src="../../../../../../Phanstiel%20Lab%20Dropbox/Nicole%20Kramer/BentoBox/development/BentoBox/vignettes/man/figures/philosphy_4-1.png" width="576" style="display: block; margin: auto;"></p>
+<p><img src="our_philosophy_files/figure-html/philosphy_4-1.png" width="576" style="display: block; margin: auto;"></p>
 <p>and users want their plot be 2 inches wide and 1 inch tall:</p>
-<p><img src="../../../../../../Phanstiel%20Lab%20Dropbox/Nicole%20Kramer/BentoBox/development/BentoBox/vignettes/man/figures/philosphy_5-1.png" width="576" style="display: block; margin: auto;"></p>
+<p><img src="our_philosophy_files/figure-html/philosphy_5-1.png" width="576" style="display: block; margin: auto;"></p>
 <p><code>BentoBox</code> can make the plot with these exact parameters:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co">## Create BentoBox page</span>
@@ -187,7 +187,7 @@
                             chrom <span class="op">=</span> <span class="st">"chr21"</span>, chromstart <span class="op">=</span> <span class="fl">28000000</span>, chromend <span class="op">=</span> <span class="fl">30300000</span>,
                             x <span class="op">=</span> <span class="fl">0.5</span>, y <span class="op">=</span> <span class="fl">0.5</span>, width <span class="op">=</span> <span class="fl">2</span>, height <span class="op">=</span> <span class="fl">1</span>, 
                             just <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"left"</span>, <span class="st">"top"</span><span class="op">)</span>, default.units <span class="op">=</span> <span class="st">"inches"</span><span class="op">)</span></code></pre></div>
-<p><img src="../../../../../../Phanstiel%20Lab%20Dropbox/Nicole%20Kramer/BentoBox/development/BentoBox/vignettes/man/figures/philosophy_6-1.png" width="576" style="display: block; margin: auto;"></p>
+<p><img src="our_philosophy_files/figure-html/philosophy_6-1.png" width="576" style="display: block; margin: auto;"></p>
 <p>This exact plot sizing and placement is particularly important and useful for standardized and accurate data comparisons along the x and y-axes.</p>
 </div>
 <div id="containerized-edge-to-edge-visualizations" class="section level2">
@@ -208,7 +208,7 @@
 <span class="fu"><a href="../reference/bb_annoGenomeLabel.html">bb_annoGenomeLabel</a></span><span class="op">(</span>plot <span class="op">=</span> <span class="va">genesPlot</span>, scale <span class="op">=</span> <span class="st">"Mb"</span>,
                    x <span class="op">=</span> <span class="fl">0.5</span>, y <span class="op">=</span> <span class="fl">1.5</span>, 
                    just <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"left"</span>, <span class="st">"top"</span><span class="op">)</span>, default.units <span class="op">=</span> <span class="st">"inches"</span><span class="op">)</span></code></pre></div>
-<p><img src="../../../../../../Phanstiel%20Lab%20Dropbox/Nicole%20Kramer/BentoBox/development/BentoBox/vignettes/man/figures/philosphy_7-1.png" width="576" style="display: block; margin: auto;"></p>
+<p><img src="our_philosophy_files/figure-html/philosphy_7-1.png" width="576" style="display: block; margin: auto;"></p>
 <p>When it’s time to stack various data types along the same genomic region, users can be confident in accurately aligning containers of the same width:</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co">## Load data</span>
@@ -245,7 +245,7 @@
 <span class="fu"><a href="../reference/bb_annoGenomeLabel.html">bb_annoGenomeLabel</a></span><span class="op">(</span>plot <span class="op">=</span> <span class="va">signalPlot</span>, 
                    params <span class="op">=</span> <span class="va">params</span>, scale <span class="op">=</span> <span class="st">"Mb"</span>,
                    y <span class="op">=</span> <span class="fl">3.6</span>, just <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"left"</span>, <span class="st">"top"</span><span class="op">)</span>, default.units <span class="op">=</span> <span class="st">"inches"</span><span class="op">)</span></code></pre></div>
-<p><img src="../../../../../../Phanstiel%20Lab%20Dropbox/Nicole%20Kramer/BentoBox/development/BentoBox/vignettes/man/figures/philosphy_8-1.png" width="576" style="display: block; margin: auto;"></p>
+<p><img src="our_philosophy_files/figure-html/philosphy_8-1.png" width="576" style="display: block; margin: auto;"></p>
 </div>
 <div id="utilizing-grid-graphics-viewports" class="section level2">
 <h2 class="hasAnchor">
