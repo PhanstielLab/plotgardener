@@ -185,7 +185,7 @@ bb_plotSegments <- function(x0, y0, x1, y1, default.units = "inches", linecolor 
   # ======================================================================================================================================================================================
 
    segments <- grid.segments(x0 = unit(new_x0, page_units), y0 = unit(page_height - new_y0, page_units), x1 = unit(new_x1, page_units),
-                             y1 = unit(page_height - new_y1, page_units), gp = bb_segments$gp)
+                             y1 = unit(page_height - new_y1, page_units), arrow = bb_segments$arrow, gp = bb_segments$gp)
 
   # ======================================================================================================================================================================================
   # ADD GROB TO OBJECT
