@@ -2,7 +2,7 @@ url: https://phanstiellab.github.io/bentobox
 
 template:
   params:
-    bootswatch: simplex
+    bootswatch: lumen
 
 authors:
   Nicole Kramer:
