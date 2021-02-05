@@ -92,10 +92,8 @@
 
       </header><div class="row">
   <div class="contents col-md-9">
-<div id="bentobox-" class="section level1">
-<div class="page-header"><h1 class="hasAnchor">
-<a href="#bentobox-" class="anchor"></a>BentoBox <img src="reference/figures/logo.png" align="right" width="140px" style="padding-left:20px; background-color:white">
-</h1></div>
+
+<p><img src="reference/figures/bento-logotype.png" height="100px" style="background-color:white;border=transparent"></p>
 <p><code>BentoBox</code> is a genomic data vizualization package for R. Using <code>grid</code> graphics, <code>BentoBox</code> empowers users to programmatically and flexibly generate multi-panel figures. <code>BentoBox</code> accomplishes these goals by utilizing 1) a coordinate-based plotting system, and 2) edge-to-edge containerized data visualization. The coordinate-based plotting system grants users precise control over the size, position, and arrangement of plots. Its edge-to-edge plotting functions preserve the mapping between user-specified containers and the represented data. This allows users to stack plots with confidence that vertically aligned data will correspond to the same regions. For more information about BenoBox’s philosophy and design, check out the <code>Our Philosophy</code> page.</p>
 <p>Specialized for genomic data, <code>BentoBox</code> also contains functions to read and plot multi-omic data quickly and easily. <code>BentoBox</code> can address an endless number of use cases, including: dynamic exploration of genomic data, arrangment into multi-omic layouts, and survey plotting for quickly viewing data across the genome. Check out our <code>vignettes</code> for detailed examples and suggested use cases!</p>
 <div id="installation" class="section level2">
@@ -130,7 +128,7 @@
 <span class="co">## Quick plot Hi-C data</span>
 <span class="va">hicPlot</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/bb_plotHicSquare.html">bb_plotHicSquare</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">bb_hicData</span>,
                             chrom <span class="op">=</span> <span class="st">"chr21"</span>, chromstart <span class="op">=</span> <span class="fl">28000000</span>, chromend <span class="op">=</span> <span class="fl">30300000</span><span class="op">)</span></code></pre></div>
-<p><img src="reference/figures/README-quickHicExample-1.png" style="display: block; margin: auto;"></p>
+<p><img src="reference/figures/quickHicExample-1.png" style="display: block; margin: auto;"></p>
 <p>In addition to plotting the Hi-C Data, this creates an S3 object of class <code>bb_hicSquare</code> which stores all of the information about the region being plotted, the genome assembly, and any plotting parameters.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/class.html">class</a></span><span class="op">(</span><span class="va">hicPlot</span><span class="op">)</span>
@@ -203,8 +201,8 @@
 <span class="co">##         rgb(x[, 1L], x[, 2L], x[, 3L], x[, 4L], maxColorValue = 255)</span>
 <span class="co">##     else rgb(x[, 1L], x[, 2L], x[, 3L], maxColorValue = 255)</span>
 <span class="co">## }</span>
-<span class="co">## &lt;bytecode: 0x7fd59705e550&gt;</span>
-<span class="co">## &lt;environment: 0x7fd597061318&gt;</span>
+<span class="co">## &lt;bytecode: 0x7f87771074f0&gt;</span>
+<span class="co">## &lt;environment: 0x7f8777104308&gt;</span>
 <span class="co">## </span>
 <span class="co">## $zrange</span>
 <span class="co">## [1]  0 70</span>
@@ -238,8 +236,7 @@
 </ol>
 <p>As an annotation example, lets say we want to add a color scale legend for a Hi-C plot:</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R">
-<span class="co">## Load BentoBox</span>
+<code class="sourceCode R"><span class="co">## Load BentoBox</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://phanstiellab.github.io/bentobox">BentoBox</a></span><span class="op">)</span>
 
 <span class="co">## Load example Hi-C data</span>
@@ -256,12 +253,11 @@
 <span class="co">## Add color scale annotation</span>
 <span class="fu"><a href="reference/bb_annoHeatmapLegend.html">bb_annoHeatmapLegend</a></span><span class="op">(</span>plot <span class="op">=</span> <span class="va">hicPlot</span>,
                      x <span class="op">=</span> <span class="fl">2.85</span>, y <span class="op">=</span> <span class="fl">0.25</span>, width <span class="op">=</span> <span class="fl">0.1</span>, height <span class="op">=</span> <span class="fl">1.25</span>, default.units <span class="op">=</span> <span class="st">"inches"</span><span class="op">)</span></code></pre></div>
-<p><img src="reference/figures/README-unnamed-chunk-5-1.png" style="display: block; margin: auto;"></p>
+<p><img src="reference/figures/unnamed-chunk-5-1.png" style="display: block; margin: auto;"></p>
 <p>By default, all placement coordinates are relative to the top right corner of the page/plot. This can be adjusted for each function individually with the <code>just</code> parameter. This allows us to use the most convenient coordinates to place our plot and the ability to right, left, center, top, bottom, or middle align every plotting element. For more information on plot placement, check out the vignettes.</p>
 <p>Now, let’s suppose we have both Hi-C data and signal track data such as H3K27Ac bigWig files. We could enter the region information (chr21:28000000-30300000) into both functions. But we can streamline this process by taking advantage of the <code><a href="reference/bb_params.html">bb_params()</a></code> function. Since many functions share arguments, <code><a href="reference/bb_params.html">bb_params()</a></code> lets us reduce repetition by defining shared arguments in one place. Furthermore, we can concatenate these <code>bb_params</code> objects, to create useful combinations of parameter settings. For more information about <code><a href="reference/bb_params.html">bb_params()</a></code> usage, refer to the documentation or vignettes. The following code shows how we can utilize these functions to plot Hi-C data H3K27Ac signal tracks, and add a genomic label to a shared region:</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R">
-<span class="co">## Load BentoBox</span>
+<code class="sourceCode R"><span class="co">## Load BentoBox</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://phanstiellab.github.io/bentobox">BentoBox</a></span><span class="op">)</span>
 
 <span class="co">## Load example Hi-C and signal track (H3K27Ac) data</span>
@@ -292,7 +288,7 @@
 <span class="co">## Label genome coordinates</span>
 <span class="fu"><a href="reference/bb_plotGenomeLabel.html">bb_plotGenomeLabel</a></span><span class="op">(</span>params <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">region</span>, <span class="va">params</span><span class="op">)</span>,
                    y <span class="op">=</span> <span class="fl">3.5</span>, length <span class="op">=</span> <span class="va">params</span><span class="op">$</span><span class="va">width</span>, scale <span class="op">=</span> <span class="st">"bp"</span><span class="op">)</span></code></pre></div>
-<p><img src="reference/figures/README-unnamed-chunk-6-1.png" style="display: block; margin: auto;"></p>
+<p><img src="reference/figures/unnamed-chunk-6-1.png" style="display: block; margin: auto;"></p>
 <p>You might notice that using <code><a href="reference/bb_params.html">bb_params()</a></code> we can remove quite a few of the plotting arguments. The only things we need to specify are the data to use and the y-coordinate to place each plot. Using <code><a href="https://rdrr.io/r/base/c.html">c()</a></code> we can also combine distinct sets of <code><a href="reference/bb_params.html">bb_params()</a></code> to create different combinations of paramters for each function. We can also override arguments in <code><a href="reference/bb_params.html">bb_params()</a></code> objects by defining them in local functions if needed.</p>
 <p>Another useful feature of <code><a href="reference/bb_params.html">bb_params()</a></code> is the ability to build regions and plots from gene names, given genomic annotation packages are loaded. You can check which data packages belong to which assemblies by using <code><a href="reference/bb_defaultPackages.html">bb_defaultPackages(Genome)</a></code> or make your own with <code><a href="reference/bb_assembly.html">bb_assembly()</a></code>:</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
@@ -314,11 +310,11 @@
 
 <span class="co">## Plot IL1B with no buffer</span>
 <span class="fu"><a href="reference/bb_plotGenes.html">bb_plotGenes</a></span><span class="op">(</span>params <span class="op">=</span> <span class="fu"><a href="reference/bb_params.html">bb_params</a></span><span class="op">(</span>gene <span class="op">=</span> <span class="st">'IL1B'</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<p><img src="reference/figures/README-unnamed-chunk-8-1.png" style="display: block; margin: auto;"></p>
+<p><img src="reference/figures/unnamed-chunk-8-1.png" style="display: block; margin: auto;"></p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co">## Plot genes with a 1000000bp (1Mb) buffer, centered on IL1B</span>
 <span class="fu"><a href="reference/bb_plotGenes.html">bb_plotGenes</a></span><span class="op">(</span>params <span class="op">=</span> <span class="fu"><a href="reference/bb_params.html">bb_params</a></span><span class="op">(</span>gene <span class="op">=</span> <span class="st">'IL1B'</span>, geneBuffer <span class="op">=</span> <span class="fl">1000000</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<p><img src="reference/figures/README-unnamed-chunk-9-1.png" style="display: block; margin: auto;"></p>
+<p><img src="reference/figures/unnamed-chunk-9-1.png" style="display: block; margin: auto;"></p>
 </div>
 </div>
 <div id="a-word-of-caution" class="section level2">
@@ -326,7 +322,7 @@
 <a href="#a-word-of-caution" class="anchor"></a>A word of caution</h2>
 <p><code>BentoBox</code> is incredibly flexible and functional. However, due to this flexibility and like all programming packages, it may not always prevent users from making unintentional mistakes. If plot sizes are entered incorrectly or data is mishandled, it is possible to connect multi-omic data incorrectly. Make sure you utilize package features that reduce human error and increase re-usability of code to get the most milage out of BentoBox.</p>
 </div>
-</div>
+
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

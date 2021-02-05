@@ -18,7 +18,7 @@ and plot multi-omic data quickly and easily. `BentoBox` can address an
 endless number of use cases, including: dynamic exploration of genomic
 data, arrangment into multi-omic layouts, and survey plotting for
 quickly viewing data across the genome. Check out our `vignettes` for
-detailed examples and suggested use cases\!
+detailed examples and suggested use cases!
 
 ## Installation
 
@@ -41,7 +41,7 @@ package.version("BentoBox")
 
 We can use any of the plotting functions to quickly plot a single data
 type by simply ignoring the arguments that define the plotting location
-(i.e. `x`, `y`, `width`, `height`, `just`, `default.units`).
+(i.e. `x`, `y`, `width`, `height`, `just`, `default.units`).
 
 Lets demonstrate this by plotting the example Hi-C data included in
 bb\_hicData (chr21:28000000-30300000):
@@ -137,8 +137,8 @@ print(hicPlot)
 ##         rgb(x[, 1L], x[, 2L], x[, 3L], x[, 4L], maxColorValue = 255)
 ##     else rgb(x[, 1L], x[, 2L], x[, 3L], maxColorValue = 255)
 ## }
-## <bytecode: 0x7fd59705e550>
-## <environment: 0x7fd597061318>
+## <bytecode: 0x7fb5a5932f28>
+## <environment: 0x7fb5a592fdb0>
 ## 
 ## $zrange
 ## [1]  0 70
@@ -188,7 +188,6 @@ As an annotation example, lets say we want to add a color scale legend
 for a Hi-C plot:
 
 ``` r
-
 ## Load BentoBox
 library(BentoBox)
 
@@ -230,7 +229,6 @@ can utilize these functions to plot Hi-C data H3K27Ac signal tracks, and
 add a genomic label to a shared region:
 
 ``` r
-
 ## Load BentoBox
 library(BentoBox)
 
