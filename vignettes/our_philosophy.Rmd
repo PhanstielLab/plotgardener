@@ -14,7 +14,7 @@ knitr::opts_chunk$set(
   fig.height = 5,
   fig.width = 6,
   fig.align = "center",
-  fig.path = "../man/figures/"
+  fig.path = "man/figures/"
 )
 library(BentoBox)
 ```
