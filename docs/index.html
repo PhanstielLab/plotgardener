@@ -41,9 +41,9 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-
-      <span class="navbar-brand" rel="home" href="index.html" title="BentoBox released version 0.1.0">
-        <img style="padding:4px; max-height:45px" src="reference/figures/bento-logotype.png"><a class="navbar-link" href="index.html"></a>
+      <span class="navbar-brand">
+        <a class="navbar-link" href="index.html">BentoBox</a>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.0</span>
       </span>
     </div>
 
@@ -52,7 +52,7 @@
 <li>
   <a href="index.html">
     <span class="fas fa-home fa-lg"></span>
-
+     
   </a>
 </li>
 <li>
@@ -61,7 +61,7 @@
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
     Vignettes
-
+     
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
@@ -78,7 +78,7 @@
 <li>
   <a href="https://github.com/PhanstielLab/BentoBox">
     <span class="fab fa-github fa-lg"></span>
-
+     
   </a>
 </li>
       </ul>
@@ -93,12 +93,10 @@
 
       </header><div class="row">
   <div class="contents col-md-9">
-
-<h2>
-<center>
-<img src="reference/figures/bento-logotype-singleline-black.png" height="100px" style="background-color:white;border=transparent">
-</center>
-</h2>
+<div id="-" class="section level1">
+<div class="page-header"><h1 class="hasAnchor">
+<a href="#-" class="anchor"></a><img src="reference/figures/bento-logotype-singleline-black.png" width="400px" style="background-color:white;border=transparent"><img src="reference/figures/logo.png" align="right" width="140px" style="padding-left:20px; background-color:white">
+</h1></div>
 <p><code>BentoBox</code> is a genomic data vizualization package for R. Using <code>grid</code> graphics, <code>BentoBox</code> empowers users to programmatically and flexibly generate multi-panel figures. <code>BentoBox</code> accomplishes these goals by utilizing 1) a coordinate-based plotting system, and 2) edge-to-edge containerized data visualization. The coordinate-based plotting system grants users precise control over the size, position, and arrangement of plots. Its edge-to-edge plotting functions preserve the mapping between user-specified containers and the represented data. This allows users to stack plots with confidence that vertically aligned data will correspond to the same regions. For more information about BenoBox’s philosophy and design, check out the <code>Our Philosophy</code> page.</p>
 <p>Specialized for genomic data, <code>BentoBox</code> also contains functions to read and plot multi-omic data quickly and easily. <code>BentoBox</code> can address an endless number of use cases, including: dynamic exploration of genomic data, arrangment into multi-omic layouts, and survey plotting for quickly viewing data across the genome. Check out our <code>vignettes</code> for detailed examples and suggested use cases!</p>
 <div id="installation" class="section level2">
@@ -206,8 +204,8 @@
 <span class="co">##         rgb(x[, 1L], x[, 2L], x[, 3L], x[, 4L], maxColorValue = 255)</span>
 <span class="co">##     else rgb(x[, 1L], x[, 2L], x[, 3L], maxColorValue = 255)</span>
 <span class="co">## }</span>
-<span class="co">## &lt;bytecode: 0x7fec129a8b68&gt;</span>
-<span class="co">## &lt;environment: 0x7fec129a64d8&gt;</span>
+<span class="co">## &lt;bytecode: 0x7fd629903b70&gt;</span>
+<span class="co">## &lt;environment: 0x7fd629901320&gt;</span>
 <span class="co">## </span>
 <span class="co">## $zrange</span>
 <span class="co">## [1]  0 70</span>
@@ -327,7 +325,7 @@
 <a href="#a-word-of-caution" class="anchor"></a>A word of caution</h2>
 <p><code>BentoBox</code> is incredibly flexible and functional. However, due to this flexibility and like all programming packages, it may not always prevent users from making unintentional mistakes. If plot sizes are entered incorrectly or data is mishandled, it is possible to connect multi-omic data incorrectly. Make sure you utilize package features that reduce human error and increase re-usability of code to get the most milage out of BentoBox.</p>
 </div>
-
+</div>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
