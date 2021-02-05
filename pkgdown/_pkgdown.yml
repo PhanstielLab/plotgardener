@@ -19,7 +19,7 @@ authors:
 navbar:
   type: default
   left:
-    - icon: man/figures/bento-logotype.png
+    - icon: fa-home fa-lg
       href: index.html
     - text: Our Philosophy
       href: articles/our_philosophy.html
