@@ -27,7 +27,7 @@
 #' @param just Justification of genome label relative to its (x, y) location. If there are two values, the first value specifies horizontal justification and the second value specifies vertical justification.
 #' Possible string values are: \code{"left"}, \code{"right"}, \code{"centre"}, \code{"center"}, \code{"bottom"}, and \code{"top"}. Default value is \code{just = c("left", "top")}.
 #' @param default.units A string indicating the default units to use if \code{x} or \code{y} are only given as numerics. Default value is \code{default.units = "inches"}.
-#' @param params An optional \link[BentoBox]{bb_assembly} object containing relevant function parameters.
+#' @param params An optional \link[BentoBox]{bb_params} object containing relevant function parameters.
 #' @param ... Additional grid graphical parameters. See \link[grid]{gpar}.
 #'
 #' @return Returns a \code{bb_genomeLabel} object containing relevant genomic region, placement, and \link[grid]{grob} information.

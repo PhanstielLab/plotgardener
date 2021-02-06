@@ -53,7 +53,7 @@ bb_plotSegments(
 
 \item{arrow}{A list describing arrow heads to place at either end of the line segments, as produced by the \link[grid]{arrow} function.}
 
-\item{params}{An optional \link[BentoBox]{bb_assembly} object containing relevant function parameters.}
+\item{params}{An optional \link[BentoBox]{bb_params} object containing relevant function parameters.}
 
 \item{...}{Additional grid graphical parameters. See \link[grid]{gpar}.}
 }

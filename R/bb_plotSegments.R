@@ -21,7 +21,7 @@
 #' \item{\code{"bevel"}: }{Line joins are flattened corners.}
 #' }
 #' @param arrow A list describing arrow heads to place at either end of the line segments, as produced by the \link[grid]{arrow} function.
-#' @param params An optional \link[BentoBox]{bb_assembly} object containing relevant function parameters.
+#' @param params An optional \link[BentoBox]{bb_params} object containing relevant function parameters.
 #' @param ... Additional grid graphical parameters. See \link[grid]{gpar}.
 #'
 #' @return Returns a \code{bb_segments} object containing relevant placement and \link[grid]{grob} information.

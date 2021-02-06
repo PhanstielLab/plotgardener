@@ -19,7 +19,7 @@ bb_pageGuideHorizontal(
 
 \item{linecolor}{Character value indicating color of guideline. Default value is \code{linecolor = "grey55"}.}
 
-\item{params}{An optional \link[BentoBox]{bb_assembly} object containing relevant function parameters.}
+\item{params}{An optional \link[BentoBox]{bb_params} object containing relevant function parameters.}
 
 \item{...}{Additional grid graphical parameters. See \link[grid]{gpar}.}
 }

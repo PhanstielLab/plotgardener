@@ -29,7 +29,7 @@ If not logical, must be the same length as the \code{at} argument.}
 
 \item{gp}{Grid graphical parameters. See \link[grid]{gpar}.}
 
-\item{params}{An optional \link[BentoBox]{bb_assembly} object containing relevant function parameters.}
+\item{params}{An optional \link[BentoBox]{bb_params} object containing relevant function parameters.}
 }
 \value{
 Returns a \code{bb_yaxis} object containing relevant \link[grid]{grob} information.

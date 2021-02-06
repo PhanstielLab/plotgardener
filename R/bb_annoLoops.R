@@ -16,7 +16,7 @@
 #' \item{\code{"bottom"}: }{Loops will be annotated ont the bottom diagonal half of a square Hi-C plot.}
 #' }
 #' @param shift Numeric specifying the number of pixels on either end of loop in a box or circle. Numeric specifying number of pixels for the length of an arrow.
-#' @param params An optional \link[BentoBox]{bb_assembly} object containing relevant function parameters.
+#' @param params An optional \link[BentoBox]{bb_params} object containing relevant function parameters.
 #' @param ... Additional grid graphical parameters. See \link[grid]{gpar}.
 #'
 #' @return Returns a \code{bb_loops} object containing relevant genomic region, placement, and \link[grid]{grob} information.

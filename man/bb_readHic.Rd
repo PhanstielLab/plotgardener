@@ -56,7 +56,7 @@ bb_readHic(
 \item{\code{"oe"}: }{Observed/expected counts.}
 }}
 
-\item{params}{An optional \link[BentoBox]{bb_assembly} object containing relevant function parameters.}
+\item{params}{An optional \link[BentoBox]{bb_params} object containing relevant function parameters.}
 }
 \value{
 Returns a 3-column dataframe in sparse upper triangular format with the following columns: \code{chrom}, \code{altchrom}, \code{counts}.

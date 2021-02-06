@@ -36,7 +36,7 @@ bb_annoLoops(
 
 \item{shift}{Numeric specifying the number of pixels on either end of loop in a box or circle. Numeric specifying number of pixels for the length of an arrow.}
 
-\item{params}{An optional \link[BentoBox]{bb_assembly} object containing relevant function parameters.}
+\item{params}{An optional \link[BentoBox]{bb_params} object containing relevant function parameters.}
 
 \item{...}{Additional grid graphical parameters. See \link[grid]{gpar}.}
 }

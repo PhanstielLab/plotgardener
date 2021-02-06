@@ -36,7 +36,7 @@ Default value is \code{default.units = "inches"}.}
 
 \item{interpolate}{A logical value indicating whether to linearly interpolate the image. Default value is \code{interpolate = TRUE}.}
 
-\item{params}{An optional \link[BentoBox]{bb_assembly} object containing relevant function parameters.}
+\item{params}{An optional \link[BentoBox]{bb_params} object containing relevant function parameters.}
 
 \item{...}{Additional grid graphical parameters. See \link[grid]{gpar}.}
 }

@@ -72,7 +72,7 @@ Possible string values are: \code{"left"}, \code{"right"}, \code{"centre"}, \cod
 
 \item{draw}{A logical value indicating whether graphics output should be produced. Default value is \code{draw = TRUE}.}
 
-\item{params}{An optional \link[BentoBox]{bb_assembly} object containing relevant function parameters.}
+\item{params}{An optional \link[BentoBox]{bb_params} object containing relevant function parameters.}
 }
 \value{
 Returns a \code{bb_genes} object containing relevant genomic region, placement, and \link[grid]{grob} information.

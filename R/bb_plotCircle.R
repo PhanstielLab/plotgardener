@@ -9,7 +9,7 @@
 #' @param lty A numeric specifying circle line type. Default value is \code{lty = 1}.
 #' @param fill A character value specifying circle fill color. Default value is \code{fill = NA}.
 #' @param alpha Numeric value specifying color transparency. Default value is \code{alpha = 1}.
-#' @param params An optional \link[BentoBox]{bb_assembly} object containing relevant function parameters.
+#' @param params An optional \link[BentoBox]{bb_params} object containing relevant function parameters.
 #' @param ... Additional grid graphical parameters. See \link[grid]{gpar}.
 #'
 #' @return Returns a \code{bb_circle} object containing relevant placement and \link[grid]{grob} information.

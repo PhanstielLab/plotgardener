@@ -37,7 +37,7 @@ bb_plotCircle(
 
 \item{alpha}{Numeric value specifying color transparency. Default value is \code{alpha = 1}.}
 
-\item{params}{An optional \link[BentoBox]{bb_assembly} object containing relevant function parameters.}
+\item{params}{An optional \link[BentoBox]{bb_params} object containing relevant function parameters.}
 
 \item{...}{Additional grid graphical parameters. See \link[grid]{gpar}.}
 }

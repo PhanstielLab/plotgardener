@@ -9,7 +9,7 @@
 #' Possible string values are: \code{"left"}, \code{"right"}, \code{"centre"}, \code{"center"}, \code{"bottom"}, and \code{"top"}. Default value is \code{just = c("left", "top")}.
 #' @param default.units A string indicating the default units to use if \code{x}, \code{y}, \code{width}, or \code{height} are only given as numerics. Default value is \code{default.units = "inches"}.
 #' @param draw A logical value indicating whether graphics output should be produced. Default value is \code{draw = TRUE}.
-#' @param params An optional \link[BentoBox]{bb_assembly} object containing relevant function parameters.
+#' @param params An optional \link[BentoBox]{bb_params} object containing relevant function parameters.
 #'
 #' @return Function will update dimensions of an input plot and return an updated BentoBox plot object.
 #'

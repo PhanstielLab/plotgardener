@@ -10,7 +10,7 @@
 #' \item{\code{"-"}: }{Minus strand.}
 #' \item{\code{"*"}: }{Plus and minus strands.}
 #' }
-#' @param params An optional \link[BentoBox]{bb_assembly} object containing relevant function parameters.
+#' @param params An optional \link[BentoBox]{bb_params} object containing relevant function parameters.
 #'
 #' @return Returns a 6-column dataframe of bigwig information.
 #'

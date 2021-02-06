@@ -40,7 +40,7 @@ bb_plotPolygon(
 
 \item{id.lengths}{A numeric vector used to separate locations in \code{x} and \code{y} into multiple polygons. Specifies consecutive blocks of locations which make up separate polygons.}
 
-\item{params}{An optional \link[BentoBox]{bb_assembly} object containing relevant function parameters.}
+\item{params}{An optional \link[BentoBox]{bb_params} object containing relevant function parameters.}
 
 \item{...}{Additional grid graphical parameters. See \link[grid]{gpar}.}
 }

@@ -10,7 +10,7 @@
 #' @param alpha Numeric value specifying color transparency. Default value is \code{alpha = 1}.
 #' @param id A numeric vector used to separate locations in \code{x} and \code{y} into multiple polygons. All locations with the same \code{id} belong to the same polygon.
 #' @param id.lengths A numeric vector used to separate locations in \code{x} and \code{y} into multiple polygons. Specifies consecutive blocks of locations which make up separate polygons.
-#' @param params An optional \link[BentoBox]{bb_assembly} object containing relevant function parameters.
+#' @param params An optional \link[BentoBox]{bb_params} object containing relevant function parameters.
 #' @param ... Additional grid graphical parameters. See \link[grid]{gpar}.
 #'
 #' @return Returns a \code{bb_polygon} object containing relevant placement and \link[grid]{grob} information.

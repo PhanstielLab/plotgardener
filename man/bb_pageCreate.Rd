@@ -33,7 +33,7 @@ bb_pageCreate(
 
 \item{showUnit}{A logical value indicating whether to show the name of units at the top left of the page. Default value is \code{showUnit = TRUE}.}
 
-\item{params}{An optional \link[BentoBox]{bb_assembly} object containing relevant function parameters.}
+\item{params}{An optional \link[BentoBox]{bb_params} object containing relevant function parameters.}
 }
 \description{
 Create a page for a BentoBox layout

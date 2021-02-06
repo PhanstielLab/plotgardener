@@ -10,7 +10,7 @@
 #' \item{\code{FALSE}: }{y-axis is drawn at the right of the plot.}
 #' }
 #' @param gp Grid graphical parameters. See \link[grid]{gpar}.
-#' @param params An optional \link[BentoBox]{bb_assembly} object containing relevant function parameters.
+#' @param params An optional \link[BentoBox]{bb_params} object containing relevant function parameters.
 #'
 #' @return Returns a \code{bb_yaxis} object containing relevant \link[grid]{grob} information.
 #'

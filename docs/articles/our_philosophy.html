@@ -100,74 +100,11 @@
     
     
 <p><strong><code>BentoBox</code> was developed to give users unparalleled control in plotting and arranging multiple figures entirely within the R plotting environment. This functionality is motivated by the following design principles:</strong></p>
-<div id="programmatic-and-reproducible-multi-panel-figures" class="section level2">
-<h2 class="hasAnchor">
-<a href="#programmatic-and-reproducible-multi-panel-figures" class="anchor"></a>Programmatic and reproducible multi-panel figures</h2>
-<p>Data visualization is most rigorous and accurate when it is reproducible. Although many visualizations are initially designed with code, final customizations and arrangements of figures are typically made with third party graphic design software and cannot be easily replicated. <code>BentoBox</code> makes this entire process programmatic, from raw data input to finalized, complex visualization. This means that if users define the same data:</p>
-<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">TxDb.Hsapiens.UCSC.hg19.knownGene</span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">org.Hs.eg.db</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="st">"bb_hicData"</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">bb_hicData</span><span class="op">)</span>
-<span class="co">#&gt;      chr21    chr21 counts</span>
-<span class="co">#&gt; 1 28000000 28000000     70</span>
-<span class="co">#&gt; 2 28000000 28010000     70</span>
-<span class="co">#&gt; 3 28010000 28010000     70</span>
-<span class="co">#&gt; 4 28000000 28020000     70</span>
-<span class="co">#&gt; 5 28010000 28020000     70</span>
-<span class="co">#&gt; 6 28020000 28020000     70</span></code></pre></div>
-<p>and the same <code>BentoBox</code> code:</p>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co">## Create a BentoBox page</span>
-<span class="fu"><a href="../reference/bb_pageCreate.html">bb_pageCreate</a></span><span class="op">(</span>width <span class="op">=</span> <span class="fl">4</span>, height <span class="op">=</span> <span class="fl">3.5</span>, default.units <span class="op">=</span> <span class="st">"inches"</span><span class="op">)</span>
-
-<span class="co">## Define genomic region with `bb_params`</span>
-<span class="va">params</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/bb_params.html">bb_params</a></span><span class="op">(</span>chrom <span class="op">=</span> <span class="st">"chr21"</span>, chromstart <span class="op">=</span> <span class="fl">28000000</span>, chromend <span class="op">=</span> <span class="fl">30300000</span><span class="op">)</span>
-
-<span class="co">## Plot Hi-C data</span>
-<span class="va">hicPlot</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/bb_plotHicTriangle.html">bb_plotHicTriangle</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">bb_hicData</span>,
-                              params <span class="op">=</span> <span class="va">params</span>,
-                              x <span class="op">=</span> <span class="fl">2</span>, y <span class="op">=</span> <span class="fl">0.5</span>, width <span class="op">=</span> <span class="fl">3</span>, height <span class="op">=</span> <span class="fl">2</span>, 
-                              just <span class="op">=</span> <span class="st">"top"</span>, default.units <span class="op">=</span> <span class="st">"inches"</span><span class="op">)</span>
-
-<span class="co">## Add color scale annotation</span>
-<span class="fu"><a href="../reference/bb_annoHeatmapLegend.html">bb_annoHeatmapLegend</a></span><span class="op">(</span>plot <span class="op">=</span> <span class="va">hicPlot</span>, 
-                     x <span class="op">=</span> <span class="fl">3</span>, y <span class="op">=</span> <span class="fl">0.5</span>, width <span class="op">=</span> <span class="fl">0.12</span>, height <span class="op">=</span> <span class="fl">0.6</span>, 
-                     just <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"left"</span>, <span class="st">"top"</span><span class="op">)</span>, default.units <span class="op">=</span> <span class="st">"inches"</span><span class="op">)</span>
-
-<span class="co">## Plot gene track in same genomic region</span>
-<span class="va">genesPlot</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/bb_plotGenes.html">bb_plotGenes</a></span><span class="op">(</span>params <span class="op">=</span> <span class="va">params</span>,
-                          x <span class="op">=</span> <span class="fl">0.5</span>, y <span class="op">=</span> <span class="fl">2.25</span>, width <span class="op">=</span> <span class="fl">3</span>, height <span class="op">=</span> <span class="fl">0.5</span>,
-                          just <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"left"</span>, <span class="st">"top"</span><span class="op">)</span>, default.units <span class="op">=</span> <span class="st">"inches"</span><span class="op">)</span>
-
-<span class="co">## Label genomic region</span>
-<span class="fu"><a href="../reference/bb_annoGenomeLabel.html">bb_annoGenomeLabel</a></span><span class="op">(</span>plot <span class="op">=</span> <span class="va">genesPlot</span>,
-                   x <span class="op">=</span> <span class="fl">0.5</span>, y <span class="op">=</span> <span class="fl">2.8</span>, just <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"left"</span>, <span class="st">"top"</span><span class="op">)</span>, default.units <span class="op">=</span> <span class="st">"inches"</span><span class="op">)</span>
-
-<span class="co">## Hide page guides</span>
-<span class="fu"><a href="../reference/bb_pageGuideHide.html">bb_pageGuideHide</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
-<p>they will generate the <strong>exact same</strong> visualization:</p>
-<p><img src="our_philosophy_files/figure-html/philosophy_1-1.png" width="576" style="display: block; margin: auto;"></p>
-<p>Not only does this make visualizations entirely reproducible with code, but it also makes it easy to change data ranges and aesthetics with simple pieces of code:</p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co">## Change colors while maintaining plot layout</span>
-<span class="va">hicPlot</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/bb_plotHicTriangle.html">bb_plotHicTriangle</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">bb_hicData</span>,
-                              params <span class="op">=</span> <span class="va">params</span>,
-                              palette <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grDevices/colorRamp.html">colorRampPalette</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"white"</span>, <span class="st">"steel blue"</span><span class="op">)</span><span class="op">)</span>,
-                              x <span class="op">=</span> <span class="fl">2</span>, y <span class="op">=</span> <span class="fl">0.5</span>, width <span class="op">=</span> <span class="fl">3</span>, height <span class="op">=</span> <span class="fl">2</span>, 
-                              just <span class="op">=</span> <span class="st">"top"</span>, default.units <span class="op">=</span> <span class="st">"inches"</span><span class="op">)</span>
-
-<span class="va">genesPlot</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/bb_plotGenes.html">bb_plotGenes</a></span><span class="op">(</span>params <span class="op">=</span> <span class="va">params</span>,
-                          strandcolors <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"grey"</span>, <span class="st">"grey"</span><span class="op">)</span>, fontcolors <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"black"</span>, <span class="st">"black"</span><span class="op">)</span>,
-                          x <span class="op">=</span> <span class="fl">0.5</span>, y <span class="op">=</span> <span class="fl">2.25</span>, width <span class="op">=</span> <span class="fl">3</span>, height <span class="op">=</span> <span class="fl">0.5</span>,
-                          just <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"left"</span>, <span class="st">"top"</span><span class="op">)</span>, default.units <span class="op">=</span> <span class="st">"inches"</span><span class="op">)</span></code></pre></div>
-<p><img src="our_philosophy_files/figure-html/philosophy_2-1.png" width="576" style="display: block; margin: auto;"></p>
-</div>
 <div id="coordinate-based-plot-placement" class="section level2">
 <h2 class="hasAnchor">
 <a href="#coordinate-based-plot-placement" class="anchor"></a>Coordinate-based plot placement</h2>
 <p>A coordinate-based plotting system provides users with exquisite control over plot sizes and arrangements through a user-defined page and common units of measurement. This system makes the <code>BentoBox</code> plotting process intuitive and absolute, meaning that plots cannot be squished and stretched based on their <em>relative</em> sizes and placements. Users can create a page in their preferred size and unit of measurement:</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/bb_pageCreate.html">bb_pageCreate</a></span><span class="op">(</span>width <span class="op">=</span> <span class="fl">3</span>, height <span class="op">=</span> <span class="fl">3</span>, default.units <span class="op">=</span> <span class="st">"inches"</span><span class="op">)</span></code></pre></div>
 <p><img src="our_philosophy_files/figure-html/philosophy_3-1.png" width="576" style="display: block; margin: auto;"></p>
 <p>and then make and precisely arrange plots within this defined landscape. If users want the top, left corner of their plot to be 0.5 inches down from the top of this page and 0.5 inches from the left:</p>
@@ -175,7 +112,7 @@
 <p>and users want their plot be 2 inches wide and 1 inch tall:</p>
 <p><img src="our_philosophy_files/figure-html/philosphy_5-1.png" width="576" style="display: block; margin: auto;"></p>
 <p><code>BentoBox</code> can make the plot with these exact parameters:</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co">## Create BentoBox page</span>
 <span class="fu"><a href="../reference/bb_pageCreate.html">bb_pageCreate</a></span><span class="op">(</span>width <span class="op">=</span> <span class="fl">3</span>, height <span class="op">=</span> <span class="fl">3</span>, default.units <span class="op">=</span> <span class="st">"inches"</span><span class="op">)</span>
 
@@ -194,9 +131,14 @@
 <h2 class="hasAnchor">
 <a href="#containerized-edge-to-edge-visualizations" class="anchor"></a>Containerized, edge-to-edge visualizations</h2>
 <p>With the stacked nature of genomic plots, it is critical that aligned plots correspond to the same genomic regions to ensure figure accuracy. By separating data plotting from plot annotations, data fills defined plot coordinates and dimensions from edge to edge and precisely preserves the mapping between the data and its user-defined container. For example, if a user creates a 2 inch-wide gene track and wants that plot to represent the genomic region chr8:1000000-2000000, this genomic region will exactly span the 2 inch width:</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/bb_pageCreate.html">bb_pageCreate</a></span><span class="op">(</span>width <span class="op">=</span> <span class="fl">3</span>, height <span class="op">=</span> <span class="fl">2</span>, default.units <span class="op">=</span> <span class="st">"inches"</span><span class="op">)</span>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">TxDb.Hsapiens.UCSC.hg19.knownGene</span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">org.Hs.eg.db</span><span class="op">)</span>
 
+<span class="co">## Create BentoBox page</span>
+<span class="fu"><a href="../reference/bb_pageCreate.html">bb_pageCreate</a></span><span class="op">(</span>width <span class="op">=</span> <span class="fl">3</span>, height <span class="op">=</span> <span class="fl">2</span>, default.units <span class="op">=</span> <span class="st">"inches"</span><span class="op">)</span>
+
+<span class="co">## Define genomic region with `bb_params`</span>
 <span class="va">genomicRegion</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/bb_params.html">bb_params</a></span><span class="op">(</span>chrom <span class="op">=</span> <span class="st">"chr8"</span>, chromstart <span class="op">=</span> <span class="fl">1000000</span>, chromend <span class="op">=</span> <span class="fl">2000000</span><span class="op">)</span>
 
 <span class="co">## Plot genes with background color highlighting size</span>
@@ -210,11 +152,12 @@
                    just <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"left"</span>, <span class="st">"top"</span><span class="op">)</span>, default.units <span class="op">=</span> <span class="st">"inches"</span><span class="op">)</span></code></pre></div>
 <p><img src="our_philosophy_files/figure-html/philosphy_7-1.png" width="576" style="display: block; margin: auto;"></p>
 <p>When it’s time to stack various data types along the same genomic region, users can be confident in accurately aligning containers of the same width:</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co">## Load data</span>
 <span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="st">"bb_hicData"</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="st">"bb_bedpeData"</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="st">"bb_signalData"</span><span class="op">)</span>
+
 <span class="co">## Define genomic region and widths of all plots</span>
 <span class="va">params</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/bb_params.html">bb_params</a></span><span class="op">(</span>chrom <span class="op">=</span> <span class="st">"chr21"</span>, chromstart <span class="op">=</span> <span class="fl">28000000</span>, chromend <span class="op">=</span> <span class="fl">30300000</span>, 
                     x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grid/unit.html">unit</a></span><span class="op">(</span><span class="fl">0.5</span>, <span class="st">"inches"</span><span class="op">)</span>, width <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grid/unit.html">unit</a></span><span class="op">(</span><span class="fl">2</span>, <span class="st">"inches"</span><span class="op">)</span><span class="op">)</span>
@@ -246,6 +189,83 @@
                    params <span class="op">=</span> <span class="va">params</span>, scale <span class="op">=</span> <span class="st">"Mb"</span>,
                    y <span class="op">=</span> <span class="fl">3.6</span>, just <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"left"</span>, <span class="st">"top"</span><span class="op">)</span>, default.units <span class="op">=</span> <span class="st">"inches"</span><span class="op">)</span></code></pre></div>
 <p><img src="our_philosophy_files/figure-html/philosphy_8-1.png" width="576" style="display: block; margin: auto;"></p>
+</div>
+<div id="programmatic-and-reproducible-multi-panel-figures" class="section level2">
+<h2 class="hasAnchor">
+<a href="#programmatic-and-reproducible-multi-panel-figures" class="anchor"></a>Programmatic and reproducible multi-panel figures</h2>
+<p>Data visualization is most rigorous and accurate when it is reproducible. Although many visualizations are initially designed with code, final customizations and arrangements of figures are typically made with third party graphic design software and cannot be easily replicated. <code>BentoBox</code> makes this entire process programmatic, from raw data input to finalized, complex visualization. This means that if users define the same data:</p>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">TxDb.Hsapiens.UCSC.hg19.knownGene</span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">org.Hs.eg.db</span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org">ggplot2</a></span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="va">mtcars</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="st">"bb_hicData"</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">bb_hicData</span><span class="op">)</span>
+<span class="co">#&gt;      chr21    chr21 counts</span>
+<span class="co">#&gt; 1 28000000 28000000     70</span>
+<span class="co">#&gt; 2 28000000 28010000     70</span>
+<span class="co">#&gt; 3 28010000 28010000     70</span>
+<span class="co">#&gt; 4 28000000 28020000     70</span>
+<span class="co">#&gt; 5 28010000 28020000     70</span>
+<span class="co">#&gt; 6 28020000 28020000     70</span></code></pre></div>
+<p>and the same <code>BentoBox</code> code:</p>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co">## Create a BentoBox page</span>
+<span class="fu"><a href="../reference/bb_pageCreate.html">bb_pageCreate</a></span><span class="op">(</span>width <span class="op">=</span> <span class="fl">7</span>, height <span class="op">=</span> <span class="fl">3.5</span>, default.units <span class="op">=</span> <span class="st">"inches"</span><span class="op">)</span>
+
+<span class="co">## Define genomic region with `bb_params`</span>
+<span class="va">params</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/bb_params.html">bb_params</a></span><span class="op">(</span>chrom <span class="op">=</span> <span class="st">"chr21"</span>, chromstart <span class="op">=</span> <span class="fl">28000000</span>, chromend <span class="op">=</span> <span class="fl">30300000</span><span class="op">)</span>
+
+<span class="co">## Plot Hi-C data</span>
+<span class="va">hicPlot</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/bb_plotHicTriangle.html">bb_plotHicTriangle</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">bb_hicData</span>,
+                              params <span class="op">=</span> <span class="va">params</span>,
+                              x <span class="op">=</span> <span class="fl">2</span>, y <span class="op">=</span> <span class="fl">0.5</span>, width <span class="op">=</span> <span class="fl">3</span>, height <span class="op">=</span> <span class="fl">2</span>, 
+                              just <span class="op">=</span> <span class="st">"top"</span>, default.units <span class="op">=</span> <span class="st">"inches"</span><span class="op">)</span>
+
+<span class="co">## Add color scale annotation</span>
+<span class="fu"><a href="../reference/bb_annoHeatmapLegend.html">bb_annoHeatmapLegend</a></span><span class="op">(</span>plot <span class="op">=</span> <span class="va">hicPlot</span>, 
+                     x <span class="op">=</span> <span class="fl">3</span>, y <span class="op">=</span> <span class="fl">0.5</span>, width <span class="op">=</span> <span class="fl">0.12</span>, height <span class="op">=</span> <span class="fl">0.6</span>, 
+                     just <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"left"</span>, <span class="st">"top"</span><span class="op">)</span>, default.units <span class="op">=</span> <span class="st">"inches"</span><span class="op">)</span>
+
+<span class="co">## Plot gene track in same genomic region</span>
+<span class="va">genesPlot</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/bb_plotGenes.html">bb_plotGenes</a></span><span class="op">(</span>params <span class="op">=</span> <span class="va">params</span>,
+                          x <span class="op">=</span> <span class="fl">0.5</span>, y <span class="op">=</span> <span class="fl">2.25</span>, width <span class="op">=</span> <span class="fl">3</span>, height <span class="op">=</span> <span class="fl">0.5</span>,
+                          just <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"left"</span>, <span class="st">"top"</span><span class="op">)</span>, default.units <span class="op">=</span> <span class="st">"inches"</span><span class="op">)</span>
+
+<span class="co">## Label genomic region</span>
+<span class="fu"><a href="../reference/bb_annoGenomeLabel.html">bb_annoGenomeLabel</a></span><span class="op">(</span>plot <span class="op">=</span> <span class="va">genesPlot</span>,
+                   x <span class="op">=</span> <span class="fl">0.5</span>, y <span class="op">=</span> <span class="fl">2.8</span>, just <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"left"</span>, <span class="st">"top"</span><span class="op">)</span>, default.units <span class="op">=</span> <span class="st">"inches"</span><span class="op">)</span>
+
+<span class="co">## Create and place mtcars boxplot</span>
+<span class="va">boxPlot</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">mtcars</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_boxplot.html">geom_boxplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">gear</span>, <span class="va">disp</span>, group <span class="op">=</span> <span class="va">gear</span><span class="op">)</span><span class="op">)</span>
+<span class="fu"><a href="../reference/bb_plotGG.html">bb_plotGG</a></span><span class="op">(</span>plot <span class="op">=</span> <span class="va">boxPlot</span>,
+          x <span class="op">=</span> <span class="fl">4</span>, y <span class="op">=</span> <span class="fl">0.5</span>, width <span class="op">=</span> <span class="fl">2.5</span>, height <span class="op">=</span> <span class="fl">2</span>,
+          just <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"left"</span>, <span class="st">"top"</span><span class="op">)</span>, default.units <span class="op">=</span> <span class="st">"inches"</span><span class="op">)</span>
+
+<span class="co">## Label panels</span>
+<span class="fu"><a href="../reference/bb_plotText.html">bb_plotText</a></span><span class="op">(</span>label <span class="op">=</span> <span class="st">"A"</span>, fontsize <span class="op">=</span> <span class="fl">16</span>, fontface <span class="op">=</span> <span class="st">"bold"</span>,
+            x <span class="op">=</span> <span class="fl">0.75</span>, y <span class="op">=</span> <span class="fl">0.5</span>, just <span class="op">=</span> <span class="st">"center"</span>, default.units <span class="op">=</span> <span class="st">"inches"</span><span class="op">)</span>
+<span class="fu"><a href="../reference/bb_plotText.html">bb_plotText</a></span><span class="op">(</span>label <span class="op">=</span> <span class="st">"B"</span>, fontsize <span class="op">=</span> <span class="fl">16</span>, fontface <span class="op">=</span> <span class="st">"bold"</span>,
+            x <span class="op">=</span> <span class="fl">3.75</span>, y <span class="op">=</span> <span class="fl">0.5</span>, just <span class="op">=</span> <span class="st">"center"</span>, default.units <span class="op">=</span> <span class="st">"inches"</span><span class="op">)</span>
+
+<span class="co">## Hide page guides</span>
+<span class="fu"><a href="../reference/bb_pageGuideHide.html">bb_pageGuideHide</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<p>they will generate the <strong>exact same</strong> multi-panel visualization:</p>
+<p><img src="our_philosophy_files/figure-html/philosophy_1-1.png" width="768" style="display: block; margin: auto;"></p>
+<p>Not only does this make visualizations entirely reproducible with code, but it also makes it easy to change data ranges and aesthetics with simple pieces of code:</p>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co">## Change colors while maintaining plot layout</span>
+<span class="va">hicPlot</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/bb_plotHicTriangle.html">bb_plotHicTriangle</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">bb_hicData</span>,
+                              params <span class="op">=</span> <span class="va">params</span>,
+                              palette <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grDevices/colorRamp.html">colorRampPalette</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"white"</span>, <span class="st">"steel blue"</span><span class="op">)</span><span class="op">)</span>,
+                              x <span class="op">=</span> <span class="fl">2</span>, y <span class="op">=</span> <span class="fl">0.5</span>, width <span class="op">=</span> <span class="fl">3</span>, height <span class="op">=</span> <span class="fl">2</span>, 
+                              just <span class="op">=</span> <span class="st">"top"</span>, default.units <span class="op">=</span> <span class="st">"inches"</span><span class="op">)</span>
+
+<span class="va">genesPlot</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/bb_plotGenes.html">bb_plotGenes</a></span><span class="op">(</span>params <span class="op">=</span> <span class="va">params</span>,
+                          strandcolors <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"grey"</span>, <span class="st">"grey"</span><span class="op">)</span>, fontcolors <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"black"</span>, <span class="st">"black"</span><span class="op">)</span>,
+                          x <span class="op">=</span> <span class="fl">0.5</span>, y <span class="op">=</span> <span class="fl">2.25</span>, width <span class="op">=</span> <span class="fl">3</span>, height <span class="op">=</span> <span class="fl">0.5</span>,
+                          just <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"left"</span>, <span class="st">"top"</span><span class="op">)</span>, default.units <span class="op">=</span> <span class="st">"inches"</span><span class="op">)</span></code></pre></div>
+<p><img src="our_philosophy_files/figure-html/philosophy_2-1.png" width="768" style="display: block; margin: auto;"></p>
 </div>
 <div id="utilizing-grid-graphics-viewports" class="section level2">
 <h2 class="hasAnchor">

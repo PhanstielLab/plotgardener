@@ -8,7 +8,7 @@
 #' @param showOutline A logical value indicating whether to draw a black border around the entire page. Default value is \code{showOutline = TRUE}.
 #' @param showRuler A logical value indicating whether to show guiding rulers along the top and left side of page. Default value is \code{showRuler = TRUE}.
 #' @param showUnit A logical value indicating whether to show the name of units at the top left of the page. Default value is \code{showUnit = TRUE}.
-#' @param params An optional \link[BentoBox]{bb_assembly} object containing relevant function parameters.
+#' @param params An optional \link[BentoBox]{bb_params} object containing relevant function parameters.
 #'
 #' @examples
 #' ## Create a 5-inch wide, 4-inch high BentoBox page

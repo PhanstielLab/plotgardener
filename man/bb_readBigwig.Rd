@@ -29,7 +29,7 @@ bb_readBigwig(
 \item{\code{"*"}: }{Plus and minus strands.}
 }}
 
-\item{params}{An optional \link[BentoBox]{bb_assembly} object containing relevant function parameters.}
+\item{params}{An optional \link[BentoBox]{bb_params} object containing relevant function parameters.}
 }
 \value{
 Returns a 6-column dataframe of bigwig information.

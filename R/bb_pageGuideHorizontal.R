@@ -3,7 +3,7 @@
 #' @param y A numeric or unit object specifying y-coordinate of guide.
 #' @param default.units A string indicating the default units to use if \code{y} is only given as a numeric. Default value is \code{default.units = "inches"}.
 #' @param linecolor Character value indicating color of guideline. Default value is \code{linecolor = "grey55"}.
-#' @param params An optional \link[BentoBox]{bb_assembly} object containing relevant function parameters.
+#' @param params An optional \link[BentoBox]{bb_params} object containing relevant function parameters.
 #' @param ... Additional grid graphical parameters. See \link[grid]{gpar}.
 #'
 #' @examples

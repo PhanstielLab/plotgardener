@@ -34,7 +34,7 @@ Possible string values are: \code{"left"}, \code{"right"}, \code{"centre"}, \cod
 
 \item{bg}{Character value indicating background color. Default value is \code{bg = NA}.}
 
-\item{params}{An optional \link[BentoBox]{bb_assembly} object containing relevant function parameters.}
+\item{params}{An optional \link[BentoBox]{bb_params} object containing relevant function parameters.}
 }
 \value{
 Returns a \code{bb_base} object containing relevant placement and \link[grid]{grob} information.

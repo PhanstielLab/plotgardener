@@ -21,7 +21,7 @@
 #' \item{\code{"observed"}: }{Observed counts.}
 #' \item{\code{"oe"}: }{Observed/expected counts.}
 #' }
-#' @param params An optional \link[BentoBox]{bb_assembly} object containing relevant function parameters.
+#' @param params An optional \link[BentoBox]{bb_params} object containing relevant function parameters.
 #'
 #' @return Returns a 3-column dataframe in sparse upper triangular format with the following columns: \code{chrom}, \code{altchrom}, \code{counts}.
 #'
