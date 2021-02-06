@@ -24,13 +24,13 @@ library(BentoBox)
 
 A coordinate-based plotting system provides users with exquisite control over plot sizes and arrangements through a user-defined page and common units of measurement. This system makes the `BentoBox` plotting process intuitive and absolute, meaning that plots cannot be squished and stretched based on their *relative* sizes and placements. Users can create a page in their preferred size and unit of measurement:
 
-```{r philosophy_3, eval=TRUE}
+```{r philosophy_1, eval=TRUE}
 bb_pageCreate(width = 3, height = 3, default.units = "inches")
 ```
 
 and then make and precisely arrange plots within this defined landscape. If users want the top, left corner of their plot to be 0.5 inches down from the top of this page and 0.5 inches from the left:
 
-```{r philosphy_4, echo=FALSE, eval=TRUE, message=FALSE}
+```{r philosphy_2, echo=FALSE, eval=TRUE, message=FALSE}
 bb_pageCreate(width = 3, height = 3, default.units = "inches")
 bb_plotSegments(x0 = 0.5, y0 = 0, x1 = 0.5, y1 = 0.5, arrow = arrow(angle=30,length=unit(0.1, "inches"),ends="last",type="closed"), fill = "black")
 bb_plotSegments(x0 = 0, y0 = 0.5, x1 = 0.5, y1 = 0.5, arrow = arrow(angle=30,length=unit(0.1, "inches"),ends="last",type="closed"), fill = "black")
@@ -41,7 +41,7 @@ bb_plotText(label = "0.5 in", x = 0.25, y = 0.6, just = "top")
 
 and users want their plot be 2 inches wide and 1 inch tall:
 
-```{r philosphy_5, echo=FALSE, eval=TRUE, message=FALSE}
+```{r philosphy_3, echo=FALSE, eval=TRUE, message=FALSE}
 bb_pageCreate(width = 3, height = 3, default.units = "inches")
 bb_plotSegments(x0 = 0.5, y0 = 0, x1 = 0.5, y1 = 0.5, arrow = arrow(angle=30,length=unit(0.1, "inches"),ends="last",type="closed"), fill = "black")
 bb_plotSegments(x0 = 0, y0 = 0.5, x1 = 0.5, y1 = 0.5, arrow = arrow(angle=30,length=unit(0.1, "inches"),ends="last",type="closed"), fill = "black")
@@ -54,7 +54,7 @@ bb_plotText(label = "1 in", x = 0.4, y = 1, just = "right")
 
 `BentoBox` can make the plot with these exact parameters:
 
-```{r philosophy_6, echo=TRUE, eval=TRUE, message=FALSE}
+```{r philosophy_4, echo=TRUE, eval=TRUE, message=FALSE}
 ## Create BentoBox page
 bb_pageCreate(width = 3, height = 3, default.units = "inches")
 
@@ -74,7 +74,7 @@ This exact plot sizing and placement is particularly important and useful for st
 
 With the stacked nature of genomic plots, it is critical that aligned plots correspond to the same genomic regions to ensure figure accuracy. By separating data plotting from plot annotations, data fills defined plot coordinates and dimensions from edge to edge and precisely preserves the mapping between the data and its user-defined container. For example, if a user creates a 2 inch-wide gene track and wants that plot to represent the genomic region chr8:1000000-2000000, this genomic region will exactly span the 2 inch width:
 
-```{r philosphy_7, echo=TRUE, eval=TRUE, message=FALSE, warning=FALSE}
+```{r philosphy_5, echo=TRUE, eval=TRUE, message=FALSE, warning=FALSE}
 library(TxDb.Hsapiens.UCSC.hg19.knownGene)
 library(org.Hs.eg.db)
 
@@ -97,7 +97,7 @@ bb_annoGenomeLabel(plot = genesPlot, scale = "Mb",
 
 When it's time to stack various data types along the same genomic region, users can be confident in accurately aligning containers of the same width:
 
-```{r philosphy_8, echo=TRUE, eval=TRUE, message=FALSE, warning=FALSE}
+```{r philosphy_6, echo=TRUE, eval=TRUE, message=FALSE, warning=FALSE}
 ## Load data
 data("bb_hicData")
 data("bb_bedpeData")
@@ -196,7 +196,7 @@ bb_pageGuideHide()
 
 they will generate the **exact same** multi-panel visualization:
 
-```{r philosophy_1, eval=TRUE, message=FALSE, echo=FALSE, fig.width=8}
+```{r philosophy_7, eval=TRUE, message=FALSE, echo=FALSE, fig.width=8}
 ## Create a BentoBox page
 bb_pageCreate(width = 7, height = 3.5, default.units = "inches",
               xgrid = 0, ygrid = 0, showOutline = FALSE,
@@ -255,7 +255,7 @@ genesPlot <- bb_plotGenes(params = params,
                           just = c("left", "top"), default.units = "inches")
 ```
 
-```{r philosophy_2, eval=TRUE, message=FALSE, echo=FALSE, fig.width=8}
+```{r philosophy_8, eval=TRUE, message=FALSE, echo=FALSE, fig.width=8}
 ## Create a BentoBox page
 bb_pageCreate(width = 7, height = 3.5, default.units = "inches",
               xgrid = 0, ygrid = 0, showOutline = FALSE,
