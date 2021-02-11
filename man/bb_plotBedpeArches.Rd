@@ -19,7 +19,7 @@ bb_plotBedpeArches(
   linecolor = "grey",
   alpha = 0.4,
   bg = NA,
-  clip = TRUE,
+  clip = FALSE,
   baseline = FALSE,
   x = NULL,
   y = NULL,
@@ -69,7 +69,7 @@ bb_plotBedpeArches(
 
 \item{bg}{Character value indicating background color. Default value is \code{bg = NA}.}
 
-\item{clip}{A logical value indicating whether to clip any arches that get cutoff in the given genomic region. Default value is \code{clip = TRUE}.}
+\item{clip}{A logical value indicating whether to clip any arches that get cutoff in the given genomic region. Default value is \code{clip = FALSE}.}
 
 \item{baseline}{Logical value indicating whether to include a baseline along the x-axis. Default value is \code{baseline = FALSE}.}
 

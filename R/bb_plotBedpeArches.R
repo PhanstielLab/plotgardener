@@ -22,7 +22,7 @@
 #' @param linecolor A character value specifying the color of the lines outlining arches. Default value is \code{linecolor = "grey"}.
 #' @param alpha Numeric value specifying transparency. Default value is \code{alpha = 0.4}.
 #' @param bg Character value indicating background color. Default value is \code{bg = NA}.
-#' @param clip A logical value indicating whether to clip any arches that get cutoff in the given genomic region. Default value is \code{clip = TRUE}.
+#' @param clip A logical value indicating whether to clip any arches that get cutoff in the given genomic region. Default value is \code{clip = FALSE}.
 #' @param baseline Logical value indicating whether to include a baseline along the x-axis. Default value is \code{baseline = FALSE}.
 #' @param x A numeric or unit object specifying BEDPE arches plot x-location.
 #' @param y A numeric or unit object specifying BEDPE arches plot y-location.
@@ -76,7 +76,7 @@
 #'
 #' @export
 bb_plotBedpeArches <- function(data, chrom, chromstart = NULL, chromend = NULL, assembly = "hg19", style = "2D", position = "top", curvature = 5, archHeight = NULL,
-                               fill = "grey", colorby = NULL, linecolor = "grey", alpha = 0.4, bg = NA, clip = TRUE, baseline = FALSE, x = NULL,
+                               fill = "grey", colorby = NULL, linecolor = "grey", alpha = 0.4, bg = NA, clip = FALSE, baseline = FALSE, x = NULL,
                                y = NULL, width = NULL, height = NULL, just = c("left", "top"), default.units = "inches", draw = TRUE, params = NULL, ...){
 
   # ======================================================================================================================================================================================
@@ -244,7 +244,7 @@ bb_plotBedpeArches <- function(data, chrom, chromstart = NULL, chromend = NULL, 
   bb_archInternal <- parseParams(bb_params = params, object_params = bb_archInternal)
 
   ## For any defaults that are still NULL, set back to default
-  if(is.null(bb_archInternal$clip)) bb_archInternal$clip <- TRUE
+  if(is.null(bb_archInternal$clip)) bb_archInternal$clip <- FALSE
   if(is.null(bb_archInternal$style)) bb_archInternal$style <- "2D"
   if(is.null(bb_archInternal$curvature)) bb_archInternal$curvature <- 5
   if(is.null(bb_archInternal$position)) bb_archInternal$position <- "top"

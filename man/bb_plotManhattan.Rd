@@ -6,17 +6,18 @@
 \usage{
 bb_plotManhattan(
   data,
-  pVals,
   sigVal = 5e-08,
   chrom = NULL,
   chromstart = NULL,
   chromend = NULL,
   assembly = "hg19",
-  sigLine = FALSE,
-  sigCol = NULL,
   fill = "black",
   pch = 19,
   cex = 0.25,
+  leadSNP = NULL,
+  scaleLD = NULL,
+  sigLine = FALSE,
+  sigCol = NULL,
   ymax = 1,
   range = NULL,
   space = 0.01,
@@ -34,11 +35,18 @@ bb_plotManhattan(
 )
 }
 \arguments{
-\item{data}{Data to be plotted; as a character value specifying a BED file path, a dataframe in BED format, or a \link[GenomicRanges]{GRanges} object.}
+\item{data}{Data to be plotted, as a character value specifying a file path of GWAS data, a dataframe, or a \link[GenomicRanges]{GRanges} object. Each of these data types must have the following columns:
+\itemize{
+\item{\code{"chr"}: }{Chromosome names. This column must be a character.}
+\item{\code{"pos"}: }{Chromosomal position. This column must be an integer or numeric.}
+\item{\code{"p"}: }{p-value. This column must be numeric. p-values will be converted to -log(10) space.}
+\item{\code{"snp"}(optional): }{SNP name or rsid. This column should be a character.}
+}}
 
-\item{pVals}{Character value specifying the name of the \code{data} column of corresponding p-values (will be converted to -log(10) space).}
+\item{sigVal}{A numeric specifying the significance level of p-values. Along with data p-values, this value will be converted to -log1=(10) space.
+Default value is \code{sigVal = 5e-08}.}
 
-\item{chrom}{Chromosome of region to be plotted, as a string.}
+\item{chrom}{Chromosome of region to be plotted, as a string. If left \code{NULL}, all chromosomes found in data will be plotted.}
 
 \item{chromstart}{Integer start position on chromosome to be plotted.}
 
@@ -46,15 +54,26 @@ bb_plotManhattan(
 
 \item{assembly}{Default genome assembly as a string or a \link[BentoBox]{bb_assembly} object. Default value is \code{assembly = "hg19"}.}
 
+\item{fill}{Character value(s) as a single value, vector, or palette specifying fill colors of data points.
+If \code{scaleLD} is supplied, colors will be mapped to \code{scaleLD} values. If \code{scaleLD} is not supplied, color vectors and palettes will
+only be mapped to different chromosomes of a multi-chromosomal plot. Default value is \code{fill = "black"}.}
+
+\item{pch}{A numeric value or numeric vector specifying point symbols.
+If \code{scaleLD} is supplied, point symbols will be mapped to \code{scaleLD} values. Default value is \code{pch = 19}.}
+
+\item{cex}{A numeric indicating the amount by which points should be scaled relative to the default. Default value is \code{cex = 0.25}.}
+
+\item{leadSNP}{A list specifying the lead SNP in the desired region and any associated aesthetic features of the lead SNP data point and text label.
+The lead SNP should be specified as a character with the name slot \code{"snp"} in the list. Accepted lead SNP aesthetic features in the list include
+\code{fill}, \code{pch}, \code{cex}, \code{fontcolor}, and \code{fontsize}.}
+
+\item{scaleLD}{A character value specifying the \code{data} column name of linkage disequilibrium (LD) scores to apply \code{fill} and/or
+\code{pch} vectors or functions to. LD scores will be grouped into the following ranges: 0-0.2, 0.2-0.4, 0.4-0.6, 0.6-0.8, 0.8-1.}
+
 \item{sigLine}{Logical value indicating whether to draw a line at the significance level indicated with \code{sigVal}. Default value is \code{sigLine = FALSE}.}
 
-\item{sigCol}{Single character value specifying the color of significant data points.}
-
-\item{fill}{Character value(s) as a single value, vector, or palette specifying fill colors of data points. Default value is \code{fill = "black"}.}
-
-\item{pch}{A numeric specifying point symbols. Default value is \code{pch = 19}.}
-
-\item{cex}{A numeric indiciating the amount by which points should be scaled relative to the default. Default value is \code{cex = 0.25}.}
+\item{sigCol}{Single character value specifying the color of significant data points. If \code{scaleLD} is supplied,
+\code{sigCol} will be ignored.}
 
 \item{ymax}{A numeric specifying the fraction of the max y-value to set as the height of the plot. Default value is \code{ymax = 1}.}
 
@@ -94,13 +113,13 @@ Plot a Manhattan plot
 \details{
 This function can be used to quickly plot a Manhattan plot by ignoring plot placement parameters:
 \preformatted{
-bb_plotManhattan(data, pVals,
+bb_plotManhattan(data,
                  chrom = NULL,
                  chromstart = NULL, chromend = NULL)
 }
 A Manhattan plot can be placed on a BentoBox coordinate page by providing plot placement parameters:
 \preformatted{
-bb_plotManhattan(data, pVals,
+bb_plotManhattan(data,
                  chrom = NULL,
                  chromstart = NULL, chromend = NULL,
                  x, y, width, height, just = c("left", "top"),
@@ -108,29 +127,5 @@ bb_plotManhattan(data, pVals,
 }
 }
 \examples{
-## Load GWAS data
-data("bb_gwasData")
-
-## Plot Manhattan plot filling up entire graphic device
-bb_plotManhattan(data = bb_gwasData, pVals = "pVal", chrom = "chr21",
-                 chromstart = 28000000, chromend = 30300000, ymax = 1.1, cex = 0.20)
-
-## Plot and place Manhattan plot on a BentoBox page
-bb_pageCreate(width = 5, height = 2, default.units = "inches")
-manhattanPlot <- bb_plotManhattan(data = bb_gwasData, pVals = "pVal", chrom = "chr21",
-                                  chromstart = 28000000, chromend = 30300000,
-                                  ymax = 1.1, cex = 0.20,
-                                  x = 0.5, y = 1.75, width = 4, height = 1.5,
-                                  just = c("left", "bottom"), default.units = "inches")
-
-## Annotate genome label
-bb_annoGenomeLabel(plot = manhattanPlot, x = 0.5, y = 1.8)
-
-## Annotate y-axis
-bb_annoYaxis(plot = manhattanPlot, at = c(2, 4, 6), gp = gpar(fontsize = 10))
-bb_plotText(label = "-log10(pVal)", fontsize = 8, rot = 90, x = 0.1, y = 0.75)
-
-## Hide page guides
-bb_pageGuideHide()
 
 }

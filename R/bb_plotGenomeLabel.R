@@ -113,15 +113,28 @@ bb_plotGenomeLabel <- function(chrom, chromstart = NULL, chromend = NULL, assemb
   ## Define a function that adds commas to chromstart/chromend labels
   comma_labels <- function(object, commas, format, fact){
 
+    roundedStart <- round(object$chromstart/fact, 1)
+    if ((roundedStart*fact) != object$chromstart){
+      roundedStart <- paste0("~", roundedStart)
+      warning("Start label is rounded.", call. = FALSE)
+    }
+
+    roundedEnd <- round(object$chromend/fact, 1)
+    if ((roundedEnd*fact) != object$chromend){
+      roundedEnd <- paste0("~", roundedEnd)
+      warning("End label is rounded.", call. = FALSE)
+    }
+
+
     if (commas == TRUE){
 
-      chromstartlabel <- formatC(round(object$chromstart/fact, 1), format = format, big.mark = ",")
-      chromendlabel <- formatC(round(object$chromend/fact, 1), format = format, big.mark = ",")
+      chromstartlabel <- formatC(roundedStart, format = format, big.mark = ",")
+      chromendlabel <- formatC(roundedEnd, format = format, big.mark = ",")
 
     } else {
 
-      chromstartlabel <- round(object$chromstart/fact, 1)
-      chromendlabel <- round(object$chromend/fact, 1)
+      chromstartlabel <- roundedStart
+      chromendlabel <- roundedEnd
 
     }
 
@@ -179,12 +192,12 @@ bb_plotGenomeLabel <- function(chrom, chromstart = NULL, chromend = NULL, assemb
 
           ## Make x-axis equivalent viewport and rotate into dimensions of given y-axis viewport
           vp <- viewport(width = convertedPageCoords$length, height = convertedPageCoords$depth,
-                         x = bottomRightViewport[[1]], y = bottomRightViewport[[2]] + convertedPageCoords$length,
+                         x = bottomRightViewport[[1]] - convertedPageCoords$depth, y = bottomRightViewport[[2]],
                          just = c("left", "top"),
                          name = vp_name,
                          xscale = c(object$chromstart, object$chromend),
                          yscale = c(0, depth),
-                         angle = -90)
+                         angle = 90)
 
         } else {
           vp <- viewport(width = convertedPageCoords$width, height = convertedPageCoords$height,
@@ -227,12 +240,12 @@ bb_plotGenomeLabel <- function(chrom, chromstart = NULL, chromend = NULL, assemb
         bottomRightViewport <- vp_bottomRight(viewport = convertedViewport)
         ## Make x-axis equivalent viewport and rotate into dimensions of given y-axis viewport
         vp <- viewport(width = convertedPageCoords$length, height = convertedPageCoords$depth,
-                       x = bottomRightViewport[[1]], y = bottomRightViewport[[2]] + convertedPageCoords$length,
+                       x = bottomRightViewport[[1]] - convertedPageCoords$depth, y = bottomRightViewport[[2]],
                        just = c("left", "top"),
                        name = vp_name,
                        xscale = c(object$chromstart, object$chromend),
                        yscale = c(0, depth),
-                       angle = -90)
+                       angle = 90)
 
       } else {
         vp <- viewport(width = convertedPageCoords$width, height = convertedPageCoords$height,
@@ -250,7 +263,7 @@ bb_plotGenomeLabel <- function(chrom, chromstart = NULL, chromend = NULL, assemb
   }
 
   ## Define a function that makes tick, line, and text grobs for chrom/chromstart/chromend labels
-  chrom_grobs <- function(tgH, ticks, tickHeight, seqType, scale, chromLabel, startLabel, endLabel, height, object, vp){
+  chrom_grobs <- function(tgH, ticks, tickHeight, seqType, scale, chromLabel, startLabel, endLabel, height, object, vp, yaxis){
 
     if (!is.null(seqType)){
       assign("genomeLabel_grobs", gTree(), envir = bbEnv)
@@ -260,54 +273,116 @@ bb_plotGenomeLabel <- function(chrom, chromstart = NULL, chromend = NULL, assemb
         tgH <- convertHeight(tgH, unitTo = get("page_units", envir = bbEnv), valueOnly = T)
         tick_height <- convertHeight(tickHeight, unitTo = get("page_units", envir = bbEnv), valueOnly = T)
         x_coords <- ticks
-        y0_coord <- tgH + tick_height + 0.5*tgH
-        y1_coords <- rep(tgH + 0.5*tgH, length(ticks))
 
-        tickGrobs <- segmentsGrob(x0 = x_coords, y0 = rep(y0_coord, length(ticks)),
-                                  x1 = x_coords, y1 = y1_coords,
-                                  vp = chrom_vp,
-                                  gp = object$gp, default.units = "native")
-        line <- segmentsGrob(x0 = unit(0, "npc"), x1 = unit(1, "npc"),
-                             y0 = y0_coord, y1 = y0_coord,
-                             vp = chrom_vp,
-                             gp = object$gp, default.units = "native")
-        object$gp$col <- object$gp$fontcolor
-        startLab <- textGrob(label = paste(startLabel, scale), x = unit(0, "npc"), y =  unit(tgH + 0.25*tgH, "native"),
-                             just = c("left", "top"),
+        if (yaxis == TRUE){
+
+          y0_coord <- 0
+          y1_coords <- rep(tick_height, length(ticks))
+          yLabel <- unit(height - (tgH + 0.25*tgH), "native")
+
+          tickGrobs <- segmentsGrob(x0 = x_coords, y0 = rep(y0_coord, length(ticks)),
+                                    x1 = x_coords, y1 = y1_coords,
+                                    vp = chrom_vp,
+                                    gp = object$gp, default.units = "native")
+          line <- segmentsGrob(x0 = unit(0, "npc"), x1 = unit(1, "npc"),
+                               y0 = y0_coord, y1 = y0_coord,
+                               vp = chrom_vp,
+                               gp = object$gp, default.units = "native")
+          object$gp$col <- object$gp$fontcolor
+          startLab <- textGrob(label = paste(startLabel, scale), x = unit(0, "npc"), y = yLabel,
+                               just = c("left", "bottom"),
+                               vp = chrom_vp,
+                               gp = object$gp)
+          endLab <- textGrob(label = paste(endLabel, scale), x = unit(1, "npc"), y = yLabel,
+                             just = c("right", "bottom"),
                              vp = chrom_vp,
                              gp = object$gp)
-        endLab <- textGrob(label = paste(endLabel, scale), x = unit(1, "npc"), y = unit(tgH + 0.25*tgH, "native"),
-                           just = c("right", "top"),
-                           vp = chrom_vp,
-                           gp = object$gp)
-        object$gp$fontface <- "bold"
-        chromLab <- textGrob(label = chromLabel, x = unit(0.5, "npc"), y = unit(tgH + 0.25*tgH, "native"),
+          object$gp$fontface <- "bold"
+          chromLab <- textGrob(label = chromLabel, x = unit(0.5, "npc"), y = yLabel,
+                               vp = chrom_vp,
+                               gp = object$gp, just = c("center", "bottom"))
+
+
+        } else {
+          y0_coord <- tgH + tick_height + 0.5*tgH
+          y1_coords <- rep(tgH + 0.5*tgH, length(ticks))
+          yLabel <- unit(tgH + 0.25*tgH, "native")
+
+          tickGrobs <- segmentsGrob(x0 = x_coords, y0 = rep(y0_coord, length(ticks)),
+                                    x1 = x_coords, y1 = y1_coords,
+                                    vp = chrom_vp,
+                                    gp = object$gp, default.units = "native")
+          line <- segmentsGrob(x0 = unit(0, "npc"), x1 = unit(1, "npc"),
+                               y0 = y0_coord, y1 = y0_coord,
+                               vp = chrom_vp,
+                               gp = object$gp, default.units = "native")
+          object$gp$col <- object$gp$fontcolor
+          startLab <- textGrob(label = paste(startLabel, scale), x = unit(0, "npc"), y = yLabel,
+                               just = c("left", "top"),
+                               vp = chrom_vp,
+                               gp = object$gp)
+          endLab <- textGrob(label = paste(endLabel, scale), x = unit(1, "npc"), y = yLabel,
+                             just = c("right", "top"),
                              vp = chrom_vp,
-                             gp = object$gp, just = c("center", "top"))
+                             gp = object$gp)
+          object$gp$fontface <- "bold"
+          chromLab <- textGrob(label = chromLabel, x = unit(0.5, "npc"), y = yLabel,
+                               vp = chrom_vp,
+                               gp = object$gp, just = c("center", "top"))
+
+        }
+
+
         assign("genomeLabel_grobs", setChildren(get("genomeLabel_grobs", envir = bbEnv), children =  gList(line, chromLab, startLab, endLab, tickGrobs)), envir = bbEnv)
 
 
 
       } else {
 
-        line <- segmentsGrob(x0 = unit(0, "npc"), x1 = unit(1, "npc"),
-                             y0 = height, y1 = height,
+        if (yaxis == TRUE){
+          line <- segmentsGrob(x0 = unit(0, "npc"), x1 = unit(1, "npc"),
+                               y0 = unit(0, "npc"), y1 = unit(0, "npc"),
+                               vp = chrom_vp,
+                               gp = object$gp)
+          object$gp$col <- object$gp$fontcolor
+          startLab <- textGrob(label = paste(startLabel, scale, sep = " "), x = unit(0, "npc"), y = unit(0.15, "npc"),
+                               vp = chrom_vp,
+                               just = c("left", "bottom"),
+                               gp = object$gp)
+          endLab <- textGrob(label = paste(endLabel, scale, sep = " "), x = unit(1, "npc"), y = unit(0.15, "npc"),
                              vp = chrom_vp,
-                             gp = object$gp, default.units = "native")
-        object$gp$col <- object$gp$fontcolor
-        startLab <- textGrob(label = paste(startLabel, scale, sep = " "), x = unit(0, "npc"), y = unit(0.85, "npc"),
-                             vp = chrom_vp,
-                             just = c("left", "top"),
+                             just = c("right", "bottom"),
                              gp = object$gp)
-        endLab <- textGrob(label = paste(endLabel, scale, sep = " "), x = unit(1, "npc"), y = unit(0.85, "npc"),
-                           vp = chrom_vp,
-                           just = c("right", "top"),
-                           gp = object$gp)
-        object$gp$fontface <- "bold"
-        chromLab <- textGrob(label = chromLabel, x = unit(0.5, "npc"), y = unit(0, "npc"),
+          object$gp$fontface <- "bold"
+          chromLab <- textGrob(label = chromLabel, x = unit(0.5, "npc"), y = unit(0, "npc"),
+                               vp = chrom_vp,
+                               gp = object$gp,
+                               just = c("center", "bottom"))
+
+
+        } else {
+
+          line <- segmentsGrob(x0 = unit(0, "npc"), x1 = unit(1, "npc"),
+                               y0 = height, y1 = height,
+                               vp = chrom_vp,
+                               gp = object$gp, default.units = "native")
+          object$gp$col <- object$gp$fontcolor
+          startLab <- textGrob(label = paste(startLabel, scale, sep = " "), x = unit(0, "npc"), y = unit(0.85, "npc"),
+                               vp = chrom_vp,
+                               just = c("left", "top"),
+                               gp = object$gp)
+          endLab <- textGrob(label = paste(endLabel, scale, sep = " "), x = unit(1, "npc"), y = unit(0.85, "npc"),
                              vp = chrom_vp,
-                             gp = object$gp,
-                             just = c("center", "bottom"))
+                             just = c("right", "top"),
+                             gp = object$gp)
+          object$gp$fontface <- "bold"
+          chromLab <- textGrob(label = chromLabel, x = unit(0.5, "npc"), y = unit(0, "npc"),
+                               vp = chrom_vp,
+                               gp = object$gp,
+                               just = c("center", "bottom"))
+        }
+
+
 
         assign("genomeLabel_grobs", setChildren(get("genomeLabel_grobs", envir = bbEnv), children = gList(line, chromLab, startLab, endLab)), envir = bbEnv)
 
@@ -321,43 +396,92 @@ bb_plotGenomeLabel <- function(chrom, chromstart = NULL, chromend = NULL, assemb
         tgH <- convertHeight(tgH, unitTo = get("page_units", envir = bbEnv), valueOnly = T)
         tick_height <- convertHeight(tickHeight, unitTo = get("page_units", envir = bbEnv), valueOnly = T)
         x_coords <- ticks
-        y0_coord <- tgH + tick_height + 0.5*tgH
-        y1_coords <- rep(tgH + 0.5*tgH, length(ticks))
 
-        tickGrobs <- segmentsGrob(x0 = x_coords, y0 = rep(y0_coord, length(ticks)),
-                                  x1 = x_coords, y1 = y1_coords,
-                                  gp = object$gp, default.units = "native")
-        line <- segmentsGrob(x0 = unit(0, "npc"), x1 = unit(1, "npc"),
-                             y0 = y0_coord, y1 = y0_coord,
-                             gp = object$gp, default.units = "native")
-        object$gp$col <- object$gp$fontcolor
-        startLab <- textGrob(label = paste(startLabel, scale), x = unit(0, "npc"), y =  unit(tgH + 0.25*tgH, "native"),
-                             just = c("left", "top"),
+        if(yaxis == TRUE){
+          y0_coord <- 0
+          y1_coords <- rep(tick_height, length(ticks))
+          yLabel <- unit(height - (tgH + 0.25*tgH), "native")
+
+          tickGrobs <- segmentsGrob(x0 = x_coords, y0 = rep(y0_coord, length(ticks)),
+                                    x1 = x_coords, y1 = y1_coords,
+                                    gp = object$gp, default.units = "native")
+          line <- segmentsGrob(x0 = unit(0, "npc"), x1 = unit(1, "npc"),
+                               y0 = y0_coord, y1 = y0_coord,
+                               gp = object$gp, default.units = "native")
+          object$gp$col <- object$gp$fontcolor
+          startLab <- textGrob(label = paste(startLabel, scale), x = unit(0, "npc"), y = yLabel,
+                               just = c("left", "bottom"),
+                               gp = object$gp)
+          endLab <- textGrob(label = paste(endLabel, scale), x = unit(1, "npc"), y = yLabel,
+                             just = c("right", "bottom"),
                              gp = object$gp)
-        endLab <- textGrob(label = paste(endLabel, scale), x = unit(1, "npc"), y = unit(tgH + 0.25*tgH, "native"),
-                           just = c("right", "top"),
-                           gp = object$gp)
-        object$gp$fontface <- "bold"
-        chromLab <- textGrob(label = chromLabel, x = unit(0.5, "npc"), y = unit(tgH + 0.25*tgH, "native"),
-                             gp = object$gp$fontface, just = c("center", "top"))
+          object$gp$fontface <- "bold"
+          chromLab <- textGrob(label = chromLabel, x = unit(0.5, "npc"), y = yLabel,
+                               gp = object$gp, just = c("center", "bottom"))
+
+        } else {
+          y0_coord <- tgH + tick_height + 0.5*tgH
+          y1_coords <- rep(tgH + 0.5*tgH, length(ticks))
+          yLabel <- unit(tgH + 0.25*tgH, "native")
+          tickGrobs <- segmentsGrob(x0 = x_coords, y0 = rep(y0_coord, length(ticks)),
+                                    x1 = x_coords, y1 = y1_coords,
+                                    gp = object$gp, default.units = "native")
+          line <- segmentsGrob(x0 = unit(0, "npc"), x1 = unit(1, "npc"),
+                               y0 = y0_coord, y1 = y0_coord,
+                               gp = object$gp, default.units = "native")
+          object$gp$col <- object$gp$fontcolor
+          startLab <- textGrob(label = paste(startLabel, scale), x = unit(0, "npc"), y =  unit(tgH + 0.25*tgH, "native"),
+                               just = c("left", "top"),
+                               gp = object$gp)
+          endLab <- textGrob(label = paste(endLabel, scale), x = unit(1, "npc"), y = unit(tgH + 0.25*tgH, "native"),
+                             just = c("right", "top"),
+                             gp = object$gp)
+          object$gp$fontface <- "bold"
+          chromLab <- textGrob(label = chromLabel, x = unit(0.5, "npc"), y = unit(tgH + 0.25*tgH, "native"),
+                               gp = object$gp, just = c("center", "top"))
+
+        }
+
         assign("genomeLabel_grobs", setChildren(get("genomeLabel_grobs", envir = bbEnv), children =  gList(line, chromLab, startLab, endLab, tickGrobs)), envir = bbEnv)
 
       } else {
 
-        line <- segmentsGrob(x0 = unit(0, "npc"), x1 = unit(1, "npc"),
-                             y0 = height, y1 = height,
-                             gp = object$gp, default.units = "native")
-        object$gp$col <- object$gp$fontcolor
-        startLab <- textGrob(label = paste(startLabel, scale, sep = " "), x = unit(0, "npc"), y = unit(0.85, "npc"),
-                             just = c("left", "top"),
+        if (yaxis == TRUE){
+          line <- segmentsGrob(x0 = unit(0, "npc"), x1 = unit(1, "npc"),
+                               y0 = unit(0, "npc"), y1 = unit(0, "npc"),
+                               gp = object$gp)
+          object$gp$col <- object$gp$fontcolor
+          startLab <- textGrob(label = paste(startLabel, scale, sep = " "), x = unit(0, "npc"), y = unit(0.15, "npc"),
+                               just = c("left", "bottom"),
+                               gp = object$gp)
+          endLab <- textGrob(label = paste(endLabel, scale, sep = " "), x = unit(1, "npc"), y = unit(0.15, "npc"),
+                             just = c("right", "bottom"),
                              gp = object$gp)
-        endLab <- textGrob(label = paste(endLabel, scale, sep = " "), x = unit(1, "npc"), y = unit(0.85, "npc"),
-                           just = c("right", "top"),
-                           gp = object$gp)
-        object$gp$fontface <- "bold"
-        chromLab <- textGrob(label = chromLabel, x = unit(0.5, "npc"), y = unit(0.85, "npc"),
-                             gp = object$gp,
-                             just = c("center", "top"))
+          object$gp$fontface <- "bold"
+          chromLab <- textGrob(label = chromLabel, x = unit(0.5, "npc"), y = unit(0.15, "npc"),
+                               gp = object$gp,
+                               just = c("center", "bottom"))
+
+        } else {
+
+          line <- segmentsGrob(x0 = unit(0, "npc"), x1 = unit(1, "npc"),
+                               y0 = height, y1 = height,
+                               gp = object$gp, default.units = "native")
+          object$gp$col <- object$gp$fontcolor
+          startLab <- textGrob(label = paste(startLabel, scale, sep = " "), x = unit(0, "npc"), y = unit(0.85, "npc"),
+                               just = c("left", "top"),
+                               gp = object$gp)
+          endLab <- textGrob(label = paste(endLabel, scale, sep = " "), x = unit(1, "npc"), y = unit(0.85, "npc"),
+                             just = c("right", "top"),
+                             gp = object$gp)
+          object$gp$fontface <- "bold"
+          chromLab <- textGrob(label = chromLabel, x = unit(0.5, "npc"), y = unit(0.85, "npc"),
+                               gp = object$gp,
+                               just = c("center", "top"))
+
+        }
+
+
 
         assign("genomeLabel_grobs", setChildren(get("genomeLabel_grobs", envir = bbEnv), children = gList(line, chromLab, startLab, endLab)), envir = bbEnv)
 
@@ -598,12 +722,10 @@ bb_plotGenomeLabel <- function(chrom, chromstart = NULL, chromend = NULL, assemb
   if (bb_genomeLabelInternal$scale == "Mb"){
     fact = 1000000
     format = NULL
-    warning("Chromosome start and stop will be rounded.", call. = FALSE)
   }
   if (bb_genomeLabelInternal$scale == "Kb"){
     fact = 1000
     format = "d"
-    warning("Chromosome start and stop will be rounded.", call. = FALSE)
   }
 
   tgH <- convertHeight(heightDetails(textGrob(label = bb_genomeLabelInternal$scale, x = 0.5, y = 0.5, default.units = "npc", gp = bb_genomeLabelInternal$gp)),
@@ -702,7 +824,8 @@ bb_plotGenomeLabel <- function(chrom, chromstart = NULL, chromend = NULL, assemb
 
     chrom_grobs(tgH = tgH, ticks = bb_genomeLabelInternal$at, tickHeight = tick_height, seqType = seqType, scale = bb_genomeLabelInternal$scale,
                 chromLabel = bb_genomeLabel$chrom,
-                startLabel = chromstartlabel, endLabel = chromendlabel, height = depth, object = bb_genomeLabelInternal, vp = vp)
+                startLabel = chromstartlabel, endLabel = chromendlabel, height = depth, object = bb_genomeLabelInternal, vp = vp,
+                yaxis = (bb_genomeLabelInternal$axis == "y"))
 
     ## Sequence grobs if applicable
     if (!is.null(seqType)){
