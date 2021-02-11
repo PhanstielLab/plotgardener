@@ -3,7 +3,7 @@
 export(bb_annoBedpeAnchors)
 export(bb_annoGenomeLabel)
 export(bb_annoHeatmapLegend)
-export(bb_annoLoops)
+export(bb_annoPixels)
 export(bb_annoXaxis)
 export(bb_annoYaxis)
 export(bb_assembly)

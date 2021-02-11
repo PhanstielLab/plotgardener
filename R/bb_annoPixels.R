@@ -1,25 +1,25 @@
-#' Annotate DNA loops in a Hi-C plot
+#' Annotate pixels in a Hi-C plot
 #'
-#' @param plot Hi-C plot object from \code{bb_plotHicSquare} or \code{bb_plotHicTriangle} on which to annotate loops.
-#' @param data A string specifying the BEDPE file path or a dataframe in BEDPE format specifying loop positions.
+#' @param plot Hi-C plot object from \code{bb_plotHicSquare} or \code{bb_plotHicTriangle} on which to annotate pixels.
+#' @param data A string specifying the BEDPE file path or a dataframe in BEDPE format specifying pixel positions.
 #' @param type Character value specifying type of annotation. Default value is \code{type = "box"}. Options are:
 #' \itemize{
-#' \item{\code{"box"}: }{Boxes are drawn around each loop.}
-#' \item{\code{"circle"}: }{Circles are drawn around each loop.}
-#' \item{\code{"arrow"}: }{Arrows are drawn pointing to each loop.}
+#' \item{\code{"box"}: }{Boxes are drawn around each pixel.}
+#' \item{\code{"circle"}: }{Circles are drawn around each pixel.}
+#' \item{\code{"arrow"}: }{Arrows are drawn pointing to each pixel.}
 #' }
 #' @param half Character value specifying which half of hic plots to annotate. Triangle Hi-C plots will always default to the entirety of the triangular plot. Default value is \code{half = "inherit"}. Options are:
 #' \itemize{
-#' \item{\code{"inherit"}: }{Loops will be annotated on the \code{half} inherited by the input Hi-C plot.}
-#' \item{\code{"both"}: }{Loops will be annotated on both halves of the diagonal of a square Hi-C plot.}
-#' \item{\code{"top"}: }{Loops will be annotated on the upper diagonal half of a square Hi-C plot.}
-#' \item{\code{"bottom"}: }{Loops will be annotated ont the bottom diagonal half of a square Hi-C plot.}
+#' \item{\code{"inherit"}: }{Pixels will be annotated on the \code{half} inherited by the input Hi-C plot.}
+#' \item{\code{"both"}: }{Pixels will be annotated on both halves of the diagonal of a square Hi-C plot.}
+#' \item{\code{"top"}: }{Pixels will be annotated on the upper diagonal half of a square Hi-C plot.}
+#' \item{\code{"bottom"}: }{Pixels will be annotated ont the bottom diagonal half of a square Hi-C plot.}
 #' }
-#' @param shift Numeric specifying the number of pixels on either end of loop in a box or circle. Numeric specifying number of pixels for the length of an arrow.
+#' @param shift Numeric specifying the number of pixels on either end of main pixel in a box or circle. Numeric specifying number of pixels for the length of an arrow.
 #' @param params An optional \link[BentoBox]{bb_params} object containing relevant function parameters.
 #' @param ... Additional grid graphical parameters. See \link[grid]{gpar}.
 #'
-#' @return Returns a \code{bb_loops} object containing relevant genomic region, placement, and \link[grid]{grob} information.
+#' @return Returns a \code{bb_pixel} object containing relevant genomic region, placement, and \link[grid]{grob} information.
 #'
 #' @examples
 #' ## Load Hi-C data and BEDPE data
@@ -36,7 +36,7 @@
 #'                             default.units = "inches")
 #'
 #' ## Annotate loops of Hi-C plot
-#' bb_annoLoops(plot = hicPlot, data = bb_bedpeData, type = "box", half = "both")
+#' bb_annoPixels(plot = hicPlot, data = bb_bedpeData, type = "box", half = "both")
 #'
 #' ## Annotate genome label
 #' bb_annoGenomeLabel(plot = hicPlot, x = 0.5, y = 3.6, scale = "Mb", just = c("left", "top"))
@@ -45,7 +45,7 @@
 #' bb_pageGuideHide()
 #'
 #' @export
-bb_annoLoops <- function(plot, data, type = "box", half = "inherit", shift = 4, params = NULL, ...){
+bb_annoPixels <- function(plot, data, type = "box", half = "inherit", shift = 4, params = NULL, ...){
 
   # ======================================================================================================================================================================================
   # FUNCTIONS
@@ -53,7 +53,7 @@ bb_annoLoops <- function(plot, data, type = "box", half = "inherit", shift = 4, 
   ## For more accurate calculation of sqrt(2)
   two <- mpfr(2, 120)
 
-  ## Define a function to catch errors for bb_annoLoops
+  ## Define a function to catch errors for bb_annoPixels
   errorcheck_bb_annoLoops <- function(hic, loops, half, type){
 
     ###### hic #####
@@ -76,7 +76,7 @@ bb_annoLoops <- function(plot, data, type = "box", half = "inherit", shift = 4, 
 
     if ("data.frame" %in% class(loops) && nrow(loops) < 1){
 
-      stop("Loop input contains no values.", call. = FALSE)
+      stop("\'data\' input contains no values.", call. = FALSE)
 
     }
 
@@ -136,11 +136,11 @@ bb_annoLoops <- function(plot, data, type = "box", half = "inherit", shift = 4, 
 
         if (hic$althalf == "bottom"){
 
-          message(paste("Attempting to annotate loops where", hic$chrom, "is on the x-axis and", hic$altchrom, "is on the y-axis."), call. = FALSE)
+          message(paste("Attempting to annotate pixels where", hic$chrom, "is on the x-axis and", hic$altchrom, "is on the y-axis."), call. = FALSE)
 
         } else if (hic$althalf == "top"){
 
-          message(paste("Attempting to annotate loops where", hic$altchrom, "is on the x-axis and", hic$chrom, "is on the y-axis."), call. = FALSE)
+          message(paste("Attempting to annotate pixels where", hic$altchrom, "is on the x-axis and", hic$chrom, "is on the y-axis."), call. = FALSE)
 
         }
 
@@ -150,7 +150,7 @@ bb_annoLoops <- function(plot, data, type = "box", half = "inherit", shift = 4, 
 
       if (half == "both" | half == "bottom"){
 
-        warning("Plot of class \'bb_hicTriangle\' detected.  Loops will automatically be annotated in the upper triangular of the plot.", call. = FALSE)
+        warning("Plot of class \'bb_hicTriangle\' detected.  Pixels will automatically be annotated in the upper triangular of the plot.", call. = FALSE)
 
       }
 
@@ -379,13 +379,13 @@ bb_annoLoops <- function(plot, data, type = "box", half = "inherit", shift = 4, 
   bb_loops <- structure(list(chrom = bb_loopsInternal$plot$chrom, chromstart = bb_loopsInternal$plot$chromstart, chromend = bb_loopsInternal$plot$chromend, altchrom = bb_loopsInternal$plot$altchrom,
                              altchromstart = bb_loopsInternal$plot$altchromstart, altchromend = bb_loopsInternal$plot$altchromend, assembly = bb_loopsInternal$plot$assembly,
                              x = bb_loopsInternal$plot$x, y = bb_loopsInternal$plot$y, width = bb_loopsInternal$plot$width, height = bb_loopsInternal$plot$height,
-                             just = bb_loopsInternal$plot$just, grobs = NULL), class = "bb_loops")
+                             just = bb_loopsInternal$plot$just, grobs = NULL), class = "bb_pixel")
 
   # ======================================================================================================================================================================================
   # CATCH ERRORS
   # ======================================================================================================================================================================================
 
-  check_bbpage(error = "Cannot annotate Hi-C loops without a BentoBox page.")
+  check_bbpage(error = "Cannot annotate Hi-C pixels without a BentoBox page.")
   if(is.null(bb_loopsInternal$plot)) stop("argument \"plot\" is missing, with no default.", call. = FALSE)
   if(is.null(bb_loopsInternal$data)) stop("argument \"data\" is missing, with no default.", call. = FALSE)
 
@@ -419,7 +419,7 @@ bb_annoLoops <- function(plot, data, type = "box", half = "inherit", shift = 4, 
 
     loops <- as.data.frame(data.table::fread(loops))
     if (nrow(loops) < 1){
-      warning("Loop input contains no values.", call. = FALSE)
+      warning("\'data\' input contains no values.", call. = FALSE)
     }
 
 
@@ -522,7 +522,7 @@ bb_annoLoops <- function(plot, data, type = "box", half = "inherit", shift = 4, 
 
   } else {
 
-    warning("No loops found in region.", call. = FALSE)
+    warning("No pixels found in region.", call. = FALSE)
   }
 
 
