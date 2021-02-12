@@ -27,35 +27,38 @@
 #' @return Returns a \code{bb_bedpe} object containing relevant genomic region, placement, and \link[grid]{grob} information.
 #'
 #' @examples
-#' ## Load BEDPE data
-#' data("bb_bedpeData")
+#'# Load BEDPE data
+#'data("bb_bedpeData")
 #'
-#' ## Plot a BEDPE plot filling up entire graphic device
-#' bedpePlot <- bb_plotBedpe(data = bb_bedpeData, chrom = "chr21",
-#'                           chromstart = 28000000, chromend = 30300000)
+#'# Set the coordinates
+#'params = bb_params(chrom = "chr21",chromstart = 27900000, chromend = 30700000,width=7)
 #'
-#' ## Plot and place BEDPE plot on a BentoBox page
-#' bb_pageCreate(width = 5, height = 1.6, default.units = "inches")
+#'# Create a page
+#'bb_pageCreate(width = 7.5, height = 2.1, default.units = "inches")
 #'
-#' ## Add example "score" column to color data by
-#' bb_bedpeData$score <- sample(1:4, 16, replace = T)
-#' bedpePlot <- bb_plotBedpe(data = bb_bedpeData, chrom = "chr21",
-#'                           chromstart = 28000000, chromend = 30300000,
-#'                           fill = colorRampPalette(c("light grey", "black")),
-#'                           colorby = colorby("score"),
-#'                           x = 0.5, y = 0.25, width = 4, height = 1,
-#'                           just = c("left", "top"), default.units = "inches")
+#'# Add a length column
+#'bb_bedpeData$length = (bb_bedpeData$start2 - bb_bedpeData$start1) / 1000
 #'
-#' ## Annotate genome label
-#' bb_annoGenomeLabel(plot = bedpePlot, x = 0.5, y = 1.35, just = c("left", "top"))
+#'# Plot the data
+#'bedpePlot <- bb_plotBedpe(data = bb_bedpeData, params = params,
+#'                          fill = colorRampPalette(c("dodgerblue2", "firebrick2")),
+#'                          colorby = colorby("length"),
+#'                          lwd=2,spaceHeight = .7,
+#'                          x = 0.25, y = 0.25,  height = 1.5,
+#'                          just = c("left", "top"), default.units = "inches")
 #'
-#' ## Annotate heatmap legend
-#' bb_annoHeatmapLegend(plot = bedpePlot, fontcolor = "black", x = 0.25, y = 0.4,
-#'                      width = 0.12, height = 0.5, just = c("left", "top"))
-#' bb_plotText(label = "score", fontsize = 7, rot = 90, x = 0.15, y = 0.65)
+#'# Annotate genome label
+#'bb_annoGenomeLabel(plot = bedpePlot, x = 0.25, y = 1.78,scale = "Mb")
 #'
-#' ## Hide page guides
-#' bb_pageGuideHide()
+#'# Add heatmap legend
+#'bb_annoHeatmapLegend(plot = bedpePlot, fontcolor = "black", x = 7.0, y = 0.25,
+#'                     width = 0.10, height = 1,fontsize=10)
+#'
+#'# Add heatmap legend label
+#'bb_plotText(label = "Kb", rot = 90, x = 6.9, y = 0.75,just=c("center","center"),fontsize=10)
+#'
+#'# Hide page guides
+#'bb_pageGuideHide()
 #'
 #' @details
 #' This function can be used to quickly plot a BEDPE plot by ignoring plot placement parameters:
