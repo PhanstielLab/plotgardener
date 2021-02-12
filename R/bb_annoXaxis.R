@@ -34,7 +34,7 @@
 #' bb_pageGuideHide()
 #'
 #' @export
-bb_annoXaxis <- function(plot, at = NULL, label = TRUE, main = TRUE, gp = gpar(), params = NULL){
+bb_annoXaxis <- function(plot, at = NULL, label = TRUE, main = TRUE, gp = gpar(), scipen = 999, axisLine = FALSE, params = NULL){
 
   # ======================================================================================================================================================================================
   # PARSE PARAMETERS
@@ -62,6 +62,13 @@ bb_annoXaxis <- function(plot, at = NULL, label = TRUE, main = TRUE, gp = gpar()
 
   if(is.null(bb_xInternal$plot)) stop("argument \"plot\" is missing, with no default.", call. = FALSE)
   check_bbpage(error = "Cannot add an x-axis without a BentoBox page.")
+
+  # ======================================================================================================================================================================================
+  # SAVE USER'S SCIPEN AND SET OURS TEMPORARILY
+  # ======================================================================================================================================================================================
+
+  usrscipen = getOption("scipen")
+  options(scipen = scipen)
 
   # ======================================================================================================================================================================================
   # INITIALIZE OBJECT
@@ -122,8 +129,15 @@ bb_annoXaxis <- function(plot, at = NULL, label = TRUE, main = TRUE, gp = gpar()
   # ======================================================================================================================================================================================
 
   xGrob <- grid.xaxis(at = bb_xInternal$at, label = bb_xInternal$label, main = bb_xInternal$main, gp = bb_xInternal$gp, vp = vp)
+  if(!axisLine) grid.remove(paste0(xGrob$name, "::major"))
   xaxis_grobs <- gTree(vp = vp, children = gList(xGrob))
   xAxis$grobs <- xaxis_grobs
+
+  # ======================================================================================================================================================================================
+  # RESTORE USER'S SCIPEN
+  # ======================================================================================================================================================================================
+
+  options(scipen = usrscipen)
 
   # ======================================================================================================================================================================================
   # RETURN OBJECT

@@ -35,7 +35,7 @@
 #' bb_pageGuideHide()
 #'
 #' @export
-bb_annoYaxis <- function(plot, at = NULL, label = TRUE, main = TRUE, gp = gpar(), params = NULL){
+bb_annoYaxis <- function(plot, at = NULL, label = TRUE, main = TRUE, gp = gpar(), scipen = 999, axisLine = FALSE, params = NULL){
 
   # ======================================================================================================================================================================================
   # PARSE PARAMETERS
@@ -63,6 +63,13 @@ bb_annoYaxis <- function(plot, at = NULL, label = TRUE, main = TRUE, gp = gpar()
 
   if(is.null(bb_yInternal$plot)) stop("argument \"plot\" is missing, with no default.", call. = FALSE)
   check_bbpage(error = "Cannot add an y-axis without a BentoBox page.")
+
+  # ======================================================================================================================================================================================
+  # SAVE USER'S SCIPEN AND SET OURS TEMPORARILY
+  # ======================================================================================================================================================================================
+
+  usrscipen = getOption("scipen")
+  options(scipen = scipen)
 
   # ======================================================================================================================================================================================
   # INITIALIZE OBJECT
@@ -125,8 +132,15 @@ bb_annoYaxis <- function(plot, at = NULL, label = TRUE, main = TRUE, gp = gpar()
   # ======================================================================================================================================================================================
 
   yGrob <- grid.yaxis(at = bb_yInternal$at, label = bb_yInternal$label, main = bb_yInternal$main, gp = bb_yInternal$gp, vp = vp)
+  if(!axisLine) grid.remove(paste0(yGrob$name, "::major"))
   yaxis_grobs <- gTree(vp = vp, children = gList(yGrob))
   yAxis$grobs <- yaxis_grobs
+
+  # ======================================================================================================================================================================================
+  # RESTORE USER'S SCIPEN
+  # ======================================================================================================================================================================================
+
+  options(scipen = usrscipen)
 
   # ======================================================================================================================================================================================
   # RETURN OBJECT
