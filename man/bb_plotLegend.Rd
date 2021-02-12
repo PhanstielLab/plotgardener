@@ -81,7 +81,7 @@ data("bb_bedData")
 bb_pageCreate(width = 5, height = 4, default.units = "inches")
 
 ## Plot a pileup plot, coloring elements by strand
-pileupPlot <- bb_plotPileup(data = bb_bedData, chrom = "chr21",
+pileupPlot <- bb_plotBed(data = bb_bedData, chrom = "chr21",
                             chromstart = 29073000, chromend = 29074000,
                             fill = c("steel blue", "light salmon"),
                             colorby = colorby("strand"),
