@@ -165,7 +165,7 @@ bb_pageCreate <- function(width = 8.5, height = 11, default.units = "inches", xg
 
   page_vp <- viewport(x = unit(0.5, "npc"), y = unit(0.5, "npc"),
                       width = bb_page$width, height = bb_page$height,
-                      xscale = c(0, bb_page$width), yscale = rev(c(0, bb_page$height)),
+                      xscale = c(0, page_width), yscale = rev(c(0, page_height)),
                       name = "bb_page")
 
   # ======================================================================================================================================================================================
@@ -201,7 +201,7 @@ bb_pageCreate <- function(width = 8.5, height = 11, default.units = "inches", xg
       xsegs <- segmentsGrob(x0 = seq(0, page_width, div), y0 = y0,
                             x1 = seq(0, page_width, div), y1 = y1, default.units = page_units, gp = gpar(col = "black"))
       ysegs <- segmentsGrob(x0 = x0, y0 = seq(0, page_height, div),
-                            x1 = x1, y1 = seq(0, page_height, div), default.units = page_units, gp = gpar(col = "black"))
+                            x1 = x1, y1 = seq(0, page_height, div), default.units = "native", gp = gpar(col = "black"))
 
       for (i in 1:4){
         div <- div*2
@@ -212,7 +212,7 @@ bb_pageCreate <- function(width = 8.5, height = 11, default.units = "inches", xg
         v <- segmentsGrob(x0 = xsegs$x0[xsegs$x0 %in% seq(0, page_width, div)], y0 = y0,
                           x1 = xsegs$x0[xsegs$x0 %in% seq(0, page_width, div)], y1 = y1, default.units = page_units, gp = gpar(col = "black"))
         h <- segmentsGrob(x0 = x0, y0 = ysegs$y1[ysegs$y1 %in% seq(0, page_height, div)],
-                          x1 = x1, y1 = ysegs$y1[ysegs$y1 %in% seq(0, page_height, div)], default.units = page_units, gp = gpar(col = "black"))
+                          x1 = x1, y1 = ysegs$y1[ysegs$y1 %in% seq(0, page_height, div)], default.units = "native", gp = gpar(col = "black"))
 
         assign("guide_grobs", addGrob(gTree = get("guide_grobs", envir = bbEnv), child = v), envir = bbEnv)
         assign("guide_grobs", addGrob(gTree = get("guide_grobs", envir = bbEnv), child = h), envir = bbEnv)
@@ -232,14 +232,14 @@ bb_pageCreate <- function(width = 8.5, height = 11, default.units = "inches", xg
       xsegs <- segmentsGrob(x0 = seq(0, page_width, div), y0 = y0,
                             x1 = seq(0, page_width, div), y1 = y1, default.units = page_units, gp = gpar(col = "black"))
       ysegs <- segmentsGrob(x0 = x0, y0 = seq(0, page_height, div),
-                            x1 = x1, y1 = seq(0, page_height, div), default.units = page_units, gp = gpar(col = "black"))
+                            x1 = x1, y1 = seq(0, page_height, div), default.units = "native", gp = gpar(col = "black"))
 
 
       div2 <- 1/2
       v2 <- segmentsGrob(x0 = seq(0, page_width, div2), y0 = page_height + 3*tickH,
                         x1 = seq(0, page_width, div2), y1 = page_height + 4*tickH, default.units = page_units, gp = gpar(col = "black"))
       h2 <- segmentsGrob(x0 = -3*tickH, y0 = seq(0, page_height, div2),
-                        x1 = -4*tickH, y1 = seq(0, page_height, div2), default.units = page_units, gp = gpar(col = "black"))
+                        x1 = -4*tickH, y1 = seq(0, page_height, div2), default.units = "native", gp = gpar(col = "black"))
       assign("guide_grobs", addGrob(gTree = get("guide_grobs", envir = bbEnv), child = v2), envir = bbEnv)
       assign("guide_grobs", addGrob(gTree = get("guide_grobs", envir = bbEnv), child = h2), envir = bbEnv)
 
@@ -247,7 +247,7 @@ bb_pageCreate <- function(width = 8.5, height = 11, default.units = "inches", xg
       v3 <- segmentsGrob(x0 = seq(0, page_width, div3), y0 = page_height + 4*tickH,
                          x1 = seq(0, page_width, div3), y1 = page_height + 5*tickH, default.units = page_units, gp = gpar(col = "black"))
       h3 <- segmentsGrob(x0 = -4*tickH, y0 = seq(0, page_height, div3),
-                         x1 = -5*tickH, y1 = seq(0, page_height, div3), default.units = page_units, gp = gpar(col = "black"))
+                         x1 = -5*tickH, y1 = seq(0, page_height, div3), default.units = "native", gp = gpar(col = "black"))
       assign("guide_grobs", addGrob(gTree = get("guide_grobs", envir = bbEnv), child = v3), envir = bbEnv)
       assign("guide_grobs", addGrob(gTree = get("guide_grobs", envir = bbEnv), child = h3), envir = bbEnv)
 
@@ -266,13 +266,13 @@ bb_pageCreate <- function(width = 8.5, height = 11, default.units = "inches", xg
       xsegs <- segmentsGrob(x0 = seq(0, page_width, div), y0 = y0,
                             x1 = seq(0, page_width, div), y1 = y1, default.units = page_units, gp = gpar(col = "black"))
       ysegs <- segmentsGrob(x0 = x0, y0 = seq(0, page_height, div),
-                            x1 = x1, y1 = seq(0, page_height, div), default.units = page_units, gp = gpar(col = "black"))
+                            x1 = x1, y1 = seq(0, page_height, div), default.units = "native", gp = gpar(col = "black"))
 
       div2 <- 5
       v2 <- segmentsGrob(x0 = seq(0, page_width, div2), y0 = page_height + 3*tickH,
                          x1 = seq(0, page_width, div2), y1 = page_height + 4*tickH, default.units = page_units, gp = gpar(col = "black"))
       h2 <- segmentsGrob(x0 = -3*tickH, y0 = seq(0, page_height, div2),
-                         x1 = -4*tickH, y1 = seq(0, page_height, div2), default.units = page_units, gp = gpar(col = "black"))
+                         x1 = -4*tickH, y1 = seq(0, page_height, div2), default.units = "native", gp = gpar(col = "black"))
       assign("guide_grobs", addGrob(gTree = get("guide_grobs", envir = bbEnv), child = v2), envir = bbEnv)
       assign("guide_grobs", addGrob(gTree = get("guide_grobs", envir = bbEnv), child = h2), envir = bbEnv)
 
@@ -280,7 +280,7 @@ bb_pageCreate <- function(width = 8.5, height = 11, default.units = "inches", xg
       v3 <- segmentsGrob(x0 = seq(0, page_width, div3), y0 = page_height + 4*tickH,
                          x1 = seq(0, page_width, div3), y1 = page_height + 5*tickH, default.units = page_units, gp = gpar(col = "black"))
       h3 <- segmentsGrob(x0 = -4*tickH, y0 = seq(0, page_height, div3),
-                         x1 = -5*tickH, y1 = seq(0, page_height, div3), default.units = page_units, gp = gpar(col = "black"))
+                         x1 = -5*tickH, y1 = seq(0, page_height, div3), default.units = "native", gp = gpar(col = "black"))
       assign("guide_grobs", addGrob(gTree = get("guide_grobs", envir = bbEnv), child = v3), envir = bbEnv)
       assign("guide_grobs", addGrob(gTree = get("guide_grobs", envir = bbEnv), child = h3), envir = bbEnv)
 
@@ -298,14 +298,14 @@ bb_pageCreate <- function(width = 8.5, height = 11, default.units = "inches", xg
       xsegs <- segmentsGrob(x0 = seq(0, page_width, div), y0 = y0,
                             x1 = seq(0, page_width, div), y1 = y1, default.units = page_units, gp = gpar(col = "black"))
       ysegs <- segmentsGrob(x0 = x0, y0 = seq(0, page_height, div),
-                            x1 = x1, y1 = seq(0, page_height, div), default.units = page_units, gp = gpar(col = "black"))
+                            x1 = x1, y1 = seq(0, page_height, div), default.units = "native", gp = gpar(col = "black"))
 
 
       div2 <- 1/2
       v2 <- segmentsGrob(x0 = seq(0, page_width, div2), y0 = page_height + 3*tickH,
                          x1 = seq(0, page_width, div2), y1 = page_height + 4*tickH, default.units = page_units, gp = gpar(col = "black"))
       h2 <- segmentsGrob(x0 = -3*tickH, y0 = seq(0, page_height, div2),
-                         x1 = -4*tickH, y1 = seq(0, page_height, div2), default.units = page_units, gp = gpar(col = "black"))
+                         x1 = -4*tickH, y1 = seq(0, page_height, div2), default.units = "native", gp = gpar(col = "black"))
       assign("guide_grobs", addGrob(gTree = get("guide_grobs", envir = bbEnv), child = v2), envir = bbEnv)
       assign("guide_grobs", addGrob(gTree = get("guide_grobs", envir = bbEnv), child = h2), envir = bbEnv)
 
@@ -313,7 +313,7 @@ bb_pageCreate <- function(width = 8.5, height = 11, default.units = "inches", xg
       v3 <- segmentsGrob(x0 = seq(0, page_width, div3), y0 = page_height + 4*tickH,
                          x1 = seq(0, page_width, div3), y1 = page_height + 5*tickH, default.units = page_units, gp = gpar(col = "black"))
       h3 <- segmentsGrob(x0 = -4*tickH, y0 = seq(0, page_height, div3),
-                         x1 = -5*tickH, y1 = seq(0, page_height, div3), default.units = page_units, gp = gpar(col = "black"))
+                         x1 = -5*tickH, y1 = seq(0, page_height, div3), default.units = "native", gp = gpar(col = "black"))
       assign("guide_grobs", addGrob(gTree = get("guide_grobs", envir = bbEnv), child = v3), envir = bbEnv)
       assign("guide_grobs", addGrob(gTree = get("guide_grobs", envir = bbEnv), child = h3), envir = bbEnv)
 
@@ -352,7 +352,7 @@ bb_pageCreate <- function(width = 8.5, height = 11, default.units = "inches", xg
 
     yGrid <- segmentsGrob(x0 = 0, y0 = seq(0, page_height, bb_page$ygrid),
                           x1 = page_width, y1 = seq(0, page_height, bb_page$ygrid),
-                          default.units = page_units, gp = gpar(col = "grey50", lty = 2, lwd = 0.5))
+                          default.units = "native", gp = gpar(col = "grey50", lty = 2, lwd = 0.5))
 
     assign("guide_grobs", addGrob(gTree = get("guide_grobs", envir = bbEnv), child = xGrid), envir = bbEnv)
     assign("guide_grobs", addGrob(gTree = get("guide_grobs", envir = bbEnv), child = yGrid), envir = bbEnv)

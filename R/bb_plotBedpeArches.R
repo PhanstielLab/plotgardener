@@ -38,62 +38,64 @@
 #' @return Returns a \code{bb_arches} object containing relevant genomic region, placement, and \link[grid]{grob} information.
 #'
 #' @examples
-#'# Load BEDPE data
-#'data("bb_bedpeData")
+#' ## Load BEDPE data
+#' data("bb_bedpeData")
 #'
-#'# Set the coordinates
-#'params = bb_params(chrom = "chr21",chromstart = 27900000, chromend = 30700000,width=7)
+#' ## Set the coordinates
+#' params = bb_params(chrom = "chr21", chromstart = 27900000, chromend = 30700000,
+#'                    width = 7)
 #'
-#'# Create a page
-#'bb_pageCreate(width = 7.5, height = 2.1, default.units = "inches")
+#' ## Create a page
+#' bb_pageCreate(width = 7.5, height = 2.1, default.units = "inches")
 #'
-#'# Add a length column to color by
-#'bb_bedpeData$length = (bb_bedpeData$start2 - bb_bedpeData$start1) / 1000
+#' ## Add a length column to color by
+#' bb_bedpeData$length = (bb_bedpeData$start2 - bb_bedpeData$start1) / 1000
 #'
-#'# Translate lengths into heights
-#'heights = bb_bedpeData$length / max(bb_bedpeData$length)
+#' ## Translate lengths into heights
+#' heights = bb_bedpeData$length / max(bb_bedpeData$length)
 #'
-#'# Plot the data
-#'bedpePlot <- bb_plotBedpeArches(data = bb_bedpeData, params = params,
-#'                                fill = colorRampPalette(c("dodgerblue2", "firebrick2")),
-#'                                linecolor="fill",
-#'                                colorby = colorby("length"),
-#'                                archHeight = heights,alpha = 1,
-#'                                x = 0.25, y = 0.25,  height = 1.5,
-#'                                just = c("left", "top"), default.units = "inches")
+#' ## Plot the data
+#' bedpePlot <- bb_plotBedpeArches(data = bb_bedpeData, params = params,
+#'                                 fill = colorRampPalette(c("dodgerblue2", "firebrick2")),
+#'                                 linecolor = "fill",
+#'                                 colorby = colorby("length"),
+#'                                 archHeight = heights, alpha = 1,
+#'                                 x = 0.25, y = 0.25,  height = 1.5,
+#'                                 just = c("left", "top"), default.units = "inches")
 #'
-#'# Annotate genome label
-#'bb_annoGenomeLabel(plot = bedpePlot, x = 0.25, y = 1.78,scale = "Mb")
-#'
-#'
-#'# Annotate heatmap legend
-#'bb_annoHeatmapLegend(plot = bedpePlot, fontcolor = "black", x = 7.0, y = 0.25,
-#'                     width = 0.10, height = 1,fontsize=10)
-#'
-#'# Add the heatmap legend title
-#'bb_plotText(label = "Kb", rot = 90, x = 6.9, y = 0.75,just=c("center","center"),fontsize=10)
+#' ## Annotate genome label
+#' bb_annoGenomeLabel(plot = bedpePlot, x = 0.25, y = 1.78, scale = "Mb")
 #'
 #'
-#'# Hide page guides
-#'bb_pageGuideHide()
+#' ## Annotate heatmap legend
+#' bb_annoHeatmapLegend(plot = bedpePlot, fontcolor = "black", x = 7.0, y = 0.25,
+#'                      width = 0.10, height = 1, fontsize = 10)
+#'
+#' ## Add the heatmap legend title
+#' bb_plotText(label = "Kb", rot = 90, x = 6.9, y = 0.75, just = c("center","center"),
+#'             fontsize = 10)
+#'
+#'
+#' ## Hide page guides
+#' bb_pageGuideHide()
 #'
 #' @details
-#' This function can be used to quickly plot a BEDPE Arches plot by ignoring plot placement parameters:
-#' \preformatted{
-#' bb_plotBedpeArches(data, chrom,
-#'                    chromstart = NULL, chromend = NULL)
-#' }
-#' A BEDPE Arches plot can be placed on a BentoBox coordinate page by providing plot placement parameters:
+#' #' A BEDPE Arches plot can be placed on a BentoBox coordinate page by providing plot placement parameters:
 #' \preformatted{
 #' bb_plotBedpeArches(data chrom,
 #'                    chromstart = NULL, chromend = NULL,
 #'                    x, y, width, height, just = c("left", "top"),
 #'                    default.units = "inches")
 #' }
+#' This function can also be used to quickly plot an unannotated BEDPE Arches plot by ignoring plot placement parameters:
+#' \preformatted{
+#' bb_plotBedpeArches(data, chrom,
+#'                    chromstart = NULL, chromend = NULL)
+#' }
 #'
 #' @export
 bb_plotBedpeArches <- function(data, chrom, chromstart = NULL, chromend = NULL, assembly = "hg19", style = "2D", position = "top", curvature = 5, archHeight = NULL,
-                               fill = "grey", colorby = NULL, linecolor = "NA", alpha = 0.4, bg = NA, clip = TRUE, baseline = FALSE, x = NULL,
+                               fill = "grey", colorby = NULL, linecolor = "NA", alpha = 0.4, bg = NA, clip = FALSE, baseline = FALSE, x = NULL,
                                y = NULL, width = NULL, height = NULL, just = c("left", "top"), default.units = "inches", draw = TRUE, params = NULL, ...){
 
   # ======================================================================================================================================================================================
