@@ -353,7 +353,7 @@ bb_plotBed <- function(data, chrom, chromstart = NULL, chromend = NULL, assembly
 
   ## Get viewport name
   currentViewports <- current_viewports()
-  vp_name <- paste0("bb_pileup", length(grep(pattern = "bb_pileup", x = currentViewports)) + 1)
+  vp_name <- paste0("bb_bed", length(grep(pattern = "bb_bed", x = currentViewports)) + 1)
 
   ## If placing information is provided but plot == TRUE, set up it's own viewport separate from bb_makepage
   ## Not translating into page_coordinates
@@ -371,7 +371,7 @@ bb_plotBed <- function(data, chrom, chromstart = NULL, chromend = NULL, assembly
 
     if (bb_pileInternal$draw == TRUE){
 
-      vp$name <- "bb_pileup1"
+      vp$name <- "bb_bed1"
       grid.newpage()
 
     }
@@ -447,7 +447,7 @@ bb_plotBed <- function(data, chrom, chromstart = NULL, chromend = NULL, assembly
 
         if (any(rowDF$row == 0)){
           rowDF <- rowDF[which(rowDF$row != 0),]
-          warning("Not enough plotting space for all provided pileup elements.", call. = FALSE)
+          warning("Not enough plotting space for all provided BED elements.", call. = FALSE)
 
           limitGrob <- textGrob(label = "+", x = unit(1, "npc"), y = unit(1, "npc"),
                                 just = c("right", "top"), gp = gpar(col = "black"))
@@ -480,7 +480,7 @@ bb_plotBed <- function(data, chrom, chromstart = NULL, chromend = NULL, assembly
         colnames(posDF) <- c("start", "stop", "colorby", "row")
         if (any(posDF$row == 0)){
           posDF <- posDF[which(posDF$row != 0),]
-          warning("Not enough plotting space for all provided plus strand pileup elements.", call. = FALSE)
+          warning("Not enough plotting space for all provided plus strand BED elements.", call. = FALSE)
           limitGrob1 <- textGrob(label = "+", x = unit(1, "npc"), y = unit(1, "npc"),
                                  just = c("right", "top"), gp = gpar(col = "black"))
           assign("pileup_grobs", addGrob(gTree = get("pileup_grobs", envir = bbEnv), child = limitGrob1), envir = bbEnv)
@@ -508,7 +508,7 @@ bb_plotBed <- function(data, chrom, chromstart = NULL, chromend = NULL, assembly
         colnames(minDF) <- c("start", "stop", "colorby", "row")
         if (any(minDF$row == 0)){
           minDF <- minDF[which(minDF$row != 0),]
-          warning("Not enough plotting space for all provided minus strand pileup elements.", call. = FALSE)
+          warning("Not enough plotting space for all provided minus strand BED elements.", call. = FALSE)
           limitGrob2 <- textGrob(label = "+", x = unit(1, "npc"), y = unit(0, "npc"),
                                  just = c("right", "bottom"), gp = gpar(col = "black"))
           assign("pileup_grobs", addGrob(gTree = get("pileup_grobs", envir = bbEnv), child = limitGrob2), envir = bbEnv)
@@ -648,7 +648,7 @@ bb_plotBed <- function(data, chrom, chromstart = NULL, chromend = NULL, assembly
   } else {
 
     if (txdbChecks == TRUE){
-      warning("No pileup data to plot.", call. = FALSE)
+      warning("No BED data to plot.", call. = FALSE)
     }
 
   }
@@ -672,6 +672,6 @@ bb_plotBed <- function(data, chrom, chromstart = NULL, chromend = NULL, assembly
   # RETURN OBJECT
   # ======================================================================================================================================================================================
 
-  message(paste0("bb_pileup[", vp$name, "]"))
+  message(paste0("bb_bed[", vp$name, "]"))
   invisible(pileup_plot)
 }
