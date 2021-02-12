@@ -7,6 +7,7 @@
 #' @param check.overlap A logical value to indicate whether to check for and omit overlapping text. Default value is \code{check.overlap = FALSE}.
 #' @param x A numeric vector or unit object specifying text x-location.
 #' @param y A numeric vector or unit object specifying text y-location.
+#' @param plot Input BentoBox plot to internally place text relative to instead of overall BentoBox page.
 #' @param just Justification of text relative to its (x, y) location. If there are two values, the first value specifies horizontal justification and the second value specifies vertical justification.
 #' Possible string values are: \code{"left"}, \code{"right"}, \code{"centre"}, \code{"center"}, \code{"bottom"}, and \code{"top"}. Default value is \code{just = "center"}.
 #' @param default.units A string indicating the default units to use if \code{x} or \code{y} are only given as numerics or numeric vectors. Default value is \code{default.units = "inches"}.
@@ -17,11 +18,36 @@
 #'
 #' @examples
 #' ## Create a BentoBox page
-#' bb_pageCreate(width = 2, height = 2, default.units = "inches")
+#' bb_pageCreate(width = 4, height = 4.5, default.units = "inches")
 #'
-#' ## Plot text
-#' bb_plotText(label = "BentoBox", fontsize = 14,
+#' ## Plot text, adjusting fontsize and fontface
+#' bb_plotText(label = "BentoBox", fontsize = 14, fontface = "bold",
 #'             x = 1, y = 1, just = "center", default.units = "inches")
+#'
+#' ## Plot text, adjusting color, rotation, and fontfamily
+#' bb_plotText(label = "coordinate-based", fontcolor = "#225EA8", rot = 90,
+#'             fontfamily = "HersheyScript", x = 2, y = 1, just = "center",
+#'             default.units = "inches")
+#'
+#' ## Plot a text label in multiple places at once
+#' bb_plotText(label = "R", x = c(0.5, 1, 1.5), y = 1.5, just = "center",
+#'             default.units = "inches")
+#'
+#' ## Plot a vector of text labels
+#' bb_plotText(label = c("bb", "Bento", "Box"), x = 3, y = c(0.5, 1, 1.75),
+#'             just = "center", default.units = "inches")
+#'
+#' ## Plot text relative to a BentoBox plot
+#' data("bb_hicData")
+#' hicPlot <- bb_plotHicSquare(data = bb_hicData, chrom = "chr21",
+#'                            chromstart = 28000000, chromend = 29500000, zrange = c(0, 70),
+#'                            x = 1, y = 2, width = 2, height = 2, just = c("left", "top"),
+#'                            default.units = "inches")
+#' bb_annoGenomeLabel(plot = hicPlot, x = 1, y = 4.025, scale = "Mb",
+#'                    just = c("left", "top"), default.units = "inches")
+#'
+#' bb_plotText(label = "Loop", fontsize = 8, plot = hicPlot, x = 29075000, y = 28150000,
+#'             just = "center", default.units = "native")
 #'
 #' ## Hide page guides
 #' bb_pageGuideHide()
@@ -29,7 +55,7 @@
 #' @seealso \link[grid]{grid.text}
 #'
 #' @export
-bb_plotText <- function(label, fontcolor = "black", fontsize = 12, rot = 0, check.overlap = FALSE, x, y, just = "center", default.units = "inches", params = NULL, ...){
+bb_plotText <- function(label, fontcolor = "black", fontsize = 12, rot = 0, check.overlap = FALSE, x, y, plot = NULL, just = "center", default.units = "inches", params = NULL, ...){
 
 
   # ======================================================================================================================================================================================
@@ -50,7 +76,7 @@ bb_plotText <- function(label, fontcolor = "black", fontsize = 12, rot = 0, chec
   if(!hasArg(y)) y <- NULL
 
   ## Compile all parameters into an internal object
-  bb_textInternal <- structure(list(label = label, x = x, y = y, just = just, fontcolor = fontcolor,
+  bb_textInternal <- structure(list(label = label, x = x, y = y, plot = plot, just = just, fontcolor = fontcolor,
                                     fontsize = fontsize, rot = rot, check.overlap = check.overlap, default.units = default.units), class = "bb_textInternal")
 
   bb_textInternal <- parseParams(bb_params = params, object_params = bb_textInternal)
@@ -124,15 +150,52 @@ bb_plotText <- function(label, fontcolor = "black", fontsize = 12, rot = 0, chec
 
   }
 
-  ## Convert coordinates to page_units
-  new_x <- convertX(bb_text$x, unitTo = page_units, valueOnly = TRUE)
-  new_y <- convertY(bb_text$y, unitTo = page_units, valueOnly = TRUE)
+
+  ## If plot is specified, get scale/units of plot viewport
+  if (!is.null(bb_textInternal$plot)){
+
+    if (class(bb_textInternal$plot) == "bb_genes"){
+
+      plotVP <- bb_textInternal$plot$grobs$children$background$vp
+
+    } else if (class(bb_textInternal$plot) == "bb_hicTriangle"){
+
+      plotVP <- bb_textInternal$plot$outsideVP
+
+    } else {
+
+      plotVP <- bb_textInternal$plot$grobs$vp
+
+    }
+
+    ## Convert plot viewport to bottom left to get position on entire page
+    plotVP_bottomLeft <- vp_bottomLeft(viewport = plotVP)
+
+    ## Push plot viewport to convert x/y from plot native units to page units
+    pushViewport(plotVP)
+
+    new_x <- convertX(bb_text$x, unitTo = page_units, valueOnly = TRUE)
+    new_y <- convertX(bb_text$y, unitTo = page_units, valueOnly = TRUE)
+
+    upViewport()
+
+    ## Add additional page units to new_x and new_y
+    new_x <- as.numeric(plotVP_bottomLeft[[1]]) + new_x
+    new_y <- as.numeric(plotVP_bottomLeft[[2]]) + new_y
+
+  } else {
+
+    ## Convert coordinates to page_units
+    new_x <- convertX(bb_text$x, unitTo = page_units, valueOnly = TRUE)
+    new_y <- page_height - convertY(bb_text$y, unitTo = page_units, valueOnly = TRUE)
+
+  }
 
   # ======================================================================================================================================================================================
   # MAKE GROB
   # ======================================================================================================================================================================================
 
-  text <- grid.text(label = bb_text$label, x = unit(new_x, page_units), y = unit(page_height - new_y, page_units), just = bb_text$just,
+  text <- grid.text(label = bb_text$label, x = unit(new_x, page_units), y = unit(new_y, page_units), just = bb_text$just,
             gp = bb_textInternal$gp, rot = bb_textInternal$rot, check.overlap = bb_textInternal$check.overlap)
 
   # ======================================================================================================================================================================================

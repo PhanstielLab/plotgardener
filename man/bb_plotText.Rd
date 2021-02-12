@@ -12,6 +12,7 @@ bb_plotText(
   check.overlap = FALSE,
   x,
   y,
+  plot = NULL,
   just = "center",
   default.units = "inches",
   params = NULL,
@@ -33,6 +34,8 @@ bb_plotText(
 
 \item{y}{A numeric vector or unit object specifying text y-location.}
 
+\item{plot}{Input BentoBox plot to internally place text relative to instead of overall BentoBox page.}
+
 \item{just}{Justification of text relative to its (x, y) location. If there are two values, the first value specifies horizontal justification and the second value specifies vertical justification.
 Possible string values are: \code{"left"}, \code{"right"}, \code{"centre"}, \code{"center"}, \code{"bottom"}, and \code{"top"}. Default value is \code{just = "center"}.}
 
@@ -50,11 +53,36 @@ Plot text within a BentoBox layout
 }
 \examples{
 ## Create a BentoBox page
-bb_pageCreate(width = 2, height = 2, default.units = "inches")
+bb_pageCreate(width = 4, height = 4.5, default.units = "inches")
 
-## Plot text
-bb_plotText(label = "BentoBox", fontsize = 14,
+## Plot text, adjusting fontsize and fontface
+bb_plotText(label = "BentoBox", fontsize = 14, fontface = "bold",
             x = 1, y = 1, just = "center", default.units = "inches")
+
+## Plot text, adjusting color, rotation, and fontfamily
+bb_plotText(label = "coordinate-based", fontcolor = "#225EA8", rot = 90,
+            fontfamily = "HersheyScript", x = 2, y = 1, just = "center",
+            default.units = "inches")
+
+## Plot a text label in multiple places at once
+bb_plotText(label = "R", x = c(0.5, 1, 1.5), y = 1.5, just = "center",
+            default.units = "inches")
+
+## Plot a vector of text labels
+bb_plotText(label = c("bb", "Bento", "Box"), x = 3, y = c(0.5, 1, 1.75),
+            just = "center", default.units = "inches")
+
+## Plot text relative to a BentoBox plot
+data("bb_hicData")
+hicPlot <- bb_plotHicSquare(data = bb_hicData, chrom = "chr21",
+                           chromstart = 28000000, chromend = 29500000, zrange = c(0, 70),
+                           x = 1, y = 2, width = 2, height = 2, just = c("left", "top"),
+                           default.units = "inches")
+bb_annoGenomeLabel(plot = hicPlot, x = 1, y = 4.025, scale = "Mb",
+                   just = c("left", "top"), default.units = "inches")
+
+bb_plotText(label = "Loop", fontsize = 8, plot = hicPlot, x = 29075000, y = 28150000,
+            just = "center", default.units = "native")
 
 ## Hide page guides
 bb_pageGuideHide()
