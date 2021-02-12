@@ -93,6 +93,7 @@ reference:
 
 figures:
   fig.height: 6
+  fig.width: 7.5
   fig.asp: ~
 
 

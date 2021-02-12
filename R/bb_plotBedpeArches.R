@@ -376,9 +376,10 @@ bb_plotBedpeArches <- function(data, chrom, chromstart = NULL, chromend = NULL, 
                            & bedpe[,2] >= arches_plot$chromstart & bedpe[,3] <= arches_plot$chromend
                            & bedpe[,5] >= arches_plot$chromstart & bedpe[,6] <= arches_plot$chromend),]
     } else {
-      bedpe <- bedpe[bedpe[[1]] == arches_plot$chrom & bedpe[[4]] == arches_plot$chrom &
-                       ((bedpe[[3]] >= arches_plot$chromstart & bedpe[[3]] <= arches_plot$chromend) |
-                          (bedpe[[5]] <= arches_plot$chromstart & bedpe[[5]] >= arches_plot$chromend))]
+
+      bedpe <- bedpe[which(bedpe[,1] == arches_plot$chrom & bedpe[,4] == arches_plot$chrom &
+                       ((bedpe[,3] >= arches_plot$chromstart & bedpe[,3] <= arches_plot$chromend) |
+                          (bedpe[,5] <= arches_plot$chromstart & bedpe[,5] >= arches_plot$chromend))),]
     }
 
   } else {

@@ -35,7 +35,7 @@
 #' data("bb_bedData")
 #'
 #' ## Plot pileup BED plot filling up entire graphic device
-#' bb_plotBED(data = bb_bedData, chrom = "chr21", chromstart = 29073000, chromend = 29074000,
+#' bb_plotBed(data = bb_bedData, chrom = "chr21", chromstart = 29073000, chromend = 29074000,
 #'               fill = "grey")
 #'
 #' ## Plot and place a pileup BED plot on a BentoBox page
