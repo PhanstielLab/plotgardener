@@ -16,5 +16,5 @@ Returns a "\code{bb_colorby}" object.
 }
 \description{
 \code{colorby} should be used to create a set of parameters that specify color scaling for the functions \code{bb_plotBedpe},
-\code{bb_plotBedpeArches}, and \code{bb_plotPileup}.
+\code{bb_plotBedpeArches}, and \code{bb_plotBed}.
 }
