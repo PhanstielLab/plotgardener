@@ -19,7 +19,7 @@
 #' @param archHeight Single numeric value or numeric vector specifying the arch heights. When NULL, all arches will be the same height, filling up the given plot area
 #' @param fill Character value(s) as a single value, vector, or palette specifying fill colors of arches. Default value is \code{fill = "grey"}.
 #' @param colorby A "\link[BentoBox]{colorby}" object specifying information for scaling colors in data.
-#' @param linecolor A character value specifying the color of the lines outlining arches. Default value is \code{linecolor = "grey"}.
+#' @param linecolor A character value specifying the color of the lines outlining arches. "NA" for no line color.  "fill" for the same color as the fill. Default value is \code{linecolor = "NA"}.
 #' @param alpha Numeric value specifying transparency. Default value is \code{alpha = 0.4}.
 #' @param bg Character value indicating background color. Default value is \code{bg = NA}.
 #' @param clip A logical value indicating whether to clip any arches that get cutoff in the given genomic region. Default value is \code{clip = TRUE}.
@@ -76,7 +76,7 @@
 #'
 #' @export
 bb_plotBedpeArches <- function(data, chrom, chromstart = NULL, chromend = NULL, assembly = "hg19", style = "2D", position = "top", curvature = 5, archHeight = NULL,
-                               fill = "grey", colorby = NULL, linecolor = "grey", alpha = 0.4, bg = NA, clip = TRUE, baseline = FALSE, x = NULL,
+                               fill = "grey", colorby = NULL, linecolor = "NA", alpha = 0.4, bg = NA, clip = TRUE, baseline = FALSE, x = NULL,
                                y = NULL, width = NULL, height = NULL, just = c("left", "top"), default.units = "inches", draw = TRUE, params = NULL, ...){
 
   # ======================================================================================================================================================================================
@@ -165,14 +165,15 @@ bb_plotBedpeArches <- function(data, chrom, chromstart = NULL, chromend = NULL, 
   }
 
   ## Define a function that creates ribbon arch grobs
-  drawRibbons <- function(df, style, arch, position, linecolor, transp, ...){
+  drawRibbons <- function(df, style, arch, position, transp, ...){
 
     x1 <- df[[2]]
     x2 <- df[[3]]
     y1 <- df[[5]]
     y2 <- df[[6]]
     fillCol <- df[[7]]
-    outerHeight <- as.numeric(df[[9]])
+    lineCol <- df$linecolor
+    outerHeight <- as.numeric(df[[length(df)]])
     innerHeight <- outerHeight - 0.01
 
     if (style == "3D"){
@@ -203,10 +204,13 @@ bb_plotBedpeArches <- function(data, chrom, chromstart = NULL, chromend = NULL, 
     innerBP <- bezierPoints(innerLoop)
     outerBP <- bezierPoints(outerLoop)
 
+    print (fillCol)
+    print (lineCol)
+
     ## Connect points, convert to proper units and draw polygons
     archGrob <- polygonGrob(x = unit(c(convertX(outerBP$x, "native"), rev(convertX(innerBP$x, "native"))), "native"),
                  y = unit(c(convertY(outerBP$y, "npc"), rev(convertY(innerBP$y, "npc"))), "npc"),
-                 gp = gpar(fill = fillCol, col = linecolor, alpha = transp, ...))
+                 gp = gpar(fill = fillCol, col = lineCol, alpha = transp, ...))
     assign("arches_grobs", addGrob(gTree = get("arches_grobs", envir = bbEnv), child = archGrob), envir = bbEnv)
 
 
@@ -411,6 +415,21 @@ bb_plotBedpeArches <- function(data, chrom, chromstart = NULL, chromend = NULL, 
   bedpe <- bedpe[,c(1:6)]
   bedpe$color <- colors
 
+  # Set actual line color to fill color if requested by user
+  actuallinecolor = linecolor
+  if (is.null(linecolor) == FALSE)
+  {
+    if (linecolor == "fill")
+    {
+      actuallinecolor = bedpe$color
+    }
+  }
+  if (is.null(linecolor) == TRUE)
+  {
+    actuallinecolor = "NA"
+  }
+  bedpe$linecolor = actuallinecolor
+
   # ======================================================================================================================================================================================
   # VIEWPORTS
   # ======================================================================================================================================================================================
@@ -492,7 +511,7 @@ bb_plotBedpeArches <- function(data, chrom, chromstart = NULL, chromend = NULL, 
     }
 
     invisible(apply(bedpe, 1, drawRibbons, style = bb_archInternal$style, arch = bb_archInternal$curvature, position = bb_archInternal$position,
-                    linecolor = bb_archInternal$linecolor, transp = bb_archInternal$alpha, ...))
+                    transp = bb_archInternal$alpha, ...))
 
   } else {
 
