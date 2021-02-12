@@ -510,7 +510,7 @@ bb_plotBedpe <- function(data, chrom, chromstart = NULL, chromend = NULL, assemb
                               x1 = rowBedpe$pos2,
                               y1 = rowBedpe$y + 0.5*boxHeight,
                               default.units = "native",
-                              gp = gpar(col = rowBedpe$color, ...))
+                              gp = gpar(col = rowBedpe$color, lineend="butt",...))
 
     assign("bedpe_grobs", addGrob(gTree = get("bedpe_grobs", envir = bbEnv), child = bedpeRect1), envir = bbEnv)
     assign("bedpe_grobs", addGrob(gTree = get("bedpe_grobs", envir = bbEnv), child = bedpeRect2), envir = bbEnv)
