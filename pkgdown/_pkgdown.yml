@@ -47,8 +47,32 @@ reference:
       - starts_with("bb_read")
 
   - title: "Plotting functions"
+  - subtitle: "Genomics"
     contents:
-      - starts_with("bb_plot")
+      - bb_plotBed
+      - bb_plotBedpe
+      - bb_plotBedpeArches
+      - bb_plotGenes
+      - bb_plotGenomeLabel
+      - bb_plotHicSquare
+      - bb_plotHicTriangle
+      - bb_plotIdeogram
+      - bb_plotManhattan
+      - bb_plotSignal
+      - bb_plotTranscripts
+  - subtitle: "Shapes and Basic Elements"
+  - contents:
+      - bb_plotCircle
+      - bb_plotLegend
+      - bb_plotPolygon
+      - bb_plotRaster
+      - bb_plotRect
+      - bb_plotSegments
+      - bb_plotText
+  - subtitle: "External"
+  - contents:
+      - bb_plotBase
+      - bb_plotGG
 
   - title: "Annotation functions"
     contents:
