@@ -223,9 +223,6 @@ bb_plotBedpeArches <- function(data, chrom, chromstart = NULL, chromend = NULL, 
     innerBP <- bezierPoints(innerLoop)
     outerBP <- bezierPoints(outerLoop)
 
-    print (fillCol)
-    print (lineCol)
-
     ## Connect points, convert to proper units and draw polygons
     archGrob <- polygonGrob(x = unit(c(convertX(outerBP$x, "native"), rev(convertX(innerBP$x, "native"))), "native"),
                  y = unit(c(convertY(outerBP$y, "npc"), rev(convertY(innerBP$y, "npc"))), "npc"),
