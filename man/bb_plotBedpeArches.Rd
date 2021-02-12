@@ -99,7 +99,7 @@ Returns a \code{bb_arches} object containing relevant genomic region, placement,
 Plot paired-end BEDPE data in an arch style
 }
 \details{
-#' A BEDPE Arches plot can be placed on a BentoBox coordinate page by providing plot placement parameters:
+A BEDPE Arches plot can be placed on a BentoBox coordinate page by providing plot placement parameters:
 \preformatted{
 bb_plotBedpeArches(data chrom,
                    chromstart = NULL, chromend = NULL,

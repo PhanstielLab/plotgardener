@@ -5,6 +5,7 @@
 #' @param fontsize A numeric specifying text fontsize in points. Default value is \code{fontsize = 10}.
 #' @param fontcolor A character value indicating the color for text. Default value is \code{fontcolor = "black"}.
 #' @param linecolor A character value indicating the color of the genome label axis. Default value is \code{linecolor = "black"}.
+#' @param margin A numeric or unit vector specifying space between axis and coordinate labels. Default value is \code{margin = unit(1, "mm")},
 #' @param scale A character value indicating the scale of the coordinates along the genome label. Default value is \code{scale = "bp"}. Options are:
 #' \itemize{
 #' \item{\code{"bp"}: }{base pairs.}
@@ -59,7 +60,7 @@
 #' bb_pageGuideHide()
 #'
 #' @export
-bb_annoGenomeLabel <- function(plot, fontsize = 10, fontcolor = "black", linecolor = "black", scale = "bp",
+bb_annoGenomeLabel <- function(plot, fontsize = 10, fontcolor = "black", linecolor = "black", margin = unit(1, "mm"), scale = "bp",
                                commas = TRUE, sequence = TRUE, boxWidth = 0.5, axis = "x", at = NULL,
                                tcl = 0.5, x, y, just = c("left", "top"), default.units = "inches", params = NULL, ...){
 
@@ -72,6 +73,7 @@ bb_annoGenomeLabel <- function(plot, fontsize = 10, fontcolor = "black", linecol
   if(missing(fontcolor)) fontcolor <- NULL
   if(missing(linecolor)) linecolor <- NULL
   if(missing(scale)) scale <- NULL
+  if(missing(margin)) margin <- NULL
   if(missing(commas)) commas <- NULL
   if(missing(sequence)) sequence <- NULL
   if(missing(boxWidth)) boxWidth <- NULL
@@ -86,7 +88,7 @@ bb_annoGenomeLabel <- function(plot, fontsize = 10, fontcolor = "black", linecol
   if(!hasArg(y)) y <- NULL
 
   ## Compile all parameters into an internal object
-  bb_genomeLabelInternal <- structure(list(plot = plot, x = x, y = y, just = just, scale = scale,
+  bb_genomeLabelInternal <- structure(list(plot = plot, x = x, y = y, just = just, scale = scale, margin = margin,
                                            fontsize = fontsize, fontcolor = fontcolor, linecolor = linecolor, commas = commas,
                                            sequence = sequence, axis = axis, boxWidth = boxWidth, at = at, tcl = tcl, default.units = default.units), class = "bb_genomeLabelInternal")
   bb_genomeLabelInternal <- parseParams(bb_params = params, object_params = bb_genomeLabelInternal)
@@ -95,6 +97,7 @@ bb_annoGenomeLabel <- function(plot, fontsize = 10, fontcolor = "black", linecol
   if(is.null(bb_genomeLabelInternal$fontsize)) bb_genomeLabelInternal$fontsize <- 10
   if(is.null(bb_genomeLabelInternal$fontcolor)) bb_genomeLabelInternal$fontcolor <- "black"
   if(is.null(bb_genomeLabelInternal$linecolor)) bb_genomeLabelInternal$linecolor <- "black"
+  if(is.null(bb_genomeLabelInternal$margin)) bb_genomeLabelInternal$margin <- unit(1, "mm")
   if(is.null(bb_genomeLabelInternal$scale)) bb_genomeLabelInternal$scale <- "bp"
   if(is.null(bb_genomeLabelInternal$commas)) bb_genomeLabelInternal$commas <- TRUE
   if(is.null(bb_genomeLabelInternal$sequence)) bb_genomeLabelInternal$sequence <- TRUE
@@ -150,7 +153,8 @@ bb_annoGenomeLabel <- function(plot, fontsize = 10, fontcolor = "black", linecol
 
   bb_genomeLabel <- bb_plotGenomeLabel(chrom = chrom, chromstart = chromstart, chromend = chromend, assembly = assembly,
                                        fontsize = bb_genomeLabelInternal$fontsize, fontcolor = bb_genomeLabelInternal$fontcolor,
-                                       linecolor = bb_genomeLabelInternal$linecolor, scale = bb_genomeLabelInternal$scale,
+                                       linecolor = bb_genomeLabelInternal$linecolor, margin = bb_genomeLabelInternal$margin,
+                                       scale = bb_genomeLabelInternal$scale,
                                        commas = bb_genomeLabelInternal$commas, sequence = bb_genomeLabelInternal$sequence,
                                        boxWidth = bb_genomeLabelInternal$boxWidth, axis = bb_genomeLabelInternal$axis,
                                        at = bb_genomeLabelInternal$at, tcl = bb_genomeLabelInternal$tcl,

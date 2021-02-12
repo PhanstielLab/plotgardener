@@ -12,6 +12,7 @@ bb_plotGenomeLabel(
   fontsize = 10,
   fontcolor = "black",
   linecolor = "black",
+  margin = unit(1, "mm"),
   scale = "bp",
   commas = TRUE,
   sequence = TRUE,
@@ -42,6 +43,8 @@ bb_plotGenomeLabel(
 \item{fontcolor}{A character value indicating the color for text. Default value is \code{fontcolor = "black"}.}
 
 \item{linecolor}{A character value indicating the color of the genome label axis. Default value is \code{linecolor = "black"}.}
+
+\item{margin}{A numeric or unit vector specifying space between axis and coordinate labels. Default value is \code{margin = unit(1, "mm")},}
 
 \item{scale}{A character value indicating the scale of the coordinates along the genome label. Default value is \code{scale = "bp"}. Options are:
 \itemize{

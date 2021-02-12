@@ -69,6 +69,7 @@ bb_params(
   lty = NULL,
   lwd = NULL,
   main = NULL,
+  margin = NULL,
   matrix = NULL,
   norm = NULL,
   OrgDb = NULL,

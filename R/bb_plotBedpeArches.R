@@ -80,7 +80,7 @@
 #' bb_pageGuideHide()
 #'
 #' @details
-#' #' A BEDPE Arches plot can be placed on a BentoBox coordinate page by providing plot placement parameters:
+#' A BEDPE Arches plot can be placed on a BentoBox coordinate page by providing plot placement parameters:
 #' \preformatted{
 #' bb_plotBedpeArches(data chrom,
 #'                    chromstart = NULL, chromend = NULL,
