@@ -480,13 +480,13 @@ bb_plotGenomeLabel <- function(chrom, chromstart = NULL, chromend = NULL, assemb
                                                        GenomicRanges::GRanges(seqnames = chromLabel, ranges = IRanges::IRanges(start = object$chromstart, end = object$chromend)))),
                          split = "")
     ## Make dataframe of sequence letter, position, and color
-    dfSequence <- data.frame("nucleotide" = unlist(sequence), "pos" = seq(object$chromstart, object$chromend), "col" = "black")
+    dfSequence <- data.frame("nucleotide" = unlist(sequence), "pos" = seq(object$chromstart, object$chromend), "col" = "grey")
 
     ## Make colors A = green, T = red, G = orange, C = blue
-    dfSequence[which(dfSequence$nucleotide == "A"),]$col <- "#009600"
-    dfSequence[which(dfSequence$nucleotide == "T"),]$col <- "#ff0000"
-    dfSequence[which(dfSequence$nucleotide == "G"),]$col <- "#d17105"
-    dfSequence[which(dfSequence$nucleotide == "C"),]$col <- "#0000ff"
+    invisible(tryCatch(dfSequence[which(dfSequence$nucleotide == "A"),]$col <- "#009600", error = function(e){}))
+    invisible(tryCatch(dfSequence[which(dfSequence$nucleotide == "T"),]$col <- "#ff0000", error = function(e){}))
+    invisible(tryCatch(dfSequence[which(dfSequence$nucleotide == "G"),]$col <- "#d17105", error = function(e){}))
+    invisible(tryCatch(dfSequence[which(dfSequence$nucleotide == "C"),]$col <- "#0000ff", error = function(e){}))
 
     seq_vp <- vp[[2]]
 
