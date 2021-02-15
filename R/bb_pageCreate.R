@@ -5,9 +5,7 @@
 #' @param default.units A string indicating the default units to use if \code{width} or \code{height} are only given as numerics. Default value is \code{default.units = "inches"}.
 #' @param xgrid A numeric indicating the increment by which to place vertical gridlines. Default value is \code{xgrid = 0.5}.
 #' @param ygrid A numeric indicating the increment by which to place horizontal gridlines. Default value is \code{ygrid = 0.5}.
-#' @param showOutline A logical value indicating whether to draw a black border around the entire page. Default value is \code{showOutline = TRUE}.
-#' @param showRuler A logical value indicating whether to show guiding rulers along the top and left side of page. Default value is \code{showRuler = TRUE}.
-#' @param showUnit A logical value indicating whether to show the name of units at the top left of the page. Default value is \code{showUnit = TRUE}.
+#' @param showGuides A logical value indicating whether to draw a black border around the entire page and guiding rulers along the top and left side of the page. Default value is \code{showOutline = TRUE}.
 #' @param params An optional \link[BentoBox]{bb_params} object containing relevant function parameters.
 #'
 #' @examples
@@ -20,7 +18,7 @@
 #' @details \code{width} and \code{height} must be specified in the same units.
 #'
 #' @export
-bb_pageCreate <- function(width = 8.5, height = 11, default.units = "inches", xgrid = 0.5, ygrid = 0.5, showOutline = TRUE, showRuler = TRUE, showUnit = TRUE, params = NULL){
+bb_pageCreate <- function(width = 8.5, height = 11, default.units = "inches", xgrid = 0.5, ygrid = 0.5, showGuides = TRUE, params = NULL){
 
   # ======================================================================================================================================================================================
   # FUNCTION
@@ -71,24 +69,20 @@ bb_pageCreate <- function(width = 8.5, height = 11, default.units = "inches", xg
   if(missing(width)) width <- NULL
   if(missing(height)) height <- NULL
   if(missing(default.units)) default.units <- NULL
-  if(missing(showOutline)) showOutline <- NULL
-  if(missing(showRuler)) showRuler <- NULL
-  if(missing(showUnit)) showUnit <- NULL
+  if(missing(showGuides)) showGuides <- NULL
   if(missing(xgrid)) xgrid <- NULL
   if(missing(ygrid)) ygrid <- NULL
 
   ## Compile all parameters into an internal object
-  bb_page <- structure(list(width = width, height = height, default.units = default.units, showOutline = showOutline,
-                            showRuler = showRuler, showUnit = showUnit, xgrid = xgrid, ygrid = ygrid), class = "bb_page")
+  bb_page <- structure(list(width = width, height = height, default.units = default.units, showGuides = showGuides,
+                            xgrid = xgrid, ygrid = ygrid), class = "bb_page")
   bb_page <- parseParams(bb_params = params, object_params = bb_page)
 
   ## For any defaults that are still NULL, set back to default
   if(is.null(bb_page$width)) bb_page$width <- 8.5
   if(is.null(bb_page$height)) bb_page$height <- 11
   if(is.null(bb_page$default.units)) bb_page$default.units <- "inches"
-  if(is.null(bb_page$showOutline)) bb_page$showOutline <- TRUE
-  if(is.null(bb_page$showRuler)) bb_page$showRuler <- TRUE
-  if(is.null(bb_page$showUnit)) bb_page$showUnit <- TRUE
+  if(is.null(bb_page$showGuides)) bb_page$showGuides <- TRUE
   if(is.null(bb_page$xgrid)) bb_page$xgrid <- 0.5
   if(is.null(bb_page$ygrid)) bb_page$ygrid <- 0.5
 
@@ -175,21 +169,14 @@ bb_pageCreate <- function(width = 8.5, height = 11, default.units = "inches", xg
   assign("guide_grobs", gTree(name = "guide_grobs", vp = page_vp), envir = bbEnv)
 
   # ======================================================================================================================================================================================
-  # SHOW OUTLINE
+  # SHOW OUTLINE/RULER/UNITS
   # ======================================================================================================================================================================================
 
-  if (bb_page$showOutline == TRUE){
+  if (bb_page$showGuides == TRUE){
 
     border <- rectGrob()
     assign("guide_grobs", addGrob(gTree = get("guide_grobs", envir = bbEnv), child = border), envir = bbEnv)
 
-  }
-
-  # ======================================================================================================================================================================================
-  # SHOW RULER
-  # ======================================================================================================================================================================================
-
-  if (bb_page$showRuler == TRUE){
 
     if (page_units == "inches"){
 
@@ -328,14 +315,10 @@ bb_pageCreate <- function(width = 8.5, height = 11, default.units = "inches", xg
     assign("guide_grobs", addGrob(gTree = get("guide_grobs", envir = bbEnv), child = vLabel), envir = bbEnv)
 
 
-  }
-
-
-  if (bb_page$showUnit == TRUE){
-
     ## Unit annotation
     unitLabel <- textGrob(label = page_units, x = 0, y = page_height, hjust = 1.75, vjust = -1.5, default.units = page_units, just = c("right", "bottom"))
     assign("guide_grobs", addGrob(gTree = get("guide_grobs", envir = bbEnv), child = unitLabel), envir = bbEnv)
+
 
   }
 

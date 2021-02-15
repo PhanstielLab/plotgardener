@@ -10,9 +10,7 @@ bb_pageCreate(
   default.units = "inches",
   xgrid = 0.5,
   ygrid = 0.5,
-  showOutline = TRUE,
-  showRuler = TRUE,
-  showUnit = TRUE,
+  showGuides = TRUE,
   params = NULL
 )
 }
@@ -27,11 +25,7 @@ bb_pageCreate(
 
 \item{ygrid}{A numeric indicating the increment by which to place horizontal gridlines. Default value is \code{ygrid = 0.5}.}
 
-\item{showOutline}{A logical value indicating whether to draw a black border around the entire page. Default value is \code{showOutline = TRUE}.}
-
-\item{showRuler}{A logical value indicating whether to show guiding rulers along the top and left side of page. Default value is \code{showRuler = TRUE}.}
-
-\item{showUnit}{A logical value indicating whether to show the name of units at the top left of the page. Default value is \code{showUnit = TRUE}.}
+\item{showGuides}{A logical value indicating whether to draw a black border around the entire page and guiding rulers along the top and left side of the page. Default value is \code{showOutline = TRUE}.}
 
 \item{params}{An optional \link[BentoBox]{bb_params} object containing relevant function parameters.}
 }
