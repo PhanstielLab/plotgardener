@@ -388,7 +388,7 @@ bb_plotHicSquare <- function(data, resolution = "auto", zrange = NULL, norm = "K
       if (!is.null(hic_plot$chromstart) & !is.null(hic_plot$chromend)){
         message(paste("Read in dataframe.  Assuming \'chrom\' in column1 and \'altchrom\' in column2.", hic_plot$resolution, "BP resolution detected."))
         ## check range of data in dataframe
-        check_dataframe(hic = hic, hic_plot = hic_plot)
+        #check_dataframe(hic = hic, hic_plot = hic_plot)
       } else {
         hic <- data.frame(matrix(nrow = 0, ncol = 3))
       }

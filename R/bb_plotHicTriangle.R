@@ -307,7 +307,7 @@ bb_plotHicTriangle <- function(data, resolution = "auto", zrange = NULL, norm = 
       if (!is.null(hic_plot$chromstart) & !is.null(hic_plot$chromend)){
         message(paste("Read in dataframe.", hic_plot$resolution, "BP resolution detected."))
         ## check range of data in dataframe
-        check_dataframe(hic = hic, hic_plot = hic_plot)
+        #check_dataframe(hic = hic, hic_plot = hic_plot)
       } else {
         hic <- data.frame(matrix(nrow = 0, ncol = 3))
       }
