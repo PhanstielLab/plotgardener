@@ -32,35 +32,51 @@
 #' library("TxDb.Hsapiens.UCSC.hg19.knownGene")
 #' library("org.Hs.eg.db")
 #'
-#' ## Plot gene track filling up entire graphic device
-#' bb_plotGenes(chrom = "chr8", chromstart = 1000000, chromend = 2000000, assembly = "hg19")
+#' ## Load BEDPE data
+#' data("bb_bedpeData")
 #'
-#' ## Plot and place gene track with a highlighted gene on a BentoBox page
-#' bb_pageCreate(width = 5, height = 2, default.units = "inches")
-#' genesPlot <- bb_plotGenes(chrom = "chr8", chromstart = 1000000, chromend = 2000000,
-#'                           assembly = "hg19",
-#'                           geneHighlights = data.frame("gene" = c("DLGAP2"),
-#'                                                       "color" = c("steel blue")),
-#'                           geneBackground = "grey",
-#'                           x = 0.5, y = 0.25, width = 4.5, height = 1.5,
+#' ## Set genomic coordinates
+#' paramssmall <- bb_params(chrom = "chr8", chromstart = 0000000, chromend = 3000000,
+#'                         assembly = "hg19", width = 7)
+#' paramsbig <- bb_params(chrom = "chr8", chromstart = 0, chromend = 146364022,
+#'                       assembly = "hg19", width = 7)
+#' ## Set colors
+#' cols = c("#41B6C4","#225EA8")
+#'
+#' ## Create page
+#' bb_pageCreate(width = 7.5, height = 3.5, default.units = "inches")
+#'
+#' ## Plot genes big
+#' genesPlot <- bb_plotGenes(params = paramsbig, strandcolors = cols, fontcolors = cols,
+#'                           x = 0.25, y = 0.25, height = 0.75,
 #'                           just = c("left", "top"), default.units = "inches")
 #'
 #' ## Annotate genome label
-#' bb_annoGenomeLabel(plot = genesPlot, x = 0.5, y = 1.6, scale = "Mb", just = c("left", "top"))
+#' bb_annoGenomeLabel(plot = genesPlot, x = 0.25, y = 1.0, scale = "Mb", just = c("left", "top"))
+#'
+#' ## Plot genes small
+#' genesPlot <- bb_plotGenes(params = paramssmall,
+#'                          geneHighlights = data.frame("gene" = c("DLGAP2"),"color" = c("#225EA8")),
+#'                          geneBackground = "grey",
+#'                          x = 0.25, y = 2.25, height = 0.75,
+#'                          just = c("left", "top"), default.units = "inches")
+#'
+#' ## Annotate genome label
+#' bb_annoGenomeLabel(plot = genesPlot, x = 0.25, y = 3.0, scale = "Mb", just = c("left", "top"))
 #'
 #' ## Hide page guides
 #' bb_pageGuideHide()
 #'
 #' @details
-#' This function can be used to quickly plot a gene track by ignoring plot placement parameters:
-#' \preformatted{
-#' bb_plotGenes(chrom, chromstart = NULL, chromend = NULL)
-#' }
 #' A gene track can be placed on a BentoBox coordinate page by providing plot placement parameters:
 #' \preformatted{
 #' bb_plotGenes(chrom, chromstart = NULL, chromend = NULL,
 #'              x, y, width, height, just = c("left", "top"),
 #'              default.units = "inches")
+#' }
+#' This function can be used to quickly plot an unnannotated gene track by ignoring plot placement parameters:
+#' \preformatted{
+#' bb_plotGenes(chrom, chromstart = NULL, chromend = NULL)
 #' }
 #'
 #' Genomic annotation information is acquired through \link[GenomicFeatures]{TxDb} and \link[AnnotationDbi]{OrgDb-class} packages, as determined

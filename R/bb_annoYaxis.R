@@ -10,6 +10,8 @@
 #' \item{\code{FALSE}: }{y-axis is drawn at the right of the plot.}
 #' }
 #' @param gp Grid graphical parameters. See \link[grid]{gpar}.
+#' @param scipen An integer indicating the penalty to be applied when deciding to print numeric values in fixed or exponential notation. Default value is \code{scipen = 999}.
+#' @param axisLine A logical value indicating whether to show the axis line. Default value is \code{axisLine = FALSE}.
 #' @param params An optional \link[BentoBox]{bb_params} object containing relevant function parameters.
 #'
 #' @return Returns a \code{bb_yaxis} object containing relevant \link[grid]{grob} information.
@@ -44,19 +46,22 @@ bb_annoYaxis <- function(plot, at = NULL, label = TRUE, main = TRUE, gp = gpar()
   ## Check which defaults are not overwritten and set to NULL
   if(missing(label)) label <- NULL
   if(missing(main)) main <- NULL
+  if(missing(scipen)) scipen <- NULL
+  if(missing(axisLine)) axisLine <- NULL
 
   ## Check if plot argument is missing (could be in object)
   if(!hasArg(plot)) plot <- NULL
 
   ## Compile all parameters into an internal object
-  bb_yInternal <- structure(list(plot = plot, at = at, label = label, main = main, gp = gp), class = "bb_yInternal")
+  bb_yInternal <- structure(list(plot = plot, at = at, label = label, main = main, gp = gp, scipen = scipen, axisLine = axisLine), class = "bb_yInternal")
 
   bb_yInternal <- parseParams(bb_params = params, object_params = bb_yInternal)
 
   ## For any defaults that are still NULL, set back to default
   if(is.null(bb_yInternal$label)) bb_yInternal$label <- TRUE
   if(is.null(bb_yInternal$main)) bb_yInternal$main <- TRUE
-
+  if(is.null(bb_yInternal$scipen)) bb_yInternal$scipen <- 999
+  if(is.null(bb_yInternal$axisLine)) bb_yInternal$axisLine <- FALSE
   # ======================================================================================================================================================================================
   # CATCH ERRORS
   # ======================================================================================================================================================================================
@@ -69,7 +74,7 @@ bb_annoYaxis <- function(plot, at = NULL, label = TRUE, main = TRUE, gp = gpar()
   # ======================================================================================================================================================================================
 
   usrscipen = getOption("scipen")
-  options(scipen = scipen)
+  options(scipen = bb_yInternal$scipen)
 
   # ======================================================================================================================================================================================
   # INITIALIZE OBJECT
@@ -132,7 +137,7 @@ bb_annoYaxis <- function(plot, at = NULL, label = TRUE, main = TRUE, gp = gpar()
   # ======================================================================================================================================================================================
 
   yGrob <- grid.yaxis(at = bb_yInternal$at, label = bb_yInternal$label, main = bb_yInternal$main, gp = bb_yInternal$gp, vp = vp)
-  if(!axisLine) grid.remove(paste0(yGrob$name, "::major"))
+  if(!bb_yInternal$axisLine) grid.remove(paste0(yGrob$name, "::major"))
   yaxis_grobs <- gTree(vp = vp, children = gList(yGrob))
   yAxis$grobs <- yaxis_grobs
 

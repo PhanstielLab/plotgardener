@@ -9,6 +9,8 @@
 #' \item{\code{FALSE}: }{x-axis is drawn at the top of the plot.}
 #' }
 #' @param gp Grid graphical parameters. See \link[grid]{gpar}.
+#' @param scipen An integer indicating the penalty to be applied when deciding to print numeric values in fixed or exponential notation. Default value is \code{scipen = 999}.
+#' @param axisLine A logical value indicating whether to show the axis line. Default value is \code{axisLine = FALSE}.
 #' @param params An optional \link[BentoBox]{bb_params} object containing relevant function parameters.
 #'
 #' @return Returns a \code{bb_xaxis} object containing relevant \link[grid]{grob} information.
@@ -43,18 +45,22 @@ bb_annoXaxis <- function(plot, at = NULL, label = TRUE, main = TRUE, gp = gpar()
   ## Check which defaults are not overwritten and set to NULL
   if(missing(label)) label <- NULL
   if(missing(main)) main <- NULL
+  if(missing(scipen)) scipen <- NULL
+  if(missing(axisLine)) axisLine <- NULL
 
   ## Check if plot argument is missing (could be in object)
   if(!hasArg(plot)) plot <- NULL
 
   ## Compile all parameters into an internal object
-  bb_xInternal <- structure(list(plot = plot, at = at, label = label, main = main, gp = gp), class = "bb_xInternal")
+  bb_xInternal <- structure(list(plot = plot, at = at, label = label, main = main, gp = gp, scipen = scipen, axisLine = axisLine), class = "bb_xInternal")
 
   bb_xInternal <- parseParams(bb_params = params, object_params = bb_xInternal)
 
   ## For any defaults that are still NULL, set back to default
   if(is.null(bb_xInternal$label)) bb_xInternal$label <- TRUE
   if(is.null(bb_xInternal$main)) bb_xInternal$main <- TRUE
+  if(is.null(bb_xInternal$scipen)) bb_xInternal$scipen <- 999
+  if(is.null(bb_xInternal$axisLine)) bb_xInternal$axisLine <- FALSE
 
   # ======================================================================================================================================================================================
   # CATCH ERRORS
@@ -68,7 +74,7 @@ bb_annoXaxis <- function(plot, at = NULL, label = TRUE, main = TRUE, gp = gpar()
   # ======================================================================================================================================================================================
 
   usrscipen = getOption("scipen")
-  options(scipen = scipen)
+  options(scipen = bb_xInternal$scipen)
 
   # ======================================================================================================================================================================================
   # INITIALIZE OBJECT
@@ -129,7 +135,7 @@ bb_annoXaxis <- function(plot, at = NULL, label = TRUE, main = TRUE, gp = gpar()
   # ======================================================================================================================================================================================
 
   xGrob <- grid.xaxis(at = bb_xInternal$at, label = bb_xInternal$label, main = bb_xInternal$main, gp = bb_xInternal$gp, vp = vp)
-  if(!axisLine) grid.remove(paste0(xGrob$name, "::major"))
+  if(!bb_xInternal$axisLine) grid.remove(paste0(xGrob$name, "::major"))
   xaxis_grobs <- gTree(vp = vp, children = gList(xGrob))
   xAxis$grobs <- xaxis_grobs
 

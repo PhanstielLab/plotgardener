@@ -10,6 +10,8 @@ bb_annoXaxis(
   label = TRUE,
   main = TRUE,
   gp = gpar(),
+  scipen = 999,
+  axisLine = FALSE,
   params = NULL
 )
 }
@@ -27,6 +29,10 @@ bb_annoXaxis(
 }}
 
 \item{gp}{Grid graphical parameters. See \link[grid]{gpar}.}
+
+\item{scipen}{An integer indicating the penalty to be applied when deciding to print numeric values in fixed or exponential notation. Default value is \code{scipen = 999}.}
+
+\item{axisLine}{A logical value indicating whether to show the axis line. Default value is \code{axisLine = FALSE}.}
 
 \item{params}{An optional \link[BentoBox]{bb_params} object containing relevant function parameters.}
 }
