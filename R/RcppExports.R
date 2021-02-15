@@ -5,3 +5,7 @@ checkRow <- function(x, maxRows, rowCol, wiggle) {
     .Call('_BentoBox_checkRow', PACKAGE = 'BentoBox', x, maxRows, rowCol, wiggle)
 }
 
+rebinBigwig <- function(bigwig, bins) {
+    .Call('_BentoBox_rebinBigwig', PACKAGE = 'BentoBox', bigwig, bins)
+}
+
