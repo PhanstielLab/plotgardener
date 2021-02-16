@@ -522,6 +522,9 @@ bb_plotManhattan <- function(data, sigVal = 5e-08, chrom = NULL, chromstart = NU
       # ======================================================================================================================================================================================
 
       if (!is.null(bb_manInternal$scaleLD)){
+        ## Make sure LD column is numeric
+        bed_data$ld <- as.numeric(bed_data$ld)
+
         leadSNP_data <- NULL
         if ("snp" %in% colnames(bed_data)){
           ## Remove lead SNP from data
