@@ -8,6 +8,7 @@ bb_plotSignal(
   data,
   binSize = NA,
   binCap = TRUE,
+  negData = FALSE,
   chrom,
   chromstart = NULL,
   chromend = NULL,
@@ -37,6 +38,8 @@ Either one \code{data} argument or a list of two can be provided, where the seco
 \item{binSize}{A numeric specifying the length of each data bin in basepairs. Default value is \code{binSize = NA}.}
 
 \item{binCap}{A logical value indicating whether the function will limit the number of data bins to 8,000. Default value is \code{binCap = TRUE}.}
+
+\item{negData}{A logical value indicating whether the data has both positive and negative scores and the y-axis should be split. Default value is \code{negData = FALSE}.}
 
 \item{chrom}{Chromosome of region to be plotted, as a string.}
 

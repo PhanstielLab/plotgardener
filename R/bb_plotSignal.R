@@ -4,6 +4,7 @@
 #' Either one \code{data} argument or a list of two can be provided, where the second \code{data} will be plotted below the x-axis.
 #' @param binSize A numeric specifying the length of each data bin in basepairs. Default value is \code{binSize = NA}.
 #' @param binCap A logical value indicating whether the function will limit the number of data bins to 8,000. Default value is \code{binCap = TRUE}.
+#' @param negData A logical value indicating whether the data has both positive and negative scores and the y-axis should be split. Default value is \code{negData = FALSE}.
 #' @param chrom Chromosome of region to be plotted, as a string.
 #' @param chromstart Integer start position on chromosome to be plotted.
 #' @param chromend Integer end position on chromosome to be plotted.
@@ -66,7 +67,7 @@
 #' }
 #'
 #' @export
-bb_plotSignal <- function(data, binSize = NA, binCap = TRUE, chrom, chromstart = NULL, chromend = NULL, assembly = "hg19", linecolor = "grey", fill = NULL,
+bb_plotSignal <- function(data, binSize = NA, binCap = TRUE, negData = FALSE, chrom, chromstart = NULL, chromend = NULL, assembly = "hg19", linecolor = "grey", fill = NULL,
                           ymax = 1, range = NULL, scale = FALSE, bg = NA, baseline = FALSE, x = NULL, y = NULL, width = NULL, height = NULL,
                           just = c("left", "top"), default.units = "inches", draw = TRUE, params = NULL, ...){
 
@@ -448,6 +449,7 @@ bb_plotSignal <- function(data, binSize = NA, binCap = TRUE, chrom, chromstart =
   if(missing(linecolor)) linecolor <- NULL
   if(missing(binSize)) binSize <- NULL
   if(missing(binCap)) binCap <- NULL
+  if(missing(negData)) negData <- NULL
   if(missing(assembly)) assembly <- NULL
   if(missing(ymax)) ymax <- NULL
   if(missing(scale)) scale <- NULL
@@ -462,7 +464,7 @@ bb_plotSignal <- function(data, binSize = NA, binCap = TRUE, chrom, chromstart =
   if(!hasArg(chrom)) chrom <- NULL
 
   ## Compile all parameters into an internal object
-  bb_sigInternal <- structure(list(data = data, chrom = chrom, chromstart = chromstart, chromend = chromend, range = range, linecolor = linecolor, binSize = binSize,
+  bb_sigInternal <- structure(list(data = data, chrom = chrom, chromstart = chromstart, chromend = chromend, negData = negData, range = range, linecolor = linecolor, binSize = binSize,
                                    binCap = binCap, fill = fill, assembly = assembly, ymax = ymax, scale = scale, bg = bg, baseline = baseline, width = width, height = height,
                                    x = x, y = y, just = just, default.units = default.units, draw = draw), class = "bb_sigInternal")
 
@@ -472,6 +474,7 @@ bb_plotSignal <- function(data, binSize = NA, binCap = TRUE, chrom, chromstart =
   if(is.null(bb_sigInternal$linecolor)) bb_sigInternal$linecolor <- "grey"
   if(is.null(bb_sigInternal$binSize)) bb_sigInternal$binSize <- NA
   if(is.null(bb_sigInternal$binCap)) bb_sigInternal$binCap <- TRUE
+  if(is.null(bb_sigInternal$negData)) bb_sigInternal$negData <- FALSE
   if(is.null(bb_sigInternal$assembly)) bb_sigInternal$assembly <- "hg19"
   if(is.null(bb_sigInternal$ymax)) bb_sigInternal$ymax <- 1
   if(is.null(bb_sigInternal$scale)) bb_sigInternal$scale <- FALSE
@@ -580,6 +583,11 @@ bb_plotSignal <- function(data, binSize = NA, binCap = TRUE, chrom, chromstart =
 
     if (any(signal[,3] < 0)){
 
+      if (bb_sigInternal$negData == FALSE){
+        warning("Negative scores detected in signal data. To make an entirely positive signal track,
+                please remove negative scores from data.", call. = FALSE)
+      }
+
       posSignal <- signal[which(signal[,3] >= 0),]
       negSignal <- signal[which(signal[,3] < 0),]
       negSignal[,3] <- negSignal[,3]*-1
@@ -589,6 +597,11 @@ bb_plotSignal <- function(data, binSize = NA, binCap = TRUE, chrom, chromstart =
 
       posSignal <- signal
       split <- FALSE
+      if (bb_sigInternal$negData == TRUE){
+        negSignal <- data.frame()
+        split <- TRUE
+      }
+
     }
 
   }
