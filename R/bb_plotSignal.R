@@ -242,25 +242,13 @@ bb_plotSignal <- function(data, binSize = NA, binCap = TRUE, chrom, chromstart =
       # ===============================================================================================================================================
       # BIN DATA
       # ===============================================================================================================================================
-
-      binned_signal <- data.frame("chromstart" = seq(signaltrack$chromstart, signaltrack$chromend - signaltrack$binSize, signaltrack$binSize),
-                                  "chromend" = seq(signaltrack$chromstart + signaltrack$binSize, signaltrack$chromend, signaltrack$binSize),
-                                  "bin" = factor(1:signaltrack$binNum))
-
-      breaks <- seq(signaltrack$chromstart, signaltrack$chromend, signaltrack$binSize)
-
-      ## Divide data into defined bins
-      signal$bin <- cut(signal$end, breaks, labels = 1:signaltrack$binNum)
       ## Find the max signal value for each bin
-      binMaxes <- aggregate(signal$score, by = list(signal$bin), max)
-      colnames(binMaxes) <- c("bin", "maxscore")
-
-      ## Join bin maxes with bin starts and ends
-      binnedSignal <- dplyr::left_join(x = binned_signal, y = binMaxes, by = "bin")
-      binnedSignal[is.na(binnedSignal)] <- 0
+      binDF <- data.frame("start" = seq(signaltrack$chromstart, signaltrack$chromend - signaltrack$binSize, signaltrack$binSize),
+                          "end" = seq(signaltrack$chromstart + signaltrack$binSize, signaltrack$chromend, signaltrack$binSize))
+      binDF$maxScore <- rebinBigwig(signal, binDF)
 
       ## Use binned data as new signal data
-      newSignal <- binnedSignal[,c(1:2,4)]
+      newSignal <- binDF
       colnames(newSignal) <- c("chromstart", "chromend", "counts")
 
       # ================================================================================================================================================

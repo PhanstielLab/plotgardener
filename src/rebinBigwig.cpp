@@ -34,3 +34,6 @@ NumericVector rebinBigwig(DataFrame bigwig, DataFrame bins)
   }
   return max_scores;
 }
+
+
+
