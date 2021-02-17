@@ -6,7 +6,7 @@
 \usage{
 bb_plotManhattan(
   data,
-  sigVal = 0.00000005,
+  sigVal = 5e-08,
   chrom = NULL,
   chromstart = NULL,
   chromend = NULL,
