@@ -14,18 +14,18 @@ NumericVector rebinBigwig(DataFrame bigwig, DataFrame bins)
   int bw_i = 0, b_i = 0;
   while(bw_i < bigwig.nrows() && b_i < bins.nrows())
   {
-    if(bw_end[bw_i]<bins_start[b_i])
+    if(bw_end[bw_i] < bins_start[b_i])
       bw_i++;
-    else if(bins_end[b_i]<bw_start[bw_i])
+    else if(bins_end[b_i] <= bw_start[bw_i])
       b_i++;
     else
     {
       max_scores[b_i] = fmax(max_scores[b_i], bw_score[bw_i]);
-      if(bw_end[bw_i]<bins_end[b_i])
+      if(bw_end[bw_i] < bins_end[b_i])
         bw_i++;
-      else if(bins_end[b_i]<bw_end[bw_i])
+      else if(bins_end[b_i] <= bw_end[bw_i])
         b_i++;
-      else if(bw_end[bw_i]==bins_end[b_i])
+      else if(bw_end[bw_i] == bins_end[b_i])
       {
         bw_i++;
         b_i++;
@@ -34,6 +34,3 @@ NumericVector rebinBigwig(DataFrame bigwig, DataFrame bins)
   }
   return max_scores;
 }
-
-
-
