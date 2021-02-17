@@ -6,7 +6,8 @@ Authors@R: c(person("Nicole", "Kramer", email = "nekramer@live.unc.edu", role = 
              comment = c(ORCID = "0000-0001-9617-9671")),
              person(c("Eric", "S."), "Davis", email = "esdavis@live.unc.edu", role = c("aut"),
              comment = c(ORCID = "0000-0003-4051-3217")),
-             person("Craig", "Wenger", email = "craig.wenger@gmail.com", role = c("aut")),
+             person("Craig", "Wenger", email = "craig.wenger@gmail.com", role = c("aut"),
+             comment = c(ORCID = "0000-0002-7361-8456")),
              person("Sarah", "Parker", email = "sarmae@live.unc.edu", role = c("ctb")),
              person("Erika", "Deoudes", email = "ed@erikadudes.com", role = c("art")),
              person(c("Douglas", "H."), "Phanstiel", email = "douglas_phanstiel@med.unc.edu", role = c("aut", "cph")))
