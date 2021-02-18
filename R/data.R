@@ -49,20 +49,23 @@
 
 #' BentoBox example GWAS data
 #'
-#' A dataset representing GWAS data in the region chr21:28000000-30300000 according to the hg19 genome build.
+#' A dataset representing GWAS data from a GWAS study of insulin response with coordinates based on the hg19 genome build.
 #'
-#' @format a dataframe in BED format with a column representing p-values
+#' @format a dataframe with the following columns:
 #' \describe{
-#' \item{chrom}{The name of the chromosome on which the genome feature exists.}
-#' \item{start}{The starting position of the feature in the chromosome.}
-#' \item{end}{The ending position of the feature in the chromosome.}
-#' \item{pVal}{The associated p-value of the feature.}
+#' \item{chr}{The name of the chromosome of the SNP.}
+#' \item{pos}{The basepair position of the SNP.}
+#' \item{p}{The p-value of the SNP.}
+#' \item{snp}{The rsID of the SNP.}
+#' \item{LD}{A calculated linkage disequilibrium score for the SNP.}
 #' }
 #'
 #' @docType data
 #'
 #' @usage data("bb_gwasData")
 #'
+#' @references Prokopenko I, Poon W, Mägi R, Prasad B R, Salehi SA, Almgren P, Osmark P, Bouatia-Naji N, Wierup N, Fall T, Stančáková A, Barker A, Lagou V, Osmond C, Xie W, Lahti J, Jackson AU, Cheng YC, Liu J, O'Connell JR, Blomstedt PA, Fadista J, Alkayyali S, Dayeh T, Ahlqvist E, Taneera J, Lecoeur C, Kumar A, Hansson O, Hansson K, Voight BF, Kang HM, Levy-Marchal C, Vatin V, Palotie A, Syvänen AC, Mari A, Weedon MN, Loos RJ, Ong KK, Nilsson P, Isomaa B, Tuomi T, Wareham NJ, Stumvoll M, Widen E, Lakka TA, Langenberg C, Tönjes A, Rauramaa R, Kuusisto J, Frayling TM, Froguel P, Walker M, Eriksson JG, Ling C, Kovacs P, Ingelsson E, McCarthy MI, Shuldiner AR, Silver KD, Laakso M, Groop L, Lyssenko V. A central role for GRB10 in regulation of islet function in man. PLoS Genet. 2014 Apr 3;10(4):e1004235. doi: 10.1371/journal.pgen.1004235. PMID: 24699409; PMCID: PMC3974640.
+#' @source GWAS summary statistics were downloaded from LocusZoom \url{http://locuszoom.org/}.
 #'
 "bb_gwasData"
 
@@ -72,7 +75,7 @@
 #' region chr21:28000000-30300000 according to the hg19 genome build. This data is from the IMR90
 #' cell line.
 #'
-#' @format A 3-column data frame in sparse upper triangular format.
+#' @format a 3-column data frame in sparse upper triangular format.
 #'
 #' @docType data
 #'
@@ -88,7 +91,7 @@
 #' A dataset listing read depths across the genome resulting from H3K27ac ChIP-seq in the IMR90 cell line. Genomic coordinates
 #' fall within the region chr21:28000000-30300000 according to the hg19 genome build.
 #'
-#' @format dataframe in BED format with "score" column
+#' @format a dataframe in BED format with a "score" column
 #' \describe{
 #' \item{chrom}{The name of the chromosome on which the genome feature exists.}
 #' \item{start}{The starting position of the feature in the chromosome.}

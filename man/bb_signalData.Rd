@@ -5,7 +5,7 @@
 \alias{bb_signalData}
 \title{BentoBox example H3K27ac signal data}
 \format{
-dataframe in BED format with "score" column
+a dataframe in BED format with a "score" column
 \describe{
 \item{chrom}{The name of the chromosome on which the genome feature exists.}
 \item{start}{The starting position of the feature in the chromosome.}
