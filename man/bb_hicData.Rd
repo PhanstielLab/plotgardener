@@ -5,7 +5,7 @@
 \alias{bb_hicData}
 \title{BentoBox example Hi-C data}
 \format{
-A 3-column data frame in sparse upper triangular format.
+a 3-column data frame in sparse upper triangular format.
 }
 \usage{
 data("bb_hicData")
