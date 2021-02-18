@@ -6,9 +6,9 @@
 #' @param assembly Default genome assembly as a string or a \link[BentoBox]{bb_assembly} object. Default value is \code{assembly = "hg19"}.
 #' @param fontsize A numeric specifying text fontsize in points. Default value is \code{fontsize = 8}.
 #' @param fontcolors A character vector of length 2 indicating the font colors for the plus strand and minus strand gene labels. The first value will color the plus strand gene labels and
-#' the second value will color the minus strand gene labels. Default value is \code{fontcolors = c("#2929ff", "#ff3434")}.
+#' the second value will color the minus strand gene labels. Default value is \code{fontcolors = c("#669fd9", "#abcc8e")}.
 #' @param strandcolors A character vector of length 2 indicating the strand colors for the plus strand and minus strand plot elements. The first value will color the plus strand plot elements and
-#' the second label will color the minus strand plot elements. Default value is \code{strandcolors = c("#8a8aff", "#ff7e7e")}.
+#' the second label will color the minus strand plot elements. Default value is \code{strandcolors = c("#669fd9", "#abcc8e")}.
 #' @param geneOrder An ordered character vector of gene names to prioritize when labeling genes.
 #' @param geneHighlights A two-column dataframe with the first column containing gene names as strings to highlight and the second column containing corresponding highlight colors.
 #' @param geneBackground If \code{geneHighlights} is given, a character value indicating the color for genes that are not highlighted.
@@ -85,8 +85,8 @@
 #' @seealso \link[BentoBox]{bb_assembly}, \link[BentoBox]{bb_genomes}, \link[BentoBox]{bb_defaultPackages}
 #'
 #' @export
-bb_plotGenes <- function(chrom, chromstart = NULL, chromend = NULL, assembly = "hg19", fontsize = 8, fontcolors = c("#2929ff", "#ff3434"),
-                         strandcolors = c("#8a8aff", "#ff7e7e"), geneOrder = NULL, geneHighlights = NULL, geneBackground = "grey", strandLabels = TRUE,
+bb_plotGenes <- function(chrom, chromstart = NULL, chromend = NULL, assembly = "hg19", fontsize = 8, fontcolors = c("#669fd9", "#abcc8e"),
+                         strandcolors = c("#669fd9", "#abcc8e"), geneOrder = NULL, geneHighlights = NULL, geneBackground = "grey", strandLabels = TRUE,
                          stroke = 0.1, bg = NA, x = NULL, y = NULL, width = NULL, height = unit(0.6, "inches"),
                          just = c("left", "top"), default.units = "inches", draw = TRUE, params = NULL){
 
@@ -202,8 +202,8 @@ bb_plotGenes <- function(chrom, chromstart = NULL, chromend = NULL, assembly = "
 
   ## For any defaults that are still NULL, set back to default
   if(is.null(bb_genesInternal$assembly)) bb_genesInternal$assembly <- "hg19"
-  if(is.null(bb_genesInternal$fontcolors)) bb_genesInternal$fontcolors <- c("#2929ff", "#ff3434")
-  if(is.null(bb_genesInternal$strandcolors)) bb_genesInternal$strandcolors <- c("#8a8aff", "#ff7e7e")
+  if(is.null(bb_genesInternal$fontcolors)) bb_genesInternal$fontcolors <- c("#669fd9", "#abcc8e")
+  if(is.null(bb_genesInternal$strandcolors)) bb_genesInternal$strandcolors <- c("#669fd9", "#abcc8e")
   if(is.null(bb_genesInternal$geneBackground)) bb_genesInternal$geneBackground <- "grey"
   if(is.null(bb_genesInternal$stroke)) bb_genesInternal$stroke <- 0.1
   if(is.null(bb_genesInternal$fontsize)) bb_genesInternal$fontsize <- 8

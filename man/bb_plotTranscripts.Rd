@@ -9,7 +9,7 @@ bb_plotTranscripts(
   chromstart = NULL,
   chromend = NULL,
   assembly = "hg19",
-  fill = c("#8a8aff", "#ff7e7e"),
+  fill = c("#669fd9", "#abcc8e"),
   colorbyStrand = TRUE,
   strandSplit = FALSE,
   boxHeight = unit(2, "mm"),
@@ -38,7 +38,7 @@ bb_plotTranscripts(
 
 \item{assembly}{Default genome assembly as a string or a \link[BentoBox]{bb_assembly} object. Default value is \code{assembly = "hg19"}.}
 
-\item{fill}{Character value(s) as a single value or vector specifying fill colors of transcripts. Default value is \code{fill = c("#8a8aff", "#ff7e7e")}.}
+\item{fill}{Character value(s) as a single value or vector specifying fill colors of transcripts. Default value is \code{fill = c("#669fd9", "#abcc8e")}.}
 
 \item{colorbyStrand}{A logical value indicating whether to color plus and minus strands by the first two colors in a \code{fill} vector, where plus strand transcripts will be colored by the first \code{fill} color and
 minus strand transcripts will be colored by the second \code{fill} color. Default value is \code{colorbyStrand = TRUE}.}

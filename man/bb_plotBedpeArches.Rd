@@ -14,9 +14,9 @@ bb_plotBedpeArches(
   position = "top",
   curvature = 5,
   archHeight = NULL,
-  fill = "grey",
+  fill = "#1f4297",
   colorby = NULL,
-  linecolor = "NA",
+  linecolor = NA,
   alpha = 0.4,
   bg = NA,
   clip = FALSE,
@@ -59,11 +59,15 @@ bb_plotBedpeArches(
 
 \item{archHeight}{Single numeric value or numeric vector specifying the arch heights. When NULL, all arches will be the same height, filling up the given plot area}
 
-\item{fill}{Character value(s) as a single value, vector, or palette specifying fill colors of arches. Default value is \code{fill = "grey"}.}
+\item{fill}{Character value(s) as a single value, vector, or palette specifying fill colors of arches. Default value is \code{fill = #1f4297"}.}
 
 \item{colorby}{A "\link[BentoBox]{colorby}" object specifying information for scaling colors in data.}
 
-\item{linecolor}{A character value specifying the color of the lines outlining arches. "NA" for no line color.  "fill" for the same color as the fill. Default value is \code{linecolor = "NA"}.}
+\item{linecolor}{A character value specifying the color of the lines outlining arches. Default value is \code{linecolor = NA}. Special options include:
+\itemize{
+\item{\code{NA}: }{No line color.}
+\item{\code{"fill"}: }{Same color as \code{fill}.}
+}}
 
 \item{alpha}{Numeric value specifying transparency. Default value is \code{alpha = 0.4}.}
 

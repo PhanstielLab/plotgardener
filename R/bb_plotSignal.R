@@ -9,8 +9,8 @@
 #' @param chromstart Integer start position on chromosome to be plotted.
 #' @param chromend Integer end position on chromosome to be plotted.
 #' @param assembly Default genome assembly as a string or a \link[BentoBox]{bb_assembly} object. Default value is \code{assembly = "hg19"}.
-#' @param linecolor A character value or vector of length 2 specifying the line color(s) outlining the signal track(s). Default value is \code{linecolor = "grey"}.
-#' @param fill A character value or vector of length 2 specifying the fill color(s) of the signal track(s).
+#' @param linecolor A character value or vector of length 2 specifying the line color(s) outlining the signal track(s). Default value is \code{linecolor = "#37a7db"}.
+#' @param fill A character value or vector of length 2 specifying the fill color(s) of the signal track(s). Default value is \code{fill = "#37a7db"}.
 #' @param ymax A numeric specifying the fraction of the max y-value to set as the height of the plot. Default value is \code{ymax = 1}.
 #' @param range A numeric vector of length 2 specifying the y-range of data to plot (c(min, max)).
 #' @param scale A logical value indicating whether to include a data scale label in the top left corner of the plot. Default value is \code{scale = FALSE}.
@@ -67,7 +67,7 @@
 #' }
 #'
 #' @export
-bb_plotSignal <- function(data, binSize = NA, binCap = TRUE, negData = FALSE, chrom, chromstart = NULL, chromend = NULL, assembly = "hg19", linecolor = "grey", fill = NULL,
+bb_plotSignal <- function(data, binSize = NA, binCap = TRUE, negData = FALSE, chrom, chromstart = NULL, chromend = NULL, assembly = "hg19", linecolor = "#37a7db", fill = "#37a7db",
                           ymax = 1, range = NULL, scale = FALSE, bg = NA, baseline = FALSE, x = NULL, y = NULL, width = NULL, height = NULL,
                           just = c("left", "top"), default.units = "inches", draw = TRUE, params = NULL, ...){
 
@@ -447,6 +447,7 @@ bb_plotSignal <- function(data, binSize = NA, binCap = TRUE, negData = FALSE, ch
 
   ## Check which defaults are not overwritten and set to NULL
   if(missing(linecolor)) linecolor <- NULL
+  if(missing(fill)) fill <- NULL
   if(missing(binSize)) binSize <- NULL
   if(missing(binCap)) binCap <- NULL
   if(missing(negData)) negData <- NULL
@@ -471,7 +472,8 @@ bb_plotSignal <- function(data, binSize = NA, binCap = TRUE, negData = FALSE, ch
   bb_sigInternal <- parseParams(bb_params = params, object_params = bb_sigInternal)
 
   ## For any defaults that are still NULL, set back to default
-  if(is.null(bb_sigInternal$linecolor)) bb_sigInternal$linecolor <- "grey"
+  if(is.null(bb_sigInternal$linecolor)) bb_sigInternal$linecolor <-"#37a7db"
+  if(is.null(bb_sigInternal$fill)) bb_sigInternal$fill <-"#37a7db"
   if(is.null(bb_sigInternal$binSize)) bb_sigInternal$binSize <- NA
   if(is.null(bb_sigInternal$binCap)) bb_sigInternal$binCap <- TRUE
   if(is.null(bb_sigInternal$negData)) bb_sigInternal$negData <- FALSE

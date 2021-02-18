@@ -10,7 +10,7 @@ bb_plotBed(
   chromstart = NULL,
   chromend = NULL,
   assembly = "hg19",
-  fill = "black",
+  fill = "#7ecdbb",
   colorby = NULL,
   linecolor = NA,
   collapse = FALSE,
@@ -42,7 +42,7 @@ bb_plotBed(
 
 \item{assembly}{Default genome assembly as a string or a \link[BentoBox]{bb_assembly} object. Default value is \code{assembly = "hg19"}.}
 
-\item{fill}{Character value(s) as a single value, vector, or palette specifying fill colors of BED elements. Default value is \code{fill = "black"}.}
+\item{fill}{Character value(s) as a single value, vector, or palette specifying fill colors of BED elements. Default value is \code{fill = "#7ecdbb"}.}
 
 \item{colorby}{A "\link[BentoBox]{colorby}" object specifying information for scaling colors in \code{data}.}
 

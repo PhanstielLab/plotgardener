@@ -5,7 +5,7 @@
 #' @param chromstart Integer start position on chromosome to be plotted.
 #' @param chromend Integer end position on chromosome to be plotted.
 #' @param assembly Default genome assembly as a string or a \link[BentoBox]{bb_assembly} object. Default value is \code{assembly = "hg19"}.
-#' @param fill Character value(s) as a single value, vector, or palette specifying fill colors of BEDPE elements. Default value is \code{fill = "black"}.
+#' @param fill Character value(s) as a single value, vector, or palette specifying fill colors of BEDPE elements. Default value is \code{fill = "#1f4297"}.
 #' @param colorby A "\link[BentoBox]{colorby}" object specifying information for scaling colors in data.
 #' @param linecolor A character value specifying the color of the lines outlining BEDPE elements. Default value is \code{linecolor = NA}.
 #' @param bg Character value indicating background color. Default value is \code{bg = NA}.
@@ -77,7 +77,7 @@
 #' }
 #'
 #' @export
-bb_plotBedpe <- function(data, chrom, chromstart = NULL, chromend = NULL, assembly = "hg19", fill = "black", colorby = NULL, linecolor = NA,
+bb_plotBedpe <- function(data, chrom, chromstart = NULL, chromend = NULL, assembly = "hg19", fill = "#1f4297", colorby = NULL, linecolor = NA,
                          bg = NA, boxHeight = unit(2, "mm"), spaceWidth = 0.02, spaceHeight = 0.3, baseline = FALSE, x = NULL, y = NULL, width = NULL, height = NULL,
                          just = c("left", "top"), default.units = "inches", draw = TRUE, params = NULL, ...){
 
@@ -157,7 +157,7 @@ bb_plotBedpe <- function(data, chrom, chromstart = NULL, chromend = NULL, assemb
   bb_bedpeInternal <- parseParams(bb_params = params, object_params = bb_bedpeInternal)
 
   ## For any defaults that are still NULL, set back to default
-  if(is.null(bb_bedpeInternal$fill)) bb_bedpeInternal$fill <- "black"
+  if(is.null(bb_bedpeInternal$fill)) bb_bedpeInternal$fill <- "#1f4297"
   if(is.null(bb_bedpeInternal$linecolor)) bb_bedpeInternal$linecolor <- NA
   if(is.null(bb_bedpeInternal$assembly)) bb_bedpeInternal$assembly <- "hg19"
   if(is.null(bb_bedpeInternal$boxHeight)) bb_bedpeInternal$boxHeight <- unit(2, "mm")

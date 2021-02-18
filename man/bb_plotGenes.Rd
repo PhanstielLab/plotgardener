@@ -10,8 +10,8 @@ bb_plotGenes(
   chromend = NULL,
   assembly = "hg19",
   fontsize = 8,
-  fontcolors = c("#2929ff", "#ff3434"),
-  strandcolors = c("#8a8aff", "#ff7e7e"),
+  fontcolors = c("#669fd9", "#abcc8e"),
+  strandcolors = c("#669fd9", "#abcc8e"),
   geneOrder = NULL,
   geneHighlights = NULL,
   geneBackground = "grey",
@@ -40,10 +40,10 @@ bb_plotGenes(
 \item{fontsize}{A numeric specifying text fontsize in points. Default value is \code{fontsize = 8}.}
 
 \item{fontcolors}{A character vector of length 2 indicating the font colors for the plus strand and minus strand gene labels. The first value will color the plus strand gene labels and
-the second value will color the minus strand gene labels. Default value is \code{fontcolors = c("#2929ff", "#ff3434")}.}
+the second value will color the minus strand gene labels. Default value is \code{fontcolors = c("#669fd9", "#abcc8e")}.}
 
 \item{strandcolors}{A character vector of length 2 indicating the strand colors for the plus strand and minus strand plot elements. The first value will color the plus strand plot elements and
-the second label will color the minus strand plot elements. Default value is \code{strandcolors = c("#8a8aff", "#ff7e7e")}.}
+the second label will color the minus strand plot elements. Default value is \code{strandcolors = c("#669fd9", "#abcc8e")}.}
 
 \item{geneOrder}{An ordered character vector of gene names to prioritize when labeling genes.}
 

@@ -17,9 +17,13 @@
 #' }
 #' @param curvature Numeric indicating the number of points along the arch curvature. Default value is \code{curvature = 5}.
 #' @param archHeight Single numeric value or numeric vector specifying the arch heights. When NULL, all arches will be the same height, filling up the given plot area
-#' @param fill Character value(s) as a single value, vector, or palette specifying fill colors of arches. Default value is \code{fill = "grey"}.
+#' @param fill Character value(s) as a single value, vector, or palette specifying fill colors of arches. Default value is \code{fill = #1f4297"}.
 #' @param colorby A "\link[BentoBox]{colorby}" object specifying information for scaling colors in data.
-#' @param linecolor A character value specifying the color of the lines outlining arches. "NA" for no line color.  "fill" for the same color as the fill. Default value is \code{linecolor = "NA"}.
+#' @param linecolor A character value specifying the color of the lines outlining arches. Default value is \code{linecolor = NA}. Special options include:
+#' \itemize{
+#' \item{\code{NA}: }{No line color.}
+#' \item{\code{"fill"}: }{Same color as \code{fill}.}
+#' }
 #' @param alpha Numeric value specifying transparency. Default value is \code{alpha = 0.4}.
 #' @param bg Character value indicating background color. Default value is \code{bg = NA}.
 #' @param clip A logical value indicating whether to clip any arches that get cutoff in the given genomic region. Default value is \code{clip = FALSE}.
@@ -95,7 +99,7 @@
 #'
 #' @export
 bb_plotBedpeArches <- function(data, chrom, chromstart = NULL, chromend = NULL, assembly = "hg19", style = "2D", position = "top", curvature = 5, archHeight = NULL,
-                               fill = "grey", colorby = NULL, linecolor = "NA", alpha = 0.4, bg = NA, clip = FALSE, baseline = FALSE, x = NULL,
+                               fill = "#1f4297", colorby = NULL, linecolor = NA, alpha = 0.4, bg = NA, clip = FALSE, baseline = FALSE, x = NULL,
                                y = NULL, width = NULL, height = NULL, just = c("left", "top"), default.units = "inches", draw = TRUE, params = NULL, ...){
 
   # ======================================================================================================================================================================================
@@ -271,7 +275,7 @@ bb_plotBedpeArches <- function(data, chrom, chromstart = NULL, chromend = NULL, 
   if(is.null(bb_archInternal$style)) bb_archInternal$style <- "2D"
   if(is.null(bb_archInternal$curvature)) bb_archInternal$curvature <- 5
   if(is.null(bb_archInternal$position)) bb_archInternal$position <- "top"
-  if(is.null(bb_archInternal$fill)) bb_archInternal$fill <- "lightgrey"
+  if(is.null(bb_archInternal$fill)) bb_archInternal$fill <- "#1f4297"
   if(is.null(bb_archInternal$linecolor)) bb_archInternal$linecolor <- NA
   if(is.null(bb_archInternal$assembly)) bb_archInternal$assembly <- "hg19"
   if(is.null(bb_archInternal$alpha)) bb_archInternal$alpha <- 0.4
@@ -440,7 +444,7 @@ bb_plotBedpeArches <- function(data, chrom, chromstart = NULL, chromend = NULL, 
 
   # Set actual line color to fill color if requested by user
   actuallinecolor = bb_archInternal$linecolor
-  if (is.null(lbb_archInternal$linecolor) == FALSE)
+  if (is.na(bb_archInternal$linecolor) == FALSE)
   {
     if (bb_archInternal$linecolor == "fill")
     {
@@ -449,7 +453,7 @@ bb_plotBedpeArches <- function(data, chrom, chromstart = NULL, chromend = NULL, 
   }
   if (is.null(bb_archInternal$linecolor) == TRUE)
   {
-    actuallinecolor = "NA"
+    actuallinecolor = NA
   }
   bedpe$linecolor = actuallinecolor
 

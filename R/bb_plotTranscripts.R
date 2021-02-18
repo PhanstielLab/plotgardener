@@ -4,7 +4,7 @@
 #' @param chromstart Integer start position on chromosome to be plotted.
 #' @param chromend Integer end position on chromosome to be plotted.
 #' @param assembly Default genome assembly as a string or a \link[BentoBox]{bb_assembly} object. Default value is \code{assembly = "hg19"}.
-#' @param fill Character value(s) as a single value or vector specifying fill colors of transcripts. Default value is \code{fill = c("#8a8aff", "#ff7e7e")}.
+#' @param fill Character value(s) as a single value or vector specifying fill colors of transcripts. Default value is \code{fill = c("#669fd9", "#abcc8e")}.
 #' @param colorbyStrand A logical value indicating whether to color plus and minus strands by the first two colors in a \code{fill} vector, where plus strand transcripts will be colored by the first \code{fill} color and
 #' minus strand transcripts will be colored by the second \code{fill} color. Default value is \code{colorbyStrand = TRUE}.
 #' @param strandSplit A logical value indicating whether plus and minus-stranded transcripts should be separated, with plus strand transcripts plotted above the x-axis and minus strand transcripts plotted below the x-axis. Default value is \code{strandSplit = FALSE}.
@@ -78,7 +78,7 @@
 #' @seealso \link[BentoBox]{bb_assembly}, \link[BentoBox]{bb_genomes}, \link[BentoBox]{bb_defaultPackages}
 #'
 #' @export
-bb_plotTranscripts <- function(chrom, chromstart = NULL, chromend = NULL, assembly = "hg19", fill = c("#8a8aff", "#ff7e7e"), colorbyStrand = TRUE, strandSplit = FALSE,
+bb_plotTranscripts <- function(chrom, chromstart = NULL, chromend = NULL, assembly = "hg19", fill = c("#669fd9", "#abcc8e"), colorbyStrand = TRUE, strandSplit = FALSE,
                                boxHeight = unit(2, "mm"), spaceWidth = 0.02, spaceHeight = 0.3, fontsize = 8, labels = "transcript", stroke = 0.1, bg = NA,
                                x = NULL, y = NULL, width = NULL, height = NULL, just = c("left", "top"), default.units = "inches", draw = TRUE, params = NULL){
 
@@ -220,7 +220,7 @@ bb_plotTranscripts <- function(chrom, chromstart = NULL, chromend = NULL, assemb
   if(is.null(bb_transcriptsInternal$boxHeight)) bb_transcriptsInternal$boxHeight <- unit(2, "mm")
   if(is.null(bb_transcriptsInternal$spaceHeight)) bb_transcriptsInternal$spaceHeight <- 0.3
   if(is.null(bb_transcriptsInternal$spaceWidth)) bb_transcriptsInternal$spaceWidth <- 0.02
-  if(is.null(bb_transcriptsInternal$fill)) bb_transcriptsInternal$fill <- c("#8a8aff", "#ff7e7e")
+  if(is.null(bb_transcriptsInternal$fill)) bb_transcriptsInternal$fill <- c("#669fd9", "#abcc8e")
   if(is.null(bb_transcriptsInternal$colorbyStrand)) bb_transcriptsInternal$colorbyStrand <- TRUE
   if(is.null(bb_transcriptsInternal$labels)) bb_transcriptsInternal$labels <- "transcript"
   if(is.null(bb_transcriptsInternal$fontsize)) bb_transcriptsInternal$fontsize <- 8

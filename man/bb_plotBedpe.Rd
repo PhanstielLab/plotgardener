@@ -10,7 +10,7 @@ bb_plotBedpe(
   chromstart = NULL,
   chromend = NULL,
   assembly = "hg19",
-  fill = "black",
+  fill = "#1f4297",
   colorby = NULL,
   linecolor = NA,
   bg = NA,
@@ -40,7 +40,7 @@ bb_plotBedpe(
 
 \item{assembly}{Default genome assembly as a string or a \link[BentoBox]{bb_assembly} object. Default value is \code{assembly = "hg19"}.}
 
-\item{fill}{Character value(s) as a single value, vector, or palette specifying fill colors of BEDPE elements. Default value is \code{fill = "black"}.}
+\item{fill}{Character value(s) as a single value, vector, or palette specifying fill colors of BEDPE elements. Default value is \code{fill = "#1f4297"}.}
 
 \item{colorby}{A "\link[BentoBox]{colorby}" object specifying information for scaling colors in data.}
 

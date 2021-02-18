@@ -5,7 +5,7 @@
 #' @param chromstart Integer start position on chromosome to be plotted.
 #' @param chromend Integer end position on chromosome to be plotted.
 #' @param assembly Default genome assembly as a string or a \link[BentoBox]{bb_assembly} object. Default value is \code{assembly = "hg19"}.
-#' @param fill Character value(s) as a single value, vector, or palette specifying fill colors of BED elements. Default value is \code{fill = "black"}.
+#' @param fill Character value(s) as a single value, vector, or palette specifying fill colors of BED elements. Default value is \code{fill = "#7ecdbb"}.
 #' @param colorby A "\link[BentoBox]{colorby}" object specifying information for scaling colors in \code{data}.
 #' @param linecolor A character value specifying the color of the lines outlining BED elements. Default value is \code{linecolor = NA}.
 #' @param collapse A logical value indicating whether to collapse BED elements into a single row, or into two rows if \code{strandSplit = TRUE}.
@@ -67,7 +67,7 @@
 #' }
 #'
 #' @export
-bb_plotBed <- function(data, chrom, chromstart = NULL, chromend = NULL, assembly = "hg19", fill = "black", colorby = NULL, linecolor = NA, collapse = FALSE,
+bb_plotBed <- function(data, chrom, chromstart = NULL, chromend = NULL, assembly = "hg19", fill = "#7ecdbb", colorby = NULL, linecolor = NA, collapse = FALSE,
                           boxHeight =  unit(2, "mm"), spaceWidth = 0.02, spaceHeight = 0.3, strandSplit = FALSE, bg = NA, baseline = FALSE, x = NULL, y = NULL, width = NULL,
                           height = NULL, just = c("left", "top"), default.units = "inches", draw = TRUE, params = NULL, ...){
 
@@ -163,7 +163,7 @@ bb_plotBed <- function(data, chrom, chromstart = NULL, chromend = NULL, assembly
 
   ## For any defaults that are still NULL, set back to default
   if(is.null(bb_pileInternal$assembly)) bb_pileInternal$assembly <- "hg19"
-  if(is.null(bb_pileInternal$fill)) bb_pileInternal$fill <- "black"
+  if(is.null(bb_pileInternal$fill)) bb_pileInternal$fill <- "#7ecdbb"
   if(is.null(bb_pileInternal$collapse)) bb_pileInternal$collapse <- FALSE
   if(is.null(bb_pileInternal$linecolor)) bb_pileInternal$linecolor <- NA
   if(is.null(bb_pileInternal$strandSplit)) bb_pileInternal$strandSplit <- FALSE

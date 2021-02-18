@@ -13,8 +13,8 @@ bb_plotSignal(
   chromstart = NULL,
   chromend = NULL,
   assembly = "hg19",
-  linecolor = "grey",
-  fill = NULL,
+  linecolor = "#37a7db",
+  fill = "#37a7db",
   ymax = 1,
   range = NULL,
   scale = FALSE,
@@ -49,9 +49,9 @@ Either one \code{data} argument or a list of two can be provided, where the seco
 
 \item{assembly}{Default genome assembly as a string or a \link[BentoBox]{bb_assembly} object. Default value is \code{assembly = "hg19"}.}
 
-\item{linecolor}{A character value or vector of length 2 specifying the line color(s) outlining the signal track(s). Default value is \code{linecolor = "grey"}.}
+\item{linecolor}{A character value or vector of length 2 specifying the line color(s) outlining the signal track(s). Default value is \code{linecolor = "#37a7db"}.}
 
-\item{fill}{A character value or vector of length 2 specifying the fill color(s) of the signal track(s).}
+\item{fill}{A character value or vector of length 2 specifying the fill color(s) of the signal track(s). Default value is \code{fill = "#37a7db"}.}
 
 \item{ymax}{A numeric specifying the fraction of the max y-value to set as the height of the plot. Default value is \code{ymax = 1}.}
 
