@@ -152,7 +152,7 @@ bb_plotBedpe <- function(data, chrom, chromstart = NULL, chromend = NULL, assemb
   bb_bedpeInternal <- structure(list(data = data, chrom = chrom, chromstart = chromstart, chromend = chromend,
                                      fill = fill, colorby = colorby, linecolor = linecolor,
                                      assembly = assembly, boxHeight = boxHeight, spaceHeight = spaceHeight, spaceWidth = spaceWidth, baseline = baseline, bg = bg,
-                                     x = x, y = y, width = width, height = height, just = just, default.units = default.units, draw = draw), class = "bb_bedpeInternal")
+                                     x = x, y = y, width = width, height = height, just = just, default.units = default.units, draw = draw, gp = gpar()), class = "bb_bedpeInternal")
 
   bb_bedpeInternal <- parseParams(bb_params = params, object_params = bb_bedpeInternal)
 
@@ -168,6 +168,9 @@ bb_plotBedpe <- function(data, chrom, chromstart = NULL, chromend = NULL, assemb
   if(is.null(bb_bedpeInternal$just)) bb_bedpeInternal$just <- c("left", "top")
   if(is.null(bb_bedpeInternal$default.units)) bb_bedpeInternal$default.units <- "inches"
   if(is.null(bb_bedpeInternal$draw)) bb_bedpeInternal$draw <- TRUE
+
+  ## Parse gp
+  bb_bedpeInternal$gp <- setGP(gpList = bb_bedpeInternal$gp, params = bb_bedpeInternal, ...)
 
   # ======================================================================================================================================================================================
   # CHECK ARGUMENT ERRORS
@@ -467,7 +470,6 @@ bb_plotBedpe <- function(data, chrom, chromstart = NULL, chromend = NULL, assemb
       if (class(bb_bedpeInternal$fill) == "function"){
 
         rowBedpe$color <- bb_maptocolors(rowBedpe$colorby, bb_bedpeInternal$fill, range = bb_bedpe$zrange)
-        #sorted_colors <- unique(rowBedpe[order(rowBedpe$colorby),]$color)
         bb_bedpe$color_palette <- bb_bedpeInternal$fill
 
       } else {
@@ -489,7 +491,8 @@ bb_plotBedpe <- function(data, chrom, chromstart = NULL, chromend = NULL, assemb
       assign("bedpe_grobs", addGrob(gTree = get("bedpe_grobs", envir = bbEnv), child = baselineGrob), envir = bbEnv)
     }
 
-
+    bb_bedpeInternal$gp$fill <- rowBedpe$color
+    bb_bedpeInternal$gp$col <- bb_bedpeInternal$linecolor
 
     bedpeRect1 <- rectGrob(x = rowBedpe$start1,
                            y = rowBedpe$y,
@@ -497,7 +500,7 @@ bb_plotBedpe <- function(data, chrom, chromstart = NULL, chromend = NULL, assemb
                            height = boxHeight,
                            just = c("left", "bottom"),
                            default.units = "native",
-                           gp = gpar(fill = rowBedpe$color, col = bb_bedpeInternal$linecolor, ...))
+                           gp = bb_bedpeInternal$gp)
 
     bedpeRect2 <- rectGrob(x = rowBedpe$start2,
                            y = rowBedpe$y,
@@ -505,14 +508,17 @@ bb_plotBedpe <- function(data, chrom, chromstart = NULL, chromend = NULL, assemb
                            height = boxHeight,
                            just = c("left", "bottom"),
                            default.units = "native",
-                           gp = gpar(fill = rowBedpe$color, col = bb_bedpeInternal$linecolor, ...))
+                           gp = bb_bedpeInternal$gp)
+
+    bb_bedpeInternal$gp$col <- rowBedpe$color
+    bb_bedpeInternal$gp$lineend <- "butt"
 
     bedpeLine <- segmentsGrob(x0 = rowBedpe$pos1,
                               y0 = rowBedpe$y + 0.5*boxHeight,
                               x1 = rowBedpe$pos2,
                               y1 = rowBedpe$y + 0.5*boxHeight,
                               default.units = "native",
-                              gp = gpar(col = rowBedpe$color, lineend = "butt",...))
+                              gp = bb_bedpeInternal$gp)
 
     assign("bedpe_grobs", addGrob(gTree = get("bedpe_grobs", envir = bbEnv), child = bedpeLine), envir = bbEnv)
     assign("bedpe_grobs", addGrob(gTree = get("bedpe_grobs", envir = bbEnv), child = bedpeRect1), envir = bbEnv)

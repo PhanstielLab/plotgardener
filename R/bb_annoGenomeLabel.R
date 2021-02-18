@@ -159,7 +159,7 @@ bb_annoGenomeLabel <- function(plot, fontsize = 10, fontcolor = "black", linecol
                                        boxWidth = bb_genomeLabelInternal$boxWidth, axis = bb_genomeLabelInternal$axis,
                                        at = bb_genomeLabelInternal$at, tcl = bb_genomeLabelInternal$tcl,
                                        x = x, y = y, length = length, just = just, default.units = bb_genomeLabelInternal$default.units,
-                                       space = space, ...)
+                                       space = space, params = params, ...)
 
   # ======================================================================================================================================================================================
   # RETURN OBJECT

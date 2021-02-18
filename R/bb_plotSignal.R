@@ -466,7 +466,7 @@ bb_plotSignal <- function(data, binSize = NA, binCap = TRUE, negData = FALSE, ch
   ## Compile all parameters into an internal object
   bb_sigInternal <- structure(list(data = data, chrom = chrom, chromstart = chromstart, chromend = chromend, negData = negData, range = range, linecolor = linecolor, binSize = binSize,
                                    binCap = binCap, fill = fill, assembly = assembly, ymax = ymax, scale = scale, bg = bg, baseline = baseline, width = width, height = height,
-                                   x = x, y = y, just = just, default.units = default.units, draw = draw), class = "bb_sigInternal")
+                                   x = x, y = y, just = just, default.units = default.units, draw = draw, gp = gpar()), class = "bb_sigInternal")
 
   bb_sigInternal <- parseParams(bb_params = params, object_params = bb_sigInternal)
 
@@ -483,6 +483,9 @@ bb_plotSignal <- function(data, binSize = NA, binCap = TRUE, negData = FALSE, ch
   if(is.null(bb_sigInternal$just)) bb_sigInternal$just <- c("left", "top")
   if(is.null(bb_sigInternal$default.units)) bb_sigInternal$default.units <- "inches"
   if(is.null(bb_sigInternal$draw)) bb_sigInternal$draw <- TRUE
+
+  ## Set gp
+  bb_sigInternal$gp <- setGP(gpList = bb_sigInternal$gp, params = bb_sigInternal, ...)
 
   # ======================================================================================================================================================================================
   # INITIALIZE OBJECT
@@ -698,14 +701,10 @@ bb_plotSignal <- function(data, binSize = NA, binCap = TRUE, negData = FALSE, ch
   # MAKE GROBS
   # ======================================================================================================================================================================================
 
-  gp = gpar(...)
-  if (length(gp) != 0){
-    if ("col" %in% names(gp)){
-      gp$axis <- gp$col
-    } else{
-      gp$axis <- "black"
-    }
-
+  if ("col" %in% names(bb_sigInternal$gp)){
+    bb_sigInternal$gp$axis <- bb_sigInternal$gp$col
+  } else {
+    bb_sigInternal$gp$axis <- "black"
   }
 
   if (!is.na(signal_track$binSize)){
@@ -716,38 +715,38 @@ bb_plotSignal <- function(data, binSize = NA, binCap = TRUE, negData = FALSE, ch
       lines <- parseColors(bb_sigInternal$linecolor)
 
       if (nrow(posSignal) >= 2){
-        sigGrob(signal = posSignal2, fillCol = fills[[1]], lineCol = lines[[1]], gp = gp)
+        sigGrob(signal = posSignal2, fillCol = fills[[1]], lineCol = lines[[1]], gp = bb_sigInternal$gp)
         ## Find and make cutoff lines
         cutoffGrobs(signal = posSignal2, signaltrack = signal_track, side = "top")
 
       } else {
-        gp$col <- lines[[1]]
-        posGrob <- segmentsGrob(x0 = 0, y0 = unit(0, "native"), x1 = 1, y1 = unit(0, "native"), gp = gp)
+        bb_sigInternal$gp$col <- lines[[1]]
+        posGrob <- segmentsGrob(x0 = 0, y0 = unit(0, "native"), x1 = 1, y1 = unit(0, "native"), gp = bb_sigInternal$gp)
         assign("signal_grobs", addGrob(gTree = get("signal_grobs", envir = bbEnv), child = posGrob), envir = bbEnv)
         warning("Not enough top signal data to plot.", call. = FALSE)
       }
 
 
       if (nrow(negSignal) >= 2){
-        sigGrob(signal = negSignal2, fillCol = fills[[2]], lineCol = lines[[2]], gp = gp)
+        sigGrob(signal = negSignal2, fillCol = fills[[2]], lineCol = lines[[2]], gp = bb_sigInternal$gp)
         ## Find and make cutoff lines
         cutoffGrobs(signal = negSignal2, signaltrack = signal_track, side = "bottom")
       } else {
-        gp$col <- lines[[2]]
-        negGrob <- segmentsGrob(x0 = 0, y0 = unit(0, "native"), x1 = 1, y1 = unit(0, "native"), gp = gp)
+        bb_sigInternal$gp$col <- lines[[2]]
+        negGrob <- segmentsGrob(x0 = 0, y0 = unit(0, "native"), x1 = 1, y1 = unit(0, "native"), gp = bb_sigInternal$gp)
         assign("signal_grobs", addGrob(gTree = get("signal_grobs", envir = bbEnv), child = negGrob), envir = bbEnv)
         warning("Not enough bottom signal data to plot.", call. = FALSE)
       }
 
-      gp$col <- gp$axis
-      if (!"lwd" %in% names(gp)){
-        gp$lwd <- 1.5
+      bb_sigInternal$gp$col <- bb_sigInternal$gp$axis
+      if (!"lwd" %in% names(bb_sigInternal$gp)){
+        bb_sigInternal$gp$lwd <- 1.5
       } else{
-        gp$lwd <- gp$lwd + 0.5
+        bb_sigInternal$gp$lwd <- bb_sigInternal$gp$lwd + 0.5
       }
 
       lineGrob <- segmentsGrob(x0 = unit(0, "npc"), x1 = unit(1, "npc"), y0 = 0, y1 = 0,
-                               gp = gp, default.units = "native")
+                               gp = bb_sigInternal$gp, default.units = "native")
       assign("signal_grobs", addGrob(gTree = get("signal_grobs", envir = bbEnv), child = lineGrob), envir = bbEnv)
 
     } else {
@@ -756,16 +755,16 @@ bb_plotSignal <- function(data, binSize = NA, binCap = TRUE, negData = FALSE, ch
 
         if(bb_sigInternal$baseline == TRUE){
           baselineGrob <- segmentsGrob(x0 = unit(0, "npc"), x1 = unit(1, "npc"), y0 = 0, y1 = 0,
-                                   gp = gpar(col = gp$axis, lwd = 1.5), default.units = "native")
+                                   gp = gpar(col = bb_sigInternal$gp$axis, lwd = 1.5), default.units = "native")
           assign("signal_grobs", addGrob(gTree = get("signal_grobs", envir = bbEnv), child = baselineGrob), envir = bbEnv)
         }
 
-        sigGrob(signal = posSignal2, fillCol = bb_sigInternal$fill[1], lineCol = bb_sigInternal$linecolor[1], gp = gp)
+        sigGrob(signal = posSignal2, fillCol = bb_sigInternal$fill[1], lineCol = bb_sigInternal$linecolor[1], gp = bb_sigInternal$gp)
         ## Find and make cutoff lines
         cutoffGrobs(signal = posSignal2, signaltrack = signal_track, side = "top")
       } else {
-        gp$col <- bb_sigInternal$linecolor
-        signalGrob <- segmentsGrob(x0 = 0, y0 = unit(0, "native"), x1 = 1, y1 = unit(0, "native"), gp = gp)
+        bb_sigInternal$gp$col <- bb_sigInternal$linecolor
+        signalGrob <- segmentsGrob(x0 = 0, y0 = unit(0, "native"), x1 = 1, y1 = unit(0, "native"), gp = bb_sigInternal$gp)
         assign("signal_grobs", addGrob(gTree = get("signal_grobs", envir = bbEnv), child = signalGrob), envir = bbEnv)
         warning("Not enough data within range to plot.", call. = FALSE)
       }
@@ -777,11 +776,11 @@ bb_plotSignal <- function(data, binSize = NA, binCap = TRUE, negData = FALSE, ch
 
     ## Add scale of the range of data in the top left corner
     if (bb_sigInternal$scale == TRUE){
-      gp$col <- gp$axis
+      bb_sigInternal$gp$col <- bb_sigInternal$gp$axis
       upperLim <- round(signal_track$range[2], digits = 4)
       lowerLim <- round(signal_track$range[1], digits = 4)
       scaleGrob <- textGrob(label = paste0("[", lowerLim, " - ", upperLim, "]"), just = c("left", "top"), x = 0, y = 1,
-                            gp = gp)
+                            gp = bb_sigInternal$gp)
 
       ## Add grob to gtree
       assign("signal_grobs", addGrob(gTree = get("signal_grobs", envir = bbEnv), child = scaleGrob), envir = bbEnv)

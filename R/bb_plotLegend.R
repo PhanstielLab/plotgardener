@@ -75,7 +75,7 @@ bb_plotLegend <- function(legend, fill = NULL, pch = NULL, lty = NULL, orientati
 
   ## Compile all parameters into an internal object
   bb_legInternal <- structure(list(legend = legend, orientation = orientation, fill = fill, pch = pch, lty = lty, title = title, fontsize = fontsize,
-                                   border = border, bg = bg, x = x, y = y, width = width, height = height, just = just, default.units = default.units, draw = draw), class = "bb_legInternal")
+                                   border = border, bg = bg, x = x, y = y, width = width, height = height, just = just, default.units = default.units, draw = draw, gp = gpar()), class = "bb_legInternal")
 
   bb_legInternal <- parseParams(bb_params = params, object_params = bb_legInternal)
 
@@ -87,6 +87,9 @@ bb_plotLegend <- function(legend, fill = NULL, pch = NULL, lty = NULL, orientati
   if(is.null(bb_legInternal$just)) bb_legInternal$just <- c("left", "top")
   if(is.null(bb_legInternal$default.units)) bb_legInternal$default.units <- "inches"
   if(is.null(bb_legInternal$draw)) bb_legInternal$draw <- TRUE
+
+  ## Set gp
+  bb_legInternal$gp <- setGP(gpList = bb_legInternal$gp, params = bb_legInternal, ...)
 
   # ======================================================================================================================================================================================
   # INITIALIZE OBJECT
@@ -301,17 +304,18 @@ bb_plotLegend <- function(legend, fill = NULL, pch = NULL, lty = NULL, orientati
     assign("legend_grobs", addGrob(get("legend_grobs", envir = bbEnv), child = labelColors), envir = bbEnv)
   }
 
+  bb_legInternal$gp$fontsize <- bb_legInternal$fontsize
 
   ## Text labels
   if (bb_legInternal$orientation == "h"){
 
     labelText <- textGrob(label = bb_legInternal$legend, x = xcoords + textHeight + widthSpace, y = ycoords + 0.5*textHeight,
-                          just = "left", gp = gpar(fontsize = bb_legInternal$fontsize,...), default.units = "native")
+                          just = "left", gp = bb_legInternal$gp, default.units = "native")
 
   } else {
 
     labelText <- textGrob(label = rev(bb_legInternal$legend), x = xcoords + 2*textHeight, y = ycoords + 0.5*textHeight,
-                          just = "left", gp = gpar(fontsize = bb_legInternal$fontsize,...), default.units = "native")
+                          just = "left", gp = bb_legInternal$gp, default.units = "native")
   }
 
   assign("legend_grobs", addGrob(get("legend_grobs", envir = bbEnv), child = labelText), envir = bbEnv)

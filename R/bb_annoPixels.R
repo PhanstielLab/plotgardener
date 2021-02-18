@@ -363,7 +363,7 @@ bb_annoPixels <- function(plot, data, type = "box", half = "inherit", shift = 4,
   if(!hasArg(data)) data <- NULL
 
   ## Compile all parameters into an internal object
-  bb_loopsInternal <- structure(list(plot = plot, data = data, half = half, shift = shift, type = type, gp = gpar(...)), class = "bb_loopsInternal")
+  bb_loopsInternal <- structure(list(plot = plot, data = data, half = half, shift = shift, type = type, gp = gpar()), class = "bb_loopsInternal")
 
   bb_loopsInternal <- parseParams(bb_params = params, object_params = bb_loopsInternal)
 
@@ -371,6 +371,9 @@ bb_annoPixels <- function(plot, data, type = "box", half = "inherit", shift = 4,
   if(is.null(bb_loopsInternal$half)) bb_loopsInternal$half <- "inherit"
   if(is.null(bb_loopsInternal$shift)) bb_loopsInternal$shift <- 4
   if(is.null(bb_loopsInternal$type)) bb_loopsInternal$type <- "box"
+
+  ## Set gp
+  bb_loopsInternal$gp <- setGP(gpList = bb_loopsInternal$gp, params = bb_Internal, ...)
 
   # ======================================================================================================================================================================================
   # INITIALIZE OBJECT: GET REGION/DIMENSIONS FROM HIC PLOT INPUT

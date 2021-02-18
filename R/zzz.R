@@ -24,6 +24,7 @@
 
   ## Change specific argument defaults (add lines as desired ...)
   allArgs1 <- gsub('assembly=NULL', 'assembly="hg19"', allArgs1)
+  allArgs1 <- paste0(allArgs1, ",...")
 
   ## Pass all arguments into function definition
   bb_params <- parse(text=c(sprintf("
@@ -32,6 +33,7 @@
 
     ## Construct object
     object <- structure(.Data = list(%s), class = 'bb_params')
+    object[names(list(...))] <- list(...)
 
     ## Feature: setting region parameters by gene name & assembly ------------------------
 

@@ -366,6 +366,10 @@ bb_plotManhattan <- function(data, sigVal = 5e-08, chrom = NULL, chromstart = NU
   if(is.null(bb_manInternal$default.units)) bb_manInternal$default.units <- "inches"
   if(is.null(bb_manInternal$draw)) bb_manInternal$draw <- TRUE
 
+  ## Set gp
+  bb_manInternal$gp <- gpar(cex = bb_manInternal$cex)
+  bb_manInternal$gp <- setGP(gpList = bb_manInternal$gp, params = bb_manInternal, ...)
+
   # ======================================================================================================================================================================================
   # INITIALIZE OBJECT
   # ======================================================================================================================================================================================
@@ -672,19 +676,16 @@ bb_plotManhattan <- function(data, sigVal = 5e-08, chrom = NULL, chromstart = NU
     # ======================================================================================================================================================================================
     # POINTS
     # ======================================================================================================================================================================================
-    gp = gpar(...)
-    if (length(gp) != 0){
-      if ("col" %in% names(gp)){
 
-        gp$linecolor <- gp$col
-
-      }
+    if ("col" %in% names(bb_manInternal$gp)){
+      bb_manInternal$gp$linecolor <- bb_manInternal$gp$col
     }
-    gp$col <- colorBed$color
-    gp$cex <- bb_manInternal$cex
+
+    bb_manInternal$gp$col <- colorBed$color
+
 
     points <- pointsGrob(x = colorBed$pos, y = -log10(colorBed$p), pch = colorBed$pch,
-                         gp = gp,
+                         gp = bb_manInternal$gp,
                          default.units = "native")
     assign("manhattan_grobs", addGrob(gTree = get("manhattan_grobs", envir = bbEnv), child = points), envir = bbEnv)
 
@@ -693,17 +694,17 @@ bb_plotManhattan <- function(data, sigVal = 5e-08, chrom = NULL, chromstart = NU
     # ======================================================================================================================================================================================
 
     if (nrow(leadSNP_row) > 0){
-      gp$col <- bb_manInternal$leadSNP$fill
-      gp$cex <- bb_manInternal$leadSNP$cex
+      bb_manInternal$gp$col <- bb_manInternal$leadSNP$fill
+      bb_manInternal$gp$cex <- bb_manInternal$leadSNP$cex
       if (is.null(bb_manInternal$leadSNP$pch)){
         bb_manInternal$leadSNP$pch <- bb_manInternal$pch[1]
       }
       if (is.null(bb_manInternal$leadSNP$cex)){
-        gp$cex <- bb_manInternal$cex
+        bb_manInternal$gp$cex <- bb_manInternal$cex
       }
 
       point <- pointsGrob(x = leadSNP_row$pos, y = -log10(leadSNP_row$p), pch = bb_manInternal$leadSNP$pch,
-                          gp = gp,
+                          gp = bb_manInternal$gp,
                           default.units = "native")
       snp <- textGrob(label = leadSNP_row$snp, x = leadSNP_row$pos, y = unit(-log10(leadSNP_row$p), "native") + unit(1.5, "mm"),
                       just = "bottom", gp = gpar(fontsize = bb_manInternal$leadSNP$fontsize, col = bb_manInternal$leadSNP$fontcolor), default.units = "native")
@@ -718,17 +719,17 @@ bb_plotManhattan <- function(data, sigVal = 5e-08, chrom = NULL, chromstart = NU
 
     if (bb_manInternal$sigLine == TRUE){
 
-      gp$col <- gp$linecolor
+      bb_manInternal$gp$col <- bb_manInternal$gp$linecolor
       sigGrob <- segmentsGrob(x0 = unit(0, "npc"), y0 = unit(-log10(bb_manInternal$sigVal), "native"), x1 = unit(1, "npc"), y1 = unit(-log10(bb_manInternal$sigVal), "native"),
-                              gp = gp)
+                              gp = bb_manInternal$gp)
       assign("manhattan_grobs", addGrob(gTree = get("manhattan_grobs", envir = bbEnv), child = sigGrob), envir = bbEnv)
     }
 
     if (bb_manInternal$baseline == TRUE){
-      gp$col <- gp$linecolor
-      gp$lwd <- 1.5
+      bb_manInternal$gp$col <- bb_manInternal$gp$linecolor
+      bb_manInternal$gp$lwd <- 1.5
       baselineGrob <- segmentsGrob(x0 = unit(0, "npc"), y0 = 0, x1 = unit(1, "npc"), y1 = 0,
-                              gp = gp, default.units = "native")
+                              gp = bb_manInternal$gp, default.units = "native")
       assign("manhattan_grobs", addGrob(gTree = get("manhattan_grobs", envir = bbEnv), child = baselineGrob), envir = bbEnv)
 
     }

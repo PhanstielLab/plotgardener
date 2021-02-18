@@ -557,14 +557,15 @@ bb_plotGenomeLabel <- function(chrom, chromstart = NULL, chromend = NULL, assemb
   if(is.null(bb_genomeLabelInternal$tcl)) bb_genomeLabelInternal$tcl <- 0.5
   if(is.null(bb_genomeLabelInternal$default.units)) bb_genomeLabelInternal$default.units <- "inches"
 
-  ## Parsing for "space" from input Manhattan plot
+  ## Parsing for "space" from input Manhattan plot from bb_annoGenomeLabel
   additionalParams <- list(...)
   if ("space" %in% names(additionalParams)){
     bb_genomeLabelInternal$space <- additionalParams$space
   }
 
   ## Assign "gp"
-  bb_genomeLabelInternal$gp <- gpar(fontsize = bb_genomeLabelInternal$fontsize, col = bb_genomeLabelInternal$linecolor, fontcolor = bb_genomeLabelInternal$fontcolor, ...)
+  bb_genomeLabelInternal$gp <- gpar(fontsize = bb_genomeLabelInternal$fontsize, col = bb_genomeLabelInternal$linecolor, fontcolor = bb_genomeLabelInternal$fontcolor)
+  bb_genomeLabelInternal$gp <- setGP(gpList = bb_genomeLabelInternal$gp, params = bb_genomeLabelInternal, ...)
   # ======================================================================================================================================================================================
   # INITIALIZE OBJECT
   # ======================================================================================================================================================================================

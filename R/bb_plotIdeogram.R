@@ -17,7 +17,6 @@
 #' @param default.units A string indicating the default units to use if \code{x}, \code{y}, \code{width}, or \code{height} are only given as numerics. Default value is \code{default.units = "inches"}.
 #' @param draw A logical value indicating whether graphics output should be produced. Default value is \code{draw = TRUE}.
 #' @param params An optional \link[BentoBox]{bb_params} object containing relevant function parameters.
-#' @param ... Additional grid graphical parameters. See \link[grid]{gpar}.
 #'
 #' @return Returns a \code{bb_ideogram} object containing relevant genomic region, placement, and \link[grid]{grob} information.
 #'
@@ -57,7 +56,7 @@
 #'
 #' @export
 bb_plotIdeogram <- function(chrom, assembly = "hg19", orientation = "h", showBands = TRUE, x = NULL, y = NULL, width = NULL, height = NULL,
-                             just = c("left", "top"), default.units = "inches", draw = TRUE, params = NULL, ...){
+                             just = c("left", "top"), default.units = "inches", draw = TRUE, params = NULL){
 
   # ======================================================================================================================================================================================
   # FUNCTIONS

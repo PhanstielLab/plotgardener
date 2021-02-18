@@ -157,7 +157,7 @@ bb_plotBed <- function(data, chrom, chromstart = NULL, chromend = NULL, assembly
   bb_pileInternal <- structure(list(data = data, chrom = chrom, chromstart = chromstart, chromend = chromend, assembly = assembly, collapse = collapse, fill = fill,
                                     linecolor = linecolor, colorby = colorby, strandSplit = strandSplit, boxHeight = boxHeight, spaceHeight = spaceHeight,
                                     spaceWidth = spaceWidth, bg = bg, baseline = baseline, x = x, y = y, width = width, height = height, just = just,
-                                    default.units = default.units, draw = draw), class = "bb_pileInternal")
+                                    default.units = default.units, draw = draw, gp = gpar()), class = "bb_pileInternal")
 
   bb_pileInternal <- parseParams(bb_params = params, object_params = bb_pileInternal)
 
@@ -175,6 +175,9 @@ bb_plotBed <- function(data, chrom, chromstart = NULL, chromend = NULL, assembly
   if(is.null(bb_pileInternal$just)) bb_pileInternal$just <- c("left", "top")
   if(is.null(bb_pileInternal$default.units)) bb_pileInternal$default.units <- "inches"
   if(is.null(bb_pileInternal$draw)) bb_pileInternal$draw <- TRUE
+
+  ## Parse gp
+  bb_pileInternal$gp <- setGP(gpList = bb_pileInternal$gp, params = bb_pileInternal, ...)
 
   # ======================================================================================================================================================================================
   # CHECK ARGUMENT ERROS
@@ -600,7 +603,6 @@ bb_plotBed <- function(data, chrom, chromstart = NULL, chromend = NULL, assembly
       if (class(bb_pileInternal$fill) == "function"){
 
         rowDF$color <- bb_maptocolors(rowDF$colorby, bb_pileInternal$fill, range = pileup_plot$zrange)
-        #sorted_colors <- unique(rowDF[order(rowDF$colorby),]$color)
         pileup_plot$color_palette <- bb_pileInternal$fill
 
       } else {
@@ -617,13 +619,9 @@ bb_plotBed <- function(data, chrom, chromstart = NULL, chromend = NULL, assembly
     # ======================================================================================================================================================================================
     # MAKE GROBS
     # ======================================================================================================================================================================================
-
-
     alpha <- 1
-    if (!length(list(...)) == 0){
-      if ("alpha" %in% names(list(...))){
-        alpha <- list(...)$alpha
-      }
+    if ("alpha" %in% names(bb_pileInternal$gp)){
+      alpha <- bb_pileInternal$gp$alpha
     }
 
     bedRects <- rectGrob(x = rowDF$start,
@@ -639,7 +637,7 @@ bb_plotBed <- function(data, chrom, chromstart = NULL, chromend = NULL, assembly
 
       lineGrob <- segmentsGrob(x0 = unit(0, "npc"), x1 = unit(1, "npc"),
                                y0 = unit(0, "native"), y1 = unit(0, "native"),
-                               gp = gpar(...))
+                               gp = bb_pileInternal$gp)
       assign("pileup_grobs", addGrob(gTree = get("pileup_grobs", envir = bbEnv), child = lineGrob), envir = bbEnv)
 
     }

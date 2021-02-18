@@ -68,13 +68,17 @@ bb_plotRect <- function(x, y, width, height, just = "center", default.units = "i
   if(is.null(bb_rectInternal$alpha)) bb_rectInternal$alpha <- 1
   if(is.null(bb_rectInternal$default.units)) bb_rectInternal$default.units <- "inches"
 
+  ## Set gp
+  bb_rectInternal$gp <- gpar(col = bb_rectInternal$linecolor, fill = bb_rectInternal$fill, lwd = bb_rectInternal$lwd,
+                               lty = bb_rectInternal$lty, alpha = bb_rectInternal$alpha)
+  bb_rectInternal$gp <- setGP(gpList = bb_rectInternal$gp, params = bb_rectInternal, ...)
+
   # ======================================================================================================================================================================================
   # INITIALIZE OBJECT
   # ======================================================================================================================================================================================
 
   bb_rect <- structure(list(x = bb_rectInternal$x, y = bb_rectInternal$y, width = bb_rectInternal$width, height = bb_rectInternal$height, just = bb_rectInternal$just,
-                            grobs = NULL, gp = gpar(col = bb_rectInternal$linecolor, fill = bb_rectInternal$fill, lwd = bb_rectInternal$lwd, lty = bb_rectInternal$lty,
-                                                    alpha = bb_rectInternal$alpha, ...)), class = "bb_rect")
+                            grobs = NULL, gp = bb_rectInternal$gp), class = "bb_rect")
 
   # ======================================================================================================================================================================================
   # CATCH ERRORS

@@ -76,14 +76,18 @@ bb_plotSegments <- function(x0, y0, x1, y1, default.units = "inches", linecolor 
   if(is.null(bb_segmentsInternal$linejoin)) bb_segmentsInternal$linejoin <- "mitre"
   if(is.null(bb_segmentsInternal$default.units)) bb_segmentsInternal$default.units <- "inches"
 
+  ## Set gp
+  bb_segmentsInternal$gp <- gpar(col = bb_segmentsInternal$linecolor, lwd = bb_segmentsInternal$lwd,
+                               lty = bb_segmentsInternal$lty, lineend = bb_segmentsInternal$lineend, linejoin = bb_segmentsInternal$linejoin)
+  bb_segmentsInternal$gp <- setGP(gpList = bb_segmentsInternal$gp, params = bb_segmentsInternal, ...)
+
   # ======================================================================================================================================================================================
   # INITIALIZE OBJECT
   # ======================================================================================================================================================================================
 
   bb_segments <- structure(list(x0 = bb_segmentsInternal$x0, y0 = bb_segmentsInternal$y0, x1 = bb_segmentsInternal$x1, y1 = bb_segmentsInternal$y1,
                                 arrow = bb_segmentsInternal$arrow, grobs = NULL,
-                                gp = gpar(col = bb_segmentsInternal$linecolor, lwd = bb_segmentsInternal$lwd,lty = bb_segmentsInternal$lty, lineend = bb_segmentsInternal$lineend,
-                                          linejoin = bb_segmentsInternal$linejoin, ...)), class = "bb_segmentsInternal")
+                                gp = bb_segmentsInternal$gp), class = "bb_segmentsInternal")
 
   # ======================================================================================================================================================================================
   # CATCH ERRORS

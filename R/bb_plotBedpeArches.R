@@ -184,7 +184,7 @@ bb_plotBedpeArches <- function(data, chrom, chromstart = NULL, chromend = NULL, 
   }
 
   ## Define a function that creates ribbon arch grobs
-  drawRibbons <- function(df, style, arch, position, transp, ...){
+  drawRibbons <- function(df, style, arch, position, transp, gp){
 
     x1 <- df[[2]]
     x2 <- df[[3]]
@@ -194,6 +194,9 @@ bb_plotBedpeArches <- function(data, chrom, chromstart = NULL, chromend = NULL, 
     lineCol <- df$linecolor
     outerHeight <- as.numeric(df[[length(df)]])
     innerHeight <- outerHeight - 0.01
+    gp$fill <- fillCol
+    gp$col <- lineCol
+    gp$alpha <- transp
 
     if (style == "3D"){
       x1 <- df[[3]]
@@ -226,7 +229,7 @@ bb_plotBedpeArches <- function(data, chrom, chromstart = NULL, chromend = NULL, 
     ## Connect points, convert to proper units and draw polygons
     archGrob <- polygonGrob(x = unit(c(convertX(outerBP$x, "native"), rev(convertX(innerBP$x, "native"))), "native"),
                  y = unit(c(convertY(outerBP$y, "npc"), rev(convertY(innerBP$y, "npc"))), "npc"),
-                 gp = gpar(fill = fillCol, col = lineCol, alpha = transp, ...))
+                 gp = gp)
     assign("arches_grobs", addGrob(gTree = get("arches_grobs", envir = bbEnv), child = archGrob), envir = bbEnv)
 
 
@@ -259,7 +262,7 @@ bb_plotBedpeArches <- function(data, chrom, chromstart = NULL, chromend = NULL, 
   bb_archInternal <- structure(list(data = data, chrom = chrom, chromstart = chromstart, chromend = chromend, clip = clip, archHeight = archHeight, style = style,
                                     curvature = curvature, position = position, fill = fill, linecolor = linecolor, colorby = colorby,
                                     assembly = assembly, alpha = alpha, baseline = baseline, bg = bg, x = x, y = y, width = width, height = height, just = just,
-                                    default.units = default.units, draw = draw), class = "bb_archInternal")
+                                    default.units = default.units, draw = draw, gp = gpar()), class = "bb_archInternal")
 
   bb_archInternal <- parseParams(bb_params = params, object_params = bb_archInternal)
 
@@ -277,6 +280,9 @@ bb_plotBedpeArches <- function(data, chrom, chromstart = NULL, chromend = NULL, 
   if(is.null(bb_archInternal$just)) bb_archInternal$just <- c("left", "top")
   if(is.null(bb_archInternal$default.units)) bb_archInternal$default.units <- "inches"
   if(is.null(bb_archInternal$draw)) bb_archInternal$draw <- TRUE
+
+  ## Set gp
+  bb_archInternal$gp <- setGP(gpList = bb_archInternal$gp, params = bb_archInternal, ...)
 
   # ======================================================================================================================================================================================
   # CHECK ARGUMENT ERRORS
@@ -433,15 +439,15 @@ bb_plotBedpeArches <- function(data, chrom, chromstart = NULL, chromend = NULL, 
   bedpe$color <- colors
 
   # Set actual line color to fill color if requested by user
-  actuallinecolor = linecolor
-  if (is.null(linecolor) == FALSE)
+  actuallinecolor = bb_archInternal$linecolor
+  if (is.null(lbb_archInternal$linecolor) == FALSE)
   {
-    if (linecolor == "fill")
+    if (bb_archInternal$linecolor == "fill")
     {
       actuallinecolor = bedpe$color
     }
   }
-  if (is.null(linecolor) == TRUE)
+  if (is.null(bb_archInternal$linecolor) == TRUE)
   {
     actuallinecolor = "NA"
   }
@@ -528,7 +534,7 @@ bb_plotBedpeArches <- function(data, chrom, chromstart = NULL, chromend = NULL, 
     }
 
     invisible(apply(bedpe, 1, drawRibbons, style = bb_archInternal$style, arch = bb_archInternal$curvature, position = bb_archInternal$position,
-                    transp = bb_archInternal$alpha, ...))
+                    transp = bb_archInternal$alpha, gp = bb_archInternal$gp))
 
   } else {
 

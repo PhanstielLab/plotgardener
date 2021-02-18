@@ -5,6 +5,7 @@
 \title{bb_params: BentoBox parameters object}
 \usage{
 bb_params(
+  ... = NULL,
   alpha = NULL,
   altchrom = NULL,
   altchromend = NULL,
@@ -51,7 +52,6 @@ bb_params(
   geneHighlights = NULL,
   geneOrder = NULL,
   Genome = NULL,
-  gp = NULL,
   half = NULL,
   height = NULL,
   id = NULL,
@@ -122,6 +122,8 @@ bb_params(
 )
 }
 \arguments{
+\item{...}{This function will take any BentoBox function parameters and their values.}
+
 \item{assembly}{String defining the genome build. Default value is \code{assembly = "hg19"}.}
 
 \item{gene}{(optional) String naming a gene used to set the chromosome, chromstart, and
@@ -129,8 +131,6 @@ chromend arguments.}
 
 \item{geneBuffer}{(optional) Integer base-pairs to extend the start and end of a gene
 defined by argument \code{gene}.}
-
-\item{...}{This function will take any BentoBox function parameters and their values.}
 }
 \value{
 Returns an object of class \code{bb_params} containing BentoBox function arguments.

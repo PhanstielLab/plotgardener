@@ -64,13 +64,17 @@ bb_plotPolygon <- function(x, y, default.units = "inches", linecolor = "black", 
   if(is.null(bb_polygonInternal$alpha)) bb_polygonInternal$alpha <- 1
   if(is.null(bb_polygonInternal$default.units)) bb_polygonInternal$default.units <- "inches"
 
+  ## Set gp
+  bb_polygonInternal$gp <- gpar(col = bb_polygonInternal$linecolor, fill = bb_polygonInternal$fill, lwd = bb_polygonInternal$lwd,
+                               lty = bb_polygonInternal$lty, alpha = bb_polygonInternal$alpha)
+  bb_polygonInternal$gp <- setGP(gpList = bb_polygonInternal$gp, params = bb_polygonInternal, ...)
+
   # ======================================================================================================================================================================================
   # INITIALIZE OBJECT
   # ======================================================================================================================================================================================
 
   bb_polygon <- structure(list(x = bb_polygonInternal$x, y = bb_polygonInternal$y, id = bb_polygonInternal$id, id.lengths = bb_polygonInternal$id.lengths,
-                            grobs = NULL, gp = gpar(col = bb_polygonInternal$linecolor, fill = bb_polygonInternal$fill, lwd = bb_polygonInternal$lwd, lty = bb_polygonInternal$lty,
-                                                    alpha = bb_polygonInternal$alpha, ...)), class = "bb_polygon")
+                            grobs = NULL, gp = bb_polygonInternal$gp), class = "bb_polygon")
 
   # ======================================================================================================================================================================================
   # CATCH ERRORS

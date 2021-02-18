@@ -53,7 +53,7 @@ bb_plotRaster <- function(image, x, y, width, height, just = "center", default.u
   if(!hasArg(height)) height <- NULL
 
   ## Compile all parameters into an internal object
-  bb_rastInternal <- structure(list(image = image, x = x, y = y, width = width, height = height, just = just, interpolate = interpolate, default.units = default.units), class = "bb_rastInternal")
+  bb_rastInternal <- structure(list(image = image, x = x, y = y, width = width, height = height, just = just, interpolate = interpolate, default.units = default.units, gp = gpar()), class = "bb_rastInternal")
 
   bb_rastInternal <- parseParams(bb_params = params, object_params = bb_rastInternal)
 
@@ -62,12 +62,15 @@ bb_plotRaster <- function(image, x, y, width, height, just = "center", default.u
   if(is.null(bb_rastInternal$interpolate)) bb_rastInternal$interpolate <- TRUE
   if(is.null(bb_rastInternal$default.units)) bb_rastInternal$default.units <- "inches"
 
+  ## Set gp
+  bb_rastInternal$gp <- setGP(gpList = bb_rastInternal$gp, params = bb_rastInternal, ...)
+
   # ======================================================================================================================================================================================
   # INITIALIZE OBJECT
   # ======================================================================================================================================================================================
 
   bb_rast <- structure(list(image = bb_rastInternal$image, x = bb_rastInternal$x, y = bb_rastInternal$y, width = bb_rastInternal$width, height = bb_rastInternal$height, just = bb_rastInternal$just,
-                            interpolate = bb_rastInternal$interpolate, grobs = NULL, gp = gpar()), class = "bb_raster")
+                            interpolate = bb_rastInternal$interpolate, grobs = NULL, gp = bb_rastInternal$gp), class = "bb_raster")
 
   # ======================================================================================================================================================================================
   # CATCH ERRORS

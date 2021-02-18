@@ -37,6 +37,9 @@ bb_pageGuideHorizontal <- function(y, default.units = "inches", linecolor = "gre
   if(is.null(bb_hguide$linecolor)) bb_hguide$linecolor <- "grey55"
   if(is.null(bb_hguide$default.units)) bb_hguide$default.units <- "inches"
 
+  ## Set gp
+  bb_hguide$gp <- gpar(col = bb_hguide$linecolor)
+  bb_hguide$gp <- setGP(gpList = bb_hguide$gp, params = bb_hguide, ...)
   # ======================================================================================================================================================================================
   # ERRORS
   # ======================================================================================================================================================================================
@@ -71,7 +74,7 @@ bb_pageGuideHorizontal <- function(y, default.units = "inches", linecolor = "gre
   y <- convertY(y, unitTo = get("page_units", envir = bbEnv), valueOnly = TRUE)
 
   guide <- grid.segments(x0 = unit(0, units = "npc"), x1 = unit(1, units = "npc"), y0 = get("page_height", envir = bbEnv) - y, y1 = get("page_height", envir = bbEnv) - y,
-                           default.units = get("page_units", envir = bbEnv), gp = gpar(col = bb_hguide$linecolor, ...))
+                           default.units = get("page_units", envir = bbEnv), gp = bb_hguide$gp)
   assign("guide_grobs", addGrob(gTree = get("guide_grobs", envir = bbEnv), child = guide), envir = bbEnv)
 
 }

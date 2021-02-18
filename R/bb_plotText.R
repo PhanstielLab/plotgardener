@@ -76,7 +76,9 @@ bb_plotText <- function(label, fontcolor = "black", fontsize = 12, rot = 0, chec
   if(is.null(bb_textInternal$check.overlap)) bb_textInternal$check.overlap <- FALSE
   if(is.null(bb_textInternal$default.units)) bb_textInternal$default.units <- "inches"
 
-  bb_textInternal$gp <- gpar(col = bb_textInternal$fontcolor, fontsize = bb_textInternal$fontsize,...)
+  ## Set gp
+  bb_textInternal$gp <- gpar(col = bb_textInternal$fontcolor, fontsize = bb_textInternal$fontsize)
+  bb_textInternal$gp <- setGP(gpList = bb_textInternal$gp, params = bb_textInternal, ...)
 
   # ======================================================================================================================================================================================
   # INITIALIZE OBJECT

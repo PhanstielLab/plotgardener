@@ -67,13 +67,18 @@ bb_plotCircle <- function(x, y, r, default.units = "inches", linecolor = "black"
   if(is.null(bb_circleInternal$alpha)) bb_circleInternal$alpha <- 1
   if(is.null(bb_circleInternal$default.units)) bb_circleInternal$default.units <- "inches"
 
+  ## Set gp
+  bb_circleInternal$gp <- gpar(col = bb_circleInternal$linecolor, fill = bb_circleInternal$fill, lwd = bb_circleInternal$lwd,
+                               lty = bb_circleInternal$lty, alpha = bb_circleInternal$alpha)
+  bb_circleInternal$gp <- setGP(gpList = bb_circleInternal$gp, params = bb_circleInternal, ...)
+
+
   # ======================================================================================================================================================================================
   # INITIALIZE OBJECT
   # ======================================================================================================================================================================================
 
   bb_circle <- structure(list(x = bb_circleInternal$x, y = bb_circleInternal$y, r = bb_circleInternal$r, grobs = NULL,
-                              gp = gpar(col = bb_circleInternal$linecolor, fill = bb_circleInternal$fill, lwd = bb_circleInternal$lwd,
-                                        lty = bb_circleInternal$lty, alpha = bb_circleInternal$alpha, ...)), class = "bb_circle")
+                              gp = bb_circleInternal$gp), class = "bb_circle")
 
   # ======================================================================================================================================================================================
   # CATCH ERRORS

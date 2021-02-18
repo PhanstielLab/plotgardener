@@ -94,7 +94,7 @@ bb_annoHeatmapLegend <- function(plot, orientation = "v", fontsize = 8, fontcolo
   ## Compile all parameters into an internal object
   bb_heatmapLegendInternal <- structure(list(plot = plot, border = border, x = x, y = y, width = width, height = height,
                                      orientation = orientation, fontsize = fontsize, fontcolor = fontcolor,
-                                     just = just, default.units = default.units, gp = NULL), class = "bb_heatmapLegendInternal")
+                                     just = just, default.units = default.units, gp = gpar()), class = "bb_heatmapLegendInternal")
 
   bb_heatmapLegendInternal <- parseParams(bb_params = params, object_params = bb_heatmapLegendInternal)
 
@@ -105,6 +105,16 @@ bb_annoHeatmapLegend <- function(plot, orientation = "v", fontsize = 8, fontcolo
   if(is.null(bb_heatmapLegendInternal$fontcolor)) bb_heatmapLegendInternal$fontcolor <- "dark grey"
   if(is.null(bb_heatmapLegendInternal$just)) bb_heatmapLegendInternal$just <- c("left", "top")
   if(is.null(bb_heatmapLegendInternal$default.units)) bb_heatmapLegendInternal$default.units <- "inches"
+
+  ## Set gp
+  bb_heatmapLegendInternal$gp <- gpar(fontsize = bb_heatmapLegendInternal$fontsize)
+  bb_heatmapLegendInternal$gp <- setGP(gpList = bb_heatmapLegendInternal$gp, params = bb_heatmapLegendInternal, ...)
+  if ("col" %in% names(bb_heatmapLegendInternal$gp)){
+    bb_heatmapLegendInternal$gp$linecol <- bb_heatmapLegendInternal$gp$col
+  } else {
+    bb_heatmapLegendInternal$gp$linecol <- "black"
+  }
+  bb_heatmapLegendInternal$gp$col <- bb_heatmapLegendInternal$fontcolor
 
   # ======================================================================================================================================================================================
   # INITIAL ERRORS
@@ -179,27 +189,6 @@ bb_annoHeatmapLegend <- function(plot, orientation = "v", fontsize = 8, fontcolo
   # ======================================================================================================================================================================================
 
   assign("heatmapLegend_grobs", gTree(vp = vp), envir = bbEnv)
-
-  # ======================================================================================================================================================================================
-  # CAPTURE AND SEPARATE "..." PARAMETERS
-  # ======================================================================================================================================================================================
-
-  params <- list(...)
-  if (length(params) != 0){
-
-    bb_heatmapLegendInternal$gp <- gpar(...)
-    bb_heatmapLegendInternal$gp$fontsize <- bb_heatmapLegendInternal$fontsize
-    bb_heatmapLegendInternal$gp$col <- bb_heatmapLegendInternal$fontcolor
-
-    if ("col" %in% names(params)){
-      bb_heatmapLegendInternal$gp$linecol <- params$col
-    } else {
-      bb_heatmapLegendInternal$gp$linecol <- "black"
-    }
-
-  } else {
-    bb_heatmapLegendInternal$gp <- gpar(fontsize = bb_heatmapLegendInternal$fontsize, col = bb_heatmapLegendInternal$fontcolor)
-  }
 
   # ======================================================================================================================================================================================
   # VERTICAL ORIENTATION

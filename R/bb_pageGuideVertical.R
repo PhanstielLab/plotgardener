@@ -36,6 +36,10 @@ bb_pageGuideVertical <- function(x, default.units = "inches", linecolor = "grey5
   if(is.null(bb_vguide$linecolor)) bb_vguide$linecolor <- "grey55"
   if(is.null(bb_vguide$default.units)) bb_vguide$default.units <- "inches"
 
+  ## Set gp
+  bb_vguide$gp <- gpar(col = bb_vguide$linecolor)
+  bb_vguide$gp <- setGP(gpList = bb_vguide$gp, params = bb_vguide, ...)
+
   # ======================================================================================================================================================================================
   # ERRORS
   # ======================================================================================================================================================================================
@@ -61,7 +65,7 @@ bb_pageGuideVertical <- function(x, default.units = "inches", linecolor = "grey5
   }
 
   guide <- grid.segments(x0 = x, x1 = x, y0 = unit(0, units = "npc"), y1 = unit(1, units = "npc"),
-                           gp = gpar(col = bb_vguide$linecolor, ...))
+                           gp = bb_vguide$gp)
   assign("guide_grobs", addGrob(gTree = get("guide_grobs", envir = bbEnv), child = guide), envir = bbEnv)
 
 }

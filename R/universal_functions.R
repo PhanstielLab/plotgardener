@@ -540,11 +540,25 @@ parseParams <- function(bb_params, object_params){
       object_params[match(names(objectMatches), names(object_params))] <- objectMatches
 
 
+      addParams <- bb_params[which(!names(bb_params) %in% objectNames)]
+
+      object_params <- c(object_params, addParams)
+
     }
 
   }
 
   return(object_params)
+}
+
+## Define a function that parses gpar parameters
+setGP <- function(gpList, params, ...){
+
+  availGPs <- names(get.gpar())
+  gpMatches <- params[which(names(params) %in% availGPs)]
+  gpList[names(gpMatches)] <- gpMatches
+  gpList[names(list(...))] <- list(...)
+  return(gpList)
 }
 
 

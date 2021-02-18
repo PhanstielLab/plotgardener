@@ -13,6 +13,7 @@
 #' @param scipen An integer indicating the penalty to be applied when deciding to print numeric values in fixed or exponential notation. Default value is \code{scipen = 999}.
 #' @param axisLine A logical value indicating whether to show the axis line. Default value is \code{axisLine = FALSE}.
 #' @param params An optional \link[BentoBox]{bb_params} object containing relevant function parameters.
+#' @param ... Additional grid graphical parameters. See \link[grid]{gpar}.
 #'
 #' @return Returns a \code{bb_yaxis} object containing relevant \link[grid]{grob} information.
 #'
@@ -37,7 +38,7 @@
 #' bb_pageGuideHide()
 #'
 #' @export
-bb_annoYaxis <- function(plot, at = NULL, label = TRUE, main = TRUE, gp = gpar(), scipen = 999, axisLine = FALSE, params = NULL){
+bb_annoYaxis <- function(plot, at = NULL, label = TRUE, main = TRUE, scipen = 999, axisLine = FALSE, params = NULL, ...){
 
   # ======================================================================================================================================================================================
   # PARSE PARAMETERS
@@ -53,7 +54,7 @@ bb_annoYaxis <- function(plot, at = NULL, label = TRUE, main = TRUE, gp = gpar()
   if(!hasArg(plot)) plot <- NULL
 
   ## Compile all parameters into an internal object
-  bb_yInternal <- structure(list(plot = plot, at = at, label = label, main = main, gp = gp, scipen = scipen, axisLine = axisLine), class = "bb_yInternal")
+  bb_yInternal <- structure(list(plot = plot, at = at, label = label, main = main, gp = gpar(), scipen = scipen, axisLine = axisLine), class = "bb_yInternal")
 
   bb_yInternal <- parseParams(bb_params = params, object_params = bb_yInternal)
 
@@ -62,6 +63,9 @@ bb_annoYaxis <- function(plot, at = NULL, label = TRUE, main = TRUE, gp = gpar()
   if(is.null(bb_yInternal$main)) bb_yInternal$main <- TRUE
   if(is.null(bb_yInternal$scipen)) bb_yInternal$scipen <- 999
   if(is.null(bb_yInternal$axisLine)) bb_yInternal$axisLine <- FALSE
+
+  ## Set gp
+  bb_yInternal$gp <- setGP(gpList = bb_yInternal$gp, params = bb_yInternal, ...)
   # ======================================================================================================================================================================================
   # CATCH ERRORS
   # ======================================================================================================================================================================================
