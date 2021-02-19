@@ -5,7 +5,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Vignette Title • BentoBox</title>
+<title>Introduction to BentoBox • BentoBox</title>
 <!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
 <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
 <link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png">
@@ -17,7 +17,7 @@
 <script src="../bootstrap-toc.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
-<script src="../pkgdown.js"></script><meta property="og:title" content="Vignette Title">
+<script src="../pkgdown.js"></script><meta property="og:title" content="Introduction to BentoBox">
 <meta property="og:description" content="BentoBox">
 <meta property="og:image" content="https://phanstiellab.github.io/bentobox/logo.png">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
@@ -86,13 +86,13 @@
 
       
 
-      </header><script src="introduction_to_bentobox_files/header-attrs-2.6/header-attrs.js"></script><div class="row">
+      </header><script src="introduction_to_bentobox_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
-      <h1 data-toc-skip>Vignette Title</h1>
-                        <h4 class="author">Vignette Author</h4>
+      <h1 data-toc-skip>Introduction to BentoBox</h1>
+                        <h4 class="author">Nicole Kramer, Eric S. Davis, Craig Wenger, Sarah Parker, Erika Deoudes, and Douglas H. Phanstiel</h4>
             
-            <h4 class="date">2021-02-12</h4>
+            <h4 class="date">2021-02-17</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/PhanstielLab/BentoBox/blob/master/vignettes/introduction_to_bentobox.Rmd"><code>vignettes/introduction_to_bentobox.Rmd</code></a></small>
       <div class="hidden name"><code>introduction_to_bentobox.Rmd</code></div>
@@ -101,211 +101,338 @@
 
     
     
-<p>Vignettes are long form documentation commonly included in packages. Because they are part of the distribution of the package, they need to be as compact as possible. The <code>html_vignette</code> output type provides a custom style sheet (and tweaks some options) to ensure that the resulting html is as small as possible. The <code>html_vignette</code> format:</p>
+<div id="overview" class="section level1">
+<h1 class="hasAnchor">
+<a href="#overview" class="anchor"></a>Overview</h1>
+<p><img src="../man/figures/logo.png" align="right" width="140px" style="padding-left:20px; background-color:white; border-color: transparent"></p>
+<p><code>BentoBox</code> is a coordinate-based, genomic visualization package for R. Using <code>grid</code> graphics, <code>BentoBox</code> empowers users to programatically and flexibly generate multi-panel figures. Tailored for genomics, <code>BentoBox</code> allows users to visualize large, complex genomic datasets while providing exquisite control over the arrangement of plots.</p>
+<p><code>BentoBox</code> functions can be grouped into the following categories:</p>
 <ul>
-<li>Never uses retina figures</li>
-<li>Has a smaller default figure size</li>
-<li>Uses a custom CSS stylesheet instead of the default Twitter Bootstrap style</li>
+<li>
+<p><strong>Page layout functions:</strong></p>
+<p>Functions for creating <code>BentoBox</code> page layouts, drawing, showing, and hiding guides, as well as placing plots on the page.</p>
+</li>
+<li>
+<p><strong>Reading functions:</strong></p>
+<p>Functions for quickly reading in large biological datasets.</p>
+</li>
+<li>
+<p><strong>Plotting functions:</strong></p>
+<p>Contains genomic plotting functions, functions for placing ggplots and base plots, as well as functions for drawing simple shapes.</p>
+</li>
+<li>
+<p><strong>Annotation functions:</strong></p>
+<p>Enables users to add annotations to their plots, such as legends, axes, and scales.</p>
+</li>
+<li>
+<p><strong>Meta functions:</strong></p>
+<p>Functions that display <code>BentoBox</code> properties, or operate on other <code>BentoBox</code> functions.</p>
+</li>
 </ul>
-<div id="vignette-info" class="section level2">
-<h2 class="hasAnchor">
-<a href="#vignette-info" class="anchor"></a>Vignette Info</h2>
-<p>Note the various macros within the <code>vignette</code> section of the metadata block above. These are required in order to instruct R how to build the vignette. Note that you should change the <code>title</code> field and the <code>\VignetteIndexEntry</code> to match the title of your vignette.</p>
+<p>This vignette provides a best-practices guide for utilizing <code>BentoBox</code>. It begins with a Quick Start section that outlines usage examples for reading in and plotting the most commonly used genomic data. Then the following sections explore how BentoBox works in more detail, highlighting helpful topics that showcase the capabilities of BentoBox. For detailed usage of each function, see the function-specific reference examples with <code>?function()</code> (e.g. <code>?bb_plotBedpe()</code>).</p>
 </div>
-<div id="styles" class="section level2">
+<div id="quick-start" class="section level1">
+<h1 class="hasAnchor">
+<a href="#quick-start" class="anchor"></a>Quick start</h1>
+<div id="how-to-quickly-plot" class="section level2">
 <h2 class="hasAnchor">
-<a href="#styles" class="anchor"></a>Styles</h2>
-<p>The <code>html_vignette</code> template includes a basic CSS theme. To override this theme you can specify your own CSS in the document metadata as follows:</p>
-<pre><code>output: 
-  rmarkdown::html_vignette:
-    css: mystyles.css</code></pre>
-</div>
-<div id="figures" class="section level2">
-<h2 class="hasAnchor">
-<a href="#figures" class="anchor"></a>Figures</h2>
-<p>The figure sizes have been customised so that you can easily put two images side-by-side.</p>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="fl">10</span><span class="op">:</span><span class="fl">1</span><span class="op">)</span></code></pre></div>
-<p><img src="introduction_to_bentobox_files/figure-html/unnamed-chunk-1-1.png" width="768"><img src="introduction_to_bentobox_files/figure-html/unnamed-chunk-1-2.png" width="768"></p>
-<p>You can enable figure captions by <code>fig_caption: yes</code> in YAML:</p>
-<pre><code>output:
-  rmarkdown::html_vignette:
-    fig_caption: yes</code></pre>
-<p>Then you can use the chunk option <code>fig.cap = "Your figure caption."</code> in <strong>knitr</strong>.</p>
-</div>
-<div id="more-examples" class="section level2">
-<h2 class="hasAnchor">
-<a href="#more-examples" class="anchor"></a>More Examples</h2>
-<p>You can write math expressions, e.g. <span class="math inline">\(Y = X\beta + \epsilon\)</span>, footnotes<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a>, and tables, e.g. using <code><a href="https://rdrr.io/pkg/knitr/man/kable.html">knitr::kable()</a></code>.</p>
-<table class="table">
-<thead><tr class="header">
-<th align="left"></th>
-<th align="right">mpg</th>
-<th align="right">cyl</th>
-<th align="right">disp</th>
-<th align="right">hp</th>
-<th align="right">drat</th>
-<th align="right">wt</th>
-<th align="right">qsec</th>
-<th align="right">vs</th>
-<th align="right">am</th>
-<th align="right">gear</th>
-<th align="right">carb</th>
-</tr></thead>
-<tbody>
-<tr class="odd">
-<td align="left">Mazda RX4</td>
-<td align="right">21.0</td>
-<td align="right">6</td>
-<td align="right">160.0</td>
-<td align="right">110</td>
-<td align="right">3.90</td>
-<td align="right">2.620</td>
-<td align="right">16.46</td>
-<td align="right">0</td>
-<td align="right">1</td>
-<td align="right">4</td>
-<td align="right">4</td>
-</tr>
-<tr class="even">
-<td align="left">Mazda RX4 Wag</td>
-<td align="right">21.0</td>
-<td align="right">6</td>
-<td align="right">160.0</td>
-<td align="right">110</td>
-<td align="right">3.90</td>
-<td align="right">2.875</td>
-<td align="right">17.02</td>
-<td align="right">0</td>
-<td align="right">1</td>
-<td align="right">4</td>
-<td align="right">4</td>
-</tr>
-<tr class="odd">
-<td align="left">Datsun 710</td>
-<td align="right">22.8</td>
-<td align="right">4</td>
-<td align="right">108.0</td>
-<td align="right">93</td>
-<td align="right">3.85</td>
-<td align="right">2.320</td>
-<td align="right">18.61</td>
-<td align="right">1</td>
-<td align="right">1</td>
-<td align="right">4</td>
-<td align="right">1</td>
-</tr>
-<tr class="even">
-<td align="left">Hornet 4 Drive</td>
-<td align="right">21.4</td>
-<td align="right">6</td>
-<td align="right">258.0</td>
-<td align="right">110</td>
-<td align="right">3.08</td>
-<td align="right">3.215</td>
-<td align="right">19.44</td>
-<td align="right">1</td>
-<td align="right">0</td>
-<td align="right">3</td>
-<td align="right">1</td>
-</tr>
-<tr class="odd">
-<td align="left">Hornet Sportabout</td>
-<td align="right">18.7</td>
-<td align="right">8</td>
-<td align="right">360.0</td>
-<td align="right">175</td>
-<td align="right">3.15</td>
-<td align="right">3.440</td>
-<td align="right">17.02</td>
-<td align="right">0</td>
-<td align="right">0</td>
-<td align="right">3</td>
-<td align="right">2</td>
-</tr>
-<tr class="even">
-<td align="left">Valiant</td>
-<td align="right">18.1</td>
-<td align="right">6</td>
-<td align="right">225.0</td>
-<td align="right">105</td>
-<td align="right">2.76</td>
-<td align="right">3.460</td>
-<td align="right">20.22</td>
-<td align="right">1</td>
-<td align="right">0</td>
-<td align="right">3</td>
-<td align="right">1</td>
-</tr>
-<tr class="odd">
-<td align="left">Duster 360</td>
-<td align="right">14.3</td>
-<td align="right">8</td>
-<td align="right">360.0</td>
-<td align="right">245</td>
-<td align="right">3.21</td>
-<td align="right">3.570</td>
-<td align="right">15.84</td>
-<td align="right">0</td>
-<td align="right">0</td>
-<td align="right">3</td>
-<td align="right">4</td>
-</tr>
-<tr class="even">
-<td align="left">Merc 240D</td>
-<td align="right">24.4</td>
-<td align="right">4</td>
-<td align="right">146.7</td>
-<td align="right">62</td>
-<td align="right">3.69</td>
-<td align="right">3.190</td>
-<td align="right">20.00</td>
-<td align="right">1</td>
-<td align="right">0</td>
-<td align="right">4</td>
-<td align="right">2</td>
-</tr>
-<tr class="odd">
-<td align="left">Merc 230</td>
-<td align="right">22.8</td>
-<td align="right">4</td>
-<td align="right">140.8</td>
-<td align="right">95</td>
-<td align="right">3.92</td>
-<td align="right">3.150</td>
-<td align="right">22.90</td>
-<td align="right">1</td>
-<td align="right">0</td>
-<td align="right">4</td>
-<td align="right">2</td>
-</tr>
-<tr class="even">
-<td align="left">Merc 280</td>
-<td align="right">19.2</td>
-<td align="right">6</td>
-<td align="right">167.6</td>
-<td align="right">123</td>
-<td align="right">3.92</td>
-<td align="right">3.440</td>
-<td align="right">18.30</td>
-<td align="right">1</td>
-<td align="right">0</td>
-<td align="right">4</td>
-<td align="right">4</td>
-</tr>
-</tbody>
-</table>
-<p>Also a quote using <code><a href="https://rdrr.io/r/base/Comparison.html">&gt;</a></code>:</p>
-<blockquote>
-<p>“He who gives up [code] safety for [code] speed deserves neither.” (<a href="https://twitter.com/hadleywickham/status/504368538874703872">via</a>)</p>
-</blockquote>
-</div>
-<div class="footnotes">
-<hr>
-<ol>
-<li id="fn1"><p>A footnote here.<a href="#fnref1" class="footnote-back">↩︎</a></p></li>
+<a href="#how-to-quickly-plot" class="anchor"></a>How to quickly plot</h2>
+<p><code>BentoBox</code> plotting functions contain 4 types of arguments:</p>
+<ol style="list-style-type: decimal">
+<li><p>Data reading argument (<code>data</code>)</p></li>
+<li><p>Locus arguments (<code>chrom</code>, <code>chromstart</code>, <code>chromend</code>, <code>assembly</code>)</p></li>
+<li><p>Placement arguments (<code>x</code>, <code>y</code>, <code>width</code>, <code>height</code>, <code>just</code>, <code>default.units</code>, …) that define where each plot resides on a <code>bb_page</code>.</p></li>
+<li><p>Attribute arguments that affect the data being plotted or the style of the plot (<code>palette</code>, <code>norm</code>, <code>fontcolor</code>, …). These are typically different for each function.</p></li>
 </ol>
+<p>The quickest way to plot data is to omit the placement arguments. This will generate a <code>BentoBox</code> plot that fills up the entire graphics window. The only arguments that are required are the data arguments and locus arguments. The examples below show how to quickly plot different types of genomic data with plot defaults and included data types. To use your own data, replace the <code>data</code> argument with either a path to the file or an R object.</p>
+<div id="hi-c-matricies" class="section level3">
+<h3 class="hasAnchor">
+<a href="#hi-c-matricies" class="anchor"></a>Hi-C matricies</h3>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co">## Load BentoBox</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://phanstiellab.github.io/bentobox">BentoBox</a></span><span class="op">)</span>
+
+<span class="co">## Load example Hi-C data</span>
+<span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="st">"bb_hicData"</span><span class="op">)</span>
+
+<span class="co">## Quick plot Hi-C data</span>
+<span class="fu"><a href="../reference/bb_plotHicSquare.html">bb_plotHicSquare</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">bb_hicData</span>,
+                 chrom <span class="op">=</span> <span class="st">"chr21"</span>, chromstart <span class="op">=</span> <span class="fl">28000000</span>, chromend <span class="op">=</span> <span class="fl">30300000</span><span class="op">)</span></code></pre></div>
+<p><img src="introduction_to_bentobox_files/figure-html/hic_quickplot-1.png" width="288" style="display: block; margin: auto;"></p>
+</div>
+<div id="signal-tracks" class="section level3">
+<h3 class="hasAnchor">
+<a href="#signal-tracks" class="anchor"></a>Signal tracks</h3>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co">## Load BentoBox</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://phanstiellab.github.io/bentobox">BentoBox</a></span><span class="op">)</span>
+
+<span class="co">## Load example signal data</span>
+<span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="st">"bb_signalData"</span><span class="op">)</span>
+
+<span class="co">## Quick plot signal data</span>
+<span class="fu"><a href="../reference/bb_plotSignal.html">bb_plotSignal</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">bb_signalData</span>,
+                 chrom <span class="op">=</span> <span class="st">"chr21"</span>, chromstart <span class="op">=</span> <span class="fl">28000000</span>, chromend <span class="op">=</span> <span class="fl">30300000</span><span class="op">)</span></code></pre></div>
+<p><img src="introduction_to_bentobox_files/figure-html/signal_quickplot-1.png" width="288" style="display: block; margin: auto;"></p>
+</div>
+<div id="gene-tracks" class="section level3">
+<h3 class="hasAnchor">
+<a href="#gene-tracks" class="anchor"></a>Gene tracks</h3>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co">## Load BentoBox</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://phanstiellab.github.io/bentobox">BentoBox</a></span><span class="op">)</span>
+
+<span class="co">## Load hg19 genomic annotation packages</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">TxDb.Hsapiens.UCSC.hg19.knownGene</span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">org.Hs.eg.db</span><span class="op">)</span>
+
+<span class="co">## Quick plot genes</span>
+<span class="fu"><a href="../reference/bb_plotGenes.html">bb_plotGenes</a></span><span class="op">(</span>assembly <span class="op">=</span> <span class="st">"hg19"</span>,
+             chrom <span class="op">=</span> <span class="st">"chr21"</span>, chromstart <span class="op">=</span> <span class="fl">28000000</span>, chromend <span class="op">=</span> <span class="fl">30300000</span><span class="op">)</span></code></pre></div>
+<p><img src="introduction_to_bentobox_files/figure-html/gene_quickplot-1.png" width="288" style="display: block; margin: auto;"></p>
+<p>Alternatively, if you want to plot around a particular gene rather than a genomic region you can specify <code>gene</code> and <code>geneBuffer</code> using the <code><a href="../reference/bb_params.html">bb_params()</a></code> meta function. If <code>geneBuffer</code> is not included, the default buffer adds <code>(gene length) / 2</code> base pairs to the ends of the gene coordinates.</p>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co">## Load BentoBox</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://phanstiellab.github.io/bentobox">BentoBox</a></span><span class="op">)</span>
+
+<span class="co">## Load hg19 genomic annotation packages</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">TxDb.Hsapiens.UCSC.hg19.knownGene</span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">org.Hs.eg.db</span><span class="op">)</span>
+
+<span class="co">## Quick plot genes</span>
+<span class="fu"><a href="../reference/bb_plotGenes.html">bb_plotGenes</a></span><span class="op">(</span>params <span class="op">=</span> <span class="fu"><a href="../reference/bb_params.html">bb_params</a></span><span class="op">(</span>gene <span class="op">=</span> <span class="st">"IL1B"</span>, geneBuffer <span class="op">=</span> <span class="fl">1000</span>, assembly <span class="op">=</span> <span class="st">"hg19"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<p><img src="introduction_to_bentobox_files/figure-html/gene2_quickplot-1.png" width="288" style="display: block; margin: auto;"></p>
+</div>
+<div id="gwas-manhattan-plots" class="section level3">
+<h3 class="hasAnchor">
+<a href="#gwas-manhattan-plots" class="anchor"></a>GWAS manhattan plots</h3>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co">## Load BentoBox</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://phanstiellab.github.io/bentobox">BentoBox</a></span><span class="op">)</span>
+
+<span class="co">## Load example gwas data</span>
+<span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="st">"bb_gwasData"</span><span class="op">)</span>
+
+<span class="co">## Quick plot gwas data -- fix error in bb_plotManhattan()</span>
+<span class="co"># bb_plotManhattan(data = bb_gwasData,</span>
+<span class="co">#                  chrom = "chr21", chromstart = 28000000, chromend = 30300000,</span>
+<span class="co">#                  pVals = "pVal", ymax = 1.1, cex = 0.20)</span></code></pre></div>
+</div>
+</div>
+<div id="how-to-add-plot-annotations" class="section level2">
+<h2 class="hasAnchor">
+<a href="#how-to-add-plot-annotations" class="anchor"></a>How to add plot annotations</h2>
+<p>To add annotation features to a <code>bb_plot</code> object, or to view multiple <code>bb_plot</code> objects simultaneously, we must:</p>
+<ol style="list-style-type: decimal">
+<li>Create a BentoBox coordinate page with <code><a href="../reference/bb_pageCreate.html">bb_pageCreate()</a></code>.</li>
+<li>Provide a <code>bb_plot</code> object to the <code>plot</code> argument (for annotation).</li>
+<li>Provide values for the placement arguments (<code>x</code>, <code>y</code>, <code>width</code>, <code>height</code>, <code>just</code>, <code>default.units</code>) in <code>bb_plot</code> functions.</li>
+</ol>
+<p>As an annotation example, here we add a color scale and genome label annotation:</p>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R">
+<span class="co">## Load BentoBox</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://phanstiellab.github.io/bentobox">BentoBox</a></span><span class="op">)</span>
+
+<span class="co">## Load example Hi-C data</span>
+<span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="st">"bb_hicData"</span><span class="op">)</span>
+
+<span class="co">## Create a BentoBox page</span>
+<span class="fu"><a href="../reference/bb_pageCreate.html">bb_pageCreate</a></span><span class="op">(</span>width <span class="op">=</span> <span class="fl">3.25</span>, height <span class="op">=</span> <span class="fl">3.25</span>, default.units <span class="op">=</span> <span class="st">"inches"</span><span class="op">)</span>
+
+<span class="co">## Plot Hi-C data with placing information</span>
+<span class="va">hicPlot</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/bb_plotHicSquare.html">bb_plotHicSquare</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">bb_hicData</span>,
+                            chrom <span class="op">=</span> <span class="st">"chr21"</span>, chromstart <span class="op">=</span> <span class="fl">28000000</span>, chromend <span class="op">=</span> <span class="fl">30300000</span>,
+                            x <span class="op">=</span> <span class="fl">0.25</span>, y <span class="op">=</span> <span class="fl">0.25</span>, width <span class="op">=</span> <span class="fl">2.5</span>, height <span class="op">=</span> <span class="fl">2.5</span>, default.units <span class="op">=</span> <span class="st">"inches"</span><span class="op">)</span>
+
+<span class="co">## Add color scale annotation</span>
+<span class="fu"><a href="../reference/bb_annoHeatmapLegend.html">bb_annoHeatmapLegend</a></span><span class="op">(</span>plot <span class="op">=</span> <span class="va">hicPlot</span>,
+                     x <span class="op">=</span> <span class="fl">2.85</span>, y <span class="op">=</span> <span class="fl">0.25</span>, width <span class="op">=</span> <span class="fl">0.1</span>, height <span class="op">=</span> <span class="fl">1.25</span>, default.units <span class="op">=</span> <span class="st">"inches"</span><span class="op">)</span>
+
+<span class="co">## Add genome label annotation</span>
+<span class="fu"><a href="../reference/bb_annoGenomeLabel.html">bb_annoGenomeLabel</a></span><span class="op">(</span>plot <span class="op">=</span> <span class="va">hicPlot</span>,
+                   x <span class="op">=</span> <span class="fl">0.25</span>, y <span class="op">=</span> <span class="fl">2.75</span>, width <span class="op">=</span> <span class="fl">2.5</span>, height <span class="op">=</span> <span class="fl">0.25</span>, default.units <span class="op">=</span> <span class="st">"inches"</span><span class="op">)</span></code></pre></div>
+<p><img src="introduction_to_bentobox_files/figure-html/anno_quickplot-1.png" width="384" style="display: block; margin: auto;"></p>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R">
+<span class="co">## Hide plot gridlines</span>
+<span class="fu"><a href="../reference/bb_pageGuideHide.html">bb_pageGuideHide</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<p><img src="introduction_to_bentobox_files/figure-html/anno_quickplot-2.png" width="384" style="display: block; margin: auto;"></p>
+<p>For more information about how to place plots and annotations on a <code>bb_page</code> check out the section <code>Arranging bb_plot Objects</code>.</p>
+</div>
+</div>
+<div id="the-bentobox-page" class="section level1">
+<h1 class="hasAnchor">
+<a href="#the-bentobox-page" class="anchor"></a>The <code>BentoBox</code> page</h1>
+<p><code>BentoBox</code> uses a coordinate-based plotting system to define the size and location of plots. This system makes the plotting process intuitive and absolute, meaning that plots cannot be squished and stretched based on their <em>relative</em> sizes. This also allows for precise control of the size of each visualization and the location of all plots, annotations, and text.</p>
+<p>All <code>BentoBox</code> page functions begin with the <code>bb_page</code> prefix.</p>
+<p>Users can create a page in their preferred size and unit of measurement using <code><a href="../reference/bb_pageCreate.html">bb_pageCreate()</a></code>. Within this function the user can also set gridlines in the vertical and horizontal directions with <code>xgrid</code> and <code>ygrid</code>, respectively. By default these values are set to 0.5 of the unit. In the following example we demonstrate creating a standard 8.5 x 11 inch page:</p>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/bb_pageCreate.html">bb_pageCreate</a></span><span class="op">(</span>width <span class="op">=</span> <span class="fl">8.5</span>, height <span class="op">=</span> <span class="fl">11</span>, default.units <span class="op">=</span> <span class="st">"inches"</span><span class="op">)</span></code></pre></div>
+<p><img src="introduction_to_bentobox_files/figure-html/page_demo01-1.png" width="1056" style="display: block; margin: auto;"></p>
+<p>Or we could create a smaller sized page in a different set of units with different gridlines:</p>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/bb_pageCreate.html">bb_pageCreate</a></span><span class="op">(</span>width <span class="op">=</span> <span class="fl">8</span>, height <span class="op">=</span> <span class="fl">8</span>, xgrid <span class="op">=</span> <span class="fl">1</span>, ygrid <span class="op">=</span> <span class="fl">1</span>, default.units <span class="op">=</span> <span class="st">"cm"</span><span class="op">)</span></code></pre></div>
+<p><img src="introduction_to_bentobox_files/figure-html/page_demo02-1.png" width="480" style="display: block; margin: auto;"></p>
+<p>We could turn off gridlines entirely by setting <code>xgrid</code> and <code>ygrid</code> to 0:</p>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/bb_pageCreate.html">bb_pageCreate</a></span><span class="op">(</span>width <span class="op">=</span> <span class="fl">3</span>, height <span class="op">=</span> <span class="fl">3</span>, xgrid <span class="op">=</span> <span class="fl">0</span>, ygrid <span class="op">=</span> <span class="fl">0</span>, default.units <span class="op">=</span> <span class="st">"inches"</span><span class="op">)</span></code></pre></div>
+<p><img src="introduction_to_bentobox_files/figure-html/page_demo03-1.png" width="480" style="display: block; margin: auto;"></p>
+<p>We can also remove all guidelines from the plot once we are finished by using the <code><a href="../reference/bb_pageGuideHide.html">bb_pageGuideHide()</a></code> function:</p>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co">## Create page</span>
+<span class="fu"><a href="../reference/bb_pageCreate.html">bb_pageCreate</a></span><span class="op">(</span>width <span class="op">=</span> <span class="fl">3</span>, height <span class="op">=</span> <span class="fl">3</span>, default.units <span class="op">=</span> <span class="st">"inches"</span><span class="op">)</span></code></pre></div>
+<p><img src="introduction_to_bentobox_files/figure-html/page_demo04-1.png" width="480" style="display: block; margin: auto;"></p>
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co">## Remove guides</span>
+<span class="fu"><a href="../reference/bb_pageGuideHide.html">bb_pageGuideHide</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<p><img src="introduction_to_bentobox_files/figure-html/page_demo04-2.png" width="480" style="display: block; margin: auto;"></p>
+<div id="arranging-plot-objects" class="section level2">
+<h2 class="hasAnchor">
+<a href="#arranging-plot-objects" class="anchor"></a>Arranging plot objects</h2>
+<p>In <code>BentoBox</code> all plot objects are boxes, with user defined positions and sizes. All plot objects can be placed on a <code>bb_page</code> using the placement arguments (e.g. <code>x</code>, <code>y</code>, <code>width</code>, <code>height</code>, <code>just</code>, <code>default.units</code>, …). The <code>bb_page</code> sets the origin of the plot at the top left corner of the page. By default, the <code>x</code> and <code>y</code> arguments place the top-left corner of a plot in the specified position on the <code>bb_page</code> while the <code>width</code> and <code>height</code> arguments define the size of the plot.</p>
+<p>For example, if users want the top-left corner of their plot to be 0.5 inches down from the top of the page and 0.5 inches from the left…</p>
+<p><img src="introduction_to_bentobox_files/figure-html/arrange_example01-1.png" width="480" style="display: block; margin: auto;"></p>
+<p>and the plot to be 2 inches wide and 1 inch tall…</p>
+<p><img src="introduction_to_bentobox_files/figure-html/arrange_example02-1.png" width="480" style="display: block; margin: auto;"></p>
+<p><code>BentoBox</code> can make the plot with these exact dimensions:</p>
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co">## Load libraries</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://phanstiellab.github.io/bentobox">BentoBox</a></span><span class="op">)</span>
+
+<span class="co">## Create page</span>
+<span class="fu"><a href="../reference/bb_pageCreate.html">bb_pageCreate</a></span><span class="op">(</span>width <span class="op">=</span> <span class="fl">3</span>, height <span class="op">=</span> <span class="fl">3</span>, default.units <span class="op">=</span> <span class="st">"inches"</span><span class="op">)</span>
+
+<span class="co">## Plot rectangle</span>
+<span class="fu"><a href="../reference/bb_plotRect.html">bb_plotRect</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fl">0.5</span>, y <span class="op">=</span> <span class="fl">0.5</span>, width <span class="op">=</span> <span class="fl">2</span>, height <span class="op">=</span> <span class="fl">1</span>,
+            just <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"left"</span>, <span class="st">"top"</span><span class="op">)</span>, default.units <span class="op">=</span> <span class="st">"inches"</span><span class="op">)</span></code></pre></div>
+<p><img src="introduction_to_bentobox_files/figure-html/arrange_example03-1.png" width="480" style="display: block; margin: auto;"></p>
+<p><code>BentoBox</code> also provides the helper function <code><a href="../reference/bb_pagePlotPlace.html">bb_pagePlotPlace()</a></code> for placing plot objects that have been previously defined:</p>
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co">## Load libraries</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://phanstiellab.github.io/bentobox">BentoBox</a></span><span class="op">)</span>
+
+<span class="co">## Load data</span>
+<span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="st">"bb_signalData"</span><span class="op">)</span>
+
+<span class="co">## Create page</span>
+<span class="fu"><a href="../reference/bb_pageCreate.html">bb_pageCreate</a></span><span class="op">(</span>width <span class="op">=</span> <span class="fl">3</span>, height <span class="op">=</span> <span class="fl">3</span>, default.units <span class="op">=</span> <span class="st">"inches"</span><span class="op">)</span>
+
+<span class="co">## Define signal plot</span>
+<span class="va">signalPlot</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/bb_plotSignal.html">bb_plotSignal</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">bb_signalData</span>,
+                            chrom <span class="op">=</span> <span class="st">"chr21"</span>, chromstart <span class="op">=</span> <span class="fl">28000000</span>, chromend <span class="op">=</span> <span class="fl">30300000</span>,
+                            draw <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
+
+<span class="co">## Place plot on bb_page</span>
+<span class="fu"><a href="../reference/bb_pagePlotPlace.html">bb_pagePlotPlace</a></span><span class="op">(</span>plot <span class="op">=</span> <span class="va">signalPlot</span>,
+                 x <span class="op">=</span> <span class="fl">0.5</span>, y <span class="op">=</span> <span class="fl">0.5</span>, width <span class="op">=</span> <span class="fl">2</span>, height <span class="op">=</span> <span class="fl">1</span>, 
+                 just <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"left"</span>, <span class="st">"top"</span><span class="op">)</span>, default.units <span class="op">=</span> <span class="st">"inches"</span><span class="op">)</span></code></pre></div>
+<p><img src="introduction_to_bentobox_files/figure-html/arrange_example04-1.png" width="480" style="display: block; margin: auto;"></p>
+<p>This gives the users additional flexibility in how they create their R scripts.</p>
+</div>
+<div id="using-the-just-parameter" class="section level2">
+<h2 class="hasAnchor">
+<a href="#using-the-just-parameter" class="anchor"></a>Using the <code>just</code> parameter</h2>
+<p>While the <code>x</code>, <code>y</code>, <code>width</code>, and <code>height</code> parameters are relative to the top-left corner of the plot by default, the <code>just</code> parameter provides additional flexibility by allowing users to change the reference point. The <code>just</code> parameter accepts a character or numeric vector of length 2 describing the horizontal and vertical justification (or reference point), respectively.</p>
+<p>The just parameter can be set using character strings “left”, “right”, “center”, “bottom” and “top”:</p>
+<p><img src="introduction_to_bentobox_files/figure-html/arrange_example05-1.png" width="576" style="display: block; margin: auto;"></p>
+<p>Or it can be set using numeric values where 0 means left/bottom, 1 means right/top, and 0.5 means center:</p>
+<p><img src="introduction_to_bentobox_files/figure-html/arrange_example06-1.png" width="576" style="display: block; margin: auto;"></p>
+<p>This is particularly useful when an object needs to be aligned in reference to another plot object or page marker. For example, in the Hi-C plot below we might want to align the top-right corner of the heatmap legend to the 3 inch mark. There is no need to calculate the top-left position (i.e. <code>3 inches - (legend width)</code>) to determine where to place the heatmap legend. Instead we can change the <code>just</code> parameter to <code>just=c('right', 'top')</code>:</p>
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co">## Load BentoBox</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://phanstiellab.github.io/bentobox">BentoBox</a></span><span class="op">)</span>
+
+<span class="co">## Load example Hi-C data</span>
+<span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="st">"bb_hicData"</span><span class="op">)</span>
+
+<span class="co">## Create a BentoBox page</span>
+<span class="fu"><a href="../reference/bb_pageCreate.html">bb_pageCreate</a></span><span class="op">(</span>width <span class="op">=</span> <span class="fl">3.25</span>, height <span class="op">=</span> <span class="fl">3.25</span>, default.units <span class="op">=</span> <span class="st">"inches"</span><span class="op">)</span>
+
+<span class="co">## Plot Hi-C data with placing information</span>
+<span class="va">hicPlot</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/bb_plotHicSquare.html">bb_plotHicSquare</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">bb_hicData</span>,
+                            chrom <span class="op">=</span> <span class="st">"chr21"</span>, chromstart <span class="op">=</span> <span class="fl">28000000</span>, chromend <span class="op">=</span> <span class="fl">30300000</span>,
+                            x <span class="op">=</span> <span class="fl">0.25</span>, y <span class="op">=</span> <span class="fl">0.25</span>, width <span class="op">=</span> <span class="fl">2.5</span>, height <span class="op">=</span> <span class="fl">2.5</span>, default.units <span class="op">=</span> <span class="st">"inches"</span><span class="op">)</span>
+
+<span class="co">## Add color scale annotation with just = c("right", "top")</span>
+<span class="fu"><a href="../reference/bb_annoHeatmapLegend.html">bb_annoHeatmapLegend</a></span><span class="op">(</span>plot <span class="op">=</span> <span class="va">hicPlot</span>,
+                     x <span class="op">=</span> <span class="fl">3</span>, y <span class="op">=</span> <span class="fl">0.25</span>, width <span class="op">=</span> <span class="fl">0.1</span>, height <span class="op">=</span> <span class="fl">1.25</span>,
+                     just <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"right"</span>, <span class="st">"top"</span><span class="op">)</span>, default.units <span class="op">=</span> <span class="st">"inches"</span><span class="op">)</span></code></pre></div>
+<p><img src="introduction_to_bentobox_files/figure-html/arrange_example07-1.png" width="576" style="display: block; margin: auto;"></p>
+</div>
+</div>
+<div id="plotting-multi-omic-data" class="section level1">
+<h1 class="hasAnchor">
+<a href="#plotting-multi-omic-data" class="anchor"></a>Plotting multi-omic data</h1>
+<p><code>BentoBox</code> makes it easy to create reproducible, publication-quality figures from multi-omic data. Since each plot can be placed in <em>exactly</em> the desired location, users can stack multiple types of genomic data so that their axes and data are correctly aligned. In this section we will show some examples of plotting multi-omic data, how the <code>bb_params</code> object can facilitate this process, and how to correctly normalize stacked signal track data.</p>
+<p>In the following example, we plot the same genomic region (i.e. <code>chr21:28000000-30300000</code>) represented in Hi-C data, loop annotations, signal track data, GWAS data, all along a common gene track and genome label axis:</p>
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co">## Load BentoBox</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://phanstiellab.github.io/bentobox">BentoBox</a></span><span class="op">)</span>
+
+<span class="co">## Load example data</span>
+<span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="st">"bb_hicData"</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="st">"bb_bedpeData"</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="st">"bb_signalData"</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="st">"bb_gwasData"</span><span class="op">)</span>
+
+<span class="co">## Create a BentoBox page</span>
+<span class="fu"><a href="../reference/bb_pageCreate.html">bb_pageCreate</a></span><span class="op">(</span>width <span class="op">=</span> <span class="fl">3</span>, height <span class="op">=</span> <span class="fl">5</span>, default.units <span class="op">=</span> <span class="st">"inches"</span><span class="op">)</span>
+
+<span class="co">## Plot Hi-C data in region</span>
+<span class="fu"><a href="../reference/bb_plotHicSquare.html">bb_plotHicSquare</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">bb_hicData</span>,
+                 chrom <span class="op">=</span> <span class="st">"chr21"</span>, chromstart <span class="op">=</span> <span class="fl">28000000</span>, chromend <span class="op">=</span> <span class="fl">30300000</span>,
+                 x <span class="op">=</span> <span class="fl">0.5</span>, y <span class="op">=</span> <span class="fl">0.5</span>, width <span class="op">=</span> <span class="fl">2</span>, height <span class="op">=</span> <span class="fl">2</span>,
+                 just <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"left"</span>, <span class="st">"top"</span><span class="op">)</span>, default.units <span class="op">=</span> <span class="st">"inches"</span><span class="op">)</span>
+
+<span class="co">## Plot loop annotations</span>
+<span class="fu"><a href="../reference/bb_plotBedpeArches.html">bb_plotBedpeArches</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">bb_bedpeData</span>,
+                   chrom <span class="op">=</span> <span class="st">"chr21"</span>, chromstart <span class="op">=</span> <span class="fl">28000000</span>, chromend <span class="op">=</span> <span class="fl">30300000</span>,
+                   x <span class="op">=</span> <span class="fl">0.5</span>, y <span class="op">=</span> <span class="fl">2.5</span>, width <span class="op">=</span> <span class="fl">2</span>, height <span class="op">=</span> <span class="fl">0.25</span>, 
+                   just <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"left"</span>, <span class="st">"top"</span><span class="op">)</span>, default.units <span class="op">=</span> <span class="st">"inches"</span>,
+                   fill <span class="op">=</span> <span class="st">"black"</span>, linecolor <span class="op">=</span> <span class="st">"black"</span>, position <span class="op">=</span> <span class="st">"bottom"</span><span class="op">)</span>
+
+<span class="co">## Plot signal track data</span>
+<span class="fu"><a href="../reference/bb_plotSignal.html">bb_plotSignal</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">bb_signalData</span>,
+              chrom <span class="op">=</span> <span class="st">"chr21"</span>, chromstart <span class="op">=</span> <span class="fl">28000000</span>, chromend <span class="op">=</span> <span class="fl">30300000</span>,
+              x <span class="op">=</span> <span class="fl">0.5</span>, y <span class="op">=</span> <span class="fl">2.75</span>, width <span class="op">=</span> <span class="fl">2</span>, height <span class="op">=</span> <span class="fl">0.5</span>, 
+              just <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"left"</span>, <span class="st">"top"</span><span class="op">)</span>, default.units <span class="op">=</span> <span class="st">"inches"</span><span class="op">)</span>
+
+<span class="co">## Plot GWAS data -- Fix bb_plotManhattan()</span>
+<span class="co"># bb_plotManhattan(data = bb_gwasData,</span>
+<span class="co">#                  chrom = "chr21", chromstart = 28000000, chromend = 30300000,</span>
+<span class="co">#                  pVals = "pVal", ymax = 1.1, cex = 0.20,</span>
+<span class="co">#                  x = 0.5, y = 3.5, width = 2, height = 0.5, </span>
+<span class="co">#                  just = c("left", "top"), default.units = "inches")</span>
+
+<span class="co">## Plot gene track</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">TxDb.Hsapiens.UCSC.hg19.knownGene</span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">org.Hs.eg.db</span><span class="op">)</span>
+<span class="fu"><a href="../reference/bb_plotGenes.html">bb_plotGenes</a></span><span class="op">(</span>chrom <span class="op">=</span> <span class="st">"chr21"</span>, chromstart <span class="op">=</span> <span class="fl">28000000</span>, chromend <span class="op">=</span> <span class="fl">30300000</span>,
+             x <span class="op">=</span> <span class="fl">0.5</span>, y <span class="op">=</span> <span class="fl">4</span>, width <span class="op">=</span> <span class="fl">2</span>, height <span class="op">=</span> <span class="fl">0.5</span>,
+             just <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"left"</span>, <span class="st">"top"</span><span class="op">)</span>, default.units <span class="op">=</span> <span class="st">"inches"</span><span class="op">)</span>
+
+<span class="co">## Plot genome label</span>
+<span class="fu"><a href="../reference/bb_plotGenomeLabel.html">bb_plotGenomeLabel</a></span><span class="op">(</span>chrom <span class="op">=</span> <span class="st">"chr21"</span>, chromstart <span class="op">=</span> <span class="fl">28000000</span>, chromend <span class="op">=</span> <span class="fl">30300000</span>,
+                   x <span class="op">=</span> <span class="fl">0.5</span>, y <span class="op">=</span> <span class="fl">4.5</span>, length <span class="op">=</span> <span class="fl">2</span>, scale <span class="op">=</span> <span class="st">"Mb"</span>,
+                   just <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"left"</span>, <span class="st">"top"</span><span class="op">)</span>, default.units <span class="op">=</span> <span class="st">"inches"</span><span class="op">)</span></code></pre></div>
+<p><img src="introduction_to_bentobox_files/figure-html/plotting_example01-1.png" width="480" style="display: block; margin: auto;"></p>
+<div id="using-the-bb_params-object" class="section level2">
+<h2 class="hasAnchor">
+<a href="#using-the-bb_params-object" class="anchor"></a>Using the <code>bb_params</code> object</h2>
+<p>The <code><a href="../reference/bb_params.html">bb_params()</a></code> function creates a <code>bb_params</code> object that can contain any argument from <code>BentoBox</code> functions.</p>
+<p>We can recreate and simplify the multi-omic plot above</p>
+</div>
+<div id="stacked-signal-tracks" class="section level2">
+<h2 class="hasAnchor">
+<a href="#stacked-signal-tracks" class="anchor"></a>Stacked signal tracks</h2>
+<p>Coming soon…</p>
+</div>
+</div>
+<div id="plot-aesthetics" class="section level1">
+<h1 class="hasAnchor">
+<a href="#plot-aesthetics" class="anchor"></a>Plot aesthetics</h1>
+<p>Coming soon…</p>
 </div>
   </div>
 

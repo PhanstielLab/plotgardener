@@ -199,8 +199,7 @@ they will generate the **exact same** multi-panel visualization:
 ```{r philosophy_7, eval=TRUE, message=FALSE, echo=FALSE, fig.width=8}
 ## Create a BentoBox page
 bb_pageCreate(width = 7, height = 3.5, default.units = "inches",
-              xgrid = 0, ygrid = 0, showOutline = FALSE,
-              showRuler = FALSE, showUnit = FALSE)
+              xgrid = 0, ygrid = 0, showGuides = FALSE)
 
 ## Define genomic region with `bb_params`
 params <- bb_params(chrom = "chr21", chromstart = 28000000, chromend = 30300000)
@@ -258,8 +257,7 @@ genesPlot <- bb_plotGenes(params = params,
 ```{r philosophy_8, eval=TRUE, message=FALSE, echo=FALSE, fig.width=8}
 ## Create a BentoBox page
 bb_pageCreate(width = 7, height = 3.5, default.units = "inches",
-              xgrid = 0, ygrid = 0, showOutline = FALSE,
-              showRuler = FALSE, showUnit = FALSE)
+              xgrid = 0, ygrid = 0, showGuides = FALSE)
 
 ## Define genomic region with `bb_params`
 params <- bb_params(chrom = "chr21", chromstart = 28000000, chromend = 30300000)

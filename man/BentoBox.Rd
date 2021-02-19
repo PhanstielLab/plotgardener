@@ -25,7 +25,7 @@ Useful links:
 Authors:
 \itemize{
   \item Eric S. Davis \email{esdavis@live.unc.edu} (\href{https://orcid.org/0000-0003-4051-3217}{ORCID})
-  \item Craig Wenger \email{craig.wenger@gmail.com}
+  \item Craig Wenger \email{craig.wenger@gmail.com} (\href{https://orcid.org/0000-0002-7361-8456}{ORCID})
   \item Douglas H. Phanstiel \email{douglas_phanstiel@med.unc.edu} [copyright holder]
 }
 

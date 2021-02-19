@@ -1,65 +1,536 @@
 ---
-title: "Vignette Title"
-author: "Vignette Author"
+title: "Introduction to BentoBox"
+author: "Nicole Kramer, Eric S. Davis, Craig Wenger, Sarah Parker, Erika Deoudes, and Douglas H. Phanstiel"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Vignette Title}
+  %\VignetteIndexEntry{Introduction to BentoBox}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
 
 ```{r setup, include = FALSE}
 knitr::opts_chunk$set(
+  fig.align = 'center',
+  fig.width = 3,
+  fig.height = 3,
   collapse = TRUE,
   comment = "#>"
 )
 ```
 
-Vignettes are long form documentation commonly included in packages. Because they are part of the distribution of the package, they need to be as compact as possible. The `html_vignette` output type provides a custom style sheet (and tweaks some options) to ensure that the resulting html is as small as possible. The `html_vignette` format:
+# Overview
+<img src="../man/figures/logo.png" align="right" width="140px" style="padding-left:20px; background-color:white; border-color: transparent" />
 
-- Never uses retina figures
-- Has a smaller default figure size
-- Uses a custom CSS stylesheet instead of the default Twitter Bootstrap style
+`BentoBox` is a coordinate-based, genomic visualization package for R. Using `grid` graphics, `BentoBox` empowers users to programatically and flexibly generate multi-panel figures. Tailored for genomics, `BentoBox` allows users to visualize large, complex genomic datasets while providing exquisite control over the arrangement of plots.
 
-## Vignette Info
+`BentoBox` functions can be grouped into the following categories:
 
-Note the various macros within the `vignette` section of the metadata block above. These are required in order to instruct R how to build the vignette. Note that you should change the `title` field and the `\VignetteIndexEntry` to match the title of your vignette.
+  - **Page layout functions:**
+    
+    Functions for creating `BentoBox` page layouts, drawing, showing, and hiding guides, as well as placing plots on the page.
+    
+  - **Reading functions:**
+  
+    Functions for quickly reading in large biological datasets.
+    
+  - **Plotting functions:**
+  
+    Contains genomic plotting functions, functions for placing ggplots and base plots, as well as functions for drawing simple shapes.
+    
+  - **Annotation functions:**
+  
+    Enables users to add annotations to their plots, such as legends, axes, and scales.
+  
+  - **Meta functions:**
+  
+    Functions that display `BentoBox` properties, or operate on other `BentoBox` functions.
 
-## Styles
+This vignette provides a best-practices guide for utilizing `BentoBox`. It begins with a Quick Start section that outlines usage examples for reading in and plotting the most commonly used genomic data. Then the following sections explore how BentoBox works in more detail, highlighting helpful topics that showcase the capabilities of BentoBox. For detailed usage of each function, see the function-specific reference examples with `?function()` (e.g. `?bb_plotBedpe()`).
 
-The `html_vignette` template includes a basic CSS theme. To override this theme you can specify your own CSS in the document metadata as follows:
 
-    output: 
-      rmarkdown::html_vignette:
-        css: mystyles.css
+# Quick start
 
-## Figures
+## How to quickly plot
 
-The figure sizes have been customised so that you can easily put two images side-by-side. 
+`BentoBox` plotting functions contain 4 types of arguments:
 
-```{r, fig.show='hold'}
-plot(1:10)
-plot(10:1)
+  1. Data reading argument (`data`)
+  
+  2. Locus arguments (`chrom`, `chromstart`, `chromend`, `assembly`)
+  
+  3. Placement arguments (`x`, `y`, `width`, `height`, `just`, `default.units`, ...) that define where each plot resides on a `bb_page`.
+  
+  4. Attribute arguments that affect the data being plotted or the style of the plot (`palette`, `norm`, `fontcolor`, ...). These are typically different for each function.
+  
+The quickest way to plot data is to omit the placement arguments. This will generate a `BentoBox` plot that fills up the entire graphics window. The only arguments that are required are the data arguments and locus arguments. The examples below show how to quickly plot different types of genomic data with plot defaults and included data types. To use your own data, replace the `data` argument with either a path to the file or an R object.
+
+### Hi-C matricies
+
+```{r hic_quickplot, eval=TRUE, echo=TRUE, message=FALSE}
+## Load BentoBox
+library(BentoBox)
+
+## Load example Hi-C data
+data("bb_hicData")
+
+## Quick plot Hi-C data
+bb_plotHicSquare(data = bb_hicData,
+                 chrom = "chr21", chromstart = 28000000, chromend = 30300000)
+
 ```
 
-You can enable figure captions by `fig_caption: yes` in YAML:
 
-    output:
-      rmarkdown::html_vignette:
-        fig_caption: yes
+### Signal tracks
 
-Then you can use the chunk option `fig.cap = "Your figure caption."` in **knitr**.
+```{r signal_quickplot, eval=TRUE, echo=TRUE, message=FALSE}
+## Load BentoBox
+library(BentoBox)
 
-## More Examples
+## Load example signal data
+data("bb_signalData")
 
-You can write math expressions, e.g. $Y = X\beta + \epsilon$, footnotes^[A footnote here.], and tables, e.g. using `knitr::kable()`.
+## Quick plot signal data
+bb_plotSignal(data = bb_signalData,
+                 chrom = "chr21", chromstart = 28000000, chromend = 30300000)
 
-```{r, echo=FALSE, results='asis'}
-knitr::kable(head(mtcars, 10))
 ```
 
-Also a quote using `>`:
 
-> "He who gives up [code] safety for [code] speed deserves neither."
-([via](https://twitter.com/hadleywickham/status/504368538874703872))
+### Gene tracks
+
+```{r gene_quickplot, eval=TRUE, echo=TRUE, message=FALSE}
+## Load BentoBox
+library(BentoBox)
+
+## Load hg19 genomic annotation packages
+library(TxDb.Hsapiens.UCSC.hg19.knownGene)
+library(org.Hs.eg.db)
+
+## Quick plot genes
+bb_plotGenes(assembly = "hg19",
+             chrom = "chr21", chromstart = 28000000, chromend = 30300000)
+
+```
+
+
+Alternatively, if you want to plot around a particular gene rather than a genomic region you can specify `gene` and `geneBuffer` using the `bb_params()` meta function. If `geneBuffer` is not included, the default buffer adds `(gene length) / 2` base pairs to the ends of the gene coordinates.
+
+```{r gene2_quickplot, eval=TRUE, echo=TRUE, message=FALSE}
+## Load BentoBox
+library(BentoBox)
+
+## Load hg19 genomic annotation packages
+library(TxDb.Hsapiens.UCSC.hg19.knownGene)
+library(org.Hs.eg.db)
+
+## Quick plot genes
+bb_plotGenes(params = bb_params(gene = "IL1B", geneBuffer = 1000, assembly = "hg19"))
+
+```
+
+
+### GWAS manhattan plots
+
+```{r gwas_quickplot, eval=TRUE, echo=TRUE, message=FALSE}
+## Load BentoBox
+library(BentoBox)
+
+## Load example gwas data
+data("bb_gwasData")
+
+## Quick plot gwas data -- fix error in bb_plotManhattan()
+# bb_plotManhattan(data = bb_gwasData,
+#                  chrom = "chr21", chromstart = 28000000, chromend = 30300000,
+#                  pVals = "pVal", ymax = 1.1, cex = 0.20)
+```
+
+## How to add plot annotations
+
+To add annotation features to a `bb_plot` object, or to view multiple `bb_plot` objects simultaneously, we must:  
+
+1. Create a BentoBox coordinate page with `bb_pageCreate()`.
+2. Provide a `bb_plot` object to the `plot` argument (for annotation).
+3. Provide values for the placement arguments (`x`, `y`, `width`, `height`, `just`, `default.units`) in `bb_plot` functions.
+
+As an annotation example, here we add a color scale and genome label annotation:
+
+```{r anno_quickplot, eval=TRUE, echo=TRUE, message=FALSE, results='hide', fig.width=4, fig.height=4}
+
+## Load BentoBox
+library(BentoBox)
+
+## Load example Hi-C data
+data("bb_hicData")
+
+## Create a BentoBox page
+bb_pageCreate(width = 3.25, height = 3.25, default.units = "inches")
+
+## Plot Hi-C data with placing information
+hicPlot <- bb_plotHicSquare(data = bb_hicData,
+                            chrom = "chr21", chromstart = 28000000, chromend = 30300000,
+                            x = 0.25, y = 0.25, width = 2.5, height = 2.5, default.units = "inches")
+
+## Add color scale annotation
+bb_annoHeatmapLegend(plot = hicPlot,
+                     x = 2.85, y = 0.25, width = 0.1, height = 1.25, default.units = "inches")
+
+## Add genome label annotation
+bb_annoGenomeLabel(plot = hicPlot,
+                   x = 0.25, y = 2.75, width = 2.5, height = 0.25, default.units = "inches")
+
+## Hide plot gridlines
+bb_pageGuideHide()
+
+```
+
+For more information about how to place plots and annotations on a `bb_page` check out the section `Arranging bb_plot Objects`.
+
+# The `BentoBox` page
+
+`BentoBox` uses a coordinate-based plotting system to define the size and location of plots. This system makes the plotting process intuitive and absolute, meaning that plots cannot be squished and stretched based on their *relative* sizes. This also allows for precise control of the size of each visualization and the location of all plots, annotations, and text. 
+
+All `BentoBox` page functions begin with the `bb_page` prefix. 
+
+Users can create a page in their preferred size and unit of measurement using `bb_pageCreate()`. Within this function the user can also set gridlines in the vertical and horizontal directions with `xgrid` and `ygrid`, respectively. By default these values are set to 0.5 of the unit. In the following example we demonstrate creating a standard 8.5 x 11 inch page:
+
+```{r page_demo01, fig.width=11, fig.height=12}
+bb_pageCreate(width = 8.5, height = 11, default.units = "inches")
+```
+
+
+Or we could create a smaller sized page in a different set of units with different gridlines:
+
+```{r page_demo02, fig.width=5, fig.height=4}
+bb_pageCreate(width = 8, height = 8, xgrid = 1, ygrid = 1, default.units = "cm")
+```
+
+We could turn off gridlines entirely by setting `xgrid` and `ygrid` to 0:
+
+```{r page_demo03, fig.width=5, fig.height=4}
+bb_pageCreate(width = 3, height = 3, xgrid = 0, ygrid = 0, default.units = "inches")
+```
+
+We can also remove all guidelines from the plot once we are finished by using the `bb_pageGuideHide()` function:
+
+```{r page_demo04, fig.width=5, fig.height=4}
+## Create page
+bb_pageCreate(width = 3, height = 3, default.units = "inches")
+## Remove guides
+bb_pageGuideHide()
+```
+
+
+## Arranging plot objects
+
+In `BentoBox` all plot objects are boxes, with user defined positions and sizes. All plot objects can be placed on a `bb_page` using the placement arguments (e.g. `x`, `y`, `width`, `height`, `just`, `default.units`, ...). The `bb_page` sets the origin of the plot at the top left corner of the page. By default, the `x` and `y` arguments place the top-left corner of a plot in the specified position on the `bb_page` while the `width` and `height` arguments define the size of the plot.
+
+For example, if users want the top-left corner of their plot to be 0.5 inches down from the top of the page and 0.5 inches from the left...
+
+```{r arrange_example01, eval=TRUE, echo=FALSE, fig.height=4, fig.width=5, message=FALSE}
+## Load libraries
+library(BentoBox)
+
+## Create page
+bb_pageCreate(width = 3, height = 3, default.units = "inches")
+
+## Draw arrows
+bb_plotSegments(x0 = 0.5, y0 = 0, x1 = 0.5, y1 = 0.5,
+                arrow = arrow(angle=30,
+                              length=unit(0.1, "inches"),
+                              ends="last",
+                              type="closed"),
+                fill = "black")
+
+bb_plotSegments(x0 = 0, y0 = 0.5, x1 = 0.5, y1 = 0.5,
+                arrow = arrow(angle=30,
+                              length=unit(0.1, "inches"),
+                              ends="last",
+                              type="closed"),
+                fill = "black")
+
+## Draw text
+bb_plotText(label = "0.5 in", x =0.6, y = 0.25, just = "left")
+bb_plotText(label = "0.5 in", x = 0.25, y = 0.6, just = "top")
+```
+
+and the plot to be 2 inches wide and 1 inch tall...
+
+
+```{r arrange_example02, eval=TRUE, echo=FALSE, fig.height=4, fig.width=5, message=FALSE}
+## Load libraries
+library(BentoBox)
+
+## Create page
+bb_pageCreate(width = 3, height = 3, default.units = "inches")
+
+## Draw arrows
+bb_plotSegments(x0 = 0.5, y0 = 0, x1 = 0.5, y1 = 0.5,
+                arrow = arrow(angle=30,
+                              length=unit(0.1, "inches"),
+                              ends="last",
+                              type="closed"),
+                fill = "black")
+
+bb_plotSegments(x0 = 0, y0 = 0.5, x1 = 0.5, y1 = 0.5,
+                arrow = arrow(angle=30,
+                              length=unit(0.1, "inches"),
+                              ends="last",
+                              type="closed"),
+                fill = "black")
+
+## Draw plot dimension arrows
+bb_plotSegments(x0 = 0.5, y0 = 0.5, x1 = 2.5, y1 = 0.5,
+                arrow = arrow(angle=30,
+                              length=unit(0.1, "inches"),
+                              ends="both",
+                              type="closed"),
+                fill = "black")
+
+bb_plotSegments(x0 = 0.5, y0 = 0.5, x1 = 0.5, y1 = 1.5,
+                arrow = arrow(angle=30,
+                              length=unit(0.1, "inches"),
+                              ends="both",
+                              type="closed"),
+                fill = "black")
+
+## Draw text
+bb_plotText(label = "2 in", x = 1.5, y = 0.4, just = "bottom")
+bb_plotText(label = "1 in", x = 0.4, y = 1, just = "right")
+```
+
+`BentoBox` can make the plot with these exact dimensions:
+
+```{r arrange_example03, eval=TRUE, echo=TRUE, fig.height=4, fig.width=5, message=FALSE}
+## Load libraries
+library(BentoBox)
+
+## Create page
+bb_pageCreate(width = 3, height = 3, default.units = "inches")
+
+## Plot rectangle
+bb_plotRect(x = 0.5, y = 0.5, width = 2, height = 1,
+            just = c("left", "top"), default.units = "inches")
+
+```
+
+`BentoBox` also provides the helper function `bb_pagePlotPlace()` for placing plot objects that have been previously defined:
+
+```{r arrange_example04, eval=TRUE, echo=TRUE, fig.height=4, fig.width=5, message=FALSE}
+## Load libraries
+library(BentoBox)
+
+## Load data
+data("bb_signalData")
+
+## Create page
+bb_pageCreate(width = 3, height = 3, default.units = "inches")
+
+## Define signal plot
+signalPlot <- bb_plotSignal(data = bb_signalData,
+                            chrom = "chr21", chromstart = 28000000, chromend = 30300000,
+                            draw = FALSE)
+
+## Place plot on bb_page
+bb_pagePlotPlace(plot = signalPlot,
+                 x = 0.5, y = 0.5, width = 2, height = 1, 
+                 just = c("left", "top"), default.units = "inches")
+
+```
+
+This gives the users additional flexibility in how they create their R scripts.
+
+## Using the `just` parameter
+
+While the `x`, `y`, `width`, and `height` parameters are relative to the top-left corner of the plot by default, the `just` parameter provides additional flexibility by allowing users to change the reference point. The `just` parameter accepts a character or numeric vector of length 2 describing the horizontal and vertical justification (or reference point), respectively.
+
+The just parameter can be set using character strings "left", "right", "center", "bottom" and "top":
+
+```{r arrange_example05, eval=TRUE, echo=FALSE, fig.height=5, fig.width=6, message=FALSE}
+## Load libraries
+library(BentoBox)
+
+## Create page
+bb_pageCreate(width = 4, height = 4, xgrid = 1, ygrid = 1, default.units = "inches")
+
+## Define x and y coords, colors, and justifications
+xcoords <- c(0.25, 2, 3.75, 3.75, 3.75, 2, 0.25, 0.25, 2)
+ycoords <- c(0.25, 0.25, 0.25, 2, 3.75, 3.75, 3.75, 2, 2)
+cols <- c(RColorBrewer::brewer.pal(n = 8, name = "Dark2"), "black")
+justs <- list(c('left', 'top'), c('center', 'top'), c('right', 'top'),
+             c('right', 'center'), c('right', 'bottom'), c('center', 'bottom'),
+             c('left', 'bottom'), c('left', 'center'), c('center', 'center'))
+
+## Define x and y shift vectors for adjusting text
+s <- 0.1
+xshift = c(s, 0, -s, -s, -s,  0,  s, s, 0)
+yshift = c(s, s,  s,  0, -s, -s, -s, 0, -s*3)
+
+## Draw guides
+bb_pageGuideHorizontal(y = ycoords, linecolor = "grey90", lty = 2)
+bb_pageGuideVertical(x = xcoords, linecolor = "grey90", lty = 2)
+  
+## Draw box
+bb_plotRect(x = 0.25, y = 0.25, width = 3.5, height = 3.5, just = c("left", "top"))
+
+## Plot points
+bb_plotCircle(x = xcoords,
+              y = ycoords,
+              r = 0.035, linecolor = cols, fill = cols)
+
+## Text descriptions
+for(i in 1:9) {
+  bb_plotText(label = sprintf("x = %s\ny = %s\njust = c('%s', '%s')",
+                            xcoords[i], ycoords[i], justs[[i]][1], justs[[i]][2]),
+            x = xcoords[i]+xshift[i],
+            y = ycoords[i]+yshift[i],
+            just = justs[[i]], fontsize = 6.5, fontcolor = cols[i], fontface = 'bold')
+}
+
+```
+
+
+Or it can be set using numeric values where 0 means left/bottom, 1 means right/top, and 0.5 means center: 
+
+```{r arrange_example06, eval=TRUE, echo=FALSE, fig.height=5, fig.width=6, message=FALSE}
+## Load libraries
+library(BentoBox)
+
+## Create page
+bb_pageCreate(width = 4, height = 4, xgrid = 1, ygrid = 1, default.units = "inches")
+
+## Define x and y coords, colors, and justifications
+xcoords <- c(0.25, 2, 3.75, 3.75, 3.75, 2, 0.25, 0.25, 2)
+ycoords <- c(0.25, 0.25, 0.25, 2, 3.75, 3.75, 3.75, 2, 2)
+cols <- c(RColorBrewer::brewer.pal(n = 8, name = "Dark2"), "black")
+justs <- list(c(0, 1), c(0.5, 1), c(1, 1),
+             c(1, 0.5), c(1, 0), c(0.5, 0),
+             c(0, 0), c(0, 0.5), c(0.5, 0.5))
+
+## Define x and y shift vectors for adjusting text
+s <- 0.1
+xshift = c(s, 0, -s, -s, -s,  0,  s, s, 0)
+yshift = c(s, s,  s,  0, -s, -s, -s, 0, -s*3)
+
+## Draw guides
+bb_pageGuideHorizontal(y = ycoords, linecolor = "grey90", lty = 2)
+bb_pageGuideVertical(x = xcoords, linecolor = "grey90", lty = 2)
+  
+## Draw box
+bb_plotRect(x = 0.25, y = 0.25, width = 3.5, height = 3.5, just = c("left", "top"))
+
+## Plot points
+bb_plotCircle(x = xcoords,
+              y = ycoords,
+              r = 0.035, linecolor = cols, fill = cols)
+
+## Text descriptions
+for(i in 1:9) {
+  bb_plotText(label = sprintf("x = %s\ny = %s\njust = c(%s, %s)",
+                            xcoords[i], ycoords[i], justs[[i]][1], justs[[i]][2]),
+            x = xcoords[i]+xshift[i],
+            y = ycoords[i]+yshift[i],
+            just = justs[[i]], fontsize = 6.5, fontcolor = cols[i], fontface = 'bold')
+}
+
+```
+
+
+This is particularly useful when an object needs to be aligned in reference to another plot object or page marker. For example, in the Hi-C plot below we might want to align the top-right corner of the heatmap legend to the 3 inch mark. There is no need to calculate the top-left position (i.e. `3 inches - (legend width)`) to determine where to place the heatmap legend. Instead we can change the `just` parameter to `just=c('right', 'top')`:
+
+
+```{r arrange_example07, eval=TRUE, echo=TRUE, fig.height=5, fig.width=6, message=FALSE}
+## Load BentoBox
+library(BentoBox)
+
+## Load example Hi-C data
+data("bb_hicData")
+
+## Create a BentoBox page
+bb_pageCreate(width = 3.25, height = 3.25, default.units = "inches")
+
+## Plot Hi-C data with placing information
+hicPlot <- bb_plotHicSquare(data = bb_hicData,
+                            chrom = "chr21", chromstart = 28000000, chromend = 30300000,
+                            x = 0.25, y = 0.25, width = 2.5, height = 2.5, default.units = "inches")
+
+## Add color scale annotation with just = c("right", "top")
+bb_annoHeatmapLegend(plot = hicPlot,
+                     x = 3, y = 0.25, width = 0.1, height = 1.25,
+                     just = c("right", "top"), default.units = "inches")
+
+```
+
+
+# Plotting multi-omic data
+
+`BentoBox` makes it easy to create reproducible, publication-quality figures from multi-omic data. Since each plot can be placed in *exactly* the desired location, users can stack multiple types of genomic data so that their axes and data are correctly aligned. In this section we will show some examples of plotting multi-omic data, how the `bb_params` object can facilitate this process, and how to correctly normalize stacked signal track data.
+
+In the following example, we plot the same genomic region (i.e. `chr21:28000000-30300000`) represented in Hi-C data, loop annotations, signal track data, GWAS data, all along a common gene track and genome label axis:
+
+```{r plotting_example01, eval=TRUE, echo=TRUE, fig.height=6, fig.width=5, warning=FALSE, message=FALSE}
+## Load BentoBox
+library(BentoBox)
+
+## Load example data
+data("bb_hicData")
+data("bb_bedpeData")
+data("bb_signalData")
+data("bb_gwasData")
+
+## Create a BentoBox page
+bb_pageCreate(width = 3, height = 5, default.units = "inches")
+
+## Plot Hi-C data in region
+bb_plotHicSquare(data = bb_hicData,
+                 chrom = "chr21", chromstart = 28000000, chromend = 30300000,
+                 x = 0.5, y = 0.5, width = 2, height = 2,
+                 just = c("left", "top"), default.units = "inches")
+
+## Plot loop annotations
+bb_plotBedpeArches(data = bb_bedpeData,
+                   chrom = "chr21", chromstart = 28000000, chromend = 30300000,
+                   x = 0.5, y = 2.5, width = 2, height = 0.25, 
+                   just = c("left", "top"), default.units = "inches",
+                   fill = "black", linecolor = "black", position = "bottom")
+
+## Plot signal track data
+bb_plotSignal(data = bb_signalData,
+              chrom = "chr21", chromstart = 28000000, chromend = 30300000,
+              x = 0.5, y = 2.75, width = 2, height = 0.5, 
+              just = c("left", "top"), default.units = "inches")
+
+## Plot GWAS data -- Fix bb_plotManhattan()
+# bb_plotManhattan(data = bb_gwasData,
+#                  chrom = "chr21", chromstart = 28000000, chromend = 30300000,
+#                  pVals = "pVal", ymax = 1.1, cex = 0.20,
+#                  x = 0.5, y = 3.5, width = 2, height = 0.5, 
+#                  just = c("left", "top"), default.units = "inches")
+
+## Plot gene track
+library(TxDb.Hsapiens.UCSC.hg19.knownGene)
+library(org.Hs.eg.db)
+bb_plotGenes(chrom = "chr21", chromstart = 28000000, chromend = 30300000,
+             x = 0.5, y = 4, width = 2, height = 0.5,
+             just = c("left", "top"), default.units = "inches")
+
+## Plot genome label
+bb_plotGenomeLabel(chrom = "chr21", chromstart = 28000000, chromend = 30300000,
+                   x = 0.5, y = 4.5, length = 2, scale = "Mb",
+                   just = c("left", "top"), default.units = "inches")
+
+```
+
+## Using the `bb_params` object
+
+The `bb_params()` function creates a `bb_params` object that can contain any argument from `BentoBox` functions.  
+
+We can recreate and simplify the multi-omic plot above
+
+## Stacked signal tracks
+
+Coming soon...
+
+# Plot aesthetics
+
+Coming soon...
