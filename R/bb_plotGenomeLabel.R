@@ -457,11 +457,10 @@ bb_plotGenomeLabel <- function(chrom, chromstart = NULL, chromend = NULL, assemb
 
       margin <- convertHeight(margin, unitTo = get("page_units", envir = bbEnv), valueOnly = T)
 
-      line <- segmentsGrob(x0 = unit(0, "npc"), x1 = unit(1, "npc"), y0 = margin, y1 = margin, gp = gp,
-                           default.units = "native")
+      line <- segmentsGrob(x0 = unit(0, "npc"), x1 = unit(1, "npc"), y0 = unit(1, "npc"), y1 = unit(1, "npc"), gp = gp)
       gp$col <- gp$fontcolor
       labels <- textGrob(label = gsub("chr", "", offsetAssembly[,1]), x = chromCenters,
-                         y = unit(0, "npc"), just = c("center", "top"),
+                         y = unit(1, "npc") - unit(margin, 'native'), just = c("center", "top"),
                          gp = gp,
                          default.units = "native")
       assign("genomeLabel_grobs", setChildren(get("genomeLabel_grobs", envir = bbEnv), children = gList(line, labels)), envir = bbEnv)

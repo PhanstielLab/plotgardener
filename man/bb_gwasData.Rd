@@ -11,7 +11,7 @@ a dataframe with the following columns:
 \item{pos}{The basepair position of the SNP.}
 \item{p}{The p-value of the SNP.}
 \item{snp}{The rsID of the SNP.}
-\item{LD}{A calculated linkage disequilibrium score for the SNP.}
+\item{LD}{A simulated linkage disequilibrium score for the SNP.}
 }
 }
 \source{

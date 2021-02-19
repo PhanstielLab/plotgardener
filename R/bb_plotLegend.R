@@ -91,6 +91,12 @@ bb_plotLegend <- function(legend, fill = NULL, pch = NULL, lty = NULL, orientati
   ## Set gp
   bb_legInternal$gp <- setGP(gpList = bb_legInternal$gp, params = bb_legInternal, ...)
 
+  ## Reset lty
+  if (is.null(bb_legInternal$gp$lty)){
+    bb_legInternal$gp$lty <- NULL
+  }
+
+
   # ======================================================================================================================================================================================
   # INITIALIZE OBJECT
   # ======================================================================================================================================================================================
@@ -180,9 +186,12 @@ bb_plotLegend <- function(legend, fill = NULL, pch = NULL, lty = NULL, orientati
 
   ## Border
   if (bb_legInternal$border == TRUE){
-    border <- rectGrob(gp = gpar(fill = bb_legInternal$bg, col = "black"))
+    bb_legInternal$gp$fill <- bb_legInternal$bg
+    border <- rectGrob(gp = bb_legInternal$gp)
   } else {
-    border <- rectGrob(gp = gpar(fill = bb_legInternal$bg, col = NA))
+    bb_legInternal$gp$fill <- bb_legInternal$bg
+    bb_legInternal$gp$col <- NA
+    border <- rectGrob(gp = bb_legInternal$gp)
   }
 
   assign("legend_grobs", addGrob(get("legend_grobs", envir = bbEnv), child = border), envir = bbEnv)
@@ -202,10 +211,21 @@ bb_plotLegend <- function(legend, fill = NULL, pch = NULL, lty = NULL, orientati
 
     }
 
+    ## Remove lty
+    lty <- bb_legInternal$gp$lty
+    bb_legInternal$gp$lty <- NULL
+    ## Remove cex for text
+    cex <- bb_legInternal$gp$cex
+    bb_legInternal$gp$cex <- NULL
+
+    bb_legInternal$gp$col <- NA
+
     titleGrob <- textGrob(label = bb_legInternal$title, x = unit(0.5, "npc"), y = height - remainingSpace/spaceNo,
-                          just = "top", gp = gpar(fontsize = bb_legInternal$fontsize), default.units = "native")
+                          just = "top", gp = bb_legInternal$gp, default.units = "native")
     assign("legend_grobs", addGrob(get("legend_grobs", envir = bbEnv), child = titleGrob), envir = bbEnv)
 
+    bb_legInternal$gp$lty <- lty
+    bb_legInternal$gp$cex <- cex
   } else {
 
     if (bb_legInternal$orientation == "h"){
@@ -281,20 +301,30 @@ bb_plotLegend <- function(legend, fill = NULL, pch = NULL, lty = NULL, orientati
   if (!is.null(bb_legInternal$pch)){
     ## Only take the first number of symbols for the length of legend
     pchs <- bb_legInternal$pch[1:length(bb_legInternal$legend)]
+    if (bb_legInternal$orientation == "v"){
+      pchs <- rev(pchs)
+    }
+
+    bb_legInternal$gp$col <- fillcolors
 
     labelSymbols <- pointsGrob(x = xpch, y = ypch,
-                               pch = pchs, size = unit(bb_legInternal$fontsize, "points"),
-                               gp = gpar(fill = fillcolors), default.units = "native")
+                               pch = pchs,
+                               gp = bb_legInternal$gp, default.units = "native")
     assign("legend_grobs", addGrob(get("legend_grobs", envir = bbEnv), child = labelSymbols), envir = bbEnv)
 
     ## Lines
   } else if (!is.null(lty)) {
     ## Only take the first number of symbols for the length of legend
     ltys <- lty[1:length(legend)]
+    lty <- bb_legInternal$gp$lty
+    bb_legInternal$gp$lty <- ltys
+    bb_legInternal$gp$col <- fillcolors
     labelLines <- segmentsGrob(x0 = x0s, y0 = y0s,
                                x1 = x1s, y1 = y1s,
-                               gp = gpar(lty = ltys, col = fillcolors), default.units = "native")
+                               gp = bb_legInternal$gp, default.units = "native")
     assign("legend_grobs", addGrob(get("legend_grobs", envir = bbEnv), child = labelLines), envir = bbEnv)
+
+    bb_legInternal$gp$lty <- lty
 
   } else {
 
@@ -306,16 +336,24 @@ bb_plotLegend <- function(legend, fill = NULL, pch = NULL, lty = NULL, orientati
 
   bb_legInternal$gp$fontsize <- bb_legInternal$fontsize
 
+  if (is.null(bb_legInternal$gp$fontcolor)){
+    bb_legInternal$gp$fontcolor <- "black"
+    bb_legInternal$gp$col <- "black"
+  } else {
+    bb_legInternal$gp$col <- bb_legInternal$gp$fontcolor
+  }
+  bb_legInternal$gp$lty <- NULL
+  bb_legInternal$gp$cex <- NULL
+
   ## Text labels
   if (bb_legInternal$orientation == "h"){
 
     labelText <- textGrob(label = bb_legInternal$legend, x = xcoords + textHeight + widthSpace, y = ycoords + 0.5*textHeight,
-                          just = "left", gp = bb_legInternal$gp, default.units = "native")
+                          just = c("left", "center"), gp = bb_legInternal$gp, default.units = "native")
 
   } else {
-
     labelText <- textGrob(label = rev(bb_legInternal$legend), x = xcoords + 2*textHeight, y = ycoords + 0.5*textHeight,
-                          just = "left", gp = bb_legInternal$gp, default.units = "native")
+                          just = c("left", "center"), gp = bb_legInternal$gp, default.units = "native")
   }
 
   assign("legend_grobs", addGrob(get("legend_grobs", envir = bbEnv), child = labelText), envir = bbEnv)

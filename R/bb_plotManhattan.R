@@ -46,14 +46,71 @@
 #' @return Returns a \code{bb_manhattan} object containing relevant genomic region, placement, and \link[grid]{grob} information.
 #'
 #' @examples
+#' ## Load genomic assembly information
+#' library("TxDb.Hsapiens.UCSC.hg19.knownGene")
+#' ## Load GWAS data
+#' data("bb_gwasData")
+#'
+#' ## Create a page
+#' bb_pageCreate(width = 7.5, height = 4.5, default.units = "inches")
+#'
+#' ## Plot all GWAS data
+#' manhattanPlot <- bb_plotManhattan(data = bb_gwasData, assembly = "hg19",
+#'                                   fill = c("grey", "#37a7db"), sigLine = TRUE,
+#'                                   col = "grey", lty = 2, range = c(0, 14),
+#'                                   x = 0.5, y = 0, width = 6.5, height = 2,
+#'                                   just = c("left", "top"), default.units = "inches")
+#' ## Annotate genome label
+#' bb_annoGenomeLabel(plot = manhattanPlot, x = 0.5, y = 2, fontsize = 8, just = c("left", "top"),
+#'                    default.units = "inches" )
+#'
+#' ## Annotate y-axis
+#' bb_annoYaxis(plot = manhattanPlot, at = c(0, 2, 4, 6, 8, 10, 12, 14),
+#'              axisLine = TRUE, fontsize = 8)
+#'
+#' ## Plot y-axis label
+#' bb_plotText(label = "-log10(p-value)", x = 0.15, y = 1, rot = 90,
+#'             fontsize = 8, fontface = "bold", just = "center", default.units = "inches")
+#'
+#'
+#' ## Plot GWAS data zooming in on chromosome 11, highlighting a lead SNP, and coloring by LD score
+#' leadSNP_p <- min(bb_gwasData[which(bb_gwasData$chr == "chr11"),]$p)
+#' leadSNP <- bb_gwasData[which(bb_gwasData$p == leadSNP_p),]$snp
+#' chr11_manhattanPlot <- bb_plotManhattan(data = bb_gwasData, chrom = "chr11",
+#'                                         chromstart = 60000000, chromend = 130000000,
+#'                                         fill = c("#1f4297", "#37a7db", "green", "orange", "red"),
+#'                                         sigLine = TRUE, col = "grey", lty = 2, range = c(0, 16),
+#'                                         leadSNP = list("snp" = leadSNP, pch = 18, cex = 0.75, fill = "#7ecdbb", fontsize = 8),
+#'                                         scaleLD = "LD",
+#'                                         x = 0.5, y = 2.5, width = 6.5, height = 1.5,
+#'                                         just = c("left", "top"), default.units = "inches")
+#'
+#' ## Plot legend for LD scores
+#' bb_plotLegend(legend = c("LD Ref Var",
+#'                          expression(paste("0.4", ">", "r"^{paste("2")}, "", ">=", "0.2")),
+#'                          expression(paste("0.2", ">", "r"^{paste("2")}, "", ">=", "0")),
+#'                          "no LD data"),
+#'               fill = c("#7ecdbb", "#37a7db", "#1f4297", "grey"), cex = 0.75,
+#'               pch = c(18, 19, 19, 19), border = FALSE, x = 7, y = 2.5,
+#'               width = 1.5, height = 0.6, just = c("right", "top"), default.units = "inches")
+#'
+#'
+#' ## Annotate genome label
+#' bb_annoGenomeLabel(plot = chr11_manhattanPlot, x = 0.5, y = 4.01, fontsize = 8, scale = "Mb",
+#'                    just = c("left", "top"), default.units = "inches" )
+#'
+#' ## Annotate y-axis
+#' bb_annoYaxis(plot = chr11_manhattanPlot, at = c(0, 2, 4, 6, 8, 10, 12, 14, 16),
+#'              axisLine = TRUE, fontsize = 8)
+#'
+#' ## Plot y-axis label
+#' bb_plotText(label = "-log10(p-value)", x = 0.15, y = 3.25, rot = 90,
+#'             fontsize = 8, fontface = "bold", just = "center", default.units = "inches")
+#'
+#' ## Hide page guides
+#' bb_pageGuideHide()
 #'
 #' @details
-#' This function can be used to quickly plot a Manhattan plot by ignoring plot placement parameters:
-#' \preformatted{
-#' bb_plotManhattan(data,
-#'                  chrom = NULL,
-#'                  chromstart = NULL, chromend = NULL)
-#' }
 #' A Manhattan plot can be placed on a BentoBox coordinate page by providing plot placement parameters:
 #' \preformatted{
 #' bb_plotManhattan(data,
@@ -61,6 +118,12 @@
 #'                  chromstart = NULL, chromend = NULL,
 #'                  x, y, width, height, just = c("left", "top"),
 #'                  default.units = "inches")
+#' }
+#' This function can also be used to quickly plot an unannotated Manhattan plot by ignoring plot placement parameters:
+#' \preformatted{
+#' bb_plotManhattan(data,
+#'                  chrom = NULL,
+#'                  chromstart = NULL, chromend = NULL)
 #' }
 #'
 #' @export

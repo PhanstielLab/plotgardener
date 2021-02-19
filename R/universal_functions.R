@@ -558,6 +558,14 @@ setGP <- function(gpList, params, ...){
   gpMatches <- params[which(names(params) %in% availGPs)]
   gpList[names(gpMatches)] <- gpMatches
   gpList[names(list(...))] <- list(...)
+
+  ## Reset with fontface first
+  if ("fontface" %in% names(gpList)){
+    otherParams <- gpList
+    gpList <- gpar(fontface = gpList$fontface)
+    gpList[names(otherParams)] <- otherParams
+  }
+
   return(gpList)
 }
 
