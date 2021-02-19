@@ -145,8 +145,10 @@
   at <span class='op'>=</span> <span class='cn'>NULL</span>,
   label <span class='op'>=</span> <span class='cn'>TRUE</span>,
   main <span class='op'>=</span> <span class='cn'>TRUE</span>,
-  gp <span class='op'>=</span> <span class='fu'>gpar</span><span class='op'>(</span><span class='op'>)</span>,
-  params <span class='op'>=</span> <span class='cn'>NULL</span>
+  scipen <span class='op'>=</span> <span class='fl'>999</span>,
+  axisLine <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  params <span class='op'>=</span> <span class='cn'>NULL</span>,
+  <span class='va'>...</span>
 <span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -172,12 +174,24 @@
 </ul></td>
     </tr>
     <tr>
-      <th>gp</th>
-      <td><p>Grid graphical parameters. See <a href='https://rdrr.io/r/grid/gpar.html'>gpar</a>.</p></td>
+      <th>scipen</th>
+      <td><p>An integer indicating the penalty to be applied when deciding to print numeric values in fixed or exponential notation. Default value is <code>scipen = 999</code>.</p></td>
+    </tr>
+    <tr>
+      <th>axisLine</th>
+      <td><p>A logical value indicating whether to show the axis line. Default value is <code>axisLine = FALSE</code>.</p></td>
     </tr>
     <tr>
       <th>params</th>
       <td><p>An optional <a href='bb_params.html'>bb_params</a> object containing relevant function parameters.</p></td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td><p>Additional grid graphical parameters. See <a href='https://rdrr.io/r/grid/gpar.html'>gpar</a>.</p></td>
+    </tr>
+    <tr>
+      <th>gp</th>
+      <td><p>Grid graphical parameters. See <a href='https://rdrr.io/r/grid/gpar.html'>gpar</a>.</p></td>
     </tr>
     </table>
 
@@ -201,10 +215,10 @@
 <span class='co'>## Add standard x-axis to transcript plot</span>
 <span class='fu'>bb_annoXaxis</span><span class='op'>(</span>plot <span class='op'>=</span> <span class='va'>transcriptPlot</span>, at <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1000000</span>, <span class='fl'>1250000</span>, <span class='fl'>1500000</span>, <span class='fl'>1750000</span>, <span class='fl'>2000000</span><span class='op'>)</span>,
              gp <span class='op'>=</span> <span class='fu'>gpar</span><span class='op'>(</span>fontsize <span class='op'>=</span> <span class='fl'>8</span><span class='op'>)</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>bb_xaxis[bb_xaxis1]</span></div><div class='img'><img src='bb_annoXaxis-1.png' alt='' width='768' height='576' /></div><div class='input'>
+</div><div class='img'><img src='bb_annoXaxis-1.png' alt='' width='768' height='576' /></div><div class='output co'>#&gt; <span class='message'>bb_xaxis[bb_xaxis1]</span></div><div class='img'><img src='bb_annoXaxis-2.png' alt='' width='768' height='576' /></div><div class='input'>
 <span class='co'>## Hide page guides</span>
 <span class='fu'><a href='bb_pageGuideHide.html'>bb_pageGuideHide</a></span><span class='op'>(</span><span class='op'>)</span>
-</div><div class='img'><img src='bb_annoXaxis-2.png' alt='' width='768' height='576' /></div><div class='input'>
+</div><div class='img'><img src='bb_annoXaxis-3.png' alt='' width='768' height='576' /></div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

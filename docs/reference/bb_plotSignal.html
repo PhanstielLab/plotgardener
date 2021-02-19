@@ -144,12 +144,13 @@
   <span class='va'>data</span>,
   binSize <span class='op'>=</span> <span class='cn'>NA</span>,
   binCap <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  negData <span class='op'>=</span> <span class='cn'>FALSE</span>,
   <span class='va'>chrom</span>,
   chromstart <span class='op'>=</span> <span class='cn'>NULL</span>,
   chromend <span class='op'>=</span> <span class='cn'>NULL</span>,
   assembly <span class='op'>=</span> <span class='st'>"hg19"</span>,
-  linecolor <span class='op'>=</span> <span class='st'>"grey"</span>,
-  fill <span class='op'>=</span> <span class='cn'>NULL</span>,
+  linecolor <span class='op'>=</span> <span class='st'>"#37a7db"</span>,
+  fill <span class='op'>=</span> <span class='st'>"#37a7db"</span>,
   ymax <span class='op'>=</span> <span class='fl'>1</span>,
   range <span class='op'>=</span> <span class='cn'>NULL</span>,
   scale <span class='op'>=</span> <span class='cn'>FALSE</span>,
@@ -183,6 +184,10 @@ Either one <code>data</code> argument or a list of two can be provided, where th
       <td><p>A logical value indicating whether the function will limit the number of data bins to 8,000. Default value is <code>binCap = TRUE</code>.</p></td>
     </tr>
     <tr>
+      <th>negData</th>
+      <td><p>A logical value indicating whether the data has both positive and negative scores and the y-axis should be split. Default value is <code>negData = FALSE</code>.</p></td>
+    </tr>
+    <tr>
       <th>chrom</th>
       <td><p>Chromosome of region to be plotted, as a string.</p></td>
     </tr>
@@ -200,11 +205,11 @@ Either one <code>data</code> argument or a list of two can be provided, where th
     </tr>
     <tr>
       <th>linecolor</th>
-      <td><p>A character value or vector of length 2 specifying the line color(s) outlining the signal track(s). Default value is <code>linecolor = "grey"</code>.</p></td>
+      <td><p>A character value or vector of length 2 specifying the line color(s) outlining the signal track(s). Default value is <code>linecolor = "#37a7db"</code>.</p></td>
     </tr>
     <tr>
       <th>fill</th>
-      <td><p>A character value or vector of length 2 specifying the fill color(s) of the signal track(s).</p></td>
+      <td><p>A character value or vector of length 2 specifying the fill color(s) of the signal track(s). Default value is <code>fill = "#37a7db"</code>.</p></td>
     </tr>
     <tr>
       <th>ymax</th>

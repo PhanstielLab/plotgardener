@@ -53,7 +53,6 @@ bb_params(
   geneBuffer = NULL,
   geneHighlights = NULL,
   geneOrder = NULL,
-  Genome = NULL,
   half = NULL,
   height = NULL,
   id = NULL,
