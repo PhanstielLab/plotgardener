@@ -145,6 +145,7 @@
   fontsize <span class='op'>=</span> <span class='fl'>10</span>,
   fontcolor <span class='op'>=</span> <span class='st'>"black"</span>,
   linecolor <span class='op'>=</span> <span class='st'>"black"</span>,
+  margin <span class='op'>=</span> <span class='fu'>unit</span><span class='op'>(</span><span class='fl'>1</span>, <span class='st'>"mm"</span><span class='op'>)</span>,
   scale <span class='op'>=</span> <span class='st'>"bp"</span>,
   commas <span class='op'>=</span> <span class='cn'>TRUE</span>,
   sequence <span class='op'>=</span> <span class='cn'>TRUE</span>,
@@ -179,6 +180,10 @@ assembly will be inherited from <code>plot</code>.</p></td>
     <tr>
       <th>linecolor</th>
       <td><p>A character value indicating the color of the genome label axis. Default value is <code>linecolor = "black"</code>.</p></td>
+    </tr>
+    <tr>
+      <th>margin</th>
+      <td><p>A numeric or unit vector specifying space between axis and coordinate labels. Default value is <code>margin = unit(1, "mm")</code>,</p></td>
     </tr>
     <tr>
       <th>scale</th>
@@ -250,7 +255,7 @@ Possible string values are: <code>"left"</code>, <code>"right"</code>, <code>"ce
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'>## Load hg19 genomic annotation packages</span>
 <span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='st'>"TxDb.Hsapiens.UCSC.hg19.knownGene"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>Loading required package: GenomicFeatures</span></div><div class='output co'>#&gt; <span class='message'>Loading required package: BiocGenerics</span></div><div class='output co'>#&gt; <span class='warning'>Warning: package ‘BiocGenerics’ was built under R version 4.0.3</span></div><div class='output co'>#&gt; <span class='message'>Loading required package: parallel</span></div><div class='output co'>#&gt; <span class='message'></span>
+</div><div class='output co'>#&gt; <span class='message'>Loading required package: GenomicFeatures</span></div><div class='output co'>#&gt; <span class='message'>Loading required package: BiocGenerics</span></div><div class='output co'>#&gt; <span class='message'>Loading required package: parallel</span></div><div class='output co'>#&gt; <span class='message'></span>
 #&gt; <span class='message'>Attaching package: ‘BiocGenerics’</span></div><div class='output co'>#&gt; <span class='message'>The following objects are masked from ‘package:parallel’:</span>
 #&gt; <span class='message'></span>
 #&gt; <span class='message'>    clusterApply, clusterApplyLB, clusterCall, clusterEvalQ,</span>
@@ -270,7 +275,7 @@ Possible string values are: <code>"left"</code>, <code>"right"</code>, <code>"ce
 #&gt; <span class='message'>    grepl, intersect, is.unsorted, lapply, Map, mapply, match, mget,</span>
 #&gt; <span class='message'>    order, paste, pmax, pmax.int, pmin, pmin.int, Position, rank,</span>
 #&gt; <span class='message'>    rbind, Reduce, rownames, sapply, setdiff, sort, table, tapply,</span>
-#&gt; <span class='message'>    union, unique, unsplit, which.max, which.min</span></div><div class='output co'>#&gt; <span class='message'>Loading required package: S4Vectors</span></div><div class='output co'>#&gt; <span class='warning'>Warning: package ‘S4Vectors’ was built under R version 4.0.3</span></div><div class='output co'>#&gt; <span class='message'>Loading required package: stats4</span></div><div class='output co'>#&gt; <span class='message'></span>
+#&gt; <span class='message'>    union, unique, unsplit, which.max, which.min</span></div><div class='output co'>#&gt; <span class='message'>Loading required package: S4Vectors</span></div><div class='output co'>#&gt; <span class='message'>Loading required package: stats4</span></div><div class='output co'>#&gt; <span class='message'></span>
 #&gt; <span class='message'>Attaching package: ‘S4Vectors’</span></div><div class='output co'>#&gt; <span class='message'>The following objects are masked from ‘package:dplyr’:</span>
 #&gt; <span class='message'></span>
 #&gt; <span class='message'>    first, rename</span></div><div class='output co'>#&gt; <span class='message'>The following object is masked from ‘package:tidyr’:</span>
@@ -279,14 +284,14 @@ Possible string values are: <code>"left"</code>, <code>"right"</code>, <code>"ce
 #&gt; <span class='message'></span>
 #&gt; <span class='message'>    first, second</span></div><div class='output co'>#&gt; <span class='message'>The following object is masked from ‘package:base’:</span>
 #&gt; <span class='message'></span>
-#&gt; <span class='message'>    expand.grid</span></div><div class='output co'>#&gt; <span class='message'>Loading required package: IRanges</span></div><div class='output co'>#&gt; <span class='warning'>Warning: package ‘IRanges’ was built under R version 4.0.3</span></div><div class='output co'>#&gt; <span class='message'></span>
+#&gt; <span class='message'>    expand.grid</span></div><div class='output co'>#&gt; <span class='message'>Loading required package: IRanges</span></div><div class='output co'>#&gt; <span class='message'></span>
 #&gt; <span class='message'>Attaching package: ‘IRanges’</span></div><div class='output co'>#&gt; <span class='message'>The following object is masked from ‘package:purrr’:</span>
 #&gt; <span class='message'></span>
 #&gt; <span class='message'>    reduce</span></div><div class='output co'>#&gt; <span class='message'>The following objects are masked from ‘package:dplyr’:</span>
 #&gt; <span class='message'></span>
 #&gt; <span class='message'>    collapse, desc, slice</span></div><div class='output co'>#&gt; <span class='message'>The following object is masked from ‘package:data.table’:</span>
 #&gt; <span class='message'></span>
-#&gt; <span class='message'>    shift</span></div><div class='output co'>#&gt; <span class='message'>Loading required package: GenomeInfoDb</span></div><div class='output co'>#&gt; <span class='warning'>Warning: package ‘GenomeInfoDb’ was built under R version 4.0.3</span></div><div class='output co'>#&gt; <span class='message'>Loading required package: GenomicRanges</span></div><div class='output co'>#&gt; <span class='warning'>Warning: package ‘GenomicRanges’ was built under R version 4.0.3</span></div><div class='output co'>#&gt; <span class='message'>Loading required package: AnnotationDbi</span></div><div class='output co'>#&gt; <span class='warning'>Warning: package ‘AnnotationDbi’ was built under R version 4.0.3</span></div><div class='output co'>#&gt; <span class='message'>Loading required package: Biobase</span></div><div class='output co'>#&gt; <span class='warning'>Warning: package ‘Biobase’ was built under R version 4.0.3</span></div><div class='output co'>#&gt; <span class='message'>Welcome to Bioconductor</span>
+#&gt; <span class='message'>    shift</span></div><div class='output co'>#&gt; <span class='message'>Loading required package: GenomeInfoDb</span></div><div class='output co'>#&gt; <span class='message'>Loading required package: GenomicRanges</span></div><div class='output co'>#&gt; <span class='message'>Loading required package: AnnotationDbi</span></div><div class='output co'>#&gt; <span class='message'>Loading required package: Biobase</span></div><div class='output co'>#&gt; <span class='message'>Welcome to Bioconductor</span>
 #&gt; <span class='message'></span>
 #&gt; <span class='message'>    Vignettes contain introductory material; view with</span>
 #&gt; <span class='message'>    'browseVignettes()'. To cite Bioconductor, see</span>

@@ -92,7 +92,7 @@
       <h1 data-toc-skip>Introduction to BentoBox</h1>
                         <h4 class="author">Nicole Kramer, Eric S. Davis, Craig Wenger, Sarah Parker, Erika Deoudes, and Douglas H. Phanstiel</h4>
             
-            <h4 class="date">2021-02-17</h4>
+            <h4 class="date">2021-02-19</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/PhanstielLab/BentoBox/blob/master/vignettes/introduction_to_bentobox.Rmd"><code>vignettes/introduction_to_bentobox.Rmd</code></a></small>
       <div class="hidden name"><code>introduction_to_bentobox.Rmd</code></div>
@@ -213,10 +213,20 @@
 <span class="co">## Load example gwas data</span>
 <span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="st">"bb_gwasData"</span><span class="op">)</span>
 
+<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">bb_gwasData</span><span class="op">)</span>
+<span class="co">#&gt;    chr       pos         p        snp   LD</span>
+<span class="co">#&gt; 1 chr1  34294726 0.6835307 rs10914788 &lt;NA&gt;</span>
+<span class="co">#&gt; 2 chr1 236591003 0.9930270   rs634626 &lt;NA&gt;</span>
+<span class="co">#&gt; 3 chr1 193391538 0.7216855 rs12043960 &lt;NA&gt;</span>
+<span class="co">#&gt; 4 chr1   7554435 0.1002769  rs1725271 &lt;NA&gt;</span>
+<span class="co">#&gt; 5 chr1  82022757 0.9852280 rs12090221 &lt;NA&gt;</span>
+<span class="co">#&gt; 6 chr1  10246129 0.4317934  rs2180185 &lt;NA&gt;</span>
+
 <span class="co">## Quick plot gwas data -- fix error in bb_plotManhattan()</span>
-<span class="co"># bb_plotManhattan(data = bb_gwasData,</span>
-<span class="co">#                  chrom = "chr21", chromstart = 28000000, chromend = 30300000,</span>
-<span class="co">#                  pVals = "pVal", ymax = 1.1, cex = 0.20)</span></code></pre></div>
+<span class="fu"><a href="../reference/bb_plotManhattan.html">bb_plotManhattan</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">bb_gwasData</span>,
+                 chrom <span class="op">=</span> <span class="st">"chr21"</span>, chromstart <span class="op">=</span> <span class="fl">28000000</span>, chromend <span class="op">=</span> <span class="fl">30300000</span>,
+                 pVals <span class="op">=</span> <span class="st">"pVal"</span>, ymax <span class="op">=</span> <span class="fl">1.1</span>, cex <span class="op">=</span> <span class="fl">0.20</span><span class="op">)</span></code></pre></div>
+<p><img src="introduction_to_bentobox_files/figure-html/gwas_quickplot-1.png" width="288" style="display: block; margin: auto;"></p>
 </div>
 </div>
 <div id="how-to-add-plot-annotations" class="section level2">
@@ -399,11 +409,11 @@
               just <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"left"</span>, <span class="st">"top"</span><span class="op">)</span>, default.units <span class="op">=</span> <span class="st">"inches"</span><span class="op">)</span>
 
 <span class="co">## Plot GWAS data -- Fix bb_plotManhattan()</span>
-<span class="co"># bb_plotManhattan(data = bb_gwasData,</span>
-<span class="co">#                  chrom = "chr21", chromstart = 28000000, chromend = 30300000,</span>
-<span class="co">#                  pVals = "pVal", ymax = 1.1, cex = 0.20,</span>
-<span class="co">#                  x = 0.5, y = 3.5, width = 2, height = 0.5, </span>
-<span class="co">#                  just = c("left", "top"), default.units = "inches")</span>
+<span class="fu"><a href="../reference/bb_plotManhattan.html">bb_plotManhattan</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">bb_gwasData</span>,
+                 chrom <span class="op">=</span> <span class="st">"chr21"</span>, chromstart <span class="op">=</span> <span class="fl">28000000</span>, chromend <span class="op">=</span> <span class="fl">30300000</span>,
+                 pVals <span class="op">=</span> <span class="st">"pVal"</span>, ymax <span class="op">=</span> <span class="fl">1.1</span>, cex <span class="op">=</span> <span class="fl">0.20</span>,
+                 x <span class="op">=</span> <span class="fl">0.5</span>, y <span class="op">=</span> <span class="fl">3.5</span>, width <span class="op">=</span> <span class="fl">2</span>, height <span class="op">=</span> <span class="fl">0.5</span>,
+                 just <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"left"</span>, <span class="st">"top"</span><span class="op">)</span>, default.units <span class="op">=</span> <span class="st">"inches"</span><span class="op">)</span>
 
 <span class="co">## Plot gene track</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">TxDb.Hsapiens.UCSC.hg19.knownGene</span><span class="op">)</span>

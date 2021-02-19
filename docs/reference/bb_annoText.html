@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Annotate pixels in a Hi-C plot — bb_annoPixels • BentoBox</title>
+<title>Annotates text within a BentoBox plot — bb_annoText • BentoBox</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -46,8 +46,8 @@
 
 
 
-<meta property="og:title" content="Annotate pixels in a Hi-C plot — bb_annoPixels" />
-<meta property="og:description" content="Annotate pixels in a Hi-C plot" />
+<meta property="og:title" content="Annotates text within a BentoBox plot — bb_annoText" />
+<meta property="og:description" content="Annotates text within a BentoBox plot" />
 <meta property="og:image" content="https://phanstiellab.github.io/bentobox/logo.png" />
 
 
@@ -131,21 +131,26 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Annotate pixels in a Hi-C plot</h1>
-    <small class="dont-index">Source: <a href='https://github.com/PhanstielLab/BentoBox/blob/master/R/bb_annoPixels.R'><code>R/bb_annoPixels.R</code></a></small>
-    <div class="hidden name"><code>bb_annoPixels.Rd</code></div>
+    <h1>Annotates text within a BentoBox plot</h1>
+    <small class="dont-index">Source: <a href='https://github.com/PhanstielLab/BentoBox/blob/master/R/bb_annoText.R'><code>R/bb_annoText.R</code></a></small>
+    <div class="hidden name"><code>bb_annoText.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Annotate pixels in a Hi-C plot</p>
+    <p>Annotates text within a BentoBox plot</p>
     </div>
 
-    <pre class="usage"><span class='fu'>bb_annoPixels</span><span class='op'>(</span>
+    <pre class="usage"><span class='fu'>bb_annoText</span><span class='op'>(</span>
+  <span class='va'>label</span>,
+  fontcolor <span class='op'>=</span> <span class='st'>"black"</span>,
+  fontsize <span class='op'>=</span> <span class='fl'>12</span>,
+  rot <span class='op'>=</span> <span class='fl'>0</span>,
+  check.overlap <span class='op'>=</span> <span class='cn'>FALSE</span>,
   <span class='va'>plot</span>,
-  <span class='va'>data</span>,
-  type <span class='op'>=</span> <span class='st'>"box"</span>,
-  half <span class='op'>=</span> <span class='st'>"inherit"</span>,
-  shift <span class='op'>=</span> <span class='fl'>4</span>,
+  <span class='va'>x</span>,
+  <span class='va'>y</span>,
+  just <span class='op'>=</span> <span class='st'>"center"</span>,
+  default.units <span class='op'>=</span> <span class='st'>"native"</span>,
   params <span class='op'>=</span> <span class='cn'>NULL</span>,
   <span class='va'>...</span>
 <span class='op'>)</span></pre>
@@ -154,33 +159,45 @@
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
+      <th>label</th>
+      <td><p>Character or expression of text to be plotted.</p></td>
+    </tr>
+    <tr>
+      <th>fontcolor</th>
+      <td><p>A character value specifying text fontcolor. Default value is <code>fontcolor = "black"</code>.</p></td>
+    </tr>
+    <tr>
+      <th>fontsize</th>
+      <td><p>A numeric specifying text fontsize in points. Default value is <code>fontsize = 12</code>.</p></td>
+    </tr>
+    <tr>
+      <th>rot</th>
+      <td><p>A numeric specifying the angle to rotate the text. Default value is <code>rot = 0</code>.</p></td>
+    </tr>
+    <tr>
+      <th>check.overlap</th>
+      <td><p>A logical value to indicate whether to check for and omit overlapping text. Default value is <code>check.overlap = FALSE</code>.</p></td>
+    </tr>
+    <tr>
       <th>plot</th>
-      <td><p>Hi-C plot object from <code>bb_plotHicSquare</code> or <code>bb_plotHicTriangle</code> on which to annotate pixels.</p></td>
+      <td><p>Input BentoBox plot to internally place text relative to.</p></td>
     </tr>
     <tr>
-      <th>data</th>
-      <td><p>A string specifying the BEDPE file path or a dataframe in BEDPE format specifying pixel positions.</p></td>
+      <th>x</th>
+      <td><p>A numeric vector or unit object specifying text x-location.</p></td>
     </tr>
     <tr>
-      <th>type</th>
-      <td><p>Character value specifying type of annotation. Default value is <code>type = "box"</code>. Options are:</p><ul>
-<li><p><code>"box"</code>: Boxes are drawn around each pixel.</p></li>
-<li><p><code>"circle"</code>: Circles are drawn around each pixel.</p></li>
-<li><p><code>"arrow"</code>: Arrows are drawn pointing to each pixel.</p></li>
-</ul></td>
+      <th>y</th>
+      <td><p>A numeric vector or unit object specifying text y-location.</p></td>
     </tr>
     <tr>
-      <th>half</th>
-      <td><p>Character value specifying which half of hic plots to annotate. Triangle Hi-C plots will always default to the entirety of the triangular plot. Default value is <code>half = "inherit"</code>. Options are:</p><ul>
-<li><p><code>"inherit"</code>: Pixels will be annotated on the <code>half</code> inherited by the input Hi-C plot.</p></li>
-<li><p><code>"both"</code>: Pixels will be annotated on both halves of the diagonal of a square Hi-C plot.</p></li>
-<li><p><code>"top"</code>: Pixels will be annotated on the upper diagonal half of a square Hi-C plot.</p></li>
-<li><p><code>"bottom"</code>: Pixels will be annotated ont the bottom diagonal half of a square Hi-C plot.</p></li>
-</ul></td>
+      <th>just</th>
+      <td><p>Justification of text relative to its (x, y) location. If there are two values, the first value specifies horizontal justification and the second value specifies vertical justification.
+Possible string values are: <code>"left"</code>, <code>"right"</code>, <code>"centre"</code>, <code>"center"</code>, <code>"bottom"</code>, and <code>"top"</code>. Default value is <code>just = "center"</code>.</p></td>
     </tr>
     <tr>
-      <th>shift</th>
-      <td><p>Numeric specifying the number of pixels on either end of main pixel in a box or circle. Numeric specifying number of pixels for the length of an arrow.</p></td>
+      <th>default.units</th>
+      <td><p>A string indicating the default units to use if <code>x</code> or <code>y</code> are only given as numerics or numeric vectors. Default value is <code>default.units = "native"</code>.</p></td>
     </tr>
     <tr>
       <th>params</th>
@@ -194,31 +211,30 @@
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>Returns a <code>bb_pixel</code> object containing relevant genomic region, placement, and <a href='https://rdrr.io/r/grid/grid.grob.html'>grob</a> information.</p>
+    <p>Returns a <code>bb_text</code> object containing relevant placement and <a href='https://rdrr.io/r/grid/grid.grob.html'>grob</a> information.</p>
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+
+    <div class='dont-index'><p><a href='https://rdrr.io/r/grid/grid.text.html'>grid.text</a></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'>## Load Hi-C data and BEDPE data</span>
-<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='st'>"bb_hicData"</span><span class='op'>)</span>
-<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='st'>"bb_bedpeData"</span><span class='op'>)</span>
-
-<span class='co'>## Create BentoBox page</span>
+    <pre class="examples"><div class='input'><span class='co'>## Create a BentoBox page</span>
 <span class='fu'><a href='bb_pageCreate.html'>bb_pageCreate</a></span><span class='op'>(</span>width <span class='op'>=</span> <span class='fl'>4</span>, height <span class='op'>=</span> <span class='fl'>4</span>, default.units <span class='op'>=</span> <span class='st'>"inches"</span><span class='op'>)</span>
 </div><div class='input'>
-<span class='co'>## Plot and place a square Hi-C plot</span>
-<span class='va'>hicPlot</span> <span class='op'>&lt;-</span> <span class='fu'><a href='bb_plotHicSquare.html'>bb_plotHicSquare</a></span><span class='op'>(</span>data <span class='op'>=</span> <span class='va'>bb_hicData</span>, resolution <span class='op'>=</span> <span class='fl'>10000</span>, zrange <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>70</span><span class='op'>)</span>,
-                            chrom <span class='op'>=</span> <span class='st'>"chr21"</span>, chromstart <span class='op'>=</span> <span class='fl'>28000000</span>, chromend <span class='op'>=</span> <span class='fl'>30300000</span>,
-                            x <span class='op'>=</span> <span class='fl'>0.5</span>, y <span class='op'>=</span> <span class='fl'>0.5</span>, width <span class='op'>=</span> <span class='fl'>3</span>, height <span class='op'>=</span> <span class='fl'>3</span>, just <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"left"</span>, <span class='st'>"top"</span><span class='op'>)</span>,
-                            default.units <span class='op'>=</span> <span class='st'>"inches"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>Read in dataframe.  Assuming 'chrom' in column1 and 'altchrom' in column2. 10000 BP resolution detected.</span></div><div class='output co'>#&gt; <span class='message'>bb_hicSquare[bb_hicSquare1]</span></div><div class='input'>
-<span class='co'>## Annotate loops of Hi-C plot</span>
-<span class='fu'>bb_annoPixels</span><span class='op'>(</span>plot <span class='op'>=</span> <span class='va'>hicPlot</span>, data <span class='op'>=</span> <span class='va'>bb_bedpeData</span>, type <span class='op'>=</span> <span class='st'>"box"</span>, half <span class='op'>=</span> <span class='st'>"both"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='error'>Error in setGP(gpList = bb_loopsInternal$gp, params = bb_Internal, ...): object 'bb_Internal' not found</span></div><div class='input'>
-<span class='co'>## Annotate genome label</span>
-<span class='fu'><a href='bb_annoGenomeLabel.html'>bb_annoGenomeLabel</a></span><span class='op'>(</span>plot <span class='op'>=</span> <span class='va'>hicPlot</span>, x <span class='op'>=</span> <span class='fl'>0.5</span>, y <span class='op'>=</span> <span class='fl'>3.6</span>, scale <span class='op'>=</span> <span class='st'>"Mb"</span>, just <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"left"</span>, <span class='st'>"top"</span><span class='op'>)</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>bb_genomeLabel[bb_genomeLabel1]</span></div><div class='img'><img src='bb_annoPixels-1.png' alt='' width='768' height='576' /></div><div class='input'>
+<span class='co'>## Plot text relative to a BentoBox plot</span>
+<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='st'>"bb_hicData"</span><span class='op'>)</span>
+<span class='va'>hicPlot</span> <span class='op'>&lt;-</span> <span class='fu'><a href='bb_plotHicSquare.html'>bb_plotHicSquare</a></span><span class='op'>(</span>data <span class='op'>=</span> <span class='va'>bb_hicData</span>, chrom <span class='op'>=</span> <span class='st'>"chr21"</span>,
+                           chromstart <span class='op'>=</span> <span class='fl'>28000000</span>, chromend <span class='op'>=</span> <span class='fl'>29500000</span>, zrange <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>70</span><span class='op'>)</span>,
+                           x <span class='op'>=</span> <span class='fl'>0.5</span>, y <span class='op'>=</span> <span class='fl'>0.5</span>, width <span class='op'>=</span> <span class='fl'>3</span>, height <span class='op'>=</span> <span class='fl'>3</span>, just <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"left"</span>, <span class='st'>"top"</span><span class='op'>)</span>,
+                           default.units <span class='op'>=</span> <span class='st'>"inches"</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='message'>Read in dataframe.  Assuming 'chrom' in column1 and 'altchrom' in column2. 10000 BP resolution detected.</span></div><div class='output co'>#&gt; <span class='message'>bb_hicSquare[bb_hicSquare1]</span></div><div class='input'><span class='fu'><a href='bb_annoGenomeLabel.html'>bb_annoGenomeLabel</a></span><span class='op'>(</span>plot <span class='op'>=</span> <span class='va'>hicPlot</span>, x <span class='op'>=</span> <span class='fl'>0.5</span>, y <span class='op'>=</span> <span class='fl'>3.55</span>, scale <span class='op'>=</span> <span class='st'>"Mb"</span>,
+                   just <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"left"</span>, <span class='st'>"top"</span><span class='op'>)</span>, default.units <span class='op'>=</span> <span class='st'>"inches"</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='message'>bb_genomeLabel[bb_genomeLabel1]</span></div><div class='input'>
+<span class='fu'>bb_annoText</span><span class='op'>(</span>label <span class='op'>=</span> <span class='st'>"Loop"</span>, fontsize <span class='op'>=</span> <span class='fl'>8</span>, plot <span class='op'>=</span> <span class='va'>hicPlot</span>, x <span class='op'>=</span> <span class='fl'>29075000</span>, y <span class='op'>=</span> <span class='fl'>28150000</span>,
+            just <span class='op'>=</span> <span class='st'>"center"</span>, default.units <span class='op'>=</span> <span class='st'>"native"</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='message'>bb_text[GRID.text.159]</span></div><div class='img'><img src='bb_annoText-1.png' alt='' width='768' height='576' /></div><div class='input'>
 <span class='co'>## Hide page guides</span>
 <span class='fu'><a href='bb_pageGuideHide.html'>bb_pageGuideHide</a></span><span class='op'>(</span><span class='op'>)</span>
-</div><div class='img'><img src='bb_annoPixels-2.png' alt='' width='768' height='576' /></div><div class='input'>
+</div><div class='img'><img src='bb_annoText-2.png' alt='' width='768' height='576' /></div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

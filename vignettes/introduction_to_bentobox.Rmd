@@ -139,10 +139,12 @@ library(BentoBox)
 ## Load example gwas data
 data("bb_gwasData")
 
+head(bb_gwasData)
+
 ## Quick plot gwas data -- fix error in bb_plotManhattan()
-# bb_plotManhattan(data = bb_gwasData,
-#                  chrom = "chr21", chromstart = 28000000, chromend = 30300000,
-#                  pVals = "pVal", ymax = 1.1, cex = 0.20)
+bb_plotManhattan(data = bb_gwasData,
+                 chrom = "chr21", chromstart = 28000000, chromend = 30300000,
+                 pVals = "pVal", ymax = 1.1, cex = 0.20)
 ```
 
 ## How to add plot annotations
@@ -501,11 +503,11 @@ bb_plotSignal(data = bb_signalData,
               just = c("left", "top"), default.units = "inches")
 
 ## Plot GWAS data -- Fix bb_plotManhattan()
-# bb_plotManhattan(data = bb_gwasData,
-#                  chrom = "chr21", chromstart = 28000000, chromend = 30300000,
-#                  pVals = "pVal", ymax = 1.1, cex = 0.20,
-#                  x = 0.5, y = 3.5, width = 2, height = 0.5, 
-#                  just = c("left", "top"), default.units = "inches")
+bb_plotManhattan(data = bb_gwasData,
+                 chrom = "chr21", chromstart = 28000000, chromend = 30300000,
+                 pVals = "pVal", ymax = 1.1, cex = 0.20,
+                 x = 0.5, y = 3.5, width = 2, height = 0.5,
+                 just = c("left", "top"), default.units = "inches")
 
 ## Plot gene track
 library(TxDb.Hsapiens.UCSC.hg19.knownGene)
