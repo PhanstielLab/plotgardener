@@ -318,10 +318,11 @@ bb_plotGenes <- function(chrom, chromstart = NULL, chromend = NULL, assembly = "
     minusHighlight$fontColor <- minusHighlight$strandColor
 
     # Change background genes to background color
-    plusBackground$strandColor <- bb_genesInternal$geneBackground[1]
-    plusBackground$fontColor <- bb_genesInternal$geneBackground[1]
-    minusBackground$strandColor <- bb_genesInternal$geneBackground[1]
-    minusBackground$fontColor <- bb_genesInternal$geneBackground[1]
+    plusBackground$strandColor <- rep(bb_genesInternal$geneBackground[1], nrow(plusBackground))
+    plusBackground$fontColor <- rep(bb_genesInternal$geneBackground[1], nrow(plusBackground))
+    minusBackground$strandColor <- rep(bb_genesInternal$geneBackground[1], nrow(minusBackground))
+    minusBackground$fontColor <- rep(bb_genesInternal$geneBackground[1], nrow(minusBackground))
+
     ## Automatically change fontcolor for +/- strand label
     bb_genesInternal$fontcolors[1] <- bb_genesInternal$geneBackground[1]
     bb_genesInternal$fontcolors[2] <- bb_genesInternal$geneBackground[1]
