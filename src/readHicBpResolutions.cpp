@@ -17,17 +17,17 @@ NumericVector readHicBpResolutions(std::string hicFilename)
   ifstream fin(hicFilename, ios::in | ios::binary);
 
   if (!readMagicString(fin)) {
-    cerr << "Hi-C magic string is missing, does not appear to be a hic file" << endl;
+    Rcerr << "Hi-C magic string is missing, does not appear to be a hic file" << endl;
     fin.close();
-    return NumericVector(0);
+    return NULL;
   }
 
   int version;
   fin.read((char*)&version, sizeof(int));
   if (version < 6) {
-    cerr << "Version " << version << " no longer supported" << endl;
+    Rcerr << "Version " << version << " no longer supported" << endl;
     fin.close();
-    return NumericVector(0);
+    return NULL;
   }
   long master;
   fin.read((char*)&master, sizeof(long));
