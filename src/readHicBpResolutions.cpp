@@ -12,7 +12,7 @@ bool readMagicString(ifstream& fin) {
 }
 
 // [[Rcpp::export]]
-NumericVector readHicBpResolutions(string hicFilename)
+NumericVector readHicBpResolutions(std::string hicFilename)
 {
   ifstream fin(hicFilename, ios::in | ios::binary);
 

@@ -20,12 +20,12 @@ BEGIN_RCPP
 END_RCPP
 }
 // readHicBpResolutions
-NumericVector readHicBpResolutions(string hicFilename);
+NumericVector readHicBpResolutions(std::string hicFilename);
 RcppExport SEXP _BentoBox_readHicBpResolutions(SEXP hicFilenameSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< string >::type hicFilename(hicFilenameSEXP);
+    Rcpp::traits::input_parameter< std::string >::type hicFilename(hicFilenameSEXP);
     rcpp_result_gen = Rcpp::wrap(readHicBpResolutions(hicFilename));
     return rcpp_result_gen;
 END_RCPP
