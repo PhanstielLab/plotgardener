@@ -141,10 +141,10 @@ data("bb_gwasData")
 
 head(bb_gwasData)
 
-## Quick plot gwas data -- fix error in bb_plotManhattan()
+## Quick plot gwas data 
 bb_plotManhattan(data = bb_gwasData,
                  chrom = "chr21", chromstart = 28000000, chromend = 30300000,
-                 pVals = "pVal", ymax = 1.1, cex = 0.20)
+                 ymax = 1.1, cex = 0.20)
 ```
 
 ## How to add plot annotations
@@ -502,10 +502,10 @@ bb_plotSignal(data = bb_signalData,
               x = 0.5, y = 2.75, width = 2, height = 0.5, 
               just = c("left", "top"), default.units = "inches")
 
-## Plot GWAS data -- Fix bb_plotManhattan()
+## Plot GWAS data 
 bb_plotManhattan(data = bb_gwasData,
                  chrom = "chr21", chromstart = 28000000, chromend = 30300000,
-                 pVals = "pVal", ymax = 1.1, cex = 0.20,
+                 ymax = 1.1, cex = 0.20,
                  x = 0.5, y = 3.5, width = 2, height = 0.5,
                  just = c("left", "top"), default.units = "inches")
 

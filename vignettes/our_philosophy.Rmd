@@ -85,7 +85,7 @@ bb_pageCreate(width = 3, height = 2, default.units = "inches")
 genomicRegion <- bb_params(chrom = "chr8", chromstart = 1000000, chromend = 2000000)
 
 ## Plot genes with background color highlighting size
-genesPlot <- bb_plotGenes(params = genomicRegion, bg = "light grey",
+genesPlot <- bb_plotGenes(params = genomicRegion, bg = "#f6f6f6",
              x = 0.5, y = 0.5, width = 2, height = 1,
              just = c("left", "top"), default.units = "inches")
 
@@ -132,7 +132,7 @@ signalPlot <- bb_plotSignal(data = bb_signalData,
 ## Annotate genome label
 bb_annoGenomeLabel(plot = signalPlot, 
                    params = params, scale = "Mb",
-                   y = 3.6, just = c("left", "top"), default.units = "inches")
+                   y = 3.47, just = c("left", "top"), default.units = "inches")
 ```
 
 ## Programmatic and reproducible multi-panel figures
@@ -165,8 +165,8 @@ hicPlot <- bb_plotHicTriangle(data = bb_hicData,
 
 ## Add color scale annotation
 bb_annoHeatmapLegend(plot = hicPlot, 
-                     x = 3, y = 0.5, width = 0.12, height = 0.6, 
-                     just = c("left", "top"), default.units = "inches")
+                     x = 3.5, y = 0.5, width = 0.12, height = 1, 
+                     just = c("right", "top"), default.units = "inches")
 
 ## Plot gene track in same genomic region
 genesPlot <- bb_plotGenes(params = params,
@@ -212,8 +212,8 @@ hicPlot <- bb_plotHicTriangle(data = bb_hicData,
 
 ## Add color scale annotation
 bb_annoHeatmapLegend(plot = hicPlot, 
-                     x = 3, y = 0.5, width = 0.12, height = 0.6, 
-                     just = c("left", "top"), default.units = "inches")
+                     x = 3.5, y = 0.5, width = 0.12, height = 1, 
+                     just = c("right", "top"), default.units = "inches")
 
 ## Plot gene track in same genomic region
 genesPlot <- bb_plotGenes(params = params,
@@ -271,8 +271,8 @@ hicPlot <- bb_plotHicTriangle(data = bb_hicData,
 
 ## Add color scale annotation
 bb_annoHeatmapLegend(plot = hicPlot, 
-                     x = 3, y = 0.5, width = 0.12, height = 0.6, 
-                     just = c("left", "top"), default.units = "inches")
+                     x = 3.5, y = 0.5, width = 0.12, height = 1, 
+                     just = c("right", "top"), default.units = "inches")
 
 ## Plot gene track in same genomic region
 genesPlot <- bb_plotGenes(params = params,
