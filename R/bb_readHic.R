@@ -193,26 +193,33 @@ bb_readHic <- function(file, chrom, chromstart = NULL, chromend = NULL, altchrom
   }
 
   ## Define a function that determines a best resolution for size of region
-  auto_resolution <- function(chromstart, chromend){
+  auto_resolution <- function(file, chromstart, chromend){
 
+    fileResolutions <- readHicBpResolutions(file)
     if (is.null(chromstart) & is.null(chromend)){
-      autoRes <- 500000
+      autoRes <- max(fileResolutions)
     } else {
       dataRange <- chromend - chromstart
       if (dataRange >= 150000000){
-        autoRes <- 500000
+        autoRes <- max(fileResolutions)
       } else if (dataRange >= 75000000 & dataRange < 150000000){
         autoRes <- 250000
+        autoRes <- fileResolutions[which(abs(fileResolutions - autoRes) == min(abs(fileResolutions - autoRes)))]
       } else if (dataRange >= 35000000 & dataRange < 75000000){
         autoRes <- 100000
+        autoRes <- fileResolutions[which(abs(fileResolutions - autoRes) == min(abs(fileResolutions - autoRes)))]
       } else if (dataRange >= 20000000 & dataRange < 35000000){
         autoRes <- 50000
+        autoRes <- fileResolutions[which(abs(fileResolutions - autoRes) == min(abs(fileResolutions - autoRes)))]
       } else if (dataRange >= 5000000 & dataRange < 20000000){
         autoRes <- 25000
+        autoRes <- fileResolutions[which(abs(fileResolutions - autoRes) == min(abs(fileResolutions - autoRes)))]
       } else if (dataRange >= 3000000 & dataRange < 5000000){
         autoRes <- 10000
+        autoRes <- fileResolutions[which(abs(fileResolutions - autoRes) == min(abs(fileResolutions - autoRes)))]
       } else {
         autoRes <- 5000
+        autoRes <- fileResolutions[which(abs(fileResolutions - autoRes) == min(abs(fileResolutions - autoRes)))]
       }
     }
 
@@ -419,7 +426,7 @@ bb_readHic <- function(file, chrom, chromstart = NULL, chromend = NULL, altchrom
   # ======================================================================================================================================================================================
 
   if (bb_rhic$resolution == "auto"){
-    bb_rhic$resolution <- auto_resolution(chromstart = bb_rhic$chromstart, chromend = bb_rhic$chromend)
+    bb_rhic$resolution <- auto_resolution(file = bb_rhic$file, chromstart = bb_rhic$chromstart, chromend = bb_rhic$chromend)
     bb_rhic$res_scale <- "BP"
   }
 

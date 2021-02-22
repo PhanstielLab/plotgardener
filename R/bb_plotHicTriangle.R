@@ -246,22 +246,29 @@ bb_plotHicTriangle <- function(data, resolution = "auto", zrange = NULL, norm = 
     if (!("data.frame" %in% class(hic))){
 
       if (!is.null(hic_plot$chromstart) & !is.null(hic_plot$chromend)){
+        fileResolutions <- readHicBpResolutions(hic)
         ## Get range of data and try to pick a resolution to extract from hic file
         dataRange <- hic_plot$chromend - hic_plot$chromstart
         if (dataRange >= 150000000){
-          bestRes <- 500000
+          bestRes <- max(fileResolutions)
         } else if (dataRange >= 75000000 & dataRange < 150000000){
           bestRes <- 250000
+          bestRes <- fileResolutions[which(abs(fileResolutions - bestRes) == min(abs(fileResolutions - bestRes)))]
         } else if (dataRange >= 35000000 & dataRange < 75000000){
           bestRes <- 100000
+          bestRes <- fileResolutions[which(abs(fileResolutions - bestRes) == min(abs(fileResolutions - bestRes)))]
         } else if (dataRange >= 20000000 & dataRange < 35000000){
           bestRes <- 50000
+          bestRes <- fileResolutions[which(abs(fileResolutions - bestRes) == min(abs(fileResolutions - bestRes)))]
         } else if (dataRange >= 5000000 & dataRange < 20000000){
           bestRes <- 25000
+          bestRes <- fileResolutions[which(abs(fileResolutions - bestRes) == min(abs(fileResolutions - bestRes)))]
         } else if (dataRange >= 3000000 & dataRange < 5000000){
           bestRes <- 10000
+          bestRes <- fileResolutions[which(abs(fileResolutions - bestRes) == min(abs(fileResolutions - bestRes)))]
         } else {
           bestRes <- 5000
+          bestRes <- fileResolutions[which(abs(fileResolutions - bestRes) == min(abs(fileResolutions - bestRes)))]
         }
 
         hic_plot$resolution <- as.integer(bestRes)
