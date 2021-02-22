@@ -19,6 +19,17 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// readHicBpResolutions
+NumericVector readHicBpResolutions(string hicFilename);
+RcppExport SEXP _BentoBox_readHicBpResolutions(SEXP hicFilenameSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< string >::type hicFilename(hicFilenameSEXP);
+    rcpp_result_gen = Rcpp::wrap(readHicBpResolutions(hicFilename));
+    return rcpp_result_gen;
+END_RCPP
+}
 // rebinBigwig
 NumericVector rebinBigwig(DataFrame bigwig, DataFrame bins);
 RcppExport SEXP _BentoBox_rebinBigwig(SEXP bigwigSEXP, SEXP binsSEXP) {
@@ -34,6 +45,7 @@ END_RCPP
 
 static const R_CallMethodDef CallEntries[] = {
     {"_BentoBox_checkRow", (DL_FUNC) &_BentoBox_checkRow, 4},
+    {"_BentoBox_readHicBpResolutions", (DL_FUNC) &_BentoBox_readHicBpResolutions, 1},
     {"_BentoBox_rebinBigwig", (DL_FUNC) &_BentoBox_rebinBigwig, 2},
     {NULL, NULL, 0}
 };
