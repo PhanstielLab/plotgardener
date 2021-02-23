@@ -33,7 +33,8 @@
 #' @param bg Character value indicating background color. Default value is \code{bg = NA}.
 #' @param baseline Logical value indicating whether to include a baseline along the x-axis. Default value is \code{baseline = FALSE}.
 #' @param x A numeric or unit object specifying Manhattan plot x-location.
-#' @param y A numeric or unit object specifying Manhattan plot y-location.
+#' @param y A numeric, unit object, or character containing a "b" combined with a numeric value specifying Manhattan plot y-location. The character value will
+#' place the Manhattan plot y relative to the bottom of the most recently plotted BentoBox plot according to the units of the BentoBox page.
 #' @param width A numeric or unit object specifying Manhattan plot width.
 #' @param height A numeric or unit object specifying Manhattan plot height.
 #' @param just Justification of Manhattan plot relative to its (x, y) location. If there are two values, the first value specifies horizontal justification and the second value specifies vertical justification.

@@ -1,7 +1,8 @@
 #' Plot a rectangle within a BentoBox layout
 #'
 #' @param x A numeric vector or unit object specifying rectangle x-locations.
-#' @param y A numeric vector or unit object specifying rectangle y-locations.
+#' @param y A numeric vector, unit object, or a character vector of values containing a "b" combined with a numeric value specifying rectangle y-locations.
+#' The character vector will place rectangle y-locations relative to the bottom of the most recently plotted BentoBox plot according to the units of the BentoBox page.
 #' @param width A numeric vector or unit object specifying rectangle widths.
 #' @param height A numeric vector or unit object specifying rectangle heights.
 #' @param just Justification of rectangle relative to its (x, y) location. If there are two values, the first value specifies horizontal justification and the second value specifies vertical justification.
@@ -119,19 +120,36 @@ bb_plotRect <- function(x, y, width, height, just = "center", default.units = "i
 
   if (!"unit" %in% class(bb_rect$y)){
 
-    if (!is.numeric(bb_rect$y)){
+    ## Check for "below" y-coords
+    if (all(grepl("b", bb_rect$y)) == TRUE){
+      if (any(grepl("^[ac-zA-Z]+$", bb_rect$y)) == TRUE){
+        stop("\'below\' y-coordinate(s) detected with additional letters. Cannot parse y-coordinate(s).", call. = FALSE)
+      }
 
-      stop("y-coordinate is neither a unit object or a numeric value. Cannot plot rectangle.", call. = FALSE)
+      if(any(is.na(as.numeric(gsub("b","", bb_rect$y))))){
+        stop("\'below\' y-coordinate(s) does not have a numeric associated with it. Cannot parse y-coordinate(s).", call. = FALSE)
+      }
+
+      bb_rect$y <- unit(unlist(lapply(bb_rect$y, plot_belowY)), get("page_units", envir = bbEnv))
+
+    } else {
+
+      if (!is.numeric(bb_rect$y)){
+
+        stop("y-coordinate is neither a unit object or a numeric value. Cannot plot rectangle.", call. = FALSE)
+
+      }
+
+      if (is.null(bb_rectInternal$default.units)){
+
+        stop("y-coordinate detected as numeric.\'default.units\' must be specified.", call. = FALSE)
+
+      }
+
+      bb_rect$y <- unit(bb_rect$y, bb_rectInternal$default.units)
+
 
     }
-
-    if (is.null(bb_rectInternal$default.units)){
-
-      stop("y-coordinate detected as numeric.\'default.units\' must be specified.", call. = FALSE)
-
-    }
-
-    bb_rect$y <- unit(bb_rect$y, bb_rectInternal$default.units)
 
   }
 

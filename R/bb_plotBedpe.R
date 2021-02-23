@@ -14,7 +14,8 @@
 #' @param spaceHeight A numeric specifying the height of space between boxes of BEDPE elements on different rows. Default value is \code{spaceHeight = 0.3}.
 #' @param baseline Logical value indicating whether to include a baseline along the x-axis. Default value is \code{baseline = FALSE}.
 #' @param x A numeric or unit object specifying BEDPE plot x-location.
-#' @param y A numeric or unit object specifying BEDPE plot y-location.
+#' @param y A numeric, unit object, or character containing a "b" combined with a numeric value specifying BEDPE plot y-location. The character value will
+#' place the BEDPE plot y relative to the bottom of the most recently plotted BentoBox plot according to the units of the BentoBox page.
 #' @param width A numeric or unit object specifying BEDPE plot width.
 #' @param height A numeric or unit object specifying BEDPE plot height.
 #' @param just Justification of BEDPE plot relative to its (x, y) location. If there are two values, the first value specifies horizontal justification and the second value specifies vertical justification.

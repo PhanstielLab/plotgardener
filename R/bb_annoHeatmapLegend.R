@@ -10,7 +10,8 @@
 #' @param fontcolor Character value specfying text fontcolor. Default value is \code{fontcolor = "dark grey"}.
 #' @param border Logical value indicating whether to add a border around heatmap legend. Default value is \code{border = FALSE}.
 #' @param x A numeric or unit object specifying x-location of legend.
-#' @param y A numeric or unit object specifying y-location of legend.
+#' @param y A numeric, unit object, or character containing a "b" combined with a numeric value specifying y-location of legend. The character value will
+#' place the legend y relative to the bottom of the most recently plotted BentoBox plot according to the units of the BentoBox page.
 #' @param width A numeric or unit object specifying width of legend.
 #' @param height A numeric or unit object specifying height of legend.
 #' @param just Justification of heatmap legend relative to its (x, y) location. If there are two values, the first value specifies horizontal justification and the second value specifies vertical justification. Possible string values are: \code{"left"}, \code{"right"}, \code{"centre"}, \code{"center"}, \code{"bottom"}, and \code{"top"}.

@@ -31,7 +31,8 @@ bb_plotText(
 
 \item{x}{A numeric vector or unit object specifying text x-location.}
 
-\item{y}{A numeric vector or unit object specifying text y-location.}
+\item{y}{A numeric vector, unit object, or a character vector of values containing a "b" combined with a numeric value specifying text y-locations.
+The character vector will place text y-locations relative to the bottom of the most recently plotted BentoBox plot according to the units of the BentoBox page.}
 
 \item{just}{Justification of text relative to its (x, y) location. If there are two values, the first value specifies horizontal justification and the second value specifies vertical justification.
 Possible string values are: \code{"left"}, \code{"right"}, \code{"centre"}, \code{"center"}, \code{"bottom"}, and \code{"top"}. Default value is \code{just = "center"}.}

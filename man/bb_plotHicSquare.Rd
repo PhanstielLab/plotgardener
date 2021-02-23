@@ -70,7 +70,8 @@ dataframes, "auto" will attempt to detect the resolution the dataframe contains.
 
 \item{x}{A numeric or unit object specifying square Hi-C plot x-location.}
 
-\item{y}{A numeric or unit object specifying square Hi-C plot y-location.}
+\item{y}{A numeric, unit object, or character containing a "b" combined with a numeric value specifying square Hi-C plot y-location. The character value will
+place the square Hi-C plot y relative to the bottom of the most recently plotted BentoBox plot according to the units of the BentoBox page.}
 
 \item{width}{A numeric or unit object specifying square Hi-C plot width.}
 

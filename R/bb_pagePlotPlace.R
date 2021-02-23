@@ -2,7 +2,8 @@
 #'
 #' @param plot BentoBox plot object to be placed, defined by the output of a BentoBox plotting function.
 #' @param x A numeric or unit object specifying plot x-location.
-#' @param y A numeric or unit object specifying plot y-location.
+#' @param y A numeric, unit object, or character containing a "b" combined with a numeric value specifying plot y-location. The character value will
+#' place the plot y relative to the bottom of the most recently plotted BentoBox plot according to the units of the BentoBox page.
 #' @param width A numeric or unit object specifying plot width.
 #' @param height A numeric or unit object specifying plot height.
 #' @param just Justification of plot relative to its (x, y) location. If there are two values, the first value specifies horizontal justification and the second value specifies vertical justification.
@@ -225,21 +226,43 @@ bb_pagePlotPlace <- function(plot, x = NULL, y = NULL, width = NULL, height = NU
 
     if (!"unit" %in% class(bb_place$y)){
 
-      if (!is.numeric(bb_place$y)){
+      ## Check for "below" y-coord
+      if (grepl("b", bb_place$y) == TRUE){
+        if (grepl("^[ac-zA-Z]+$", bb_place$y) == TRUE){
+          warning("\'below\' y-coordinate detected with additional letters. Cannot parse y-coordinate.", call. = FALSE)
+          bb_place$y <- NULL
 
-        warning("y-coordinate is neither a unit object or a numeric value. Cannot parse y-coordinate.", call. = FALSE)
-        bb_place$y <- NULL
+          }
+
+        if (is.na(as.numeric(gsub("b","", bb_place$y)))){
+          warning("\'below\' y-coordinate does not have a numeric associated with it. Cannot parse y-coordinate.", call. = FALSE)
+          bb_place$y <- NULL
+        }
+
+        bb_place$y <- plot_belowY(y_coord = bb_place$y)
+
+      } else {
+
+        if (!is.numeric(bb_place$y)){
+
+          warning("y-coordinate is neither a unit object or a numeric value. Cannot parse y-coordinate.", call. = FALSE)
+          bb_place$y <- NULL
+
+        }
+
+        if (is.null(bb_place$default.units)){
+
+          warning("y-coordinate detected as numeric.\'default.units\' must be specified.", call. = FALSE)
+          bb_place$y <- NULL
+
+        }
+
+        bb_place$y <- unit(bb_place$y, bb_place$default.units)
+
 
       }
 
-      if (is.null(bb_place$default.units)){
 
-        warning("y-coordinate detected as numeric.\'default.units\' must be specified.", call. = FALSE)
-        bb_place$y <- NULL
-
-      }
-
-      bb_place$y <- unit(bb_place$y, bb_place$default.units)
 
     }
   }
@@ -296,7 +319,7 @@ bb_pagePlotPlace <- function(plot, x = NULL, y = NULL, width = NULL, height = NU
   # ======================================================================================================================================================================================
 
   object <- set_values(object = object, x = bb_place$x, y = bb_place$y, width = bb_place$width, height = bb_place$height)
-  object$justification <- bb_place$just
+  object$just <- bb_place$just
   attr(x = object, which = "plotted") <- bb_place$draw
 
   # ======================================================================================================================================================================================

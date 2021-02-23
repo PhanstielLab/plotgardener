@@ -25,7 +25,8 @@
 #' \item{\code{"bottom"}: }{Half below the diagonal.}
 #' }
 #' @param x A numeric or unit object specifying square Hi-C plot x-location.
-#' @param y A numeric or unit object specifying square Hi-C plot y-location.
+#' @param y A numeric, unit object, or character containing a "b" combined with a numeric value specifying square Hi-C plot y-location. The character value will
+#' place the square Hi-C plot y relative to the bottom of the most recently plotted BentoBox plot according to the units of the BentoBox page.
 #' @param width A numeric or unit object specifying square Hi-C plot width.
 #' @param height A numeric or unit object specifying square Hi-C plot height.
 #' @param just Justification of square Hi-C plot relative to its (x, y) location. If there are two values, the first value specifies horizontal justification and the second value specifies vertical justification.

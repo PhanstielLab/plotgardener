@@ -16,7 +16,8 @@
 #' @param stroke A numeric value indicating the stroke width for gene body outlines. Default value is \code{stroke = 0.1}.
 #' @param bg Character value indicating background color. Default value is \code{bg = NA}.
 #' @param x A numeric or unit object specifying genes plot x-location.
-#' @param y A numeric or unit object specifying genes plot y-location.
+#' @param y A numeric, unit object, or character containing a "b" combined with a numeric value specifying genes plot y-location. The character value will
+#' place the genes plot y relative to the bottom of the most recently plotted BentoBox plot according to the units of the BentoBox page.
 #' @param width A numeric or unit object specifying genes plot width.
 #' @param height A numeric or unit object specifying genes plot height.
 #' @param just Justification of genes plot relative to its (x, y) location. If there are two values, the first value specifies horizontal justification and the second value specifies vertical justification.

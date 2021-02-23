@@ -26,7 +26,8 @@
 #' @param at A numeric vector of x-value locations for tick marks.
 #' @param tcl A numeric specifying the length of tickmarks as a fraction of text height. Default value is \code{tcl = 0.5}.
 #' @param x A numeric or unit object specifying genome label x-location.
-#' @param y A numeric or unit object specifying genome label y-location.
+#' @param y A numeric, unit object, or character containing a "b" combined with a numeric value specifying genome label y-location. The character value will
+#' place the genome label y relative to the bottom of the most recently plotted BentoBox plot according to the units of the BentoBox page.
 #' @param length A numeric or unit object specifying length of genome label axis.
 #' @param just Justification of genome label relative to its (x, y) location. If there are two values, the first value specifies horizontal justification and the second value specifies vertical justification.
 #' Possible string values are: \code{"left"}, \code{"right"}, \code{"centre"}, \code{"center"}, \code{"bottom"}, and \code{"top"}. Default value is \code{just = c("left", "top")}.
@@ -623,19 +624,35 @@ bb_plotGenomeLabel <- function(chrom, chromstart = NULL, chromend = NULL, assemb
 
   if (!"unit" %in% class(bb_genomeLabel$y)){
 
-    if (!is.numeric(bb_genomeLabel$y)){
+    ## Check for "below" y-coord
+    if (grepl("b", bb_genomeLabel$y) == TRUE){
+      if (grepl("^[ac-zA-Z]+$", bb_genomeLabel$y) == TRUE){
+        stop("\'below\' y-coordinate detected with additional letters. Cannot parse y-coordinate.", call. = FALSE)
+      }
 
-      stop("y-coordinate is neither a unit object or a numeric value. Cannot place object.", call. = FALSE)
+      if(is.na(as.numeric(gsub("b","", bb_genomeLabel$y)))){
+        stop("\'below\' y-coordinate does not have a numeric associated with it. Cannot parse y-coordinate.", call. = FALSE)
+      }
+
+      bb_genomeLabel$y <- plot_belowY(y_coord = bb_genomeLabel$y)
+
+    } else {
+
+      if (!is.numeric(bb_genomeLabel$y)){
+
+        stop("y-coordinate is neither a unit object or a numeric value. Cannot place object.", call. = FALSE)
+
+      }
+
+      if (is.null(bb_genomeLabelInternal$default.units)){
+
+        stop("y-coordinate detected as numeric.\'default.units\' must be specified.", call. = FALSE)
+
+      }
+
+      bb_genomeLabel$y <- unit(bb_genomeLabel$y, bb_genomeLabelInternal$default.units)
 
     }
-
-    if (is.null(bb_genomeLabelInternal$default.units)){
-
-      stop("y-coordinate detected as numeric.\'default.units\' must be specified.", call. = FALSE)
-
-    }
-
-    bb_genomeLabel$y <- unit(bb_genomeLabel$y, bb_genomeLabelInternal$default.units)
 
   }
 

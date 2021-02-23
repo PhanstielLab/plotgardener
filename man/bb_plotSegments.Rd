@@ -23,11 +23,13 @@ bb_plotSegments(
 \arguments{
 \item{x0}{A numeric vector or unit object indicating the starting x-values of the line segments.}
 
-\item{y0}{A numeric vector or unit object indicating the starting y-values of the line segments.}
+\item{y0}{A numeric vector, unit object, or a character vector of values containing a "b" combined with a numeric value specifying starting y-values of the line segments.
+The character vector will place starting y-values relative to the bottom of the most recently plotted BentoBox plot according to the units of the BentoBox page.}
 
 \item{x1}{A numeric vector or unit object indicating the stopping x-values of the line segments.}
 
-\item{y1}{A numeric vector or unit object indicating the stopping y-values of the line segments.}
+\item{y1}{A numeric vector, unit object, or a character vector of values containing a "b" combined with a numeric value specifying stopping y-values of the line segments.
+The character vector will place stopping y-values relative to the bottom of the most recently plotted BentoBox plot according to the units of the BentoBox page.}
 
 \item{default.units}{A string indicating the default units to use if \code{x0}, \code{y0}, \code{x1}, or \code{y1} are only given as numeric vectors. Default value is \code{default.units = "inches"}.}
 

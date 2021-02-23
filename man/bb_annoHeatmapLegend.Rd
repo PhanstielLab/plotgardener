@@ -37,7 +37,8 @@ bb_annoHeatmapLegend(
 
 \item{x}{A numeric or unit object specifying x-location of legend.}
 
-\item{y}{A numeric or unit object specifying y-location of legend.}
+\item{y}{A numeric, unit object, or character containing a "b" combined with a numeric value specifying y-location of legend. The character value will
+place the legend y relative to the bottom of the most recently plotted BentoBox plot according to the units of the BentoBox page.}
 
 \item{width}{A numeric or unit object specifying width of legend.}
 

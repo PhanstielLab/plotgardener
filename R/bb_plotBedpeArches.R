@@ -29,7 +29,8 @@
 #' @param clip A logical value indicating whether to clip any arches that get cutoff in the given genomic region. Default value is \code{clip = FALSE}.
 #' @param baseline Logical value indicating whether to include a baseline along the x-axis. Default value is \code{baseline = FALSE}.
 #' @param x A numeric or unit object specifying BEDPE arches plot x-location.
-#' @param y A numeric or unit object specifying BEDPE arches plot y-location.
+#' @param y A numeric, unit object, or character containing a "b" combined with a numeric value specifying BEDPE arches plot y-location. The character value will
+#' place the BEDPE arches plot y relative to the bottom of the most recently plotted BentoBox plot according to the units of the BentoBox page.
 #' @param width A numeric or unit object specifying BEDPE arches plot width.
 #' @param height A numeric or unit object specifying BEDPE arches plot height.
 #' @param just Justification of BEDPE arches plot relative to its (x, y) location. If there are two values, the first value specifies horizontal justification and the second value specifies vertical justification.

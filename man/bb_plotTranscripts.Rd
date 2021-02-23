@@ -67,7 +67,8 @@ minus strand transcripts will be colored by the second \code{fill} color. Defaul
 
 \item{x}{A numeric or unit object specifying transcript plot x-location.}
 
-\item{y}{A numeric or unit object specifying transcript plot y-location.}
+\item{y}{A numeric, unit object, or character containing a "b" combined with a numeric value specifying transcript plot y-location. The character value will
+place the transcript plot y relative to the bottom of the most recently plotted BentoBox plot according to the units of the BentoBox page.}
 
 \item{width}{A numeric or unit object specifying transcript plot width.}
 

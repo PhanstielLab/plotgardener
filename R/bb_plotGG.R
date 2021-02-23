@@ -2,7 +2,8 @@
 #'
 #' @param plot ggplot object.
 #' @param x A numeric or unit object specifying ggplot x-location.
-#' @param y A numeric or unit object specifying ggplot y-location.
+#' @param y A numeric, unit object, or character containing a "b" combined with a numeric value specifying ggplot y-location. The character value will
+#' place the ggplot y relative to the bottom of the most recently plotted BentoBox plot according to the units of the BentoBox page.
 #' @param width A numeric or unit object specifying ggplot width.
 #' @param height A numeric or unit object specifying ggplot height.
 #' @param just Justification of ggplot relative to its (x, y) location. If there are two values, the first value specifies horizontal justification and the second value specifies vertical justification.

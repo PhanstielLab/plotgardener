@@ -22,7 +22,8 @@ bb_plotPolygon(
 \arguments{
 \item{x}{A numeric vector or unit object specifying polygon vertex x-locations.}
 
-\item{y}{A numeric vector or unit object specifying polygon vertex y-locations.}
+\item{y}{A numeric vector, unit object, or a character vector of values containing a "b" combined with a numeric value specifying polygon vertex y-locations.
+The character vector will place polygon vertex y-locations relative to the bottom of the most recently plotted BentoBox plot according to the units of the BentoBox page.}
 
 \item{default.units}{A string indicating the default units to use if \code{x} or \code{y} are only given as numeric vectors. Default value is \code{default.units = "inches"}.}
 

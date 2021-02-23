@@ -22,7 +22,8 @@ bb_plotRaster(
 
 \item{x}{A numeric vector or unit object specifying raster x-locations.}
 
-\item{y}{A numeric vector or unit object specifying raster y-locations}
+\item{y}{A numeric vector, unit object, or a character vector of values containing a "b" combined with a numeric value specifying raster y-locations.
+The character vector will place raster y relative to the bottom of the most recently plotted BentoBox plot according to the units of the BentoBox page.}
 
 \item{width}{A numeric vector or unit object specifying raster widths.}
 

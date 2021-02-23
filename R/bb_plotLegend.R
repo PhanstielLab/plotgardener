@@ -14,7 +14,8 @@
 #' @param border Logical value indicating whether to add a border around heatmap legend. Default value is \code{border = TRUE}.
 #' @param bg Character value indicating background color. Default value is \code{bg = NA}.
 #' @param x A numeric or unit object specifying legend x-location.
-#' @param y A numeric or unit object specifying legend y-location.
+#' @param y A numeric, unit object, or character containing a "b" combined with a numeric value specifying legend y-location. The character value will
+#' place the legend y relative to the bottom of the most recently plotted BentoBox plot according to the units of the BentoBox page.
 #' @param width A numeric or unit object specifying legend width.
 #' @param height A numeric or unit object specifying legend height.
 #' @param just Justification of legend relative to its (x, y) location. If there are two values, the first value specifies horizontal justification and the second value specifies vertical justification.

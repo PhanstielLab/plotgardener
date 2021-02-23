@@ -1,7 +1,8 @@
 #' Plot a circle within a BentoBox layout
 #'
 #' @param x A numeric vector or unit object specifying circle x-locations relative to center.
-#' @param y A numeric vector or unit object specifying circle y-locations relative to center.
+#' @param y A numeric vector, unit object, or a character vector of values containing a "b" combined with a numeric value specifying circle y-locations relative to center.
+#' The character vector will place circle y-locations relative to the bottom of the most recently plotted BentoBox plot according to the units of the BentoBox page.
 #' @param r A numeric vector or unit object specifying radii.
 #' @param default.units A string indicating the default units to use if \code{r}, \code{x}, or \code{y} are only given as numerics or numeric vectors. Default value is \code{default.units = "inches"}.
 #' @param linecolor A character value specifying circle line color. Default value is \code{linecolor = "black"}.
@@ -117,19 +118,39 @@ bb_plotCircle <- function(x, y, r, default.units = "inches", linecolor = "black"
 
   if (!"unit" %in% class(bb_circle$y)){
 
-    if (!is.numeric(bb_circle$y)){
+    ## Check for "below" y-coords
+    if (all(grepl("b", bb_circle$y)) == TRUE){
+      if (any(grepl("^[ac-zA-Z]+$", bb_circle$y)) == TRUE){
+        stop("\'below\' y-coordinate(s) detected with additional letters. Cannot parse y-coordinate(s).", call. = FALSE)
+      }
 
-      stop("y-coordinate is neither a unit object or a numeric value. Cannot plot circle.", call. = FALSE)
+      if(any(is.na(as.numeric(gsub("b","", bb_circle$y))))){
+        stop("\'below\' y-coordinate(s) does not have a numeric associated with it. Cannot parse y-coordinate(s).", call. = FALSE)
+      }
+
+      bb_circle$y <- unit(unlist(lapply(bb_circle$y, plot_belowY)), get("page_units", envir = bbEnv))
+
+    } else {
+
+
+      if (!is.numeric(bb_circle$y)){
+
+        stop("y-coordinate is neither a unit object or a numeric value. Cannot plot circle.", call. = FALSE)
+
+      }
+
+      if (is.null(bb_circleInternal$default.units)){
+
+        stop("y-coordinate detected as numeric.\'default.units\' must be specified.", call. = FALSE)
+
+      }
+
+      bb_circle$y <- unit(bb_circle$y, bb_circleInternal$default.units)
+
 
     }
 
-    if (is.null(bb_circleInternal$default.units)){
 
-      stop("y-coordinate detected as numeric.\'default.units\' must be specified.", call. = FALSE)
-
-    }
-
-    bb_circle$y <- unit(bb_circle$y, bb_circleInternal$default.units)
 
   }
 

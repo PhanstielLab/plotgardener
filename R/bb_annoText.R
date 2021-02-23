@@ -122,19 +122,28 @@ bb_annoText <- function(label, fontcolor = "black", fontsize = 12, rot = 0, chec
 
   if (!"unit" %in% class(bb_text$y)){
 
-    if (!is.numeric(bb_text$y)){
+    ## Check for "below" y-coord
+    if (grepl("b", bb_text$y) == TRUE){
+      stop("\'below\' y-coordinate detected. Cannot parse \'below\' y-coordinate for bb_annoText.", call. = FALSE)
 
-      stop("y-coordinate is neither a unit object or a numeric value. Cannot plot text.", call. = FALSE)
+    } else {
+
+      if (!is.numeric(bb_text$y)){
+
+        stop("y-coordinate is neither a unit object or a numeric value. Cannot plot text.", call. = FALSE)
+
+      }
+
+      if (is.null(bb_textInternal$default.units)){
+
+        stop("y-coordinate detected as numeric.\'default.units\' must be specified.", call. = FALSE)
+
+      }
+
+      bb_text$y <- unit(bb_text$y, bb_textInternal$default.units)
 
     }
 
-    if (is.null(bb_textInternal$default.units)){
-
-      stop("y-coordinate detected as numeric.\'default.units\' must be specified.", call. = FALSE)
-
-    }
-
-    bb_text$y <- unit(bb_text$y, bb_textInternal$default.units)
 
   }
 

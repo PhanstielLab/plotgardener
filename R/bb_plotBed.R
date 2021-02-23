@@ -18,7 +18,8 @@
 #' @param bg Character value indicating background color. Default value is \code{bg = NA}.
 #' @param baseline Logical value indicating whether to include a baseline along the x-axis. Default value is \code{baseline = FALSE}.
 #' @param x A numeric or unit object specifying BED plot x-location.
-#' @param y A numeric or unit object specifying BED plot y-location.
+#' @param y A numeric, unit object, or character containing a "b" combined with a numeric value specifying BED plot y-location. The character value will
+#' place the BED plot y relative to the bottom of the most recently plotted BentoBox plot according to the units of the BentoBox page.
 #' @param width A numeric or unit object specifying BED plot width.
 #' @param height A numeric or unit object specifying BED plot height.
 #' @param just Justification of BED plot relative to its (x, y) location. If there are two values, the first value specifies horizontal justification and the second value specifies vertical justification.

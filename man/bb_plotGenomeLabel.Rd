@@ -72,7 +72,8 @@ Options are:
 
 \item{x}{A numeric or unit object specifying genome label x-location.}
 
-\item{y}{A numeric or unit object specifying genome label y-location.}
+\item{y}{A numeric, unit object, or character containing a "b" combined with a numeric value specifying genome label y-location. The character value will
+place the genome label y relative to the bottom of the most recently plotted BentoBox plot according to the units of the BentoBox page.}
 
 \item{length}{A numeric or unit object specifying length of genome label axis.}
 

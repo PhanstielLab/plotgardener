@@ -9,7 +9,8 @@
 #' }
 #' @param showBands Logical value indicating whether to draw colored cytobands within ideogram. Default value is \code{showBands = TRUE}.
 #' @param x A numeric or unit object specifying ideogram x-location.
-#' @param y A numeric or unit object specifying ideogram y-location.
+#' @param y A numeric, unit object, or character containing a "b" combined with a numeric value specifying ideogram y-location. The character value will
+#' place the ideogram y relative to the bottom of the most recently plotted BentoBox plot according to the units of the BentoBox page.
 #' @param width A numeric or unit object specifying ideogram width.
 #' @param height A numeric or unit object specifying ideogram height.
 #' @param just Justification of ideogram relative to its (x, y) location. If there are two values, the first value specifies horizontal justification and the second value specifies vertical justification.
@@ -25,11 +26,10 @@
 #' library("TxDb.Hsapiens.UCSC.hg19.knownGene")
 #' data("cytoBand.Hsapiens.UCSC.hg19")
 #'
-#' ## Plot ideogram filling up entire graphic device
-#' bb_plotIdeogram(chrom = "chr2", assembly = "hg19")
-#'
-#' ## Plot and place ideogram on a BentoBox page
+#' ## Create page
 #' bb_pageCreate(width = 4.5, height = 1, default.units = "inches")
+#'
+#' ## Plot and place ideogram
 #' ideogramPlot <- bb_plotIdeogram(chrom = "chr2", assembly = "hg19",
 #'                                 x = 0.25, y = 0.25, width = 4, height = 0.3,
 #'                                just = c("left", "top"), default.units = "inches")

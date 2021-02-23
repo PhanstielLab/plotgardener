@@ -65,7 +65,8 @@ Either one \code{data} argument or a list of two can be provided, where the seco
 
 \item{x}{A numeric or unit object specifying signal plot x-location.}
 
-\item{y}{A numeric or unit object specifying signal plot y-location.}
+\item{y}{A numeric, unit object, or character containing a "b" combined with a numeric value specifying signal plot y-location. The character value will
+place the signal plot y relative to the bottom of the most recently plotted BentoBox plot according to the units of the BentoBox page.}
 
 \item{width}{A numeric or unit object specifying signal plot width.}
 

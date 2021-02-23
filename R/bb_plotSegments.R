@@ -1,9 +1,11 @@
 #' Draw a line segment within a BentoBox layout
 #'
 #' @param x0 A numeric vector or unit object indicating the starting x-values of the line segments.
-#' @param y0 A numeric vector or unit object indicating the starting y-values of the line segments.
+#' @param y0 A numeric vector, unit object, or a character vector of values containing a "b" combined with a numeric value specifying starting y-values of the line segments.
+#' The character vector will place starting y-values relative to the bottom of the most recently plotted BentoBox plot according to the units of the BentoBox page.
 #' @param x1 A numeric vector or unit object indicating the stopping x-values of the line segments.
-#' @param y1 A numeric vector or unit object indicating the stopping y-values of the line segments.
+#' @param y1 A numeric vector, unit object, or a character vector of values containing a "b" combined with a numeric value specifying stopping y-values of the line segments.
+#' The character vector will place stopping y-values relative to the bottom of the most recently plotted BentoBox plot according to the units of the BentoBox page.
 #' @param default.units A string indicating the default units to use if \code{x0}, \code{y0}, \code{x1}, or \code{y1} are only given as numeric vectors. Default value is \code{default.units = "inches"}.
 #' @param linecolor A character value specifying segment line color. Default value is \code{linecolor = "black"}.
 #' @param lwd A numeric specifying segment line width. Default value is \code{lwd = 1}.
@@ -127,19 +129,36 @@ bb_plotSegments <- function(x0, y0, x1, y1, default.units = "inches", linecolor 
 
   if (!"unit" %in% class(bb_segments$y0)){
 
-    if (!is.numeric(bb_segments$y0)){
+    ## Check for "below" y0-coords
+    if (all(grepl("b", bb_segments$y0)) == TRUE){
+      if (any(grepl("^[ac-zA-Z]+$", bb_segments$y0)) == TRUE){
+        stop("\'below\' y0-coordinate(s) detected with additional letters. Cannot parse y0-coordinate(s).", call. = FALSE)
+      }
 
-      stop("Starting y-coordinate is neither a unit object or a numeric value. Cannot plot segment.", call. = FALSE)
+      if(any(is.na(as.numeric(gsub("b","", bb_segments$y0))))){
+        stop("\'below\' y0-coordinate(s) does not have a numeric associated with it. Cannot parse y0-coordinate(s).", call. = FALSE)
+      }
+
+      bb_segments$y0 <- unit(unlist(lapply(bb_segments$y0, plot_belowY)), get("page_units", envir = bbEnv))
+
+    } else {
+
+      if (!is.numeric(bb_segments$y0)){
+
+        stop("Starting y-coordinate is neither a unit object or a numeric value. Cannot plot segment.", call. = FALSE)
+
+      }
+
+      if (is.null(bb_segmentsInternal$default.units)){
+
+        stop("Starting y-coordinate detected as numeric.\'default.units\' must be specified.", call. = FALSE)
+
+      }
+
+      bb_segments$y0 <- unit(bb_segments$y0, bb_segmentsInternal$default.units)
 
     }
 
-    if (is.null(bb_segmentsInternal$default.units)){
-
-      stop("Starting y-coordinate detected as numeric.\'default.units\' must be specified.", call. = FALSE)
-
-    }
-
-    bb_segments$y0 <- unit(bb_segments$y0, bb_segmentsInternal$default.units)
 
   }
 
@@ -163,19 +182,35 @@ bb_plotSegments <- function(x0, y0, x1, y1, default.units = "inches", linecolor 
 
   if (!"unit" %in% class(bb_segments$y1)){
 
-    if (!is.numeric(bb_segments$y1)){
+    ## Check for "below" y1-coords
+    if (all(grepl("b", bb_segments$y1)) == TRUE){
+      if (any(grepl("^[ac-zA-Z]+$", bb_segments$y1)) == TRUE){
+        stop("\'below\' y1-coordinate(s) detected with additional letters. Cannot parse y1-coordinate(s).", call. = FALSE)
+      }
 
-      stop("Stopping y-coordinate is neither a unit object or a numeric value. Cannot plot segment.", call. = FALSE)
+      if(any(is.na(as.numeric(gsub("b","", bb_segments$y1))))){
+        stop("\'below\' y1-coordinate(s) does not have a numeric associated with it. Cannot parse y1-coordinate(s).", call. = FALSE)
+      }
+
+      bb_segments$y1 <- unit(unlist(lapply(bb_segments$y1, plot_belowY)), get("page_units", envir = bbEnv))
+
+    } else {
+      if (!is.numeric(bb_segments$y1)){
+
+        stop("Stopping y-coordinate is neither a unit object or a numeric value. Cannot plot segment.", call. = FALSE)
+
+      }
+
+      if (is.null(bb_segmentsInternal$default.units)){
+
+        stop("Stopping y-coordinate detected as numeric.\'default.units\' must be specified.", call. = FALSE)
+
+      }
+
+      bb_segments$y1 <- unit(bb_segments$y1, bb_segmentsInternal$default.units)
 
     }
 
-    if (is.null(bb_segmentsInternal$default.units)){
-
-      stop("Stopping y-coordinate detected as numeric.\'default.units\' must be specified.", call. = FALSE)
-
-    }
-
-    bb_segments$y1 <- unit(bb_segments$y1, bb_segmentsInternal$default.units)
 
   }
   ## Convert coordinates to page_units

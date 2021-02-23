@@ -23,7 +23,8 @@ bb_plotRect(
 \arguments{
 \item{x}{A numeric vector or unit object specifying rectangle x-locations.}
 
-\item{y}{A numeric vector or unit object specifying rectangle y-locations.}
+\item{y}{A numeric vector, unit object, or a character vector of values containing a "b" combined with a numeric value specifying rectangle y-locations.
+The character vector will place rectangle y-locations relative to the bottom of the most recently plotted BentoBox plot according to the units of the BentoBox page.}
 
 \item{width}{A numeric vector or unit object specifying rectangle widths.}
 
