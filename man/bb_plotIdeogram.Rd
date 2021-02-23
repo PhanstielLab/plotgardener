@@ -56,15 +56,15 @@ Returns a \code{bb_ideogram} object containing relevant genomic region, placemen
 Plot a chromosome ideogram with or without cytobands
 }
 \details{
-This function can be used to quickly plot an ideogram by ignoring plot placement parameters:
-\preformatted{
-bb_plotIdeogram(chrom)
-}
 An ideogram can be placed on a BentoBox coordinate page by providing plot placement parameters:
 \preformatted{
 bb_plotIdeogram(chrom,
                 x, y, width, height, just = c("left", "top"),
                 default.units = "inches")
+}
+This function can also be used to quickly plot an unannotated ideogram by ignoring plot placement parameters:
+\preformatted{
+bb_plotIdeogram(chrom)
 }
 
 Giemsa stain band data from the UCSC Genome Browser is included with BentoBox.
@@ -78,13 +78,13 @@ data("cytoBand.Hsapiens.UCSC.hg19")
 bb_plotIdeogram(chrom = "chr2", assembly = "hg19")
 
 ## Plot and place ideogram on a BentoBox page
-bb_pageCreate(width = 4, height = 1.5, default.units = "inches")
+bb_pageCreate(width = 4.5, height = 1, default.units = "inches")
 ideogramPlot <- bb_plotIdeogram(chrom = "chr2", assembly = "hg19",
-                                x = 0.25, y = 0.25, width = 3.5, height = 0.5,
+                                x = 0.25, y = 0.25, width = 4, height = 0.3,
                                just = c("left", "top"), default.units = "inches")
 
-## Annotate genome label
-bb_annoGenomeLabel(plot = ideogramPlot, x = 0.25, y = 1, scale = "Mb")
+## Plot text
+bb_plotText(label = "Chromosome 2", x = 2.25, y = 0.75, just = "center" )
 
 ## Hide page guides
 bb_pageGuideHide()

@@ -73,11 +73,11 @@ hicPlot <- bb_plotHicSquare(data = bb_hicData, resolution = 10000, zrange = c(0,
 
 ## Add heatmap legend
 bb_annoHeatmapLegend(plot = hicPlot,
-                     x = 3.2, y = 0.5, width = 0.25, height = 0.75,
+                     x = 3.2, y = 0.5, width = 0.12, height = 1.2,
                      just = c("left", "top"), default.units = "inches")
 
 ## Annotate genome label
-bb_annoGenomeLabel(plot = hicPlot, x = 0.5, y = 3.1, scale = "Mb", just = c("left", "top"))
+bb_annoGenomeLabel(plot = hicPlot, x = 0.5, y = 3.03, scale = "Mb", just = c("left", "top"))
 
 ## Hide page guides
 bb_pageGuideHide()

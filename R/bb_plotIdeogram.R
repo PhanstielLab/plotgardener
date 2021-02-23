@@ -29,27 +29,27 @@
 #' bb_plotIdeogram(chrom = "chr2", assembly = "hg19")
 #'
 #' ## Plot and place ideogram on a BentoBox page
-#' bb_pageCreate(width = 4, height = 1.5, default.units = "inches")
+#' bb_pageCreate(width = 4.5, height = 1, default.units = "inches")
 #' ideogramPlot <- bb_plotIdeogram(chrom = "chr2", assembly = "hg19",
-#'                                 x = 0.25, y = 0.25, width = 3.5, height = 0.5,
+#'                                 x = 0.25, y = 0.25, width = 4, height = 0.3,
 #'                                just = c("left", "top"), default.units = "inches")
 #'
-#' ## Annotate genome label
-#' bb_annoGenomeLabel(plot = ideogramPlot, x = 0.25, y = 1, scale = "Mb")
+#' ## Plot text
+#' bb_plotText(label = "Chromosome 2", x = 2.25, y = 0.75, just = "center" )
 #'
 #' ## Hide page guides
 #' bb_pageGuideHide()
 #'
 #' @details
-#' This function can be used to quickly plot an ideogram by ignoring plot placement parameters:
-#' \preformatted{
-#' bb_plotIdeogram(chrom)
-#' }
 #' An ideogram can be placed on a BentoBox coordinate page by providing plot placement parameters:
 #' \preformatted{
 #' bb_plotIdeogram(chrom,
 #'                 x, y, width, height, just = c("left", "top"),
 #'                 default.units = "inches")
+#' }
+#' This function can also be used to quickly plot an unannotated ideogram by ignoring plot placement parameters:
+#' \preformatted{
+#' bb_plotIdeogram(chrom)
 #' }
 #'
 #' Giemsa stain band data from the UCSC Genome Browser is included with BentoBox.
@@ -338,8 +338,8 @@ bb_plotIdeogram <- function(chrom, assembly = "hg19", orientation = "h", showBan
   ## Not translating into page_coordinates
   if (is.null(ideogram_plot$x) & is.null(ideogram_plot$y)){
 
-    height <- 0.10
-    width <- 0.9
+    height <- 0.075
+    width <- 1
 
     scaleRatio <- width/height
     yscale <- chromLength/scaleRatio
@@ -352,8 +352,8 @@ bb_plotIdeogram <- function(chrom, assembly = "hg19", orientation = "h", showBan
                      just = "center",
                      name = vp_name)
     } else {
-      height <- 0.9
-      width <- 0.10
+      height <- 1
+      width <- 0.075
       vp <- viewport(height = unit(width, "snpc"), width = unit(height, "snpc"),
                      x = unit(0.5, "npc"), y = unit(0.5, "npc"),
                      xscale = c(0, chromLength),

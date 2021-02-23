@@ -89,15 +89,15 @@ Returns a \code{bb_transcripts} object containing relevant genomic region, place
 Plot gene transcripts in a pileup style for a single chromosome
 }
 \details{
-This function can be used to quickly plot a transcripts plot by ignoring plot placement parameters:
-\preformatted{
-bb_plotTranscripts(chrom, chromstart = NULL, chromend = NULL)
-}
 A transcripts plot can be placed on a BentoBox coordinate page by providing plot placement parameters:
 \preformatted{
 bb_plotTranscripts(chrom, chromstart = NULL, chromend = NULL,
                    x, y, width, height, just = c("left", "top"),
                    default.units = "inches")
+}
+This function can also be used to quickly plot an unannotated transcripts plot by ignoring plot placement parameters:
+\preformatted{
+bb_plotTranscripts(chrom, chromstart = NULL, chromend = NULL)
 }
 
 Genomic annotation information is acquired through \link[GenomicFeatures]{TxDb} and \link[AnnotationDbi]{OrgDb-class} packages, as determined
@@ -108,24 +108,22 @@ through the \code{assembly} parameter.
 library("TxDb.Hsapiens.UCSC.hg19.knownGene")
 library("org.Hs.eg.db")
 
-## Plot transcripts filling up entire graphic device
-bb_plotTranscripts(chrom = "chr8", chromstart = 1000000, chromend = 2000000,
-                   assembly = "hg19")
+## Create page
+bb_pageCreate(width = 7.5, height = 3.5, default.units = "inches")
 
-## Plot and place transcripts on a BentoBox page
-bb_pageCreate(width = 4, height = 4, default.units = "inches")
+## Plot and place transcripts
 bb_plotTranscripts(chrom = "chr8", chromstart = 1000000, chromend = 2000000,
                    assembly = "hg19", labels = "gene",
-                   x = 0.5, y = 0.5, width = 3, height = 2.5,
+                   x = 0.5, y = 0.5, width = 6.5, height = 2.5,
                    just = c("left", "top"), default.units = "inches")
 
 ## Plot genome label
 bb_plotGenomeLabel(chrom = "chr8", chromstart = 1000000, chromend = 2000000,
-                   x = 0.5, y = 3, length = 3, default.units = "inches")
+                   x = 0.5, y = 3.03, length = 6.5, default.units = "inches")
 
 ## Plot a legend
-bb_plotLegend(legend = c("+", "-"), fill = c("#8a8aff", "#ff7e7e"), border = FALSE,
-              x = 0.5, y = 1.5, width = 1, height = 0.5, just = c("left", "top"))
+bb_plotLegend(legend = c("+ strand", "- strand"), fill = c("#669fd9", "#abcc8e"), border = FALSE,
+              x = 0.5, y = 1, width = 1, height = 0.5, just = c("left", "top"))
 
 ## Hide page guides
 bb_pageGuideHide()

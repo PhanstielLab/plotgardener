@@ -333,7 +333,9 @@ Possible string values are: <code>"left"</code>, <code>"right"</code>, <code>"ce
 </div><div class='output co'>#&gt; <span class='message'>bb_manhattan[bb_manhattan1]</span></div><div class='input'><span class='co'>## Annotate genome label</span>
 <span class='fu'><a href='bb_annoGenomeLabel.html'>bb_annoGenomeLabel</a></span><span class='op'>(</span>plot <span class='op'>=</span> <span class='va'>manhattanPlot</span>, x <span class='op'>=</span> <span class='fl'>0.5</span>, y <span class='op'>=</span> <span class='fl'>2</span>, fontsize <span class='op'>=</span> <span class='fl'>8</span>, just <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"left"</span>, <span class='st'>"top"</span><span class='op'>)</span>,
                    default.units <span class='op'>=</span> <span class='st'>"inches"</span> <span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>bb_genomeLabel[bb_genomeLabel1]</span></div><div class='input'>
+</div><div class='output co'>#&gt; <span class='message'>bb_genomeLabel[bb_genomeLabel1]</span></div><div class='input'><span class='fu'><a href='bb_plotText.html'>bb_plotText</a></span><span class='op'>(</span>label <span class='op'>=</span> <span class='st'>"Chromosome"</span>, fontsize <span class='op'>=</span> <span class='fl'>8</span>,
+            x <span class='op'>=</span> <span class='fl'>3.75</span>, y <span class='op'>=</span> <span class='fl'>2.20</span>, just <span class='op'>=</span> <span class='st'>"center"</span>, default.units <span class='op'>=</span> <span class='st'>"inches"</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='message'>bb_text[GRID.text.2712]</span></div><div class='input'>
 <span class='co'>## Annotate y-axis</span>
 <span class='fu'><a href='bb_annoYaxis.html'>bb_annoYaxis</a></span><span class='op'>(</span>plot <span class='op'>=</span> <span class='va'>manhattanPlot</span>, at <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>2</span>, <span class='fl'>4</span>, <span class='fl'>6</span>, <span class='fl'>8</span>, <span class='fl'>10</span>, <span class='fl'>12</span>, <span class='fl'>14</span><span class='op'>)</span>,
              axisLine <span class='op'>=</span> <span class='cn'>TRUE</span>, fontsize <span class='op'>=</span> <span class='fl'>8</span><span class='op'>)</span>
@@ -341,7 +343,7 @@ Possible string values are: <code>"left"</code>, <code>"right"</code>, <code>"ce
 <span class='co'>## Plot y-axis label</span>
 <span class='fu'><a href='bb_plotText.html'>bb_plotText</a></span><span class='op'>(</span>label <span class='op'>=</span> <span class='st'>"-log10(p-value)"</span>, x <span class='op'>=</span> <span class='fl'>0.15</span>, y <span class='op'>=</span> <span class='fl'>1</span>, rot <span class='op'>=</span> <span class='fl'>90</span>,
             fontsize <span class='op'>=</span> <span class='fl'>8</span>, fontface <span class='op'>=</span> <span class='st'>"bold"</span>, just <span class='op'>=</span> <span class='st'>"center"</span>, default.units <span class='op'>=</span> <span class='st'>"inches"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>bb_text[GRID.text.3170]</span></div><div class='input'>
+</div><div class='output co'>#&gt; <span class='message'>bb_text[GRID.text.2716]</span></div><div class='input'>
 
 <span class='co'>## Plot GWAS data zooming in on chromosome 11, highlighting a lead SNP, and coloring by LD score</span>
 <span class='va'>leadSNP_p</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/Extremes.html'>min</a></span><span class='op'>(</span><span class='va'>bb_gwasData</span><span class='op'>[</span><span class='fu'><a href='https://rdrr.io/r/base/which.html'>which</a></span><span class='op'>(</span><span class='va'>bb_gwasData</span><span class='op'>$</span><span class='va'>chr</span> <span class='op'>==</span> <span class='st'>"chr11"</span><span class='op'>)</span>,<span class='op'>]</span><span class='op'>$</span><span class='va'>p</span><span class='op'>)</span>
@@ -375,8 +377,9 @@ Possible string values are: <code>"left"</code>, <code>"right"</code>, <code>"ce
 </div><div class='output co'>#&gt; <span class='message'>bb_yaxis[bb_yaxis2]</span></div><div class='input'>
 <span class='co'>## Plot y-axis label</span>
 <span class='fu'><a href='bb_plotText.html'>bb_plotText</a></span><span class='op'>(</span>label <span class='op'>=</span> <span class='st'>"-log10(p-value)"</span>, x <span class='op'>=</span> <span class='fl'>0.15</span>, y <span class='op'>=</span> <span class='fl'>3.25</span>, rot <span class='op'>=</span> <span class='fl'>90</span>,
-            fontsize <span class='op'>=</span> <span class='fl'>8</span>, fontface <span class='op'>=</span> <span class='st'>"bold"</span>, just <span class='op'>=</span> <span class='st'>"center"</span>, default.units <span class='op'>=</span> <span class='st'>"inches"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>bb_text[GRID.text.3196]</span></div><div class='img'><img src='bb_plotManhattan-1.png' alt='' width='768' height='576' /></div><div class='input'>
+            fontsize <span class='op'>=</span> <span class='fl'>8</span>, fontface <span class='op'>=</span> <span class='st'>"bold"</span>, just <span class='op'>=</span> <span class='st'>"center"</span>,
+            default.units <span class='op'>=</span> <span class='st'>"inches"</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='message'>bb_text[GRID.text.2742]</span></div><div class='img'><img src='bb_plotManhattan-1.png' alt='' width='768' height='576' /></div><div class='input'>
 <span class='co'>## Hide page guides</span>
 <span class='fu'><a href='bb_pageGuideHide.html'>bb_pageGuideHide</a></span><span class='op'>(</span><span class='op'>)</span>
 </div><div class='img'><img src='bb_plotManhattan-2.png' alt='' width='768' height='576' /></div><div class='input'>

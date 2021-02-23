@@ -33,12 +33,10 @@
 #' ## Load signal data
 #' data("bb_signalData")
 #'
-#' ## Plot signal plot filling up entire graphic device
-#' bb_plotSignal(data = bb_signalData, chrom = "chr21",
-#'              chromstart = 28000000, chromend = 30300000, fill = "grey")
-#'
-#' ## Plot and place signal plot on a BentoBox page
+#' ## Create a page
 #' bb_pageCreate(width = 4, height = 3, default.units = "inches")
+#'
+#' ## Plot and place signal plot
 #' bb_plotSignal(data = bb_signalData, chrom = "chr21",
 #'               chromstart = 28000000, chromend = 30300000, fill = "steel blue",
 #'               linecolor = "steel blue",
@@ -47,23 +45,23 @@
 #'
 #' ## Plot genome label
 #' bb_plotGenomeLabel(chrom = "chr21", chromstart = 28000000, chromend = 30300000,
-#'                    x = 0.5, y = 2.1, length = 3, default.units = "inches")
+#'                    x = 0.5, y = 2.03, length = 3, default.units = "inches")
 #'
 #' ## Hide page guides
 #' bb_pageGuideHide()
 #'
 #' @details
-#' This function can be used to quickly plot a signal track by ignoring plot placement parameters:
-#' \preformatted{
-#' bb_plotSignal(data, chrom,
-#'               chromstart = NULL, chromend = NULL)
-#' }
-#' A signal track can be placed on a BentoBox coordinate page by providing plot placement parameters:
+#' #A signal track can be placed on a BentoBox coordinate page by providing plot placement parameters:
 #' \preformatted{
 #' bb_plotSignal(data, chrom,
 #'               chromstart = NULL, chromend = NULL,
 #'               x, y, width, height, just = c("left", "top"),
 #'               default.units = "inches")
+#' }
+#' This function can also be used to quickly plot an unannotated signal track by ignoring plot placement parameters:
+#' \preformatted{
+#' bb_plotSignal(data, chrom,
+#'               chromstart = NULL, chromend = NULL)
 #' }
 #'
 #' @export

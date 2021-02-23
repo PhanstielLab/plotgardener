@@ -92,11 +92,6 @@ Returns a \code{bb_hicSquare} object containing relevant genomic region, Hi-C da
 Plot a Hi-C interaction matrix in a square format
 }
 \details{
-This function can be used to quickly plot a square Hi-C plot by ignoring plot placement parameters:
-\preformatted{
-bb_plotHicSquare(data, chrom,
-                 chromstart = NULL, chromend = NULL)
-}
 A square Hi-C plot can be placed on a BentoBox coordinate page by providing plot placement parameters:
 \preformatted{
 bb_plotHicSquare(data, chrom,
@@ -104,31 +99,34 @@ bb_plotHicSquare(data, chrom,
                  x, y, width, height, just = c("left", "top"),
                  default.units = "inches")
 }
+This function can be used to quickly plot an unannotated square Hi-C plot by ignoring plot placement parameters:
+\preformatted{
+bb_plotHicSquare(data, chrom,
+                 chromstart = NULL, chromend = NULL)
+}
 }
 \examples{
 ## Load Hi-C data
 data("bb_hicData")
 
-## Plot upper diagonal of square Hi-C plot filling up entire graphic device
-bb_plotHicSquare(data = bb_hicData, resolution = 10000, zrange = c(0, 70),
-                 chrom = "chr21", chromstart = 28000000, chromend = 30300000, half = "top")
-
-## Plot and place both halves of square Hi-C plot on a BentoBox page
+## Create a page
 bb_pageCreate(width = 3, height = 3, default.units = "inches")
+
+## Plot and place Hi-C plot
 hicPlot <- bb_plotHicSquare(data = bb_hicData, resolution = 10000, zrange = c(0, 70),
                             chrom = "chr21", chromstart = 28000000, chromend = 30300000,
                             x = 0.5, y = 0.5, width = 2, height = 2,
                             just = c("left", "top"), default.units = "inches")
 
 ## Annotate heatmap legend
-bb_annoHeatmapLegend(plot = hicPlot, x = 2.6, y = 0.5, width = 0.12, height = 0.6,
+bb_annoHeatmapLegend(plot = hicPlot, x = 2.6, y = 0.5, width = 0.12, height = 1.2,
                      just = c("left", "top"), default.units = "inches")
 
 ## Annotate x-axis and y-axis genome labels
 bb_annoGenomeLabel(plot = hicPlot, scale = "Mb", axis = "x",
-                   x = 0.5, y = 2.5, just = c("left", "top"))
+                   x = 0.5, y = 2.53, just = c("left", "top"))
 bb_annoGenomeLabel(plot = hicPlot, scale = "Mb", axis = "y",
-                   x = 0.5, y = 0.5, just = c("right", "top"))
+                   x = 0.47, y = 0.5, just = c("right", "top"))
 
 ## Hide page guides
 bb_pageGuideHide()

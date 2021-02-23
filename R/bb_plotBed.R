@@ -34,12 +34,10 @@
 #' ## Load BED data
 #' data("bb_bedData")
 #'
-#' ## Plot pileup BED plot filling up entire graphic device
-#' bb_plotBed(data = bb_bedData, chrom = "chr21", chromstart = 29073000, chromend = 29074000,
-#'               fill = "grey")
-#'
-#' ## Plot and place a pileup BED plot on a BentoBox page
+#' ## Create page
 #' bb_pageCreate(width = 5, height = 5, default.units = "inches")
+#'
+#' ## Plot and place a pileup BED plot
 #' pileupPlot <- bb_plotBed(data = bb_bedData, chrom = "chr21",
 #'                             chromstart = 29073000, chromend = 29074000,
 #'                             fill = "grey", strandSplit = TRUE,
@@ -53,17 +51,17 @@
 #' bb_pageGuideHide()
 #'
 #' @details
-#' This function can be used to quickly plot a BED plot by ignoring plot placement parameters:
-#' \preformatted{
-#' bb_plotBed(data, chrom,
-#'               chromstart = NULL, chromend = NULL)
-#' }
 #' A BED plot can be placed on a BentoBox coordinate page by providing plot placement parameters:
 #' \preformatted{
 #' bb_plotBed(data, chrom,
 #'               chromstart = NULL, chromend = NULL,
 #'               x, y, width, height, just = c("left", "top"),
 #'               default.units = "inches")
+#' }
+#' This function can also be used to quickly plot an unannotated BED plot by ignoring plot placement parameters:
+#' \preformatted{
+#' bb_plotBed(data, chrom,
+#'               chromstart = NULL, chromend = NULL)
 #' }
 #'
 #' @export

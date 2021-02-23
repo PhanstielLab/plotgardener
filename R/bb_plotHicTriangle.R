@@ -31,39 +31,37 @@
 #' ## Load Hi-C data
 #' data("bb_hicData")
 #'
-#' ## Plot triangle Hi-C plot filling up entire graphic device
-#' bb_plotHicTriangle(data = bb_hicData, resolution = 10000, zrange = c(0, 70),
-#'                    chrom = "chr21", chromstart = 28000000, chromend = 30300000)
-#'
-#' ## Plot and place triangle Hi-C plot on a BentoBox page
+#' ## Create a page
 #' bb_pageCreate(width = 4, height = 2.5, default.units = "inches")
+#'
+#' ## Plot and place triangle Hi-C plot
 #' hicPlot <- bb_plotHicTriangle(data = bb_hicData, resolution = 10000, zrange = c(0, 70),
 #'                               chrom = "chr21", chromstart = 28000000, chromend = 30300000,
 #'                               x = 2, y = 0.5, width = 3, height = 1.5,
 #'                               just = "top", default.units = "inches")
 #'
 #' ## Annotate x-axis genome label
-#' bb_annoGenomeLabel(plot = hicPlot, scale = "Mb", x = 0.5, y = 2, just = c("left", "top"))
+#' bb_annoGenomeLabel(plot = hicPlot, scale = "Mb", x = 0.5, y = 2.03, just = c("left", "top"))
 #'
 #' ## Annotate heatmap legend
-#' bb_annoHeatmapLegend(plot = hicPlot, x = 3, y = 0.5, width = 0.13, height = 0.6,
-#'                      just = c("left", "top"))
+#' bb_annoHeatmapLegend(plot = hicPlot, x = 3.5, y = 0.5, width = 0.13, height = 1.2,
+#'                      just = c("right", "top"))
 #'
 #' ## Hide page guides
 #' bb_pageGuideHide()
 #'
 #' @details
-#' This function can be used to quickly plot a triangle Hi-C plot by ignoring plot placement parameters:
-#' \preformatted{
-#' bb_plotHicTriangle(data, chrom,
-#'                    chromstart = NULL, chromend = NULL)
-#' }
 #' A triangle Hi-C plot can be placed on a BentoBox coordinate page by providing plot placement parameters:
 #' \preformatted{
 #' bb_plotHicTriangle(data, chrom,
 #'                    chromstart = NULL, chromend = NULL,
 #'                    x, y, width, height, just = c("left", "top"),
 #'                    default.units = "inches")
+#' }
+#' This function can also be used to quickly plot an unannotated triangle Hi-C plot by ignoring plot placement parameters:
+#' \preformatted{
+#' bb_plotHicTriangle(data, chrom,
+#'                    chromstart = NULL, chromend = NULL)
 #' }
 #'
 #' If \code{height} is \eqn{<} \eqn{0.5 * sqrt(2)}, the top of the triangle will be cropped to the given \code{height}.

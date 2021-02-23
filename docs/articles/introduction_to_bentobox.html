@@ -86,13 +86,13 @@
 
       
 
-      </header><script src="introduction_to_bentobox_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
+      </header><script src="introduction_to_bentobox_files/header-attrs-2.6/header-attrs.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Introduction to BentoBox</h1>
                         <h4 class="author">Nicole Kramer, Eric S. Davis, Craig Wenger, Sarah Parker, Erika Deoudes, and Douglas H. Phanstiel</h4>
             
-            <h4 class="date">2021-02-19</h4>
+            <h4 class="date">2021-02-22</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/PhanstielLab/BentoBox/blob/master/vignettes/introduction_to_bentobox.Rmd"><code>vignettes/introduction_to_bentobox.Rmd</code></a></small>
       <div class="hidden name"><code>introduction_to_bentobox.Rmd</code></div>
@@ -184,6 +184,13 @@
 
 <span class="co">## Load hg19 genomic annotation packages</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">TxDb.Hsapiens.UCSC.hg19.knownGene</span><span class="op">)</span>
+<span class="co">#&gt; Warning: package 'BiocGenerics' was built under R version 4.0.3</span>
+<span class="co">#&gt; Warning: package 'S4Vectors' was built under R version 4.0.3</span>
+<span class="co">#&gt; Warning: package 'IRanges' was built under R version 4.0.3</span>
+<span class="co">#&gt; Warning: package 'GenomeInfoDb' was built under R version 4.0.3</span>
+<span class="co">#&gt; Warning: package 'GenomicRanges' was built under R version 4.0.3</span>
+<span class="co">#&gt; Warning: package 'AnnotationDbi' was built under R version 4.0.3</span>
+<span class="co">#&gt; Warning: package 'Biobase' was built under R version 4.0.3</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">org.Hs.eg.db</span><span class="op">)</span>
 
 <span class="co">## Quick plot genes</span>
@@ -222,10 +229,10 @@
 <span class="co">#&gt; 5 chr1  82022757 0.9852280 rs12090221 &lt;NA&gt;</span>
 <span class="co">#&gt; 6 chr1  10246129 0.4317934  rs2180185 &lt;NA&gt;</span>
 
-<span class="co">## Quick plot gwas data -- fix error in bb_plotManhattan()</span>
+<span class="co">## Quick plot gwas data </span>
 <span class="fu"><a href="../reference/bb_plotManhattan.html">bb_plotManhattan</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">bb_gwasData</span>,
                  chrom <span class="op">=</span> <span class="st">"chr21"</span>, chromstart <span class="op">=</span> <span class="fl">28000000</span>, chromend <span class="op">=</span> <span class="fl">30300000</span>,
-                 pVals <span class="op">=</span> <span class="st">"pVal"</span>, ymax <span class="op">=</span> <span class="fl">1.1</span>, cex <span class="op">=</span> <span class="fl">0.20</span><span class="op">)</span></code></pre></div>
+                 ymax <span class="op">=</span> <span class="fl">1.1</span>, cex <span class="op">=</span> <span class="fl">0.20</span><span class="op">)</span></code></pre></div>
 <p><img src="introduction_to_bentobox_files/figure-html/gwas_quickplot-1.png" width="288" style="display: block; margin: auto;"></p>
 </div>
 </div>
@@ -408,10 +415,10 @@
               x <span class="op">=</span> <span class="fl">0.5</span>, y <span class="op">=</span> <span class="fl">2.75</span>, width <span class="op">=</span> <span class="fl">2</span>, height <span class="op">=</span> <span class="fl">0.5</span>, 
               just <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"left"</span>, <span class="st">"top"</span><span class="op">)</span>, default.units <span class="op">=</span> <span class="st">"inches"</span><span class="op">)</span>
 
-<span class="co">## Plot GWAS data -- Fix bb_plotManhattan()</span>
+<span class="co">## Plot GWAS data </span>
 <span class="fu"><a href="../reference/bb_plotManhattan.html">bb_plotManhattan</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">bb_gwasData</span>,
                  chrom <span class="op">=</span> <span class="st">"chr21"</span>, chromstart <span class="op">=</span> <span class="fl">28000000</span>, chromend <span class="op">=</span> <span class="fl">30300000</span>,
-                 pVals <span class="op">=</span> <span class="st">"pVal"</span>, ymax <span class="op">=</span> <span class="fl">1.1</span>, cex <span class="op">=</span> <span class="fl">0.20</span>,
+                 ymax <span class="op">=</span> <span class="fl">1.1</span>, cex <span class="op">=</span> <span class="fl">0.20</span>,
                  x <span class="op">=</span> <span class="fl">0.5</span>, y <span class="op">=</span> <span class="fl">3.5</span>, width <span class="op">=</span> <span class="fl">2</span>, height <span class="op">=</span> <span class="fl">0.5</span>,
                  just <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"left"</span>, <span class="st">"top"</span><span class="op">)</span>, default.units <span class="op">=</span> <span class="st">"inches"</span><span class="op">)</span>
 

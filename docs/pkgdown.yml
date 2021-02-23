@@ -1,10 +1,10 @@
-pandoc: 2.7.3
+pandoc: 2.11.4
 pkgdown: 1.6.1
 pkgdown_sha: ~
 articles:
   introduction_to_bentobox: introduction_to_bentobox.html
   our_philosophy: our_philosophy.html
-last_built: 2021-02-19T20:16Z
+last_built: 2021-02-23T02:48Z
 urls:
   reference: https://phanstiellab.github.io/bentobox/reference
   article: https://phanstiellab.github.io/bentobox/articles

@@ -399,7 +399,7 @@ defaultUnits <- function(object, default.units){
 
       if (!is.numeric(object$x)){
 
-        stop("x-coordinate is neither a unit object or a numeric value. Cannot place object.", call. = FALSE)
+        stop("x-coordinate is neither a unit object nor a numeric value. Cannot place object.", call. = FALSE)
 
       }
 
@@ -416,19 +416,36 @@ defaultUnits <- function(object, default.units){
 
     if (!"unit" %in% class(object$y)){
 
-      if (!is.numeric(object$y)){
+      ## Check for "below" y-coord
+      if (grepl("b", object$y) == TRUE){
+        if (grepl("^[ac-zA-Z]+$", object$y) == TRUE){
+          stop("\'below\' y-coordinate detected with additional letters. Cannot parse y-coordinate.", call. = FALSE)
+        }
 
-        stop("y-coordinate is neither a unit object or a numeric value. Cannot place object.", call. = FALSE)
+        if(is.na(as.numeric(gsub("b","", object$y)))){
+          stop("\'below\' y-coordinate does not have a numeric associated with it. Cannot parse y-coordinate.", call. = FALSE)
+        }
+
+       object$y <- plot_belowY(y_coord = object$y)
+
+      } else {
+
+        if (!is.numeric(object$y)){
+
+          stop("y-coordinate is neither a unit object nor a numeric value. Cannot place object.", call. = FALSE)
+
+        }
+
+        if (is.null(default.units)){
+
+          stop("y-coordinate detected as numeric.\'default.units\' must be specified.", call. = FALSE)
+
+        }
+
+        object$y <- unit(object$y, default.units)
 
       }
 
-      if (is.null(default.units)){
-
-        stop("y-coordinate detected as numeric.\'default.units\' must be specified.", call. = FALSE)
-
-      }
-
-      object$y <- unit(object$y, default.units)
 
     }
 
@@ -436,7 +453,7 @@ defaultUnits <- function(object, default.units){
 
       if (!is.numeric(object$width)){
 
-        stop("Width is neither a unit object or a numeric value. Cannot place object.", call. = FALSE)
+        stop("Width is neither a unit object nor a numeric value. Cannot place object.", call. = FALSE)
 
       }
 
@@ -454,7 +471,7 @@ defaultUnits <- function(object, default.units){
 
       if (!is.numeric(object$height)){
 
-        stop("Height is neither a unit object or a numeric value. Cannot place object.", call. = FALSE)
+        stop("Height is neither a unit object nor a numeric value. Cannot place object.", call. = FALSE)
 
       }
 
@@ -780,31 +797,35 @@ defaultGenePriorities <- function(data, assembly, transcript = FALSE){
 
 }
 
+## Parse y-coordinates for plots relative to bottom of last plot
+plot_belowY <- function(y_coord){
 
+  currentViewports <- current_viewports()
+  if (length(currentViewports) == 0){
+    stop("No previous plot detected. Cannot define a \'below\' y-coordinate.", call. = FALSE)
+  }
 
+  lastPlot <- currentViewports[length(currentViewports)]
+  ## Go into viewport to get coordinates/dimensions
+  seekViewport(name = lastPlot)
+  x <- current.viewport()$x
+  y <- current.viewport()$y
+  width <- current.viewport()$width
+  height <- current.viewport()$height
+  just <- current.viewport()$just
 
+  ## Exit viewport
+  upViewport()
 
+  ## Convert to bottom
+  bottomCoords <- vp_bottomLeft(viewport(x = x, y = y, width = width, height = height, just = just))
 
+  ## Parse number and convert to page units
+  space <- as.numeric(gsub("b", "", y_coord))
+  space <- unit(space, get("page_units", envir = bbEnv))
 
+  new_y <- (unit(get("page_height", envir = bbEnv), get("page_units", envir = bbEnv)) - bottomCoords[[2]]) + space
+  new_y <- convertY(new_y, unitTo = get("page_units", envir = bbEnv))
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+  return(new_y)
+}

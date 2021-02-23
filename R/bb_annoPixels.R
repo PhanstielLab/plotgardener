@@ -39,7 +39,7 @@
 #' bb_annoPixels(plot = hicPlot, data = bb_bedpeData, type = "box", half = "both")
 #'
 #' ## Annotate genome label
-#' bb_annoGenomeLabel(plot = hicPlot, x = 0.5, y = 3.6, scale = "Mb", just = c("left", "top"))
+#' bb_annoGenomeLabel(plot = hicPlot, x = 0.5, y = 3.53, scale = "Mb", just = c("left", "top"))
 #'
 #' ## Hide page guides
 #' bb_pageGuideHide()
@@ -373,7 +373,7 @@ bb_annoPixels <- function(plot, data, type = "box", half = "inherit", shift = 4,
   if(is.null(bb_loopsInternal$type)) bb_loopsInternal$type <- "box"
 
   ## Set gp
-  bb_loopsInternal$gp <- setGP(gpList = bb_loopsInternal$gp, params = bb_Internal, ...)
+  bb_loopsInternal$gp <- setGP(gpList = bb_loopsInternal$gp, params = bb_loopsInternal, ...)
 
   # ======================================================================================================================================================================================
   # INITIALIZE OBJECT: GET REGION/DIMENSIONS FROM HIC PLOT INPUT

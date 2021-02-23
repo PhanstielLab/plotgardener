@@ -47,19 +47,6 @@ Returns a \code{bb_raster} object containing relevant placement and \link[grid]{
 Plot a raster object within a BentoBox layout
 }
 \examples{
-library(jpeg)
-## Create a BentoBox page
-bb_pageCreate(width = 3, height = 3, default.units = "inches")
-
-## Read in R logo image
-bb_image <- readJPEG(system.file("img", "Rlogo.jpg", package="jpeg"))
-
-## Plot image as a raster
-bb_plotRaster(image = bb_image, x = 0.5, y = 0.5, width = 1, height = 1,
-              default.units = "inches")
-
-## Hide page guides
-bb_pageGuideHide()
 
 }
 \seealso{

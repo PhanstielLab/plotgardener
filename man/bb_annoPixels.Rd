@@ -64,7 +64,7 @@ hicPlot <- bb_plotHicSquare(data = bb_hicData, resolution = 10000, zrange = c(0,
 bb_annoPixels(plot = hicPlot, data = bb_bedpeData, type = "box", half = "both")
 
 ## Annotate genome label
-bb_annoGenomeLabel(plot = hicPlot, x = 0.5, y = 3.6, scale = "Mb", just = c("left", "top"))
+bb_annoGenomeLabel(plot = hicPlot, x = 0.5, y = 3.53, scale = "Mb", just = c("left", "top"))
 
 ## Hide page guides
 bb_pageGuideHide()

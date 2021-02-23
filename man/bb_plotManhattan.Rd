@@ -144,6 +144,8 @@ manhattanPlot <- bb_plotManhattan(data = bb_gwasData, assembly = "hg19",
 ## Annotate genome label
 bb_annoGenomeLabel(plot = manhattanPlot, x = 0.5, y = 2, fontsize = 8, just = c("left", "top"),
                    default.units = "inches" )
+bb_plotText(label = "Chromosome", fontsize = 8,
+            x = 3.75, y = 2.20, just = "center", default.units = "inches")
 
 ## Annotate y-axis
 bb_annoYaxis(plot = manhattanPlot, at = c(0, 2, 4, 6, 8, 10, 12, 14),
@@ -186,7 +188,8 @@ bb_annoYaxis(plot = chr11_manhattanPlot, at = c(0, 2, 4, 6, 8, 10, 12, 14, 16),
 
 ## Plot y-axis label
 bb_plotText(label = "-log10(p-value)", x = 0.15, y = 3.25, rot = 90,
-            fontsize = 8, fontface = "bold", just = "center", default.units = "inches")
+            fontsize = 8, fontface = "bold", just = "center",
+            default.units = "inches")
 
 ## Hide page guides
 bb_pageGuideHide()
