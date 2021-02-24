@@ -47,6 +47,54 @@
 #'
 "bb_bedpeData"
 
+#' BentoBox example GM12878 CTCF signal data
+#'
+#' A dataset listing read depths across the genome resulting from CTCF ChIP-seq in the GM12878 cell line. Genomic coordinates
+#' fall within the region chr21:28000000-30300000 according to the hg19 genome build.
+#'
+#' @format a dataframe in BED format with a "score" column
+#' \describe{
+#' \item{chrom}{The name of the chromosome on which the genome feature exists.}
+#' \item{start}{The starting position of the feature in the chromosome.}
+#' \item{end}{The ending position of the feature in the chromosome.}
+#' \item{score}{Score value of read depth.}
+#' }
+#'
+#' @docType data
+#'
+#' @usage data("bb_gmCTCFData")
+#'
+#' @references
+#' ENCODE Project Consortium. An integrated encyclopedia of DNA elements in the human genome. Nature. 2012 Sep 6;489(7414):57-74. doi: 10.1038/nature11247. PMID: 22955616; PMCID: PMC3439153.
+#'
+#' Davis CA, Hitz BC, Sloan CA, Chan ET, Davidson JM, Gabdank I, Hilton JA, Jain K, Baymuradov UK, Narayanan AK, Onate KC, Graham K, Miyasato SR, Dreszer TR, Strattan JS, Jolanki O, Tanaka FY, Cherry JM. The Encyclopedia of DNA elements (ENCODE): data portal update. Nucleic Acids Res. 2018 Jan 4;46(D1):D794-D801. doi: 10.1093/nar/gkx1081. PMID: 29126249; PMCID: PMC5753278.
+#'
+#' @source Data from \strong{Michael Snyder, Stanford} with accession number \strong{ENCFF312KXX} was downloaded from the ENCODE portal \url{https://www.encodeproject.org/}.
+#'
+"bb_gmCTCFData"
+
+#' BentoBox example GM12878 H3K27ac signal data
+#'
+#' A dataset listing read depths across the genome resulting from H3K27ac ChIP-seq in the GM12878 cell line. Genomic coordinates
+#' fall within the region chr21:28000000-30300000 according to the hg19 genome build.
+#'
+#' @format a dataframe in BED format with a "score" column
+#' \describe{
+#' \item{chrom}{The name of the chromosome on which the genome feature exists.}
+#' \item{start}{The starting position of the feature in the chromosome.}
+#' \item{end}{The ending position of the feature in the chromosome.}
+#' \item{score}{Score value of read depth.}
+#' }
+#'
+#' @docType data
+#'
+#' @usage data("bb_gmH3K27acData")
+#'
+#' @references Roadmap Epigenomics Consortium., Integrative analysis coordination., Kundaje, A. et al. Integrative analysis of 111 reference human epigenomes. Nature 518, 317–330 (2015). https://doi.org/10.1038/nature14248
+#' @source Data with reference epigenome identifier \strong{E116} was downloaded from the NIH Roadmap Epigenomics Project \url{http://www.roadmapepigenomics.org/}.
+#'
+"bb_gmH3K27acData"
+
 #' BentoBox example GWAS data
 #'
 #' A dataset representing GWAS data from a GWAS study of insulin response with coordinates based on the hg19 genome build.
@@ -85,8 +133,33 @@
 #' (\href{https://pubmed.ncbi.nlm.nih.gov/25497547/}{PubMed})
 "bb_hicData"
 
+#' BentoBox example IMR90 CTCF signal data
+#'
+#' A dataset listing read depths across the genome resulting from CTCF ChIP-seq in the IMR90 cell line. Genomic coordinates
+#' fall within the region chr21:28000000-30300000 according to the hg19 genome build.
+#'
+#' @format a dataframe in BED format with a "score" column
+#' \describe{
+#' \item{chrom}{The name of the chromosome on which the genome feature exists.}
+#' \item{start}{The starting position of the feature in the chromosome.}
+#' \item{end}{The ending position of the feature in the chromosome.}
+#' \item{score}{Score value of read depth.}
+#' }
+#'
+#' @docType data
+#'
+#' @usage data("bb_imrCTCFData")
+#'
+#' @references
+#' ENCODE Project Consortium. An integrated encyclopedia of DNA elements in the human genome. Nature. 2012 Sep 6;489(7414):57-74. doi: 10.1038/nature11247. PMID: 22955616; PMCID: PMC3439153.
+#'
+#' Davis CA, Hitz BC, Sloan CA, Chan ET, Davidson JM, Gabdank I, Hilton JA, Jain K, Baymuradov UK, Narayanan AK, Onate KC, Graham K, Miyasato SR, Dreszer TR, Strattan JS, Jolanki O, Tanaka FY, Cherry JM. The Encyclopedia of DNA elements (ENCODE): data portal update. Nucleic Acids Res. 2018 Jan 4;46(D1):D794-D801. doi: 10.1093/nar/gkx1081. PMID: 29126249; PMCID: PMC5753278.
+#'
+#' @source Data from \strong{Michael Snyder, Stanford} with accession number \strong{ENCFF603PYX} was downloaded from the ENCODE portal \url{https://www.encodeproject.org/}.
+#'
+"bb_imrCTCFData"
 
-#' BentoBox example H3K27ac signal data
+#' BentoBox example IMR90 H3K27ac signal data
 #'
 #' A dataset listing read depths across the genome resulting from H3K27ac ChIP-seq in the IMR90 cell line. Genomic coordinates
 #' fall within the region chr21:28000000-30300000 according to the hg19 genome build.
@@ -101,12 +174,12 @@
 #'
 #' @docType data
 #'
-#' @usage data("bb_signalData")
+#' @usage data("bb_imrH3K27acData")
 #'
 #' @references Roadmap Epigenomics Consortium., Integrative analysis coordination., Kundaje, A. et al. Integrative analysis of 111 reference human epigenomes. Nature 518, 317–330 (2015). https://doi.org/10.1038/nature14248
 #' @source Data with reference epigenome identifier \strong{E017} was downloaded from the NIH Roadmap Epigenomics Project \url{http://www.roadmapepigenomics.org/}.
 #'
-"bb_signalData"
+"bb_imrH3K27acData"
 
 #' UCSC CytoBand information for the dm6 genome assembly
 #'

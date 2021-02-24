@@ -105,13 +105,13 @@ bb_plotSignal(data, chrom,
 }
 \examples{
 ## Load signal data
-data("bb_signalData")
+data("bb_imrH3K27acData")
 
 ## Create a page
 bb_pageCreate(width = 4, height = 3, default.units = "inches")
 
 ## Plot and place signal plot
-bb_plotSignal(data = bb_signalData, chrom = "chr21",
+bb_plotSignal(data = bb_imrH3K27acData, chrom = "chr21",
               chromstart = 28000000, chromend = 30300000, fill = "steel blue",
               linecolor = "steel blue",
               x = 0.5, y = 1, width = 3, height = 1,

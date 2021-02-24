@@ -88,10 +88,10 @@ bb_plotHicSquare(data = bb_hicData,
 library(BentoBox)
 
 ## Load example signal data
-data("bb_signalData")
+data("bb_imrH3K27acData")
 
 ## Quick plot signal data
-bb_plotSignal(data = bb_signalData,
+bb_plotSignal(data = bb_imrH3K27acData,
                  chrom = "chr21", chromstart = 28000000, chromend = 30300000)
 
 ```
@@ -323,13 +323,13 @@ bb_plotRect(x = 0.5, y = 0.5, width = 2, height = 1,
 library(BentoBox)
 
 ## Load data
-data("bb_signalData")
+data("bb_imrH3K27acData")
 
 ## Create page
 bb_pageCreate(width = 3, height = 3, default.units = "inches")
 
 ## Define signal plot
-signalPlot <- bb_plotSignal(data = bb_signalData,
+signalPlot <- bb_plotSignal(data = bb_imrH3K27acData,
                             chrom = "chr21", chromstart = 28000000, chromend = 30300000,
                             draw = FALSE)
 
@@ -477,7 +477,7 @@ library(BentoBox)
 ## Load example data
 data("bb_hicData")
 data("bb_bedpeData")
-data("bb_signalData")
+data("bb_imrH3K27acData")
 data("bb_gwasData")
 
 ## Create a BentoBox page
@@ -497,7 +497,7 @@ bb_plotBedpeArches(data = bb_bedpeData,
                    fill = "black", linecolor = "black", position = "bottom")
 
 ## Plot signal track data
-bb_plotSignal(data = bb_signalData,
+bb_plotSignal(data = bb_imrH3K27acData,
               chrom = "chr21", chromstart = 28000000, chromend = 30300000,
               x = 0.5, y = 2.75, width = 2, height = 0.5, 
               just = c("left", "top"), default.units = "inches")
