@@ -39,6 +39,8 @@ package.version("BentoBox")
 
 ## Usage
 
+<img src="man/figures/homePage-1.png" width="672" style="display: block; margin: auto;" />
+
 ``` r
 ## Load libraries and datasets
 library("BentoBox")
@@ -205,8 +207,6 @@ bb_annoGenomeLabel(plot = genes_imr, params = params_d,
 ## Hide page guides
 bb_pageGuideHide()
 ```
-
-<img src="man/figures/unnamed-chunk-2-1.png" style="display: block; margin: auto;" />
 
 ## A word of caution
 
