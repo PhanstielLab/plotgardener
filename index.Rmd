@@ -70,13 +70,13 @@ print(hicPlot)
 We can use our own data by using `bb_read` functions. This can be useful if there are additional processing steps required.
 
 ```{r eval=FALSE, echo=TRUE, message=FALSE}
-bb_readHic(hicFile = "path/to/file.hic", ...)
+bb_readHic(file = "path/to/file.hic", ...)
 ```
 
 Or if no processing is required, we can simply provide the file path directly to the `bb_plot` function.
 
 ```{r eval=FALSE, echo=TRUE, message=FALSE}
-bb_plotHicSquare(hicData = "path/to/file.hic", ...)
+bb_plotHicSquare(data = "path/to/file.hic", ...)
 ```
 
 
