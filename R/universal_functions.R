@@ -151,7 +151,7 @@ vp_topLeft <- function(viewport){
     } else if ("right" %in% viewport$justification & "top" %in% viewport$justification){
       vp_x <- viewport$x - (viewport$width)
       vp_y <- viewport$y
-    } else if ("left" %in% pviewport$justification & "bottom" %in% viewport$justification){
+    } else if ("left" %in% viewport$justification & "bottom" %in% viewport$justification){
       vp_x <- viewport$x
       vp_y <- viewport$y + (viewport$height)
     } else if ("right" %in% viewport$justification & "bottom" %in% viewport$justification){
@@ -210,7 +210,7 @@ vp_bottomLeft <- function(viewport){
     } else if ("right" %in% viewport$justification & "top" %in% viewport$justification){
       vp_x <- viewport$x - (viewport$width)
       vp_y <- viewport$y - (viewport$height)
-    } else if ("left" %in% pviewport$justification & "bottom" %in% viewport$justification){
+    } else if ("left" %in% viewport$justification & "bottom" %in% viewport$justification){
       vp_x <- viewport$x
       vp_y <- viewport$y
     } else if ("right" %in% viewport$justification & "bottom" %in% viewport$justification){
@@ -269,7 +269,7 @@ vp_bottomRight <- function(viewport){
     } else if ("right" %in% viewport$justification & "top" %in% viewport$justification){
       vp_x <- viewport$x
       vp_y <- viewport$y - (viewport$height)
-    } else if ("left" %in% pviewport$justification & "bottom" %in% viewport$justification){
+    } else if ("left" %in% viewport$justification & "bottom" %in% viewport$justification){
       vp_x <- viewport$x + viewport$width
       vp_y <- viewport$y
     } else if ("right" %in% viewport$justification & "bottom" %in% viewport$justification){

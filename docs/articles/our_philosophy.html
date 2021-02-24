@@ -117,10 +117,10 @@
 <span class="fu"><a href="../reference/bb_pageCreate.html">bb_pageCreate</a></span><span class="op">(</span>width <span class="op">=</span> <span class="fl">3</span>, height <span class="op">=</span> <span class="fl">3</span>, default.units <span class="op">=</span> <span class="st">"inches"</span><span class="op">)</span>
 
 <span class="co">## Load signal data</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="st">"bb_signalData"</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="st">"bb_imrH3K27acData"</span><span class="op">)</span>
 
 <span class="co">## Plot and place signal data with precise measurements</span>
-<span class="va">signalPlot</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/bb_plotSignal.html">bb_plotSignal</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">bb_signalData</span>,
+<span class="va">signalPlot</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/bb_plotSignal.html">bb_plotSignal</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">bb_imrH3K27acData</span>,
                             chrom <span class="op">=</span> <span class="st">"chr21"</span>, chromstart <span class="op">=</span> <span class="fl">28000000</span>, chromend <span class="op">=</span> <span class="fl">30300000</span>,
                             x <span class="op">=</span> <span class="fl">0.5</span>, y <span class="op">=</span> <span class="fl">0.5</span>, width <span class="op">=</span> <span class="fl">2</span>, height <span class="op">=</span> <span class="fl">1</span>, 
                             just <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"left"</span>, <span class="st">"top"</span><span class="op">)</span>, default.units <span class="op">=</span> <span class="st">"inches"</span><span class="op">)</span></code></pre></div>
@@ -154,9 +154,9 @@
 <p>When it’s time to stack various data types along the same genomic region, users can be confident in accurately aligning containers of the same width:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co">## Load data</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="st">"bb_hicData"</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="st">"bb_imrHicData"</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="st">"bb_bedpeData"</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="st">"bb_signalData"</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="st">"bb_imrH3K27acData"</span><span class="op">)</span>
 
 <span class="co">## Define genomic region and widths of all plots</span>
 <span class="va">params</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/bb_params.html">bb_params</a></span><span class="op">(</span>chrom <span class="op">=</span> <span class="st">"chr21"</span>, chromstart <span class="op">=</span> <span class="fl">28000000</span>, chromend <span class="op">=</span> <span class="fl">30300000</span>, 
@@ -166,7 +166,7 @@
 <span class="fu"><a href="../reference/bb_pageCreate.html">bb_pageCreate</a></span><span class="op">(</span>width <span class="op">=</span> <span class="fl">3</span>, height <span class="op">=</span> <span class="fl">4</span>, default.units <span class="op">=</span> <span class="st">"inches"</span><span class="op">)</span>
 
 <span class="co">## Plot Hi-C data in region</span>
-<span class="va">hicPlot</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/bb_plotHicSquare.html">bb_plotHicSquare</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">bb_hicData</span>,
+<span class="va">hicPlot</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/bb_plotHicSquare.html">bb_plotHicSquare</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">bb_imrHicData</span>,
                             params <span class="op">=</span> <span class="va">params</span>,
                             y <span class="op">=</span> <span class="fl">0.5</span>, height <span class="op">=</span> <span class="fl">2</span>,
                             just <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"left"</span>, <span class="st">"top"</span><span class="op">)</span>, default.units <span class="op">=</span> <span class="st">"inches"</span><span class="op">)</span>
@@ -179,7 +179,7 @@
                                  just <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"left"</span>, <span class="st">"top"</span><span class="op">)</span>, default.units <span class="op">=</span> <span class="st">"inches"</span><span class="op">)</span>
 
 <span class="co">## Plot and align signal track in region</span>
-<span class="va">signalPlot</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/bb_plotSignal.html">bb_plotSignal</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">bb_signalData</span>,
+<span class="va">signalPlot</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/bb_plotSignal.html">bb_plotSignal</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">bb_imrH3K27acData</span>,
                             params <span class="op">=</span> <span class="va">params</span>,
                             y <span class="op">=</span> <span class="fl">3</span>, height <span class="op">=</span> <span class="fl">0.45</span>,
                             just <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"left"</span>, <span class="st">"top"</span><span class="op">)</span>, default.units <span class="op">=</span> <span class="st">"inches"</span><span class="op">)</span>
@@ -199,8 +199,8 @@
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">org.Hs.eg.db</span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org">ggplot2</a></span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="va">mtcars</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="st">"bb_hicData"</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">bb_hicData</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="st">"bb_imrHicData"</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">bb_imrHicData</span><span class="op">)</span>
 <span class="co">#&gt;      chr21    chr21 counts</span>
 <span class="co">#&gt; 1 28000000 28000000     70</span>
 <span class="co">#&gt; 2 28000000 28010000     70</span>
@@ -217,7 +217,7 @@
 <span class="va">params</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/bb_params.html">bb_params</a></span><span class="op">(</span>chrom <span class="op">=</span> <span class="st">"chr21"</span>, chromstart <span class="op">=</span> <span class="fl">28000000</span>, chromend <span class="op">=</span> <span class="fl">30300000</span><span class="op">)</span>
 
 <span class="co">## Plot Hi-C data</span>
-<span class="va">hicPlot</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/bb_plotHicTriangle.html">bb_plotHicTriangle</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">bb_hicData</span>,
+<span class="va">hicPlot</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/bb_plotHicTriangle.html">bb_plotHicTriangle</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">bb_imrHicData</span>,
                               params <span class="op">=</span> <span class="va">params</span>,
                               x <span class="op">=</span> <span class="fl">2</span>, y <span class="op">=</span> <span class="fl">0.5</span>, width <span class="op">=</span> <span class="fl">3</span>, height <span class="op">=</span> <span class="fl">2</span>, 
                               just <span class="op">=</span> <span class="st">"top"</span>, default.units <span class="op">=</span> <span class="st">"inches"</span><span class="op">)</span>
@@ -255,7 +255,7 @@
 <p>Not only does this make visualizations entirely reproducible with code, but it also makes it easy to change data ranges and aesthetics with simple pieces of code:</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co">## Change colors while maintaining plot layout</span>
-<span class="va">hicPlot</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/bb_plotHicTriangle.html">bb_plotHicTriangle</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">bb_hicData</span>,
+<span class="va">hicPlot</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/bb_plotHicTriangle.html">bb_plotHicTriangle</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">bb_imrHicData</span>,
                               params <span class="op">=</span> <span class="va">params</span>,
                               palette <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grDevices/colorRamp.html">colorRampPalette</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"white"</span>, <span class="st">"steel blue"</span><span class="op">)</span><span class="op">)</span>,
                               x <span class="op">=</span> <span class="fl">2</span>, y <span class="op">=</span> <span class="fl">0.5</span>, width <span class="op">=</span> <span class="fl">3</span>, height <span class="op">=</span> <span class="fl">2</span>, 

@@ -92,7 +92,7 @@
       <h1 data-toc-skip>Introduction to BentoBox</h1>
                         <h4 class="author">Nicole Kramer, Eric S. Davis, Craig Wenger, Sarah Parker, Erika Deoudes, and Douglas H. Phanstiel</h4>
             
-            <h4 class="date">2021-02-22</h4>
+            <h4 class="date">2021-02-24</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/PhanstielLab/BentoBox/blob/master/vignettes/introduction_to_bentobox.Rmd"><code>vignettes/introduction_to_bentobox.Rmd</code></a></small>
       <div class="hidden name"><code>introduction_to_bentobox.Rmd</code></div>
@@ -153,10 +153,10 @@
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://phanstiellab.github.io/bentobox">BentoBox</a></span><span class="op">)</span>
 
 <span class="co">## Load example Hi-C data</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="st">"bb_hicData"</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="st">"bb_imrHicData"</span><span class="op">)</span>
 
 <span class="co">## Quick plot Hi-C data</span>
-<span class="fu"><a href="../reference/bb_plotHicSquare.html">bb_plotHicSquare</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">bb_hicData</span>,
+<span class="fu"><a href="../reference/bb_plotHicSquare.html">bb_plotHicSquare</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">bb_imrHicData</span>,
                  chrom <span class="op">=</span> <span class="st">"chr21"</span>, chromstart <span class="op">=</span> <span class="fl">28000000</span>, chromend <span class="op">=</span> <span class="fl">30300000</span><span class="op">)</span></code></pre></div>
 <p><img src="introduction_to_bentobox_files/figure-html/hic_quickplot-1.png" width="288" style="display: block; margin: auto;"></p>
 </div>
@@ -168,10 +168,10 @@
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://phanstiellab.github.io/bentobox">BentoBox</a></span><span class="op">)</span>
 
 <span class="co">## Load example signal data</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="st">"bb_signalData"</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="st">"bb_imrH3K27acData"</span><span class="op">)</span>
 
 <span class="co">## Quick plot signal data</span>
-<span class="fu"><a href="../reference/bb_plotSignal.html">bb_plotSignal</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">bb_signalData</span>,
+<span class="fu"><a href="../reference/bb_plotSignal.html">bb_plotSignal</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">bb_imrH3K27acData</span>,
                  chrom <span class="op">=</span> <span class="st">"chr21"</span>, chromstart <span class="op">=</span> <span class="fl">28000000</span>, chromend <span class="op">=</span> <span class="fl">30300000</span><span class="op">)</span></code></pre></div>
 <p><img src="introduction_to_bentobox_files/figure-html/signal_quickplot-1.png" width="288" style="display: block; margin: auto;"></p>
 </div>
@@ -252,13 +252,13 @@
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://phanstiellab.github.io/bentobox">BentoBox</a></span><span class="op">)</span>
 
 <span class="co">## Load example Hi-C data</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="st">"bb_hicData"</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="st">"bb_imrHicData"</span><span class="op">)</span>
 
 <span class="co">## Create a BentoBox page</span>
 <span class="fu"><a href="../reference/bb_pageCreate.html">bb_pageCreate</a></span><span class="op">(</span>width <span class="op">=</span> <span class="fl">3.25</span>, height <span class="op">=</span> <span class="fl">3.25</span>, default.units <span class="op">=</span> <span class="st">"inches"</span><span class="op">)</span>
 
 <span class="co">## Plot Hi-C data with placing information</span>
-<span class="va">hicPlot</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/bb_plotHicSquare.html">bb_plotHicSquare</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">bb_hicData</span>,
+<span class="va">hicPlot</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/bb_plotHicSquare.html">bb_plotHicSquare</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">bb_imrHicData</span>,
                             chrom <span class="op">=</span> <span class="st">"chr21"</span>, chromstart <span class="op">=</span> <span class="fl">28000000</span>, chromend <span class="op">=</span> <span class="fl">30300000</span>,
                             x <span class="op">=</span> <span class="fl">0.25</span>, y <span class="op">=</span> <span class="fl">0.25</span>, width <span class="op">=</span> <span class="fl">2.5</span>, height <span class="op">=</span> <span class="fl">2.5</span>, default.units <span class="op">=</span> <span class="st">"inches"</span><span class="op">)</span>
 
@@ -330,13 +330,13 @@
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://phanstiellab.github.io/bentobox">BentoBox</a></span><span class="op">)</span>
 
 <span class="co">## Load data</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="st">"bb_signalData"</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="st">"bb_imrH3K27acData"</span><span class="op">)</span>
 
 <span class="co">## Create page</span>
 <span class="fu"><a href="../reference/bb_pageCreate.html">bb_pageCreate</a></span><span class="op">(</span>width <span class="op">=</span> <span class="fl">3</span>, height <span class="op">=</span> <span class="fl">3</span>, default.units <span class="op">=</span> <span class="st">"inches"</span><span class="op">)</span>
 
 <span class="co">## Define signal plot</span>
-<span class="va">signalPlot</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/bb_plotSignal.html">bb_plotSignal</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">bb_signalData</span>,
+<span class="va">signalPlot</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/bb_plotSignal.html">bb_plotSignal</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">bb_imrH3K27acData</span>,
                             chrom <span class="op">=</span> <span class="st">"chr21"</span>, chromstart <span class="op">=</span> <span class="fl">28000000</span>, chromend <span class="op">=</span> <span class="fl">30300000</span>,
                             draw <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
 
@@ -352,22 +352,26 @@
 <a href="#using-the-just-parameter" class="anchor"></a>Using the <code>just</code> parameter</h2>
 <p>While the <code>x</code>, <code>y</code>, <code>width</code>, and <code>height</code> parameters are relative to the top-left corner of the plot by default, the <code>just</code> parameter provides additional flexibility by allowing users to change the reference point. The <code>just</code> parameter accepts a character or numeric vector of length 2 describing the horizontal and vertical justification (or reference point), respectively.</p>
 <p>The just parameter can be set using character strings “left”, “right”, “center”, “bottom” and “top”:</p>
+<pre><code>#&gt; Warning in if (grepl("b", bb_hguide$y) == TRUE) {: the condition has length &gt; 1
+#&gt; and only the first element will be used</code></pre>
 <p><img src="introduction_to_bentobox_files/figure-html/arrange_example05-1.png" width="576" style="display: block; margin: auto;"></p>
 <p>Or it can be set using numeric values where 0 means left/bottom, 1 means right/top, and 0.5 means center:</p>
+<pre><code>#&gt; Warning in if (grepl("b", bb_hguide$y) == TRUE) {: the condition has length &gt; 1
+#&gt; and only the first element will be used</code></pre>
 <p><img src="introduction_to_bentobox_files/figure-html/arrange_example06-1.png" width="576" style="display: block; margin: auto;"></p>
 <p>This is particularly useful when an object needs to be aligned in reference to another plot object or page marker. For example, in the Hi-C plot below we might want to align the top-right corner of the heatmap legend to the 3 inch mark. There is no need to calculate the top-left position (i.e. <code>3 inches - (legend width)</code>) to determine where to place the heatmap legend. Instead we can change the <code>just</code> parameter to <code>just=c('right', 'top')</code>:</p>
-<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co">## Load BentoBox</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://phanstiellab.github.io/bentobox">BentoBox</a></span><span class="op">)</span>
 
 <span class="co">## Load example Hi-C data</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="st">"bb_hicData"</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="st">"bb_imrHicData"</span><span class="op">)</span>
 
 <span class="co">## Create a BentoBox page</span>
 <span class="fu"><a href="../reference/bb_pageCreate.html">bb_pageCreate</a></span><span class="op">(</span>width <span class="op">=</span> <span class="fl">3.25</span>, height <span class="op">=</span> <span class="fl">3.25</span>, default.units <span class="op">=</span> <span class="st">"inches"</span><span class="op">)</span>
 
 <span class="co">## Plot Hi-C data with placing information</span>
-<span class="va">hicPlot</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/bb_plotHicSquare.html">bb_plotHicSquare</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">bb_hicData</span>,
+<span class="va">hicPlot</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/bb_plotHicSquare.html">bb_plotHicSquare</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">bb_imrHicData</span>,
                             chrom <span class="op">=</span> <span class="st">"chr21"</span>, chromstart <span class="op">=</span> <span class="fl">28000000</span>, chromend <span class="op">=</span> <span class="fl">30300000</span>,
                             x <span class="op">=</span> <span class="fl">0.25</span>, y <span class="op">=</span> <span class="fl">0.25</span>, width <span class="op">=</span> <span class="fl">2.5</span>, height <span class="op">=</span> <span class="fl">2.5</span>, default.units <span class="op">=</span> <span class="st">"inches"</span><span class="op">)</span>
 
@@ -383,21 +387,21 @@
 <a href="#plotting-multi-omic-data" class="anchor"></a>Plotting multi-omic data</h1>
 <p><code>BentoBox</code> makes it easy to create reproducible, publication-quality figures from multi-omic data. Since each plot can be placed in <em>exactly</em> the desired location, users can stack multiple types of genomic data so that their axes and data are correctly aligned. In this section we will show some examples of plotting multi-omic data, how the <code>bb_params</code> object can facilitate this process, and how to correctly normalize stacked signal track data.</p>
 <p>In the following example, we plot the same genomic region (i.e. <code>chr21:28000000-30300000</code>) represented in Hi-C data, loop annotations, signal track data, GWAS data, all along a common gene track and genome label axis:</p>
-<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co">## Load BentoBox</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://phanstiellab.github.io/bentobox">BentoBox</a></span><span class="op">)</span>
 
 <span class="co">## Load example data</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="st">"bb_hicData"</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="st">"bb_imrHicData"</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="st">"bb_bedpeData"</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="st">"bb_signalData"</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="st">"bb_imrH3K27acData"</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="st">"bb_gwasData"</span><span class="op">)</span>
 
 <span class="co">## Create a BentoBox page</span>
 <span class="fu"><a href="../reference/bb_pageCreate.html">bb_pageCreate</a></span><span class="op">(</span>width <span class="op">=</span> <span class="fl">3</span>, height <span class="op">=</span> <span class="fl">5</span>, default.units <span class="op">=</span> <span class="st">"inches"</span><span class="op">)</span>
 
 <span class="co">## Plot Hi-C data in region</span>
-<span class="fu"><a href="../reference/bb_plotHicSquare.html">bb_plotHicSquare</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">bb_hicData</span>,
+<span class="fu"><a href="../reference/bb_plotHicSquare.html">bb_plotHicSquare</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">bb_imrHicData</span>,
                  chrom <span class="op">=</span> <span class="st">"chr21"</span>, chromstart <span class="op">=</span> <span class="fl">28000000</span>, chromend <span class="op">=</span> <span class="fl">30300000</span>,
                  x <span class="op">=</span> <span class="fl">0.5</span>, y <span class="op">=</span> <span class="fl">0.5</span>, width <span class="op">=</span> <span class="fl">2</span>, height <span class="op">=</span> <span class="fl">2</span>,
                  just <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"left"</span>, <span class="st">"top"</span><span class="op">)</span>, default.units <span class="op">=</span> <span class="st">"inches"</span><span class="op">)</span>
@@ -410,7 +414,7 @@
                    fill <span class="op">=</span> <span class="st">"black"</span>, linecolor <span class="op">=</span> <span class="st">"black"</span>, position <span class="op">=</span> <span class="st">"bottom"</span><span class="op">)</span>
 
 <span class="co">## Plot signal track data</span>
-<span class="fu"><a href="../reference/bb_plotSignal.html">bb_plotSignal</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">bb_signalData</span>,
+<span class="fu"><a href="../reference/bb_plotSignal.html">bb_plotSignal</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">bb_imrH3K27acData</span>,
               chrom <span class="op">=</span> <span class="st">"chr21"</span>, chromstart <span class="op">=</span> <span class="fl">28000000</span>, chromend <span class="op">=</span> <span class="fl">30300000</span>,
               x <span class="op">=</span> <span class="fl">0.5</span>, y <span class="op">=</span> <span class="fl">2.75</span>, width <span class="op">=</span> <span class="fl">2</span>, height <span class="op">=</span> <span class="fl">0.5</span>, 
               just <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"left"</span>, <span class="st">"top"</span><span class="op">)</span>, default.units <span class="op">=</span> <span class="st">"inches"</span><span class="op">)</span>

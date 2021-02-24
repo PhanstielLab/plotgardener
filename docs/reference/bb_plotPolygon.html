@@ -164,7 +164,8 @@
     </tr>
     <tr>
       <th>y</th>
-      <td><p>A numeric vector or unit object specifying polygon vertex y-locations.</p></td>
+      <td><p>A numeric vector, unit object, or a character vector of values containing a "b" combined with a numeric value specifying polygon vertex y-locations.
+The character vector will place polygon vertex y-locations relative to the bottom of the most recently plotted BentoBox plot according to the units of the BentoBox page.</p></td>
     </tr>
     <tr>
       <th>default.units</th>
@@ -222,7 +223,7 @@
 <span class='co'>## Plot a 5-sided polygon</span>
 <span class='fu'>bb_plotPolygon</span><span class='op'>(</span>x <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0.5</span>, <span class='fl'>1</span>, <span class='fl'>1.5</span>, <span class='fl'>1.25</span>, <span class='fl'>0.75</span><span class='op'>)</span>, y <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0.5</span>, <span class='fl'>0.25</span>, <span class='fl'>0.5</span>, <span class='fl'>1.25</span>, <span class='fl'>1.25</span><span class='op'>)</span>,
                default.units <span class='op'>=</span> <span class='st'>"inches"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>bb_polygon[GRID.polygon.2759]</span></div><div class='img'><img src='bb_plotPolygon-1.png' alt='' width='768' height='576' /></div><div class='input'>
+</div><div class='output co'>#&gt; <span class='message'>bb_polygon[GRID.polygon.2741]</span></div><div class='img'><img src='bb_plotPolygon-1.png' alt='' width='768' height='576' /></div><div class='input'>
 <span class='co'>## Hide page guides</span>
 <span class='fu'><a href='bb_pageGuideHide.html'>bb_pageGuideHide</a></span><span class='op'>(</span><span class='op'>)</span>
 </div><div class='img'><img src='bb_plotPolygon-2.png' alt='' width='768' height='576' /></div><div class='input'>

@@ -468,7 +468,7 @@ bb_plotGenes <- function(chrom, chromstart = NULL, chromend = NULL, assembly = "
 
         plus_exonsGrobs <- rectGrob(x = plus_genes$EXONSTART, y = unit(0.63, "npc"),
                                     width = plus_genes$EXONEND - plus_genes$EXONSTART,
-                                    height = unit(0.1, "npc"),
+                                    height = unit(0.1, "npc"), just = "left",
                                     gp = gpar(fill = plus_genes$strandColor, col = NA),
                                     vp = vp_gene, default.units = "native")
 
@@ -482,7 +482,7 @@ bb_plotGenes <- function(chrom, chromstart = NULL, chromend = NULL, assembly = "
         if(nrow(poscdsData) > 0){
           plus_cdsGrobs <- rectGrob(x = poscdsData$CDSSTART, y = unit(0.63, "npc"),
                                     width = poscdsData$CDSEND - poscdsData$CDSSTART,
-                                    height = unit(0.18, "npc"),
+                                    height = unit(0.18, "npc"), just = "left",
                                     gp = gpar(fill = poscdsData$strandColor, col = poscdsData$strandColor, lwd = 1.25),
                                     vp = vp_gene, default.units = "native")
           assign("gene_grobs", addGrob(get("gene_grobs", envir = bbEnv), child = plus_cdsGrobs), envir = bbEnv)
@@ -514,7 +514,7 @@ bb_plotGenes <- function(chrom, chromstart = NULL, chromend = NULL, assembly = "
 
         minus_exonsGrobs <- rectGrob(x = minus_genes$EXONSTART, y = unit(0.37, "npc"),
                                     width = minus_genes$EXONEND - minus_genes$EXONSTART,
-                                    height = unit(0.1, "npc"),
+                                    height = unit(0.1, "npc"), just = "left",
                                     gp = gpar(fill = minus_genes$strandColor, col = NA),
                                     vp = vp_gene, default.units = "native")
 
@@ -528,8 +528,9 @@ bb_plotGenes <- function(chrom, chromstart = NULL, chromend = NULL, assembly = "
 
           minus_cdsGrobs <- rectGrob(x = mincdsData$CDSSTART, y = unit(0.37, "npc"),
                                      width = mincdsData$CDSEND - mincdsData$CDSSTART,
-                                     height = unit(0.18, "npc"),
-                                     gp = gpar(fill = mincdsData$strandColor, col = mincdsData$strandColor, lwd = 1.25),
+                                     height = unit(0.18, "npc"), just = "left",
+                                     gp = gpar(fill = mincdsData$strandColor, col = mincdsData$strandColor,
+                                               lwd = 1.25),
                                      vp = vp_gene, default.units = "native")
           assign("gene_grobs", addGrob(get("gene_grobs", envir = bbEnv), child = minus_cdsGrobs), envir = bbEnv)
 

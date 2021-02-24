@@ -214,7 +214,8 @@ dataframes, "auto" will attempt to detect the resolution the dataframe contains.
     </tr>
     <tr>
       <th>y</th>
-      <td><p>A numeric or unit object specifying triangle Hi-C plot y-location.</p></td>
+      <td><p>A numeric, unit object, or character containing a "b" combined with a numeric value specifying triangle Hi-C plot y-location. The character value will
+place the triangle Hi-C plot y relative to the bottom of the most recently plotted BentoBox plot according to the units of the BentoBox page.</p></td>
     </tr>
     <tr>
       <th>width</th>
@@ -265,13 +266,13 @@ Possible string values are: <code>"left"</code>, <code>"right"</code>, <code>"ce
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'>## Load Hi-C data</span>
-<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='st'>"bb_hicData"</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='st'>"bb_imrHicData"</span><span class='op'>)</span>
 
 <span class='co'>## Create a page</span>
 <span class='fu'><a href='bb_pageCreate.html'>bb_pageCreate</a></span><span class='op'>(</span>width <span class='op'>=</span> <span class='fl'>4</span>, height <span class='op'>=</span> <span class='fl'>2.5</span>, default.units <span class='op'>=</span> <span class='st'>"inches"</span><span class='op'>)</span>
 </div><div class='input'>
 <span class='co'>## Plot and place triangle Hi-C plot</span>
-<span class='va'>hicPlot</span> <span class='op'>&lt;-</span> <span class='fu'>bb_plotHicTriangle</span><span class='op'>(</span>data <span class='op'>=</span> <span class='va'>bb_hicData</span>, resolution <span class='op'>=</span> <span class='fl'>10000</span>, zrange <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>70</span><span class='op'>)</span>,
+<span class='va'>hicPlot</span> <span class='op'>&lt;-</span> <span class='fu'>bb_plotHicTriangle</span><span class='op'>(</span>data <span class='op'>=</span> <span class='va'>bb_imrHicData</span>, resolution <span class='op'>=</span> <span class='fl'>10000</span>, zrange <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>70</span><span class='op'>)</span>,
                               chrom <span class='op'>=</span> <span class='st'>"chr21"</span>, chromstart <span class='op'>=</span> <span class='fl'>28000000</span>, chromend <span class='op'>=</span> <span class='fl'>30300000</span>,
                               x <span class='op'>=</span> <span class='fl'>2</span>, y <span class='op'>=</span> <span class='fl'>0.5</span>, width <span class='op'>=</span> <span class='fl'>3</span>, height <span class='op'>=</span> <span class='fl'>1.5</span>,
                               just <span class='op'>=</span> <span class='st'>"top"</span>, default.units <span class='op'>=</span> <span class='st'>"inches"</span><span class='op'>)</span>

@@ -40,10 +40,25 @@
     <loc>https://phanstiellab.github.io/bentobox/reference/bb_genomes.html</loc>
   </url>
   <url>
+    <loc>https://phanstiellab.github.io/bentobox/reference/bb_gmCTCFData.html</loc>
+  </url>
+  <url>
+    <loc>https://phanstiellab.github.io/bentobox/reference/bb_gmH3K27acData.html</loc>
+  </url>
+  <url>
+    <loc>https://phanstiellab.github.io/bentobox/reference/bb_gmHicData.html</loc>
+  </url>
+  <url>
     <loc>https://phanstiellab.github.io/bentobox/reference/bb_gwasData.html</loc>
   </url>
   <url>
-    <loc>https://phanstiellab.github.io/bentobox/reference/bb_hicData.html</loc>
+    <loc>https://phanstiellab.github.io/bentobox/reference/bb_imrCTCFData.html</loc>
+  </url>
+  <url>
+    <loc>https://phanstiellab.github.io/bentobox/reference/bb_imrH3K27acData.html</loc>
+  </url>
+  <url>
+    <loc>https://phanstiellab.github.io/bentobox/reference/bb_imrHicData.html</loc>
   </url>
   <url>
     <loc>https://phanstiellab.github.io/bentobox/reference/bb_pageCreate.html</loc>
@@ -134,9 +149,6 @@
   </url>
   <url>
     <loc>https://phanstiellab.github.io/bentobox/reference/bb_readHic.html</loc>
-  </url>
-  <url>
-    <loc>https://phanstiellab.github.io/bentobox/reference/bb_signalData.html</loc>
   </url>
   <url>
     <loc>https://phanstiellab.github.io/bentobox/reference/colorby.html</loc>

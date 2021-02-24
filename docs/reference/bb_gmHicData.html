@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Remove BentoBox plots and annotations — bb_pagePlotRemove • BentoBox</title>
+<title>BentoBox example GM12878 Hi-C data — bb_gmHicData • BentoBox</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -46,8 +46,10 @@
 
 
 
-<meta property="og:title" content="Remove BentoBox plots and annotations — bb_pagePlotRemove" />
-<meta property="og:description" content="Remove BentoBox plots and annotations" />
+<meta property="og:title" content="BentoBox example GM12878 Hi-C data — bb_gmHicData" />
+<meta property="og:description" content="A dataset containing interaction frequency matrix counts along genomic coordinates in the
+region chr21:28000000-30300000 according to the hg19 genome build. This data is from the GM12878
+cell line." />
 <meta property="og:image" content="https://phanstiellab.github.io/bentobox/logo.png" />
 
 
@@ -131,44 +133,28 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Remove BentoBox plots and annotations</h1>
-    <small class="dont-index">Source: <a href='https://github.com/PhanstielLab/BentoBox/blob/master/R/bb_pagePlotRemove.R'><code>R/bb_pagePlotRemove.R</code></a></small>
-    <div class="hidden name"><code>bb_pagePlotRemove.Rd</code></div>
+    <h1>BentoBox example GM12878 Hi-C data</h1>
+    <small class="dont-index">Source: <a href='https://github.com/PhanstielLab/BentoBox/blob/master/R/data.R'><code>R/data.R</code></a></small>
+    <div class="hidden name"><code>bb_gmHicData.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Remove BentoBox plots and annotations</p>
+    <p>A dataset containing interaction frequency matrix counts along genomic coordinates in the
+region chr21:28000000-30300000 according to the hg19 genome build. This data is from the GM12878
+cell line.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>bb_pagePlotRemove</span><span class='op'>(</span><span class='va'>plot</span><span class='op'>)</span></pre>
-
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
-    <table class="ref-arguments">
-    <colgroup><col class="name" /><col class="desc" /></colgroup>
-    <tr>
-      <th>plot</th>
-      <td><p>BentoBox plot object to be removed, defined by the output of a BentoBox plotting function.</p></td>
-    </tr>
-    </table>
+    <pre class="usage"><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='st'>"bb_gmHicData"</span><span class='op'>)</span></pre>
 
 
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'>## Load Hi-C data</span>
-<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='st'>"bb_hicData"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='warning'>Warning: data set ‘bb_hicData’ not found</span></div><div class='input'>
-<span class='co'>## Create BentoBox page</span>
-<span class='fu'><a href='bb_pageCreate.html'>bb_pageCreate</a></span><span class='op'>(</span>width <span class='op'>=</span> <span class='fl'>4</span>, height <span class='op'>=</span> <span class='fl'>3.5</span>, default.units <span class='op'>=</span> <span class='st'>"inches"</span><span class='op'>)</span>
-</div><div class='img'><img src='bb_pagePlotRemove-1.png' alt='' width='768' height='576' /></div><div class='input'>
-<span class='co'>## Plot and place a square Hi-C plot</span>
-<span class='va'>hicPlot</span> <span class='op'>&lt;-</span> <span class='fu'><a href='bb_plotHicSquare.html'>bb_plotHicSquare</a></span><span class='op'>(</span>data <span class='op'>=</span> <span class='va'>bb_hicData</span>, resolution <span class='op'>=</span> <span class='fl'>10000</span>, zrange <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>70</span><span class='op'>)</span>,
-                            chrom <span class='op'>=</span> <span class='st'>"chr21"</span>, chromstart <span class='op'>=</span> <span class='fl'>28000000</span>, chromend <span class='op'>=</span> <span class='fl'>30300000</span>,
-                            x <span class='op'>=</span> <span class='fl'>0.5</span>, y <span class='op'>=</span> <span class='fl'>0.5</span>, width <span class='op'>=</span> <span class='fl'>2.5</span>, height <span class='op'>=</span> <span class='fl'>2.5</span>,
-                            just <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"left"</span>, <span class='st'>"top"</span><span class='op'>)</span>, default.units <span class='op'>=</span> <span class='st'>"inches"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='error'>Error in structure(list(data = data, chrom = chrom, chromstart = chromstart,     chromend = chromend, half = half, resolution = resolution,     zrange = zrange, palette = palette, assembly = assembly,     width = width, height = height, x = x, y = y, just = just,     default.units = default.units, draw = draw, altchrom = altchrom,     altchromstart = altchromstart, altchromend = altchromend,     norm = norm, matrix = matrix), class = "bb_hicInternal"): object 'bb_hicData' not found</span></div><div class='input'>
-<span class='co'>## Remove square Hi-C plot from page</span>
-<span class='fu'>bb_pagePlotRemove</span><span class='op'>(</span>plot <span class='op'>=</span> <span class='va'>hicPlot</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='error'>Error in gPath(plot$grobs$name): object 'hicPlot' not found</span></div><div class='input'>
-</div></pre>
+    <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
+
+    <p>a 3-column data frame in sparse upper triangular format.</p>
+    <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
+
+    <p>Rao SS, Huntley MH, Durand NC, Stamenova EK, Bochkov ID, Robinson JT, Sanborn AL, Machol I, Omer AD, Lander ES, Aiden EL. A 3D map of the human genome at kilobase resolution reveals principles of chromatin looping. Cell. 2014 Dec 18;159(7):1665-80. doi: 10.1016/j.cell.2014.11.021. Epub 2014 Dec 11. Erratum in: Cell. 2015 Jul 30;162(3):687-8. PMID: 25497547; PMCID: PMC5635824.
+(<a href='https://pubmed.ncbi.nlm.nih.gov/25497547/'>PubMed</a>)</p>
+
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

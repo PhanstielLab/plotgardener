@@ -165,7 +165,8 @@
     </tr>
     <tr>
       <th>y0</th>
-      <td><p>A numeric vector or unit object indicating the starting y-values of the line segments.</p></td>
+      <td><p>A numeric vector, unit object, or a character vector of values containing a "b" combined with a numeric value specifying starting y-values of the line segments.
+The character vector will place starting y-values relative to the bottom of the most recently plotted BentoBox plot according to the units of the BentoBox page.</p></td>
     </tr>
     <tr>
       <th>x1</th>
@@ -173,7 +174,8 @@
     </tr>
     <tr>
       <th>y1</th>
-      <td><p>A numeric vector or unit object indicating the stopping y-values of the line segments.</p></td>
+      <td><p>A numeric vector, unit object, or a character vector of values containing a "b" combined with a numeric value specifying stopping y-values of the line segments.
+The character vector will place stopping y-values relative to the bottom of the most recently plotted BentoBox plot according to the units of the BentoBox page.</p></td>
     </tr>
     <tr>
       <th>default.units</th>
@@ -234,7 +236,7 @@
 </div><div class='input'>
 <span class='co'>## Plot a line segment</span>
 <span class='fu'>bb_plotSegments</span><span class='op'>(</span>x0 <span class='op'>=</span> <span class='fl'>0.5</span>, y0 <span class='op'>=</span> <span class='fl'>0.25</span>, x1 <span class='op'>=</span> <span class='fl'>1.5</span>, y1 <span class='op'>=</span> <span class='fl'>1.75</span>, default.units <span class='op'>=</span> <span class='st'>"inches"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>bb_segments[GRID.segments.2793]</span></div><div class='img'><img src='bb_plotSegments-1.png' alt='' width='768' height='576' /></div><div class='input'>
+</div><div class='output co'>#&gt; <span class='message'>bb_segments[GRID.segments.2775]</span></div><div class='img'><img src='bb_plotSegments-1.png' alt='' width='768' height='576' /></div><div class='input'>
 <span class='co'>## Hide page guides</span>
 <span class='fu'><a href='bb_pageGuideHide.html'>bb_pageGuideHide</a></span><span class='op'>(</span><span class='op'>)</span>
 </div><div class='img'><img src='bb_plotSegments-2.png' alt='' width='768' height='576' /></div><div class='input'>

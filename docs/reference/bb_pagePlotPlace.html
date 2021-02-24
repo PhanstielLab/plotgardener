@@ -165,7 +165,8 @@
     </tr>
     <tr>
       <th>y</th>
-      <td><p>A numeric or unit object specifying plot y-location.</p></td>
+      <td><p>A numeric, unit object, or character containing a "b" combined with a numeric value specifying plot y-location. The character value will
+place the plot y relative to the bottom of the most recently plotted BentoBox plot according to the units of the BentoBox page.</p></td>
     </tr>
     <tr>
       <th>width</th>
@@ -201,20 +202,20 @@ Possible string values are: <code>"left"</code>, <code>"right"</code>, <code>"ce
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'>## Load Hi-C data</span>
 <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='st'>"bb_hicData"</span><span class='op'>)</span>
-
+</div><div class='output co'>#&gt; <span class='warning'>Warning: data set ‘bb_hicData’ not found</span></div><div class='input'>
 <span class='co'>## Create, but do not plot, square Hi-C plot</span>
 <span class='va'>hicPlot</span> <span class='op'>&lt;-</span> <span class='fu'><a href='bb_plotHicSquare.html'>bb_plotHicSquare</a></span><span class='op'>(</span>data <span class='op'>=</span> <span class='va'>bb_hicData</span>, resolution <span class='op'>=</span> <span class='fl'>10000</span>, zrange <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>70</span><span class='op'>)</span>,
                             chrom <span class='op'>=</span> <span class='st'>"chr21"</span>, chromstart <span class='op'>=</span> <span class='fl'>28000000</span>, chromend <span class='op'>=</span> <span class='fl'>30300000</span>,
                             draw <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>Read in dataframe.  Assuming 'chrom' in column1 and 'altchrom' in column2. 10000 BP resolution detected.</span></div><div class='output co'>#&gt; <span class='message'>bb_hicSquare[bb_hicSquare1]</span></div><div class='input'>
+</div><div class='output co'>#&gt; <span class='error'>Error in structure(list(data = data, chrom = chrom, chromstart = chromstart,     chromend = chromend, half = half, resolution = resolution,     zrange = zrange, palette = palette, assembly = assembly,     width = width, height = height, x = x, y = y, just = just,     default.units = default.units, draw = draw, altchrom = altchrom,     altchromstart = altchromstart, altchromend = altchromend,     norm = norm, matrix = matrix), class = "bb_hicInternal"): object 'bb_hicData' not found</span></div><div class='input'>
 <span class='co'>## Create BentoBox page</span>
 <span class='fu'><a href='bb_pageCreate.html'>bb_pageCreate</a></span><span class='op'>(</span>width <span class='op'>=</span> <span class='fl'>4</span>, height <span class='op'>=</span> <span class='fl'>3.5</span>, default.units <span class='op'>=</span> <span class='st'>"inches"</span><span class='op'>)</span>
-</div><div class='input'>
+</div><div class='img'><img src='bb_pagePlotPlace-1.png' alt='' width='768' height='576' /></div><div class='input'>
 <span class='co'>## Place Hi-C plot on BentoBox page</span>
 <span class='fu'>bb_pagePlotPlace</span><span class='op'>(</span>plot <span class='op'>=</span> <span class='va'>hicPlot</span>,
                  x <span class='op'>=</span> <span class='fl'>0.5</span>, y <span class='op'>=</span> <span class='fl'>0.5</span>, width <span class='op'>=</span> <span class='fl'>2.5</span>, height <span class='op'>=</span> <span class='fl'>2.5</span>,
                  just <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"left"</span>, <span class='st'>"top"</span><span class='op'>)</span>, default.units <span class='op'>=</span> <span class='st'>"inches"</span>, draw <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>bb_hicSquare[bb_hicSquare1]</span></div><div class='img'><img src='bb_pagePlotPlace-1.png' alt='' width='768' height='576' /></div><div class='input'>
+</div><div class='output co'>#&gt; <span class='error'>Error in structure(list(plot = plot, x = x, y = y, width = width, height = height,     draw = draw, just = just, default.units = default.units),     class = "bb_place"): object 'hicPlot' not found</span></div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
