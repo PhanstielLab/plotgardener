@@ -30,13 +30,13 @@
 #'
 #' @examples
 #' ## Load Hi-C data
-#' data("bb_hicData")
+#' data("bb_imrHicData")
 #'
 #' ## Create a page
 #' bb_pageCreate(width = 4, height = 2.5, default.units = "inches")
 #'
 #' ## Plot and place triangle Hi-C plot
-#' hicPlot <- bb_plotHicTriangle(data = bb_hicData, resolution = 10000, zrange = c(0, 70),
+#' hicPlot <- bb_plotHicTriangle(data = bb_imrHicData, resolution = 10000, zrange = c(0, 70),
 #'                               chrom = "chr21", chromstart = 28000000, chromend = 30300000,
 #'                               x = 2, y = 0.5, width = 3, height = 1.5,
 #'                               just = "top", default.units = "inches")

@@ -47,13 +47,13 @@ Add a y-axis to a plot
 }
 \examples{
 ## Load Hi-C data
-data("bb_hicData")
+data("bb_imrHicData")
 
 ## Create BentoBox page
 bb_pageCreate(width = 4, height = 3.5, default.units = "inches")
 
 ## Plot and place a square Hi-C plot
-hicPlot <- bb_plotHicSquare(data = bb_hicData, resolution = 10000, zrange = c(0, 70),
+hicPlot <- bb_plotHicSquare(data = bb_imrHicData, resolution = 10000, zrange = c(0, 70),
                             chrom = "chr21", chromstart = 28000000, chromend = 30300000,
                             x = 1, y = 0.5, width = 2.5, height = 2.5,
                             just = c("left", "top"), default.units = "inches")

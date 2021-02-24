@@ -72,10 +72,10 @@ The quickest way to plot data is to omit the placement arguments. This will gene
 library(BentoBox)
 
 ## Load example Hi-C data
-data("bb_hicData")
+data("bb_imrHicData")
 
 ## Quick plot Hi-C data
-bb_plotHicSquare(data = bb_hicData,
+bb_plotHicSquare(data = bb_imrHicData,
                  chrom = "chr21", chromstart = 28000000, chromend = 30300000)
 
 ```
@@ -163,13 +163,13 @@ As an annotation example, here we add a color scale and genome label annotation:
 library(BentoBox)
 
 ## Load example Hi-C data
-data("bb_hicData")
+data("bb_imrHicData")
 
 ## Create a BentoBox page
 bb_pageCreate(width = 3.25, height = 3.25, default.units = "inches")
 
 ## Plot Hi-C data with placing information
-hicPlot <- bb_plotHicSquare(data = bb_hicData,
+hicPlot <- bb_plotHicSquare(data = bb_imrHicData,
                             chrom = "chr21", chromstart = 28000000, chromend = 30300000,
                             x = 0.25, y = 0.25, width = 2.5, height = 2.5, default.units = "inches")
 
@@ -446,13 +446,13 @@ This is particularly useful when an object needs to be aligned in reference to a
 library(BentoBox)
 
 ## Load example Hi-C data
-data("bb_hicData")
+data("bb_imrHicData")
 
 ## Create a BentoBox page
 bb_pageCreate(width = 3.25, height = 3.25, default.units = "inches")
 
 ## Plot Hi-C data with placing information
-hicPlot <- bb_plotHicSquare(data = bb_hicData,
+hicPlot <- bb_plotHicSquare(data = bb_imrHicData,
                             chrom = "chr21", chromstart = 28000000, chromend = 30300000,
                             x = 0.25, y = 0.25, width = 2.5, height = 2.5, default.units = "inches")
 
@@ -475,7 +475,7 @@ In the following example, we plot the same genomic region (i.e. `chr21:28000000-
 library(BentoBox)
 
 ## Load example data
-data("bb_hicData")
+data("bb_imrHicData")
 data("bb_bedpeData")
 data("bb_imrH3K27acData")
 data("bb_gwasData")
@@ -484,7 +484,7 @@ data("bb_gwasData")
 bb_pageCreate(width = 3, height = 5, default.units = "inches")
 
 ## Plot Hi-C data in region
-bb_plotHicSquare(data = bb_hicData,
+bb_plotHicSquare(data = bb_imrHicData,
                  chrom = "chr21", chromstart = 28000000, chromend = 30300000,
                  x = 0.5, y = 0.5, width = 2, height = 2,
                  just = c("left", "top"), default.units = "inches")

@@ -108,13 +108,13 @@ bb_plotHicSquare(data, chrom,
 }
 \examples{
 ## Load Hi-C data
-data("bb_hicData")
+data("bb_imrHicData")
 
 ## Create a page
 bb_pageCreate(width = 3, height = 3, default.units = "inches")
 
 ## Plot and place Hi-C plot
-hicPlot <- bb_plotHicSquare(data = bb_hicData, resolution = 10000, zrange = c(0, 70),
+hicPlot <- bb_plotHicSquare(data = bb_imrHicData, resolution = 10000, zrange = c(0, 70),
                             chrom = "chr21", chromstart = 28000000, chromend = 30300000,
                             x = 0.5, y = 0.5, width = 2, height = 2,
                             just = c("left", "top"), default.units = "inches")

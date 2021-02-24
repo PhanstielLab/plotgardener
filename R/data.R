@@ -95,6 +95,22 @@
 #'
 "bb_gmH3K27acData"
 
+#' BentoBox example GM12878 Hi-C data
+#'
+#' A dataset containing interaction frequency matrix counts along genomic coordinates in the
+#' region chr21:28000000-30300000 according to the hg19 genome build. This data is from the GM12878
+#' cell line.
+#'
+#' @format a 3-column data frame in sparse upper triangular format.
+#'
+#' @docType data
+#'
+#' @usage data("bb_gmHicData")
+#'
+#' @references Rao SS, Huntley MH, Durand NC, Stamenova EK, Bochkov ID, Robinson JT, Sanborn AL, Machol I, Omer AD, Lander ES, Aiden EL. A 3D map of the human genome at kilobase resolution reveals principles of chromatin looping. Cell. 2014 Dec 18;159(7):1665-80. doi: 10.1016/j.cell.2014.11.021. Epub 2014 Dec 11. Erratum in: Cell. 2015 Jul 30;162(3):687-8. PMID: 25497547; PMCID: PMC5635824.
+#' (\href{https://pubmed.ncbi.nlm.nih.gov/25497547/}{PubMed})
+"bb_gmHicData"
+
 #' BentoBox example GWAS data
 #'
 #' A dataset representing GWAS data from a GWAS study of insulin response with coordinates based on the hg19 genome build.
@@ -116,22 +132,6 @@
 #' @source GWAS summary statistics were downloaded from LocusZoom \url{http://locuszoom.org/}.
 #'
 "bb_gwasData"
-
-#' BentoBox example Hi-C data
-#'
-#' A dataset containing interaction frequency matrix counts along genomic coordinates in the
-#' region chr21:28000000-30300000 according to the hg19 genome build. This data is from the IMR90
-#' cell line.
-#'
-#' @format a 3-column data frame in sparse upper triangular format.
-#'
-#' @docType data
-#'
-#' @usage data("bb_hicData")
-#'
-#' @references Rao SS, Huntley MH, Durand NC, Stamenova EK, Bochkov ID, Robinson JT, Sanborn AL, Machol I, Omer AD, Lander ES, Aiden EL. A 3D map of the human genome at kilobase resolution reveals principles of chromatin looping. Cell. 2014 Dec 18;159(7):1665-80. doi: 10.1016/j.cell.2014.11.021. Epub 2014 Dec 11. Erratum in: Cell. 2015 Jul 30;162(3):687-8. PMID: 25497547; PMCID: PMC5635824.
-#' (\href{https://pubmed.ncbi.nlm.nih.gov/25497547/}{PubMed})
-"bb_hicData"
 
 #' BentoBox example IMR90 CTCF signal data
 #'
@@ -180,6 +180,22 @@
 #' @source Data with reference epigenome identifier \strong{E017} was downloaded from the NIH Roadmap Epigenomics Project \url{http://www.roadmapepigenomics.org/}.
 #'
 "bb_imrH3K27acData"
+
+#' BentoBox example IMR90 Hi-C data
+#'
+#' A dataset containing interaction frequency matrix counts along genomic coordinates in the
+#' region chr21:28000000-30300000 according to the hg19 genome build. This data is from the IMR90
+#' cell line.
+#'
+#' @format a 3-column data frame in sparse upper triangular format.
+#'
+#' @docType data
+#'
+#' @usage data("bb_imrHicData")
+#'
+#' @references Rao SS, Huntley MH, Durand NC, Stamenova EK, Bochkov ID, Robinson JT, Sanborn AL, Machol I, Omer AD, Lander ES, Aiden EL. A 3D map of the human genome at kilobase resolution reveals principles of chromatin looping. Cell. 2014 Dec 18;159(7):1665-80. doi: 10.1016/j.cell.2014.11.021. Epub 2014 Dec 11. Erratum in: Cell. 2015 Jul 30;162(3):687-8. PMID: 25497547; PMCID: PMC5635824.
+#' (\href{https://pubmed.ncbi.nlm.nih.gov/25497547/}{PubMed})
+"bb_imrHicData"
 
 #' UCSC CytoBand information for the dm6 genome assembly
 #'
