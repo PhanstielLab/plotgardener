@@ -158,9 +158,13 @@ bb_plotGenes <- function(chrom, chromstart = NULL, chromend = NULL, assembly = "
     label <- df[1]
     location <- df[2]
 
+    ## Update viewport fontsize for proper text size calculation
+    vp$gp <- gpar(fontsize = fontsize)
+
     pushViewport(vp)
     labelWidth <- convertWidth(widthDetails(textGrob(label = label, gp = gpar(fontsize = fontsize))), unitTo = "native", valueOnly = T)
     upViewport()
+
     leftBound <- as.numeric(location) - 0.5*labelWidth
     rightBound <- as.numeric(location) + 0.5*labelWidth
 
