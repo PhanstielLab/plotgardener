@@ -502,6 +502,7 @@ bb_plotBedpeArches <- function(data, chrom, chromstart = NULL, chromend = NULL, 
   # HEIGHTS
   # ======================================================================================================================================================================================
 
+  if (nrow(bedpe) > 0){
   if (is.null(bb_archInternal$archHeight)){
     bedpe$height <- rep(1, nrow(bedpe))
   } else if (length(bb_archInternal$archHeight) == 1){
@@ -518,6 +519,8 @@ bb_plotBedpeArches <- function(data, chrom, chromstart = NULL, chromend = NULL, 
     bedpe$normHeight <- lapply(bedpe$height, normHeights, position = bb_archInternal$position, min = 0, max = max(bedpe$height))
   }
 
+
+    }
 
   # ======================================================================================================================================================================================
   # INITIALIZE GTREE FOR GROBS WITH BACKGROUND
@@ -544,7 +547,7 @@ bb_plotBedpeArches <- function(data, chrom, chromstart = NULL, chromend = NULL, 
   } else {
 
     if (txdbChecks == TRUE){
-      warning("Bedpe contains no values.", call. = FALSE)
+      warning("BEDPE data contains no values.", call. = FALSE)
     }
 
   }

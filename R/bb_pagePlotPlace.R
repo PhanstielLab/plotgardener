@@ -123,8 +123,8 @@ bb_pagePlotPlace <- function(plot, x = NULL, y = NULL, width = NULL, height = NU
   parse_coordinates <- function(input_plot, output_plot){
 
     ## Make sublists of the dimensions and coordinates of the input and output plots
-    inputCoords <- list(x = input_plot$x, y = input_plot$y, width = input_plot$width, height = input_plot$height, justification = input_plot$jusification)
-    outputCoords <- list(x = output_plot$x, y = output_plot$y, width = output_plot$width, height = output_plot$height, justification = output_plot$justification)
+    inputCoords <- list(x = input_plot$x, y = input_plot$y, width = input_plot$width, height = input_plot$height, just = input_plot$just)
+    outputCoords <- list(x = output_plot$x, y = output_plot$y, width = output_plot$width, height = output_plot$height, just = output_plot$just)
 
     ## Determine which values in the output plot are NULL
     to_replace <- names(outputCoords[sapply(outputCoords, is.null)])
@@ -143,7 +143,7 @@ bb_pagePlotPlace <- function(plot, x = NULL, y = NULL, width = NULL, height = NU
     # output_plot$height <- new_coords$height
 
     output_plot <- set_values(object = output_plot, x = new_coords$x, y = new_coords$y, width = new_coords$width, height = new_coords$height)
-    output_plot$justification <- new_coords$justification
+    output_plot$just <- new_coords$just
 
     ## Return object
     return(output_plot)

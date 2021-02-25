@@ -371,7 +371,7 @@ bb_plotHicTriangle <- function(data, resolution = "auto", zrange = NULL, norm = 
     width <- convertWidth(hic_plot$width, unitTo = get("page_units", envir = bbEnv), valueOnly = T)
     x <- convertX(hic_plot$x, unitTo = get("page_units", envir = bbEnv), valueOnly = T)
     y <- get("page_height", envir = bbEnv) - convertY(hic_plot$y, unitTo = get("page_units", envir = bbEnv), valueOnly = T)
-    just <- hic_plot$justification
+    just <- hic_plot$just
 
     ## Calculate height of triangle/trapezoid
     two <- mpfr(2, 120)
@@ -644,7 +644,7 @@ bb_plotHicTriangle <- function(data, resolution = "auto", zrange = NULL, norm = 
   # ======================================================================================================================================================================================
 
   new_just <- reset_just(just = bb_thicInternal$just, x = hic_plot$x, y = hic_plot$y, width = hic_plot$width, height = hic_plot$height)
-  hic_plot$justification <- new_just
+  hic_plot$just <- new_just
 
   # ======================================================================================================================================================================================
   # WHOLE CHROM INFORMATION
@@ -797,41 +797,50 @@ bb_plotHicTriangle <- function(data, resolution = "auto", zrange = NULL, norm = 
 
   if (!is.null(hic_plot$chromstart) & !is.null(hic_plot$chromend)){
 
-    hic$width <- hic_plot$resolution
-    hic$height <- hic_plot$resolution
+    if (nrow(hic) > 0){
 
-    ## Manually "clip" the grobs that fall out of the desired chromstart to chromend region
-    hic <- manual_clip(hic = hic, hic_plot = hic_plot)
-    hic <- hic[order(as.numeric(rownames(hic))),]
+      hic$width <- hic_plot$resolution
+      hic$height <- hic_plot$resolution
 
-    ## Separate into squares for upper region and triangle shapes for the diagonal
-    squares <- hic[which(hic[,2] > hic[,1]),]
-    triangles <- hic[which(hic[,2] == hic[,1]),]
+      ## Manually "clip" the grobs that fall out of the desired chromstart to chromend region
+      hic <- manual_clip(hic = hic, hic_plot = hic_plot)
+      hic <- hic[order(as.numeric(rownames(hic))),]
 
-    if (nrow(squares) > 0){
+      ## Separate into squares for upper region and triangle shapes for the diagonal
+      squares <- hic[which(hic[,2] > hic[,1]),]
+      triangles <- hic[which(hic[,2] == hic[,1]),]
 
-      ## Make square grobs and add to grob gTree
-      hic_squares <- rectGrob(x = squares$x,
-                              y = squares$y,
-                              just = c("left", "bottom"),
-                              width = squares$width,
-                              height = squares$height,
-                              gp = gpar(col = NA, fill = squares$color),
-                              default.units = "native")
-      assign("hic_grobs2", addGrob(gTree = get("hic_grobs2", envir = bbEnv), child = hic_squares), envir = bbEnv)
-    }
+      if (nrow(squares) > 0){
 
-    if (nrow(triangles) > 0){
-      ## Make triangle grobs and add to grob gTree
-      invisible(apply(triangles, 1, hic_diagonal))
-
-    }
-
-    if (nrow(squares) == 0 & nrow(triangles) == 0){
-
-      if (txdbChecks == TRUE){
-        warning("Warning: no data found in region.  Suggestions: check chromosome, check region.", call. = FALSE)
+        ## Make square grobs and add to grob gTree
+        hic_squares <- rectGrob(x = squares$x,
+                                y = squares$y,
+                                just = c("left", "bottom"),
+                                width = squares$width,
+                                height = squares$height,
+                                gp = gpar(col = NA, fill = squares$color),
+                                default.units = "native")
+        assign("hic_grobs2", addGrob(gTree = get("hic_grobs2", envir = bbEnv), child = hic_squares), envir = bbEnv)
       }
+
+      if (nrow(triangles) > 0){
+        ## Make triangle grobs and add to grob gTree
+        invisible(apply(triangles, 1, hic_diagonal))
+
+      }
+
+      if (nrow(squares) == 0 & nrow(triangles) == 0){
+
+        if (txdbChecks == TRUE){
+          warning("Warning: no data found in region.  Suggestions: check chromosome, check region.", call. = FALSE)
+        }
+
+    }
+
+
+    } else {
+
+      warning("Warning: no data found in region.  Suggestions: check chromosome, check region.", call. = FALSE)
 
     }
 
