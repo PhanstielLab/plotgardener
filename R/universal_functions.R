@@ -800,12 +800,18 @@ defaultGenePriorities <- function(data, assembly, transcript = FALSE){
 ## Parse y-coordinates for plots relative to bottom of last plot
 plot_belowY <- function(y_coord){
 
+  annoPlots <- c("bb_heatmapLegend", "bb_pixel", "bb_yaxis", "bb_xaxis", "bb_genomeLabel")
   currentViewports <- current_viewports()
-  if (length(currentViewports) == 0){
+  validViewports <- currentViewports[!grepl(paste(annoPlots, collapse="|"), currentViewports)]
+
+  print(validViewports)
+
+
+  if (length(validViewports) == 0){
     stop("No previous plot detected. Cannot define a \'below\' y-coordinate.", call. = FALSE)
   }
 
-  lastPlot <- currentViewports[length(currentViewports)]
+  lastPlot <- validViewports[length(validViewports)]
   ## Go into viewport to get coordinates/dimensions
   seekViewport(name = lastPlot)
   x <- current.viewport()$x
