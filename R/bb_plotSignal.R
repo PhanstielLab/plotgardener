@@ -210,22 +210,29 @@ bb_plotSignal <- function(data, binSize = NA, binCap = TRUE, negData = FALSE, ch
       binNum = (signaltrack$chromend - signaltrack$chromstart)/signaltrack$binSize
       signaltrack$binNum <- binNum
 
-      ## Scale back binNum and print warning if binNum is greater than 8000
-      if (binNum > 8000 && signaltrack$binCap == TRUE){
-        updated_binNum <- 8000
-        updated_binSize <- (signaltrack$chromend - signaltrack$chromstart)/binNum
-        signaltrack$binNum <- updated_binNum
-        signaltrack$binSize <- updated_binSize
-        warning(paste0("Too many bins: adjusting to 8000 bins of size ", binSize, ". To override try binCap = FALSE."), call. = FALSE)
-      }
+      if (!is.nan(binNum)){
 
-      ## Scale bin size to 1 if binNum is larger than span
-      if (binNum > (signaltrack$chromend - signaltrack$chromstart)){
-        updated_binNum <- (signaltrack$chromend - signaltrack$chromstart)
-        updated_binSize <- 1
-        signaltrack$binNum <- updated_binNum
-        signaltrack$binSize <- updated_binSize
-        warning(paste0("Number of bins larger than plot length: adjusting to ", binNum, " bins of size 1."), call. = FALSE)
+        ## Scale back binNum and print warning if binNum is greater than 8000
+        if (binNum > 8000 && binCap == TRUE){
+          updated_binNum <- 8000
+          updated_binSize <- (signaltrack$chromend - signaltrack$chromstart)/binNum
+          signaltrack$binNum <- updated_binNum
+          signaltrack$binSize <- updated_binSize
+          warning(paste0("Too many bins: adjusting to 8000 bins of size ", binSize, ". To override try binCap = FALSE."), call. = FALSE)
+        }
+
+        ## Scale bin size to 1 if binNum is larger than span
+        if (binNum > (signaltrack$chromend - signaltrack$chromstart)){
+          updated_binNum <- (signaltrack$chromend - signaltrack$chromstart)
+          updated_binSize <- 1
+          signaltrack$binNum <- updated_binNum
+          signaltrack$binSize <- updated_binSize
+          warning(paste0("Number of bins larger than plot length: adjusting to ", binNum, " bins of size 1."), call. = FALSE)
+        }
+
+
+      } else {
+        signaltrack$binSize <- NA
       }
 
 

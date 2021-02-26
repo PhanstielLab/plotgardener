@@ -395,7 +395,7 @@ bb_plotIdeogram <- function(chrom, assembly = "hg19", orientation = "h", showBan
       ## Make viewport based on user inputs
       vpOG <- viewport(height = page_coords$height, width = page_coords$width,
                      x = page_coords$x, y = page_coords$y,
-                     just = bb_karyInternal$just)
+                     just = bb_ideoInternal$just)
 
       ## Convert viewport to bottom left (bottom right of horizontal)
       vp_bottom <- vp_bottomLeft(viewport = vpOG)

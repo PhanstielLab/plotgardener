@@ -371,11 +371,20 @@ check_placement <- function(object){
 
       }
 
+      if(as.numeric(object$width) == 0){
+        stop("Plot width cannot be 0.", call. = FALSE)
+      }
+
       if (is.null(object$height)){
 
         stop("Placement detected with plot height missing.", call. = FALSE)
 
       }
+
+      if(as.numeric(object$height) == 0){
+        stop("Plot height cannot be 0.", call. = FALSE)
+      }
+
 
       ## 3. Need a bb_page
       check_bbpage(error = "Must make a BentoBox page with `bb_pageCreate()` before placing a plot.")
