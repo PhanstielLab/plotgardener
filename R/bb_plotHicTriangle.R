@@ -9,6 +9,7 @@
 #' \itemize{
 #' \item{\code{"observed"}: }{Observed counts.}
 #' \item{\code{"oe"}: }{Observed/expected counts.}
+#' \item{\code{"logoe"}: }{Log2 transformed observed/expected counts.}
 #' }
 #' @param chrom Chromosome of region to be plotted, as a string.
 #' @param chromstart Integer start position on chromosome to be plotted.

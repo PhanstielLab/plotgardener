@@ -20,6 +20,7 @@
 #' \itemize{
 #' \item{\code{"observed"}: }{Observed counts.}
 #' \item{\code{"oe"}: }{Observed/expected counts.}
+#' \item{\code{"logoe"}: }{Log2 transformed observed/expected counts.}
 #' }
 #' @param params An optional \link[BentoBox]{bb_params} object containing relevant function parameters.
 #'
@@ -440,10 +441,22 @@ bb_readHic <- function(file, chrom, chromstart = NULL, chromend = NULL, altchrom
     return(upper)
   }
 
+  log <- FALSE
+  if (bb_rhic$matrix == "logoe"){
+    bb_rhic$matrix <- "oe"
+    log <- TRUE
+  }
+
 
   upper <-
     tryCatch(strawr::straw(bb_rhic$matrix, bb_rhic$norm, bb_rhic$file, toString(chromRegion), toString(altchromRegion), bb_rhic$res_scale, bb_rhic$resolution),
              error = errorFunction)
+
+
+  if (log == TRUE){
+    upper[,3] <- log2(upper[,3])
+  }
+
 
   # ======================================================================================================================================================================================
   # REORDER COLUMNS BASED ON CHROM/ALTCHROM INPUT
