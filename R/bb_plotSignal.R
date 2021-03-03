@@ -119,6 +119,10 @@ bb_plotSignal <- function(data, binSize = NA, binCap = TRUE, negData = FALSE, ch
 
     if (!is.null(signal_track$chromstart) & !is.null(signal_track$chromend)){
 
+      if (signal_track$chromstart == signal_track$chromend){
+        stop("Genomic region is 0 bp long.", call. = FALSE)
+      }
+
       if (signal_track$chromstart > signal_track$chromend){
 
         stop("\'chromstart\' should not be larger than \'chromend\'.", call. = FALSE)

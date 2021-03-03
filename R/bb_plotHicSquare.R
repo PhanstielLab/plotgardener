@@ -137,6 +137,12 @@ bb_plotHicSquare <- function(data, resolution = "auto", zrange = NULL, norm = "K
     }
 
     if (!is.null(hic_plot$chromstart) & !is.null(hic_plot$chromend)){
+
+      if (hic_plot$chromstart == hic_plot$chromend){
+        stop("Genomic region is 0 bp long.", call. = FALSE)
+      }
+
+
       ## Chromstart should be smaller than chromend
       if (hic_plot$chromstart > hic_plot$chromend){
 
@@ -184,6 +190,11 @@ bb_plotHicSquare <- function(data, resolution = "auto", zrange = NULL, norm = "K
       }
 
       if (!is.null(hic_plot$altchromstart) & !is.null(hic_plot$altchromend)){
+
+        if (hic_plot$altchromstart == hic_plot$altchromend){
+          stop("Genomic region is 0 bp long.", call. = FALSE)
+        }
+
 
         ## Altchromstart should be smaller than altchromend
         if (hic_plot$altchromstart > hic_plot$altchromend){

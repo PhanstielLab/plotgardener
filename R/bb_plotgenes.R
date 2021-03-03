@@ -112,6 +112,10 @@ bb_plotGenes <- function(chrom, chromstart = NULL, chromend = NULL, assembly = "
 
     if (!is.null(chromstart) & !is.null(chromend)){
 
+      if (chromstart == chromend){
+        stop("Genomic region is 0 bp long.", call. = FALSE)
+      }
+
       ## chromstart cannot be larger than chromend
 
       if (chromstart > chromend){

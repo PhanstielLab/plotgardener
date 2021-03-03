@@ -119,6 +119,10 @@ bb_plotBedpeArches <- function(data, chrom, chromstart = NULL, chromend = NULL, 
 
     if (!is.null(arches_plot$chromstart) & !is.null(arches_plot$chromend)){
 
+      if (arches_plot$chromstart == arches_plot$chromend){
+        stop("Genomic region is 0 bp long.", call. = FALSE)
+      }
+
       ## chromend > chromstart
       if (arches_plot$chromend < arches_plot$chromstart){
 

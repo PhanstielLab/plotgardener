@@ -86,6 +86,10 @@ bb_readHic <- function(file, chrom, chromstart = NULL, chromend = NULL, altchrom
 
     if (!is.null(chromstart) & !is.null(chromend)){
 
+      if (chromstart == chromend){
+        stop("Genomic region is 0 bp long.", call. = FALSE)
+      }
+
       ## Chromstart should be smaller than chromend
       if (chromstart > chromend){
 

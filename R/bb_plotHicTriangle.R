@@ -170,6 +170,11 @@ bb_plotHicTriangle <- function(data, resolution = "auto", zrange = NULL, norm = 
 
 
     if (!is.null(hic_plot$chromstart) & !is.null(hic_plot$chromend)){
+
+      if (hic_plot$chromstart == hic_plot$chromend){
+        stop("Genomic region is 0 bp long.", call. = FALSE)
+      }
+
       ## Chromstart should be smaller than chromend
       if (hic_plot$chromstart > hic_plot$chromend){
 

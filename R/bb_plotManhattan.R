@@ -187,6 +187,10 @@ bb_plotManhattan <- function(data, sigVal = 5e-08, chrom = NULL, chromstart = NU
 
         ## chromstart cannot be larger than chromend
 
+        if (chromstart == chromend){
+          stop("Genomic region is 0 bp long.", call. = FALSE)
+        }
+
         if (chromstart > chromend){
 
           stop("\'chromstart\' should not be larger than \'chromend\'.", call. = FALSE)

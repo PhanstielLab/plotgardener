@@ -88,6 +88,10 @@ bb_plotBed <- function(data, chrom, chromstart = NULL, chromend = NULL, assembly
 
     if (!is.null(pileup_plot$chromstart) & !is.null(pileup_plot$chromend)){
 
+      if (pileup_plot$chromstart == pileup_plot$chromend){
+        stop("Genomic region is 0 bp long.", call. = FALSE)
+      }
+
       ## chromend > chromstart
       if (pileup_plot$chromend < pileup_plot$chromstart){
 

@@ -101,6 +101,11 @@ bb_plotBedpe <- function(data, chrom, chromstart = NULL, chromend = NULL, assemb
 
     if (!is.null(bedpe_plot$chromstart) & !is.null(bedpe_plot$chromend)){
 
+      if (bedpe_plot$chromstart == bedpe_plot$chromend){
+        stop("Genomic region is 0 bp long.", call. = FALSE)
+      }
+
+
       ## chromend > chromstart
       if (bedpe_plot$chromend < bedpe_plot$chromstart){
 

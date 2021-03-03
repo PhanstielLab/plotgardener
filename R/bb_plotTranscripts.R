@@ -98,6 +98,10 @@ bb_plotTranscripts <- function(chrom, chromstart = NULL, chromend = NULL, assemb
 
     if (!is.null(transcript_plot$chromstart) & !is.null(transcript_plot$chromend)){
 
+      if (transcript_plot$chromstart == transcript_plot$chromend){
+        stop("Genomic region is 0 bp long.", call. = FALSE)
+      }
+
       ## chromend > chromstart
       if (transcript_plot$chromend < transcript_plot$chromstart){
 
