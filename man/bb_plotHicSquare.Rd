@@ -43,6 +43,7 @@ dataframes, "auto" will attempt to detect the resolution the dataframe contains.
 \itemize{
 \item{\code{"observed"}: }{Observed counts.}
 \item{\code{"oe"}: }{Observed/expected counts.}
+\item{\code{"logoe"}: }{Log2 transformed observed/expected counts.}
 }}
 
 \item{chrom}{Chromosome of region to be plotted, as a string.}

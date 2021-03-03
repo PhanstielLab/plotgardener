@@ -92,8 +92,8 @@ reference:
       - starts_with("cytoBand")
 
 figures:
-  fig.height: 6
-  fig.width: 8
+  fig.height: 7
+  fig.width: 8.2
   fig.asp: ~
 
 

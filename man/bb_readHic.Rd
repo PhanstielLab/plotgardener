@@ -54,6 +54,7 @@ bb_readHic(
 \itemize{
 \item{\code{"observed"}: }{Observed counts.}
 \item{\code{"oe"}: }{Observed/expected counts.}
+\item{\code{"logoe"}: }{Log2 transformed observed/expected counts.}
 }}
 
 \item{params}{An optional \link[BentoBox]{bb_params} object containing relevant function parameters.}
