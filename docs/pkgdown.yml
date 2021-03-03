@@ -4,7 +4,7 @@ pkgdown_sha: ~
 articles:
   introduction_to_bentobox: introduction_to_bentobox.html
   our_philosophy: our_philosophy.html
-last_built: 2021-02-25T16:18Z
+last_built: 2021-03-03T17:37Z
 urls:
   reference: https://phanstiellab.github.io/bentobox/reference
   article: https://phanstiellab.github.io/bentobox/articles
