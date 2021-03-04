@@ -60,7 +60,14 @@ hicPlot <- bb_plotHicSquare(data = bb_imrHicData, resolution = 10000, zrange = c
 
 ## Add standard y-axis to Hi-C plot
 bb_annoYaxis(plot = hicPlot, at = c(28000000, 29000000, 30300000),
-             gp = gpar(fontsize = 8))
+             fontsize = 10)
+
+## Annotate genome label on x-axis
+bb_annoGenomeLabel(plot = hicPlot, x = 1, y = 3.03)
+
+## Annotate heatmap legend
+bb_annoHeatmapLegend(plot = hicPlot,
+                     x = 3.6, y = 0.5, width = 0.12, height = 1.2)
 
 ## Hide page guides
 bb_pageGuideHide()

@@ -67,15 +67,30 @@ Draw a line segment within a BentoBox layout
 }
 \examples{
 ## Create a BentoBox page
-bb_pageCreate(width = 2, height = 2, default.units = "inches")
+bb_pageCreate(width = 7.5, height = 6, default.units = "inches")
 
-## Plot a line segment
-bb_plotSegments(x0 = 0.5, y0 = 0.25, x1 = 1.5, y1 = 1.75, default.units = "inches")
+## Plot one line segment
+bb_plotSegments(x0 = 3.75, y0 = 0.25, x1 = 3.75, y1 = 5.75, default.units = "inches",
+                lwd = 3, lty = 2)
+
+## Plot multiple line segments at different locations in different colors
+bb_plotSegments(x0 = 0.5, y0 = c(1, 3, 5), x1 = 3.25, y1 = c(1, 3, 5),
+                default.units = "inches",
+                lwd = 2, linecolor = c("#7ecdbb", "#37a7db", "grey"))
+
+## Plot a line segment with an arrowhead
+bb_plotSegments(x0 = 4.5, y0 = 0.5, x1 = 7, y1 = 3, default.units = "inches",
+                arrow = arrow(type = "closed"), fill = "black")
+
+## Plot lines with round lineends
+bb_plotSegments(x0 = c(4, 7), y0 = 3.5, x1 = 5.5, y1 = 4.5,
+                default.units = "inches",
+                lwd = 5, lineend = "round")
 
 ## Hide page guides
 bb_pageGuideHide()
 
 }
 \seealso{
-\link[grid]{grid.segments}
+\link[grid]{grid.segments} \link[grid]{arrow}
 }

@@ -28,7 +28,7 @@ Draw a vertical guideline at a specified x-coordinate on a BentoBox page
 }
 \examples{
 ## Create a BentoBox page
-bb_pageCreate(width = 4, height = 4, default.units = "inches")
+bb_pageCreate(width = 6, height = 5, default.units = "inches")
 
 ## Add blue vertical guideline at x = 1.7 inches
 bb_pageGuideVertical(x = 1.7, linecolor = "blue")

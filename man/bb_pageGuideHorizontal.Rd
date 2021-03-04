@@ -28,7 +28,7 @@ Draw a horizontal guideline at a specified y-coordinate on a BentoBox page
 }
 \examples{
 ## Create a BentoBox page
-bb_pageCreate(width = 4, height = 4, default.units = "inches")
+bb_pageCreate(width = 6, height = 5, default.units = "inches")
 
 ## Add red horizontal guideline at y = 2.5 inches
 bb_pageGuideHorizontal(y = 2.5, linecolor = "red")

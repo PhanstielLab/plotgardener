@@ -96,9 +96,10 @@ Plot genomic coordinates along the x or y-axis of a BentoBox plot
 ## Load hg19 genomic annotation packages
 library("TxDb.Hsapiens.UCSC.hg19.knownGene")
 library("org.Hs.eg.db")
+library("BSgenome.Hsapiens.UCSC.hg19")
 
 ## Create BentoBox page
-bb_pageCreate(width = 5, height = 2, default.units = "inches")
+bb_pageCreate(width = 5, height = 3, default.units = "inches")
 
 ## Plot and place gene track on a BentoBox page
 genesPlot <- bb_plotGenes(chrom = "chr8", chromstart = 1000000, chromend = 2000000,
@@ -120,6 +121,12 @@ bb_plotGenomeLabel(chrom = "chr8", chromstart = 1000000, chromend = 2000000, ass
                    scale = "bp",
                    x = 0.5, y = 1.75, length = 4, just = c("left", "top"),
                    default.units = "inches")
+
+## Plot a different genomic label region, zooming in enough to see base pairs
+bb_plotGenomeLabel(chrom = "chr8", chromstart = 1000000, chromend = 1000050, assembly = "hg19",
+                   x = 0.25, y = 2.2, length = 4.5)
+bb_plotGenomeLabel(chrom = "chr8", chromstart = 1000000, chromend = 1000020, assembly = "hg19",
+                   x = 0, y = 2.6, length = 5)
 
 ## Hide page guides
 bb_pageGuideHide()

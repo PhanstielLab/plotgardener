@@ -36,17 +36,24 @@
 #' data("bb_bedData")
 #'
 #' ## Create page
-#' bb_pageCreate(width = 5, height = 5, default.units = "inches")
+#' bb_pageCreate(width = 7.5, height = 5, default.units = "inches")
 #'
 #' ## Plot and place a pileup BED plot
 #' pileupPlot <- bb_plotBed(data = bb_bedData, chrom = "chr21",
-#'                             chromstart = 29073000, chromend = 29074000,
-#'                             fill = "grey", strandSplit = TRUE,
-#'                             x = 0.5, y = 0.5, width = 4, height = 4,
-#'                             just = c("left", "top"), default.units = "inches")
+#'                          chromstart = 29073000, chromend = 29074000,
+#'                          fill = c("#7ecdbb", "#37a7db"),
+#'                          strandSplit = TRUE, colorby = colorby("strand"),
+#'                          x = 0.5, y = 0.25, width = 6.5, height = 4.25,
+#'                          just = c("left", "top"), default.units = "inches")
 #'
 #' ## Annotate genome label
 #' bb_annoGenomeLabel(plot = pileupPlot, x = 0.5, y = 4.5, just = c("left", "top"))
+#'
+#' ## Add text labels
+#' bb_plotText(label = "+ strand", fontcolor = "#37a7db", fontsize = 12,
+#'             x = 0.5, y = 1.25, just = "left")
+#' bb_plotText(label = "- strand", fontcolor = "#7ecdbb", fontsize = 12,
+#'             x = 0.5, y = 3.5, just = "left")
 #'
 #' ## Hide page guides
 #' bb_pageGuideHide()

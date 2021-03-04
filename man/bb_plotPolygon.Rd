@@ -53,11 +53,23 @@ Plot a polygon within a BentoBox layout
 }
 \examples{
 ## Create a BentoBox page
-bb_pageCreate(width = 2, height = 2, default.units = "inches")
+bb_pageCreate(width = 7.5, height = 6, default.units = "inches")
 
-## Plot a 5-sided polygon
-bb_plotPolygon(x = c(0.5, 1, 1.5, 1.25, 0.75), y = c(0.5, 0.25, 0.5, 1.25, 1.25),
-               default.units = "inches")
+## Plot complex polygons one at a time
+bb_plotPolygon(x = c(2.6, 4.65, 4.75, 6.05, 1.4, 1.3), y = c(2.5, 3.1, 3.5, 4, 3.15, 2.8),
+               fill = "#4a168e", linecolor = NA)
+
+bb_plotPolygon(x = c(4.65, 4.75, 6.05, 5.05, 4.4), y = c(3.1, 3.5, 4, 1.45, 1.2),
+               fill = "#9d28b0", linecolor = NA)
+
+## Plot multiple triangles with different id's and colors
+bb_plotPolygon(x = c(0.45, 6.05, 3, 3, 6.05, 5.25, 4.4, 5.05, 4.95,
+                     1.3, 2.6, 1, 4.4, 4.95, 5, 4.95, 5, 6.25),
+               y = c(2.85, 4, 5.55, 5.55, 4, 5.55, 1.2, 1.45, 1.1,
+                     2.8, 2.5, 2.1, 1.2, 1.1, 0.45, 1.1, 0.45, 1.1),
+               id = c(1,1,1, 2, 2, 2, 3, 3, 3, 4, 4, 4, 5, 5, 5, 6, 6, 6),
+               fill = c("#ce93d9", "#bb6ac9", "#4a168e", "#7b1fa0", "#bb6ac9", "#ce93d9"),
+               linecolor = NA)
 
 ## Hide page guides
 bb_pageGuideHide()

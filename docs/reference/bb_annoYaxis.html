@@ -215,8 +215,15 @@ If not logical, must be the same length as the <code>at</code> argument.</p></td
 </div><div class='output co'>#&gt; <span class='message'>Read in dataframe.  Assuming 'chrom' in column1 and 'altchrom' in column2. 10000 BP resolution detected.</span></div><div class='output co'>#&gt; <span class='message'>bb_hicSquare[bb_hicSquare1]</span></div><div class='input'>
 <span class='co'>## Add standard y-axis to Hi-C plot</span>
 <span class='fu'>bb_annoYaxis</span><span class='op'>(</span>plot <span class='op'>=</span> <span class='va'>hicPlot</span>, at <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>28000000</span>, <span class='fl'>29000000</span>, <span class='fl'>30300000</span><span class='op'>)</span>,
-             gp <span class='op'>=</span> <span class='fu'>gpar</span><span class='op'>(</span>fontsize <span class='op'>=</span> <span class='fl'>8</span><span class='op'>)</span><span class='op'>)</span>
-</div><div class='img'><img src='bb_annoYaxis-1.png' alt='' width='787' height='672' /></div><div class='output co'>#&gt; <span class='message'>bb_yaxis[bb_yaxis1]</span></div><div class='img'><img src='bb_annoYaxis-2.png' alt='' width='787' height='672' /></div><div class='input'>
+             fontsize <span class='op'>=</span> <span class='fl'>10</span><span class='op'>)</span>
+</div><div class='img'><img src='bb_annoYaxis-1.png' alt='' width='787' height='672' /></div><div class='output co'>#&gt; <span class='message'>bb_yaxis[bb_yaxis1]</span></div><div class='input'>
+<span class='co'>## Annotate genome label on x-axis</span>
+<span class='fu'><a href='bb_annoGenomeLabel.html'>bb_annoGenomeLabel</a></span><span class='op'>(</span>plot <span class='op'>=</span> <span class='va'>hicPlot</span>, x <span class='op'>=</span> <span class='fl'>1</span>, y <span class='op'>=</span> <span class='fl'>3.03</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='message'>bb_genomeLabel[bb_genomeLabel1]</span></div><div class='input'>
+<span class='co'>## Annotate heatmap legend</span>
+<span class='fu'><a href='bb_annoHeatmapLegend.html'>bb_annoHeatmapLegend</a></span><span class='op'>(</span>plot <span class='op'>=</span> <span class='va'>hicPlot</span>,
+                     x <span class='op'>=</span> <span class='fl'>3.6</span>, y <span class='op'>=</span> <span class='fl'>0.5</span>, width <span class='op'>=</span> <span class='fl'>0.12</span>, height <span class='op'>=</span> <span class='fl'>1.2</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='message'>bb_heatmapLegend[bb_heatmapLegend1]</span></div><div class='img'><img src='bb_annoYaxis-2.png' alt='' width='787' height='672' /></div><div class='input'>
 <span class='co'>## Hide page guides</span>
 <span class='fu'><a href='bb_pageGuideHide.html'>bb_pageGuideHide</a></span><span class='op'>(</span><span class='op'>)</span>
 </div><div class='img'><img src='bb_annoYaxis-3.png' alt='' width='787' height='672' /></div><div class='input'>

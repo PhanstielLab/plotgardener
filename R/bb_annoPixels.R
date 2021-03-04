@@ -27,7 +27,7 @@
 #' data("bb_bedpeData")
 #'
 #' ## Create BentoBox page
-#' bb_pageCreate(width = 4, height = 4, default.units = "inches")
+#' bb_pageCreate(width = 4.5, height = 4, default.units = "inches")
 #'
 #' ## Plot and place a square Hi-C plot
 #' hicPlot <- bb_plotHicSquare(data = bb_imrHicData, resolution = 10000, zrange = c(0, 70),
@@ -35,8 +35,19 @@
 #'                             x = 0.5, y = 0.5, width = 3, height = 3, just = c("left", "top"),
 #'                             default.units = "inches")
 #'
-#' ## Annotate loops of Hi-C plot
-#' bb_annoPixels(plot = hicPlot, data = bb_bedpeData, type = "box", half = "both")
+#' ## Annotate loops of both sides of Hi-C plot with squares
+#' pixels <- bb_annoPixels(plot = hicPlot, data = bb_bedpeData, type = "box", half = "both")
+#'
+#' ## Annotate loops on one side of Hi-C plot with arrows and the other side with circles
+#' bb_pagePlotRemove(plot = pixels)
+#' pixels1 <- bb_annoPixels(plot = hicPlot, data = bb_bedpeData,
+#'                          type = "arrow", half = "top", shift = 8)
+#' pixels2 <- bb_annoPixels(plot = hicPlot, data = bb_bedpeData, type = "circle", half = "bottom")
+#'
+#' ## Annotate heatmap legend
+#' bb_annoHeatmapLegend(plot = hicPlot,
+#'                      x = 3.6, y = 0.5, width = 0.12, height = 1.2,
+#'                      just = c("left", "top"), default.units = "inches")
 #'
 #' ## Annotate genome label
 #' bb_annoGenomeLabel(plot = hicPlot, x = 0.5, y = 3.53, scale = "Mb", just = c("left", "top"))

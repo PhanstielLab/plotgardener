@@ -35,7 +35,8 @@
 #'                                just = c("left", "top"), default.units = "inches")
 #'
 #' ## Plot text
-#' bb_plotText(label = "Chromosome 2", x = 2.25, y = 0.75, just = "center" )
+#' bb_plotText(label = "Chromosome 2", fontcolor = "dark grey",
+#'             x = 4.25, y = 0.65, just = "right" )
 #'
 #' ## Hide page guides
 #' bb_pageGuideHide()

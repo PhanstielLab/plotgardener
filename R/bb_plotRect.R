@@ -20,11 +20,23 @@
 #'
 #' @examples
 #' ## Create a BentoBox page
-#' bb_pageCreate(width = 2, height = 2, default.units = "inches")
+#' bb_pageCreate(width = 7.5, height = 6, default.units = "inches")
 #'
-#' ## Plot a rectangle
-#' bb_plotRect(x = 1, y = 1, width = 0.75, height = 0.25, just = "center",
-#'             default.units = "inches")
+#' ## Plot one rectangle with no fill
+#' bb_plotRect(x = 0.5, y = 0.5, width = 3, height = 3,
+#'             just = c("left", "top"), default.units = "inches",
+#'             lwd = 2, fill = NA)
+#'
+#'
+#' ## Plot two rectangles with same width and height at different locations
+#' bb_plotRect(x = 4, y = c(0.5, 2.25), width = 3, height = 1.25,
+#'             just = c("left", "top"), default.units = "inches",
+#'             fill = "#7ecdbb")
+#'
+#' ## Plot two rectangles with different widths, heights, locations, and colors
+#' bb_plotRect(x = 3.75, y = c(4, 5.25), width = c(6.5, 4.5), height = c(1, 0.25),
+#'             just = "top", default.units = "inches",
+#'             fill = c("#7ecdbb", "#37a7db"), linecolor = NA, alpha = 0.4)
 #'
 #' ## Hide page guides
 #' bb_pageGuideHide()
