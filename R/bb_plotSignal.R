@@ -190,6 +190,12 @@ bb_plotSignal <- function(data, binSize = NA, binCap = TRUE, negData = FALSE, ch
 
     }
 
+    ## Convert to GRanges to check if any overlapping genomic regions
+    signal <- GenomicRanges::makeGRangesFromDataFrame(signal, keep.extra.columns = TRUE)
+    if(any(IRanges::overlapsAny(signal) == TRUE)){
+      stop("Data ranges cannot overlap. Please check `start` and `end` column ranges.", call. = FALSE)
+    }
+
     signal <- as.data.frame(signal)
     return(signal)
 
@@ -215,6 +221,9 @@ bb_plotSignal <- function(data, binSize = NA, binCap = TRUE, negData = FALSE, ch
                                                                  signal[,3] < signaltrack$chromend ))), (2:4)]
     ## Remove any duplicate rows
     signal <- signal[!duplicated(signal),]
+
+    ## Remove any NaN score values
+    signal <- na.omit(signal)
 
     return(signal)
 
@@ -618,6 +627,7 @@ bb_plotSignal <- function(data, binSize = NA, binCap = TRUE, negData = FALSE, ch
       }
 
       posSignal <- signal[which(signal[,3] >= 0),]
+      posSignal[which(posSignal[,3] < 0),][,3] <- 0
       negSignal <- signal[which(signal[,3] < 0),]
       negSignal[,3] <- negSignal[,3]*-1
       split <- TRUE
@@ -635,6 +645,7 @@ bb_plotSignal <- function(data, binSize = NA, binCap = TRUE, negData = FALSE, ch
 
   }
 
+
   # ======================================================================================================================================================================================
   # BIN, LINK, AND SORT DATA AND FIX Y-LIMITS
   # ======================================================================================================================================================================================
@@ -647,11 +658,11 @@ bb_plotSignal <- function(data, binSize = NA, binCap = TRUE, negData = FALSE, ch
 
     signal_track <- set_range(signal1 = posSignal, signal2 = posSignal2, signaltrack = signal_track, split = TRUE)
 
-
     if (nrow(negSignal) >= 2){
       negSignal2 <- parseData(signal = negSignal, signaltrack = signal_track)
       negSignal2[,2] <- negSignal2[,2]*-1
     }
+
 
     signal_track <- set_range(signal1 = negSignal, signal2 = negSignal2, signaltrack = signal_track, split = TRUE, pos = FALSE)
 
