@@ -190,13 +190,14 @@ bb_plotSignal <- function(data, binSize = NA, binCap = TRUE, negData = FALSE, ch
 
     }
 
-    ## Convert to GRanges to check if any overlapping genomic regions
-    signal <- GenomicRanges::makeGRangesFromDataFrame(signal, keep.extra.columns = TRUE)
-    if(any(IRanges::overlapsAny(signal) == TRUE)){
+    # Check for overlapping regions
+    signal <- as.data.frame(signal)
+
+    if (any(signal[,3] %in% signal[,2])){
       stop("Data ranges cannot overlap. Please check `start` and `end` column ranges.", call. = FALSE)
     }
 
-    signal <- as.data.frame(signal)
+
     return(signal)
 
   }
@@ -627,7 +628,6 @@ bb_plotSignal <- function(data, binSize = NA, binCap = TRUE, negData = FALSE, ch
       }
 
       posSignal <- signal[which(signal[,3] >= 0),]
-      posSignal[which(posSignal[,3] < 0),][,3] <- 0
       negSignal <- signal[which(signal[,3] < 0),]
       negSignal[,3] <- negSignal[,3]*-1
       split <- TRUE
