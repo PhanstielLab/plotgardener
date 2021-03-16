@@ -190,13 +190,12 @@ bb_plotSignal <- function(data, binSize = NA, binCap = TRUE, negData = FALSE, ch
 
     }
 
-    # Check for overlapping regions
     signal <- as.data.frame(signal)
 
-    if (any(signal[,3] %in% signal[,2])){
+    ## Check for overlapping data ranges
+    if (any(IRanges::overlapsAny(GenomicRanges::makeGRangesFromDataFrame(signal), drop.self = TRUE) == TRUE)){
       stop("Data ranges cannot overlap. Please check `start` and `end` column ranges.", call. = FALSE)
     }
-
 
     return(signal)
 
