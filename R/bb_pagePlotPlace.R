@@ -371,6 +371,7 @@ bb_pagePlotPlace <- function(plot, x = NULL, y = NULL, width = NULL, height = NU
 
   } else {
 
+    add_bbViewport(vp_name)
     ## Convert coordinates into same units as page
     page_coords <- convert_page(object = object)
 

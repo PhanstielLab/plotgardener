@@ -712,6 +712,8 @@ bb_plotSignal <- function(data, binSize = NA, binCap = TRUE, negData = FALSE, ch
 
   } else {
 
+    add_bbViewport(vp_name)
+
     ## Convert coordinates into same units as page
     page_coords <- convert_page(object = signal_track)
 

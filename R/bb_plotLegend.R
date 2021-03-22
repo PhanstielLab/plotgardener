@@ -160,6 +160,8 @@ bb_plotLegend <- function(legend, fill = NULL, pch = NULL, lty = NULL, orientati
 
     ## Convert coordinates into same units as page
     page_coords <- convert_page(object = legend_plot)
+    add_bbViewport(vp_name)
+
     height <- convertHeight(page_coords$height, unitTo = get("page_units", envir = bbEnv), valueOnly = T)
     width <- convertWidth(page_coords$width, unitTo = get("page_units", envir = bbEnv), valueOnly = T)
     ## Make viewport

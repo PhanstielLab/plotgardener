@@ -763,6 +763,8 @@ bb_plotHicSquare <- function(data, resolution = "auto", zrange = NULL, norm = "K
 
   } else {
 
+    add_bbViewport(vp_name)
+
     ## Convert coordinates into same units as page
     page_coords <- convert_page(object = hic_plot)
 

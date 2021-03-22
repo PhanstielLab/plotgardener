@@ -96,6 +96,8 @@ bb_plotGG <- function(plot, x, y, width, height, just = c("left", "top"), defaul
   currentViewports <- current_viewports()
   vp_name <- paste0("bb_gg", length(grep(pattern = "bb_gg", x = currentViewports)) + 1)
 
+  add_bbViewport(vp_name)
+
   ## Make viewport for gene track
   vp <- viewport(height = page_coords$height, width = page_coords$width,
                  x = page_coords$x, y = page_coords$y,

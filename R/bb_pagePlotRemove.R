@@ -21,9 +21,11 @@
 #' @export
 bb_pagePlotRemove <- function(plot){
 
-  ## error function: need a plot that's a valid BentoBox plot, make sure the plot is plotted
   grid.remove(gPath(plot$grobs$name))
 
+  bb_vpTree <- get("bb_vpTree", envir = bbEnv)
+  bb_vpTree[grep(plot$grobs$name, bb_vpTree)] <- NULL
+  assign("bb_vpTree", bb_vpTree, envir = bbEnv)
 
   ## Need to remove outer viewport of bb_hicTriangle plot
   if (class(plot) == "bb_hicTriangle"){

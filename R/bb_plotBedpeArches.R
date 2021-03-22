@@ -490,6 +490,8 @@ bb_plotBedpeArches <- function(data, chrom, chromstart = NULL, chromend = NULL, 
 
   } else {
 
+    add_bbViewport(vp_name)
+
     ## Convert coordinates into same units as page
     page_coords <- convert_page(object = arches_plot)
 

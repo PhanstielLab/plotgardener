@@ -393,6 +393,8 @@ bb_plotGenes <- function(chrom, chromstart = NULL, chromend = NULL, assembly = "
 
   } else {
 
+    add_bbViewport(vp_name)
+
     ## Convert coordinates into same units as page
     page_coords <- convert_page(object = bb_genes)
 

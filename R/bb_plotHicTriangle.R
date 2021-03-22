@@ -788,6 +788,8 @@ bb_plotHicTriangle <- function(data, resolution = "auto", zrange = NULL, norm = 
                            clip = "on",
                            just = c("left", "bottom"),
                            name = paste0(vp_name, "_outside"))
+
+    add_bbViewport(paste0(vp_name, "_outside"))
   }
 
   # ======================================================================================================================================================================================

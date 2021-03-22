@@ -377,6 +377,7 @@ bb_plotIdeogram <- function(chrom, assembly = "hg19", orientation = "h", showBan
 
     ## Convert coordinates into same units as page
     page_coords <- convert_page(object = ideogram_plot)
+    add_bbViewport(vp_name)
 
     height <- convertHeight(page_coords$height, unitTo = get("page_units", envir = bbEnv), valueOnly = T)
     width <- convertWidth(page_coords$width, unitTo = get("page_units", envir = bbEnv), valueOnly = T)

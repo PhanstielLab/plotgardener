@@ -702,6 +702,8 @@ bb_plotManhattan <- function(data, sigVal = 5e-08, chrom = NULL, chromstart = NU
 
   } else {
 
+    add_bbViewport(vp_name)
+
     ## Convert coordinates into same units as page
     page_coords <- convert_page(object = man_plot)
 

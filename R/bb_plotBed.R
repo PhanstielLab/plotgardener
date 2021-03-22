@@ -368,6 +368,7 @@ bb_plotBed <- function(data, chrom, chromstart = NULL, chromend = NULL, assembly
   currentViewports <- current_viewports()
   vp_name <- paste0("bb_bed", length(grep(pattern = "bb_bed", x = currentViewports)) + 1)
 
+
   ## If placing information is provided but plot == TRUE, set up it's own viewport separate from bb_makepage
   ## Not translating into page_coordinates
   if (is.null(pileup_plot$x) & is.null(pileup_plot$y)){
@@ -390,6 +391,8 @@ bb_plotBed <- function(data, chrom, chromstart = NULL, chromend = NULL, assembly
     }
 
   } else {
+
+    add_bbViewport(vp_name)
 
     ## Convert coordinates into same units as page
     page_coords <- convert_page(object = pileup_plot)

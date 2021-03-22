@@ -97,6 +97,7 @@ bb_plotBase <- function(plot, x, y, width, height, just = c("left", "top"), defa
   ## Name viewport
   currentViewports <- current_viewports()
   vp_name <- paste0("bb_base", length(grep(pattern = "bb_base", x = currentViewports)) + 1)
+  add_bbViewport(vp_name)
 
   ## Make viewport
   vp <- viewport(height = page_coords$height, width = page_coords$width,
