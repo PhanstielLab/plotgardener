@@ -229,10 +229,16 @@ bb_plotSignal <- function(data, binSize = NA, binCap = TRUE, negData = FALSE, ch
 
   }
 
-  ## Define a function that checks and adjust the number of bins
+  ## Define a function that checks and adjust the number/sizes of bins
   check_binNum <- function(signaltrack, binCap){
 
     if (!is.na(signaltrack$binSize)){
+
+      if (signaltrack$binSize %% 0.25 != 0){
+        updated_binSize <- round(signaltrack$binSize/0.25) * 0.25
+        signaltrack$binSize <- updated_binSize
+      }
+
 
       binNum = (signaltrack$chromend - signaltrack$chromstart)/signaltrack$binSize
       signaltrack$binNum <- binNum
@@ -277,8 +283,11 @@ bb_plotSignal <- function(data, binSize = NA, binCap = TRUE, negData = FALSE, ch
       # BIN DATA
       # ===============================================================================================================================================
       ## Find the max signal value for each bin
-      binDF <- data.frame("start" = seq(signaltrack$chromstart, signaltrack$chromend - signaltrack$binSize, signaltrack$binSize),
-                          "end" = seq(signaltrack$chromstart + signaltrack$binSize, signaltrack$chromend, signaltrack$binSize))
+
+      binChromend <- signaltrack$binSize*signaltrack$binNum + signaltrack$chromstart + signaltrack$binSize
+
+      binDF <- data.frame("start" = seq(signaltrack$chromstart, binChromend - signaltrack$binSize, signaltrack$binSize),
+                          "end" = seq(signaltrack$chromstart + signaltrack$binSize, binChromend, signaltrack$binSize))
       binDF$maxScore <- rebinBigwig(signal, binDF)
 
       ## Use binned data as new signal data
@@ -406,7 +415,7 @@ bb_plotSignal <- function(data, binSize = NA, binCap = TRUE, negData = FALSE, ch
   sigGrob <- function(signal, fillCol, lineCol, gp){
 
     gp$col <- lineCol
-    if (!is.null(fillCol)){
+    if (!is.null(fillCol) & !is.na(fillCol)){
 
       if ("alpha" %in% names(gp)){
         fillCol <- makeTransparent(color = fillCol, alpha = gp$alpha)
@@ -560,12 +569,22 @@ bb_plotSignal <- function(data, binSize = NA, binCap = TRUE, negData = FALSE, ch
 
   if (is.null(signal_track$chromstart) & is.null(signal_track$chromend)){
 
-    txdbChecks <- check_loadedPackage(package = signal_track$assembly$TxDb, message = paste(paste0("`", signal_track$assembly$TxDb,"`"),
-                                                                                            "not loaded. Please install and load to generate full chromosome signal track."))
+    if (class(signal_track$assembly$TxDb) == "TxDb"){
+      txdbChecks <- TRUE
+    } else {
+      txdbChecks <- check_loadedPackage(package = signal_track$assembly$TxDb, message = paste(paste0("`", signal_track$assembly$TxDb,"`"),
+                                                                                              "not loaded. Please install and load to generate full chromosome signal track."))
+    }
+
     xscale <- c(0, 1)
     if (txdbChecks == TRUE){
 
-      tx_db <- eval(parse(text = signal_track$assembly$TxDb))
+      if (class(signal_track$assembly$TxDb) == "TxDb"){
+        tx_db <- signal_track$assembly$TxDb
+      } else {
+        tx_db <- eval(parse(text = signal_track$assembly$TxDb))
+      }
+
       assembly_data <- seqlengths(tx_db)
       if (!signal_track$chrom %in% names(assembly_data)){
         warning(paste("Chromosome", paste0("'", signal_track$chrom, "'"), "not found in", paste0("`", signal_track$assembly$TxDb, "`"), "and data for entire chromosome cannot be plotted."), call. = FALSE)
@@ -597,7 +616,7 @@ bb_plotSignal <- function(data, binSize = NA, binCap = TRUE, negData = FALSE, ch
   }
 
   # ======================================================================================================================================================================================
-  # CHECK AND ADJUST BIN NUMBER
+  # CHECK AND ADJUST BIN NUMBER/BIN SIZE
   # ======================================================================================================================================================================================
 
   signal_track <- check_binNum(signaltrack = signal_track, binCap = bb_sigInternal$binCap)
@@ -797,6 +816,7 @@ bb_plotSignal <- function(data, binSize = NA, binCap = TRUE, negData = FALSE, ch
           assign("signal_grobs", addGrob(gTree = get("signal_grobs", envir = bbEnv), child = baselineGrob), envir = bbEnv)
         }
 
+        assign("signalData", posSignal2, envir = globalenv())
         sigGrob(signal = posSignal2, fillCol = bb_sigInternal$fill[1], lineCol = bb_sigInternal$linecolor[1], gp = bb_sigInternal$gp)
         ## Find and make cutoff lines
         cutoffGrobs(signal = posSignal2, signaltrack = signal_track, side = "top")
