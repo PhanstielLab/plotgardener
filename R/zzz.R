@@ -42,11 +42,22 @@
       ## Parse assembly
       assembly <- parse_bbAssembly(assembly = assembly)
 
-      txdbChecks <- check_loadedPackage(package = assembly$TxDb, message = paste(paste0('`', assembly$TxDb, '`'), 'not loaded. Please install and load to define genomic region based on a gene.'))
+      if (class(assembly$TxDb) == 'TxDb'){
+        txdbChecks <- TRUE
+      } else {
+        txdbChecks <- check_loadedPackage(package = assembly$TxDb, message = paste(paste0('`', assembly$TxDb, '`'), 'not loaded. Please install and load to define genomic region based on a gene.'))
+      }
+
       orgdbChecks <- check_loadedPackage(package = assembly$OrgDb, message = paste(paste0('`', assembly$OrgDb, '`'), 'not loaded. Please install and load to define genomic region based on a gene.'))
 
       if (txdbChecks == TRUE & orgdbChecks == TRUE){
-        tx_db <- eval(parse(text = assembly$TxDb))
+
+        if (class(assembly$TxDb) == 'TxDb'){
+          tx_db <- assembly$TxDb
+        } else {
+          tx_db <- eval(parse(text = assembly$TxDb))
+        }
+
         org_db <- eval(parse(text = assembly$OrgDb))
         chromSizes <- seqlengths(tx_db)
         idCol <- assembly$gene.id.column

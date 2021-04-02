@@ -226,9 +226,19 @@ bb_plotGenomeLabel <- function(chrom, chromstart = NULL, chromend = NULL, assemb
 
 
       ## Get assembly data
-      txdbChecks <- check_loadedPackage(package = object$assembly$TxDb, message = paste(paste0("`", object$assembly$TxDb,"`"), "not loaded. Please install and load to label genome."))
+      if (class(object$assembly$TxDb) == "TxDb"){
+        txdbChecks <- TRUE
+      } else {
+        txdbChecks <- check_loadedPackage(package = object$assembly$TxDb, message = paste(paste0("`", object$assembly$TxDb,"`"), "not loaded. Please install and load to label genome."))
+      }
+
       if (txdbChecks == TRUE){
-        tx_db <- eval(parse(text = object$assembly$TxDb))
+        if (class(object$assembly$TxDb) == "TxDb"){
+          tx_db <- object$assembly$TxDb
+        } else {
+          tx_db <- eval(parse(text = object$assembly$TxDb))
+        }
+
         assembly_data <- as.data.frame(setDT(as.data.frame(seqlengths(tx_db)), keep.rownames = TRUE))
         assembly_data <- assembly_data[which(assembly_data[,1] %in% object$chrom),]
         ## get the offsets based on spacer for the assembly
@@ -452,9 +462,19 @@ bb_plotGenomeLabel <- function(chrom, chromstart = NULL, chromend = NULL, assemb
     assign("genomeLabel_grobs", gTree(vp = vp), envir = bbEnv)
 
     ## Get assembly data
-    txdbChecks <- suppressWarnings(check_loadedPackage(package = object$assembly$TxDb, message = NULL))
+    if (class(object$assembly$TxDb) == "TxDb"){
+      txdbChecks <- TRUE
+    } else {
+      txdbChecks <- suppressWarnings(check_loadedPackage(package = object$assembly$TxDb, message = NULL))
+    }
+
     if (txdbChecks == TRUE){
-      tx_db <- eval(parse(text = object$assembly$TxDb))
+      if (class(object$assembly$TxDb) == "TxDb"){
+        tx_db <- object$assembly$TxDb
+      } else {
+        tx_db <- eval(parse(text = object$assembly$TxDb))
+      }
+
       assembly_data <- as.data.frame(setDT(as.data.frame(seqlengths(tx_db)), keep.rownames = TRUE))
       assembly_data <- assembly_data[which(assembly_data[,1] %in% object$chrom),]
       ## Get the offsets based on spacer for the assembly

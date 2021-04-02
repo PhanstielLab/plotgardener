@@ -658,12 +658,22 @@ bb_plotHicTriangle <- function(data, resolution = "auto", zrange = NULL, norm = 
 
   if (is.null(hic_plot$chromstart) & is.null(hic_plot$chromend)){
 
-    txdbChecks <- check_loadedPackage(package = hic_plot$assembly$TxDb, message = paste(paste0("`", hic_plot$assembly$TxDb,"`"),
-                                                                               "not loaded. Please install and load to plot full chromosome HiC map."))
+    if (class(hic_plot$assembly$TxDb) == "TxDb"){
+      txdbChecks <- TRUE
+    } else {
+      txdbChecks <- check_loadedPackage(package = hic_plot$assembly$TxDb, message = paste(paste0("`", hic_plot$assembly$TxDb,"`"),
+                                                                                          "not loaded. Please install and load to plot full chromosome Hi-C map."))
+    }
+
     scale <- c(0, 1)
     if (txdbChecks == TRUE){
 
-      tx_db <- eval(parse(text = hic_plot$assembly$TxDb))
+      if (class(hic_plot$assembly$TxDb) == "TxDb"){
+        tx_db <- hic_plot$assembly$TxDb
+      } else {
+        tx_db <- eval(parse(text = hic_plot$assembly$TxDb))
+      }
+
       assembly_data <- seqlengths(tx_db)
 
       if (!hic_plot$chrom %in% names(assembly_data)){

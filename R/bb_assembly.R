@@ -1,7 +1,7 @@
 #' Make a \code{bb_assembly} object for alternate TxDb, OrgDb,and BSgenome genomic annotation packages
 #'
 #' @param Genome String indicating the name of the genome assembly.
-#' @param TxDb String of the desired TxDb package name.
+#' @param TxDb String of existing TxDb package name or a TxDb object.
 #' @param OrgDb String of the desired OrgDb package name.
 #' @param gene.id.column String of the TxDb column name that refers to the given TxDb gene IDs.
 #' Default value is \code{gene.id.column = "ENTREZID"}.
@@ -23,7 +23,7 @@
 #' @export
 bb_assembly <- function(Genome, TxDb, OrgDb, gene.id.column = "ENTREZID", display.column = "SYMBOL", BSgenome = NULL){
 
-  object <- structure(list(Genome, TxDb, OrgDb, gene.id.column, display.column), class = "bb_assembly")
+  object <- structure(list(Genome = Genome, TxDb = TxDb, OrgDb = OrgDb, gene.id.column = gene.id.column, display.column = display.column), class = "bb_assembly")
   if(!is.null(BSgenome)){
     object$BSgenome <- BSgenome
   }

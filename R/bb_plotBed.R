@@ -283,11 +283,22 @@ bb_plotBed <- function(data, chrom, chromstart = NULL, chromend = NULL, assembly
 
   if (is.null(pileup_plot$chromstart) & is.null(pileup_plot$chromend)){
 
-    txdbChecks <- check_loadedPackage(package = pileup_plot$assembly$TxDb, message = paste(paste0("`", pileup_plot$assembly$TxDb,"`"),
-                                                                                          "not loaded. Please install and load to plot full chromosome pileup plot."))
+    if (class(pileup_plot$assembly$TxDb) == "TxDb"){
+      txdbChecks <- TRUE
+    } else {
+      txdbChecks <- check_loadedPackage(package = pileup_plot$assembly$TxDb, message = paste(paste0("`", pileup_plot$assembly$TxDb,"`"),
+                                                                                             "not loaded. Please install and load to plot full chromosome pileup plot."))
+    }
+
     xscale <- c(0, 1)
     if (txdbChecks == TRUE){
-      tx_db <- eval(parse(text = pileup_plot$assembly$TxDb))
+
+      if (class(pileup_plot$assembly$TxDb) == "TxDb"){
+        tx_db <- pileup_plot$assembly$TxDb
+      } else {
+        tx_db <- eval(parse(text = pileup_plot$assembly$TxDb))
+      }
+
       assembly_data <- seqlengths(tx_db)
 
       if (!pileup_plot$chrom %in% names(assembly_data)){

@@ -433,9 +433,7 @@ defaultGenePriorities <- function(data, assembly, transcript = FALSE){
                      rn4 = "ENSEMBL", sacCer2 = "ORF",
                      sacCer3 = "ORF")
 
-  ## Split TxDb assembly name
-  assemblyName <- unlist(strsplit(assembly$TxDb, split = "[.]"))
-
+  assemblyName <- assembly$Genome
   ## If assembly is included in package, access citations
   if (any(names(availCitations) %in% assemblyName)){
 
@@ -448,7 +446,7 @@ defaultGenePriorities <- function(data, assembly, transcript = FALSE){
       org_db <- eval(parse(text = assembly$OrgDb))
 
       ## Convert gene ids in data to ENTREZID based on previous keytype
-      entrezIDs  <- suppressMessages(select(org_db, keys = data$GENEID, columns = "ENTREZID", keytype = convertIDs[[name]]))
+      entrezIDs  <- suppressMessages(AnnotationDbi::select(org_db, keys = data$GENEID, columns = "ENTREZID", keytype = convertIDs[[name]]))
 
       data$ENTREZID <- entrezIDs
 

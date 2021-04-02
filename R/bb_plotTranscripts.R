@@ -284,15 +284,25 @@ bb_plotTranscripts <- function(chrom, chromstart = NULL, chromend = NULL, assemb
   # GET APPROPRIATE BUILD DATA
   # ======================================================================================================================================================================================
 
-  txdbChecks <- check_loadedPackage(package = bb_transcripts$assembly$TxDb, message = paste(paste0("`", bb_transcripts$assembly$TxDb,"`"),
-                                                                                      "not loaded. Please install and load to plot gene transcripts."))
+  if (class(bb_transcripts$assembly$TxDb) == "TxDb"){
+    txdbChecks <- TRUE
+  } else {
+    txdbChecks <- check_loadedPackage(package = bb_transcripts$assembly$TxDb, message = paste(paste0("`", bb_transcripts$assembly$TxDb,"`"),
+                                                                                              "not loaded. Please install and load to plot gene transcripts."))
+  }
+
   orgdbChecks <- check_loadedPackage(package = bb_transcripts$assembly$OrgDb, message = paste(paste0("`", bb_transcripts$assembly$OrgDb,"`"),
                                                                                         "not loaded. Please install and load to plot gene transcripts."))
   data <- data.frame(matrix(ncol = 22, nrow = 0))
   xscale <- c(0, 1)
   if (txdbChecks == TRUE & orgdbChecks == TRUE){
 
-    tx_db <- eval(parse(text = bb_transcripts$assembly$TxDb))
+    if (class(bb_transcripts$assembly$TxDb) == "TxDb"){
+      tx_db <- bb_transcripts$assembly$TxDb
+    } else {
+      tx_db <- eval(parse(text = bb_transcripts$assembly$TxDb))
+    }
+
     genome <- seqlengths(tx_db)
     displayCol <- bb_transcripts$assembly$display.column
 

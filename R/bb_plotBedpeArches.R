@@ -353,11 +353,21 @@ bb_plotBedpeArches <- function(data, chrom, chromstart = NULL, chromend = NULL, 
 
   if (is.null(arches_plot$chromstart) & is.null(arches_plot$chromend)){
 
-    txdbChecks <- check_loadedPackage(package = arches_plot$assembly$TxDb, message = paste(paste0("`", arches_plot$assembly$TxDb,"`"),
-                                                                                          "not loaded. Please install and load to plot full chromosome ribbon arches."))
+    if (class(arches_plot$assembly$TxDb) == "TxDb"){
+      txdbChecks <- TRUE
+    } else {
+      txdbChecks <- check_loadedPackage(package = arches_plot$assembly$TxDb, message = paste(paste0("`", arches_plot$assembly$TxDb,"`"),
+                                                                                             "not loaded. Please install and load to plot full chromosome ribbon arches."))
+    }
+
     xscale <- c(0, 1)
     if (txdbChecks == TRUE){
-      tx_db <- eval(parse(text = arches_plot$assembly$TxDb))
+      if (class(arches_plot$assembly$TxDb) == "TxDb"){
+        tx_db <- arches_plot$assembly$TxDb
+      } else {
+        tx_db <- eval(parse(text = arches_plot$assembly$TxDb))
+      }
+
       assembly_data <- seqlengths(tx_db)
 
       if (!arches_plot$chrom %in% names(assembly_data)){

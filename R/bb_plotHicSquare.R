@@ -283,11 +283,20 @@ bb_plotHicSquare <- function(data, resolution = "auto", zrange = NULL, norm = "K
     chromstart <- NULL
     chromend <- NULL
 
-    txdbChecks <- check_loadedPackage(package = assembly$TxDb, message = paste(paste0("`", assembly$TxDb,"`"),
-                                                                                        "not loaded. Please install and load to plot full chromosome HiC map."))
+    if (class(assembly$TxDb) == "TxDb"){
+      txdbChecks <- TRUE
+    } else {
+      txdbChecks <- check_loadedPackage(package = assembly$TxDb, message = paste(paste0("`", assembly$TxDb,"`"),
+                                                                                 "not loaded. Please install and load to plot full chromosome Hi-C map."))
+    }
     if (txdbChecks == TRUE){
 
-      tx_db <- eval(parse(text = assembly$TxDb))
+      if (class(assembly$TxDb) == "TxDb"){
+        tx_db <- assembly$TxDb
+      } else {
+        tx_db <- eval(parse(text = assembly$TxDb))
+      }
+
       assembly_data <- seqlengths(tx_db)
 
       if (!chrom %in% names(assembly_data)){

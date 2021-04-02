@@ -511,10 +511,21 @@ bb_plotManhattan <- function(data, sigVal = 5e-08, chrom = NULL, chromstart = NU
       chroms <- as.character(unique(bed_data$chr))
 
       ## Get chrom sizes based on assembly data
-      txdbChecks <- check_loadedPackage(package = man_plot$assembly$TxDb, message = paste(paste0("`", man_plot$assembly$TxDb,"`"), "not loaded. Please install and load to generate full genome assembly Manhattan plot."))
+
+      if (class(man_plot$assembly$TxDb) == "TxDb"){
+        txdbChecks <- TRUE
+      } else {
+        txdbChecks <- check_loadedPackage(package = man_plot$assembly$TxDb, message = paste(paste0("`", man_plot$assembly$TxDb,"`"), "not loaded. Please install and load to generate full genome assembly Manhattan plot."))
+      }
+
       if (txdbChecks == TRUE){
 
-        tx_db <- eval(parse(text = man_plot$assembly$TxDb))
+        if (class(man_plot$assembly$TxDb) == "TxDb"){
+          tx_db <- man_plot$assembly$TxDb
+        } else {
+          tx_db <- eval(parse(text = man_plot$assembly$TxDb))
+        }
+
         assembly_data <- as.data.frame(setDT(as.data.frame(seqlengths(tx_db)), keep.rownames = TRUE))
         assembly_data <- assembly_data[which(assembly_data[,1] %in% chroms),]
         man_plot$chrom <- assembly_data[,1]
@@ -555,10 +566,20 @@ bb_plotManhattan <- function(data, sigVal = 5e-08, chrom = NULL, chromstart = NU
       ## Whole single chromosome needs chromosome length information
       if (is.null(man_plot$chromstart) & is.null(man_plot$chromend)){
 
-        txdbChecks <- check_loadedPackage(package = man_plot$assembly$TxDb, message = paste(paste0("`", man_plot$assembly$TxDb,"`"), "not loaded. Please install and load to generate full chromosome Manhattan plot."))
+        if (class(man_plot$assembly$TxDb) == "TxDb"){
+          txdbChecks <- TRUE
+        } else {
+          txdbChecks <- check_loadedPackage(package = man_plot$assembly$TxDb, message = paste(paste0("`", man_plot$assembly$TxDb,"`"), "not loaded. Please install and load to generate full chromosome Manhattan plot."))
+        }
+
         if (txdbChecks == TRUE){
 
-          tx_db <- eval(parse(text = man_plot$assembly$TxDb))
+          if (class(man_plot$assembly$TxDb) == "TxDb"){
+            tx_db <- man_plot$assembly$TxDb
+          } else {
+            tx_db <- eval(parse(text = man_plot$assembly$TxDb))
+          }
+
           assembly_data <- seqlengths(tx_db)
 
           if (!man_plot$chrom %in% names(assembly_data)){

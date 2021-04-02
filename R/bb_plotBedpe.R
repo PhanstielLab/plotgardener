@@ -268,11 +268,21 @@ bb_plotBedpe <- function(data, chrom, chromstart = NULL, chromend = NULL, assemb
 
   if (is.null(bb_bedpe$chromstart) & is.null(bb_bedpe$chromend)){
 
-    txdbChecks <- check_loadedPackage(package = bb_bedpe$assembly$TxDb, message = paste(paste0("`", bb_bedpe$assembly$TxDb,"`"),
-                                                                                            "not loaded. Please install and load to plot full chromosome paired-end data."))
+    if (class(bb_bedpe$assembly$TxDb) == "TxDb"){
+      txdbChecks <- TRUE
+    } else {
+      txdbChecks <- check_loadedPackage(package = bb_bedpe$assembly$TxDb, message = paste(paste0("`", bb_bedpe$assembly$TxDb,"`"),
+                                                                                          "not loaded. Please install and load to plot full chromosome paired-end data."))
+    }
+
     xscale <- c(0, 1)
     if (txdbChecks == TRUE){
-      tx_db <- eval(parse(text = bb_bedpe$assembly$TxDb))
+      if (class(bb_bedpe$assembly$TxDb) == "TxDb"){
+        tx_db <- bb_bedpe$assembly$TxDb
+      } else {
+        tx_db <- eval(parse(text = bb_bedpe$assembly$TxDb))
+      }
+
       assembly_data <- seqlengths(tx_db)
 
       if (!bb_bedpe$chrom %in% names(assembly_data)){
