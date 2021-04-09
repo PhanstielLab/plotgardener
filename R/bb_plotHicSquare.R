@@ -9,7 +9,7 @@
 #' \itemize{
 #' \item{\code{"observed"}: }{Observed counts.}
 #' \item{\code{"oe"}: }{Observed/expected counts.}
-#' \item{\code{"logoe"}: }{Log2 transformed observed/expected counts.}
+#' \item{\code{"log2oe"}: }{Log2 transformed observed/expected counts.}
 #' }
 #' @param chrom Chromosome of region to be plotted, as a string.
 #' @param chromstart Integer start position on chromosome to be plotted.
@@ -19,6 +19,7 @@
 #' @param altchromend Alternate chromosome integer end position for off-diagonal plotting or interchromosomal plotting.
 #' @param assembly Default genome assembly as a string or a \link[BentoBox]{bb_assembly} object. Default value is \code{assembly = "hg19"}.
 #' @param palette A function describing the color palette to use for representing scale of interaction scores. Default value is \code{palette =  colorRampPalette(brewer.pal(n = 9, "YlGnBu"))}.
+#' @param colorTrans A string specifying how to scale Hi-C colors. Options are "linear", "log", "log2", or "log10". Default value is \code{colorTrans = "linear"}.
 #' @param half A character value indicating which diagonal regions to plot. For intrachromosomal plotting, options are \code{"both"}, \code{"top"}, or \code{"bottom"}. For off-diagonal or interchromosomal plotting, options are \code{"top"} or \code{"bottom"}. Default value is \code{half = "both"}.
 #' \itemize{
 #' \item{\code{"both"}: }{Both diagonal halves.}
@@ -82,7 +83,7 @@
 #'
 #' @export
 bb_plotHicSquare <- function(data, resolution = "auto", zrange = NULL, norm = "KR", matrix = "observed", chrom, chromstart = NULL, chromend = NULL, altchrom = NULL,
-                             altchromstart = NULL, altchromend = NULL, assembly = "hg19", palette = colorRampPalette(brewer.pal(n = 9,"YlGnBu")),
+                             altchromstart = NULL, altchromend = NULL, assembly = "hg19", palette = colorRampPalette(brewer.pal(n = 9,"YlGnBu")), colorTrans = "linear",
                              half = "both", x = NULL, y = NULL, width = NULL, height = NULL, just = c("left", "top"), default.units = "inches",
                              draw = TRUE, params = NULL){
 
@@ -316,121 +317,6 @@ bb_plotHicSquare <- function(data, resolution = "auto", zrange = NULL, norm = "K
 
   }
 
-  ## Define a function to check range of data in dataframe
-  check_dataframe <- function(hic, hic_plot){
-
-    if (is.null(hic_plot$altchrom)){
-
-      if (min(hic[,1]) > hic_plot$chromstart | max(hic[,1]) < hic_plot$chromend | min(hic[,2]) > hic_plot$chromstart | max(hic[,2]) < hic_plot$chromend){
-
-        warning("Data is incomplete for the specified range.", call. = FALSE)
-
-      }
-
-    } else {
-
-      if (min(hic[,1]) > hic_plot$chromstart | max(hic[,1]) < hic_plot$chromend | min(hic[,2]) > hic_plot$altchromstart | max(hic[,2]) < hic_plot$altchromend){
-
-        warning("Data is incomplete for the specified range.", call. = FALSE)
-      }
-
-    }
-
-  }
-
-  ## Define a function to adjust/detect resolution based on .hic file/dataframe
-  adjust_resolution <- function(hic, hic_plot){
-
-    if (!("data.frame" %in% class(hic))){
-
-      if (!is.null(hic_plot$chromstart) & !is.null(hic_plot$chromend)){
-
-        fileResolutions <- readHicBpResolutions(hic)
-
-        ## Get range of data and try to pick a resolution to extract from hic file
-        dataRange <- hic_plot$chromend - hic_plot$chromstart
-        if (dataRange >= 150000000){
-          bestRes <- max(fileResolutions)
-        } else if (dataRange >= 75000000 & dataRange < 150000000){
-          bestRes <- 250000
-          bestRes <- fileResolutions[which(abs(fileResolutions - bestRes) == min(abs(fileResolutions - bestRes)))]
-        } else if (dataRange >= 35000000 & dataRange < 75000000){
-          bestRes <- 100000
-          bestRes <- fileResolutions[which(abs(fileResolutions - bestRes) == min(abs(fileResolutions - bestRes)))]
-        } else if (dataRange >= 20000000 & dataRange < 35000000){
-          bestRes <- 50000
-          bestRes <- fileResolutions[which(abs(fileResolutions - bestRes) == min(abs(fileResolutions - bestRes)))]
-        } else if (dataRange >= 5000000 & dataRange < 20000000){
-          bestRes <- 25000
-          bestRes <- fileResolutions[which(abs(fileResolutions - bestRes) == min(abs(fileResolutions - bestRes)))]
-        } else if (dataRange >= 3000000 & dataRange < 5000000){
-          bestRes <- 10000
-          bestRes <- fileResolutions[which(abs(fileResolutions - bestRes) == min(abs(fileResolutions - bestRes)))]
-        } else {
-          bestRes <- 5000
-          bestRes <- fileResolutions[which(abs(fileResolutions - bestRes) == min(abs(fileResolutions - bestRes)))]
-        }
-
-        hic_plot$resolution <- as.integer(bestRes)
-
-      }
-
-    } else {
-
-      ## Try to detect resolution from data
-      offDiag <- hic[which(hic[,1] != hic[,2]),]
-      bpDiffs <- abs(offDiag[,2] - offDiag[,1])
-      predRes <- min(bpDiffs)
-
-      hic_plot$resolution <- as.integer(predRes)
-
-    }
-
-    return(hic_plot)
-  }
-
-  ## Define a function that reads in hic data for bb_plothic
-  read_data <- function(hic, hic_plot, norm, assembly, type){
-
-    ## if .hic file, read in with bb_rhic
-    if (!("data.frame" %in% class(hic))){
-
-      if (!is.null(hic_plot$chromstart) & !is.null(hic_plot$chromend)){
-
-        readchromstart <- hic_plot$chromstart - hic_plot$resolution
-        readchromend <- hic_plot$chromend + hic_plot$resolution
-        readaltchromstart <- hic_plot$altchromstart - hic_plot$resolution
-        readaltchromend <- hic_plot$altchromend + hic_plot$resolution
-        hic <- suppressWarnings(bb_readHic(file = hic, chrom = hic_plot$chrom, chromstart = readchromstart, chromend = readchromend,
-                                           resolution = hic_plot$resolution, zrange = hic_plot$zrange, norm = norm,
-                                           altchrom = hic_plot$altchrom, altchromstart = readaltchromstart,
-                                           altchromend = readaltchromend, matrix = type))
-      } else {
-        hic <- data.frame(matrix(nrow = 0, ncol = 3))
-      }
-
-
-
-    } else {
-
-      if (!is.null(hic_plot$chromstart) & !is.null(hic_plot$chromend)){
-        message(paste("Read in dataframe.  Assuming \'chrom\' in column1 and \'altchrom\' in column2.", hic_plot$resolution, "BP resolution detected."))
-        ## check range of data in dataframe
-        #check_dataframe(hic = hic, hic_plot = hic_plot)
-      } else {
-        hic <- data.frame(matrix(nrow = 0, ncol = 3))
-      }
-
-    }
-
-    ## Rename columns for later processing
-    colnames(hic) <- c("x", "y", "counts")
-    hic <- na.omit(hic)
-
-    return(hic)
-
-  }
-
   ## Define a function that subsets data
   subset_data <- function(hic, hic_plot){
 
@@ -459,29 +345,6 @@ bb_plotHicSquare <- function(data, resolution = "auto", zrange = NULL, norm = "K
     }
 
     return(hic)
-  }
-
-  ## Define a function that sets the zrange
-  set_zrange <- function(hic, hic_plot){
-
-    ## no zrange, only one value
-    if (is.null(hic_plot$zrange) & length(unique(hic$counts)) == 1){
-
-      zrange <- c(unique(hic$counts), unique(hic$counts))
-      hic_plot$zrange <- zrange
-
-    }
-
-    ## no zrange, multiple values
-    if (is.null(hic_plot$zrange) & length(unique(hic$counts)) > 1){
-
-      zrange <- c(0, max(hic$counts))
-      hic_plot$zrange <- zrange
-
-    }
-
-    return(hic_plot)
-
   }
 
   ## Define a function that sets viewport xscale and yscale
@@ -566,7 +429,7 @@ bb_plotHicSquare <- function(data, resolution = "auto", zrange = NULL, norm = "K
 
   }
 
-  ## Define a function that makes grobs for the hic diagonal
+  ## Define a function that makes grobs for the square hic diagonal
   hic_diagonal <- function(hic, hic_plot, half){
 
     col <- hic[4]
@@ -615,6 +478,7 @@ bb_plotHicSquare <- function(data, resolution = "auto", zrange = NULL, norm = "K
   if(missing(draw)) draw <- NULL
   if(missing(norm)) norm <- NULL
   if(missing(matrix)) matrix <- NULL
+  if(missing(colorTrans)) colorTrans <- NULL
 
   ## Check if hic/chrom arguments are missing (could be in object)
   if(!hasArg(data)) data <- NULL
@@ -624,7 +488,7 @@ bb_plotHicSquare <- function(data, resolution = "auto", zrange = NULL, norm = "K
   bb_hicInternal <- structure(list(data = data, chrom = chrom, chromstart = chromstart, chromend = chromend, half = half, resolution = resolution,
                                    zrange = zrange, palette = palette, assembly = assembly, width = width, height = height, x = x, y = y, just = just,
                                    default.units = default.units, draw = draw, altchrom = altchrom, altchromstart = altchromstart, altchromend = altchromend,
-                                   norm = norm, matrix = matrix), class = "bb_hicInternal")
+                                   norm = norm, matrix = matrix, colorTrans = colorTrans), class = "bb_hicInternal")
 
   bb_hicInternal <- parseParams(bb_params = params, object_params = bb_hicInternal)
 
@@ -638,6 +502,7 @@ bb_plotHicSquare <- function(data, resolution = "auto", zrange = NULL, norm = "K
   if(is.null(bb_hicInternal$draw)) bb_hicInternal$draw <- TRUE
   if(is.null(bb_hicInternal$norm)) bb_hicInternal$norm <- "KR"
   if(is.null(bb_hicInternal$matrix)) bb_hicInternal$matrix <- "observed"
+  if(is.null(bb_hicInternal$colorTrans)) bb_hicInternal$colorTrans <- "linear"
 
   if(is.null(bb_hicInternal$data)) stop("argument \"data\" is missing, with no default.", call. = FALSE)
   if(is.null(bb_hicInternal$chrom)) stop("argument \"chrom\" is missing, with no default.", call. = FALSE)
@@ -648,7 +513,8 @@ bb_plotHicSquare <- function(data, resolution = "auto", zrange = NULL, norm = "K
 
   hic_plot <- structure(list(chrom = bb_hicInternal$chrom, chromstart = bb_hicInternal$chromstart, chromend = bb_hicInternal$chromend, altchrom = bb_hicInternal$altchrom,
                              altchromstart = bb_hicInternal$altchromstart, altchromend = bb_hicInternal$altchromend, assembly = bb_hicInternal$assembly, resolution = bb_hicInternal$resolution,
-                             x = bb_hicInternal$x, y = bb_hicInternal$y, width = bb_hicInternal$width, height = bb_hicInternal$height, just = bb_hicInternal$just, color_palette = NULL, zrange = bb_hicInternal$zrange,
+                              x = bb_hicInternal$x, y = bb_hicInternal$y, width = bb_hicInternal$width, height = bb_hicInternal$height,
+                             just = bb_hicInternal$just, color_palette = NULL, colorTrans = bb_hicInternal$colorTrans, zrange = bb_hicInternal$zrange,
                              half = bb_hicInternal$half, grobs = NULL), class = "bb_hicSquare")
   attr(x = hic_plot, which = "plotted") <- bb_hicInternal$draw
 
@@ -736,7 +602,20 @@ bb_plotHicSquare <- function(data, resolution = "auto", zrange = NULL, norm = "K
   ## if we don't have an appropriate zrange (even after setting it based on a null zrange), can't scale to colors
   if (!is.null(hic_plot$zrange) & length(unique(hic_plot$zrange)) == 2){
 
-    hic$color <- bb_maptocolors(hic$counts, col = bb_hicInternal$palette, num = 100, range = hic_plot$zrange)
+    ## Log color scale
+    if (grepl("log", bb_hicInternal$colorTrans) == TRUE){
+      logBase <- as.numeric(gsub("log", "", bb_hicInternal$colorTrans))
+      if (is.na(logBase)){
+        logBase <- exp(1)
+      }
+
+      hic$counts <- log(hic$counts, base = logBase)
+      hic$color <- bb_maptocolors(hic$counts, col = bb_hicInternal$palette, num = 100, range = log(hic_plot$zrange, logBase))
+    } else {
+      hic$color <- bb_maptocolors(hic$counts, col = bb_hicInternal$palette, num = 100, range = hic_plot$zrange)
+    }
+
+
     hic_plot$color_palette <- bb_hicInternal$palette
 
     }

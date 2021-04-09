@@ -16,7 +16,7 @@ bb_assembly(
 \arguments{
 \item{Genome}{String indicating the name of the genome assembly.}
 
-\item{TxDb}{String of the desired TxDb package name.}
+\item{TxDb}{String of existing TxDb package name or a TxDb object.}
 
 \item{OrgDb}{String of the desired OrgDb package name.}
 

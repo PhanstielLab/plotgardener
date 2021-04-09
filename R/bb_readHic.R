@@ -20,7 +20,7 @@
 #' \itemize{
 #' \item{\code{"observed"}: }{Observed counts.}
 #' \item{\code{"oe"}: }{Observed/expected counts.}
-#' \item{\code{"logoe"}: }{Log2 transformed observed/expected counts.}
+#' \item{\code{"log2oe"}: }{Log2 transformed observed/expected counts.}
 #' }
 #' @param params An optional \link[BentoBox]{bb_params} object containing relevant function parameters.
 #'
@@ -30,7 +30,7 @@
 #'
 #' @export
 bb_readHic <- function(file, chrom, chromstart = NULL, chromend = NULL, altchrom = NULL, altchromstart = NULL, altchromend = NULL, assembly = "hg19", resolution = "auto", res_scale = "BP",
-                       zrange = NULL, norm = "KR",  matrix = "observed", params = NULL){
+                       zrange = NULL, norm = "KR", matrix = "observed", params = NULL){
 
 
   # ======================================================================================================================================================================================

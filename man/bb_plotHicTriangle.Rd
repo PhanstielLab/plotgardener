@@ -15,6 +15,7 @@ bb_plotHicTriangle(
   chromend = NULL,
   assembly = "hg19",
   palette = colorRampPalette(brewer.pal(n = 9, "YlGnBu")),
+  colorTrans = "linear",
   x = NULL,
   y = NULL,
   width = NULL,
@@ -39,7 +40,7 @@ dataframes, "auto" will attempt to detect the resolution the dataframe contains.
 \itemize{
 \item{\code{"observed"}: }{Observed counts.}
 \item{\code{"oe"}: }{Observed/expected counts.}
-\item{\code{"logoe"}: }{Log2 transformed observed/expected counts.}
+\item{\code{"log2oe"}: }{Log2 transformed observed/expected counts.}
 }}
 
 \item{chrom}{Chromosome of region to be plotted, as a string.}
@@ -51,6 +52,8 @@ dataframes, "auto" will attempt to detect the resolution the dataframe contains.
 \item{assembly}{Default genome assembly as a string or a \link[BentoBox]{bb_assembly} object. Default value is \code{assembly = "hg19"}.}
 
 \item{palette}{A function describing the color palette to use for representing scale of interaction scores. Default value is \code{palette =  colorRampPalette(brewer.pal(n = 9, "YlGnBu"))}.}
+
+\item{colorTrans}{A string specifying how to scale Hi-C colors. Options are "linear", "log", "log2", or "log10". Default value is \code{colorTrans = "linear"}.}
 
 \item{x}{A numeric or unit object specifying triangle Hi-C plot x-location.}
 

@@ -8,6 +8,8 @@
 #' }
 #' @param fontsize A numeric specifying text fontsize in points. Default value is \code{fontsize = 8}.
 #' @param fontcolor Character value specfying text fontcolor. Default value is \code{fontcolor = "dark grey"}.
+#' @param ticks Logical value specifying if tick marks on the heatmap colorbar should be visible. Default value is \code{ticks = FALSE}.
+#' @param breaks A numeric vector specifying tick breaks. Default value is \code{breaks = NULL}.
 #' @param border Logical value indicating whether to add a border around heatmap legend. Default value is \code{border = FALSE}.
 #' @param x A numeric or unit object specifying x-location of legend.
 #' @param y A numeric, unit object, or character containing a "b" combined with a numeric value specifying y-location of legend. The character value will
@@ -47,7 +49,7 @@
 #' bb_pageGuideHide()
 #'
 #' @export
-bb_annoHeatmapLegend <- function(plot, orientation = "v", fontsize = 8, fontcolor = "dark grey", border = FALSE, x, y, width, height,
+bb_annoHeatmapLegend <- function(plot, orientation = "v", fontsize = 8, fontcolor = "dark grey", ticks = FALSE, breaks = NULL, border = FALSE, x, y, width, height,
                                  just = c("left", "top"), default.units = "inches", params = NULL, ...){
 
   # ======================================================================================================================================================================================
@@ -82,6 +84,7 @@ bb_annoHeatmapLegend <- function(plot, orientation = "v", fontsize = 8, fontcolo
   if(missing(orientation)) orientation <- NULL
   if(missing(fontsize)) fontsize <- NULL
   if(missing(fontcolor)) fontcolor <- NULL
+  if(missing(ticks)) ticks <- NULL
   if(missing(just)) just <- NULL
   if(missing(default.units)) default.units <- NULL
 
@@ -94,8 +97,8 @@ bb_annoHeatmapLegend <- function(plot, orientation = "v", fontsize = 8, fontcolo
 
   ## Compile all parameters into an internal object
   bb_heatmapLegendInternal <- structure(list(plot = plot, border = border, x = x, y = y, width = width, height = height,
-                                     orientation = orientation, fontsize = fontsize, fontcolor = fontcolor,
-                                     just = just, default.units = default.units, gp = gpar()), class = "bb_heatmapLegendInternal")
+                                     orientation = orientation, fontsize = fontsize, fontcolor = fontcolor, ticks = ticks,
+                                     breaks = breaks, just = just, default.units = default.units, gp = gpar()), class = "bb_heatmapLegendInternal")
 
   bb_heatmapLegendInternal <- parseParams(bb_params = params, object_params = bb_heatmapLegendInternal)
 
@@ -104,6 +107,7 @@ bb_annoHeatmapLegend <- function(plot, orientation = "v", fontsize = 8, fontcolo
   if(is.null(bb_heatmapLegendInternal$orientation)) bb_heatmapLegendInternal$orientation <- "v"
   if(is.null(bb_heatmapLegendInternal$fontsize)) bb_heatmapLegendInternal$fontsize <- 8
   if(is.null(bb_heatmapLegendInternal$fontcolor)) bb_heatmapLegendInternal$fontcolor <- "dark grey"
+  if(is.null(bb_heatmapLegendInternal$ticks)) bb_heatmapLegendInternal$ticks <- FALSE
   if(is.null(bb_heatmapLegendInternal$just)) bb_heatmapLegendInternal$just <- c("left", "top")
   if(is.null(bb_heatmapLegendInternal$default.units)) bb_heatmapLegendInternal$default.units <- "inches"
 
@@ -113,7 +117,7 @@ bb_annoHeatmapLegend <- function(plot, orientation = "v", fontsize = 8, fontcolo
   if ("col" %in% names(bb_heatmapLegendInternal$gp)){
     bb_heatmapLegendInternal$gp$linecol <- bb_heatmapLegendInternal$gp$col
   } else {
-    bb_heatmapLegendInternal$gp$linecol <- "black"
+    bb_heatmapLegendInternal$gp$linecol <- "dark grey"
   }
   bb_heatmapLegendInternal$gp$col <- bb_heatmapLegendInternal$fontcolor
 
@@ -183,7 +187,53 @@ bb_annoHeatmapLegend <- function(plot, orientation = "v", fontsize = 8, fontcolo
   # SCALE COLORS
   # ======================================================================================================================================================================================
 
-  color_scale <- bb_maptocolors(vec = seq(bb_heatmapLegend$min_val, bb_heatmapLegend$max_val, length.out = 100), col = bb_heatmapLegend$color_palette)
+  ## Linear scaling
+  minVal <- bb_heatmapLegend$min_val
+  maxVal <- bb_heatmapLegend$max_val
+
+  ## Log scaling
+  if (!is.null(bb_heatmapLegendInternal$plot$colorTrans)){
+
+    if (grepl("log", bb_heatmapLegendInternal$plot$colorTrans) == TRUE){
+      logBase <- as.numeric(gsub("log", "", bb_heatmapLegendInternal$plot$colorTrans))
+      if (is.na(logBase)){
+        logBase <- exp(1)
+      }
+
+      minVal <- log(bb_heatmapLegend$min_val, base = logBase)
+      maxVal <- log(bb_heatmapLegend$max_val, base = logBase)
+    }
+
+  }
+
+  color_scale <- bb_maptocolors(vec = seq(minVal, maxVal, length.out = 100), col = bb_heatmapLegend$color_palette)
+
+  # ======================================================================================================================================================================================
+  # TICK BREAKS
+  # ======================================================================================================================================================================================
+
+  if (bb_heatmapLegendInternal$ticks == TRUE){
+
+    if (!is.null(bb_heatmapLegendInternal$breaks)){
+      breaks <- bb_heatmapLegendInternal$breaks
+      breaks <- breaks[which(breaks >= bb_heatmapLegend$min_val & breaks <= bb_heatmapLegend$max_val)]
+    } else {
+      breaks <- pretty(seq(minVal, maxVal, length.out = 100))
+      if (!is.null(bb_heatmapLegendInternal$plot$colorTrans)){
+        if (grepl("log", bb_heatmapLegendInternal$plot$colorTrans) == TRUE){
+          breaks <- pretty(seq(minVal, maxVal, length.out = 100), 20)
+          breaks <- breaks[which(breaks > minVal & breaks < maxVal)]
+          breaks <- breaks[(length(breaks) - 4):length(breaks)]
+          breaks <- logBase^breaks
+        }
+      }
+
+    }
+
+    bb_heatmapLegend$ticks <- breaks
+
+  }
+
 
   # ======================================================================================================================================================================================
   # INITIALIZE GTREE
@@ -198,9 +248,9 @@ bb_annoHeatmapLegend <- function(plot, orientation = "v", fontsize = 8, fontcolo
 
     digitLab <- textGrob(label = 0, x = 0.5, y = 0, just = c("center", "bottom"), default.units = "npc",
                        gp = bb_heatmapLegendInternal$gp)
-    lowLab <- textGrob(label = bb_heatmapLegend$min_val, x = 0.5, y = 0, just = c("center", "bottom"), default.units = "npc",
+    lowLab <- textGrob(label = format(bb_heatmapLegend$min_val, scientific = FALSE), x = 0.5, y = 0, just = c("center", "bottom"), default.units = "npc",
                        gp = bb_heatmapLegendInternal$gp)
-    highLab <- textGrob(label = bb_heatmapLegend$max_val, x = 0.5, y = 1, just = c("center", "top"), default.units = "npc",
+    highLab <- textGrob(label = format(bb_heatmapLegend$max_val, scientific = FALSE, digits = 0), x = 0.5, y = 1, just = c("center", "top"), default.units = "npc",
                         gp = bb_heatmapLegendInternal$gp)
 
     lH <- convertHeight(x = grobHeight(lowLab), unitTo = "npc", valueOnly = T)
@@ -208,18 +258,31 @@ bb_annoHeatmapLegend <- function(plot, orientation = "v", fontsize = 8, fontcolo
     dH <- convertHeight(x = grobHeight(digitLab), unitTo = "npc", valueOnly = T)
 
     new_height <- 1 - (lH + hH + dH)
-
+    yMax <- 1 - (hH + (0.5*dH))
     color_scale <- rasterGrob(rev(color_scale), width = page_coords$width, height = unit(new_height, "npc"),
-                              y = unit(1 - (hH + (0.5 * dH)), "npc"), x = unit(0.5, "npc"), just = "top")
+                              y = unit(yMax, "npc"), x = unit(0.5, "npc"), just = "top")
+    if (bb_heatmapLegendInternal$ticks == TRUE){
 
+      tickVP <- viewport(x = unit(0.5, "npc"), y = unit(yMax, "npc"),
+                         width = page_coords$width, height = unit(new_height, "npc"),
+                         just = "top",
+                         yscale = c(bb_heatmapLegend$min_val, bb_heatmapLegend$max_val),
+                         name = paste0(vp_name, "_ticks"))
+      leftIDs <- 1:length(breaks)
+      rightIDs <- (length(breaks) + 1):(length(breaks) + length(breaks))
+      tickGrobs <- polylineGrob(x = unit(c(rep(c(0, 0.15), length(breaks)), (rep(c(0.85, 1), length(breaks)))), "npc"),
+                                y = c(unlist(lapply(breaks, rep, 2)), unlist(lapply(breaks, rep, 2))),
+                                id = c(unlist(lapply(leftIDs, rep, 2)), unlist(lapply(rightIDs, rep, 2))),
+                                default.units = "native",
+                                gp = gpar(col = bb_heatmapLegendInternal$gp$linecol),
+                                vp = tickVP)
+    }
 
     if (bb_heatmapLegendInternal$border == T){
       bb_heatmapLegendInternal$gp$fill <- NA
       bb_heatmapLegendInternal$gp$col <- bb_heatmapLegendInternal$gp$linecol
       borderGrob <- rectGrob(y = unit(1 - (hH + (0.5 * dH)), "npc"), just = "top", width = page_coords$width, height = unit(new_height, "npc"),
                 gp = bb_heatmapLegendInternal$gp)
-
-
     }
 
   }
@@ -231,9 +294,9 @@ bb_annoHeatmapLegend <- function(plot, orientation = "v", fontsize = 8, fontcolo
 
     digitLab <- textGrob(label = 0, x = 0, y = 0.5, just = c("left", "center"), default.units = "npc",
                          gp = bb_heatmapLegendInternal$gp)
-    lowLab <- textGrob(label = bb_heatmapLegend$min_val, x = 0, y = 0.5, just = c("left", "center"), default.units = "npc",
+    lowLab <- textGrob(label = format(bb_heatmapLegend$min_val, scientific = FALSE), x = 0, y = 0.5, just = c("left", "center"), default.units = "npc",
                        gp = bb_heatmapLegendInternal$gp)
-    highLab <- textGrob(label = bb_heatmapLegend$max_val, x = 1, y = 0.5, just = c("right", "center"), default.units = "npc",
+    highLab <- textGrob(label = format(bb_heatmapLegend$max_val, scientific = FALSE, digits = 0), x = 1, y = 0.5, just = c("right", "center"), default.units = "npc",
                         gp = bb_heatmapLegendInternal$gp)
 
     lW <- convertWidth(x = grobWidth(lowLab), unitTo = "npc", valueOnly = T)
@@ -241,9 +304,26 @@ bb_annoHeatmapLegend <- function(plot, orientation = "v", fontsize = 8, fontcolo
     dW <- convertWidth(x = grobWidth(digitLab), unitTo = "npc", valueOnly = T)
 
     new_width <- 1 - (hW + lW + dW)
-
+    xMin <- lW + (0.5 * dW)
     color_scale <- rasterGrob(matrix(data = color_scale, nrow = 1, ncol = length(color_scale)), width = unit(new_width, "npc"), height = page_coords$height,
-                x = unit(lW + (0.5 * dW), "npc"), just = "left")
+                              x = unit(xMin, "npc"), just = "left")
+
+    if (bb_heatmapLegendInternal$ticks == TRUE){
+
+      tickVP <- viewport(x = unit(xMin, "npc"), y = unit(0.5, "npc"),
+                         width = unit(new_width, "npc"), height = page_coords$height,
+                         just = "left",
+                         xscale = c(bb_heatmapLegend$min_val, bb_heatmapLegend$max_val),
+                         name = paste0(vp_name, "_ticks"))
+      bottomIDs <- 1:length(breaks)
+      topIDs <- (length(breaks) + 1):(length(breaks) + length(breaks))
+      tickGrobs <- polylineGrob(x = c(unlist(lapply(breaks, rep, 2)), unlist(lapply(breaks, rep, 2))),
+                                y = unit(c(rep(c(0, 0.15), length(breaks)), rep(c(0.85, 1), length(breaks))), "npc"),
+                                id = c(unlist(lapply(bottomIDs, rep, 2)), unlist(lapply(topIDs, rep, 2))),
+                                default.units = "native",
+                                gp = gpar(col = bb_heatmapLegendInternal$gp$linecol),
+                                vp = tickVP)
+    }
 
     if (bb_heatmapLegendInternal$border == T){
       bb_heatmapLegendInternal$gp$fill <- NA
@@ -266,6 +346,10 @@ bb_annoHeatmapLegend <- function(plot, orientation = "v", fontsize = 8, fontcolo
   assign("heatmapLegend_grobs", setChildren(get("heatmapLegend_grobs", envir = bbEnv), children = gList(lowLab, highLab, color_scale)), envir = bbEnv)
   if (bb_heatmapLegendInternal$border == T){
     assign("heatmapLegend_grobs", addGrob(gTree = get("heatmapLegend_grobs", envir = bbEnv), child = borderGrob), envir = bbEnv)
+  }
+
+  if (bb_heatmapLegendInternal$ticks == T){
+    assign("heatmapLegend_grobs", addGrob(gTree = get("heatmapLegend_grobs", envir = bbEnv), child = tickGrobs), envir = bbEnv)
   }
 
   ## Add grobs to object

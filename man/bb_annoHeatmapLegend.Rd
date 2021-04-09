@@ -9,6 +9,8 @@ bb_annoHeatmapLegend(
   orientation = "v",
   fontsize = 8,
   fontcolor = "dark grey",
+  ticks = FALSE,
+  breaks = NULL,
   border = FALSE,
   x,
   y,
@@ -32,6 +34,10 @@ bb_annoHeatmapLegend(
 \item{fontsize}{A numeric specifying text fontsize in points. Default value is \code{fontsize = 8}.}
 
 \item{fontcolor}{Character value specfying text fontcolor. Default value is \code{fontcolor = "dark grey"}.}
+
+\item{ticks}{Logical value specifying if tick marks on the heatmap colorbar should be visible. Default value is \code{ticks = FALSE}.}
+
+\item{breaks}{A numeric vector specifying tick breaks. Default value is \code{breaks = NULL}.}
 
 \item{border}{Logical value indicating whether to add a border around heatmap legend. Default value is \code{border = FALSE}.}
 

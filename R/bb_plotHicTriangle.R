@@ -9,13 +9,14 @@
 #' \itemize{
 #' \item{\code{"observed"}: }{Observed counts.}
 #' \item{\code{"oe"}: }{Observed/expected counts.}
-#' \item{\code{"logoe"}: }{Log2 transformed observed/expected counts.}
+#' \item{\code{"log2oe"}: }{Log2 transformed observed/expected counts.}
 #' }
 #' @param chrom Chromosome of region to be plotted, as a string.
 #' @param chromstart Integer start position on chromosome to be plotted.
 #' @param chromend Integer end position on chromosome to be plotted.
 #' @param assembly Default genome assembly as a string or a \link[BentoBox]{bb_assembly} object. Default value is \code{assembly = "hg19"}.
 #' @param palette A function describing the color palette to use for representing scale of interaction scores. Default value is \code{palette =  colorRampPalette(brewer.pal(n = 9, "YlGnBu"))}.
+#' @param colorTrans A string specifying how to scale Hi-C colors. Options are "linear", "log", "log2", or "log10". Default value is \code{colorTrans = "linear"}.
 #' @param x A numeric or unit object specifying triangle Hi-C plot x-location.
 #' @param y A numeric, unit object, or character containing a "b" combined with a numeric value specifying triangle Hi-C plot y-location. The character value will
 #' place the triangle Hi-C plot y relative to the bottom of the most recently plotted BentoBox plot according to the units of the BentoBox page.
@@ -72,7 +73,7 @@
 #'
 #' @export
 bb_plotHicTriangle <- function(data, resolution = "auto", zrange = NULL, norm = "KR", matrix = "observed", chrom,  chromstart = NULL, chromend = NULL, assembly = "hg19",
-                               palette = colorRampPalette(brewer.pal(n = 9, "YlGnBu")), x = NULL, y = NULL, width = NULL, height = NULL,
+                               palette = colorRampPalette(brewer.pal(n = 9, "YlGnBu")), colorTrans = "linear", x = NULL, y = NULL, width = NULL, height = NULL,
                                just = c("left", "top"), default.units = "inches", draw = TRUE, params = NULL){
 
   # ======================================================================================================================================================================================
@@ -234,105 +235,6 @@ bb_plotHicTriangle <- function(data, resolution = "auto", zrange = NULL, norm = 
 
   }
 
-  ## Define a function to check range of data in dataframe
-  check_dataframe <- function(hic, hic_plot){
-
-    if (min(hic[,1]) > hic_plot$chromstart | max(hic[,1]) < hic_plot$chromend | min(hic[,2]) > hic_plot$chromstart | max(hic[,2]) < hic_plot$chromend){
-
-      warning("Data is incomplete for the specified range.", call. = FALSE)
-
-    }
-
-  }
-
-  ## Define a function to adjust/detect resolution based on .hic file/dataframe
-  adjust_resolution <- function(hic, hic_plot){
-
-    if (!("data.frame" %in% class(hic))){
-
-      if (!is.null(hic_plot$chromstart) & !is.null(hic_plot$chromend)){
-        fileResolutions <- readHicBpResolutions(hic)
-        ## Get range of data and try to pick a resolution to extract from hic file
-        dataRange <- hic_plot$chromend - hic_plot$chromstart
-        if (dataRange >= 150000000){
-          bestRes <- max(fileResolutions)
-        } else if (dataRange >= 75000000 & dataRange < 150000000){
-          bestRes <- 250000
-          bestRes <- fileResolutions[which(abs(fileResolutions - bestRes) == min(abs(fileResolutions - bestRes)))]
-        } else if (dataRange >= 35000000 & dataRange < 75000000){
-          bestRes <- 100000
-          bestRes <- fileResolutions[which(abs(fileResolutions - bestRes) == min(abs(fileResolutions - bestRes)))]
-        } else if (dataRange >= 20000000 & dataRange < 35000000){
-          bestRes <- 50000
-          bestRes <- fileResolutions[which(abs(fileResolutions - bestRes) == min(abs(fileResolutions - bestRes)))]
-        } else if (dataRange >= 5000000 & dataRange < 20000000){
-          bestRes <- 25000
-          bestRes <- fileResolutions[which(abs(fileResolutions - bestRes) == min(abs(fileResolutions - bestRes)))]
-        } else if (dataRange >= 3000000 & dataRange < 5000000){
-          bestRes <- 10000
-          bestRes <- fileResolutions[which(abs(fileResolutions - bestRes) == min(abs(fileResolutions - bestRes)))]
-        } else {
-          bestRes <- 5000
-          bestRes <- fileResolutions[which(abs(fileResolutions - bestRes) == min(abs(fileResolutions - bestRes)))]
-        }
-
-        hic_plot$resolution <- as.integer(bestRes)
-
-      }
-
-
-    } else {
-
-      ## Try to detect resolution from data
-      offDiag <- hic[which(hic[,1] != hic[,2]),]
-      bpDiffs <- abs(offDiag[,2] - offDiag[,1])
-      predRes <- min(bpDiffs)
-
-      hic_plot$resolution <- as.integer(predRes)
-
-    }
-
-    return(hic_plot)
-  }
-
-  ## Define a function that reads in hic data
-  read_data <- function(hic, hic_plot, norm, assembly, type){
-
-    ## if .hic file, read in with bb_rhic
-    if (!("data.frame" %in% class(hic))){
-
-      if (!is.null(hic_plot$chromstart) & !is.null(hic_plot$chromend)){
-
-        readchromstart <- hic_plot$chromstart - hic_plot$resolution
-        readchromend <- hic_plot$chromend + hic_plot$resolution
-
-        hic <- bb_readHic(file = hic, chrom = hic_plot$chrom, chromstart = readchromstart, chromend = readchromend,
-                          resolution = hic_plot$resolution, zrange = hic_plot$zrange, norm = norm, matrix = type)
-
-      } else {
-        hic <- data.frame(matrix(nrow = 0, ncol = 3))
-      }
-
-
-    } else {
-
-      if (!is.null(hic_plot$chromstart) & !is.null(hic_plot$chromend)){
-        message(paste("Read in dataframe.", hic_plot$resolution, "BP resolution detected."))
-        ## check range of data in dataframe
-        #check_dataframe(hic = hic, hic_plot = hic_plot)
-      } else {
-        hic <- data.frame(matrix(nrow = 0, ncol = 3))
-      }
-
-    }
-    ## Rename columns for later processing
-    colnames(hic) <- c("x", "y", "counts")
-    hic <- na.omit(hic)
-
-    return(hic)
-
-  }
-
   ## Define a function that subsets data
   subset_data <- function(hic, hic_plot){
 
@@ -345,29 +247,6 @@ bb_plotHicTriangle <- function(data, resolution = "auto", zrange = NULL, norm = 
 
 
     return(hic)
-  }
-
-  ## Define a function that sets the zrange
-  set_zrange <- function(hic, hic_plot){
-
-    ## no zrange, only one value
-    if (is.null(hic_plot$zrange) & length(unique(hic$counts)) == 1){
-
-      zrange <- c(unique(hic$counts), unique(hic$counts))
-      hic_plot$zrange <- zrange
-
-    }
-
-    ## no zrange, multiple values
-    if (is.null(hic_plot$zrange) & length(unique(hic$counts)) > 1){
-
-      zrange <- c(0, max(hic$counts))
-      hic_plot$zrange <- zrange
-
-    }
-
-    return(hic_plot)
-
   }
 
   ## Define a function that converts the location to the bottom left of the triangle based on justification
@@ -552,7 +431,7 @@ bb_plotHicTriangle <- function(data, resolution = "auto", zrange = NULL, norm = 
     return(clippedHic)
   }
 
-  ## Define a function that makes grobs for the hic diagonal
+  ## Define a function that makes grobs for the triangle hic diagonal
   hic_diagonal <- function(hic){
 
     col <- hic[4]
@@ -588,6 +467,7 @@ bb_plotHicTriangle <- function(data, resolution = "auto", zrange = NULL, norm = 
   if(missing(default.units)) default.units <- NULL
   if(missing(draw)) draw <- NULL
   if(missing(matrix)) matrix <- NULL
+  if(missing(colorTrans)) colorTrans <- NULL
 
   ## Check if hic/chrom arguments are missing (could be in object)
   if(!hasArg(data)) data <- NULL
@@ -595,7 +475,7 @@ bb_plotHicTriangle <- function(data, resolution = "auto", zrange = NULL, norm = 
 
   ## Compile all parameters into an internal object
   bb_thicInternal <- structure(list(data = data, chrom = chrom, chromstart = chromstart, chromend = chromend, resolution = resolution,
-                                    zrange = zrange, palette = palette, assembly = assembly, width = width, height = height, x = x,
+                                    zrange = zrange, palette = palette, assembly = assembly, width = width, height = height, x = x, colorTrans = colorTrans,
                                     y = y, just = just, norm = norm, default.units = default.units, draw = draw, matrix = matrix), class = "bb_thicInternal")
 
   bb_thicInternal <- parseParams(bb_params = params, object_params = bb_thicInternal)
@@ -609,6 +489,8 @@ bb_plotHicTriangle <- function(data, resolution = "auto", zrange = NULL, norm = 
   if(is.null(bb_thicInternal$default.units)) bb_thicInternal$default.units <- "inches"
   if(is.null(bb_thicInternal$draw)) bb_thicInternal$draw <- TRUE
   if(is.null(bb_thicInternal$matrix)) bb_thicInternal$matrix <- "observed"
+  if(is.null(bb_thicInternal$colorTrans)) bb_thicInternal$colorTrans <- "linear"
+
   # ======================================================================================================================================================================================
   # INITIALIZE OBJECT
   # ======================================================================================================================================================================================
@@ -616,7 +498,7 @@ bb_plotHicTriangle <- function(data, resolution = "auto", zrange = NULL, norm = 
   hic_plot <- structure(list(chrom = bb_thicInternal$chrom, chromstart = bb_thicInternal$chromstart, chromend = bb_thicInternal$chromend, altchrom = bb_thicInternal$chrom,
                              altchromstart = bb_thicInternal$chromstart, altchromend = bb_thicInternal$chromend, assembly = bb_thicInternal$assembly, resolution = bb_thicInternal$resolution,
                              x = bb_thicInternal$x, y = bb_thicInternal$y, width = bb_thicInternal$width, height = bb_thicInternal$height, just = NULL,
-                             color_palette = NULL, zrange = bb_thicInternal$zrange, outsideVP = NULL, grobs = NULL), class = "bb_hicTriangle")
+                             color_palette = NULL, colorTrans = bb_thicInternal$colorTrans, zrange = bb_thicInternal$zrange, outsideVP = NULL, grobs = NULL), class = "bb_hicTriangle")
   attr(x = hic_plot, which = "plotted") <- bb_thicInternal$draw
 
   # ======================================================================================================================================================================================
@@ -728,7 +610,18 @@ bb_plotHicTriangle <- function(data, resolution = "auto", zrange = NULL, norm = 
   ## if we don't have an appropriate zrange (even after setting it based on a null zrange), can't scale to colors
   if (!is.null(hic_plot$zrange) & length(unique(hic_plot$zrange)) == 2){
 
-    hic$color <- bb_maptocolors(hic$counts, col = bb_thicInternal$palette, num = 100, range = hic_plot$zrange)
+    if (grepl("log", bb_thicInternal$colorTrans) == TRUE){
+      logBase <- as.numeric(gsub("log", "", bb_thicInternal$colorTrans))
+      if (is.na(logBase)){
+        logBase <- exp(1)
+      }
+
+      hic$counts <- log(hic$counts, base = logBase)
+      hic$color <- bb_maptocolors(hic$counts, col = bb_thicInternal$palette, num = 100, range = log(hic_plot$zrange, logBase))
+    } else {
+      hic$color <- bb_maptocolors(hic$counts, col = bb_thicInternal$palette, num = 100, range = hic_plot$zrange)
+    }
+
     hic_plot$color_palette <- bb_thicInternal$palette
 
     }

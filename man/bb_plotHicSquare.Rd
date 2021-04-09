@@ -18,6 +18,7 @@ bb_plotHicSquare(
   altchromend = NULL,
   assembly = "hg19",
   palette = colorRampPalette(brewer.pal(n = 9, "YlGnBu")),
+  colorTrans = "linear",
   half = "both",
   x = NULL,
   y = NULL,
@@ -43,7 +44,7 @@ dataframes, "auto" will attempt to detect the resolution the dataframe contains.
 \itemize{
 \item{\code{"observed"}: }{Observed counts.}
 \item{\code{"oe"}: }{Observed/expected counts.}
-\item{\code{"logoe"}: }{Log2 transformed observed/expected counts.}
+\item{\code{"log2oe"}: }{Log2 transformed observed/expected counts.}
 }}
 
 \item{chrom}{Chromosome of region to be plotted, as a string.}
@@ -61,6 +62,8 @@ dataframes, "auto" will attempt to detect the resolution the dataframe contains.
 \item{assembly}{Default genome assembly as a string or a \link[BentoBox]{bb_assembly} object. Default value is \code{assembly = "hg19"}.}
 
 \item{palette}{A function describing the color palette to use for representing scale of interaction scores. Default value is \code{palette =  colorRampPalette(brewer.pal(n = 9, "YlGnBu"))}.}
+
+\item{colorTrans}{A string specifying how to scale Hi-C colors. Options are "linear", "log", "log2", or "log10". Default value is \code{colorTrans = "linear"}.}
 
 \item{half}{A character value indicating which diagonal regions to plot. For intrachromosomal plotting, options are \code{"both"}, \code{"top"}, or \code{"bottom"}. For off-diagonal or interchromosomal plotting, options are \code{"top"} or \code{"bottom"}. Default value is \code{half = "both"}.
 \itemize{
