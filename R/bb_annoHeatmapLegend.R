@@ -8,6 +8,8 @@
 #' }
 #' @param fontsize A numeric specifying text fontsize in points. Default value is \code{fontsize = 8}.
 #' @param fontcolor Character value specfying text fontcolor. Default value is \code{fontcolor = "dark grey"}.
+#' @param scientific Logical value specifying if numeric color value labels should be encoded in scientific format. Default value is \code{scientific = FALSE}.
+#' @param digits Numeric specifying how many digits to include after decimal points of numeric color value labels. Default value is \code{digits = 0}.
 #' @param ticks Logical value specifying if tick marks on the heatmap colorbar should be visible. Default value is \code{ticks = FALSE}.
 #' @param breaks A numeric vector specifying tick breaks. Default value is \code{breaks = NULL}.
 #' @param border Logical value indicating whether to add a border around heatmap legend. Default value is \code{border = FALSE}.
@@ -49,7 +51,8 @@
 #' bb_pageGuideHide()
 #'
 #' @export
-bb_annoHeatmapLegend <- function(plot, orientation = "v", fontsize = 8, fontcolor = "dark grey", ticks = FALSE, breaks = NULL, border = FALSE, x, y, width, height,
+bb_annoHeatmapLegend <- function(plot, orientation = "v", fontsize = 8, fontcolor = "dark grey", scientific = FALSE, digits = 0,
+                                 ticks = FALSE, breaks = NULL, border = FALSE, x, y, width, height,
                                  just = c("left", "top"), default.units = "inches", params = NULL, ...){
 
   # ======================================================================================================================================================================================
@@ -84,6 +87,8 @@ bb_annoHeatmapLegend <- function(plot, orientation = "v", fontsize = 8, fontcolo
   if(missing(orientation)) orientation <- NULL
   if(missing(fontsize)) fontsize <- NULL
   if(missing(fontcolor)) fontcolor <- NULL
+  if(missing(scientific)) scientific <- NULL
+  if(missing(digits)) digits <- NULL
   if(missing(ticks)) ticks <- NULL
   if(missing(just)) just <- NULL
   if(missing(default.units)) default.units <- NULL
@@ -98,7 +103,8 @@ bb_annoHeatmapLegend <- function(plot, orientation = "v", fontsize = 8, fontcolo
   ## Compile all parameters into an internal object
   bb_heatmapLegendInternal <- structure(list(plot = plot, border = border, x = x, y = y, width = width, height = height,
                                      orientation = orientation, fontsize = fontsize, fontcolor = fontcolor, ticks = ticks,
-                                     breaks = breaks, just = just, default.units = default.units, gp = gpar()), class = "bb_heatmapLegendInternal")
+                                     scientific = scientific, digits = digits, breaks = breaks, just = just,
+                                     default.units = default.units, gp = gpar()), class = "bb_heatmapLegendInternal")
 
   bb_heatmapLegendInternal <- parseParams(bb_params = params, object_params = bb_heatmapLegendInternal)
 
@@ -107,6 +113,8 @@ bb_annoHeatmapLegend <- function(plot, orientation = "v", fontsize = 8, fontcolo
   if(is.null(bb_heatmapLegendInternal$orientation)) bb_heatmapLegendInternal$orientation <- "v"
   if(is.null(bb_heatmapLegendInternal$fontsize)) bb_heatmapLegendInternal$fontsize <- 8
   if(is.null(bb_heatmapLegendInternal$fontcolor)) bb_heatmapLegendInternal$fontcolor <- "dark grey"
+  if(is.null(bb_heatmapLegendInternal$scientific)) bb_heatmapLegendInternal$scientific <- FALSE
+  if(is.null(bb_heatmapLegendInternal$digits)) bb_heatmapLegendInternal$digits <- 0
   if(is.null(bb_heatmapLegendInternal$ticks)) bb_heatmapLegendInternal$ticks <- FALSE
   if(is.null(bb_heatmapLegendInternal$just)) bb_heatmapLegendInternal$just <- c("left", "top")
   if(is.null(bb_heatmapLegendInternal$default.units)) bb_heatmapLegendInternal$default.units <- "inches"
@@ -248,9 +256,11 @@ bb_annoHeatmapLegend <- function(plot, orientation = "v", fontsize = 8, fontcolo
 
     digitLab <- textGrob(label = 0, x = 0.5, y = 0, just = c("center", "bottom"), default.units = "npc",
                        gp = bb_heatmapLegendInternal$gp)
-    lowLab <- textGrob(label = format(bb_heatmapLegend$min_val, scientific = FALSE), x = 0.5, y = 0, just = c("center", "bottom"), default.units = "npc",
+    lowLab <- textGrob(label = format(bb_heatmapLegend$min_val, scientific = bb_heatmapLegendInternal$scientific, digits = bb_heatmapLegendInternal$digits),
+                       x = 0.5, y = 0, just = c("center", "bottom"), default.units = "npc",
                        gp = bb_heatmapLegendInternal$gp)
-    highLab <- textGrob(label = format(bb_heatmapLegend$max_val, scientific = FALSE, digits = 0), x = 0.5, y = 1, just = c("center", "top"), default.units = "npc",
+    highLab <- textGrob(label = format(bb_heatmapLegend$max_val, scientific = bb_heatmapLegendInternal$scientific, digits = bb_heatmapLegendInternal$digits),
+                        x = 0.5, y = 1, just = c("center", "top"), default.units = "npc",
                         gp = bb_heatmapLegendInternal$gp)
 
     lH <- convertHeight(x = grobHeight(lowLab), unitTo = "npc", valueOnly = T)
@@ -294,9 +304,11 @@ bb_annoHeatmapLegend <- function(plot, orientation = "v", fontsize = 8, fontcolo
 
     digitLab <- textGrob(label = 0, x = 0, y = 0.5, just = c("left", "center"), default.units = "npc",
                          gp = bb_heatmapLegendInternal$gp)
-    lowLab <- textGrob(label = format(bb_heatmapLegend$min_val, scientific = FALSE), x = 0, y = 0.5, just = c("left", "center"), default.units = "npc",
+    lowLab <- textGrob(label = format(bb_heatmapLegend$min_val, scientific = bb_heatmapLegendInternal$scientific, digits = bb_heatmapLegendInternal$digits),
+                       x = 0, y = 0.5, just = c("left", "center"), default.units = "npc",
                        gp = bb_heatmapLegendInternal$gp)
-    highLab <- textGrob(label = format(bb_heatmapLegend$max_val, scientific = FALSE, digits = 0), x = 1, y = 0.5, just = c("right", "center"), default.units = "npc",
+    highLab <- textGrob(label = format(bb_heatmapLegend$max_val, scientific = bb_heatmapLegendInternal$scientific, digits = bb_heatmapLegendInternal$digits),
+                        x = 1, y = 0.5, just = c("right", "center"), default.units = "npc",
                         gp = bb_heatmapLegendInternal$gp)
 
     lW <- convertWidth(x = grobWidth(lowLab), unitTo = "npc", valueOnly = T)

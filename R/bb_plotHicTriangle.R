@@ -616,6 +616,13 @@ bb_plotHicTriangle <- function(data, resolution = "auto", zrange = NULL, norm = 
         logBase <- exp(1)
       }
 
+      ## Won't scale to log if negative values
+      if (any(hic$counts < 0)){
+        stop("Negative values in Hi-C data. Cannot scale colors on a log scale. Please
+             set `colorTrans = 'linear'`.", call. = FALSE)
+      }
+
+
       hic$counts <- log(hic$counts, base = logBase)
       hic$color <- bb_maptocolors(hic$counts, col = bb_thicInternal$palette, num = 100, range = log(hic_plot$zrange, logBase))
     } else {
