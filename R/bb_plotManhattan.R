@@ -39,6 +39,7 @@
 #' @param height A numeric or unit object specifying Manhattan plot height.
 #' @param just Justification of Manhattan plot relative to its (x, y) location. If there are two values, the first value specifies horizontal justification and the second value specifies vertical justification.
 #' Possible string values are: \code{"left"}, \code{"right"}, \code{"centre"}, \code{"center"}, \code{"bottom"}, and \code{"top"}. Default value is \code{just = c("left", "top")}.
+#' @param flip Logical value indicating whether to reflect Manhattan plot over the x-axis. Default value is \code{flip = FALSE}.
 #' @param default.units A string indicating the default units to use if \code{x}, \code{y}, \code{width}, or \code{height} are only given as numerics. Default value is \code{default.units = "inches"}.
 #' @param draw A logical value indicating whether graphics output should be produced. Default value is \code{draw = TRUE}.
 #' @param params An optional \link[BentoBox]{bb_params} object containing relevant function parameters.
@@ -133,7 +134,7 @@
 #' @export
 bb_plotManhattan <- function(data, sigVal = 5e-08, chrom = NULL, chromstart = NULL, chromend = NULL, assembly = "hg19", fill = "black", pch = 19, cex = 0.25,
                              leadSNP = NULL, scaleLD = NULL, sigLine = FALSE, sigCol = NULL, ymax = 1, range = NULL, space = 0.01, bg = NA, baseline = FALSE,
-                             x = NULL, y = NULL, width = NULL, height = NULL, just = c("left", "top"), default.units = "inches", draw = TRUE, params = NULL, ...){
+                             x = NULL, y = NULL, width = NULL, height = NULL, just = c("left", "top"), flip = FALSE, default.units = "inches", draw = TRUE, params = NULL, ...){
 
   # ======================================================================================================================================================================================
   # FUNCTIONS
@@ -408,7 +409,8 @@ bb_plotManhattan <- function(data, sigVal = 5e-08, chrom = NULL, chromstart = NU
   if(missing(bg)) bg <- NULL
   if(missing(baseline)) baseline <- NULL
   if(missing(just)) just <- NULL
-  if(missing(default.units)) default.units <- NULL
+  if(missing(just)) just <- NULL
+  if(missing(flip)) flip <- NULL
   if(missing(draw)) draw <- NULL
 
   ## Check if bed/pVals arguments are missing (could be in object)
@@ -418,7 +420,7 @@ bb_plotManhattan <- function(data, sigVal = 5e-08, chrom = NULL, chromstart = NU
   bb_manInternal <- structure(list(data = data, leadSNP = leadSNP, chrom = chrom, chromstart = chromstart, chromend = chromend, assembly = assembly,
                                    fill = fill, pch = pch, space = space, cex = cex, ymax = ymax, range = range, sigVal = sigVal, scaleLD = scaleLD,
                                    sigLine = sigLine, sigCol = sigCol, bg = bg, baseline = baseline, x = x, y = y, width = width, height = height, just = just,
-                                   default.units = default.units, draw = draw), class = "bb_manInternal")
+                                   flip = flip, default.units = default.units, draw = draw), class = "bb_manInternal")
 
   bb_manInternal <- parseParams(bb_params = params, object_params = bb_manInternal)
 
@@ -434,6 +436,7 @@ bb_plotManhattan <- function(data, sigVal = 5e-08, chrom = NULL, chromstart = NU
   if(is.null(bb_manInternal$bg)) bb_manInternal$bg <- NA
   if(is.null(bb_manInternal$baseline)) bb_manInternal$baseline <- FALSE
   if(is.null(bb_manInternal$just)) bb_manInternal$just <- c("left", "top")
+  if(is.null(bb_manInternal$flip)) bb_manInternal$flip <- FALSE
   if(is.null(bb_manInternal$default.units)) bb_manInternal$default.units <- "inches"
   if(is.null(bb_manInternal$draw)) bb_manInternal$draw <- TRUE
 
@@ -703,6 +706,12 @@ bb_plotManhattan <- function(data, sigVal = 5e-08, chrom = NULL, chromstart = NU
   currentViewports <- current_viewports()
   vp_name <- paste0("bb_manhattan", length(grep(pattern = "bb_manhattan", x = currentViewports)) + 1)
 
+  ## y-scale
+  yscale <- c(man_plot$range[1], man_plot$range[2])
+  if (bb_manInternal$flip == TRUE){
+    yscale <- rev(yscale)
+  }
+
   ## If placing information is provided but plot == TRUE, set up it's own viewport separate from bb_makepage
   ## Not translating into page_coordinates
   if (is.null(man_plot$x) & is.null(man_plot$y)){
@@ -710,7 +719,7 @@ bb_plotManhattan <- function(data, sigVal = 5e-08, chrom = NULL, chromstart = NU
     vp <- viewport(height = unit(0.25, "snpc"), width = unit(1, "snpc"),
                    x = unit(0.5, "npc"), y = unit(0.5, "npc"),
                    clip = "on",
-                   xscale = xscale, yscale = c(man_plot$range[1], man_plot$range[2]),
+                   xscale = xscale, yscale = yscale,
                    just = "center",
                    name = vp_name)
 
@@ -732,7 +741,7 @@ bb_plotManhattan <- function(data, sigVal = 5e-08, chrom = NULL, chromstart = NU
     vp <- viewport(height = page_coords$height, width = page_coords$width,
                    x = page_coords$x, y = page_coords$y,
                    clip = "on",
-                   xscale = xscale, yscale = c(man_plot$range[1], man_plot$range[2]),
+                   xscale = xscale, yscale = yscale,
                    just = bb_manInternal$just,
                    name = vp_name)
   }

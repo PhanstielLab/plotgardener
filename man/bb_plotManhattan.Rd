@@ -28,6 +28,7 @@ bb_plotManhattan(
   width = NULL,
   height = NULL,
   just = c("left", "top"),
+  flip = FALSE,
   default.units = "inches",
   draw = TRUE,
   params = NULL,
@@ -96,6 +97,8 @@ place the Manhattan plot y relative to the bottom of the most recently plotted B
 
 \item{just}{Justification of Manhattan plot relative to its (x, y) location. If there are two values, the first value specifies horizontal justification and the second value specifies vertical justification.
 Possible string values are: \code{"left"}, \code{"right"}, \code{"centre"}, \code{"center"}, \code{"bottom"}, and \code{"top"}. Default value is \code{just = c("left", "top")}.}
+
+\item{flip}{Logical value indicating whether to reflect Manhattan plot over the x-axis. Default value is \code{flip = FALSE}.}
 
 \item{default.units}{A string indicating the default units to use if \code{x}, \code{y}, \code{width}, or \code{height} are only given as numerics. Default value is \code{default.units = "inches"}.}
 

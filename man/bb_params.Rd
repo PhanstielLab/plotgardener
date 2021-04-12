@@ -44,6 +44,7 @@ bb_params(
   draw = NULL,
   file = NULL,
   fill = NULL,
+  flip = NULL,
   fontcolor = NULL,
   fontcolors = NULL,
   fontsize = NULL,
