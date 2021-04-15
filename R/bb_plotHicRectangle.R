@@ -328,9 +328,6 @@ bb_plotHicRectangle <- function(data, resolution = "auto", zrange = NULL, norm =
       txdbChecks <- check_loadedPackage(package = hic_plot$assembly$TxDb, message = paste(paste0("`", hic_plot$assembly$TxDb,"`"),
                                                                                           "not loaded. Please install and load to plot full chromosome Hi-C map."))
     }
-    #bb_rhicInternal$chromstart <- 0
-    #bb_rhicInternal$chromend <- 1
-    #scale <- c(0, 1)
     if (txdbChecks == TRUE){
 
       if (class(hic_plot$assembly$TxDb) == "TxDb"){
@@ -348,9 +345,6 @@ bb_plotHicRectangle <- function(data, resolution = "auto", zrange = NULL, norm =
         hic_plot$chromend <- assembly_data[[hic_plot$chrom]]
         hic_plot$altchromstart <- 1
         hic_plot$altchromend <- assembly_data[[hic_plot$chrom]]
-        #scale <- c(hic_plot$chromstart, hic_plot$chromend)
-        #bb_rhicInternal$chromstart <- hic_plot$chromstart
-        #bb_rhicInternal$chromend <- hic_plot$chromend
 
       }
 
@@ -358,7 +352,6 @@ bb_plotHicRectangle <- function(data, resolution = "auto", zrange = NULL, norm =
 
   } else {
     txdbChecks <- TRUE
-    #scale <- c(hic_plot$chromstart, hic_plot$chromend)
   }
 
 
