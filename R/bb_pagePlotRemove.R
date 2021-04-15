@@ -28,7 +28,7 @@ bb_pagePlotRemove <- function(plot){
   assign("bb_vpTree", bb_vpTree, envir = bbEnv)
 
   ## Need to remove outer viewport of bb_hicTriangle plot
-  if (class(plot) == "bb_hicTriangle"){
+  if (class(plot) == "bb_hicTriangle" | class(plot) == "bb_hicRectangle"){
     vp_name <- plot$grobs$vp$name
     vp_name <- gsub("inside", "outside", vp_name)
     seekViewport(vp_name)

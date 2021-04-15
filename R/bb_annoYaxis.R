@@ -107,7 +107,7 @@ bb_annoYaxis <- function(plot, at = NULL, label = TRUE, main = TRUE, scipen = 99
 
     plotVP <- bb_yInternal$plot$grobs$children$background$vp
 
-  } else if (class(bb_yInternal$plot) == "bb_hicTriangle"){
+  } else if (class(bb_yInternal$plot) == "bb_hicTriangle" | class(bb_yInternal$plot) == "bb_hicRectangle"){
 
     plotVP <- bb_yInternal$plot$outsideVP
 

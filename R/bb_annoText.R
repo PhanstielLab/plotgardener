@@ -72,7 +72,7 @@ bb_annoText <- function(label, fontcolor = "black", fontsize = 12, rot = 0, chec
   if(is.null(bb_textInternal$fontsize)) bb_textInternal$fontsize <- 12
   if(is.null(bb_textInternal$rot)) bb_textInternal$rot <- 0
   if(is.null(bb_textInternal$check.overlap)) bb_textInternal$check.overlap <- FALSE
-  if(is.null(bb_textInternal$default.units)) bb_textInternal$default.units <- "inches"
+  if(is.null(bb_textInternal$default.units)) bb_textInternal$default.units <- "native"
 
   ## Set gp
   bb_textInternal$gp <- gpar(col = bb_textInternal$fontcolor, fontsize = bb_textInternal$fontsize)
@@ -151,7 +151,7 @@ bb_annoText <- function(label, fontcolor = "black", fontsize = 12, rot = 0, chec
 
     plotVP <- bb_textInternal$plot$grobs$children$background$vp
 
-  } else if (class(bb_textInternal$plot) == "bb_hicTriangle"){
+  } else if (class(bb_textInternal$plot) == "bb_hicTriangle" | class(bb_textInternal$plot) == "bb_hicRectangle"){
 
     plotVP <- bb_textInternal$plot$outsideVP
 
@@ -165,12 +165,11 @@ bb_annoText <- function(label, fontcolor = "black", fontsize = 12, rot = 0, chec
   plotVP_bottomLeft <- vp_bottomLeft(viewport = plotVP)
 
   ## Push plot viewport to convert x/y from plot native units to page units
-  pushViewport(plotVP)
-
+  seekViewport(plotVP$name)
   new_x <- convertX(bb_text$x, unitTo = page_units, valueOnly = TRUE)
-  new_y <- convertX(bb_text$y, unitTo = page_units, valueOnly = TRUE)
+  new_y <- convertY(bb_text$y, unitTo = page_units, valueOnly = TRUE)
 
-  upViewport()
+  seekViewport(name = "bb_page")
 
   ## Add additional page units to new_x and new_y
   new_x <- as.numeric(plotVP_bottomLeft[[1]]) + new_x

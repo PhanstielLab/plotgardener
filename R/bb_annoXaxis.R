@@ -102,7 +102,7 @@ bb_annoXaxis <- function(plot, at = NULL, label = TRUE, main = TRUE, scipen = 99
 
     plotVP <- bb_xInternal$plot$grobs$children$background$vp
 
-  } else if (class(bb_xInternal$plot) == "bb_hicTriangle"){
+  } else if (class(bb_xInternal$plot) == "bb_hicTriangle" | class(bb_xInternal$plot) == "bb_hicRectangle"){
 
     plotVP <- bb_xInternal$plot$outsideVP
 

@@ -70,9 +70,9 @@ bb_annoPixels <- function(plot, data, type = "box", half = "inherit", shift = 4,
     ###### hic #####
 
     ## check type of input for hic
-    if (!class(hic) %in% c("bb_hicSquare", "bb_hicTriangle" )){
+    if (!class(hic) %in% c("bb_hicSquare", "bb_hicTriangle", "bb_hicRectangle")){
 
-      stop("Input plot must be a plot of class \'bb_hicSquare\' or \'bb_hicTriangle\'.", call. = FALSE)
+      stop("Input plot must be a plot of class \'bb_hicSquare\', \'bb_hicTriangle\', or \'bb_hicRectangle\'.", call. = FALSE)
 
     }
 
@@ -95,13 +95,6 @@ bb_annoPixels <- function(plot, data, type = "box", half = "inherit", shift = 4,
     ## if it's a file path, it needs to exist
     if (!"data.frame" %in% class(loops)){
 
-      # ## File extension
-      # if (file_ext(loops) != "bedpe"){
-      #
-      #   stop("Invalid input. File must have a \".bedpe\" extension")
-      #
-      # }
-
       ## File existence
       if (!file.exists(loops)){
 
@@ -121,7 +114,7 @@ bb_annoPixels <- function(plot, data, type = "box", half = "inherit", shift = 4,
     }
 
     ## half needs to be able to align with what kind of hic plot is plotted
-    if (class(hic) == "bb_hic"){
+    if (class(hic) == "bb_hicSquare"){
 
       if (is.null(hic$althalf)){
 
@@ -157,11 +150,11 @@ bb_annoPixels <- function(plot, data, type = "box", half = "inherit", shift = 4,
 
       }
 
-    } else if (class(hic) == "bb_hicTriangle"){
+    } else if (class(hic) == "bb_hicTriangle" | class(hic) == "bb_hicRectangle"){
 
       if (half == "both" | half == "bottom"){
 
-        warning("Plot of class \'bb_hicTriangle\' detected.  Pixels will automatically be annotated in the upper triangular of the plot.", call. = FALSE)
+        warning( paste0("Plot of class \'", class(hic), "\' detected. Pixels will automatically be annotated in the upper triangular of the plot."), call. = FALSE)
 
       }
 
@@ -184,7 +177,7 @@ bb_annoPixels <- function(plot, data, type = "box", half = "inherit", shift = 4,
     ## chrom always in col1
     ## altchrom always in col4
     ## triangle hic plots will not have altchrom parameters
-    if (class(hic) == "bb_hicTriangle"){
+    if (class(hic) == "bb_hicTriangle" | class(hic) == "bb_hicRectangle"){
       loops_subset <- loops[which(loops[,1] == object$chrom & loops[,4] == object$chrom & loops[,2] >= object$chromstart & loops[,3] <= object$chromend
                                   & loops[,5] >= object$chromstart & loops[,6] <= object$chromend),]
     } else {
@@ -211,7 +204,7 @@ bb_annoPixels <- function(plot, data, type = "box", half = "inherit", shift = 4,
 
       }
 
-    } else if (class(hic) == "bb_hicTriangle"){
+    } else if (class(hic) == "bb_hicTriangle" | class(hic) == "bb_hicRectangle"){
 
       half <- "top"
 
@@ -418,7 +411,7 @@ bb_annoPixels <- function(plot, data, type = "box", half = "inherit", shift = 4,
 
   }
 
-  if (class(bb_loopsInternal$plot) == "bb_hicTriangle"){
+  if (class(bb_loopsInternal$plot) == "bb_hicTriangle" | class(bb_loopsInternal$plot) == "bb_hicRectangle"){
 
     half <- "top"
 
@@ -465,7 +458,6 @@ bb_annoPixels <- function(plot, data, type = "box", half = "inherit", shift = 4,
   loops <- loops[,1:6]
 
   loops_subset <- subset_loops(hic = bb_loopsInternal$plot, loops = loops, object = bb_loops)
-
   # ======================================================================================================================================================================================
   # VIEWPORTS
   # ======================================================================================================================================================================================
@@ -484,6 +476,7 @@ bb_annoPixels <- function(plot, data, type = "box", half = "inherit", shift = 4,
                    yscale = bb_loopsInternal$plot$grobs$vp$yscale,
                    just = bb_loopsInternal$plot$grobs$vp$justification,
                    name = vp_name)
+
   } else if (class(bb_loopsInternal$plot) == "bb_hicTriangle"){
 
 
@@ -497,8 +490,27 @@ bb_annoPixels <- function(plot, data, type = "box", half = "inherit", shift = 4,
                    name = vp_name,
                    angle = -45)
 
-  }
+  } else if (class(bb_loopsInternal$plot) == "bb_hicRectangle"){
 
+    side <- convertUnit(bb_loopsInternal$plot$grobs$vp$width, unitTo = get("page_units", bbEnv))
+
+    ## Get bottom left coord of outsideVP
+    bottomLeft <- vp_bottomLeft(viewport = bb_loopsInternal$plot$outsideVP)
+
+    ## Convert adjusted chromstart to page units within outsideVP and add to bottomLeft x
+    seekViewport(name = bb_loopsInternal$plot$outsideVP$name)
+    xCoord <- convertX(unit(bb_loopsInternal$plot$grobs$vp$x), unitTo = get("page_units", bbEnv)) + bottomLeft[[1]]
+    seekViewport(name = "bb_page")
+
+    vp <- viewport(height = side, width = side,
+                   x = xCoord, y = bottomLeft[[2]],
+                   xscale = bb_loopsInternal$plot$grobs$vp$xscale,
+                   yscale = bb_loopsInternal$plot$grobs$vp$yscale,
+                   just = c("left", "bottom"),
+                   name = vp_name,
+                   angle = -45)
+
+  }
 
   # ======================================================================================================================================================================================
   # INITIALIZE GTREE OF GROBS
