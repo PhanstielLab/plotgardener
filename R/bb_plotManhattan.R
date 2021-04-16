@@ -32,6 +32,8 @@
 #' @param space A numeric value indicating the space between each chromsome as a fraction of the width of the plot, if plotting multiple chromosomes. Default value is \code{space = 0.01}.
 #' @param bg Character value indicating background color. Default value is \code{bg = NA}.
 #' @param baseline Logical value indicating whether to include a baseline along the x-axis. Default value is \code{baseline = FALSE}.
+#' @param baseline.color Baseline color. Default value is \code{baseline.color = "grey"}.
+#' @param baseline.lwd Baseline line width. Default value is \code{baseline.lwd = 1}.
 #' @param x A numeric or unit object specifying Manhattan plot x-location.
 #' @param y A numeric, unit object, or character containing a "b" combined with a numeric value specifying Manhattan plot y-location. The character value will
 #' place the Manhattan plot y relative to the bottom of the most recently plotted BentoBox plot according to the units of the BentoBox page.
@@ -133,8 +135,9 @@
 #'
 #' @export
 bb_plotManhattan <- function(data, sigVal = 5e-08, chrom = NULL, chromstart = NULL, chromend = NULL, assembly = "hg19", fill = "black", pch = 19, cex = 0.25,
-                             leadSNP = NULL, scaleLD = NULL, sigLine = FALSE, sigCol = NULL, ymax = 1, range = NULL, space = 0.01, bg = NA, baseline = FALSE,
-                             x = NULL, y = NULL, width = NULL, height = NULL, just = c("left", "top"), flip = FALSE, default.units = "inches", draw = TRUE, params = NULL, ...){
+                             leadSNP = NULL, scaleLD = NULL, sigLine = FALSE, sigCol = NULL, ymax = 1, range = NULL, space = 0.01, bg = NA,
+                             baseline = FALSE, baseline.color = "grey", baseline.lwd = 1, x = NULL, y = NULL, width = NULL, height = NULL, just = c("left", "top"),
+                             flip = FALSE, default.units = "inches", draw = TRUE, params = NULL, ...){
 
   # ======================================================================================================================================================================================
   # FUNCTIONS
@@ -408,6 +411,8 @@ bb_plotManhattan <- function(data, sigVal = 5e-08, chrom = NULL, chromstart = NU
   if(missing(sigLine)) sigLine <- NULL
   if(missing(bg)) bg <- NULL
   if(missing(baseline)) baseline <- NULL
+  if(missing(baseline.color)) baseline.color <- NULL
+  if(missing(baseline.lwd)) baseline.lwd <- NULL
   if(missing(just)) just <- NULL
   if(missing(just)) just <- NULL
   if(missing(flip)) flip <- NULL
@@ -419,7 +424,8 @@ bb_plotManhattan <- function(data, sigVal = 5e-08, chrom = NULL, chromstart = NU
   ## Compile all parameters into an internal object
   bb_manInternal <- structure(list(data = data, leadSNP = leadSNP, chrom = chrom, chromstart = chromstart, chromend = chromend, assembly = assembly,
                                    fill = fill, pch = pch, space = space, cex = cex, ymax = ymax, range = range, sigVal = sigVal, scaleLD = scaleLD,
-                                   sigLine = sigLine, sigCol = sigCol, bg = bg, baseline = baseline, x = x, y = y, width = width, height = height, just = just,
+                                   sigLine = sigLine, sigCol = sigCol, bg = bg, baseline = baseline, baseline.color = baseline.color, baseline.lwd = baseline.lwd,
+                                   x = x, y = y, width = width, height = height, just = just,
                                    flip = flip, default.units = default.units, draw = draw), class = "bb_manInternal")
 
   bb_manInternal <- parseParams(bb_params = params, object_params = bb_manInternal)
@@ -435,6 +441,8 @@ bb_plotManhattan <- function(data, sigVal = 5e-08, chrom = NULL, chromstart = NU
   if(is.null(bb_manInternal$sigLine)) bb_manInternal$sigLine <- FALSE
   if(is.null(bb_manInternal$bg)) bb_manInternal$bg <- NA
   if(is.null(bb_manInternal$baseline)) bb_manInternal$baseline <- FALSE
+  if(is.null(bb_manInternal$baseline.color)) bb_manInternal$baseline.color <- "grey"
+  if(is.null(bb_manInternal$baseline.lwd)) bb_manInternal$baseline.lwd <- 1
   if(is.null(bb_manInternal$just)) bb_manInternal$just <- c("left", "top")
   if(is.null(bb_manInternal$flip)) bb_manInternal$flip <- FALSE
   if(is.null(bb_manInternal$default.units)) bb_manInternal$default.units <- "inches"
@@ -829,10 +837,9 @@ bb_plotManhattan <- function(data, sigVal = 5e-08, chrom = NULL, chromstart = NU
     }
 
     if (bb_manInternal$baseline == TRUE){
-      bb_manInternal$gp$col <- bb_manInternal$gp$linecolor
-      bb_manInternal$gp$lwd <- 1.5
       baselineGrob <- segmentsGrob(x0 = unit(0, "npc"), y0 = 0, x1 = unit(1, "npc"), y1 = 0,
-                              gp = bb_manInternal$gp, default.units = "native")
+                              gp = gpar(col = bb_manInternal$baseline.color, lwd = bb_manInternal$baseline.lwd),
+                              default.units = "native")
       assign("manhattan_grobs", addGrob(gTree = get("manhattan_grobs", envir = bbEnv), child = baselineGrob), envir = bbEnv)
 
     }

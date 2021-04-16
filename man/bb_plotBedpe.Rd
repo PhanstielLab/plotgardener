@@ -18,6 +18,8 @@ bb_plotBedpe(
   spaceWidth = 0.02,
   spaceHeight = 0.3,
   baseline = FALSE,
+  baseline.color = "grey",
+  baseline.lwd = 1,
   x = NULL,
   y = NULL,
   width = NULL,
@@ -55,6 +57,10 @@ bb_plotBedpe(
 \item{spaceHeight}{A numeric specifying the height of space between boxes of BEDPE elements on different rows. Default value is \code{spaceHeight = 0.3}.}
 
 \item{baseline}{Logical value indicating whether to include a baseline along the x-axis. Default value is \code{baseline = FALSE}.}
+
+\item{baseline.color}{Baseline color. Default value is \code{baseline.color = "grey"}.}
+
+\item{baseline.lwd}{Baseline line width. Default value is \code{baseline.lwd = 1}.}
 
 \item{x}{A numeric or unit object specifying BEDPE plot x-location.}
 

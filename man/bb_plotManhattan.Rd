@@ -23,6 +23,8 @@ bb_plotManhattan(
   space = 0.01,
   bg = NA,
   baseline = FALSE,
+  baseline.color = "grey",
+  baseline.lwd = 1,
   x = NULL,
   y = NULL,
   width = NULL,
@@ -85,6 +87,10 @@ The lead SNP should be specified as a character with the name slot \code{"snp"} 
 \item{bg}{Character value indicating background color. Default value is \code{bg = NA}.}
 
 \item{baseline}{Logical value indicating whether to include a baseline along the x-axis. Default value is \code{baseline = FALSE}.}
+
+\item{baseline.color}{Baseline color. Default value is \code{baseline.color = "grey"}.}
+
+\item{baseline.lwd}{Baseline line width. Default value is \code{baseline.lwd = 1}.}
 
 \item{x}{A numeric or unit object specifying Manhattan plot x-location.}
 

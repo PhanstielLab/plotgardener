@@ -16,6 +16,8 @@ bb_params(
   axis = NULL,
   axisLine = NULL,
   baseline = NULL,
+  baseline.color = NULL,
+  baseline.lwd = NULL,
   bg = NULL,
   binCap = NULL,
   binSize = NULL,

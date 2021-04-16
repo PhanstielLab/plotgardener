@@ -13,6 +13,8 @@
 #' @param spaceWidth A numeric specifying the width of spacing between BEDPE elements, as a fraction of the plot's genomic range. Default value is \code{spaceWidth = 0.02}.
 #' @param spaceHeight A numeric specifying the height of space between boxes of BEDPE elements on different rows. Default value is \code{spaceHeight = 0.3}.
 #' @param baseline Logical value indicating whether to include a baseline along the x-axis. Default value is \code{baseline = FALSE}.
+#' @param baseline.color Baseline color. Default value is \code{baseline.color = "grey"}.
+#' @param baseline.lwd Baseline line width. Default value is \code{baseline.lwd = 1}.
 #' @param x A numeric or unit object specifying BEDPE plot x-location.
 #' @param y A numeric, unit object, or character containing a "b" combined with a numeric value specifying BEDPE plot y-location. The character value will
 #' place the BEDPE plot y relative to the bottom of the most recently plotted BentoBox plot according to the units of the BentoBox page.
@@ -79,8 +81,8 @@
 #'
 #' @export
 bb_plotBedpe <- function(data, chrom, chromstart = NULL, chromend = NULL, assembly = "hg19", fill = "#1f4297", colorby = NULL, linecolor = NA,
-                         bg = NA, boxHeight = unit(2, "mm"), spaceWidth = 0.02, spaceHeight = 0.3, baseline = FALSE, x = NULL, y = NULL, width = NULL, height = NULL,
-                         just = c("left", "top"), default.units = "inches", draw = TRUE, params = NULL, ...){
+                         bg = NA, boxHeight = unit(2, "mm"), spaceWidth = 0.02, spaceHeight = 0.3, baseline = FALSE, baseline.color = "grey", baseline.lwd = 1,
+                         x = NULL, y = NULL, width = NULL, height = NULL, just = c("left", "top"), default.units = "inches", draw = TRUE, params = NULL, ...){
 
   # ======================================================================================================================================================================================
   # FUNCTIONS
@@ -145,6 +147,8 @@ bb_plotBedpe <- function(data, chrom, chromstart = NULL, chromend = NULL, assemb
   if(missing(spaceHeight)) spaceHeight <- NULL
   if(missing(spaceWidth)) spaceWidth <- NULL
   if(missing(baseline)) baseline <- NULL
+  if(missing(baseline.color)) baseline.color <- NULL
+  if(missing(baseline.lwd)) baseline.lwd <- NULL
   if(missing(bg)) bg <- NULL
   if(missing(just)) just <- NULL
   if(missing(default.units)) default.units <- NULL
@@ -156,8 +160,9 @@ bb_plotBedpe <- function(data, chrom, chromstart = NULL, chromend = NULL, assemb
 
   ## Compile all parameters into an internal object
   bb_bedpeInternal <- structure(list(data = data, chrom = chrom, chromstart = chromstart, chromend = chromend,
-                                     fill = fill, colorby = colorby, linecolor = linecolor,
-                                     assembly = assembly, boxHeight = boxHeight, spaceHeight = spaceHeight, spaceWidth = spaceWidth, baseline = baseline, bg = bg,
+                                     fill = fill, colorby = colorby, linecolor = linecolor, assembly = assembly,
+                                     boxHeight = boxHeight, spaceHeight = spaceHeight, spaceWidth = spaceWidth,
+                                     baseline = baseline, baseline.color = baseline.color, baseline.lwd = baseline.lwd, bg = bg,
                                      x = x, y = y, width = width, height = height, just = just, default.units = default.units, draw = draw, gp = gpar()), class = "bb_bedpeInternal")
 
   bb_bedpeInternal <- parseParams(bb_params = params, object_params = bb_bedpeInternal)
@@ -170,6 +175,8 @@ bb_plotBedpe <- function(data, chrom, chromstart = NULL, chromend = NULL, assemb
   if(is.null(bb_bedpeInternal$spaceHeight)) bb_bedpeInternal$spaceHeight <- 0.3
   if(is.null(bb_bedpeInternal$spaceWidth)) bb_bedpeInternal$spaceWidth <- 0.02
   if(is.null(bb_bedpeInternal$baseline)) bb_bedpeInternal$baseline <- FALSE
+  if(is.null(bb_bedpeInternal$baseline.color)) bb_bedpeInternal$baseline.color <- "grey"
+  if(is.null(bb_bedpeInternal$baseline.lwd)) bb_bedpeInternal$baseline.lwd <- 1
   if(is.null(bb_bedpeInternal$bg)) bb_bedpeInternal$bg <- NA
   if(is.null(bb_bedpeInternal$just)) bb_bedpeInternal$just <- c("left", "top")
   if(is.null(bb_bedpeInternal$default.units)) bb_bedpeInternal$default.units <- "inches"
@@ -449,7 +456,8 @@ bb_plotBedpe <- function(data, chrom, chromstart = NULL, chromend = NULL, assemb
       rowBedpe <- rowBedpe[which(rowBedpe$row != 0),]
       warning("Not enough plotting space for all provided bedpe elements.", call. = FALSE)
 
-      limitGrob <- textGrob(label = "+", x = unit(1, "npc"), y = unit(1, "npc"), just = c("right", "top"))
+      limitGrob <- textGrob(label = "+", x = unit(1, "npc"), y = unit(1, "npc"), just = c("right", "top"),
+                            gp = gpar(col = "grey", fontsize = 6))
       assign("bedpe_grobs", addGrob(gTree = get("bedpe_grobs", envir = bbEnv), child = limitGrob), envir = bbEnv)
 
     }
@@ -505,7 +513,8 @@ bb_plotBedpe <- function(data, chrom, chromstart = NULL, chromend = NULL, assemb
     # ======================================================================================================================================================================================
 
     if (bb_bedpeInternal$baseline == TRUE){
-      baselineGrob <- segmentsGrob(x0 = unit(0, "npc"), y0 = 0, x1 = unit(1, "npc"), y1 = 0, default.units = "native", gp = gpar(lwd = 1.5))
+      baselineGrob <- segmentsGrob(x0 = unit(0, "npc"), y0 = 0, x1 = unit(1, "npc"), y1 = 0, default.units = "native",
+                                   gp = gpar(col = bb_bedpeInternal$baseline.color, lwd = bb_bedpeInternal$baseline.lwd))
       assign("bedpe_grobs", addGrob(gTree = get("bedpe_grobs", envir = bbEnv), child = baselineGrob), envir = bbEnv)
     }
 

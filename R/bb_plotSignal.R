@@ -10,12 +10,14 @@
 #' @param chromend Integer end position on chromosome to be plotted.
 #' @param assembly Default genome assembly as a string or a \link[BentoBox]{bb_assembly} object. Default value is \code{assembly = "hg19"}.
 #' @param linecolor A character value or vector of length 2 specifying the line color(s) outlining the signal track(s). Default value is \code{linecolor = "#37a7db"}.
-#' @param fill A character value or vector of length 2 specifying the fill color(s) of the signal track(s). Default value is \code{fill = "#37a7db"}.
+#' @param fill A character value or vector of length 2 specifying the fill color(s) of the signal track(s). Default value is \code{fill = NA}.
 #' @param ymax A numeric specifying the fraction of the max y-value to set as the height of the plot. Default value is \code{ymax = 1}.
 #' @param range A numeric vector of length 2 specifying the y-range of data to plot (c(min, max)).
 #' @param scale A logical value indicating whether to include a data scale label in the top left corner of the plot. Default value is \code{scale = FALSE}.
 #' @param bg Character value indicating background color. Default value is \code{bg = NA}.
-#' @param baseline Logical value indicating whether to include a baseline along the x-axis. Default value is \code{baseline = FALSE}.
+#' @param baseline Logical value indicating whether to include a baseline along the x-axis. Default value is \code{baseline = TRUE}.
+#' @param baseline.color Baseline color. Default value is \code{baseline.color = "grey"}.
+#' @param baseline.lwd Baseline line width. Default value is \code{baseline.lwd = 1}.
 #' @param x A numeric or unit object specifying signal plot x-location.
 #' @param y A numeric, unit object, or character containing a "b" combined with a numeric value specifying signal plot y-location. The character value will
 #' place the signal plot y relative to the bottom of the most recently plotted BentoBox plot according to the units of the BentoBox page.
@@ -48,7 +50,7 @@
 #'                          just = c("left", "top"), default.units = "inches")
 #'
 #' signal2 <- bb_plotSignal(data = bb_gmH3K27acData, params = region,
-#'                          fill = "#7ecdbb", linecolor = "#7ecdbb",
+#'                          linecolor = "#7ecdbb",
 #'                          x = 0.5, y = 1, width = 6.5, height = 0.65,
 #'                          just = c("left", "top"), default.units = "inches")
 #'
@@ -80,8 +82,8 @@
 #' }
 #'
 #' @export
-bb_plotSignal <- function(data, binSize = NA, binCap = TRUE, negData = FALSE, chrom, chromstart = NULL, chromend = NULL, assembly = "hg19", linecolor = "#37a7db", fill = "#37a7db",
-                          ymax = 1, range = NULL, scale = FALSE, bg = NA, baseline = FALSE, x = NULL, y = NULL, width = NULL, height = NULL,
+bb_plotSignal <- function(data, binSize = NA, binCap = TRUE, negData = FALSE, chrom, chromstart = NULL, chromend = NULL, assembly = "hg19", linecolor = "#37a7db", fill = NA,
+                          ymax = 1, range = NULL, scale = FALSE, bg = NA, baseline = TRUE, baseline.color = "grey", baseline.lwd = 1, x = NULL, y = NULL, width = NULL, height = NULL,
                           just = c("left", "top"), default.units = "inches", draw = TRUE, params = NULL, ...){
 
   # ======================================================================================================================================================================================
@@ -454,7 +456,7 @@ bb_plotSignal <- function(data, binSize = NA, binCap = TRUE, negData = FALSE, ch
       }
 
       cutoffGrob <- segmentsGrob(x0 = x0, x1 = x1, y0 = unit(y, "npc"), y1 = unit(y, "npc"),
-                                 gp = gpar(lwd = 2),
+                                 gp = gpar(lwd = 1, col = "grey"),
                                  default.units = "native")
       assign("signal_grobs", addGrob(gTree = get("signal_grobs", envir = bbEnv), child = cutoffGrob), envir = bbEnv)
 
@@ -498,6 +500,8 @@ bb_plotSignal <- function(data, binSize = NA, binCap = TRUE, negData = FALSE, ch
   if(missing(scale)) scale <- NULL
   if(missing(bg)) bg <- NULL
   if(missing(baseline)) baseline <- NULL
+  if(missing(baseline.color)) baseline.color <- NULL
+  if(missing(baseline.lwd)) baseline.lwd <- NULL
   if(missing(just)) just <- NULL
   if(missing(default.units)) default.units <- NULL
   if(missing(draw)) draw <- NULL
@@ -508,14 +512,15 @@ bb_plotSignal <- function(data, binSize = NA, binCap = TRUE, negData = FALSE, ch
 
   ## Compile all parameters into an internal object
   bb_sigInternal <- structure(list(data = data, chrom = chrom, chromstart = chromstart, chromend = chromend, negData = negData, range = range, linecolor = linecolor, binSize = binSize,
-                                   binCap = binCap, fill = fill, assembly = assembly, ymax = ymax, scale = scale, bg = bg, baseline = baseline, width = width, height = height,
+                                   binCap = binCap, fill = fill, assembly = assembly, ymax = ymax, scale = scale, bg = bg, baseline = baseline,
+                                   width = width, height = height, baseline.color = baseline.color, baseline.lwd = baseline.lwd,
                                    x = x, y = y, just = just, default.units = default.units, draw = draw, gp = gpar()), class = "bb_sigInternal")
 
   bb_sigInternal <- parseParams(bb_params = params, object_params = bb_sigInternal)
 
   ## For any defaults that are still NULL, set back to default
   if(is.null(bb_sigInternal$linecolor)) bb_sigInternal$linecolor <-"#37a7db"
-  if(is.null(bb_sigInternal$fill)) bb_sigInternal$fill <-"#37a7db"
+  if(is.null(bb_sigInternal$fill)) bb_sigInternal$fill <- NA
   if(is.null(bb_sigInternal$binSize)) bb_sigInternal$binSize <- NA
   if(is.null(bb_sigInternal$binCap)) bb_sigInternal$binCap <- TRUE
   if(is.null(bb_sigInternal$negData)) bb_sigInternal$negData <- FALSE
@@ -523,7 +528,9 @@ bb_plotSignal <- function(data, binSize = NA, binCap = TRUE, negData = FALSE, ch
   if(is.null(bb_sigInternal$ymax)) bb_sigInternal$ymax <- 1
   if(is.null(bb_sigInternal$scale)) bb_sigInternal$scale <- FALSE
   if(is.null(bb_sigInternal$bg)) bb_sigInternal$bg <- NA
-  if(is.null(bb_sigInternal$baseline)) bb_sigInternal$baseline <- FALSE
+  if(is.null(bb_sigInternal$baseline)) bb_sigInternal$baseline <- TRUE
+  if(is.null(bb_sigInternal$baseline.color)) bb_sigInternal$baseline.color <- "grey"
+  if(is.null(bb_sigInternal$baseline.lwd)) bb_sigInternal$baseline.lwd <- 1
   if(is.null(bb_sigInternal$just)) bb_sigInternal$just <- c("left", "top")
   if(is.null(bb_sigInternal$default.units)) bb_sigInternal$default.units <- "inches"
   if(is.null(bb_sigInternal$draw)) bb_sigInternal$draw <- TRUE
@@ -758,12 +765,6 @@ bb_plotSignal <- function(data, binSize = NA, binCap = TRUE, negData = FALSE, ch
   # MAKE GROBS
   # ======================================================================================================================================================================================
 
-  if ("col" %in% names(bb_sigInternal$gp)){
-    bb_sigInternal$gp$axis <- bb_sigInternal$gp$col
-  } else {
-    bb_sigInternal$gp$axis <- "black"
-  }
-
   if (!is.na(signal_track$binSize)){
 
     if (split == TRUE){
@@ -795,15 +796,10 @@ bb_plotSignal <- function(data, binSize = NA, binCap = TRUE, negData = FALSE, ch
         warning("Not enough bottom signal data to plot.", call. = FALSE)
       }
 
-      bb_sigInternal$gp$col <- bb_sigInternal$gp$axis
-      if (!"lwd" %in% names(bb_sigInternal$gp)){
-        bb_sigInternal$gp$lwd <- 1.5
-      } else{
-        bb_sigInternal$gp$lwd <- bb_sigInternal$gp$lwd + 0.5
-      }
 
       lineGrob <- segmentsGrob(x0 = unit(0, "npc"), x1 = unit(1, "npc"), y0 = 0, y1 = 0,
-                               gp = bb_sigInternal$gp, default.units = "native")
+                               gp = gpar(col = bb_sigInternal$baseline.color, lwd = bb_sigInternal$baseline.lwd),
+                               default.units = "native")
       assign("signal_grobs", addGrob(gTree = get("signal_grobs", envir = bbEnv), child = lineGrob), envir = bbEnv)
 
     } else {
@@ -812,11 +808,11 @@ bb_plotSignal <- function(data, binSize = NA, binCap = TRUE, negData = FALSE, ch
 
         if(bb_sigInternal$baseline == TRUE){
           baselineGrob <- segmentsGrob(x0 = unit(0, "npc"), x1 = unit(1, "npc"), y0 = 0, y1 = 0,
-                                   gp = gpar(col = bb_sigInternal$gp$axis, lwd = 1.5), default.units = "native")
+                                   gp = gpar(col = bb_sigInternal$baseline.color, lwd = bb_sigInternal$baseline.lwd),
+                                   default.units = "native")
           assign("signal_grobs", addGrob(gTree = get("signal_grobs", envir = bbEnv), child = baselineGrob), envir = bbEnv)
         }
 
-        assign("signalData", posSignal2, envir = globalenv())
         sigGrob(signal = posSignal2, fillCol = bb_sigInternal$fill[1], lineCol = bb_sigInternal$linecolor[1], gp = bb_sigInternal$gp)
         ## Find and make cutoff lines
         cutoffGrobs(signal = posSignal2, signaltrack = signal_track, side = "top")
@@ -834,7 +830,6 @@ bb_plotSignal <- function(data, binSize = NA, binCap = TRUE, negData = FALSE, ch
 
     ## Add scale of the range of data in the top left corner
     if (bb_sigInternal$scale == TRUE){
-      bb_sigInternal$gp$col <- bb_sigInternal$gp$axis
       upperLim <- round(signal_track$range[2], digits = 4)
       lowerLim <- round(signal_track$range[1], digits = 4)
       scaleGrob <- textGrob(label = paste0("[", lowerLim, " - ", upperLim, "]"), just = c("left", "top"), x = 0, y = 1,

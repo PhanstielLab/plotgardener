@@ -17,6 +17,8 @@
 #' @param strandSplit A logical value indicating whether plus and minus-stranded elements should be separated. Elements can only be split by strand if a \code{strand} column is found in \code{data}. Default value is \code{strandSplit = FALSE}.
 #' @param bg Character value indicating background color. Default value is \code{bg = NA}.
 #' @param baseline Logical value indicating whether to include a baseline along the x-axis. Default value is \code{baseline = FALSE}.
+#' @param baseline.color Baseline color. Default value is \code{baseline.color = "grey"}.
+#' @param baseline.lwd Baseline line width. Default value is \code{baseline.lwd = 1}.
 #' @param x A numeric or unit object specifying BED plot x-location.
 #' @param y A numeric, unit object, or character containing a "b" combined with a numeric value specifying BED plot y-location. The character value will
 #' place the BED plot y relative to the bottom of the most recently plotted BentoBox plot according to the units of the BentoBox page.
@@ -74,8 +76,8 @@
 #'
 #' @export
 bb_plotBed <- function(data, chrom, chromstart = NULL, chromend = NULL, assembly = "hg19", fill = "#7ecdbb", colorby = NULL, linecolor = NA, collapse = FALSE,
-                          boxHeight =  unit(2, "mm"), spaceWidth = 0.02, spaceHeight = 0.3, strandSplit = FALSE, bg = NA, baseline = FALSE, x = NULL, y = NULL, width = NULL,
-                          height = NULL, just = c("left", "top"), default.units = "inches", draw = TRUE, params = NULL, ...){
+                       boxHeight =  unit(2, "mm"), spaceWidth = 0.02, spaceHeight = 0.3, strandSplit = FALSE, bg = NA, baseline = FALSE, baseline.color = "grey", baseline.lwd = 1,
+                       x = NULL, y = NULL, width = NULL, height = NULL, just = c("left", "top"), default.units = "inches", draw = TRUE, params = NULL, ...){
 
   # ======================================================================================================================================================================================
   # FUNCTIONS
@@ -155,6 +157,8 @@ bb_plotBed <- function(data, chrom, chromstart = NULL, chromend = NULL, assembly
   if(missing(spaceWidth)) spaceWidth <- NULL
   if(missing(bg)) bg <- NULL
   if(missing(baseline)) baseline <- NULL
+  if(missing(baseline.color)) baseline.color <- NULL
+  if(missing(baseline.lwd)) baseline.lwd <- NULL
   if(missing(just)) just <- NULL
   if(missing(default.units)) default.units <- NULL
   if(missing(draw)) draw <- NULL
@@ -166,7 +170,8 @@ bb_plotBed <- function(data, chrom, chromstart = NULL, chromend = NULL, assembly
   ## Compile all parameters into an internal object
   bb_pileInternal <- structure(list(data = data, chrom = chrom, chromstart = chromstart, chromend = chromend, assembly = assembly, collapse = collapse, fill = fill,
                                     linecolor = linecolor, colorby = colorby, strandSplit = strandSplit, boxHeight = boxHeight, spaceHeight = spaceHeight,
-                                    spaceWidth = spaceWidth, bg = bg, baseline = baseline, x = x, y = y, width = width, height = height, just = just,
+                                    spaceWidth = spaceWidth, bg = bg, baseline = baseline, baseline.color = baseline.color, baseline.lwd = baseline.lwd,
+                                    x = x, y = y, width = width, height = height, just = just,
                                     default.units = default.units, draw = draw, gp = gpar()), class = "bb_pileInternal")
 
   bb_pileInternal <- parseParams(bb_params = params, object_params = bb_pileInternal)
@@ -182,6 +187,8 @@ bb_plotBed <- function(data, chrom, chromstart = NULL, chromend = NULL, assembly
   if(is.null(bb_pileInternal$spaceWidth)) bb_pileInternal$spaceWidth <- 0.02
   if(is.null(bb_pileInternal$bg)) bb_pileInternal$bg <- NA
   if(is.null(bb_pileInternal$baseline)) bb_pileInternal$baseline <- FALSE
+  if(is.null(bb_pileInternal$baseline.color)) bb_pileInternal$baseline.color <- "grey"
+  if(is.null(bb_pileInternal$baseline.lwd)) bb_pileInternal$baseline.lwd <- 1
   if(is.null(bb_pileInternal$just)) bb_pileInternal$just <- c("left", "top")
   if(is.null(bb_pileInternal$default.units)) bb_pileInternal$default.units <- "inches"
   if(is.null(bb_pileInternal$draw)) bb_pileInternal$draw <- TRUE
@@ -477,7 +484,7 @@ bb_plotBed <- function(data, chrom, chromstart = NULL, chromend = NULL, assembly
           warning("Not enough plotting space for all provided BED elements.", call. = FALSE)
 
           limitGrob <- textGrob(label = "+", x = unit(1, "npc"), y = unit(1, "npc"),
-                                just = c("right", "top"), gp = gpar(col = "black"))
+                                just = c("right", "top"), gp = gpar(col = "grey", fontsize = 6))
           assign("pileup_grobs", addGrob(gTree = get("pileup_grobs", envir = bbEnv), child = limitGrob), envir = bbEnv)
 
         }
@@ -509,7 +516,7 @@ bb_plotBed <- function(data, chrom, chromstart = NULL, chromend = NULL, assembly
           posDF <- posDF[which(posDF$row != 0),]
           warning("Not enough plotting space for all provided plus strand BED elements.", call. = FALSE)
           limitGrob1 <- textGrob(label = "+", x = unit(1, "npc"), y = unit(1, "npc"),
-                                 just = c("right", "top"), gp = gpar(col = "black"))
+                                 just = c("right", "top"), gp = gpar(col = "grey", fontsize = 6))
           assign("pileup_grobs", addGrob(gTree = get("pileup_grobs", envir = bbEnv), child = limitGrob1), envir = bbEnv)
         }
 
@@ -537,7 +544,7 @@ bb_plotBed <- function(data, chrom, chromstart = NULL, chromend = NULL, assembly
           minDF <- minDF[which(minDF$row != 0),]
           warning("Not enough plotting space for all provided minus strand BED elements.", call. = FALSE)
           limitGrob2 <- textGrob(label = "+", x = unit(1, "npc"), y = unit(0, "npc"),
-                                 just = c("right", "bottom"), gp = gpar(col = "black"))
+                                 just = c("right", "bottom"), gp = gpar(col = "grey", fontsize = 6))
           assign("pileup_grobs", addGrob(gTree = get("pileup_grobs", envir = bbEnv), child = limitGrob2), envir = bbEnv)
 
         }
@@ -661,7 +668,7 @@ bb_plotBed <- function(data, chrom, chromstart = NULL, chromend = NULL, assembly
 
       lineGrob <- segmentsGrob(x0 = unit(0, "npc"), x1 = unit(1, "npc"),
                                y0 = unit(0, "native"), y1 = unit(0, "native"),
-                               gp = bb_pileInternal$gp)
+                               gp = gpar(col = bb_pileInternal$baseline.color, lwd = bb_pileInternal$baseline.lwd))
       assign("pileup_grobs", addGrob(gTree = get("pileup_grobs", envir = bbEnv), child = lineGrob), envir = bbEnv)
 
     }

@@ -479,7 +479,7 @@ bb_plotTranscripts <- function(chrom, chromstart = NULL, chromend = NULL, assemb
         warning("Not all transcripts shown.", call. = FALSE)
 
         limitGrob <- textGrob(label = "+", x = unit(1, "npc"), y = unit(1, "npc"),
-                              just = c("right", "top"), gp = gpar(col = "black"))
+                              just = c("right", "top"), gp = gpar(col = "grey", fontsize = 6))
         assign("transcript_grobs", addGrob(gTree = get("transcript_grobs", envir = bbEnv), child = limitGrob), envir = bbEnv)
 
       }
@@ -524,7 +524,7 @@ bb_plotTranscripts <- function(chrom, chromstart = NULL, chromend = NULL, assemb
         posRowData <- posRowData[which(posRowData$row != 0),]
         warning("Not all plus strand transcripts shown.", call. = FALSE)
         limitGrob1 <- textGrob(label = "+", x = unit(1, "npc"), y = unit(1, "npc"),
-                               just = c("right", "top"), gp = gpar(col = "black"))
+                               just = c("right", "top"), gp = gpar(col = "grey", fontsize = 6))
         assign("transcript_grobs", addGrob(gTree = get("transcript_grobs", envir = bbEnv), child = limitGrob1), envir = bbEnv)
       }
 
@@ -566,7 +566,7 @@ bb_plotTranscripts <- function(chrom, chromstart = NULL, chromend = NULL, assemb
         minRowData <- minRowData[which(minRowData$row != 0),]
         warning("Not all minus strand transcripts shown.", call. = FALSE)
         limitGrob2 <- textGrob(label = "+", x = unit(1, "npc"), y = unit(0, "npc"),
-                               just = c("right", "bottom"), gp = gpar(col = "black"))
+                               just = c("right", "bottom"), gp = gpar(col = "grey", fontsize = 6))
         assign("transcript_grobs", addGrob(gTree = get("transcript_grobs", envir = bbEnv), child = limitGrob2), envir = bbEnv)
 
       }

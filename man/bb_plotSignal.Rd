@@ -14,12 +14,14 @@ bb_plotSignal(
   chromend = NULL,
   assembly = "hg19",
   linecolor = "#37a7db",
-  fill = "#37a7db",
+  fill = NA,
   ymax = 1,
   range = NULL,
   scale = FALSE,
   bg = NA,
-  baseline = FALSE,
+  baseline = TRUE,
+  baseline.color = "grey",
+  baseline.lwd = 1,
   x = NULL,
   y = NULL,
   width = NULL,
@@ -51,7 +53,7 @@ Either one \code{data} argument or a list of two can be provided, where the seco
 
 \item{linecolor}{A character value or vector of length 2 specifying the line color(s) outlining the signal track(s). Default value is \code{linecolor = "#37a7db"}.}
 
-\item{fill}{A character value or vector of length 2 specifying the fill color(s) of the signal track(s). Default value is \code{fill = "#37a7db"}.}
+\item{fill}{A character value or vector of length 2 specifying the fill color(s) of the signal track(s). Default value is \code{fill = NA}.}
 
 \item{ymax}{A numeric specifying the fraction of the max y-value to set as the height of the plot. Default value is \code{ymax = 1}.}
 
@@ -61,7 +63,11 @@ Either one \code{data} argument or a list of two can be provided, where the seco
 
 \item{bg}{Character value indicating background color. Default value is \code{bg = NA}.}
 
-\item{baseline}{Logical value indicating whether to include a baseline along the x-axis. Default value is \code{baseline = FALSE}.}
+\item{baseline}{Logical value indicating whether to include a baseline along the x-axis. Default value is \code{baseline = TRUE}.}
+
+\item{baseline.color}{Baseline color. Default value is \code{baseline.color = "grey"}.}
+
+\item{baseline.lwd}{Baseline line width. Default value is \code{baseline.lwd = 1}.}
 
 \item{x}{A numeric or unit object specifying signal plot x-location.}
 
@@ -121,7 +127,7 @@ signal1 <- bb_plotSignal(data = bb_imrH3K27acData, params = region,
                          just = c("left", "top"), default.units = "inches")
 
 signal2 <- bb_plotSignal(data = bb_gmH3K27acData, params = region,
-                         fill = "#7ecdbb", linecolor = "#7ecdbb",
+                         linecolor = "#7ecdbb",
                          x = 0.5, y = 1, width = 6.5, height = 0.65,
                          just = c("left", "top"), default.units = "inches")
 
