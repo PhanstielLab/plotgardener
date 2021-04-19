@@ -2,6 +2,7 @@
 
 export(bb_annoGenomeLabel)
 export(bb_annoHeatmapLegend)
+export(bb_annoHighlight)
 export(bb_annoPixels)
 export(bb_annoText)
 export(bb_annoXaxis)

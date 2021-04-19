@@ -88,7 +88,7 @@ bb_annoText <- function(label, fontcolor = "black", fontsize = 12, rot = 0, chec
   # CATCH ERRORS
   # ======================================================================================================================================================================================
 
-  check_bbpage(error = "Cannot plot text without a BentoBox page.")
+  check_bbpage(error = "Cannot annotate text without a BentoBox page.")
   if(is.null(bb_text$label)) stop("argument \"label\" is missing, with no default.", call. = FALSE)
   if(is.null(bb_textInternal$plot)) stop("argument \"plot\" is missing, with no default.", call. = FALSE)
   if(is.null(bb_text$x)) stop("argument \"x\" is missing, with no default.", call. = FALSE)
@@ -98,7 +98,7 @@ bb_annoText <- function(label, fontcolor = "black", fontsize = 12, rot = 0, chec
   # DEFINE PARAMETERS
   # ======================================================================================================================================================================================
 
-  ## Get page_height and its units from bbEnv through bb_makepage
+  ## Get page_height and its units from bbEnv through bb_pageCreate
   page_height <- get("page_height", envir = bbEnv)
   page_units <- get("page_units", envir = bbEnv)
 
@@ -106,7 +106,7 @@ bb_annoText <- function(label, fontcolor = "black", fontsize = 12, rot = 0, chec
 
     if (!is.numeric(bb_text$x)){
 
-      stop("x-coordinate is neither a unit object or a numeric value. Cannot plot text.", call. = FALSE)
+      stop("x-coordinate is neither a unit object or a numeric value. Cannot place object.", call. = FALSE)
 
     }
 
@@ -130,7 +130,7 @@ bb_annoText <- function(label, fontcolor = "black", fontsize = 12, rot = 0, chec
 
       if (!is.numeric(bb_text$y)){
 
-        stop("y-coordinate is neither a unit object or a numeric value. Cannot plot text.", call. = FALSE)
+        stop("y-coordinate is neither a unit object or a numeric value. Cannot place object.", call. = FALSE)
 
       }
 
