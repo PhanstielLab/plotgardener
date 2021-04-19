@@ -92,5 +92,5 @@ bb_pageGuideHide()
 
 }
 \seealso{
-\link[grid]{grid.segments} \link[grid]{arrow}
+\link[grid]{grid.segments}, \link[grid]{arrow}
 }
