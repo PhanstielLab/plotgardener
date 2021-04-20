@@ -154,6 +154,7 @@
   altchromend <span class='op'>=</span> <span class='cn'>NULL</span>,
   assembly <span class='op'>=</span> <span class='st'>"hg19"</span>,
   palette <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/grDevices/colorRamp.html'>colorRampPalette</a></span><span class='op'>(</span><span class='fu'>brewer.pal</span><span class='op'>(</span>n <span class='op'>=</span> <span class='fl'>9</span>, <span class='st'>"YlGnBu"</span><span class='op'>)</span><span class='op'>)</span>,
+  colorTrans <span class='op'>=</span> <span class='st'>"linear"</span>,
   half <span class='op'>=</span> <span class='st'>"both"</span>,
   x <span class='op'>=</span> <span class='cn'>NULL</span>,
   y <span class='op'>=</span> <span class='cn'>NULL</span>,
@@ -190,7 +191,7 @@ dataframes, "auto" will attempt to detect the resolution the dataframe contains.
       <td><p>Character value indicating the type of matrix to output. Default value is <code>matrix = "observed"</code>. Options are:</p><ul>
 <li><p><code>"observed"</code>: Observed counts.</p></li>
 <li><p><code>"oe"</code>: Observed/expected counts.</p></li>
-<li><p><code>"logoe"</code>: Log2 transformed observed/expected counts.</p></li>
+<li><p><code>"log2oe"</code>: Log2 transformed observed/expected counts.</p></li>
 </ul></td>
     </tr>
     <tr>
@@ -224,6 +225,10 @@ dataframes, "auto" will attempt to detect the resolution the dataframe contains.
     <tr>
       <th>palette</th>
       <td><p>A function describing the color palette to use for representing scale of interaction scores. Default value is <code>palette =  colorRampPalette(brewer.pal(n = 9, "YlGnBu"))</code>.</p></td>
+    </tr>
+    <tr>
+      <th>colorTrans</th>
+      <td><p>A string specifying how to scale Hi-C colors. Options are "linear", "log", "log2", or "log10". Default value is <code>colorTrans = "linear"</code>.</p></td>
     </tr>
     <tr>
       <th>half</th>

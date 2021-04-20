@@ -54,6 +54,7 @@ reference:
       - bb_plotBedpeArches
       - bb_plotGenes
       - bb_plotGenomeLabel
+      - bb_plotHicRectangle
       - bb_plotHicSquare
       - bb_plotHicTriangle
       - bb_plotIdeogram

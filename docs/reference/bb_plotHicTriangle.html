@@ -151,6 +151,7 @@
   chromend <span class='op'>=</span> <span class='cn'>NULL</span>,
   assembly <span class='op'>=</span> <span class='st'>"hg19"</span>,
   palette <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/grDevices/colorRamp.html'>colorRampPalette</a></span><span class='op'>(</span><span class='fu'>brewer.pal</span><span class='op'>(</span>n <span class='op'>=</span> <span class='fl'>9</span>, <span class='st'>"YlGnBu"</span><span class='op'>)</span><span class='op'>)</span>,
+  colorTrans <span class='op'>=</span> <span class='st'>"linear"</span>,
   x <span class='op'>=</span> <span class='cn'>NULL</span>,
   y <span class='op'>=</span> <span class='cn'>NULL</span>,
   width <span class='op'>=</span> <span class='cn'>NULL</span>,
@@ -186,7 +187,7 @@ dataframes, "auto" will attempt to detect the resolution the dataframe contains.
       <td><p>Character value indicating the type of matrix to output. Default value is <code>matrix = "observed"</code>. Options are:</p><ul>
 <li><p><code>"observed"</code>: Observed counts.</p></li>
 <li><p><code>"oe"</code>: Observed/expected counts.</p></li>
-<li><p><code>"logoe"</code>: Log2 transformed observed/expected counts.</p></li>
+<li><p><code>"log2oe"</code>: Log2 transformed observed/expected counts.</p></li>
 </ul></td>
     </tr>
     <tr>
@@ -208,6 +209,10 @@ dataframes, "auto" will attempt to detect the resolution the dataframe contains.
     <tr>
       <th>palette</th>
       <td><p>A function describing the color palette to use for representing scale of interaction scores. Default value is <code>palette =  colorRampPalette(brewer.pal(n = 9, "YlGnBu"))</code>.</p></td>
+    </tr>
+    <tr>
+      <th>colorTrans</th>
+      <td><p>A string specifying how to scale Hi-C colors. Options are "linear", "log", "log2", or "log10". Default value is <code>colorTrans = "linear"</code>.</p></td>
     </tr>
     <tr>
       <th>x</th>
@@ -277,7 +282,7 @@ Possible string values are: <code>"left"</code>, <code>"right"</code>, <code>"ce
                               chrom <span class='op'>=</span> <span class='st'>"chr21"</span>, chromstart <span class='op'>=</span> <span class='fl'>28000000</span>, chromend <span class='op'>=</span> <span class='fl'>30300000</span>,
                               x <span class='op'>=</span> <span class='fl'>2</span>, y <span class='op'>=</span> <span class='fl'>0.5</span>, width <span class='op'>=</span> <span class='fl'>3</span>, height <span class='op'>=</span> <span class='fl'>1.5</span>,
                               just <span class='op'>=</span> <span class='st'>"top"</span>, default.units <span class='op'>=</span> <span class='st'>"inches"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>Read in dataframe. 10000 BP resolution detected.</span></div><div class='output co'>#&gt; <span class='message'>bb_hicTriangle[bb_hicTriangle1]</span></div><div class='input'>
+</div><div class='output co'>#&gt; <span class='message'>Read in dataframe.  Assuming 'chrom' in column1 and 'altchrom' in column2. 10000 BP resolution detected.</span></div><div class='output co'>#&gt; <span class='message'>bb_hicTriangle[bb_hicTriangle1]</span></div><div class='input'>
 <span class='co'>## Annotate x-axis genome label</span>
 <span class='fu'><a href='bb_annoGenomeLabel.html'>bb_annoGenomeLabel</a></span><span class='op'>(</span>plot <span class='op'>=</span> <span class='va'>hicPlot</span>, scale <span class='op'>=</span> <span class='st'>"Mb"</span>, x <span class='op'>=</span> <span class='fl'>0.5</span>, y <span class='op'>=</span> <span class='fl'>2.03</span>, just <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"left"</span>, <span class='st'>"top"</span><span class='op'>)</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; <span class='message'>bb_genomeLabel[bb_genomeLabel1]</span></div><div class='input'>

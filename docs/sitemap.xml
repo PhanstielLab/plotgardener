@@ -13,7 +13,13 @@
     <loc>https://phanstiellab.github.io/bentobox/reference/bb_annoHeatmapLegend.html</loc>
   </url>
   <url>
+    <loc>https://phanstiellab.github.io/bentobox/reference/bb_annoHighlight.html</loc>
+  </url>
+  <url>
     <loc>https://phanstiellab.github.io/bentobox/reference/bb_annoPixels.html</loc>
+  </url>
+  <url>
+    <loc>https://phanstiellab.github.io/bentobox/reference/bb_annoSegments.html</loc>
   </url>
   <url>
     <loc>https://phanstiellab.github.io/bentobox/reference/bb_annoText.html</loc>
@@ -23,6 +29,9 @@
   </url>
   <url>
     <loc>https://phanstiellab.github.io/bentobox/reference/bb_annoYaxis.html</loc>
+  </url>
+  <url>
+    <loc>https://phanstiellab.github.io/bentobox/reference/bb_annoZoomLines.html</loc>
   </url>
   <url>
     <loc>https://phanstiellab.github.io/bentobox/reference/bb_assembly.html</loc>
@@ -107,6 +116,9 @@
   </url>
   <url>
     <loc>https://phanstiellab.github.io/bentobox/reference/bb_plotGenomeLabel.html</loc>
+  </url>
+  <url>
+    <loc>https://phanstiellab.github.io/bentobox/reference/bb_plotHicRectangle.html</loc>
   </url>
   <url>
     <loc>https://phanstiellab.github.io/bentobox/reference/bb_plotHicSquare.html</loc>
