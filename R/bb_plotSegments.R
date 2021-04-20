@@ -128,13 +128,13 @@ bb_plotSegments <- function(x0, y0, x1, y1, default.units = "inches", linecolor 
 
     if (!is.numeric(bb_segments$x0)){
 
-      stop("Starting x-coordinate is neither a unit object or a numeric value. Cannot plot segment.", call. = FALSE)
+      stop("x0-coordinate is neither a unit object or a numeric value. Cannot plot segment.", call. = FALSE)
 
     }
 
     if (is.null(bb_segmentsInternal$default.units)){
 
-      stop("Starting x-coordinate detected as numeric.\'default.units\' must be specified.", call. = FALSE)
+      stop("x0-coordinate detected as numeric.\'default.units\' must be specified.", call. = FALSE)
 
     }
 
@@ -160,13 +160,13 @@ bb_plotSegments <- function(x0, y0, x1, y1, default.units = "inches", linecolor 
 
       if (!is.numeric(bb_segments$y0)){
 
-        stop("Starting y-coordinate is neither a unit object or a numeric value. Cannot plot segment.", call. = FALSE)
+        stop("y0-coordinate is neither a unit object or a numeric value. Cannot plot segment.", call. = FALSE)
 
       }
 
       if (is.null(bb_segmentsInternal$default.units)){
 
-        stop("Starting y-coordinate detected as numeric.\'default.units\' must be specified.", call. = FALSE)
+        stop("y0-coordinate detected as numeric.\'default.units\' must be specified.", call. = FALSE)
 
       }
 
@@ -181,13 +181,13 @@ bb_plotSegments <- function(x0, y0, x1, y1, default.units = "inches", linecolor 
 
     if (!is.numeric(bb_segments$x1)){
 
-      stop("Stopping x-coordinate is neither a unit object or a numeric value. Cannot plot segment.", call. = FALSE)
+      stop("x1-coordinate is neither a unit object or a numeric value. Cannot plot segment.", call. = FALSE)
 
     }
 
     if (is.null(bb_segmentsInternal$default.units)){
 
-      stop("Stopping x-coordinate detected as numeric.\'default.units\' must be specified.", call. = FALSE)
+      stop("x1-coordinate detected as numeric.\'default.units\' must be specified.", call. = FALSE)
 
     }
 
@@ -212,13 +212,13 @@ bb_plotSegments <- function(x0, y0, x1, y1, default.units = "inches", linecolor 
     } else {
       if (!is.numeric(bb_segments$y1)){
 
-        stop("Stopping y-coordinate is neither a unit object or a numeric value. Cannot plot segment.", call. = FALSE)
+        stop("y1-coordinate is neither a unit object or a numeric value. Cannot plot segment.", call. = FALSE)
 
       }
 
       if (is.null(bb_segmentsInternal$default.units)){
 
-        stop("Stopping y-coordinate detected as numeric.\'default.units\' must be specified.", call. = FALSE)
+        stop("y1-coordinate detected as numeric.\'default.units\' must be specified.", call. = FALSE)
 
       }
 

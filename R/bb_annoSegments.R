@@ -140,13 +140,13 @@ bb_annoSegments <- function(x0, y0, x1, y1, plot, default.units = "native", line
 
     if (!is.numeric(bb_segments$x0)){
 
-      stop("Starting x-coordinate is neither a unit object or a numeric value. Cannot plot segment.", call. = FALSE)
+      stop("x0-coordinate is neither a unit object or a numeric value. Cannot plot segment.", call. = FALSE)
 
     }
 
     if (is.null(bb_segmentsInternal$default.units)){
 
-      stop("Starting x-coordinate detected as numeric.\'default.units\' must be specified.", call. = FALSE)
+      stop("x0-coordinate detected as numeric.\'default.units\' must be specified.", call. = FALSE)
 
     }
 
@@ -163,13 +163,13 @@ bb_annoSegments <- function(x0, y0, x1, y1, plot, default.units = "native", line
 
       if (!is.numeric(bb_segments$y0)){
 
-        stop("Starting y-coordinate is neither a unit object or a numeric value. Cannot plot segment.", call. = FALSE)
+        stop("y0-coordinate is neither a unit object or a numeric value. Cannot plot segment.", call. = FALSE)
 
       }
 
       if (is.null(bb_segmentsInternal$default.units)){
 
-        stop("Starting y-coordinate detected as numeric.\'default.units\' must be specified.", call. = FALSE)
+        stop("y0-coordinate detected as numeric.\'default.units\' must be specified.", call. = FALSE)
 
       }
 
@@ -184,13 +184,13 @@ bb_annoSegments <- function(x0, y0, x1, y1, plot, default.units = "native", line
 
     if (!is.numeric(bb_segments$x1)){
 
-      stop("Stopping x-coordinate is neither a unit object or a numeric value. Cannot plot segment.", call. = FALSE)
+      stop("x1-coordinate is neither a unit object or a numeric value. Cannot plot segment.", call. = FALSE)
 
     }
 
     if (is.null(bb_segmentsInternal$default.units)){
 
-      stop("Stopping x-coordinate detected as numeric.\'default.units\' must be specified.", call. = FALSE)
+      stop("x1-coordinate detected as numeric.\'default.units\' must be specified.", call. = FALSE)
 
     }
 
@@ -206,13 +206,13 @@ bb_annoSegments <- function(x0, y0, x1, y1, plot, default.units = "native", line
     } else {
       if (!is.numeric(bb_segments$y1)){
 
-        stop("Stopping y-coordinate is neither a unit object or a numeric value. Cannot plot segment.", call. = FALSE)
+        stop("y1-coordinate is neither a unit object or a numeric value. Cannot plot segment.", call. = FALSE)
 
       }
 
       if (is.null(bb_segmentsInternal$default.units)){
 
-        stop("Stopping y-coordinate detected as numeric.\'default.units\' must be specified.", call. = FALSE)
+        stop("y1-coordinate detected as numeric.\'default.units\' must be specified.", call. = FALSE)
 
       }
 
@@ -250,7 +250,7 @@ bb_annoSegments <- function(x0, y0, x1, y1, plot, default.units = "native", line
 
   seekViewport(name = "bb_page")
 
-  ## Add additional page units to new_x and new_y
+  ## Add additional page units to new_x0, new_x1, new_y0, and new_y1
   new_x0 <- as.numeric(plotVP_bottomLeft[[1]]) + new_x0
   new_x1 <- as.numeric(plotVP_bottomLeft[[1]]) + new_x1
   new_y0 <- as.numeric(plotVP_bottomLeft[[2]]) + new_y0

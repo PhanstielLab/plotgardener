@@ -337,3 +337,44 @@ plot_belowY <- function(y_coord){
 
   return(new_y)
 }
+
+## Define a function that converts chromstart/chromend to page units for multi-chromosome manhattan plot
+convertManhattan <- function(object, manhattanPlot){
+
+  ## Get assembly data
+  if (class(object$assembly$TxDb) == "TxDb"){
+    txdbChecks <- TRUE
+  } else {
+    txdbChecks <- suppressWarnings(check_loadedPackage(package = object$assembly$TxDb, message = NULL))
+  }
+
+
+  if (txdbChecks == TRUE){
+    if (class(object$assembly$TxDb) == "TxDb"){
+      tx_db <- object$assembly$TxDb
+    } else {
+      tx_db <- eval(parse(text = object$assembly$TxDb))
+    }
+
+    assembly_data <- as.data.frame(setDT(as.data.frame(seqlengths(tx_db)), keep.rownames = TRUE))
+    assembly_data <- assembly_data[which(assembly_data[,1] %in% manhattanPlot$chrom),]
+
+    ## Get the offset based on spacer for the assembly
+    offsetAssembly <- spaceChroms(assemblyData = assembly_data, space = manhattanPlot$space)
+    offsetAssembly <- offsetAssembly[which(offsetAssembly$chrom == object$chrom),]
+
+    ## Convert chromstart and chromend to chrom offsetAssembly range
+    oldRange <- offsetAssembly[,2] - 1
+    newRange <- offsetAssembly[,4] - offsetAssembly[,3]
+    newStart <- (((object$chromstart - 1) * newRange) / oldRange) + offsetAssembly[,3]
+    newEnd <- (((object$chromend - 1) * newRange) / oldRange) + offsetAssembly[,3]
+
+    ## Convert new chromstart and chromend to page units
+    start <- convertX(unit(newStart, "native"), unitTo = get("page_units", envir = bbEnv), valueOnly = TRUE)
+    end <- convertX(unit(newEnd, "native"), unitTo = get("page_units", envir = bbEnv), valueOnly = TRUE)
+
+    return(list(start, end))
+
+  }
+
+}

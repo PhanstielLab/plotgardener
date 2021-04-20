@@ -67,47 +67,6 @@ bb_annoHighlight <- function(plot, chrom, chromstart = NULL, chromend = NULL, fi
 
   }
 
-  ## Define a function that converts chromstart/chromend to page units for multi-chromosome manhattan plot
-  convertManhattan <- function(object, manhattanPlot){
-
-    ## Get assembly data
-    if (class(object$assembly$TxDb) == "TxDb"){
-      txdbChecks <- TRUE
-    } else {
-      txdbChecks <- suppressWarnings(check_loadedPackage(package = object$assembly$TxDb, message = NULL))
-    }
-
-
-    if (txdbChecks == TRUE){
-      if (class(object$assembly$TxDb) == "TxDb"){
-        tx_db <- object$assembly$TxDb
-      } else {
-        tx_db <- eval(parse(text = object$assembly$TxDb))
-      }
-
-      assembly_data <- as.data.frame(setDT(as.data.frame(seqlengths(tx_db)), keep.rownames = TRUE))
-      assembly_data <- assembly_data[which(assembly_data[,1] %in% manhattanPlot$chrom),]
-
-      ## Get the offset based on spacer for the assembly
-      offsetAssembly <- spaceChroms(assemblyData = assembly_data, space = manhattanPlot$space)
-      offsetAssembly <- offsetAssembly[which(offsetAssembly$chrom == object$chrom),]
-
-      ## Convert chromstart and chromend to chrom offsetAssembly range
-      oldRange <- offsetAssembly[,2] - 1
-      newRange <- offsetAssembly[,4] - offsetAssembly[,3]
-      newStart <- (((object$chromstart - 1) * newRange) / oldRange) + offsetAssembly[,3]
-      newEnd <- (((object$chromend - 1) * newRange) / oldRange) + offsetAssembly[,3]
-
-      ## Convert new chromstart and chromend to page units
-      start <- convertX(unit(newStart, "native"), unitTo = get("page_units", envir = bbEnv), valueOnly = TRUE)
-      end <- convertX(unit(newEnd, "native"), unitTo = get("page_units", envir = bbEnv), valueOnly = TRUE)
-
-      return(list(start, end))
-
-    }
-
-  }
-
   ## Define a function that resets y to a top-based justification
   y_Pagetop <- function(y, height, just){
     page_height <- get("page_height", envir = bbEnv)
@@ -210,8 +169,8 @@ bb_annoHighlight <- function(plot, chrom, chromstart = NULL, chromend = NULL, fi
   if(is.null(bb_highlightInternal$chrom)) stop("argument \"chrom\" is missing, with no default.", call. = FALSE)
   if(is.null(bb_highlight$y)) stop("argument \"y\" is missing, with no default.", call. = FALSE)
   if(is.null(bb_highlight$height)) stop("argument \"height\" is missing, with no default.", call. = FALSE)
-
   bb_errorcheck_annoHighlight(object = bb_highlightInternal)
+
   # ======================================================================================================================================================================================
   # PARSE UNITS
   # ======================================================================================================================================================================================
@@ -342,30 +301,33 @@ bb_annoHighlight <- function(plot, chrom, chromstart = NULL, chromend = NULL, fi
   ## Convert plot genomic coordinates to position on page
   seekViewport(plotVP$name)
 
-  if (class(bb_highlightInternal$plot) == "bb_manhattan"){
+  if(!is.null(bb_highlight$chromstart) & !is.null(bb_highlight$chromend)){
+    if (class(bb_highlightInternal$plot) == "bb_manhattan"){
 
-    ## Multiple chromosome manhattan plot
-    if (length(bb_highlightInternal$plot$chrom) > 1){
+      ## Multiple chromosome manhattan plot
+      if (length(bb_highlightInternal$plot$chrom) > 1){
 
-      convertedCoords <- convertManhattan(object = bb_highlight, manhattanPlot = bb_highlightInternal$plot)
-      start <- convertedCoords[[1]]
-      end <- convertedCoords[[2]]
+        convertedCoords <- convertManhattan(object = bb_highlight, manhattanPlot = bb_highlightInternal$plot)
+        start <- convertedCoords[[1]]
+        end <- convertedCoords[[2]]
+
+      } else {
+        start <- convertX(unit(bb_highlight$chromstart, "native"), unitTo = page_units, valueOnly = TRUE)
+        end <- convertX(unit(bb_highlight$chromend, "native"), unitTo = page_units, valueOnly = TRUE)
+      }
 
     } else {
       start <- convertX(unit(bb_highlight$chromstart, "native"), unitTo = page_units, valueOnly = TRUE)
       end <- convertX(unit(bb_highlight$chromend, "native"), unitTo = page_units, valueOnly = TRUE)
     }
 
-  } else {
-    start <- convertX(unit(bb_highlight$chromstart, "native"), unitTo = page_units, valueOnly = TRUE)
-    end <- convertX(unit(bb_highlight$chromend, "native"), unitTo = page_units, valueOnly = TRUE)
+    width <- end - start
+    ## Add additional page units to start
+    start <- as.numeric(plotVP_bottomLeft[[1]]) + start
+
   }
 
-  width <- end - start
   seekViewport("bb_page")
-
-  ## Add additional page units to start
-  start <- as.numeric(plotVP_bottomLeft[[1]]) + start
 
   # ======================================================================================================================================================================================
   # USE JUSTIFICATION TO DETERMINE PAGE-ADJUSTED TOP Y-COORD
@@ -378,15 +340,13 @@ bb_annoHighlight <- function(plot, chrom, chromstart = NULL, chromend = NULL, fi
   # ======================================================================================================================================================================================
 
   name <- paste0("bb_highlight", length(grep(pattern = "bb_highlight", x = grid.ls(print = FALSE, recursive = FALSE))) + 1)
-  highlightGrob <- grid.rect(x = unit(start, page_units), y = top_y, width = unit(width, page_units), height = bb_highlight$height,
-                             just = c("left", "top"),
-                             gp = bb_highlightInternal$gp, name = name)
 
-  # ======================================================================================================================================================================================
-  # ADD GROB TO OBJECT
-  # ======================================================================================================================================================================================
-
-  bb_highlight$grobs <- highlightGrob
+  if (!is.null(bb_highlight$chromstart) & !is.null(bb_highlight$chromend)){
+    highlightGrob <- grid.rect(x = unit(start, page_units), y = top_y, width = unit(width, page_units), height = bb_highlight$height,
+                               just = c("left", "top"),
+                               gp = bb_highlightInternal$gp, name = name)
+    bb_highlight$grobs <- highlightGrob
+  }
 
   # ======================================================================================================================================================================================
   # RETURN OBJECT
