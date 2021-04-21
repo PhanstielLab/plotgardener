@@ -11,7 +11,6 @@ Authors@R: c(person("Nicole", "Kramer", email = "nekramer@live.unc.edu", role = 
              person("Sarah", "Parker", email = "sarmae@live.unc.edu", role = c("ctb")),
              person("Erika", "Deoudes", email = "ed@erikadudes.com", role = c("art")),
              person(c("Douglas", "H."), "Phanstiel", email = "douglas_phanstiel@med.unc.edu", role = c("aut", "cph")))
-Maintainer: Nicole Kramer <nekramer@live.unc.edu>
 Description: >
     BentoBox is a coordinate-based genomic visualization package for R. It grants users
     the ability to programmatically produce complex, multi-paneled figures. Tailored for
