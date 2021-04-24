@@ -2,13 +2,20 @@
 % Please edit documentation in R/bb_pageGuideShow.R
 \name{bb_pageGuideShow}
 \alias{bb_pageGuideShow}
-\title{Reshow guides drawn with \code{bb_pageCreate}, \code{bb_pageGuideHorizontal}, and \code{bb_pageGuideVertical}}
+\title{Reshow guides drawn with \code{bb_pageCreate},
+\code{bb_pageGuideHorizontal}, and \code{bb_pageGuideVertical}}
 \usage{
 bb_pageGuideShow()
 }
+\value{
+None.
+}
 \description{
-Reshow guides drawn with \code{bb_pageCreate}, \code{bb_pageGuideHorizontal}, and \code{bb_pageGuideVertical}
+Reshow guides drawn with \code{bb_pageCreate},
+\code{bb_pageGuideHorizontal}, and \code{bb_pageGuideVertical}
 }
 \seealso{
-\link[BentoBox]{bb_pageCreate}, \link[BentoBox]{bb_pageGuideHorizontal}, \link[BentoBox]{bb_pageGuideVertical}
+\link[BentoBox]{bb_pageCreate},
+\link[BentoBox]{bb_pageGuideHorizontal},
+\link[BentoBox]{bb_pageGuideVertical}
 }
