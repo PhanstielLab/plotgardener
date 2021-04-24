@@ -9,12 +9,14 @@ colorby(column, range = NULL)
 \arguments{
 \item{column}{String specifying name of data column to scale colors by.}
 
-\item{range}{A numeric vector specifying the range of values to apply a color scale to.}
+\item{range}{A numeric vector specifying the range of values to
+apply a color scale to.}
 }
 \value{
 Returns a "\code{bb_colorby}" object.
 }
 \description{
-\code{colorby} should be used to create a set of parameters that specify color scaling for the functions \code{bb_plotBedpe},
+\code{colorby} should be used to create a set of parameters
+that specify color scaling for the functions \code{bb_plotBedpe},
 \code{bb_plotBedpeArches}, and \code{bb_plotBed}.
 }
