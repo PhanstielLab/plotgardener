@@ -10,22 +10,34 @@ a dataframe in BED format
 \item{chrom}{The name of the chromosome on which the genome feature exists.}
 \item{start}{The starting position of the feature in the chromosome.}
 \item{end}{The ending position of the feature in the chromosome.}
-\item{strand}{An optional column defining the strand of the feature as either '+' or '-'.}
+\item{strand}{An optional column defining the strand of the
+feature as either '+' or '-'.}
 }
 }
 \source{
-Data from \strong{Michael Snyder, Stanford} with accession number \strong{ENCFF847VPR} was downloaded from the ENCODE portal \url{https://www.encodeproject.org/}.
+Data from \strong{Michael Snyder, Stanford} with accession number
+\strong{ENCFF847VPR} was downloaded from the
+ENCODE portal \url{https://www.encodeproject.org/}.
 }
 \usage{
 data("bb_bedData")
 }
 \description{
-A dataset listing aligned sequencing reads for CTCF in the IMR90 cell line as determined by ChIP-seq. Genomic coordinates
-fall within the region chr21:28000000-30300000 according to the hg19 genome build.
+A dataset listing aligned sequencing reads for CTCF in the IMR90 cell
+line as determined by ChIP-seq. Genomic coordinates
+fall within the region chr21:28000000-30300000
+according to the hg19 genome build.
 }
 \references{
-ENCODE Project Consortium. An integrated encyclopedia of DNA elements in the human genome. Nature. 2012 Sep 6;489(7414):57-74. doi: 10.1038/nature11247. PMID: 22955616; PMCID: PMC3439153.
+ENCODE Project Consortium. An integrated encyclopedia of DNA elements
+in the human genome. Nature. 2012 Sep 6;489(7414):57-74.
+doi: 10.1038/nature11247. PMID: 22955616; PMCID: PMC3439153.
 
-Davis CA, Hitz BC, Sloan CA, Chan ET, Davidson JM, Gabdank I, Hilton JA, Jain K, Baymuradov UK, Narayanan AK, Onate KC, Graham K, Miyasato SR, Dreszer TR, Strattan JS, Jolanki O, Tanaka FY, Cherry JM. The Encyclopedia of DNA elements (ENCODE): data portal update. Nucleic Acids Res. 2018 Jan 4;46(D1):D794-D801. doi: 10.1093/nar/gkx1081. PMID: 29126249; PMCID: PMC5753278.
+Davis CA, Hitz BC, Sloan CA, Chan ET, Davidson JM, Gabdank I,
+Hilton JA, Jain K, Baymuradov UK, Narayanan AK, Onate KC, Graham K,
+Miyasato SR, Dreszer TR, Strattan JS, Jolanki O, Tanaka FY, Cherry JM.
+The Encyclopedia of DNA elements (ENCODE): data portal update.
+Nucleic Acids Res. 2018 Jan 4;46(D1):D794-D801. doi: 10.1093/nar/gkx1081.
+PMID: 29126249; PMCID: PMC5753278.
 }
 \keyword{datasets}

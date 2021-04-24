@@ -36,73 +36,111 @@ bb_plotTranscripts(
 
 \item{chromend}{Integer end position on chromosome to be plotted.}
 
-\item{assembly}{Default genome assembly as a string or a \link[BentoBox]{bb_assembly} object. Default value is \code{assembly = "hg19"}.}
+\item{assembly}{Default genome assembly as a string or a
+\link[BentoBox]{bb_assembly} object.
+Default value is \code{assembly = "hg19"}.}
 
-\item{fill}{Character value(s) as a single value or vector specifying fill colors of transcripts. Default value is \code{fill = c("#669fd9", "#abcc8e")}.}
+\item{fill}{Character value(s) as a single value or vector
+specifying fill colors of transcripts.
+Default value is \code{fill = c("#669fd9", "#abcc8e")}.}
 
-\item{colorbyStrand}{A logical value indicating whether to color plus and minus strands by the first two colors in a \code{fill} vector, where plus strand transcripts will be colored by the first \code{fill} color and
-minus strand transcripts will be colored by the second \code{fill} color. Default value is \code{colorbyStrand = TRUE}.}
+\item{colorbyStrand}{A logical value indicating whether to
+color plus and minus strands by the first two colors in
+a \code{fill} vector, where plus strand transcripts will be
+colored by the first \code{fill} color and
+minus strand transcripts will be colored by the second \code{fill}
+color. Default value is \code{colorbyStrand = TRUE}.}
 
-\item{strandSplit}{A logical value indicating whether plus and minus-stranded transcripts should be separated, with plus strand transcripts plotted above the x-axis and minus strand transcripts plotted below the x-axis. Default value is \code{strandSplit = FALSE}.}
+\item{strandSplit}{A logical value indicating whether plus and
+minus-stranded transcripts should be separated, with plus strand
+transcripts plotted above the x-axis and minus strand transcripts
+plotted below the x-axis. Default value is \code{strandSplit = FALSE}.}
 
-\item{boxHeight}{A numeric or unit object specifying height of transcripts. Default value is \code{boxHeight = unit(2, "mm")}.}
+\item{boxHeight}{A numeric or unit object specifying height of transcripts.
+Default value is \code{boxHeight = unit(2, "mm")}.}
 
-\item{spaceWidth}{A numeric value specifying the width of minimum spacing between transcripts, as a fraction of the plot's genomic range. Default value is \code{spaceWidth = 0.02}.}
+\item{spaceWidth}{A numeric value specifying the width of minimum spacing
+between transcripts, as a fraction of the plot's genomic range.
+Default value is \code{spaceWidth = 0.02}.}
 
-\item{spaceHeight}{A numeric value specifying the height of spacing between transcripts on different rows, as a fraction of \code{boxHeight}. Default value is \code{spaceHeight = 0.3}.}
+\item{spaceHeight}{A numeric value specifying the height of spacing
+between transcripts on different rows, as a fraction of \code{boxHeight}.
+Default value is \code{spaceHeight = 0.3}.}
 
-\item{fontsize}{A numeric specifying text fontsize in points. Default value is \code{fontsize = 8}.}
+\item{fontsize}{A numeric specifying text fontsize in points.
+Default value is \code{fontsize = 8}.}
 
-\item{labels}{A character value describing the format of transcript text labels. Default value is \code{labels = "trancript"}. Options are:
+\item{labels}{A character value describing the format of
+transcript text labels. Default value is \code{labels = "trancript"}.
+Options are:
 \itemize{
 \item{\code{NULL}: }{No labels.}
 \item{\code{"transcript"}: }{Transcript name labels.}
 \item{\code{"gene"}: }{Gene name labels.}
-\item{\code{"both"}: }{Combined transcript and gene name labels with the format "gene name:transcript name".}
+\item{\code{"both"}: }{Combined transcript and gene name labels with
+the format "gene name:transcript name".}
 }}
 
-\item{stroke}{A numeric value indicating the stroke width for transcript body outlines. Default value is \code{stroke = 0.1}.}
+\item{stroke}{A numeric value indicating the stroke width for
+transcript body outlines. Default value is \code{stroke = 0.1}.}
 
-\item{bg}{Character value indicating background color. Default value is \code{bg = NA}.}
+\item{bg}{Character value indicating background color.
+Default value is \code{bg = NA}.}
 
 \item{x}{A numeric or unit object specifying transcript plot x-location.}
 
-\item{y}{A numeric, unit object, or character containing a "b" combined with a numeric value specifying transcript plot y-location. The character value will
-place the transcript plot y relative to the bottom of the most recently plotted BentoBox plot according to the units of the BentoBox page.}
+\item{y}{A numeric, unit object, or character containing a "b"
+combined with a numeric value specifying transcript plot y-location.
+The character value will
+place the transcript plot y relative to the bottom of the most recently
+plotted BentoBox plot according to the units of the BentoBox page.}
 
 \item{width}{A numeric or unit object specifying transcript plot width.}
 
 \item{height}{A numeric or unit object specifying transcript plot height.}
 
-\item{just}{Justification of transcript plot relative to its (x, y) location. If there are two values, the first value specifies horizontal justification and the second value specifies vertical justification.
-Possible string values are: \code{"left"}, \code{"right"}, \code{"centre"}, \code{"center"}, \code{"bottom"}, and \code{"top"}. Default value is \code{just = c("left", "top")}.}
+\item{just}{Justification of transcript plot relative to
+its (x, y) location. If there are two values, the first value specifies
+horizontal justification and the second value specifies vertical
+justification.
+Possible string values are: \code{"left"}, \code{"right"},
+\code{"centre"}, \code{"center"}, \code{"bottom"}, and \code{"top"}.
+Default value is \code{just = c("left", "top")}.}
 
-\item{default.units}{A string indicating the default units to use if \code{x}, \code{y}, \code{width}, or \code{height} are only given as numerics. Default value is \code{default.units = "inches"}.}
+\item{default.units}{A string indicating the default units to use if
+\code{x}, \code{y}, \code{width}, or \code{height} are only given as
+numerics. Default value is \code{default.units = "inches"}.}
 
-\item{draw}{A logical value indicating whether graphics output should be produced. Default value is \code{draw = TRUE}.}
+\item{draw}{A logical value indicating whether graphics output should be
+produced. Default value is \code{draw = TRUE}.}
 
-\item{params}{An optional \link[BentoBox]{bb_params} object containing relevant function parameters.}
+\item{params}{An optional \link[BentoBox]{bb_params} object containing
+relevant function parameters.}
 }
 \value{
-Returns a \code{bb_transcripts} object containing relevant genomic region, placement, and \link[grid]{grob} information.
+Returns a \code{bb_transcripts} object containing relevant
+genomic region, placement, and \link[grid]{grob} information.
 }
 \description{
 Plot gene transcripts in a pileup style for a single chromosome
 }
 \details{
-A transcripts plot can be placed on a BentoBox coordinate page by providing plot placement parameters:
+A transcripts plot can be placed on a BentoBox coordinate page
+by providing plot placement parameters:
 \preformatted{
 bb_plotTranscripts(chrom, chromstart = NULL, chromend = NULL,
                    x, y, width, height, just = c("left", "top"),
                    default.units = "inches")
 }
-This function can also be used to quickly plot an unannotated transcripts plot by ignoring plot placement parameters:
+This function can also be used to quickly plot an unannotated
+transcripts plot by ignoring plot placement parameters:
 \preformatted{
 bb_plotTranscripts(chrom, chromstart = NULL, chromend = NULL)
 }
 
-Genomic annotation information is acquired through \link[GenomicFeatures]{TxDb} and \link[AnnotationDbi]{OrgDb-class} packages, as determined
-through the \code{assembly} parameter.
+Genomic annotation information is acquired through
+\link[GenomicFeatures]{TxDb} and \link[AnnotationDbi]{OrgDb-class} packages,
+as determined through the \code{assembly} parameter.
 }
 \examples{
 ## Load hg19 genomic annotation packages
@@ -123,13 +161,16 @@ bb_plotGenomeLabel(chrom = "chr8", chromstart = 1000000, chromend = 2000000,
                    x = 0.5, y = 3.03, length = 6.5, default.units = "inches")
 
 ## Plot a legend
-bb_plotLegend(legend = c("+ strand", "- strand"), fill = c("#669fd9", "#abcc8e"), border = FALSE,
-              x = 0.5, y = 1, width = 1, height = 0.5, just = c("left", "top"))
+bb_plotLegend(legend = c("+ strand", "- strand"),
+              fill = c("#669fd9", "#abcc8e"), border = FALSE,
+              x = 0.5, y = 1, width = 1, height = 0.5,
+              just = c("left", "top"))
 
 ## Hide page guides
 bb_pageGuideHide()
 
 }
 \seealso{
-\link[BentoBox]{bb_assembly}, \link[BentoBox]{bb_genomes}, \link[BentoBox]{bb_defaultPackages}
+\link[BentoBox]{bb_assembly},
+\link[BentoBox]{bb_genomes}, \link[BentoBox]{bb_defaultPackages}
 }

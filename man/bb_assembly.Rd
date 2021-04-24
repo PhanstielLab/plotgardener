@@ -43,5 +43,5 @@ newAssembly <- bb_assembly(Genome = "hg38_GRCh38",
 
 }
 \seealso{
-\link[GenomicFeatures]{TxDb}, \link[AnnotationDb]{OrgDb-class}, \link[BSgenome]{BSgenome}
+\link[GenomicFeatures]{TxDb}, \link[AnnotationDbi]{OrgDb-class}, \link[BSgenome]{BSgenome}
 }

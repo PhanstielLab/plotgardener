@@ -1,22 +1,37 @@
-#' Annotates a highlight box around a specified genomic region of a BentoBox plot
+#' Annotates a highlight box around a specified genomic region of a
+#' BentoBox plot
 #'
 #' @param plot Input BentoBox plot on which to annotate genomic region.
 #' @param chrom Chromosome of region to be highlighted, as a string.
 #' @param chromstart Integer start position on chromosome to be highlighted.
 #' @param chromend Integer end position on chromosome to be highlighted.
-#' @param fill A character value specifying highlight box fill color. Default value is \code{fill = "grey"}.
-#' @param linecolor A character value specifying highlight box line color. Default value is \code{linecolor = NA}.
-#' @param alpha Numeric value specifying color transparency. Default value is \code{alpha = 0.4}.
-#' @param y A numeric, unit object, or character containing a "b" combined with a numeric value specifying square highlight box y-location. The character value will
-#' place the highlight box y relative to the bottom of the most recently plotted BentoBox plot according to the units of the BentoBox page.
+#' @param fill A character value specifying highlight box fill color.
+#' Default value is \code{fill = "grey"}.
+#' @param linecolor A character value specifying highlight box line color.
+#' Default value is \code{linecolor = NA}.
+#' @param alpha Numeric value specifying color transparency.
+#' Default value is \code{alpha = 0.4}.
+#' @param y A numeric, unit object, or character containing a "b" combined
+#' with a numeric value specifying square highlight box y-location.
+#' The character value will place the highlight box y relative to the
+#' bottom of the most recently plotted BentoBox plot according to the
+#' units of the BentoBox page.
 #' @param height A numeric or unit object specifying highlight box height.
-#' @param just Justification of highlight box relative to its (x, y) location. If there are two values, the first value specifies horizontal justification and the second value specifies vertical justification.
-#' Possible string values are: \code{"left"}, \code{"right"}, \code{"centre"}, \code{"center"}, \code{"bottom"}, and \code{"top"}. Default value is \code{just = c("left", "top")}.
-#' @param default.units A string indicating the default units to use if \code{y} or \code{height} are only given as numerics or numeric vectors. Default value is \code{default.units = "inches"}.
-#' @param params An optional \link[BentoBox]{bb_params} object containing relevant function parameters.
+#' @param just Justification of highlight box relative to its (x, y)
+#' location. If there are two values, the first value specifies horizontal
+#' justification and the second value specifies vertical justification.
+#' Possible string values are: \code{"left"}, \code{"right"},
+#' \code{"centre"}, \code{"center"}, \code{"bottom"}, and \code{"top"}.
+#' Default value is \code{just = c("left", "top")}.
+#' @param default.units A string indicating the default units to use if
+#' \code{y} or \code{height} are only given as numerics or numeric vectors.
+#' Default value is \code{default.units = "inches"}.
+#' @param params An optional \link[BentoBox]{bb_params} object containing
+#' relevant function parameters.
 #' @param ... Additional grid graphical parameters. See \link[grid]{gpar}.
 #'
-#' @return Returns a \code{bb_highlight} object containing relevant genomic region, placement, and \link[grid]{grob} information.
+#' @return Returns a \code{bb_highlight} object containing relevant
+#' genomic region, placement, and \link[grid]{grob} information.
 #'
 #' @examples
 #' ## Create a page
@@ -24,31 +39,38 @@
 #'
 #' ## Plot and place a signal plot
 #' data("bb_imrH3K27acData")
-#' region <- bb_params(chrom = "chr21", chromstart = 28000000, chromend = 30300000,
+#' region <- bb_params(chrom = "chr21",
+#'                     chromstart = 28000000, chromend = 30300000,
 #'                     range = c(0, 45))
 #' signalPlot <- bb_plotSignal(data = bb_imrH3K27acData, params = region,
 #'                             x = 0.5, y = 0.25, width = 6.5, height = 0.65,
-#'                             just = c("left", "top"), default.units = "inches")
+#'                             just = c("left", "top"),
+#'                             default.units = "inches")
 #'
 #' ## Highlight genomic region on signal plot
 #' bb_annoHighlight(plot = signalPlot,
-#'                  chrom = "chr21", chromstart = 29000000, chromend = 29125000,
-#'                  y = 0.25, height = 1, just = c("left", "top"), default.units = "inches")
+#'                  chrom = "chr21",
+#'                  chromstart = 29000000, chromend = 29125000,
+#'                  y = 0.25, height = 1, just = c("left", "top"),
+#'                  default.units = "inches")
 #'
 #' ## Plot text label
 #' bb_plotText(label = "region of interest", fontsize = 8, fontcolor = "black",
 #'             x = 3.5, y = 0.2, just = "bottom", default.units = "inches")
 #'
 #' ## Plot genome label
-#' bb_plotGenomeLabel(chrom = "chr21", chromstart = 28000000, chromend = 30300000,
+#' bb_plotGenomeLabel(chrom = "chr21",
+#'                    chromstart = 28000000, chromend = 30300000,
 #'                    x = 0.5, y = 1.3, length = 6.5, default.units = "inches")
 #'
 #' ## Hide page guides
 #' bb_pageGuideHide()
 #'
 #' @export
-bb_annoHighlight <- function(plot, chrom, chromstart = NULL, chromend = NULL, fill = "grey", linecolor = NA, alpha = 0.4,
-                             y, height, just = c("left", "top"), default.units = "inches", params = NULL, ...){
+bb_annoHighlight <- function(plot, chrom, chromstart = NULL, chromend = NULL,
+                             fill = "grey", linecolor = NA, alpha = 0.4,
+                             y, height, just = c("left", "top"),
+                             default.units = "inches", params = NULL, ...){
 
   # ======================================================================================================================================================================================
   # FUNCTIONS
@@ -71,7 +93,8 @@ bb_annoHighlight <- function(plot, chrom, chromstart = NULL, chromend = NULL, fi
   y_Pagetop <- function(y, height, just){
     page_height <- get("page_height", envir = bbEnv)
     page_units <- get("page_units", envir = bbEnv)
-    y <- convertY(unit(page_height, units = page_units) - convertY(y, unitTo = page_units), unitTo = page_units)
+    y <- convertY(unit(page_height, units = page_units)
+                  - convertY(y, unitTo = page_units), unitTo = page_units)
     height <- convertHeight(height, unitTo = page_units)
 
     if (length(just == 2)){
@@ -134,11 +157,17 @@ bb_annoHighlight <- function(plot, chrom, chromstart = NULL, chromend = NULL, fi
   if(!hasArg(height)) height <- NULL
 
   ## Compile all parameters into an internal object
-  bb_highlightInternal <- structure(list(plot = plot, chrom = chrom, chromstart = chromstart, chromend = chromend,
-                                         fill = fill, linecolor = linecolor, alpha = alpha, y = y, height = height,
-                                         just = just, default.units = default.units), class = "bb_highlightInternal")
+  bb_highlightInternal <- structure(list(plot = plot, chrom = chrom,
+                                         chromstart = chromstart,
+                                         chromend = chromend,
+                                         fill = fill, linecolor = linecolor,
+                                         alpha = alpha, y = y, height = height,
+                                         just = just,
+                                         default.units = default.units),
+                                    class = "bb_highlightInternal")
 
-  bb_highlightInternal <- parseParams(bb_params = params, object_params = bb_highlightInternal)
+  bb_highlightInternal <- parseParams(bb_params = params,
+                                      object_params = bb_highlightInternal)
 
   ## For any defaults that are still NULL, set back to default
   if(is.null(bb_highlightInternal$fill)) bb_highlightInternal$fill <- "grey"
@@ -156,9 +185,16 @@ bb_annoHighlight <- function(plot, chrom, chromstart = NULL, chromend = NULL, fi
   # INITIALIZE OBJECT
   # ======================================================================================================================================================================================
 
-  bb_highlight <- structure(list(chrom = bb_highlightInternal$chrom, chromstart = bb_highlightInternal$chromstart, chromend = bb_highlightInternal$chromend,
-                                 assembly = bb_highlightInternal$plot$assembly, x = NULL, y = bb_highlightInternal$y, width = NULL, height = bb_highlightInternal$height,
-                                 just = bb_highlightInternal$just, grobs = NULL), class = "bb_highlight")
+  bb_highlight <- structure(list(chrom = bb_highlightInternal$chrom,
+                                 chromstart = bb_highlightInternal$chromstart,
+                                 chromend = bb_highlightInternal$chromend,
+                                 assembly = bb_highlightInternal$plot$assembly,
+                                 x = NULL, y = bb_highlightInternal$y,
+                                 width = NULL,
+                                 height = bb_highlightInternal$height,
+                                 just = bb_highlightInternal$just,
+                                 grobs = NULL),
+                            class = "bb_highlight")
 
   # ======================================================================================================================================================================================
   # CATCH ERRORS
@@ -189,7 +225,8 @@ bb_annoHighlight <- function(plot, chrom, chromstart = NULL, chromend = NULL, fi
         stop("\'below\' y-coordinate(s) does not have a numeric associated with it. Cannot parse y-coordinate(s).", call. = FALSE)
       }
 
-      bb_highlight$y <- unit(unlist(lapply(bb_highlight$y, plot_belowY)), page_units)
+      bb_highlight$y <- unit(unlist(lapply(bb_highlight$y, plot_belowY)),
+                             page_units)
 
     } else {
 
@@ -205,7 +242,8 @@ bb_annoHighlight <- function(plot, chrom, chromstart = NULL, chromend = NULL, fi
 
       }
 
-      bb_highlight$y <- unit(bb_highlight$y, bb_highlightInternal$default.units)
+      bb_highlight$y <- unit(bb_highlight$y,
+                             bb_highlightInternal$default.units)
 
     }
 
@@ -225,7 +263,8 @@ bb_annoHighlight <- function(plot, chrom, chromstart = NULL, chromend = NULL, fi
 
     }
 
-    bb_highlight$height <- unit(bb_highlight$height, bb_highlightInternal$default.units)
+    bb_highlight$height <- unit(bb_highlight$height,
+                                bb_highlightInternal$default.units)
 
   }
 
@@ -233,7 +272,8 @@ bb_annoHighlight <- function(plot, chrom, chromstart = NULL, chromend = NULL, fi
 
     plotVP <- bb_highlightInternal$plot$grobs$children$background$vp
 
-  } else if (class(bb_highlightInternal$plot) == "bb_hicTriangle" | class(bb_highlightInternal$plot) == "bb_hicRectangle"){
+  } else if (class(bb_highlightInternal$plot) == "bb_hicTriangle"
+             | class(bb_highlightInternal$plot) == "bb_hicRectangle"){
 
     plotVP <- bb_highlightInternal$plot$outsideVP
 
@@ -252,8 +292,11 @@ bb_annoHighlight <- function(plot, chrom, chromstart = NULL, chromend = NULL, fi
     if (class(bb_highlight$assembly$TxDb) == "TxDb"){
       txdbChecks <- TRUE
     } else {
-      txdbChecks <- check_loadedPackage(package = bb_highlight$assembly$TxDb, message = paste(paste0("`", bb_highlight$assembly$TxDb,"`"),
-                                                                                              "not loaded. Please install and load to annotate full chromosome region of plot."))
+      txdbChecks <- check_loadedPackage(package = bb_highlight$assembly$TxDb,
+                                        message = paste(paste0("`",
+                                                               bb_highlight$assembly$TxDb,
+                                                               "`"),
+                                                        "not loaded. Please install and load to annotate full chromosome region of plot."))
     }
 
     if (txdbChecks == TRUE){
@@ -264,9 +307,14 @@ bb_annoHighlight <- function(plot, chrom, chromstart = NULL, chromend = NULL, fi
         tx_db <- eval(parse(text = bb_highlight$assembly$TxDb))
       }
 
-      assembly_data <- seqlengths(tx_db)
+      assembly_data <- GenomeInfoDb::seqlengths(tx_db)
       if (!bb_highlight$chrom %in% names(assembly_data)){
-        warning(paste("Chromosome", paste0("'", bb_highlight$chrom, "'"), "not found in", paste0("`", bb_highlight$assembly$TxDb, "`"), "and data for entire chromosome cannot be highlighted."), call. = FALSE)
+        warning(paste("Chromosome",
+                      paste0("'", bb_highlight$chrom, "'"),
+                      "not found in",
+                      paste0("`", bb_highlight$assembly$TxDb, "`"),
+                      "and data for entire chromosome cannot be highlighted."),
+                call. = FALSE)
       } else {
         bb_highlight$chromstart <- 1
         bb_highlight$chromend <- assembly_data[[bb_highlight$chrom]]
@@ -285,7 +333,8 @@ bb_annoHighlight <- function(plot, chrom, chromstart = NULL, chromend = NULL, fi
 
     plotVP <- bb_highlightInternal$plot$grobs$children$background$vp
 
-  } else if (class(bb_highlightInternal$plot) == "bb_hicTriangle" | class(bb_highlightInternal$plot) == "bb_hicRectangle"){
+  } else if (class(bb_highlightInternal$plot) == "bb_hicTriangle"
+             | class(bb_highlightInternal$plot) == "bb_hicRectangle"){
 
     plotVP <- bb_highlightInternal$plot$outsideVP
 
@@ -307,18 +356,23 @@ bb_annoHighlight <- function(plot, chrom, chromstart = NULL, chromend = NULL, fi
       ## Multiple chromosome manhattan plot
       if (length(bb_highlightInternal$plot$chrom) > 1){
 
-        convertedCoords <- convertManhattan(object = bb_highlight, manhattanPlot = bb_highlightInternal$plot)
+        convertedCoords <- convertManhattan(object = bb_highlight,
+                                            manhattanPlot = bb_highlightInternal$plot)
         start <- convertedCoords[[1]]
         end <- convertedCoords[[2]]
 
       } else {
-        start <- convertX(unit(bb_highlight$chromstart, "native"), unitTo = page_units, valueOnly = TRUE)
-        end <- convertX(unit(bb_highlight$chromend, "native"), unitTo = page_units, valueOnly = TRUE)
+        start <- convertX(unit(bb_highlight$chromstart, "native"),
+                          unitTo = page_units, valueOnly = TRUE)
+        end <- convertX(unit(bb_highlight$chromend, "native"),
+                        unitTo = page_units, valueOnly = TRUE)
       }
 
     } else {
-      start <- convertX(unit(bb_highlight$chromstart, "native"), unitTo = page_units, valueOnly = TRUE)
-      end <- convertX(unit(bb_highlight$chromend, "native"), unitTo = page_units, valueOnly = TRUE)
+      start <- convertX(unit(bb_highlight$chromstart, "native"),
+                        unitTo = page_units, valueOnly = TRUE)
+      end <- convertX(unit(bb_highlight$chromend, "native"),
+                      unitTo = page_units, valueOnly = TRUE)
     }
 
     width <- end - start
@@ -333,16 +387,23 @@ bb_annoHighlight <- function(plot, chrom, chromstart = NULL, chromend = NULL, fi
   # USE JUSTIFICATION TO DETERMINE PAGE-ADJUSTED TOP Y-COORD
   # ======================================================================================================================================================================================
 
-  top_y <- y_Pagetop(y = bb_highlight$y, height = bb_highlight$height, just = bb_highlight$just)
+  top_y <- y_Pagetop(y = bb_highlight$y,
+                     height = bb_highlight$height,
+                     just = bb_highlight$just)
 
   # ======================================================================================================================================================================================
   # HIGHLIGHT GROB
   # ======================================================================================================================================================================================
 
-  name <- paste0("bb_highlight", length(grep(pattern = "bb_highlight", x = grid.ls(print = FALSE, recursive = FALSE))) + 1)
+  name <- paste0("bb_highlight",
+                 length(grep(pattern = "bb_highlight",
+                             x = grid.ls(print = FALSE,
+                                         recursive = FALSE))) + 1)
 
   if (!is.null(bb_highlight$chromstart) & !is.null(bb_highlight$chromend)){
-    highlightGrob <- grid.rect(x = unit(start, page_units), y = top_y, width = unit(width, page_units), height = bb_highlight$height,
+    highlightGrob <- grid.rect(x = unit(start, page_units), y = top_y,
+                               width = unit(width, page_units),
+                               height = bb_highlight$height,
                                just = c("left", "top"),
                                gp = bb_highlightInternal$gp, name = name)
     bb_highlight$grobs <- highlightGrob

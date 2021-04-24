@@ -23,34 +23,51 @@ bb_plotRect(
 \arguments{
 \item{x}{A numeric vector or unit object specifying rectangle x-locations.}
 
-\item{y}{A numeric vector, unit object, or a character vector of values containing a "b" combined with a numeric value specifying rectangle y-locations.
-The character vector will place rectangle y-locations relative to the bottom of the most recently plotted BentoBox plot according to the units of the BentoBox page.}
+\item{y}{A numeric vector, unit object, or a character vector of values
+containing a "b" combined with a numeric value specifying
+rectangle y-locations.
+The character vector will place rectangle y-locations relative to
+the bottom of the most recently plotted BentoBox plot according to
+the units of the BentoBox page.}
 
 \item{width}{A numeric vector or unit object specifying rectangle widths.}
 
 \item{height}{A numeric vector or unit object specifying rectangle heights.}
 
-\item{just}{Justification of rectangle relative to its (x, y) location. If there are two values, the first value specifies horizontal justification and the second value specifies vertical justification.
-Possible string values are: \code{"left"}, \code{"right"}, \code{"centre"}, \code{"center"}, \code{"bottom"}, and \code{"top"}. Default value is \code{just = "center"}.}
+\item{just}{Justification of rectangle relative to its (x, y) location.
+If there are two values, the first value specifies horizontal justification
+and the second value specifies vertical justification.
+Possible string values are: \code{"left"}, \code{"right"},
+ \code{"centre"}, \code{"center"}, \code{"bottom"}, and \code{"top"}.
+ Default value is \code{just = "center"}.}
 
-\item{default.units}{A string indicating the default units to use if \code{x}, \code{y}, \code{width}, and \code{height} are only given as numerics or numeric vectors. Default value is \code{default.units = "inches"}.}
+\item{default.units}{A string indicating the default units to use if
+\code{x}, \code{y}, \code{width}, and \code{height} are only given as
+numerics or numeric vectors. Default value is \code{default.units = "inches"}.}
 
-\item{linecolor}{A character value specifying rectangle line color. Default value is \code{linecolor = "black"}.}
+\item{linecolor}{A character value specifying rectangle line color.
+Default value is \code{linecolor = "black"}.}
 
-\item{lwd}{A numeric specifying rectangle line width. Default value is \code{lwd = 1}.}
+\item{lwd}{A numeric specifying rectangle line width.
+Default value is \code{lwd = 1}.}
 
-\item{lty}{A numeric specifying rectangle line type. Default value is \code{lty = 1}.}
+\item{lty}{A numeric specifying rectangle line type.
+Default value is \code{lty = 1}.}
 
-\item{fill}{A character value specifying rectangle fill color. Default value is \code{fill = NA}.}
+\item{fill}{A character value specifying rectangle fill color.
+Default value is \code{fill = NA}.}
 
-\item{alpha}{Numeric value specifying color transparency. Default value is \code{alpha = 1}.}
+\item{alpha}{Numeric value specifying color transparency.
+Default value is \code{alpha = 1}.}
 
-\item{params}{An optional \link[BentoBox]{bb_params} object containing relevant function parameters.}
+\item{params}{An optional \link[BentoBox]{bb_params} object
+containing relevant function parameters.}
 
 \item{...}{Additional grid graphical parameters. See \link[grid]{gpar}.}
 }
 \value{
-Returns a \code{bb_rect} object containing relevant placement and \link[grid]{grob} information.
+Returns a \code{bb_rect} object containing
+relevant placement and \link[grid]{grob} information.
 }
 \description{
 Plot a rectangle within a BentoBox layout
@@ -70,8 +87,10 @@ bb_plotRect(x = 4, y = c(0.5, 2.25), width = 3, height = 1.25,
             just = c("left", "top"), default.units = "inches",
             fill = "#7ecdbb")
 
-## Plot two rectangles with different widths, heights, locations, and colors
-bb_plotRect(x = 3.75, y = c(4, 5.25), width = c(6.5, 4.5), height = c(1, 0.25),
+## Plot two rectangles with different widths, heights,
+## locations, and colors
+bb_plotRect(x = 3.75, y = c(4, 5.25), width = c(6.5, 4.5),
+            height = c(1, 0.25),
             just = "top", default.units = "inches",
             fill = c("#7ecdbb", "#37a7db"), linecolor = NA, alpha = 0.4)
 

@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>bb_params: BentoBox parameters object — bb_params • BentoBox</title>
+<title>Combine multiple bb_params objects into a vector — c • BentoBox</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -46,10 +46,8 @@
 
 
 
-<meta property="og:title" content="bb_params: BentoBox parameters object — bb_params" />
-<meta property="og:description" content="Creates an object of class &quot;bb_params&quot; that can be used by BentoBox functions.
-bb_params can be used to set a set of parameters to be shared across multiple
-functions." />
+<meta property="og:title" content="Combine multiple bb_params objects into a vector — c" />
+<meta property="og:description" content="Combine multiple bb_params objects into a vector" />
 <meta property="og:image" content="https://phanstiellab.github.io/bentobox/logo.png" />
 
 
@@ -133,73 +131,32 @@ functions." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>bb_params: BentoBox parameters object</h1>
+    <h1>Combine multiple bb_params objects into a vector</h1>
     <small class="dont-index">Source: <a href='https://github.com/PhanstielLab/BentoBox/blob/master/R/bb_params.R'><code>R/bb_params.R</code></a></small>
-    <div class="hidden name"><code>bb_params.Rd</code></div>
+    <div class="hidden name"><code>c.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Creates an object of class "bb_params" that can be used by BentoBox functions.
-bb_params can be used to set a set of parameters to be shared across multiple
-functions.</p>
+    <p>Combine multiple bb_params objects into a vector</p>
     </div>
 
-    <pre class="usage"><span class='fu'>bb_params</span><span class='op'>(</span>assembly <span class='op'>=</span> <span class='st'>"hg19"</span>, gene <span class='op'>=</span> <span class='cn'>NULL</span>, geneBuffer <span class='op'>=</span> <span class='cn'>NULL</span>, <span class='va'>...</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>c</span><span class='op'>(</span><span class='va'>...</span>, recursive <span class='op'>=</span> <span class='cn'>F</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>assembly</th>
-      <td><p>String defining the genome build. Default value is <code>assembly = "hg19"</code>.</p></td>
-    </tr>
-    <tr>
-      <th>gene</th>
-      <td><p>(optional) String naming a gene used to set the chrom, chromstart, and
-chromend arguments.</p></td>
-    </tr>
-    <tr>
-      <th>geneBuffer</th>
-      <td><p>(optional) Integer base-pairs to extend the start and end of a gene
-defined by argument <code>gene</code>.</p></td>
-    </tr>
-    <tr>
       <th>...</th>
-      <td><p>This function will take any BentoBox function parameters and their values.</p></td>
+      <td><p><a href='bb_params.html'>bb_params</a> objects to be concatenated.</p></td>
+    </tr>
+    <tr>
+      <th>recursive</th>
+      <td><p>logical. If <code>recursive = TRUE</code>, the function recursively descends through lists
+(and pairlists) combining all their elements into a vector.</p></td>
     </tr>
     </table>
 
-    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>Returns an object of class <code>bb_params</code> containing BentoBox function arguments.</p>
-    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
-
-    <p>bb_params generates arguments from exported BentoBox functions at loading time of the
-package. Arguments defined in a bb_params object can be passed into the <code>params</code>
-argument of BentoBox functions. bb_params arguments can be overridden from within
-BentoBox functions.</p>
-<p>bb_params also provides an alternative region definition mechanism. Given a gene name
-and genome assembly, bb_params returns the appropriate "chrom", "chromstart", and
-"chromend" with a default buffer of <code>(gene length) / 2</code> added to the ends of the
-gene coordinates. The buffer amount can be set manually with the <code>geneBuffer</code>
-parameter. Buffer extending beyond the length of the chromosome will be trimmed.</p>
-
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'>## Load hg19 genomic annotation packages</span>
-<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='st'>"TxDb.Hsapiens.UCSC.hg19.knownGene"</span><span class='op'>)</span>
-<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='st'>"org.Hs.eg.db"</span><span class='op'>)</span>
-
-<span class='co'>## Define parameters</span>
-<span class='va'>p1</span> <span class='op'>&lt;-</span> <span class='fu'>bb_params</span><span class='op'>(</span>gene <span class='op'>=</span> <span class='st'>"IL1B"</span>, assembly <span class='op'>=</span> <span class='st'>"hg19"</span><span class='op'>)</span>
-
-<span class='co'>## Optionally add more parameters</span>
-<span class='va'>p2</span> <span class='op'>&lt;-</span> <span class='fu'>bb_params</span><span class='op'>(</span>fontsize <span class='op'>=</span> <span class='fl'>10</span><span class='op'>)</span>
-
-<span class='co'>## Combine parameters and pass them to a BentoBox function</span>
-<span class='fu'><a href='bb_plotGenes.html'>bb_plotGenes</a></span><span class='op'>(</span>params <span class='op'>=</span> <span class='fu'><a href='c.html'>c</a></span><span class='op'>(</span><span class='va'>p1</span>, <span class='va'>p2</span><span class='op'>)</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>bb_genes[bb_genes1]</span></div><div class='img'><img src='bb_params-1.png' alt='' width='787' height='672' /></div><div class='input'>
-
-</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

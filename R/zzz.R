@@ -1,28 +1,15 @@
 .onLoad <- function(libname, pkgname) {
 
-  ## Define bb_params object with all exported function args -----------------------------
+  ## Define bb_params object  -----------------------------
 
-  ## Extract exported function names
-  fname <- paste0(system.file(lib.loc = libname, package = pkgname),"/NAMESPACE")
-  fxns <- gsub("export\\((.*)\\)", "\\1", grep("export", readLines(fname), value = T))
-
-  ## Get arguments from all functions
-  x <- unlist(lapply(fxns, function(x) names(formals(x))))
-
-  ## Filter out arguments
-  x <- x[!x %in% c("", "...", "params", "recursive")]
-
-  ## Add in bb_params-specific arguments (do this here for correct sorting, default=NULL)
-  x <- unique(c("gene", "geneBuffer", x))
-
-  ## Alphebetize
-  x <- sort(x, decreasing = F)
+  ## Initialize documented bb_params function names
+  x <- c("assembly", "gene", "geneBuffer")
 
   ## Set argument inputs for function definition
   allArgs1 <- paste(paste0(x, "=NULL"), collapse = ",")
   allArgs2 <- paste0(paste(x, "=", x), collapse = ",")
 
-  ## Change specific argument defaults (add lines as desired ...)
+  ## Change specific argument defaults
   allArgs1 <- gsub('assembly=NULL', 'assembly="hg19"', allArgs1)
   allArgs1 <- paste0(allArgs1, ",...")
 
@@ -59,20 +46,23 @@
         }
 
         org_db <- eval(parse(text = assembly$OrgDb))
-        chromSizes <- seqlengths(tx_db)
+        chromSizes <- GenomeInfoDb::seqlengths(tx_db)
         idCol <- assembly$gene.id.column
         displayCol <- assembly$display.column
 
         ## convert input gene name to geneID
         geneID <- tryCatch(expr = {
-          suppressMessages(select(org_db, keys = gene, columns = c(idCol), keytype = displayCol))
+          suppressMessages(AnnotationDbi::select(org_db, keys = gene, columns = c(idCol), keytype = displayCol))
 
         }, error = function(e) stop(paste('Gene', shQuote(gene), 'does not exist in assembly.'), call. = FALSE))
 
-        geneData <- suppressMessages(select(tx_db, keys = geneID[[idCol]], columns = columns(tx_db), keytype = 'GENEID'))
+        geneData <- suppressMessages(AnnotationDbi::select(tx_db, keys = geneID[[idCol]], columns = AnnotationDbi::columns(tx_db), keytype = 'GENEID'))
 
 
         ## Check that user has not supplied both gene and chrom, chromstart, or chromend
+        chrom <- object$chrom
+        chromstart <- object$chromstart
+        chromend <- object$chromend
         if(any(!is.null(c(chrom, chromstart, chromend)))) {
           stop('Cannot use \\'gene\\' in combination with \\'chrom\\', \\'chromstart\\', or \\'chromend\\'', call. = FALSE)
         }

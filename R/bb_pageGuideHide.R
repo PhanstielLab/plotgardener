@@ -1,5 +1,13 @@
 #' Remove guides from a BentoBox page
 #'
+#' @return None.
+#'
+#' ## Make a BentoBox page
+#' bb_pageCreate(width = 7, height = 4, default.units = "inches)
+#'
+#' ## Hide page guides
+#' bb_pageGuideHide()
+#'
 #' @export
 bb_pageGuideHide <- function(){
 
@@ -12,7 +20,8 @@ bb_pageGuideHide <- function(){
 
 
   ## Get the list of grobs from the guide grobs gTree and convert to gPaths
-  grob_list <- lapply(get("guide_grobs", envir = bbEnv)$children, convert_gpath)
+  grob_list <- lapply(get("guide_grobs", envir = bbEnv)$children,
+                      convert_gpath)
 
   ## Get the last grob
   last_grob <- grob_list[length(grob_list)]

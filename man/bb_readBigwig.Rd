@@ -16,20 +16,23 @@ bb_readBigwig(
 \arguments{
 \item{file}{A character value specifying the path to the bigwig file.}
 
-\item{chrom}{Chromosome of data as a string, if data for a specific chromosome is desired.}
+\item{chrom}{Chromosome of data as a string, if data for a specific
+chromosome is desired.}
 
 \item{chromstart}{Integer start position on chromosome.}
 
 \item{chromend}{Integer end position on chromosome.}
 
-\item{strand}{A character value specifying strand. Default value is \code{strand = "*"}. Options are:
+\item{strand}{A character value specifying strand.
+Default value is \code{strand = "*"}. Options are:
 \itemize{
 \item{\code{"+"}: }{Plus strand.}
 \item{\code{"-"}: }{Minus strand.}
 \item{\code{"*"}: }{Plus and minus strands.}
 }}
 
-\item{params}{An optional \link[BentoBox]{bb_params} object containing relevant function parameters.}
+\item{params}{An optional \link[BentoBox]{bb_params} object
+containing relevant function parameters.}
 }
 \value{
 Returns a 6-column dataframe of bigwig information.

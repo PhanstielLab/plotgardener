@@ -1,20 +1,32 @@
 #' Annotates text within a BentoBox plot
 #'
 #' @param label Character or expression of text to be plotted.
-#' @param fontcolor A character value specifying text fontcolor. Default value is \code{fontcolor = "black"}.
-#' @param fontsize A numeric specifying text fontsize in points. Default value is \code{fontsize = 12}.
-#' @param rot A numeric specifying the angle to rotate the text. Default value is \code{rot = 0}.
-#' @param check.overlap A logical value to indicate whether to check for and omit overlapping text. Default value is \code{check.overlap = FALSE}.
+#' @param fontcolor A character value specifying text fontcolor.
+#' Default value is \code{fontcolor = "black"}.
+#' @param fontsize A numeric specifying text fontsize in points.
+#' Default value is \code{fontsize = 12}.
+#' @param rot A numeric specifying the angle to rotate the text.
+#' Default value is \code{rot = 0}.
+#' @param check.overlap A logical value to indicate whether to check for
+#' and omit overlapping text. Default value is \code{check.overlap = FALSE}.
 #' @param plot Input BentoBox plot to internally place text relative to.
 #' @param x A numeric vector or unit object specifying text x-location.
 #' @param y A numeric vector or unit object specifying text y-location.
-#' @param just Justification of text relative to its (x, y) location. If there are two values, the first value specifies horizontal justification and the second value specifies vertical justification.
-#' Possible string values are: \code{"left"}, \code{"right"}, \code{"centre"}, \code{"center"}, \code{"bottom"}, and \code{"top"}. Default value is \code{just = "center"}.
-#' @param default.units A string indicating the default units to use if \code{x} or \code{y} are only given as numerics or numeric vectors. Default value is \code{default.units = "native"}.
-#' @param params An optional \link[BentoBox]{bb_params} object containing relevant function parameters.
+#' @param just Justification of text relative to its (x, y) location.
+#' If there are two values, the first value specifies horizontal
+#' justification and the second value specifies vertical justification.
+#' Possible string values are: \code{"left"}, \code{"right"},
+#' \code{"centre"}, \code{"center"}, \code{"bottom"}, and \code{"top"}.
+#' Default value is \code{just = "center"}.
+#' @param default.units A string indicating the default units to use if
+#' \code{x} or \code{y} are only given as numerics or numeric vectors.
+#' Default value is \code{default.units = "native"}.
+#' @param params An optional \link[BentoBox]{bb_params} object
+#' containing relevant function parameters.
 #' @param ... Additional grid graphical parameters. See \link[grid]{gpar}.
 #'
-#' @return Returns a \code{bb_text} object containing relevant placement and \link[grid]{grob} information.
+#' @return Returns a \code{bb_text} object containing
+#' relevant placement and \link[grid]{grob} information.
 #'
 #' @examples
 #' ## Create a BentoBox page
@@ -23,13 +35,16 @@
 #' ## Plot text relative to a BentoBox plot
 #' data("bb_imrHicData")
 #' hicPlot <- bb_plotHicSquare(data = bb_imrHicData, chrom = "chr21",
-#'                            chromstart = 28000000, chromend = 29500000, zrange = c(0, 70),
-#'                            x = 0.5, y = 0.5, width = 3, height = 3, just = c("left", "top"),
+#'                            chromstart = 28000000, chromend = 29500000,
+#'                            zrange = c(0, 70),
+#'                            x = 0.5, y = 0.5, width = 3, height = 3,
+#'                            just = c("left", "top"),
 #'                            default.units = "inches")
 #' bb_annoGenomeLabel(plot = hicPlot, x = 0.5, y = 3.55, scale = "Mb",
 #'                    just = c("left", "top"), default.units = "inches")
 #'
-#' bb_annoText(label = "Loop", fontsize = 8, plot = hicPlot, x = 29075000, y = 28150000,
+#' bb_annoText(label = "Loop", fontsize = 8, plot = hicPlot,
+#'             x = 29075000, y = 28150000,
 #'             just = "center", default.units = "native")
 #'
 #' ## Hide page guides
@@ -38,9 +53,9 @@
 #' @seealso \link[grid]{grid.text}
 #'
 #' @export
-bb_annoText <- function(label, fontcolor = "black", fontsize = 12, rot = 0, check.overlap = FALSE,
-                        plot, x, y, just = "center", default.units = "native", params = NULL, ...){
-
+bb_annoText <- function(label, fontcolor = "black", fontsize = 12, rot = 0,
+                        check.overlap = FALSE, plot, x, y, just = "center",
+                        default.units = "native", params = NULL, ...){
 
   # ======================================================================================================================================================================================
   # PARSE PARAMETERS
@@ -61,10 +76,15 @@ bb_annoText <- function(label, fontcolor = "black", fontsize = 12, rot = 0, chec
   if(!hasArg(y)) y <- NULL
 
   ## Compile all parameters into an internal object
-  bb_textInternal <- structure(list(label = label, x = x, y = y, plot = plot, just = just, fontcolor = fontcolor,
-                                    fontsize = fontsize, rot = rot, check.overlap = check.overlap, default.units = default.units), class = "bb_textInternal")
+  bb_textInternal <- structure(list(label = label, x = x, y = y, plot = plot,
+                                    just = just, fontcolor = fontcolor,
+                                    fontsize = fontsize, rot = rot,
+                                    check.overlap = check.overlap,
+                                    default.units = default.units),
+                               class = "bb_textInternal")
 
-  bb_textInternal <- parseParams(bb_params = params, object_params = bb_textInternal)
+  bb_textInternal <- parseParams(bb_params = params,
+                                 object_params = bb_textInternal)
 
   ## For any defaults that are still NULL, set back to default
   if(is.null(bb_textInternal$just)) bb_textInternal$just <- "center"
@@ -75,14 +95,19 @@ bb_annoText <- function(label, fontcolor = "black", fontsize = 12, rot = 0, chec
   if(is.null(bb_textInternal$default.units)) bb_textInternal$default.units <- "native"
 
   ## Set gp
-  bb_textInternal$gp <- gpar(col = bb_textInternal$fontcolor, fontsize = bb_textInternal$fontsize)
-  bb_textInternal$gp <- setGP(gpList = bb_textInternal$gp, params = bb_textInternal, ...)
+  bb_textInternal$gp <- gpar(col = bb_textInternal$fontcolor,
+                             fontsize = bb_textInternal$fontsize)
+  bb_textInternal$gp <- setGP(gpList = bb_textInternal$gp,
+                              params = bb_textInternal, ...)
 
   # ======================================================================================================================================================================================
   # INITIALIZE OBJECT
   # ======================================================================================================================================================================================
 
-  bb_text <- structure(list(label = bb_textInternal$label, x = bb_textInternal$x, y = bb_textInternal$y, just = bb_textInternal$just, grobs = NULL), class = "bb_text")
+  bb_text <- structure(list(label = bb_textInternal$label,
+                            x = bb_textInternal$x, y = bb_textInternal$y,
+                            just = bb_textInternal$just, grobs = NULL),
+                       class = "bb_text")
 
   # ======================================================================================================================================================================================
   # CATCH ERRORS
@@ -151,7 +176,8 @@ bb_annoText <- function(label, fontcolor = "black", fontsize = 12, rot = 0, chec
 
     plotVP <- bb_textInternal$plot$grobs$children$background$vp
 
-  } else if (class(bb_textInternal$plot) == "bb_hicTriangle" | class(bb_textInternal$plot) == "bb_hicRectangle"){
+  } else if (class(bb_textInternal$plot) == "bb_hicTriangle"
+             | class(bb_textInternal$plot) == "bb_hicRectangle"){
 
     plotVP <- bb_textInternal$plot$outsideVP
 
@@ -179,8 +205,10 @@ bb_annoText <- function(label, fontcolor = "black", fontsize = 12, rot = 0, chec
   # MAKE GROB
   # ======================================================================================================================================================================================
 
-  text <- grid.text(label = bb_text$label, x = unit(new_x, page_units), y = unit(new_y, page_units), just = bb_text$just,
-                    gp = bb_textInternal$gp, rot = bb_textInternal$rot, check.overlap = bb_textInternal$check.overlap)
+  text <- grid.text(label = bb_text$label, x = unit(new_x, page_units),
+                    y = unit(new_y, page_units), just = bb_text$just,
+                    gp = bb_textInternal$gp, rot = bb_textInternal$rot,
+                    check.overlap = bb_textInternal$check.overlap)
 
   # ======================================================================================================================================================================================
   # ADD GROB TO OBJECT

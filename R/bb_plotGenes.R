@@ -3,30 +3,58 @@
 #' @param chrom Chromosome of region to be plotted, as a string.
 #' @param chromstart Integer start position on chromosome to be plotted.
 #' @param chromend Integer end position on chromosome to be plotted.
-#' @param assembly Default genome assembly as a string or a \link[BentoBox]{bb_assembly} object. Default value is \code{assembly = "hg19"}.
-#' @param fontsize A numeric specifying text fontsize in points. Default value is \code{fontsize = 8}.
-#' @param fontcolors A character vector of length 2 indicating the font colors for the plus strand and minus strand gene labels. The first value will color the plus strand gene labels and
-#' the second value will color the minus strand gene labels. Default value is \code{fontcolors = c("#669fd9", "#abcc8e")}.
-#' @param strandcolors A character vector of length 2 indicating the strand colors for the plus strand and minus strand plot elements. The first value will color the plus strand plot elements and
-#' the second label will color the minus strand plot elements. Default value is \code{strandcolors = c("#669fd9", "#abcc8e")}.
-#' @param geneOrder An ordered character vector of gene names to prioritize when labeling genes.
-#' @param geneHighlights A two-column dataframe with the first column containing gene names as strings to highlight and the second column containing corresponding highlight colors.
-#' @param geneBackground If \code{geneHighlights} is given, a character value indicating the color for genes that are not highlighted.
-#' @param strandLabels A logical value indicating whether to include + and - strand labels to the left of the gene track.
-#' @param stroke A numeric value indicating the stroke width for gene body outlines. Default value is \code{stroke = 0.1}.
-#' @param bg Character value indicating background color. Default value is \code{bg = NA}.
+#' @param assembly Default genome assembly as a string or a
+#' \link[BentoBox]{bb_assembly} object.
+#' Default value is \code{assembly = "hg19"}.
+#' @param fontsize A numeric specifying text fontsize in points.
+#' Default value is \code{fontsize = 8}.
+#' @param fontcolor A character value or vector of length 2 indicating
+#' the fontcolors for the plus strand and minus strand gene labels.
+#' The first value will color the plus strand gene labels and
+#' the second value will color the minus strand gene labels.
+#' Default value is \code{fontcolor = c("#669fd9", "#abcc8e")}.
+#' @param fill A character value or vector of length 2 indicating the
+#' strand fill colors for the plus strand and minus strand plot elements.
+#' The first value will color the plus strand plot elements and
+#' the second label will color the minus strand plot elements.
+#' Default value is \code{fill = c("#669fd9", "#abcc8e")}.
+#' @param geneOrder An ordered character vector of gene names to
+#' prioritize when labeling genes.
+#' @param geneHighlights A two-column dataframe with the first column
+#' containing gene names as strings to highlight and the second column
+#' containing corresponding highlight colors.
+#' @param geneBackground If \code{geneHighlights} is given, a character
+#' value indicating the color for genes that are not highlighted.
+#' @param strandLabels A logical value indicating whether to include
+#' + and - strand labels to the left of the gene track.
+#' @param stroke A numeric value indicating the stroke width for gene
+#' body outlines. Default value is \code{stroke = 0.1}.
+#' @param bg Character value indicating background color.
+#' Default value is \code{bg = NA}.
 #' @param x A numeric or unit object specifying genes plot x-location.
-#' @param y A numeric, unit object, or character containing a "b" combined with a numeric value specifying genes plot y-location. The character value will
-#' place the genes plot y relative to the bottom of the most recently plotted BentoBox plot according to the units of the BentoBox page.
+#' @param y A numeric, unit object, or character containing a "b"
+#' combined with a numeric value specifying genes plot y-location.
+#' The character value will
+#' place the genes plot y relative to the bottom of the most recently
+#' plotted BentoBox plot according to the units of the BentoBox page.
 #' @param width A numeric or unit object specifying genes plot width.
 #' @param height A numeric or unit object specifying genes plot height.
-#' @param just Justification of genes plot relative to its (x, y) location. If there are two values, the first value specifies horizontal justification and the second value specifies vertical justification.
-#' Possible string values are: \code{"left"}, \code{"right"}, \code{"centre"}, \code{"center"}, \code{"bottom"}, and \code{"top"}. Default value is \code{just = c("left", "top")}.
-#' @param default.units A string indicating the default units to use if \code{x}, \code{y}, \code{width}, or \code{height} are only given as numerics. Default value is \code{default.units = "inches"}.
-#' @param draw A logical value indicating whether graphics output should be produced. Default value is \code{draw = TRUE}.
-#' @param params An optional \link[BentoBox]{bb_params} object containing relevant function parameters.
+#' @param just Justification of genes plot relative to its (x, y) location.
+#' If there are two values, the first value specifies horizontal
+#' justification and the second value specifies vertical justification.
+#' Possible string values are: \code{"left"}, \code{"right"},
+#' \code{"centre"}, \code{"center"}, \code{"bottom"}, and \code{"top"}.
+#' Default value is \code{just = c("left", "top")}.
+#' @param default.units A string indicating the default units to use if
+#' \code{x}, \code{y}, \code{width}, or \code{height} are only given
+#' as numerics. Default value is \code{default.units = "inches"}.
+#' @param draw A logical value indicating whether graphics output
+#' should be produced. Default value is \code{draw = TRUE}.
+#' @param params An optional \link[BentoBox]{bb_params} object
+#' containing relevant function parameters.
 #'
-#' @return Returns a \code{bb_genes} object containing relevant genomic region, placement, and \link[grid]{grob} information.
+#' @return Returns a \code{bb_genes} object containing
+#' relevant genomic region, placement, and \link[grid]{grob} information.
 #'
 #' @examples
 #' ## Load hg19 genomic annotation packages
@@ -37,10 +65,12 @@
 #' data("bb_bedpeData")
 #'
 #' ## Set genomic coordinates
-#' paramssmall <- bb_params(chrom = "chr8", chromstart = 0000000, chromend = 3000000,
-#'                         assembly = "hg19", width = 7)
-#' paramsbig <- bb_params(chrom = "chr8", chromstart = 0, chromend = 146364022,
-#'                       assembly = "hg19", width = 7)
+#' paramssmall <- bb_params(chrom = "chr8",
+#'                          chromstart = 0000000, chromend = 3000000,
+#'                          assembly = "hg19", width = 7)
+#' paramsbig <- bb_params(chrom = "chr8",
+#'                        chromstart = 0, chromend = 146364022,
+#'                        assembly = "hg19", width = 7)
 #' ## Set colors
 #' cols = c("#41B6C4","#225EA8")
 #'
@@ -48,48 +78,66 @@
 #' bb_pageCreate(width = 7.5, height = 3.5, default.units = "inches")
 #'
 #' ## Plot genes big
-#' genesPlot <- bb_plotGenes(params = paramsbig, strandcolors = cols, fontcolors = cols,
+#' genesPlot <- bb_plotGenes(params = paramsbig, fill = cols,
+#'                           fontcolor = cols,
 #'                           x = 0.25, y = 0.25, height = 0.75,
-#'                           just = c("left", "top"), default.units = "inches")
+#'                           just = c("left", "top"),
+#'                           default.units = "inches")
 #'
 #' ## Annotate genome label
-#' bb_annoGenomeLabel(plot = genesPlot, x = 0.25, y = 1.0, scale = "Mb", just = c("left", "top"))
+#' bb_annoGenomeLabel(plot = genesPlot, x = 0.25, y = 1.0,
+#'                    scale = "Mb", just = c("left", "top"))
 #'
 #' ## Plot genes small
 #' genesPlot <- bb_plotGenes(params = paramssmall,
-#'                          geneHighlights = data.frame("gene" = c("DLGAP2"),"color" = c("#225EA8")),
+#'                          geneHighlights = data.frame("gene" = c("DLGAP2"),
+#'                                                      "color" = c("#225EA8")),
 #'                          geneBackground = "grey",
 #'                          x = 0.25, y = 2.25, height = 0.75,
 #'                          just = c("left", "top"), default.units = "inches")
 #'
 #' ## Annotate genome label
-#' bb_annoGenomeLabel(plot = genesPlot, x = 0.25, y = 3.0, scale = "Mb", just = c("left", "top"))
+#' bb_annoGenomeLabel(plot = genesPlot, x = 0.25, y = 3.0, scale = "Mb",
+#'                    just = c("left", "top"))
 #'
 #' ## Hide page guides
 #' bb_pageGuideHide()
 #'
 #' @details
-#' A gene track can be placed on a BentoBox coordinate page by providing plot placement parameters:
+#' A gene track can be placed on a BentoBox coordinate page by providing
+#' plot placement parameters:
 #' \preformatted{
 #' bb_plotGenes(chrom, chromstart = NULL, chromend = NULL,
 #'              x, y, width, height, just = c("left", "top"),
 #'              default.units = "inches")
 #' }
-#' This function can be used to quickly plot an unnannotated gene track by ignoring plot placement parameters:
+#' This function can be used to quickly plot an unnannotated gene track
+#' by ignoring plot placement parameters:
 #' \preformatted{
 #' bb_plotGenes(chrom, chromstart = NULL, chromend = NULL)
 #' }
 #'
-#' Genomic annotation information is acquired through \link[GenomicFeatures]{TxDb} and \link[AnnotationDbi]{OrgDb-class} packages, as determined
-#' through the \code{assembly} parameter. To avoid overcrowding of gene name labels, plotted gene labels are by default prioritized according to citation counts.
+#' Genomic annotation information is acquired through
+#' \link[GenomicFeatures]{TxDb} and \link[AnnotationDbi]{OrgDb-class}
+#' packages, as determined
+#' through the \code{assembly} parameter. To avoid overcrowding of gene name
+#' labels, plotted gene labels are by default prioritized according to
+#' citation counts.
 #'
-#' @seealso \link[BentoBox]{bb_assembly}, \link[BentoBox]{bb_genomes}, \link[BentoBox]{bb_defaultPackages}
+#' @seealso \link[BentoBox]{bb_assembly},
+#' \link[BentoBox]{bb_genomes}, \link[BentoBox]{bb_defaultPackages}
 #'
 #' @export
-bb_plotGenes <- function(chrom, chromstart = NULL, chromend = NULL, assembly = "hg19", fontsize = 8, fontcolors = c("#669fd9", "#abcc8e"),
-                         strandcolors = c("#669fd9", "#abcc8e"), geneOrder = NULL, geneHighlights = NULL, geneBackground = "grey", strandLabels = TRUE,
-                         stroke = 0.1, bg = NA, x = NULL, y = NULL, width = NULL, height = unit(0.6, "inches"),
-                         just = c("left", "top"), default.units = "inches", draw = TRUE, params = NULL){
+bb_plotGenes <- function(chrom, chromstart = NULL, chromend = NULL,
+                         assembly = "hg19", fontsize = 8,
+                         fontcolor = c("#669fd9", "#abcc8e"),
+                         fill = c("#669fd9", "#abcc8e"),
+                         geneOrder = NULL, geneHighlights = NULL,
+                         geneBackground = "grey", strandLabels = TRUE,
+                         stroke = 0.1, bg = NA, x = NULL, y = NULL,
+                         width = NULL, height = unit(0.6, "inches"),
+                         just = c("left", "top"), default.units = "inches",
+                         draw = TRUE, params = NULL){
 
   # ======================================================================================================================================================================================
   # FUNCTIONS
@@ -100,13 +148,15 @@ bb_plotGenes <- function(chrom, chromstart = NULL, chromend = NULL, assembly = "
 
     if (!is.null(chromstart) & is.null(chromend)){
 
-      stop("If specifying \'chromstart\', need to provide \'chromend\'.", call. = FALSE)
+      stop("If specifying \'chromstart\', need to provide \'chromend\'.",
+           call. = FALSE)
 
     }
 
     if (!is.null(chromend) & is.null(chromstart)){
 
-      stop("If specifying \'chromend\', need to provide \'chromstart\'.", call. = FALSE)
+      stop("If specifying \'chromend\', need to provide \'chromstart\'.",
+           call. = FALSE)
 
     }
 
@@ -120,7 +170,8 @@ bb_plotGenes <- function(chrom, chromstart = NULL, chromend = NULL, assembly = "
 
       if (chromstart > chromend){
 
-        stop("\'chromstart\' should not be larger than \'chromend\'.", call. = FALSE)
+        stop("\'chromstart\' should not be larger than \'chromend\'.",
+             call. = FALSE)
       }
 
     }
@@ -147,9 +198,6 @@ bb_plotGenes <- function(chrom, chromstart = NULL, chromend = NULL, assembly = "
     subset <- subset[match(geneOrder, subset[[displayCol]]),]
     subset <- subset[which(!is.na(subset[[displayCol]])),]
 
-    ## Put the remaining genes in order of Priority
-    #remaining <- remaining[order(remaining$Priority),]
-
     ## Recombine lists, putting geneOrder section at the top
     combined <- rbind(subset, remaining)
 
@@ -166,7 +214,9 @@ bb_plotGenes <- function(chrom, chromstart = NULL, chromend = NULL, assembly = "
     vp$gp <- gpar(fontsize = fontsize)
 
     pushViewport(vp)
-    labelWidth <- convertWidth(widthDetails(textGrob(label = label, gp = gpar(fontsize = fontsize))), unitTo = "native", valueOnly = T)
+    labelWidth <- convertWidth(widthDetails(textGrob(label = label,
+                                                     gp = gpar(fontsize = fontsize))),
+                               unitTo = "native", valueOnly = TRUE)
     upViewport()
 
     leftBound <- as.numeric(location) - 0.5*labelWidth
@@ -186,8 +236,8 @@ bb_plotGenes <- function(chrom, chromstart = NULL, chromend = NULL, assembly = "
 
   ## Check which defaults are not overwritten and set to NULL
   if(missing(assembly)) assembly <- NULL
-  if(missing(fontcolors)) fontcolors <- NULL
-  if(missing(strandcolors)) strandcolors <- NULL
+  if(missing(fontcolor)) fontcolor <- NULL
+  if(missing(fill)) fill <- NULL
   if(missing(geneBackground)) geneBackground <- NULL
   if(missing(stroke)) stroke <- NULL
   if(missing(fontsize)) fontsize <- NULL
@@ -202,17 +252,28 @@ bb_plotGenes <- function(chrom, chromstart = NULL, chromend = NULL, assembly = "
   if(!hasArg(chrom)) chrom <- NULL
 
   ## Compile all parameters into an internal object
-  bb_genesInternal <- structure(list(assembly = assembly, chrom = chrom, chromstart = chromstart, chromend = chromend, fontcolors = fontcolors,
-                                    strandcolors = strandcolors, geneOrder = geneOrder, geneHighlights = geneHighlights, geneBackground = geneBackground,
-                                    stroke = stroke, fontsize = fontsize, strandLabels = strandLabels, bg = bg, x = x, y = y, width = width, height = height,
-                                    just = just, default.units = default.units, draw = draw), class = "bb_genesInternal")
+  bb_genesInternal <- structure(list(assembly = assembly, chrom = chrom,
+                                     chromstart = chromstart,
+                                     chromend = chromend,
+                                     fontcolor = fontcolor,
+                                     fill = fill,
+                                     geneOrder = geneOrder,
+                                     geneHighlights = geneHighlights,
+                                     geneBackground = geneBackground,
+                                     stroke = stroke, fontsize = fontsize,
+                                     strandLabels = strandLabels,
+                                     bg = bg, x = x, y = y, width = width,
+                                     height = height, just = just,
+                                     default.units = default.units,
+                                     draw = draw), class = "bb_genesInternal")
 
-  bb_genesInternal <- parseParams(bb_params = params, object_params = bb_genesInternal)
+  bb_genesInternal <- parseParams(bb_params = params,
+                                  object_params = bb_genesInternal)
 
   ## For any defaults that are still NULL, set back to default
   if(is.null(bb_genesInternal$assembly)) bb_genesInternal$assembly <- "hg19"
-  if(is.null(bb_genesInternal$fontcolors)) bb_genesInternal$fontcolors <- c("#669fd9", "#abcc8e")
-  if(is.null(bb_genesInternal$strandcolors)) bb_genesInternal$strandcolors <- c("#669fd9", "#abcc8e")
+  if(is.null(bb_genesInternal$fontcolor)) bb_genesInternal$fontcolor <- c("#669fd9", "#abcc8e")
+  if(is.null(bb_genesInternal$fill)) bb_genesInternal$fill <- c("#669fd9", "#abcc8e")
   if(is.null(bb_genesInternal$geneBackground)) bb_genesInternal$geneBackground <- "grey"
   if(is.null(bb_genesInternal$stroke)) bb_genesInternal$stroke <- 0.1
   if(is.null(bb_genesInternal$fontsize)) bb_genesInternal$fontsize <- 8
@@ -227,8 +288,15 @@ bb_plotGenes <- function(chrom, chromstart = NULL, chromend = NULL, assembly = "
   # INITIALIZE OBJECT
   # ======================================================================================================================================================================================
 
-  bb_genes <- structure(list(chrom = bb_genesInternal$chrom, chromstart = bb_genesInternal$chromstart, chromend = bb_genesInternal$chromend, assembly = bb_genesInternal$assembly,
-                             x = bb_genesInternal$x, y = bb_genesInternal$y, width = bb_genesInternal$width, height = bb_genesInternal$height, just = bb_genesInternal$just, grobs = NULL), class = "bb_genes")
+  bb_genes <- structure(list(chrom = bb_genesInternal$chrom,
+                             chromstart = bb_genesInternal$chromstart,
+                             chromend = bb_genesInternal$chromend,
+                             assembly = bb_genesInternal$assembly,
+                             x = bb_genesInternal$x, y = bb_genesInternal$y,
+                             width = bb_genesInternal$width,
+                             height = bb_genesInternal$height,
+                             just = bb_genesInternal$just, grobs = NULL),
+                        class = "bb_genes")
   attr(x = bb_genes, which = "plotted") <- bb_genesInternal$draw
 
   # ======================================================================================================================================================================================
@@ -249,7 +317,8 @@ bb_plotGenes <- function(chrom, chromstart = NULL, chromend = NULL, assembly = "
   # PARSE UNITS
   # ======================================================================================================================================================================================
 
-  bb_genes <- defaultUnits(object = bb_genes, default.units = bb_genesInternal$default.units)
+  bb_genes <- defaultUnits(object = bb_genes,
+                           default.units = bb_genesInternal$default.units)
 
   # ======================================================================================================================================================================================
   # GET APPROPRIATE BUILD DATA
@@ -258,12 +327,18 @@ bb_plotGenes <- function(chrom, chromstart = NULL, chromend = NULL, assembly = "
   if (class(bb_genes$assembly$TxDb) == "TxDb"){
     txdbChecks <- TRUE
   } else {
-    txdbChecks <- check_loadedPackage(package = bb_genes$assembly$TxDb, message = paste(paste0("`", bb_genes$assembly$TxDb,"`"),
-                                                                                        "not loaded. Please install and load to plot genes."))
+    txdbChecks <- check_loadedPackage(package = bb_genes$assembly$TxDb,
+                                      message = paste(paste0("`",
+                                                             bb_genes$assembly$TxDb,
+                                                             "`"),
+                                                      "not loaded. Please install and load to plot genes."))
   }
 
-  orgdbChecks <- check_loadedPackage(package = bb_genes$assembly$OrgDb, message = paste(paste0("`", bb_genes$assembly$OrgDb,"`"),
-                                                                                        "not loaded. Please install and load to plot genes."))
+  orgdbChecks <- check_loadedPackage(package = bb_genes$assembly$OrgDb,
+                                     message = paste(paste0("`",
+                                                            bb_genes$assembly$OrgDb,
+                                                            "`"),
+                                                     "not loaded. Please install and load to plot genes."))
   data <- data.frame(matrix(ncol = 22, nrow = 0))
   xscale <- c(0, 1)
   if (txdbChecks == TRUE & orgdbChecks == TRUE){
@@ -273,18 +348,23 @@ bb_plotGenes <- function(chrom, chromstart = NULL, chromend = NULL, assembly = "
     } else {
       tx_db <- eval(parse(text = bb_genes$assembly$TxDb))
     }
-    genome <- seqlengths(tx_db)
+    genome <- GenomeInfoDb::seqlengths(tx_db)
     displayCol <- bb_genes$assembly$display.column
 
     if (!bb_genes$chrom %in% names(genome)){
-      warning(paste("Chromosome", paste0("'", bb_genes$chrom, "'"), "not found in", paste0("`", bb_genes$assembly$TxDb, "`"), "and genes cannot be plotted."), call. = FALSE)
+      warning(paste("Chromosome", paste0("'", bb_genes$chrom, "'"),
+                    "not found in", paste0("`", bb_genes$assembly$TxDb, "`"),
+                    "and genes cannot be plotted."), call. = FALSE)
     } else {
       if (is.null(bb_genes$chromstart) & is.null(bb_genes$chromend)){
         bb_genes$chromstart <- 1
         bb_genes$chromend <- genome[[bb_genes$chrom]]
       }
 
-      data <- bb_getExons(assembly = bb_genes$assembly, chromosome = bb_genes$chrom, start = bb_genes$chromstart, stop = bb_genes$chromend)
+      data <- bb_getExons(assembly = bb_genes$assembly,
+                          chromosome = bb_genes$chrom,
+                          start = bb_genes$chromstart,
+                          stop = bb_genes$chromend)
       xscale <- c(bb_genes$chromstart, bb_genes$chromend)
 
     }
@@ -304,15 +384,24 @@ bb_plotGenes <- function(chrom, chromstart = NULL, chromend = NULL, assembly = "
   # COLORS AND HIGHLIGHTS
   # ======================================================================================================================================================================================
 
+  ## If fontcolor and fill are length 1, change to length 2
+  if (length(bb_genesInternal$fontcolor) == 1){
+    bb_genesInternal$fontcolor <- rep(bb_genesInternal$fontcolor, 2)
+  }
+  if (length(bb_genesInternal$fill) == 1){
+    bb_genesInternal$fill <- rep(bb_genesInternal$fill, 2)
+  }
+
+
   ## Add strandColor and fontColors
   if (nrow(plus_genes) > 0){
-    plus_genes$strandColor <- bb_genesInternal$strandcolors[1]
-    plus_genes$fontColor <- bb_genesInternal$fontcolors[1]
+    plus_genes$strandColor <- bb_genesInternal$fill[1]
+    plus_genes$fontColor <- bb_genesInternal$fontcolor[1]
   }
 
   if (nrow(minus_genes) > 0){
-    minus_genes$strandColor <- bb_genesInternal$strandcolors[2]
-    minus_genes$fontColor <- bb_genesInternal$fontcolors[2]
+    minus_genes$strandColor <- bb_genesInternal$fill[2]
+    minus_genes$fontColor <- bb_genesInternal$fontcolor[2]
   }
 
 
@@ -329,21 +418,27 @@ bb_plotGenes <- function(chrom, chromstart = NULL, chromend = NULL, assembly = "
     minusBackground <- minus_genes[which(!minus_genes[[displayCol]] %in% bb_genesInternal$geneHighlights[,1]),]
 
     # Change highlight genes to highlight color
-    plusHighlight <- merge(plusHighlight, bb_genesInternal$geneHighlights, by = displayCol)
+    plusHighlight <- merge(plusHighlight, bb_genesInternal$geneHighlights,
+                           by = displayCol)
     plusHighlight$fontColor <- plusHighlight$strandColor
 
-    minusHighlight <- merge(minusHighlight, bb_genesInternal$geneHighlights, by = displayCol)
+    minusHighlight <- merge(minusHighlight, bb_genesInternal$geneHighlights,
+                            by = displayCol)
     minusHighlight$fontColor <- minusHighlight$strandColor
 
     # Change background genes to background color
-    plusBackground$strandColor <- rep(bb_genesInternal$geneBackground[1], nrow(plusBackground))
-    plusBackground$fontColor <- rep(bb_genesInternal$geneBackground[1], nrow(plusBackground))
-    minusBackground$strandColor <- rep(bb_genesInternal$geneBackground[1], nrow(minusBackground))
-    minusBackground$fontColor <- rep(bb_genesInternal$geneBackground[1], nrow(minusBackground))
+    plusBackground$strandColor <- rep(bb_genesInternal$geneBackground[1],
+                                      nrow(plusBackground))
+    plusBackground$fontColor <- rep(bb_genesInternal$geneBackground[1],
+                                    nrow(plusBackground))
+    minusBackground$strandColor <- rep(bb_genesInternal$geneBackground[1],
+                                       nrow(minusBackground))
+    minusBackground$fontColor <- rep(bb_genesInternal$geneBackground[1],
+                                     nrow(minusBackground))
 
     ## Automatically change fontcolor for +/- strand label
-    bb_genesInternal$fontcolors[1] <- bb_genesInternal$geneBackground[1]
-    bb_genesInternal$fontcolors[2] <- bb_genesInternal$geneBackground[1]
+    bb_genesInternal$fontcolor[1] <- bb_genesInternal$geneBackground[1]
+    bb_genesInternal$fontcolor[2] <- bb_genesInternal$geneBackground[1]
 
     ## Put highlight and background genes back together
     plus_genes <- rbind(plusHighlight, plusBackground)
@@ -360,7 +455,12 @@ bb_plotGenes <- function(chrom, chromstart = NULL, chromend = NULL, assembly = "
 
   ## Name viewport
   currentViewports <- current_viewports()
-  vp_name <- paste0("bb_genes", length(intersect(grep(pattern = "bb_genes", x = currentViewports), grep(pattern = "label", x = currentViewports, invert = TRUE))) + 1)
+  vp_name <- paste0("bb_genes",
+                    length(intersect(grep(pattern = "bb_genes",
+                                          x = currentViewports),
+                                     grep(pattern = "label",
+                                          x = currentViewports,
+                                          invert = TRUE))) + 1)
 
   if (is.null(bb_genes$x) & is.null(bb_genes$y)){
 
@@ -371,10 +471,12 @@ bb_plotGenes <- function(chrom, chromstart = NULL, chromend = NULL, assembly = "
 
       vp_label <- viewport(height = unit(.12, "npc"),
                            width = vp_labelW,
-                           x = unit(0, "npc"), y = unit(0.5, "npc"), just = "left",
+                           x = unit(0, "npc"), y = unit(0.5, "npc"),
+                           just = "left",
                            name = paste0(vp_name, "_label"))
 
-      vp_gene <- viewport(height = unit(.12, "npc"), width = unit(1, "npc") - vp_labelW,
+      vp_gene <- viewport(height = unit(.12, "npc"),
+                          width = unit(1, "npc") - vp_labelW,
                           x = vp_labelW, y = unit(0.5, "npc"),
                           clip = "on",
                           xscale = xscale,
@@ -382,7 +484,8 @@ bb_plotGenes <- function(chrom, chromstart = NULL, chromend = NULL, assembly = "
                           name = vp_name)
     } else {
 
-      vp_gene <- viewport(height = unit(.12, "npc"), width = unit(1, "npc"),
+      vp_gene <- viewport(height = unit(.12, "npc"),
+                          width = unit(1, "npc"),
                           x = unit(0, "npc"), y = unit(0.5, "npc"),
                           clip = "on",
                           xscale = xscale,
@@ -408,12 +511,13 @@ bb_plotGenes <- function(chrom, chromstart = NULL, chromend = NULL, assembly = "
     page_coords <- convert_page(object = bb_genes)
 
     ## Make viewport for gene track
-    vp_gene <- viewport(height = page_coords$height, width = page_coords$width,
-                   x = page_coords$x, y = page_coords$y,
-                   clip = "on",
-                   xscale = xscale,
-                   just = bb_genesInternal$just,
-                   name = vp_name)
+    vp_gene <- viewport(height = page_coords$height,
+                        width = page_coords$width,
+                        x = page_coords$x, y = page_coords$y,
+                        clip = "on",
+                        xscale = xscale,
+                        just = bb_genesInternal$just,
+                        name = vp_name)
 
     if (bb_genesInternal$strandLabels == TRUE){
 
@@ -421,8 +525,11 @@ bb_plotGenes <- function(chrom, chromstart = NULL, chromend = NULL, assembly = "
       topLeft_vp <- vp_topLeft(viewport = vp_gene)
 
       vp_label <- viewport(height = page_coords$height,
-                           width = convertWidth(widthDetails(tG) * 2, unitTo = get("page_units", envir = bbEnv)),
-                           x = topLeft_vp[[1]], y = topLeft_vp[[2]], just = c("right", "top"),
+                           width = convertWidth(widthDetails(tG) * 2,
+                                                unitTo = get("page_units",
+                                                             envir = bbEnv)),
+                           x = topLeft_vp[[1]], y = topLeft_vp[[2]],
+                           just = c("right", "top"),
                            name = paste0(vp_name, "_label"))
     }
 
@@ -432,7 +539,9 @@ bb_plotGenes <- function(chrom, chromstart = NULL, chromend = NULL, assembly = "
   # INITIALIZE GTREE FOR GROBS WITH BACKGROUND
   # ======================================================================================================================================================================================
 
-  backgroundGrob <- rectGrob(gp = gpar(fill = bb_genesInternal$bg, col = NA), name = "background", vp = vp_gene)
+  backgroundGrob <- rectGrob(gp = gpar(fill = bb_genesInternal$bg,
+                                       col = NA),
+                             name = "background", vp = vp_gene)
   assign("gene_grobs", gTree(children = gList(backgroundGrob)), envir = bbEnv)
 
   # ======================================================================================================================================================================================
@@ -449,22 +558,36 @@ bb_plotGenes <- function(chrom, chromstart = NULL, chromend = NULL, assembly = "
 
       if (nrow(plus_genes) > 0){
 
-        plus_geneGrobs <- rectGrob(x = plus_genes$TXSTART, y = unit(0.63, "npc"),
-                                   width = plus_genes$TXEND - plus_genes$TXSTART, height = unit(0.18, "npc"),
-                                   just = "left", gp = gpar(fill = plus_genes$strandColor, col = plus_genes$strandColor, lwd = bb_genesInternal$stroke),
+        plus_geneGrobs <- rectGrob(x = plus_genes$TXSTART,
+                                   y = unit(0.63, "npc"),
+                                   width = plus_genes$TXEND-plus_genes$TXSTART,
+                                   height = unit(0.18, "npc"),
+                                   just = "left",
+                                   gp = gpar(fill = plus_genes$strandColor,
+                                             col = plus_genes$strandColor,
+                                             lwd = bb_genesInternal$stroke),
                                    vp = vp_gene, default.units = "native")
-        assign("gene_grobs", addGrob(get("gene_grobs", envir = bbEnv), child = plus_geneGrobs), envir = bbEnv)
+        assign("gene_grobs",
+               addGrob(get("gene_grobs", envir = bbEnv),
+                       child = plus_geneGrobs), envir = bbEnv)
 
 
       }
 
       if (nrow(minus_genes) > 0 ){
 
-        minus_geneGrobs <- rectGrob(x = minus_genes$TXSTART, y = unit(0.37, "npc"),
-                                    width = minus_genes$TXEND - minus_genes$TXSTART, height = unit(0.18, "npc"),
-                                    just = "left", gp = gpar(fill = minus_genes$strandColor, col = minus_genes$strandColor, lwd = bb_genesInternal$stroke),
+        minus_geneGrobs <- rectGrob(x = minus_genes$TXSTART,
+                                    y = unit(0.37, "npc"),
+                                    width = minus_genes$TXEND-minus_genes$TXSTART,
+                                    height = unit(0.18, "npc"),
+                                    just = "left",
+                                    gp = gpar(fill = minus_genes$strandColor,
+                                              col = minus_genes$strandColor,
+                                              lwd = bb_genesInternal$stroke),
                                     vp = vp_gene, default.units = "native")
-        assign("gene_grobs", addGrob(get("gene_grobs", envir = bbEnv), child = minus_geneGrobs), envir = bbEnv)
+        assign("gene_grobs",
+               addGrob(get("gene_grobs", envir = bbEnv),
+                       child = minus_geneGrobs), envir = bbEnv)
 
       }
 
@@ -476,19 +599,27 @@ bb_plotGenes <- function(chrom, chromstart = NULL, chromend = NULL, assembly = "
         ## GENE LINES
         ##########################################################
 
-        plus_geneGrobs <- rectGrob(x = plus_genes$TXSTART, y = unit(0.63, "npc"),
-                                   width = plus_genes$TXEND - plus_genes$TXSTART, height = unit(0.05, "npc"),
-                                   just = "left", gp = gpar(fill = plus_genes$strandColor, col = plus_genes$strandColor, lwd = bb_genesInternal$stroke),
+        plus_geneGrobs <- rectGrob(x = plus_genes$TXSTART,
+                                   y = unit(0.63, "npc"),
+                                   width = plus_genes$TXEND-plus_genes$TXSTART,
+                                   height = unit(0.05, "npc"),
+                                   just = "left",
+                                   gp = gpar(fill = plus_genes$strandColor,
+                                             col = plus_genes$strandColor,
+                                             lwd = bb_genesInternal$stroke),
                                    vp = vp_gene, default.units = "native")
 
         ##########################################################
         ## GENE EXONS
         ###########################################################
 
-        plus_exonsGrobs <- rectGrob(x = plus_genes$EXONSTART, y = unit(0.63, "npc"),
-                                    width = plus_genes$EXONEND - plus_genes$EXONSTART,
-                                    height = unit(0.1, "npc"), just = "left",
-                                    gp = gpar(fill = plus_genes$strandColor, col = NA),
+        plus_exonsGrobs <- rectGrob(x = plus_genes$EXONSTART,
+                                    y = unit(0.63, "npc"),
+                                    width = plus_genes$EXONEND-plus_genes$EXONSTART,
+                                    height = unit(0.1, "npc"),
+                                    just = "left",
+                                    gp = gpar(fill = plus_genes$strandColor,
+                                              col = NA),
                                     vp = vp_gene, default.units = "native")
 
 
@@ -499,18 +630,28 @@ bb_plotGenes <- function(chrom, chromstart = NULL, chromend = NULL, assembly = "
         ## Get CDS regions that aren't NA
         poscdsData <- plus_genes[which(!is.na(plus_genes$CDSSTART)),]
         if(nrow(poscdsData) > 0){
-          plus_cdsGrobs <- rectGrob(x = poscdsData$CDSSTART, y = unit(0.63, "npc"),
-                                    width = poscdsData$CDSEND - poscdsData$CDSSTART,
-                                    height = unit(0.18, "npc"), just = "left",
-                                    gp = gpar(fill = poscdsData$strandColor, col = poscdsData$strandColor, lwd = 1.25),
+          plus_cdsGrobs <- rectGrob(x = poscdsData$CDSSTART,
+                                    y = unit(0.63, "npc"),
+                                    width = poscdsData$CDSEND-poscdsData$CDSSTART,
+                                    height = unit(0.18, "npc"),
+                                    just = "left",
+                                    gp = gpar(fill = poscdsData$strandColor,
+                                              col = poscdsData$strandColor,
+                                              lwd = 1.25),
                                     vp = vp_gene, default.units = "native")
-          assign("gene_grobs", addGrob(get("gene_grobs", envir = bbEnv), child = plus_cdsGrobs), envir = bbEnv)
+          assign("gene_grobs",
+                 addGrob(get("gene_grobs", envir = bbEnv),
+                         child = plus_cdsGrobs), envir = bbEnv)
         }
 
 
 
-        assign("gene_grobs", addGrob(get("gene_grobs", envir = bbEnv), child = plus_geneGrobs), envir = bbEnv)
-        assign("gene_grobs", addGrob(get("gene_grobs", envir = bbEnv), child = plus_exonsGrobs), envir = bbEnv)
+        assign("gene_grobs",
+               addGrob(get("gene_grobs", envir = bbEnv),
+                       child = plus_geneGrobs), envir = bbEnv)
+        assign("gene_grobs",
+               addGrob(get("gene_grobs", envir = bbEnv),
+                       child = plus_exonsGrobs), envir = bbEnv)
 
 
 
@@ -522,19 +663,27 @@ bb_plotGenes <- function(chrom, chromstart = NULL, chromend = NULL, assembly = "
         ## GENE LINES
         ##########################################################
 
-        minus_geneGrobs <- rectGrob(x = minus_genes$TXSTART, y = unit(0.37, "npc"),
-                                    width = minus_genes$TXEND - minus_genes$TXSTART, height = unit(0.05, "npc"),
-                                    just = "left", gp = gpar(fill = minus_genes$strandColor, col = minus_genes$strandColor, lwd = bb_genesInternal$stroke),
+        minus_geneGrobs <- rectGrob(x = minus_genes$TXSTART,
+                                    y = unit(0.37, "npc"),
+                                    width = minus_genes$TXEND-minus_genes$TXSTART,
+                                    height = unit(0.05, "npc"),
+                                    just = "left",
+                                    gp = gpar(fill = minus_genes$strandColor,
+                                              col = minus_genes$strandColor,
+                                              lwd = bb_genesInternal$stroke),
                                     vp = vp_gene, default.units = "native")
 
         ##########################################################
         ## GENE EXONS
         ###########################################################
 
-        minus_exonsGrobs <- rectGrob(x = minus_genes$EXONSTART, y = unit(0.37, "npc"),
-                                    width = minus_genes$EXONEND - minus_genes$EXONSTART,
-                                    height = unit(0.1, "npc"), just = "left",
-                                    gp = gpar(fill = minus_genes$strandColor, col = NA),
+        minus_exonsGrobs <- rectGrob(x = minus_genes$EXONSTART,
+                                     y = unit(0.37, "npc"),
+                                    width = minus_genes$EXONEND-minus_genes$EXONSTART,
+                                    height = unit(0.1, "npc"),
+                                    just = "left",
+                                    gp = gpar(fill = minus_genes$strandColor,
+                                              col = NA),
                                     vp = vp_gene, default.units = "native")
 
         ##########################################################
@@ -545,18 +694,27 @@ bb_plotGenes <- function(chrom, chromstart = NULL, chromend = NULL, assembly = "
         mincdsData <- minus_genes[which(!is.na(minus_genes$CDSSTART)),]
         if(nrow(mincdsData) > 0){
 
-          minus_cdsGrobs <- rectGrob(x = mincdsData$CDSSTART, y = unit(0.37, "npc"),
-                                     width = mincdsData$CDSEND - mincdsData$CDSSTART,
-                                     height = unit(0.18, "npc"), just = "left",
-                                     gp = gpar(fill = mincdsData$strandColor, col = mincdsData$strandColor,
+          minus_cdsGrobs <- rectGrob(x = mincdsData$CDSSTART,
+                                     y = unit(0.37, "npc"),
+                                     width = mincdsData$CDSEND-mincdsData$CDSSTART,
+                                     height = unit(0.18, "npc"),
+                                     just = "left",
+                                     gp = gpar(fill = mincdsData$strandColor,
+                                               col = mincdsData$strandColor,
                                                lwd = 1.25),
                                      vp = vp_gene, default.units = "native")
-          assign("gene_grobs", addGrob(get("gene_grobs", envir = bbEnv), child = minus_cdsGrobs), envir = bbEnv)
+          assign("gene_grobs",
+                 addGrob(get("gene_grobs", envir = bbEnv),
+                         child = minus_cdsGrobs), envir = bbEnv)
 
         }
 
-        assign("gene_grobs", addGrob(get("gene_grobs", envir = bbEnv), child = minus_geneGrobs), envir = bbEnv)
-        assign("gene_grobs", addGrob(get("gene_grobs", envir = bbEnv), child = minus_exonsGrobs), envir = bbEnv)
+        assign("gene_grobs",
+               addGrob(get("gene_grobs", envir = bbEnv),
+                       child = minus_geneGrobs), envir = bbEnv)
+        assign("gene_grobs",
+               addGrob(get("gene_grobs", envir = bbEnv),
+                       child = minus_exonsGrobs), envir = bbEnv)
 
       }
 
@@ -572,17 +730,25 @@ bb_plotGenes <- function(chrom, chromstart = NULL, chromend = NULL, assembly = "
 
     ## For every GENEID dataframe, get length and center location of each total gene
     plusgeneCenters <- lapply(separatedplusGenes, get_geneCenters)
-    plusgeneCenters <- data.frame(GENEID = names(plusgeneCenters), length = unlist(purrr::map(plusgeneCenters, 1)), labelLoc = unlist(purrr::map(plusgeneCenters, 2)))
+    plusgeneCenters <- data.frame(GENEID = names(plusgeneCenters),
+                                  length = unlist(purrr::map(plusgeneCenters, 1)),
+                                  labelLoc = unlist(purrr::map(plusgeneCenters, 2)))
     minusgeneCenters <- lapply(separatedminusGenes, get_geneCenters)
-    minusgeneCenters <- data.frame(GENEID = names(minusgeneCenters), length = unlist(purrr::map(minusgeneCenters, 1)), labelLoc = unlist(purrr::map(minusgeneCenters, 2)))
+    minusgeneCenters <- data.frame(GENEID = names(minusgeneCenters),
+                                   length = unlist(purrr::map(minusgeneCenters, 1)),
+                                   labelLoc = unlist(purrr::map(minusgeneCenters, 2)))
 
     ## Get representative value of each shown gene name
-    plusgeneNames <- plus_genes[duplicated(plus_genes[[displayCol]]) == F,]
-    minusgeneNames <- minus_genes[duplicated(minus_genes[[displayCol]]) == F,]
+    plusgeneNames <- plus_genes[duplicated(plus_genes[[displayCol]]) == FALSE,]
+    minusgeneNames <- minus_genes[duplicated(minus_genes[[displayCol]]) == FALSE,]
 
     ## Add column with center location of each gene label
-    plusgeneNames <- suppressMessages(dplyr::left_join(x = plusgeneNames, y = plusgeneCenters, by = "GENEID"))
-    minusgeneNames <- suppressMessages(dplyr::left_join(x = minusgeneNames, y = minusgeneCenters, by = "GENEID"))
+    plusgeneNames <- suppressMessages(dplyr::left_join(x = plusgeneNames,
+                                                       y = plusgeneCenters,
+                                                       by = "GENEID"))
+    minusgeneNames <- suppressMessages(dplyr::left_join(x = minusgeneNames,
+                                                        y = minusgeneCenters,
+                                                        by = "GENEID"))
 
     ## Add all the gene names in the region to object
     geneNames <- c(plusgeneNames[[displayCol]], minusgeneNames[[displayCol]])
@@ -591,36 +757,49 @@ bb_plotGenes <- function(chrom, chromstart = NULL, chromend = NULL, assembly = "
     ## DECLUTTER LABELS
 
     ## Put genes in order of default gene prioritization based on citation/gene length
-    plusgeneNames <- defaultGenePriorities(data = plusgeneNames, assembly = bb_genes$assembly)
-    minusgeneNames <- defaultGenePriorities(data = minusgeneNames, assembly = bb_genes$assembly)
+    plusgeneNames <- defaultGenePriorities(data = plusgeneNames,
+                                           assembly = bb_genes$assembly)
+    minusgeneNames <- defaultGenePriorities(data = minusgeneNames,
+                                            assembly = bb_genes$assembly)
 
     if (!is.null(bb_genesInternal$geneOrder)){
 
       ## Integrate geneOrder and default prioritization
-      plusgeneNames <- gene_priorities(genes = plusgeneNames, geneOrder = bb_genesInternal$geneOrder, displayCol = displayCol)
-      minusgeneNames <- gene_priorities(genes = minusgeneNames, geneOrder = bb_genesInternal$geneOrder, displayCol = displayCol)
+      plusgeneNames <- gene_priorities(genes = plusgeneNames,
+                                       geneOrder = bb_genesInternal$geneOrder,
+                                       displayCol = displayCol)
+      minusgeneNames <- gene_priorities(genes = minusgeneNames,
+                                        geneOrder = bb_genesInternal$geneOrder,
+                                        displayCol = displayCol)
 
     }
 
     ## Get which gene names aren't cutoff
     if (nrow(plusgeneNames) > 0){
 
-      checkedplusLabels <- apply(data.frame("label" = plusgeneNames[[displayCol]], "labelLoc" = plusgeneNames$labelLoc), 1, cutoffLabel, fontsize = bb_genesInternal$fontsize,
+      checkedplusLabels <- apply(data.frame("label" = plusgeneNames[[displayCol]],
+                                            "labelLoc" = plusgeneNames$labelLoc),
+                                 1, cutoffLabel,
+                                 fontsize = bb_genesInternal$fontsize,
                                  xscale = xscale,
                                  vp = vp_gene)
       plusgeneNames[[displayCol]] <- checkedplusLabels
-      plusgeneNames <- plusgeneNames[!is.na(plusgeneNames[[displayCol]]), ]
+      plusgeneNames <- plusgeneNames[!is.na(plusgeneNames[[displayCol]]),]
 
       if (nrow(plusgeneNames) > 0){
 
         plus_names <- textGrob(label = plusgeneNames[[displayCol]],
-                               x = plusgeneNames$labelLoc, y = unit(0.85, "npc"),
-                               gp = gpar(col = plusgeneNames$fontColor, fontsize = bb_genesInternal$fontsize),
+                               x = plusgeneNames$labelLoc,
+                               y = unit(0.85, "npc"),
+                               gp = gpar(col = plusgeneNames$fontColor,
+                                         fontsize = bb_genesInternal$fontsize),
                                vp = vp_gene,
                                default.units = "native",
                                check.overlap = TRUE)
 
-        assign("gene_grobs", addGrob(get("gene_grobs", envir = bbEnv), child = plus_names), envir = bbEnv)
+        assign("gene_grobs",
+               addGrob(get("gene_grobs", envir = bbEnv),
+                       child = plus_names), envir = bbEnv)
 
       }
 
@@ -629,21 +808,28 @@ bb_plotGenes <- function(chrom, chromstart = NULL, chromend = NULL, assembly = "
 
     if (nrow(minusgeneNames) > 0){
 
-      checkedminusLabels <- apply(data.frame("label" = minusgeneNames[[displayCol]], "labelLoc" = minusgeneNames$labelLoc), 1, cutoffLabel, fontsize = bb_genesInternal$fontsize,
+      checkedminusLabels <- apply(data.frame("label" = minusgeneNames[[displayCol]],
+                                             "labelLoc" = minusgeneNames$labelLoc),
+                                  1, cutoffLabel,
+                                  fontsize = bb_genesInternal$fontsize,
                                   xscale = xscale,
                                   vp = vp_gene)
       minusgeneNames[[displayCol]] <- checkedminusLabels
-      minusgeneNames <- minusgeneNames[!is.na(minusgeneNames[[displayCol]]), ]
+      minusgeneNames <- minusgeneNames[!is.na(minusgeneNames[[displayCol]]),]
 
       if(nrow(minusgeneNames) > 0){
 
         minus_names <- textGrob(label = minusgeneNames[[displayCol]],
-                                x = minusgeneNames$labelLoc, y = unit(0.15, "npc"),
-                                gp = gpar(col = minusgeneNames$fontColor, fontsize = bb_genesInternal$fontsize),
+                                x = minusgeneNames$labelLoc,
+                                y = unit(0.15, "npc"),
+                                gp = gpar(col = minusgeneNames$fontColor,
+                                          fontsize = bb_genesInternal$fontsize),
                                 vp = vp_gene,
                                 default.units = "native",
                                 check.overlap = TRUE)
-        assign("gene_grobs", addGrob(get("gene_grobs", envir = bbEnv), child = minus_names), envir = bbEnv)
+        assign("gene_grobs",
+               addGrob(get("gene_grobs", envir = bbEnv),
+                       child = minus_names), envir = bbEnv)
 
       }
 
@@ -655,11 +841,21 @@ bb_plotGenes <- function(chrom, chromstart = NULL, chromend = NULL, assembly = "
 
     if (bb_genesInternal$strandLabels == TRUE){
 
-      plus_label <- textGrob(label = "+", y = unit(0.63, "npc"), gp = gpar(fontsize = bb_genesInternal$fontsize + 2, col = bb_genesInternal$fontcolors[1], fontface = "bold"), vp = vp_label)
-      minus_label <- textGrob(label = "-", y = unit(0.37, "npc"), gp = gpar(fontsize = bb_genesInternal$fontsize + 2, col = bb_genesInternal$fontcolors[2], fontface = "bold"), vp = vp_label)
+      plus_label <- textGrob(label = "+", y = unit(0.63, "npc"),
+                             gp = gpar(fontsize = bb_genesInternal$fontsize+2,
+                                       col = bb_genesInternal$fontcolor[1],
+                                       fontface = "bold"), vp = vp_label)
+      minus_label <- textGrob(label = "-", y = unit(0.37, "npc"),
+                              gp = gpar(fontsize = bb_genesInternal$fontsize+2,
+                                        col = bb_genesInternal$fontcolor[2],
+                                        fontface = "bold"), vp = vp_label)
 
-      assign("gene_grobs", addGrob(get("gene_grobs", envir = bbEnv), child = plus_label), envir = bbEnv)
-      assign("gene_grobs", addGrob(get("gene_grobs", envir = bbEnv), child = minus_label), envir = bbEnv)
+      assign("gene_grobs",
+             addGrob(get("gene_grobs", envir = bbEnv),
+                     child = plus_label), envir = bbEnv)
+      assign("gene_grobs",
+             addGrob(get("gene_grobs", envir = bbEnv),
+                     child = minus_label), envir = bbEnv)
 
     }
 

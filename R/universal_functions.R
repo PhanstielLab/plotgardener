@@ -25,7 +25,7 @@ check_bbpage <- function(error){
 ## Define a function to check dimensions/placing coordinates
 check_placement <- function(object){
 
-  if (attributes(object)$plotted == T){
+  if (attributes(object)$plotted == TRUE){
 
     ## If giving placement coordinates
     if (!is.null(object$x) | !is.null(object$y)){
@@ -75,7 +75,8 @@ check_placement <- function(object){
 }
 
 ## Define a character vector of valid coordinate systems to work in
-validUnits <- c("npc", "native", "inches", "cm", "mm", "points", "bigpts", "picas", "dida",
+validUnits <- c("npc", "native", "inches", "cm", "mm", "points",
+                "bigpts", "picas", "dida",
                 "cicero", "scaledpts", "char", "lines", "snpc")
 
 ## Define a function that converts coordinates/dimensions into default units
@@ -147,7 +148,8 @@ defaultUnits <- function(object, default.units){
 
       if (is.null(default.units)){
 
-        stop("Width detected as numeric.\'default.units\' must be specified.", call. = FALSE)
+        stop("Width detected as numeric.\'default.units\' must be specified.",
+             call. = FALSE)
 
       }
 
@@ -165,7 +167,8 @@ defaultUnits <- function(object, default.units){
 
       if (is.null(default.units)){
 
-        stop("Height detected as numeric.\'default.units\' must be specified.", call. = FALSE)
+        stop("Height detected as numeric.\'default.units\' must be specified.",
+             call. = FALSE)
 
       }
 
@@ -187,15 +190,15 @@ spaceChroms <- function(assemblyData, space){
   ## Determine the offset for each chromomse
   cumsums <- cumsum(as.numeric(assemblyData[,2]))
   spacer <- cumsums[length(cumsums)] * space
-  additionalSpace <- (1:length(cumsums)-0) * spacer
+  additionalSpace <- (seq(1,length(cumsums)-0)) * spacer
 
   ## Start position
-  startPos <- c(0, cumsums[1:length(cumsums)-1])
+  startPos <- c(0, cumsums[seq(1,length(cumsums)-1)])
   startPos <- startPos + additionalSpace
   assemblyData[,3] <- startPos
 
   ## Stop Position
-  stopPos <- cumsums + (1:(length(cumsums))) * spacer
+  stopPos <- cumsums + (seq(1,(length(cumsums)))) * spacer
   assemblyData[,4] <- stopPos
 
   colnames(assemblyData) <- c("chrom", "length", "start", "stop")
@@ -211,7 +214,7 @@ makeTransparent <- function(color, alpha){
     alpha <- 1
   }
 
-  rgb <- col2rgb(color)
+  rgb <- grDevices::col2rgb(color)
   transp <- rgb(rgb[1], rgb[2], rgb[3], alpha = alpha*255, maxColorValue = 255)
   return(transp)
 
@@ -370,10 +373,14 @@ getPackages <- function(genome, TxDb=NULL){
 ## Define a function to get the assembly info based on a string (ie default) or bb_assembly object
 parse_bbAssembly <- function(assembly){
 
-  availDefaults <- c("bosTau8", "bosTau9", "canFam3", "ce6", "ce11", "danRer10",
-                     "danRer11", "dm3", "dm6", "galGal4", "galGal5", "galGal6",
-                     "hg18", "hg19", "hg38", "mm9", "mm10", "rheMac3", "rheMac8",
-                     "rehMac10", "panTro5", "panTro6", "rn4", "rn5", "rn6", "sacCer2",
+  availDefaults <- c("bosTau8", "bosTau9", "canFam3", "ce6", "ce11",
+                     "danRer10",
+                     "danRer11", "dm3", "dm6", "galGal4", "galGal5",
+                     "galGal6",
+                     "hg18", "hg19", "hg38", "mm9", "mm10", "rheMac3",
+                     "rheMac8",
+                     "rehMac10", "panTro5", "panTro6", "rn4", "rn5", "rn6",
+                     "sacCer2",
                      "sacCer3", "susScr3", "susScr11")
 
   ## If it's just a string, get the default
@@ -415,18 +422,34 @@ check_loadedPackage <- function(package, message){
 defaultGenePriorities <- function(data, assembly, transcript = FALSE){
 
   ## Define our list of available defaults that have citations
-  availCitations<- list(bosTau8 = "Citations.Btaurus.NCBI.bosTau8", bosTau9 = "Citations.Btaurus.NCBI.bosTau9",
-                        canFam3 = "Citations.Cfamiliaris.NCBI.canFam3", ce11 = "Citations.Celegans.NCBI.ce11",
-                        danRer10 = "Citations.Drerio.NCBI.danRer10", danRer11 = "Citations.Drerio.NCBI.danRer11",
-                        dm3 = "Citations.Dmelanogaster.NCBI.dm3", dm6 = "Citations.Dmelanogaster.NCBI.dm6",
-                        galGal4 = "Citations.Ggallus.NCBI.galGal4", galGal5 = "Citations.Ggallus.NCBI.galGal5", galGal6 = "Citations.Ggallus.NCBI.galGal6",
-                        hg18 = "Citations.Hsapiens.NCBI.hg18", hg19 = "Citations.Hsapiens.NCBI.hg19", hg38 = "Citations.Hsapiens.NCBI.hg38",
-                        mm9 = "Citations.Mmusculus.NCBI.mm9", mm10 = "Citations.Mmusculus.NCBI.mm10",
-                        rheMac3 = "Citations.Mmulatta.NCBI.rheMac3", rheMac8 = "Citations.Mmulatta.NCBI.rheMac8", rehMac10 = "Citations.Mmulatta.NCBI.rheMac10",
-                        panTro5 = "Citations.Ptroglodytes.NCBI.panTro5", panTro6 = "Citations.Ptroglodytes.NCBI.panTro6",
-                        rn4 = "Citations.Rnorvegicus.NCBI.rn4", rn5 = "Citations.Rnorvegicus.NCBI.rn5", rn6 = "Citations.Rnorvegicus.NCBI.rn6",
-                        sacCer2 = "Citations.Scerevisiae.NCBI.sacCer2", sacCer3 = "Citations.Scerevisiae.NCBI.sacCer3",
-                        susScr3 = "Citations.Sscrofa.NCBI.susScr3", susScr11 = "Citations.Sscrofa.NCBI.susScr11")
+  availCitations<- list(bosTau8 = "Citations.Btaurus.NCBI.bosTau8",
+                        bosTau9 = "Citations.Btaurus.NCBI.bosTau9",
+                        canFam3 = "Citations.Cfamiliaris.NCBI.canFam3",
+                        ce11 = "Citations.Celegans.NCBI.ce11",
+                        danRer10 = "Citations.Drerio.NCBI.danRer10",
+                        danRer11 = "Citations.Drerio.NCBI.danRer11",
+                        dm3 = "Citations.Dmelanogaster.NCBI.dm3",
+                        dm6 = "Citations.Dmelanogaster.NCBI.dm6",
+                        galGal4 = "Citations.Ggallus.NCBI.galGal4",
+                        galGal5 = "Citations.Ggallus.NCBI.galGal5",
+                        galGal6 = "Citations.Ggallus.NCBI.galGal6",
+                        hg18 = "Citations.Hsapiens.NCBI.hg18",
+                        hg19 = "Citations.Hsapiens.NCBI.hg19",
+                        hg38 = "Citations.Hsapiens.NCBI.hg38",
+                        mm9 = "Citations.Mmusculus.NCBI.mm9",
+                        mm10 = "Citations.Mmusculus.NCBI.mm10",
+                        rheMac3 = "Citations.Mmulatta.NCBI.rheMac3",
+                        rheMac8 = "Citations.Mmulatta.NCBI.rheMac8",
+                        rehMac10 = "Citations.Mmulatta.NCBI.rheMac10",
+                        panTro5 = "Citations.Ptroglodytes.NCBI.panTro5",
+                        panTro6 = "Citations.Ptroglodytes.NCBI.panTro6",
+                        rn4 = "Citations.Rnorvegicus.NCBI.rn4",
+                        rn5 = "Citations.Rnorvegicus.NCBI.rn5",
+                        rn6 = "Citations.Rnorvegicus.NCBI.rn6",
+                        sacCer2 = "Citations.Scerevisiae.NCBI.sacCer2",
+                        sacCer3 = "Citations.Scerevisiae.NCBI.sacCer3",
+                        susScr3 = "Citations.Sscrofa.NCBI.susScr3",
+                        susScr11 = "Citations.Sscrofa.NCBI.susScr11")
 
   ## Define assemblies whose TxDb IDs will need to be converted to ENTREZID from a different ID
   convertIDs <- list(dm3 = "ENSEMBL", dm6 = "ENSEMBL",
@@ -446,7 +469,10 @@ defaultGenePriorities <- function(data, assembly, transcript = FALSE){
       org_db <- eval(parse(text = assembly$OrgDb))
 
       ## Convert gene ids in data to ENTREZID based on previous keytype
-      entrezIDs  <- suppressMessages(AnnotationDbi::select(org_db, keys = data$GENEID, columns = "ENTREZID", keytype = convertIDs[[name]]))
+      entrezIDs  <- suppressMessages(AnnotationDbi::select(org_db,
+                                                           keys = data$GENEID,
+                                                           columns = "ENTREZID",
+                                                           keytype = convertIDs[[name]]))
 
       data$ENTREZID <- entrezIDs
 
@@ -456,13 +482,15 @@ defaultGenePriorities <- function(data, assembly, transcript = FALSE){
 
     ## Get internal citation data and match based on ENTREZID
     citationData <- eval(parse(text = availCitations[[name]]))
-    updatedData <- suppressMessages(dplyr::left_join(x = data, y = citationData, by = "ENTREZID"))
+    updatedData <- suppressMessages(dplyr::left_join(x = data,
+                                                     y = citationData,
+                                                     by = "ENTREZID"))
 
     ## Set any missing citations to 0
     updatedData[is.na(updatedData$Citations),]$Citations <- rep(0, nrow(updatedData[is.na(updatedData$Citations),]))
 
     if (transcript == TRUE){
-      updatedData <- updatedData[duplicated(updatedData$TXNAME) == F,]
+      updatedData <- updatedData[duplicated(updatedData$TXNAME) == FALSE,]
     }
 
 

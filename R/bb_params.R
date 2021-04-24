@@ -1,33 +1,43 @@
 #' bb_params: BentoBox parameters object
 #'
-#' Creates an object of class "bb_params" that can be used by BentoBox functions.
-#' bb_params can be used to set a set of parameters to be shared across multiple
-#' functions.
+#' Creates an object of class "bb_params" that can be used by
+#' BentoBox functions. bb_params can be used to set a set of parameters
+#' to be shared across multiple functions.
 #'
-#' bb_params generates arguments from exported BentoBox functions at loading time of the
-#' package. Arguments defined in a bb_params object can be passed into the \code{params}
-#' argument of BentoBox functions. bb_params arguments can be overridden from within
-#' BentoBox functions.
+#' bb_params generates arguments from exported BentoBox functions at
+#' loading time of the package. Arguments defined in a bb_params object
+#' can be passed into the \code{params} argument of BentoBox functions.
+#' bb_params arguments can be overridden from within BentoBox functions.
 #'
-#' bb_params also provides an alternative region definition mechanism. Given a gene name
-#' and genome assembly, bb_params returns the appropriate "chrom", "chromstart", and
-#' "chromend" with a default buffer of \code{(gene length) / 2} added to the ends of the
-#' gene coordinates. The buffer amount can be set manually with the \code{geneBuffer}
-#' parameter. Buffer extending beyond the length of the chromosome will be trimmed.
+#' bb_params also provides an alternative region definition mechanism.
+#' Given a gene name and genome assembly, bb_params returns the appropriate
+#' "chrom", "chromstart", and "chromend" with a default buffer of
+#' \code{(gene length) / 2} added to the ends of the gene coordinates.
+#' The buffer amount can be set manually with the \code{geneBuffer}
+#' parameter. Buffer extending beyond the length of the chromosome
+#' will be trimmed.
 #'
-#' @param gene (optional) String naming a gene used to set the chromosome, chromstart, and
-#'   chromend arguments.
+#' @param gene (optional) String naming a gene used to set the
+#' chrom, chromstart, and chromend arguments.
 #'
-#' @param geneBuffer (optional) Integer base-pairs to extend the start and end of a gene
-#'   defined by argument \code{gene}.
+#' @param geneBuffer (optional) Integer base-pairs to extend the
+#' start and end of a gene defined by argument \code{gene}.
 #'
-#' @param assembly String defining the genome build. Default value is \code{assembly = "hg19"}.
+#' @param assembly String defining the genome build.
+#' Default value is \code{assembly = "hg19"}.
 #'
-#' @param ... This function will take any BentoBox function parameters and their values.
+#' @param ... This function will take any BentoBox function
+#' parameters and their values.
 #'
-#' @return Returns an object of class \code{bb_params} containing BentoBox function arguments.
+#'
+#' @return Returns an object of class \code{bb_params}
+#' containing BentoBox function arguments.
 #'
 #' @examples
+#' ## Load hg19 genomic annotation packages
+#' library("TxDb.Hsapiens.UCSC.hg19.knownGene")
+#' library("org.Hs.eg.db")
+#'
 #' ## Define parameters
 #' p1 <- bb_params(gene = "IL1B", assembly = "hg19")
 #'
@@ -46,7 +56,17 @@ bb_params <- function(){}
 
 ## Define concatenate method for bb_params objects within default concatenate method to use when
 ## any bb_params object is found
-"c" <- function(..., recursive = F){
+
+#' Combine multiple bb_params objects into a vector
+#'
+#' @param ... \link[BentoBox]{bb_params} objects to be concatenated.
+#' @param recursive logical. If \code{recursive = TRUE}, the function
+#' recursively descends through lists
+#' (and pairlists) combining all their elements into a vector.
+#'
+#' @return \code{NULL} or an expression or a vector of an appropriate mode.
+#' (With no arguments the value is \code{NULL}.)
+"c" <- function(..., recursive = FALSE){
 
   ## Check all classes of inputs to concatenate
   inputClasses <- unlist(lapply(list(...), class))
@@ -59,18 +79,19 @@ bb_params <- function(){}
     }
 
     ## Combine arguments into a single list
-    combArgs <- unlist(list(...), recursive = F)
+    combArgs <- unlist(list(...), recursive = FALSE)
     ## Define allowed duplicates (i.e assembly="hg19")
     allowed <- c("assembly")
 
     ## Find duplicated argument names
     dupArgs <- combArgs[duplicated(names(combArgs))]
 
-    ## Check for unallowed duplicate arguments
+    ## Check for duplicate arguments that aren't allowed
     if (any(!names(dupArgs) %in% allowed)) {
       badDupArgs <- names(dupArgs)[!names(dupArgs) %in% allowed]
       stop(sprintf("Parameter(s) %s are duplicated.",
-                   paste(shQuote(badDupArgs), collapse = ",")), call. = FALSE)
+                   paste(shQuote(badDupArgs), collapse = ",")),
+           call. = FALSE)
     }
 
     ## Check that each allowed duplicate argument name has the same value
@@ -82,9 +103,10 @@ bb_params <- function(){}
     }
 
     ## Return combined object
-    return(structure(.Data = combArgs[!duplicated(names(combArgs))], class = "bb_params"))
+    return(structure(.Data = combArgs[!duplicated(names(combArgs))],
+                     class = "bb_params"))
   } else {
-    ## Otherwise we will just call the primitive concatentate function
+    ## Otherwise we will just call the primitive concatenate function
     .Primitive("c")(...)
   }
 

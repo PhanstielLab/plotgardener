@@ -20,27 +20,33 @@ bb_annoYaxis(
 
 \item{at}{A numeric vector of y-value locations for tick marks.}
 
-\item{label}{A logical value indicating whether to draw the labels on the tick marks, or an expression or character vector which specify the labels to use.
+\item{label}{A logical value indicating whether to draw the labels
+on the tick marks, or an expression or character vector which specify
+the labels to use.
 If not logical, must be the same length as the \code{at} argument.}
 
-\item{main}{A logical value indicating whether to draw the y-axis at the left of the plot. Default value is \code{main = TRUE}. Options are:
+\item{main}{A logical value indicating whether to draw the y-axis at
+the left of the plot. Default value is \code{main = TRUE}. Options are:
 \itemize{
 \item{\code{TRUE}: }{y-axis is drawn at the left of the plot.}
 \item{\code{FALSE}: }{y-axis is drawn at the right of the plot.}
 }}
 
-\item{scipen}{An integer indicating the penalty to be applied when deciding to print numeric values in fixed or exponential notation. Default value is \code{scipen = 999}.}
+\item{scipen}{An integer indicating the penalty to be applied when
+deciding to print numeric values in fixed or exponential notation.
+Default value is \code{scipen = 999}.}
 
-\item{axisLine}{A logical value indicating whether to show the axis line. Default value is \code{axisLine = FALSE}.}
+\item{axisLine}{A logical value indicating whether to show the axis line.
+Default value is \code{axisLine = FALSE}.}
 
-\item{params}{An optional \link[BentoBox]{bb_params} object containing relevant function parameters.}
+\item{params}{An optional \link[BentoBox]{bb_params} object
+containing relevant function parameters.}
 
 \item{...}{Additional grid graphical parameters. See \link[grid]{gpar}.}
-
-\item{gp}{Grid graphical parameters. See \link[grid]{gpar}.}
 }
 \value{
-Returns a \code{bb_yaxis} object containing relevant \link[grid]{grob} information.
+Returns a \code{bb_yaxis} object containing
+relevant \link[grid]{grob} information.
 }
 \description{
 Add a y-axis to a plot
@@ -53,10 +59,13 @@ data("bb_imrHicData")
 bb_pageCreate(width = 4, height = 3.5, default.units = "inches")
 
 ## Plot and place a square Hi-C plot
-hicPlot <- bb_plotHicSquare(data = bb_imrHicData, resolution = 10000, zrange = c(0, 70),
-                            chrom = "chr21", chromstart = 28000000, chromend = 30300000,
+hicPlot <- bb_plotHicSquare(data = bb_imrHicData, resolution = 10000,
+                            zrange = c(0, 70),
+                            chrom = "chr21",
+                            chromstart = 28000000, chromend = 30300000,
                             x = 1, y = 0.5, width = 2.5, height = 2.5,
-                            just = c("left", "top"), default.units = "inches")
+                            just = c("left", "top"),
+                            default.units = "inches")
 
 ## Add standard y-axis to Hi-C plot
 bb_annoYaxis(plot = hicPlot, at = c(28000000, 29000000, 30300000),

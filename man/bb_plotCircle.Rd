@@ -19,31 +19,45 @@ bb_plotCircle(
 )
 }
 \arguments{
-\item{x}{A numeric vector or unit object specifying circle x-locations relative to center.}
+\item{x}{A numeric vector or unit object specifying circle
+x-locations relative to center.}
 
-\item{y}{A numeric vector, unit object, or a character vector of values containing a "b" combined with a numeric value specifying circle y-locations relative to center.
-The character vector will place circle y-locations relative to the bottom of the most recently plotted BentoBox plot according to the units of the BentoBox page.}
+\item{y}{A numeric vector, unit object, or a character vector
+of values containing a "b" combined with a numeric value
+specifying circle y-locations relative to center.
+The character vector will place circle y-locations relative to
+the bottom of the most recently plotted BentoBox plot according
+to the units of the BentoBox page.}
 
 \item{r}{A numeric vector or unit object specifying radii.}
 
-\item{default.units}{A string indicating the default units to use if \code{r}, \code{x}, or \code{y} are only given as numerics or numeric vectors. Default value is \code{default.units = "inches"}.}
+\item{default.units}{A string indicating the default units to use
+if \code{r}, \code{x}, or \code{y} are only given as numerics or
+numeric vectors. Default value is \code{default.units = "inches"}.}
 
-\item{linecolor}{A character value specifying circle line color. Default value is \code{linecolor = "black"}.}
+\item{linecolor}{A character value specifying circle line color.
+Default value is \code{linecolor = "black"}.}
 
-\item{lwd}{A numeric specifying circle line width. Default value is \code{lwd = 1}.}
+\item{lwd}{A numeric specifying circle line width.
+Default value is \code{lwd = 1}.}
 
-\item{lty}{A numeric specifying circle line type. Default value is \code{lty = 1}.}
+\item{lty}{A numeric specifying circle line type.
+Default value is \code{lty = 1}.}
 
-\item{fill}{A character value specifying circle fill color. Default value is \code{fill = NA}.}
+\item{fill}{A character value specifying circle fill color.
+Default value is \code{fill = NA}.}
 
-\item{alpha}{Numeric value specifying color transparency. Default value is \code{alpha = 1}.}
+\item{alpha}{Numeric value specifying color transparency.
+Default value is \code{alpha = 1}.}
 
-\item{params}{An optional \link[BentoBox]{bb_params} object containing relevant function parameters.}
+\item{params}{An optional \link[BentoBox]{bb_params} object
+containing relevant function parameters.}
 
 \item{...}{Additional grid graphical parameters. See \link[grid]{gpar}.}
 }
 \value{
-Returns a \code{bb_circle} object containing relevant placement and \link[grid]{grob} information.
+Returns a \code{bb_circle} object containing
+relevant placement and \link[grid]{grob} information.
 }
 \description{
 Plot a circle within a BentoBox layout
@@ -53,8 +67,10 @@ Plot a circle within a BentoBox layout
 bb_pageCreate(width = 2, height = 2, default.units = "inches")
 
 ## Plot two circles, one at a time
-bb_plotCircle(x = 0.6, y = 0.5, r = 0.1, fill = "black", default.units = "inches")
-bb_plotCircle(x = 1.4, y = 0.5, r = 0.1, fill = "black", default.units = "inches")
+bb_plotCircle(x = 0.6, y = 0.5, r = 0.1, fill = "black",
+              default.units = "inches")
+bb_plotCircle(x = 1.4, y = 0.5, r = 0.1, fill = "black",
+              default.units = "inches")
 
 ## Plot a vector of circles
 xVals <- 1 + (0.5*cos(seq(0, pi, pi/8)))

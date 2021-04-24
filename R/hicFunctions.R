@@ -61,10 +61,16 @@ read_data <- function(hic, hic_plot, norm, assembly, type){
       readchromend <- hic_plot$chromend + hic_plot$resolution
       readaltchromstart <- hic_plot$altchromstart - hic_plot$resolution
       readaltchromend <- hic_plot$altchromend + hic_plot$resolution
-      hic <- suppressWarnings(bb_readHic(file = hic, chrom = hic_plot$chrom, chromstart = readchromstart, chromend = readchromend,
-                                         resolution = hic_plot$resolution, zrange = hic_plot$zrange, norm = norm,
-                                         altchrom = hic_plot$altchrom, altchromstart = readaltchromstart,
-                                         altchromend = readaltchromend, matrix = type))
+      hic <- suppressWarnings(bb_readHic(file = hic, chrom = hic_plot$chrom,
+                                         chromstart = readchromstart,
+                                         chromend = readchromend,
+                                         resolution = hic_plot$resolution,
+                                         zrange = hic_plot$zrange,
+                                         norm = norm,
+                                         altchrom = hic_plot$altchrom,
+                                         altchromstart = readaltchromstart,
+                                         altchromend = readaltchromend,
+                                         matrix = type))
     } else {
       hic <- data.frame(matrix(nrow = 0, ncol = 3))
     }

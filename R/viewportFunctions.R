@@ -23,7 +23,8 @@ current_viewports <- function(){
 
   } else {
 
-    page_children <- names(lapply(current.vpTree()$children$bb_page$children, viewport_name))
+    page_children <- names(lapply(current.vpTree()$children$bb_page$children,
+                                  viewport_name))
     current <- as.list(page_children)
 
   }
@@ -37,34 +38,42 @@ adjust_vpCoords <- function(viewport){
 
   if (length(viewport$justification == 2)){
 
-    if ("left" %in% viewport$justification & "center" %in% viewport$justification){
+    if ("left" %in% viewport$justification
+        & "center" %in% viewport$justification){
 
       ## convert the x-coordinate only
       vp_x <- viewport$x + (0.5 * viewport$width)
-    } else if ("right" %in% viewport$justification & "center" %in% viewport$justification){
+    } else if ("right" %in% viewport$justification
+               & "center" %in% viewport$justification){
       ## convert the x-coordinate only
       vp_x <- viewport$x - (0.5 * viewport$width)
-    } else if ("center" %in% viewport$justification & "bottom" %in% viewport$justification){
+    } else if ("center" %in% viewport$justification
+               & "bottom" %in% viewport$justification){
       ## convert the y-coordinate only
       vp_x <- viewport$x
       vp_y <- vp_y + (0.5 * viewport$height)
-    } else if ("center" %in% viewport$justification & "top" %in% viewport$justification){
+    } else if ("center" %in% viewport$justification
+               & "top" %in% viewport$justification){
       ## convert the y-coordinate only
       vp_x <- viewport$x
       vp_y <- vp_y - (0.5 * viewport$height)
-    } else if ("left" %in% viewport$justification & "top" %in% viewport$justification){
+    } else if ("left" %in% viewport$justification
+               & "top" %in% viewport$justification){
       ## convert x-coordinate and y-coordinate
       vp_x <- viewport$x + (0.5 * viewport$width)
       vp_y <- vp_y - (0.5 * viewport$height)
-    } else if ("right" %in% viewport$justification & "top" %in% viewport$justification){
+    } else if ("right" %in% viewport$justification
+               & "top" %in% viewport$justification){
       ## convert x-coordinate and y-coordinate
       vp_x <- viewport$x - (0.5 * viewport$width)
       vp_y <- vp_y - (0.5 * viewport$height)
-    } else if ("left" %in% viewport$justification & "bottom" %in% viewport$justification){
+    } else if ("left" %in% viewport$justification
+               & "bottom" %in% viewport$justification){
       ## convert x-coordinate and y-coordinate
       vp_x <- viewport$x + (0.5 * viewport$width)
       vp_y <- vp_y + (0.5 * viewport$height)
-    } else if ("right" %in% viewport$justification & "bottom" %in% viewport$justification){
+    } else if ("right" %in% viewport$justification
+               & "bottom" %in% viewport$justification){
       ## convert x-coordinate and y-coordinate
       vp_x <- viewport$x - (0.5 * viewport$width)
       vp_y <- vp_y + (0.5 * viewport$height)
@@ -105,28 +114,36 @@ vp_topLeft <- function(viewport){
 
   if (length(viewport$justification == 2)){
 
-    if ("left" %in% viewport$justification & "center" %in% viewport$justification){
+    if ("left" %in% viewport$justification
+        & "center" %in% viewport$justification){
       vp_x <- viewport$x
       vp_y <- viewport$y + (0.5 * viewport$height)
-    } else if ("right" %in% viewport$justification & "center" %in% viewport$justification){
+    } else if ("right" %in% viewport$justification
+               & "center" %in% viewport$justification){
       vp_x <- viewport$x - (viewport$width)
       vp_y <- viewport$y + (0.5 * viewport$height)
-    } else if ("center" %in% viewport$justification & "bottom" %in% viewport$justification){
+    } else if ("center" %in% viewport$justification
+               & "bottom" %in% viewport$justification){
       vp_x <- viewport$x - (0.5 * viewport$width)
       vp_y <- viewport$y + (viewport$height)
-    } else if ("center" %in% viewport$justification & "top" %in% viewport$justification){
+    } else if ("center" %in% viewport$justification
+               & "top" %in% viewport$justification){
       vp_x <- viewport$x - (0.5 * viewport$width)
       vp_y <- viewport$y
-    } else if ("left" %in% viewport$justification & "top" %in% viewport$justification){
+    } else if ("left" %in% viewport$justification
+               & "top" %in% viewport$justification){
       vp_x <- viewport$x
       vp_y <- viewport$y
-    } else if ("right" %in% viewport$justification & "top" %in% viewport$justification){
+    } else if ("right" %in% viewport$justification
+               & "top" %in% viewport$justification){
       vp_x <- viewport$x - (viewport$width)
       vp_y <- viewport$y
-    } else if ("left" %in% viewport$justification & "bottom" %in% viewport$justification){
+    } else if ("left" %in% viewport$justification
+               & "bottom" %in% viewport$justification){
       vp_x <- viewport$x
       vp_y <- viewport$y + (viewport$height)
-    } else if ("right" %in% viewport$justification & "bottom" %in% viewport$justification){
+    } else if ("right" %in% viewport$justification
+               & "bottom" %in% viewport$justification){
       vp_x <- viewport$x - (viewport$width)
       vp_y <- viewport$y + (viewport$height)
     } else {
@@ -164,28 +181,36 @@ vp_bottomLeft <- function(viewport){
 
   if (length(viewport$justification == 2)){
 
-    if ("left" %in% viewport$justification & "center" %in% viewport$justification){
+    if ("left" %in% viewport$justification
+        & "center" %in% viewport$justification){
       vp_x <- viewport$x
       vp_y <- viewport$y - (0.5 * viewport$height)
-    } else if ("right" %in% viewport$justification & "center" %in% viewport$justification){
+    } else if ("right" %in% viewport$justification
+               & "center" %in% viewport$justification){
       vp_x <- viewport$x - (viewport$width)
       vp_y <- viewport$y - (0.5 * viewport$height)
-    } else if ("center" %in% viewport$justification & "bottom" %in% viewport$justification){
+    } else if ("center" %in% viewport$justification
+               & "bottom" %in% viewport$justification){
       vp_x <- viewport$x - (0.5 * viewport$width)
       vp_y <- viewport$y
-    } else if ("center" %in% viewport$justification & "top" %in% viewport$justification){
+    } else if ("center" %in% viewport$justification
+               & "top" %in% viewport$justification){
       vp_x <- viewport$x - (0.5 * viewport$width)
       vp_y <- viewport$y - (viewport$height)
-    } else if ("left" %in% viewport$justification & "top" %in% viewport$justification){
+    } else if ("left" %in% viewport$justification
+               & "top" %in% viewport$justification){
       vp_x <- viewport$x
       vp_y <- viewport$y - (viewport$height)
-    } else if ("right" %in% viewport$justification & "top" %in% viewport$justification){
+    } else if ("right" %in% viewport$justification
+               & "top" %in% viewport$justification){
       vp_x <- viewport$x - (viewport$width)
       vp_y <- viewport$y - (viewport$height)
-    } else if ("left" %in% viewport$justification & "bottom" %in% viewport$justification){
+    } else if ("left" %in% viewport$justification
+               & "bottom" %in% viewport$justification){
       vp_x <- viewport$x
       vp_y <- viewport$y
-    } else if ("right" %in% viewport$justification & "bottom" %in% viewport$justification){
+    } else if ("right" %in% viewport$justification
+               & "bottom" %in% viewport$justification){
       vp_x <- viewport$x - (viewport$width)
       vp_y <- viewport$y
     } else {
@@ -223,28 +248,36 @@ vp_bottomRight <- function(viewport){
 
   if (length(viewport$justification == 2)){
 
-    if ("left" %in% viewport$justification & "center" %in% viewport$justification){
+    if ("left" %in% viewport$justification
+        & "center" %in% viewport$justification){
       vp_x <- viewport$x + viewport$width
       vp_y <- viewport$y - (0.5 * viewport$height)
-    } else if ("right" %in% viewport$justification & "center" %in% viewport$justification){
+    } else if ("right" %in% viewport$justification
+               & "center" %in% viewport$justification){
       vp_x <- viewport$x
       vp_y <- viewport$y - (0.5 * viewport$height)
-    } else if ("center" %in% viewport$justification & "bottom" %in% viewport$justification){
+    } else if ("center" %in% viewport$justification
+               & "bottom" %in% viewport$justification){
       vp_x <- viewport$x + (0.5 * viewport$width)
       vp_y <- viewport$y
-    } else if ("center" %in% viewport$justification & "top" %in% viewport$justification){
+    } else if ("center" %in% viewport$justification
+               & "top" %in% viewport$justification){
       vp_x <- viewport$x + (0.5 * viewport$width)
       vp_y <- viewport$y - (viewport$height)
-    } else if ("left" %in% viewport$justification & "top" %in% viewport$justification){
+    } else if ("left" %in% viewport$justification
+               & "top" %in% viewport$justification){
       vp_x <- viewport$x + viewport$width
       vp_y <- viewport$y - (viewport$height)
-    } else if ("right" %in% viewport$justification & "top" %in% viewport$justification){
+    } else if ("right" %in% viewport$justification
+               & "top" %in% viewport$justification){
       vp_x <- viewport$x
       vp_y <- viewport$y - (viewport$height)
-    } else if ("left" %in% viewport$justification & "bottom" %in% viewport$justification){
+    } else if ("left" %in% viewport$justification
+               & "bottom" %in% viewport$justification){
       vp_x <- viewport$x + viewport$width
       vp_y <- viewport$y
-    } else if ("right" %in% viewport$justification & "bottom" %in% viewport$justification){
+    } else if ("right" %in% viewport$justification
+               & "bottom" %in% viewport$justification){
       vp_x <- viewport$x
       vp_y <- viewport$y
     } else {
@@ -290,7 +323,10 @@ convert_page <- function(object){
   old_height <- object$height
   old_width <- object$width
   new_x <- convertX(old_x, unitTo = page_units)
-  new_y <- convertY(unit(page_height, units = page_units) - convertY(old_y, unitTo = page_units), unitTo = page_units)
+  new_y <- convertY(unit(page_height,
+                         units = page_units) - convertY(old_y,
+                                                        unitTo = page_units),
+                    unitTo = page_units)
   new_height <- convertHeight(old_height, unitTo = page_units)
   new_width <- convertWidth(old_width, unitTo = page_units)
 
@@ -310,7 +346,8 @@ plot_belowY <- function(y_coord){
   prevPlots <- unlist(get("bb_vpTree", envir = bbEnv))
 
   if (length(prevPlots) == 0){
-    stop("No previous plot detected. Cannot define a \'below\' y-coordinate.", call. = FALSE)
+    stop("No previous plot detected. Cannot define a \'below\' y-coordinate.",
+         call. = FALSE)
   }
 
   lastPlot <- prevPlots[length(prevPlots)]
@@ -326,13 +363,16 @@ plot_belowY <- function(y_coord){
   upViewport()
 
   ## Convert to bottom
-  bottomCoords <- vp_bottomLeft(viewport(x = x, y = y, width = width, height = height, just = just))
+  bottomCoords <- vp_bottomLeft(viewport(x = x, y = y,
+                                         width = width, height = height,
+                                         just = just))
 
   ## Parse number and convert to page units
   space <- as.numeric(gsub("b", "", y_coord))
   space <- unit(space, get("page_units", envir = bbEnv))
 
-  new_y <- (unit(get("page_height", envir = bbEnv), get("page_units", envir = bbEnv)) - bottomCoords[[2]]) + space
+  new_y <- (unit(get("page_height", envir = bbEnv),
+                 get("page_units", envir = bbEnv)) - bottomCoords[[2]]) + space
   new_y <- convertY(new_y, unitTo = get("page_units", envir = bbEnv))
 
   return(new_y)
@@ -345,7 +385,8 @@ convertManhattan <- function(object, manhattanPlot){
   if (class(object$assembly$TxDb) == "TxDb"){
     txdbChecks <- TRUE
   } else {
-    txdbChecks <- suppressWarnings(check_loadedPackage(package = object$assembly$TxDb, message = NULL))
+    txdbChecks <- suppressWarnings(check_loadedPackage(package = object$assembly$TxDb,
+                                                       message = NULL))
   }
 
 
@@ -356,7 +397,8 @@ convertManhattan <- function(object, manhattanPlot){
       tx_db <- eval(parse(text = object$assembly$TxDb))
     }
 
-    assembly_data <- as.data.frame(setDT(as.data.frame(seqlengths(tx_db)), keep.rownames = TRUE))
+    assembly_data <- as.data.frame(setDT(as.data.frame(GenomeInfoDb::seqlengths(tx_db)),
+                                         keep.rownames = TRUE))
     assembly_data <- assembly_data[which(assembly_data[,1] %in% manhattanPlot$chrom),]
 
     ## Get the offset based on spacer for the assembly
@@ -370,8 +412,12 @@ convertManhattan <- function(object, manhattanPlot){
     newEnd <- (((object$chromend - 1) * newRange) / oldRange) + offsetAssembly[,3]
 
     ## Convert new chromstart and chromend to page units
-    start <- convertX(unit(newStart, "native"), unitTo = get("page_units", envir = bbEnv), valueOnly = TRUE)
-    end <- convertX(unit(newEnd, "native"), unitTo = get("page_units", envir = bbEnv), valueOnly = TRUE)
+    start <- convertX(unit(newStart, "native"),
+                      unitTo = get("page_units", envir = bbEnv),
+                      valueOnly = TRUE)
+    end <- convertX(unit(newEnd, "native"),
+                    unitTo = get("page_units", envir = bbEnv),
+                    valueOnly = TRUE)
 
     return(list(start, end))
 

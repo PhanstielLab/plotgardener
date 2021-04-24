@@ -15,13 +15,20 @@ bb_pageGuideHorizontal(
 \arguments{
 \item{y}{A numeric or unit object specifying y-coordinate of guide.}
 
-\item{default.units}{A string indicating the default units to use if \code{y} is only given as a numeric. Default value is \code{default.units = "inches"}.}
+\item{default.units}{A string indicating the default units to use
+if \code{y} is only given as a numeric.
+Default value is \code{default.units = "inches"}.}
 
-\item{linecolor}{Character value indicating color of guideline. Default value is \code{linecolor = "grey55"}.}
+\item{linecolor}{Character value indicating color of guideline.
+Default value is \code{linecolor = "grey55"}.}
 
-\item{params}{An optional \link[BentoBox]{bb_params} object containing relevant function parameters.}
+\item{params}{An optional \link[BentoBox]{bb_params} object
+containing relevant function parameters.}
 
 \item{...}{Additional grid graphical parameters. See \link[grid]{gpar}.}
+}
+\value{
+None.
 }
 \description{
 Draw a horizontal guideline at a specified y-coordinate on a BentoBox page

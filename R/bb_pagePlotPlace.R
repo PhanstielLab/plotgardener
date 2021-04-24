@@ -1,26 +1,41 @@
 #' Place a BentoBox plot that has been previously created but not drawn
 #'
-#' @param plot BentoBox plot object to be placed, defined by the output of a BentoBox plotting function.
+#' @param plot BentoBox plot object to be placed, defined by the
+#' output of a BentoBox plotting function.
 #' @param x A numeric or unit object specifying plot x-location.
-#' @param y A numeric, unit object, or character containing a "b" combined with a numeric value specifying plot y-location. The character value will
-#' place the plot y relative to the bottom of the most recently plotted BentoBox plot according to the units of the BentoBox page.
+#' @param y A numeric, unit object, or character containing a "b" combined
+#' with a numeric value specifying plot y-location.
+#' The character value will place the plot y relative to the bottom
+#' of the most recently plotted BentoBox plot according to the units
+#' of the BentoBox page.
 #' @param width A numeric or unit object specifying plot width.
 #' @param height A numeric or unit object specifying plot height.
-#' @param just Justification of plot relative to its (x, y) location. If there are two values, the first value specifies horizontal justification and the second value specifies vertical justification.
-#' Possible string values are: \code{"left"}, \code{"right"}, \code{"centre"}, \code{"center"}, \code{"bottom"}, and \code{"top"}. Default value is \code{just = c("left", "top")}.
-#' @param default.units A string indicating the default units to use if \code{x}, \code{y}, \code{width}, or \code{height} are only given as numerics. Default value is \code{default.units = "inches"}.
-#' @param draw A logical value indicating whether graphics output should be produced. Default value is \code{draw = TRUE}.
-#' @param params An optional \link[BentoBox]{bb_params} object containing relevant function parameters.
+#' @param just Justification of plot relative to its (x, y) location.
+#' If there are two values, the first value specifies horizontal
+#' justification and the second value specifies vertical justification.
+#' Possible string values are: \code{"left"}, \code{"right"},
+#' \code{"centre"}, \code{"center"}, \code{"bottom"}, and \code{"top"}.
+#' Default value is \code{just = c("left", "top")}.
+#' @param default.units A string indicating the default units to use
+#' if \code{x}, \code{y}, \code{width}, or \code{height} are only
+#' given as numerics. Default value is \code{default.units = "inches"}.
+#' @param draw A logical value indicating whether graphics output
+#' should be produced. Default value is \code{draw = TRUE}.
+#' @param params An optional \link[BentoBox]{bb_params} object
+#' containing relevant function parameters.
 #'
-#' @return Function will update dimensions of an input plot and return an updated BentoBox plot object.
+#' @return Function will update dimensions of an input plot and
+#' return an updated BentoBox plot object.
 #'
 #' @examples
 #' ## Load Hi-C data
 #' data("bb_imrHicData")
 #'
 #' ## Create, but do not plot, square Hi-C plot
-#' hicPlot <- bb_plotHicSquare(data = bb_imrHicData, resolution = 10000, zrange = c(0, 70),
-#'                             chrom = "chr21", chromstart = 28000000, chromend = 30300000,
+#' hicPlot <- bb_plotHicSquare(data = bb_imrHicData, resolution = 10000,
+#'                             zrange = c(0, 70),
+#'                             chrom = "chr21",
+#'                             chromstart = 28000000, chromend = 30300000,
 #'                             draw = FALSE)
 #'
 #' ## Create BentoBox page
@@ -29,7 +44,8 @@
 #' ## Place Hi-C plot on BentoBox page
 #' bb_pagePlotPlace(plot = hicPlot,
 #'                  x = 0.25, y = 0.25, width = 3, height = 3,
-#'                  just = c("left", "top"), default.units = "inches", draw = TRUE)
+#'                  just = c("left", "top"),
+#'                  default.units = "inches", draw = TRUE)
 #'
 #' ## Annotate heatmap legend
 #' bb_annoHeatmapLegend(plot = hicPlot,
@@ -40,7 +56,9 @@
 #' bb_pageGuideHide()
 #'
 #' @export
-bb_pagePlotPlace <- function(plot, x = NULL, y = NULL, width = NULL, height = NULL, just = c("left", "top"), default.units = "inches",
+bb_pagePlotPlace <- function(plot, x = NULL, y = NULL, width = NULL,
+                             height = NULL, just = c("left", "top"),
+                             default.units = "inches",
                              draw = TRUE, params = NULL){
 
   # ======================================================================================================================================================================================
@@ -131,26 +149,26 @@ bb_pagePlotPlace <- function(plot, x = NULL, y = NULL, width = NULL, height = NU
   parse_coordinates <- function(input_plot, output_plot){
 
     ## Make sublists of the dimensions and coordinates of the input and output plots
-    inputCoords <- list(x = input_plot$x, y = input_plot$y, width = input_plot$width, height = input_plot$height, just = input_plot$just)
-    outputCoords <- list(x = output_plot$x, y = output_plot$y, width = output_plot$width, height = output_plot$height, just = output_plot$just)
+    inputCoords <- list(x = input_plot$x, y = input_plot$y,
+                        width = input_plot$width, height = input_plot$height,
+                        just = input_plot$just)
+    outputCoords <- list(x = output_plot$x, y = output_plot$y,
+                         width = output_plot$width,
+                         height = output_plot$height, just = output_plot$just)
 
     ## Determine which values in the output plot are NULL
-    to_replace <- names(outputCoords[sapply(outputCoords, is.null)])
-    not_replace <- outputCoords[!sapply(outputCoords, is.null)]
-
+    to_replace <- names(outputCoords[vapply(outputCoords, is.null, logical(1))])
+    not_replace <- outputCoords[!vapply(outputCoords, is.null, logical(1))]
     ## Get corresponding values for those that are NULL from the input plot
-    replaced <- unlist(lapply(to_replace, replace_value, new = inputCoords), recursive = F)
+    replaced <- unlist(lapply(to_replace, replace_value, new = inputCoords),
+                       recursive = FALSE)
 
     ## Recombine values that weren't replaced and those that were
     new_coords <- c(not_replace, replaced)
 
-    ## Assign new values to object
-    # output_plot$x <- new_coords$x
-    # output_plot$y <- new_coords$y
-    # output_plot$width <- new_coords$width
-    # output_plot$height <- new_coords$height
-
-    output_plot <- set_values(object = output_plot, x = new_coords$x, y = new_coords$y, width = new_coords$width, height = new_coords$height)
+    output_plot <- set_values(object = output_plot, x = new_coords$x,
+                              y = new_coords$y, width = new_coords$width,
+                              height = new_coords$height)
     output_plot$just <- new_coords$just
 
     ## Return object
@@ -164,7 +182,9 @@ bb_pagePlotPlace <- function(plot, x = NULL, y = NULL, width = NULL, height = NU
     new_name <- grobName(grob)
 
     grob$name <- new_name
-    assign("new_gtree", addGrob(gTree = get("new_gtree", envir = bbEnv), child = grob), envir = bbEnv)
+    assign("new_gtree",
+           addGrob(gTree = get("new_gtree", envir = bbEnv),
+                   child = grob), envir = bbEnv)
 
   }
 
@@ -181,8 +201,10 @@ bb_pagePlotPlace <- function(plot, x = NULL, y = NULL, width = NULL, height = NU
   if(!hasArg(plot)) plot <- NULL
 
   ## Compile all parameters into an internal object
-  bb_place <- structure(list(plot = plot, x = x, y = y, width = width, height = height, draw = draw,
-                                     just = just, default.units = default.units), class = "bb_place")
+  bb_place <- structure(list(plot = plot, x = x, y = y, width = width,
+                             height = height, draw = draw,
+                             just = just, default.units = default.units),
+                        class = "bb_place")
 
   bb_place <- parseParams(bb_params = params, object_params = bb_place)
 
@@ -326,7 +348,8 @@ bb_pagePlotPlace <- function(plot, x = NULL, y = NULL, width = NULL, height = NU
   # UPDATE DIMENSIONS AND COORDINATES OF PLOT OBJECT BASED ON INPUTS
   # ======================================================================================================================================================================================
 
-  object <- set_values(object = object, x = bb_place$x, y = bb_place$y, width = bb_place$width, height = bb_place$height)
+  object <- set_values(object = object, x = bb_place$x, y = bb_place$y,
+                       width = bb_place$width, height = bb_place$height)
   object$just <- bb_place$just
   attr(x = object, which = "plotted") <- bb_place$draw
 
@@ -334,7 +357,8 @@ bb_pagePlotPlace <- function(plot, x = NULL, y = NULL, width = NULL, height = NU
   # INHERIT DIMENSIONS/COOORDINATES WHERE NULL
   # ======================================================================================================================================================================================
 
-  object <- parse_coordinates(input_plot = bb_place$plot, output_plot = object)
+  object <- parse_coordinates(input_plot = bb_place$plot,
+                              output_plot = object)
 
   # ======================================================================================================================================================================================
   # CALL ERRORS
@@ -348,24 +372,32 @@ bb_pagePlotPlace <- function(plot, x = NULL, y = NULL, width = NULL, height = NU
 
   ## Get viewport name
   currentViewports <- current_viewports()
-  vp_name <- paste0(gsub(pattern = "[0-9]", replacement = "", x = object$grobs$vp$name), length(grep(pattern = gsub(pattern = "[0-9]", replacement = "", x = object$grobs$vp$name), x = currentViewports)) + 1)
+  vp_name <- paste0(gsub(pattern = "[0-9]",
+                         replacement = "", x = object$grobs$vp$name),
+                    length(grep(pattern = gsub(pattern = "[0-9]",
+                                               replacement = "",
+                                               x = object$grobs$vp$name),
+                                x = currentViewports)) + 1)
 
 
   ## If full placing information isn't provided but plot == TRUE, set up it's own viewport separate from bb_makepage
   ## Not translating into page_coordinates
-  if (is.null(object$x) | is.null(object$y) | is.null(object$width) | is.null(object$height)){
+  if (is.null(object$x) | is.null(object$y)
+      | is.null(object$width) | is.null(object$height)){
 
     new_vp <- viewport(height = unit(1, "snpc"), width = unit(1, "snpc"),
                        x = unit(0.5, "npc"), y = unit(0.5, "npc"),
                        clip = "on",
-                       xscale = object$grobs$vp$xscale, yscale = object$grobs$vp$yscale,
+                       xscale = object$grobs$vp$xscale,
+                       yscale = object$grobs$vp$yscale,
                        just = "center",
                        name = vp_name)
 
     if (bb_place$draw == TRUE){
 
       grid.newpage()
-      warning("Plot placement will only fill up the graphical device.", call. = FALSE)
+      warning("Plot placement will only fill up the graphical device.",
+              call. = FALSE)
 
     }
 
@@ -379,7 +411,8 @@ bb_pagePlotPlace <- function(plot, x = NULL, y = NULL, width = NULL, height = NU
     new_vp <- viewport(height = page_coords$height, width = page_coords$width,
                        x = page_coords$x, y = page_coords$y,
                        clip = "on",
-                       xscale = object$grobs$vp$xscale, yscale = object$grobs$vp$yscale,
+                       xscale = object$grobs$vp$xscale,
+                       yscale = object$grobs$vp$yscale,
                        just = bb_place$just,
                        name = vp_name)
   }
@@ -411,7 +444,9 @@ bb_pagePlotPlace <- function(plot, x = NULL, y = NULL, width = NULL, height = NU
   # RETURN UPDATED OBJECT
   # ======================================================================================================================================================================================
 
-  message(paste0(gsub(pattern = "[0-9]", replacement = "", x = vp_name),"[", vp_name, "]"))
+  message(paste0(gsub(pattern = "[0-9]",
+                      replacement = "",
+                      x = vp_name),"[", vp_name, "]"))
   invisible(object)
 
 

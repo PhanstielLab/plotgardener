@@ -6,6 +6,13 @@
 \usage{
 bb_genomes()
 }
+\value{
+Returns the included available default genome assemblies
+}
 \description{
 Display the included available default genome assemblies
+}
+\examples{
+bb_genomes()
+
 }

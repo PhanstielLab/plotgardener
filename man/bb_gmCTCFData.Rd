@@ -7,25 +7,40 @@
 \format{
 a dataframe in BED format with a "score" column
 \describe{
-\item{chrom}{The name of the chromosome on which the genome feature exists.}
-\item{start}{The starting position of the feature in the chromosome.}
-\item{end}{The ending position of the feature in the chromosome.}
+\item{chrom}{The name of the chromosome on which the genome
+feature exists.}
+\item{start}{The starting position of the feature in the
+chromosome.}
+\item{end}{The ending position of the feature in the
+chromosome.}
 \item{score}{Score value of read depth.}
 }
 }
 \source{
-Data from \strong{Michael Snyder, Stanford} with accession number \strong{ENCFF312KXX} was downloaded from the ENCODE portal \url{https://www.encodeproject.org/}.
+Data from \strong{Michael Snyder, Stanford} with
+accession number \strong{ENCFF312KXX} was downloaded from the
+ENCODE portal \url{https://www.encodeproject.org/}.
 }
 \usage{
 data("bb_gmCTCFData")
 }
 \description{
-A dataset listing read depths across the genome resulting from CTCF ChIP-seq in the GM12878 cell line. Genomic coordinates
-fall within the region chr21:28000000-30300000 according to the hg19 genome build.
+A dataset listing read depths across the genome resulting from CTCF
+ChIP-seq in the GM12878 cell line. Genomic coordinates
+fall within the region chr21:28000000-30300000 according
+to the hg19 genome build.
 }
 \references{
-ENCODE Project Consortium. An integrated encyclopedia of DNA elements in the human genome. Nature. 2012 Sep 6;489(7414):57-74. doi: 10.1038/nature11247. PMID: 22955616; PMCID: PMC3439153.
+ENCODE Project Consortium. An integrated encyclopedia of DNA elements
+in the human genome. Nature.
+2012 Sep 6;489(7414):57-74. doi: 10.1038/nature11247.
+PMID: 22955616; PMCID: PMC3439153.
 
-Davis CA, Hitz BC, Sloan CA, Chan ET, Davidson JM, Gabdank I, Hilton JA, Jain K, Baymuradov UK, Narayanan AK, Onate KC, Graham K, Miyasato SR, Dreszer TR, Strattan JS, Jolanki O, Tanaka FY, Cherry JM. The Encyclopedia of DNA elements (ENCODE): data portal update. Nucleic Acids Res. 2018 Jan 4;46(D1):D794-D801. doi: 10.1093/nar/gkx1081. PMID: 29126249; PMCID: PMC5753278.
+Davis CA, Hitz BC, Sloan CA, Chan ET, Davidson JM, Gabdank I,
+Hilton JA, Jain K, Baymuradov UK, Narayanan AK, Onate KC, Graham K,
+Miyasato SR, Dreszer TR, Strattan JS, Jolanki O, Tanaka FY, Cherry JM.
+The Encyclopedia of DNA elements (ENCODE): data portal update.
+Nucleic Acids Res. 2018 Jan 4;46(D1):D794-D801. doi: 10.1093/nar/gkx1081.
+PMID: 29126249; PMCID: PMC5753278.
 }
 \keyword{datasets}

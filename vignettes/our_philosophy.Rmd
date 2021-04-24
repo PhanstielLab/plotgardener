@@ -16,6 +16,7 @@ knitr::opts_chunk$set(
   fig.align = "center"
 )
 library(BentoBox)
+library(grid)
 ```
 
 **`BentoBox` was developed to give users unparalleled control in plotting and arranging multiple figures entirely within the R plotting environment. This functionality is motivated by the following design principles:**
@@ -249,7 +250,7 @@ hicPlot <- bb_plotHicTriangle(data = bb_imrHicData,
                               just = "top", default.units = "inches")
 
 genesPlot <- bb_plotGenes(params = params,
-                          strandcolors = c("grey", "grey"), fontcolors = c("black", "black"),
+                          fill = c("grey", "grey"), fontcolor = c("black", "black"),
                           x = 0.5, y = 2.25, width = 3, height = 0.5,
                           just = c("left", "top"), default.units = "inches")
 ```
@@ -276,7 +277,7 @@ bb_annoHeatmapLegend(plot = hicPlot,
 
 ## Plot gene track in same genomic region
 genesPlot <- bb_plotGenes(params = params,
-                          strandcolors = c("grey", "grey"), fontcolors = c("black", "black"),
+                          fill = c("grey", "grey"), fontcolor = c("black", "black"),
                           x = 0.5, y = 2.25, width = 3, height = 0.5,
                           just = c("left", "top"), default.units = "inches")
 

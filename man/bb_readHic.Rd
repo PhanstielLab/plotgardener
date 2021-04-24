@@ -30,37 +30,52 @@ bb_readHic(
 
 \item{chromend}{Integer end position on chromosome.}
 
-\item{altchrom}{Alternate chromosome for interchromosomal data, as a string.}
+\item{altchrom}{Alternate chromosome for interchromosomal data,
+as a string.}
 
-\item{altchromstart}{Alternate chromosome integer start position for interchromosomal data.}
+\item{altchromstart}{Alternate chromosome integer start position
+for interchromosomal data.}
 
-\item{altchromend}{Alternate chromosome integer end position for interchromosomal data.}
+\item{altchromend}{Alternate chromosome integer end position
+for interchromosomal data.}
 
-\item{assembly}{Default genome assembly as a string or a \link[BentoBox]{bb_assembly} object. Default value is \code{assembly = "hg19"}.}
+\item{assembly}{Default genome assembly as a string or a
+\link[BentoBox]{bb_assembly} object.
+Default value is \code{assembly = "hg19"}.}
 
-\item{resolution}{A numeric specifying the width of each pixel. "auto" will attempt to choose a resolution in basepairs based on the size of the region.}
+\item{resolution}{A numeric specifying the width of each pixel.
+"auto" will attempt to choose a resolution in basepairs based on
+the size of the region.}
 
-\item{res_scale}{A character value specifying the resolution scale. Default value is \code{res_scale = "BP"}. Options are:
+\item{res_scale}{A character value specifying the resolution scale.
+Default value is \code{res_scale = "BP"}. Options are:
 \itemize{
 \item{\code{"BP"}: }{Base pairs.}
 \item{\code{"FRAG"}: }{Fragments.}
 }}
 
-\item{zrange}{A numeric vector of length 2 specifying the range of interaction scores, where extreme values will be set to the max or min.}
+\item{zrange}{A numeric vector of length 2 specifying the range of
+interaction scores, where extreme values will be set to the max or min.}
 
-\item{norm}{Character value specifying hic data normalization method. This value must be found in the .hic file. Default value is \code{norm = "KR"}.}
+\item{norm}{Character value specifying hic data normalization method.
+This value must be found in the .hic file.
+Default value is \code{norm = "KR"}.}
 
-\item{matrix}{Character value indicating the type of matrix to output. Default value is \code{matrix = "observed"}. Options are:
+\item{matrix}{Character value indicating the type of matrix to output.
+Default value is \code{matrix = "observed"}. Options are:
 \itemize{
 \item{\code{"observed"}: }{Observed counts.}
 \item{\code{"oe"}: }{Observed/expected counts.}
 \item{\code{"log2oe"}: }{Log2 transformed observed/expected counts.}
 }}
 
-\item{params}{An optional \link[BentoBox]{bb_params} object containing relevant function parameters.}
+\item{params}{An optional \link[BentoBox]{bb_params} object
+containing relevant function parameters.}
 }
 \value{
-Returns a 3-column dataframe in sparse upper triangular format with the following columns: \code{chrom}, \code{altchrom}, \code{counts}.
+Returns a 3-column dataframe in sparse upper triangular
+format with the following columns: \code{chrom}, \code{altchrom},
+\code{counts}.
 }
 \description{
 Read a .hic file and return Hi-C data as a dataframe

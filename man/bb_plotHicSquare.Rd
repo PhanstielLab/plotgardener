@@ -31,16 +31,25 @@ bb_plotHicSquare(
 )
 }
 \arguments{
-\item{data}{Path to .hic file as a string or a 3-column dataframe of interaction counts in sparse upper triangular format.}
+\item{data}{Path to .hic file as a string or a 3-column dataframe of
+interaction counts in sparse upper triangular format.}
 
-\item{resolution}{A numeric specifying the width in basepairs of each pixel. For hic files, "auto" will attempt to choose a resolution based on the size of the region. For
-dataframes, "auto" will attempt to detect the resolution the dataframe contains.}
+\item{resolution}{A numeric specifying the width in
+basepairs of each pixel. For hic files, "auto" will attempt
+to choose a resolution based on the size of the region. For
+dataframes, "auto" will attempt to detect the resolution the
+dataframe contains.}
 
-\item{zrange}{A numeric vector of length 2 specifying the range of interaction scores to plot, where extreme values will be set to the max or min.}
+\item{zrange}{A numeric vector of length 2 specifying the range
+of interaction scores to plot, where extreme values will be set
+to the max or min.}
 
-\item{norm}{Character value specifying hic data normalization method, if giving .hic file. This value must be found in the .hic file. Default value is \code{norm = "KR"}.}
+\item{norm}{Character value specifying hic data normalization method,
+if giving .hic file. This value must be found in the .hic file.
+Default value is \code{norm = "KR"}.}
 
-\item{matrix}{Character value indicating the type of matrix to output. Default value is \code{matrix = "observed"}. Options are:
+\item{matrix}{Character value indicating the type of matrix to output.
+Default value is \code{matrix = "observed"}. Options are:
 \itemize{
 \item{\code{"observed"}: }{Observed counts.}
 \item{\code{"oe"}: }{Observed/expected counts.}
@@ -53,19 +62,33 @@ dataframes, "auto" will attempt to detect the resolution the dataframe contains.
 
 \item{chromend}{Integer end position on chromosome to be plotted.}
 
-\item{altchrom}{Alternate chromosome for off-diagonal plotting or interchromosomal plotting, as a string.}
+\item{altchrom}{Alternate chromosome for off-diagonal plotting
+or interchromosomal plotting, as a string.}
 
-\item{altchromstart}{Alternate chromosome integer start position for off-diagonal plotting or interchromosomal plotting.}
+\item{altchromstart}{Alternate chromosome integer start position
+for off-diagonal plotting or interchromosomal plotting.}
 
-\item{altchromend}{Alternate chromosome integer end position for off-diagonal plotting or interchromosomal plotting.}
+\item{altchromend}{Alternate chromosome integer end position
+for off-diagonal plotting or interchromosomal plotting.}
 
-\item{assembly}{Default genome assembly as a string or a \link[BentoBox]{bb_assembly} object. Default value is \code{assembly = "hg19"}.}
+\item{assembly}{Default genome assembly as a string or a
+\link[BentoBox]{bb_assembly} object.
+Default value is \code{assembly = "hg19"}.}
 
-\item{palette}{A function describing the color palette to use for representing scale of interaction scores. Default value is \code{palette =  colorRampPalette(brewer.pal(n = 9, "YlGnBu"))}.}
+\item{palette}{A function describing the color palette to use for
+representing scale of interaction scores.
+Default value is
+\code{palette =  colorRampPalette(brewer.pal(n = 9, "YlGnBu"))}.}
 
-\item{colorTrans}{A string specifying how to scale Hi-C colors. Options are "linear", "log", "log2", or "log10". Default value is \code{colorTrans = "linear"}.}
+\item{colorTrans}{A string specifying how to scale Hi-C colors.
+Options are "linear", "log", "log2", or "log10".
+Default value is \code{colorTrans = "linear"}.}
 
-\item{half}{A character value indicating which diagonal regions to plot. For intrachromosomal plotting, options are \code{"both"}, \code{"top"}, or \code{"bottom"}. For off-diagonal or interchromosomal plotting, options are \code{"top"} or \code{"bottom"}. Default value is \code{half = "both"}.
+\item{half}{A character value indicating which diagonal regions to plot.
+For intrachromosomal plotting, options are \code{"both"}, \code{"top"},
+or \code{"bottom"}. For off-diagonal or interchromosomal plotting,
+options are \code{"top"} or \code{"bottom"}.
+Default value is \code{half = "both"}.
 \itemize{
 \item{\code{"both"}: }{Both diagonal halves.}
 \item{\code{"top"}: }{Half above the diagonal.}
@@ -74,37 +97,52 @@ dataframes, "auto" will attempt to detect the resolution the dataframe contains.
 
 \item{x}{A numeric or unit object specifying square Hi-C plot x-location.}
 
-\item{y}{A numeric, unit object, or character containing a "b" combined with a numeric value specifying square Hi-C plot y-location. The character value will
-place the square Hi-C plot y relative to the bottom of the most recently plotted BentoBox plot according to the units of the BentoBox page.}
+\item{y}{A numeric, unit object, or character containing a "b" combined
+with a numeric value specifying square Hi-C plot y-location.
+The character value will
+place the square Hi-C plot y relative to the bottom of the most recently
+plotted BentoBox plot according to the units of the BentoBox page.}
 
 \item{width}{A numeric or unit object specifying square Hi-C plot width.}
 
 \item{height}{A numeric or unit object specifying square Hi-C plot height.}
 
-\item{just}{Justification of square Hi-C plot relative to its (x, y) location. If there are two values, the first value specifies horizontal justification and the second value specifies vertical justification.
-Possible string values are: \code{"left"}, \code{"right"}, \code{"centre"}, \code{"center"}, \code{"bottom"}, and \code{"top"}. Default value is \code{just = c("left", "top")}.}
+\item{just}{Justification of square Hi-C plot relative to
+its (x, y) location. If there are two values, the first value specifies
+horizontal justification and the second value specifies vertical
+justification.
+Possible string values are: \code{"left"}, \code{"right"},
+\code{"centre"}, \code{"center"}, \code{"bottom"}, and \code{"top"}.
+Default value is \code{just = c("left", "top")}.}
 
-\item{default.units}{A string indicating the default units to use if \code{x}, \code{y}, \code{width}, or \code{height} are only given as numerics. Default value is \code{default.units = "inches"}.}
+\item{default.units}{A string indicating the default units to use if
+\code{x}, \code{y}, \code{width}, or \code{height} are only given as
+numerics. Default value is \code{default.units = "inches"}.}
 
-\item{draw}{A logical value indicating whether graphics output should be produced. Default value is \code{draw = TRUE}.}
+\item{draw}{A logical value indicating whether graphics output should be
+produced. Default value is \code{draw = TRUE}.}
 
-\item{params}{An optional \link[BentoBox]{bb_params} object containing relevant function parameters.}
+\item{params}{An optional \link[BentoBox]{bb_params} object containing
+relevant function parameters.}
 }
 \value{
-Returns a \code{bb_hicSquare} object containing relevant genomic region, Hi-C data, placement, and \link[grid]{grob} information.
+Returns a \code{bb_hicSquare} object containing relevant
+genomic region, Hi-C data, placement, and \link[grid]{grob} information.
 }
 \description{
 Plot a Hi-C interaction matrix in a square format
 }
 \details{
-A square Hi-C plot can be placed on a BentoBox coordinate page by providing plot placement parameters:
+A square Hi-C plot can be placed on a BentoBox coordinate page
+by providing plot placement parameters:
 \preformatted{
 bb_plotHicSquare(data, chrom,
                  chromstart = NULL, chromend = NULL,
                  x, y, width, height, just = c("left", "top"),
                  default.units = "inches")
 }
-This function can be used to quickly plot an unannotated square Hi-C plot by ignoring plot placement parameters:
+This function can be used to quickly plot an unannotated
+square Hi-C plot by ignoring plot placement parameters:
 \preformatted{
 bb_plotHicSquare(data, chrom,
                  chromstart = NULL, chromend = NULL)
@@ -118,13 +156,17 @@ data("bb_imrHicData")
 bb_pageCreate(width = 3, height = 3, default.units = "inches")
 
 ## Plot and place Hi-C plot
-hicPlot <- bb_plotHicSquare(data = bb_imrHicData, resolution = 10000, zrange = c(0, 70),
-                            chrom = "chr21", chromstart = 28000000, chromend = 30300000,
+hicPlot <- bb_plotHicSquare(data = bb_imrHicData, resolution = 10000,
+                            zrange = c(0, 70),
+                            chrom = "chr21",
+                            chromstart = 28000000, chromend = 30300000,
                             x = 0.5, y = 0.5, width = 2, height = 2,
-                            just = c("left", "top"), default.units = "inches")
+                            just = c("left", "top"),
+                            default.units = "inches")
 
 ## Annotate heatmap legend
-bb_annoHeatmapLegend(plot = hicPlot, x = 2.6, y = 0.5, width = 0.12, height = 1.2,
+bb_annoHeatmapLegend(plot = hicPlot, x = 2.6, y = 0.5,
+                     width = 0.12, height = 1.2,
                      just = c("left", "top"), default.units = "inches")
 
 ## Annotate x-axis and y-axis genome labels

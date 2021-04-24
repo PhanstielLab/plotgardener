@@ -20,33 +20,51 @@ bb_plotPolygon(
 )
 }
 \arguments{
-\item{x}{A numeric vector or unit object specifying polygon vertex x-locations.}
+\item{x}{A numeric vector or unit object specifying polygon
+vertex x-locations.}
 
-\item{y}{A numeric vector, unit object, or a character vector of values containing a "b" combined with a numeric value specifying polygon vertex y-locations.
-The character vector will place polygon vertex y-locations relative to the bottom of the most recently plotted BentoBox plot according to the units of the BentoBox page.}
+\item{y}{A numeric vector, unit object, or a character vector
+of values containing a "b" combined with a numeric value specifying
+polygon vertex y-locations.
+The character vector will place polygon vertex y-locations relative
+to the bottom of the most recently plotted BentoBox plot according
+to the units of the BentoBox page.}
 
-\item{default.units}{A string indicating the default units to use if \code{x} or \code{y} are only given as numeric vectors. Default value is \code{default.units = "inches"}.}
+\item{default.units}{A string indicating the default units to use
+if \code{x} or \code{y} are only given as numeric vectors.
+Default value is \code{default.units = "inches"}.}
 
-\item{linecolor}{A character value specifying polygon line color. Default value is \code{linecolor = "black"}.}
+\item{linecolor}{A character value specifying polygon line color.
+Default value is \code{linecolor = "black"}.}
 
-\item{lwd}{A numeric specifying polygon line width. Default value is \code{lwd = 1}.}
+\item{lwd}{A numeric specifying polygon line width.
+Default value is \code{lwd = 1}.}
 
-\item{lty}{A numeric specifying polygon line type. Default value is \code{lty = 1}.}
+\item{lty}{A numeric specifying polygon line type.
+Default value is \code{lty = 1}.}
 
-\item{fill}{A character value specifying polygon fill color. Default value is \code{fill = NA}.}
+\item{fill}{A character value specifying polygon fill color.
+Default value is \code{fill = NA}.}
 
-\item{alpha}{Numeric value specifying color transparency. Default value is \code{alpha = 1}.}
+\item{alpha}{Numeric value specifying color transparency.
+Default value is \code{alpha = 1}.}
 
-\item{id}{A numeric vector used to separate locations in \code{x} and \code{y} into multiple polygons. All locations with the same \code{id} belong to the same polygon.}
+\item{id}{A numeric vector used to separate locations in \code{x} and
+\code{y} into multiple polygons. All locations with the same \code{id}
+belong to the same polygon.}
 
-\item{id.lengths}{A numeric vector used to separate locations in \code{x} and \code{y} into multiple polygons. Specifies consecutive blocks of locations which make up separate polygons.}
+\item{id.lengths}{A numeric vector used to separate locations in
+\code{x} and \code{y} into multiple polygons. Specifies consecutive
+blocks of locations which make up separate polygons.}
 
-\item{params}{An optional \link[BentoBox]{bb_params} object containing relevant function parameters.}
+\item{params}{An optional \link[BentoBox]{bb_params} object containing
+relevant function parameters.}
 
 \item{...}{Additional grid graphical parameters. See \link[grid]{gpar}.}
 }
 \value{
-Returns a \code{bb_polygon} object containing relevant placement and \link[grid]{grob} information.
+Returns a \code{bb_polygon} object containing relevant
+placement and \link[grid]{grob} information.
 }
 \description{
 Plot a polygon within a BentoBox layout
@@ -56,10 +74,12 @@ Plot a polygon within a BentoBox layout
 bb_pageCreate(width = 7.5, height = 6, default.units = "inches")
 
 ## Plot complex polygons one at a time
-bb_plotPolygon(x = c(2.6, 4.65, 4.75, 6.05, 1.4, 1.3), y = c(2.5, 3.1, 3.5, 4, 3.15, 2.8),
+bb_plotPolygon(x = c(2.6, 4.65, 4.75, 6.05, 1.4, 1.3),
+               y = c(2.5, 3.1, 3.5, 4, 3.15, 2.8),
                fill = "#4a168e", linecolor = NA)
 
-bb_plotPolygon(x = c(4.65, 4.75, 6.05, 5.05, 4.4), y = c(3.1, 3.5, 4, 1.45, 1.2),
+bb_plotPolygon(x = c(4.65, 4.75, 6.05, 5.05, 4.4),
+               y = c(3.1, 3.5, 4, 1.45, 1.2),
                fill = "#9d28b0", linecolor = NA)
 
 ## Plot multiple triangles with different id's and colors
@@ -68,7 +88,8 @@ bb_plotPolygon(x = c(0.45, 6.05, 3, 3, 6.05, 5.25, 4.4, 5.05, 4.95,
                y = c(2.85, 4, 5.55, 5.55, 4, 5.55, 1.2, 1.45, 1.1,
                      2.8, 2.5, 2.1, 1.2, 1.1, 0.45, 1.1, 0.45, 1.1),
                id = c(1,1,1, 2, 2, 2, 3, 3, 3, 4, 4, 4, 5, 5, 5, 6, 6, 6),
-               fill = c("#ce93d9", "#bb6ac9", "#4a168e", "#7b1fa0", "#bb6ac9", "#ce93d9"),
+               fill = c("#ce93d9", "#bb6ac9", "#4a168e",
+                       "#7b1fa0", "#bb6ac9", "#ce93d9"),
                linecolor = NA)
 
 ## Hide page guides

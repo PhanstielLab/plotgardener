@@ -34,7 +34,10 @@ bb_plotBed(
 )
 }
 \arguments{
-\item{data}{Data to be plotted; as a character value specifying a BED file path, a data frame in BED format, a character value specifying a .bam file path where a bam index file (.bam.bai) is in the same directory, or a \link[GenomicRanges]{GRanges} object.}
+\item{data}{Data to be plotted; as a character value specifying
+a BED file path, a data frame in BED format, a character value
+specifying a .bam file path where a bam index file (.bam.bai)
+is in the same directory, or a \link[GenomicRanges]{GRanges} object.}
 
 \item{chrom}{Chromosome of region to be plotted, as a string.}
 
@@ -42,69 +45,105 @@ bb_plotBed(
 
 \item{chromend}{Integer end position on chromosome to be plotted.}
 
-\item{assembly}{Default genome assembly as a string or a \link[BentoBox]{bb_assembly} object. Default value is \code{assembly = "hg19"}.}
+\item{assembly}{Default genome assembly as a string or a
+\link[BentoBox]{bb_assembly} object.
+Default value is \code{assembly = "hg19"}.}
 
-\item{fill}{Character value(s) as a single value, vector, or palette specifying fill colors of BED elements. Default value is \code{fill = "#7ecdbb"}.}
+\item{fill}{Character value(s) as a single value, vector, or palette
+specifying fill colors of BED elements.
+Default value is \code{fill = "#7ecdbb"}.}
 
-\item{colorby}{A "\link[BentoBox]{colorby}" object specifying information for scaling colors in \code{data}.}
+\item{colorby}{A "\link[BentoBox]{colorby}" object specifying information
+for scaling colors in \code{data}.}
 
-\item{linecolor}{A character value specifying the color of the lines outlining BED elements. Default value is \code{linecolor = NA}.}
+\item{linecolor}{A character value specifying the color of the lines
+outlining BED elements. Default value is \code{linecolor = NA}.}
 
-\item{collapse}{A logical value indicating whether to collapse BED elements into a single row, or into two rows if \code{strandSplit = TRUE}.
-If \code{collapse = TRUE}, \code{boxHeight} will be ignored and elements will be the height of the entire plot if \code{strandSplit = FALSE} or
-be the height of half of the entire plot if \code{strandSplit = TRUE}. Default value is \code{collapse = FALSE}.}
+\item{collapse}{A logical value indicating whether to collapse
+BED elements into a single row, or into
+two rows if \code{strandSplit = TRUE}.
+If \code{collapse = TRUE}, \code{boxHeight} will be ignored and elements
+will be the height of the entire plot if \code{strandSplit = FALSE} or
+be the height of half of the entire plot if \code{strandSplit = TRUE}.
+Default value is \code{collapse = FALSE}.}
 
-\item{boxHeight}{A numeric or unit object specifying height of BED element boxes. Default value is \code{boxHeight = unit(2, "mm")}.}
+\item{boxHeight}{A numeric or unit object specifying height of BED element
+boxes. Default value is \code{boxHeight = unit(2, "mm")}.}
 
-\item{spaceWidth}{A numeric value specifying the width of minimum spacing between BED element boxes, as a fraction of the plot's genomic range. Default value is \code{spaceWidth = 0.02}.}
+\item{spaceWidth}{A numeric value specifying the width of minimum spacing
+between BED element boxes, as a fraction of the plot's genomic range.
+Default value is \code{spaceWidth = 0.02}.}
 
-\item{spaceHeight}{A numeric value specifying the height of spacing between BED element boxes on different rows, as a fraction of boxHeight. Default value is \code{spaceHeight = 0.3}.}
+\item{spaceHeight}{A numeric value specifying the height of spacing between
+BED element boxes on different rows, as a fraction of boxHeight.
+Default value is \code{spaceHeight = 0.3}.}
 
-\item{strandSplit}{A logical value indicating whether plus and minus-stranded elements should be separated. Elements can only be split by strand if a \code{strand} column is found in \code{data}. Default value is \code{strandSplit = FALSE}.}
+\item{strandSplit}{A logical value indicating whether plus and
+minus-stranded elements should be separated. Elements can only be
+split by strand if a \code{strand} column is found in \code{data}.
+Default value is \code{strandSplit = FALSE}.}
 
-\item{bg}{Character value indicating background color. Default value is \code{bg = NA}.}
+\item{bg}{Character value indicating background color.
+Default value is \code{bg = NA}.}
 
-\item{baseline}{Logical value indicating whether to include a baseline along the x-axis. Default value is \code{baseline = FALSE}.}
+\item{baseline}{Logical value indicating whether to include a
+baseline along the x-axis. Default value is \code{baseline = FALSE}.}
 
-\item{baseline.color}{Baseline color. Default value is \code{baseline.color = "grey"}.}
+\item{baseline.color}{Baseline color.
+Default value is \code{baseline.color = "grey"}.}
 
-\item{baseline.lwd}{Baseline line width. Default value is \code{baseline.lwd = 1}.}
+\item{baseline.lwd}{Baseline line width.
+Default value is \code{baseline.lwd = 1}.}
 
 \item{x}{A numeric or unit object specifying BED plot x-location.}
 
-\item{y}{A numeric, unit object, or character containing a "b" combined with a numeric value specifying BED plot y-location. The character value will
-place the BED plot y relative to the bottom of the most recently plotted BentoBox plot according to the units of the BentoBox page.}
+\item{y}{A numeric, unit object, or character containing a "b"
+combined with a numeric value specifying BED plot y-location.
+The character value will
+place the BED plot y relative to the bottom of the most recently
+plotted BentoBox plot according to the units of the BentoBox page.}
 
 \item{width}{A numeric or unit object specifying BED plot width.}
 
 \item{height}{A numeric or unit object specifying BED plot height.}
 
-\item{just}{Justification of BED plot relative to its (x, y) location. If there are two values, the first value specifies horizontal justification and the second value specifies vertical justification.
-Possible string values are: \code{"left"}, \code{"right"}, \code{"centre"}, \code{"center"}, \code{"bottom"}, and \code{"top"}. Default value is \code{just = c("left", "top")}.}
+\item{just}{Justification of BED plot relative to its (x, y) location.
+If there are two values, the first value specifies horizontal
+justification and the second value specifies vertical justification.
+Possible string values are: \code{"left"}, \code{"right"},
+\code{"centre"}, \code{"center"}, \code{"bottom"}, and \code{"top"}.
+Default value is \code{just = c("left", "top")}.}
 
-\item{default.units}{A string indicating the default units to use if \code{x}, \code{y}, \code{width}, or \code{height} are only given as numerics. Default value is \code{default.units = "inches"}.}
+\item{default.units}{A string indicating the default units to use
+if \code{x}, \code{y}, \code{width}, or \code{height} are only given
+as numerics. Default value is \code{default.units = "inches"}.}
 
-\item{draw}{A logical value indicating whether graphics output should be produced. Default value \code{draw = TRUE}.}
+\item{draw}{A logical value indicating whether graphics output should
+be produced. Default value \code{draw = TRUE}.}
 
-\item{params}{An optional \link[BentoBox]{bb_params} object containing relevant function parameters.}
+\item{params}{An optional \link[BentoBox]{bb_params} object
+containing relevant function parameters.}
 
 \item{...}{Additional grid graphical parameters. See \link[grid]{gpar}.}
 }
 \value{
-Returns a \code{bb_bed} object containing relevant genomic region, coloring data, placement, and \link[grid]{grob} information.
+Returns a \code{bb_bed} object containing relevant
+genomic region, coloring data, placement, and \link[grid]{grob} information.
 }
 \description{
 Plot BED elements in a pileup or collapsed format
 }
 \details{
-A BED plot can be placed on a BentoBox coordinate page by providing plot placement parameters:
+A BED plot can be placed on a BentoBox coordinate page by providing
+plot placement parameters:
 \preformatted{
 bb_plotBed(data, chrom,
               chromstart = NULL, chromend = NULL,
               x, y, width, height, just = c("left", "top"),
               default.units = "inches")
 }
-This function can also be used to quickly plot an unannotated BED plot by ignoring plot placement parameters:
+This function can also be used to quickly plot an unannotated BED plot
+by ignoring plot placement parameters:
 \preformatted{
 bb_plotBed(data, chrom,
               chromstart = NULL, chromend = NULL)
@@ -126,7 +165,8 @@ pileupPlot <- bb_plotBed(data = bb_bedData, chrom = "chr21",
                          just = c("left", "top"), default.units = "inches")
 
 ## Annotate genome label
-bb_annoGenomeLabel(plot = pileupPlot, x = 0.5, y = 4.5, just = c("left", "top"))
+bb_annoGenomeLabel(plot = pileupPlot, x = 0.5, y = 4.5,
+                   just = c("left", "top"))
 
 ## Add text labels
 bb_plotText(label = "+ strand", fontcolor = "#37a7db", fontsize = 12,

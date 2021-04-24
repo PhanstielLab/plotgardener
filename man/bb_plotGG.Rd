@@ -20,22 +20,33 @@ bb_plotGG(
 
 \item{x}{A numeric or unit object specifying ggplot x-location.}
 
-\item{y}{A numeric, unit object, or character containing a "b" combined with a numeric value specifying ggplot y-location. The character value will
-place the ggplot y relative to the bottom of the most recently plotted BentoBox plot according to the units of the BentoBox page.}
+\item{y}{A numeric, unit object, or character containing a "b"
+combined with a numeric value specifying ggplot y-location.
+The character value will
+place the ggplot y relative to the bottom of the most recently
+plotted BentoBox plot according to the units of the BentoBox page.}
 
 \item{width}{A numeric or unit object specifying ggplot width.}
 
 \item{height}{A numeric or unit object specifying ggplot height.}
 
-\item{just}{Justification of ggplot relative to its (x, y) location. If there are two values, the first value specifies horizontal justification and the second value specifies vertical justification.
-Possible string values are: \code{"left"}, \code{"right"}, \code{"centre"}, \code{"center"}, \code{"bottom"}, and \code{"top"}. Default value is \code{just = c("left", "top")}.}
+\item{just}{Justification of ggplot relative to its (x, y) location.
+If there are two values, the first value specifies horizontal
+justification and the second value specifies vertical justification.
+Possible string values are: \code{"left"}, \code{"right"},
+\code{"centre"}, \code{"center"}, \code{"bottom"}, and \code{"top"}.
+Default value is \code{just = c("left", "top")}.}
 
-\item{default.units}{A string indicating the default units to use if \code{x}, \code{y}, \code{width}, or \code{height} are only given as numerics. Default value is \code{default.units = "inches"}.}
+\item{default.units}{A string indicating the default units to use
+if \code{x}, \code{y}, \code{width}, or \code{height} are only given
+as numerics. Default value is \code{default.units = "inches"}.}
 
-\item{params}{An optional \link[BentoBox]{bb_params} object containing relevant function parameters.}
+\item{params}{An optional \link[BentoBox]{bb_params} object containing
+relevant function parameters.}
 }
 \value{
-Returns a \code{bb_gg} object containing relevant placement and \link[grid]{grob} information.
+Returns a \code{bb_gg} object containing
+relevant placement and \link[grid]{grob} information.
 }
 \description{
 Plot a ggplot2 plot in a BentoBox layout
@@ -53,7 +64,8 @@ bb_plotGG(plot = p, x = 0.5, y = 0.5, width = 3, height = 3,
           just = c("left", "top"), default.units = "inches")
 
 ## Add title
-bb_plotText(label = "mtcars", fontsize = 14, fontface = "bold", x = 1, y = 0.35)
+bb_plotText(label = "mtcars", fontsize = 14, fontface = "bold",
+            x = 1, y = 0.35)
 
 ## Hide page guides
 bb_pageGuideHide()

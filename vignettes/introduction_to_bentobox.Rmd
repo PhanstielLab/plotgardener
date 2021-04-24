@@ -17,6 +17,7 @@ knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
 )
+library(grid)
 ```
 
 # Overview
@@ -65,7 +66,7 @@ This vignette provides a best-practices guide for utilizing `BentoBox`. It begin
   
 The quickest way to plot data is to omit the placement arguments. This will generate a `BentoBox` plot that fills up the entire graphics window. The only arguments that are required are the data arguments and locus arguments. The examples below show how to quickly plot different types of genomic data with plot defaults and included data types. To use your own data, replace the `data` argument with either a path to the file or an R object.
 
-### Hi-C matricies
+### Hi-C matrices
 
 ```{r hic_quickplot, eval=TRUE, echo=TRUE, message=FALSE}
 ## Load BentoBox
@@ -494,7 +495,7 @@ bb_plotBedpeArches(data = bb_bedpeData,
                    chrom = "chr21", chromstart = 28000000, chromend = 30300000,
                    x = 0.5, y = 2.5, width = 2, height = 0.25, 
                    just = c("left", "top"), default.units = "inches",
-                   fill = "black", linecolor = "black", position = "bottom")
+                   fill = "black", linecolor = "black", flip = TRUE)
 
 ## Plot signal track data
 bb_plotSignal(data = bb_imrH3K27acData,

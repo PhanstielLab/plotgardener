@@ -18,12 +18,16 @@
 #'                            OrgDb = "org.Hs.eg.db",
 #'                            BSgenome = "BSgenome.Hsapiens.NCBI.GRCh38")
 #'
-#' @seealso \link[GenomicFeatures]{TxDb}, \link[AnnotationDb]{OrgDb-class}, \link[BSgenome]{BSgenome}
+#' @seealso \link[GenomicFeatures]{TxDb}, \link[AnnotationDbi]{OrgDb-class}, \link[BSgenome]{BSgenome}
 #'
 #' @export
-bb_assembly <- function(Genome, TxDb, OrgDb, gene.id.column = "ENTREZID", display.column = "SYMBOL", BSgenome = NULL){
+bb_assembly <- function(Genome, TxDb, OrgDb, gene.id.column = "ENTREZID",
+                        display.column = "SYMBOL", BSgenome = NULL){
 
-  object <- structure(list(Genome = Genome, TxDb = TxDb, OrgDb = OrgDb, gene.id.column = gene.id.column, display.column = display.column), class = "bb_assembly")
+  object <- structure(list(Genome = Genome, TxDb = TxDb, OrgDb = OrgDb,
+                           gene.id.column = gene.id.column,
+                           display.column = display.column),
+                      class = "bb_assembly")
   if(!is.null(BSgenome)){
     object$BSgenome <- BSgenome
   }

@@ -32,7 +32,8 @@ bb_plotBedpe(
 )
 }
 \arguments{
-\item{data}{A string specifying the BEDPE file path or a dataframe in BEDPE format specifying data to be plotted.}
+\item{data}{A string specifying the BEDPE file path or a dataframe
+in BEDPE format specifying data to be plotted.}
 
 \item{chrom}{Chromosome of region to be plotted, as a string.}
 
@@ -40,50 +41,78 @@ bb_plotBedpe(
 
 \item{chromend}{Integer end position on chromosome to be plotted.}
 
-\item{assembly}{Default genome assembly as a string or a \link[BentoBox]{bb_assembly} object. Default value is \code{assembly = "hg19"}.}
+\item{assembly}{Default genome assembly as a string or a
+\link[BentoBox]{bb_assembly} object.
+Default value is \code{assembly = "hg19"}.}
 
-\item{fill}{Character value(s) as a single value, vector, or palette specifying fill colors of BEDPE elements. Default value is \code{fill = "#1f4297"}.}
+\item{fill}{Character value(s) as a single value, vector, or palette
+specifying fill colors of BEDPE elements.
+Default value is \code{fill = "#1f4297"}.}
 
-\item{colorby}{A "\link[BentoBox]{colorby}" object specifying information for scaling colors in data.}
+\item{colorby}{A "\link[BentoBox]{colorby}" object specifying
+information for scaling colors in data.}
 
-\item{linecolor}{A character value specifying the color of the lines outlining BEDPE elements. Default value is \code{linecolor = NA}.}
+\item{linecolor}{A character value specifying the color of the
+lines outlining BEDPE elements. Default value is \code{linecolor = NA}.}
 
-\item{bg}{Character value indicating background color. Default value is \code{bg = NA}.}
+\item{bg}{Character value indicating background color.
+Default value is \code{bg = NA}.}
 
-\item{boxHeight}{A numeric or unit object specifying height of boxes at either end of BEDPE elements. Default value is \code{boxHeight = unit(2, "mm")}.}
+\item{boxHeight}{A numeric or unit object specifying height of boxes
+at either end of BEDPE elements.
+Default value is \code{boxHeight = unit(2, "mm")}.}
 
-\item{spaceWidth}{A numeric specifying the width of spacing between BEDPE elements, as a fraction of the plot's genomic range. Default value is \code{spaceWidth = 0.02}.}
+\item{spaceWidth}{A numeric specifying the width of spacing between
+BEDPE elements, as a fraction of the plot's genomic range.
+Default value is \code{spaceWidth = 0.02}.}
 
-\item{spaceHeight}{A numeric specifying the height of space between boxes of BEDPE elements on different rows. Default value is \code{spaceHeight = 0.3}.}
+\item{spaceHeight}{A numeric specifying the height of space between
+boxes of BEDPE elements on different rows.
+Default value is \code{spaceHeight = 0.3}.}
 
-\item{baseline}{Logical value indicating whether to include a baseline along the x-axis. Default value is \code{baseline = FALSE}.}
+\item{baseline}{Logical value indicating whether to include a baseline
+along the x-axis. Default value is \code{baseline = FALSE}.}
 
-\item{baseline.color}{Baseline color. Default value is \code{baseline.color = "grey"}.}
+\item{baseline.color}{Baseline color.
+Default value is \code{baseline.color = "grey"}.}
 
-\item{baseline.lwd}{Baseline line width. Default value is \code{baseline.lwd = 1}.}
+\item{baseline.lwd}{Baseline line width.
+Default value is \code{baseline.lwd = 1}.}
 
 \item{x}{A numeric or unit object specifying BEDPE plot x-location.}
 
-\item{y}{A numeric, unit object, or character containing a "b" combined with a numeric value specifying BEDPE plot y-location. The character value will
-place the BEDPE plot y relative to the bottom of the most recently plotted BentoBox plot according to the units of the BentoBox page.}
+\item{y}{A numeric, unit object, or character containing a "b"
+combined with a numeric value specifying BEDPE plot y-location.
+The character value will
+place the BEDPE plot y relative to the bottom of the most recently
+plotted BentoBox plot according to the units of the BentoBox page.}
 
 \item{width}{A numeric or unit object specifying BEDPE plot width.}
 
 \item{height}{A numeric or unit object specifying BEDPE plot height.}
 
-\item{just}{Justification of BEDPE plot relative to its (x, y) location. If there are two values, the first value specifies horizontal justification and the second value specifies vertical justification.
-Possible string values are: \code{"left"}, \code{"right"}, \code{"centre"}, \code{"center"}, \code{"bottom"}, and \code{"top"}. Default value is \code{just = c("left", "top")}.}
+\item{just}{Justification of BEDPE plot relative to its (x, y) location.
+If there are two values, the first value specifies horizontal
+justification and the second value specifies vertical justification.
+Possible string values are: \code{"left"}, \code{"right"},
+\code{"centre"}, \code{"center"}, \code{"bottom"}, and \code{"top"}.
+Default value is \code{just = c("left", "top")}.}
 
-\item{default.units}{A string indicating the default units to use if \code{x}, \code{y}, \code{width}, or \code{height} are only given as numerics. Default value is \code{default.units = "inches"}.}
+\item{default.units}{A string indicating the default units to use
+if \code{x}, \code{y}, \code{width}, or \code{height} are only given
+as numerics. Default value is \code{default.units = "inches"}.}
 
-\item{draw}{A logical value indicating whether graphics output should be produced.}
+\item{draw}{A logical value indicating whether graphics
+output should be produced.}
 
-\item{params}{An optional \link[BentoBox]{bb_params} object containing relevant function parameters.}
+\item{params}{An optional \link[BentoBox]{bb_params} object
+containing relevant function parameters.}
 
 \item{...}{Additional grid graphical parameters. See \link[grid]{gpar}.}
 }
 \value{
-Returns a \code{bb_bedpe} object containing relevant genomic region, placement, and \link[grid]{grob} information.
+Returns a \code{bb_bedpe} object containing relevant
+genomic region, placement, and \link[grid]{grob} information.
 }
 \description{
 Plot paired-end BEDPE data for a single chromosome
@@ -107,7 +136,8 @@ bb_plotBedpe(data, chrom,
 data("bb_bedpeData")
 
 ## Set the coordinates
-params = bb_params(chrom = "chr21",chromstart = 27900000, chromend = 30700000,
+params = bb_params(chrom = "chr21",
+                   chromstart = 27900000, chromend = 30700000,
                    width = 7)
 
 ## Create a page
@@ -128,8 +158,9 @@ bedpePlot <- bb_plotBedpe(data = bb_bedpeData, params = params,
 bb_annoGenomeLabel(plot = bedpePlot, x = 0.25, y = 1.78, scale = "Mb")
 
 ## Add heatmap legend
-bb_annoHeatmapLegend(plot = bedpePlot, fontcolor = "black", x = 7.0, y = 0.25,
-                     width = 0.10, height = 1,fontsize=10)
+bb_annoHeatmapLegend(plot = bedpePlot, fontcolor = "black",
+                     x = 7.0, y = 0.25,
+                     width = 0.10, height = 1, fontsize = 10)
 
 ## Add heatmap legend label
 bb_plotText(label = "Kb", rot = 90, x = 6.9, y = 0.75,

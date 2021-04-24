@@ -1,33 +1,49 @@
 #' Annotates a line segment within a BentoBox plot
 #'
-#' @param x0 A numeric vector or unit object indicating the starting x-values of the line segments.
-#' @param y0 A numeric vector or unit object indicating the starting y-values of the line segments.
-#' @param x1 A numeric vector or unit object indicating the stopping x-values of the line segments.
-#' @param y1 A numeric vector or unit object indicating the stopping y-values of the line segments.
-#' @param plot Input BentoBox plot to internally plot line segments relative to.
-#' @param default.units A string indicating the default units to use if \code{x0}, \code{y0}, \code{x1}, or \code{y1} are only given as numeric vectors. Default value is \code{default.units = "native"}.
-#' @param linecolor A character value specifying segment line color. Default value is \code{linecolor = "black"}.
-#' @param lwd A numeric specifying segment line width. Default value is \code{lwd = 1}.
-#' @param lty A numeric specifying segment line type. Default value is \code{lty = 1}.
-#' @param lineend A character value specifying line end style. Default value is \code{lineend = "butt"}. Options are:
+#' @param x0 A numeric vector or unit object indicating the starting
+#' x-values of the line segments.
+#' @param y0 A numeric vector or unit object indicating the starting
+#' y-values of the line segments.
+#' @param x1 A numeric vector or unit object indicating the stopping
+#' x-values of the line segments.
+#' @param y1 A numeric vector or unit object indicating the stopping
+#' y-values of the line segments.
+#' @param plot Input BentoBox plot to internally plot line segments
+#' relative to.
+#' @param default.units A string indicating the default units to use
+#' if \code{x0}, \code{y0}, \code{x1}, or \code{y1} are only given
+#' as numeric vectors. Default value is \code{default.units = "native"}.
+#' @param linecolor A character value specifying segment line color.
+#' Default value is \code{linecolor = "black"}.
+#' @param lwd A numeric specifying segment line width.
+#' Default value is \code{lwd = 1}.
+#' @param lty A numeric specifying segment line type.
+#' Default value is \code{lty = 1}.
+#' @param lineend A character value specifying line end style.
+#' Default value is \code{lineend = "butt"}. Options are:
 #' \itemize{
 #' \item{\code{"round"}: Segment ends are rounded.}
 #' \item{\code{"butt"}: Segment ends end exactly where ended.}
 #' \item{\code{"square"}: Segment ends are squared.}
 #' }
-#' @param linejoin A character value specifying line join style. Default value is \code{linejoin = "mitre"}. Options are:
+#' @param linejoin A character value specifying line join style.
+#' Default value is \code{linejoin = "mitre"}. Options are:
 #' \itemize{
 #' \item{\code{"round"}: }{Line joins are rounded.}
 #' \item{\code{"mitre"}: }{Line joins are sharp corners.}
 #' \item{\code{"bevel"}: }{Line joins are flattened corners.}
 #' }
-#' @param arrow A list describing arrow heads to place at either end of the line segments, as produced by the \link[grid]{arrow} function.
-#' @param params An optional \link[BentoBox]{bb_params} object containing relevant function parameters.
+#' @param arrow A list describing arrow heads to place at either
+#' end of the line segments, as produced by the \link[grid]{arrow} function.
+#' @param params An optional \link[BentoBox]{bb_params} object containing
+#' relevant function parameters.
 #' @param ... Additional grid graphical parameters. See \link[grid]{gpar}.
 #'
-#' @return Returns a \code{bb_segments} object containing relevant placement and \link[grid]{grob} information.
+#' @return Returns a \code{bb_segments} object containing relevant
+#' placement and \link[grid]{grob} information.
 #'
 #' @examples
+#' library(grid)
 #' ## Create a BentoBox page
 #' bb_pageCreate(width = 7.5, height = 2.5, default.units = "inches")
 #'
@@ -35,13 +51,16 @@
 #' library("TxDb.Hsapiens.UCSC.hg19.knownGene")
 #' data("bb_gwasData")
 #' manhattanPlot <- bb_plotManhattan(data = bb_gwasData, assembly = "hg19",
-#'                                   fill = c("grey", "#37a7db"), sigLine = TRUE,
+#'                                   fill = c("grey", "#37a7db"),
+#'                                   sigLine = TRUE,
 #'                                   col = "grey", lty = 2, range = c(0, 14),
 #'                                   x = 0.5, y = 0, width = 6.5, height = 2,
-#'                                   just = c("left", "top"), default.units = "inches")
+#'                                   just = c("left", "top"),
+#'                                   default.units = "inches")
 #'
 #'## Annotate genome label
-#' bb_annoGenomeLabel(plot = manhattanPlot, x = 0.5, y = 2, fontsize = 8, just = c("left", "top"),
+#' bb_annoGenomeLabel(plot = manhattanPlot, x = 0.5, y = 2, fontsize = 8,
+#'                    just = c("left", "top"),
 #'                    default.units = "inches" )
 #' bb_plotText(label = "Chromosome", fontsize = 8,
 #'             x = 3.75, y = 2.20, just = "center", default.units = "inches")
@@ -58,16 +77,18 @@
 #'
 #' ## Plot y-axis label
 #' bb_plotText(label = "-log10(p-value)", x = 0.15, y = 1, rot = 90,
-#'             fontsize = 8, fontface = "bold", just = "center", default.units = "inches")
+#'             fontsize = 8, fontface = "bold", just = "center",
+#'             default.units = "inches")
 #'
 #' ## Hide page guides
 #' bb_pageGuideHide()
 #'
 #' @seealso \link[grid]{grid.segments}, \link[grid]{arrow}
-#'
 #' @export
-bb_annoSegments <- function(x0, y0, x1, y1, plot, default.units = "native", linecolor = "black", lwd = 1, lty = 1,
-                            lineend = "butt", linejoin = "mitre", arrow = NULL, params = NULL, ...){
+bb_annoSegments <- function(x0, y0, x1, y1, plot, default.units = "native",
+                            linecolor = "black", lwd = 1, lty = 1,
+                            lineend = "butt", linejoin = "mitre",
+                            arrow = NULL, params = NULL, ...){
 
   # ======================================================================================================================================================================================
   # PARSE PARAMETERS
@@ -90,10 +111,16 @@ bb_annoSegments <- function(x0, y0, x1, y1, plot, default.units = "native", line
   if(!hasArg(y1)) y1 <- NULL
 
   ## Compile all parameters into an internal object
-  bb_segmentsInternal <- structure(list(plot = plot, x0 = x0, y0 = y0, x1 = x1, y1 = y1, arrow = arrow, linecolor = linecolor,
-                                        lwd = lwd, lty = lty, lineend = lineend, linejoin = linejoin, default.units = default.units), class = "bb_segmentsInternal")
+  bb_segmentsInternal <- structure(list(plot = plot, x0 = x0, y0 = y0,
+                                        x1 = x1, y1 = y1, arrow = arrow,
+                                        linecolor = linecolor,
+                                        lwd = lwd, lty = lty,
+                                        lineend = lineend, linejoin = linejoin,
+                                        default.units = default.units),
+                                   class = "bb_segmentsInternal")
 
-  bb_segmentsInternal <- parseParams(bb_params = params, object_params = bb_segmentsInternal)
+  bb_segmentsInternal <- parseParams(bb_params = params,
+                                     object_params = bb_segmentsInternal)
 
   ## For any defaults that are still NULL, set back to default
   if(is.null(bb_segmentsInternal$arrow)) bb_segmentsInternal$arrow <- NULL
@@ -105,17 +132,26 @@ bb_annoSegments <- function(x0, y0, x1, y1, plot, default.units = "native", line
   if(is.null(bb_segmentsInternal$default.units)) bb_segmentsInternal$default.units <- "native"
 
   ## Set gp
-  bb_segmentsInternal$gp <- gpar(col = bb_segmentsInternal$linecolor, lwd = bb_segmentsInternal$lwd,
-                                 lty = bb_segmentsInternal$lty, lineend = bb_segmentsInternal$lineend, linejoin = bb_segmentsInternal$linejoin)
-  bb_segmentsInternal$gp <- setGP(gpList = bb_segmentsInternal$gp, params = bb_segmentsInternal, ...)
+  bb_segmentsInternal$gp <- gpar(col = bb_segmentsInternal$linecolor,
+                                 lwd = bb_segmentsInternal$lwd,
+                                 lty = bb_segmentsInternal$lty,
+                                 lineend = bb_segmentsInternal$lineend,
+                                 linejoin = bb_segmentsInternal$linejoin)
+  bb_segmentsInternal$gp <- setGP(gpList = bb_segmentsInternal$gp,
+                                  params = bb_segmentsInternal, ...)
 
   # ======================================================================================================================================================================================
   # INITIALIZE OBJECT
   # ======================================================================================================================================================================================
 
-  bb_segments <- structure(list(x0 = bb_segmentsInternal$x0, y0 = bb_segmentsInternal$y0, x1 = bb_segmentsInternal$x1, y1 = bb_segmentsInternal$y1,
-                                arrow = bb_segmentsInternal$arrow, grobs = NULL,
-                                gp = bb_segmentsInternal$gp), class = "bb_segmentsInternal")
+  bb_segments <- structure(list(x0 = bb_segmentsInternal$x0,
+                                y0 = bb_segmentsInternal$y0,
+                                x1 = bb_segmentsInternal$x1,
+                                y1 = bb_segmentsInternal$y1,
+                                arrow = bb_segmentsInternal$arrow,
+                                grobs = NULL,
+                                gp = bb_segmentsInternal$gp),
+                           class = "bb_segmentsInternal")
 
   # ======================================================================================================================================================================================
   # CATCH ERRORS
@@ -228,7 +264,8 @@ bb_annoSegments <- function(x0, y0, x1, y1, plot, default.units = "native", line
 
     plotVP <- bb_segmentsInternal$plot$grobs$children$background$vp
 
-  } else if (class(bb_segmentsInternal$plot) == "bb_hicTriangle" | class(bb_segmentsInternal$plot) == "bb_hicRectangle"){
+  } else if (class(bb_segmentsInternal$plot) == "bb_hicTriangle"
+             | class(bb_segmentsInternal$plot) == "bb_hicRectangle"){
 
     plotVP <- bb_segmentsInternal$plot$outsideVP
 
@@ -260,8 +297,11 @@ bb_annoSegments <- function(x0, y0, x1, y1, plot, default.units = "native", line
   # MAKE GROB
   # ======================================================================================================================================================================================
 
-  segments <- grid.segments(x0 = unit(new_x0, page_units), y0 = unit(new_y0, page_units), x1 = unit(new_x1, page_units),
-                            y1 = unit(new_y1, page_units), arrow = bb_segments$arrow, gp = bb_segments$gp)
+  segments <- grid.segments(x0 = unit(new_x0, page_units),
+                            y0 = unit(new_y0, page_units),
+                            x1 = unit(new_x1, page_units),
+                            y1 = unit(new_y1, page_units),
+                            arrow = bb_segments$arrow, gp = bb_segments$gp)
 
   # ======================================================================================================================================================================================
   # ADD GROB TO OBJECT

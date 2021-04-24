@@ -15,19 +15,31 @@ bb_pageCreate(
 )
 }
 \arguments{
-\item{width}{A numeric or unit object specifying page width. Default value is \code{width = 8}.}
+\item{width}{A numeric or unit object specifying page width.
+Default value is \code{width = 8}.}
 
-\item{height}{A numeric or unit object specifying page height. Default value is \code{height = 11}.}
+\item{height}{A numeric or unit object specifying page height.
+Default value is \code{height = 11}.}
 
-\item{default.units}{A string indicating the default units to use if \code{width} or \code{height} are only given as numerics. Default value is \code{default.units = "inches"}.}
+\item{default.units}{A string indicating the default units to use if
+\code{width} or \code{height} are only given as numerics.
+Default value is \code{default.units = "inches"}.}
 
-\item{xgrid}{A numeric indicating the increment by which to place vertical gridlines. Default value is \code{xgrid = 0.5}.}
+\item{xgrid}{A numeric indicating the increment by which to place
+vertical gridlines. Default value is \code{xgrid = 0.5}.}
 
-\item{ygrid}{A numeric indicating the increment by which to place horizontal gridlines. Default value is \code{ygrid = 0.5}.}
+\item{ygrid}{A numeric indicating the increment by which to place
+horizontal gridlines. Default value is \code{ygrid = 0.5}.}
 
-\item{showGuides}{A logical value indicating whether to draw a black border around the entire page and guiding rulers along the top and left side of the page. Default value is \code{showOutline = TRUE}.}
+\item{showGuides}{A logical value indicating whether to draw a
+black border around the entire page and guiding rulers along the top and
+left side of the page. Default value is \code{showOutline = TRUE}.}
 
-\item{params}{An optional \link[BentoBox]{bb_params} object containing relevant function parameters.}
+\item{params}{An optional \link[BentoBox]{bb_params} object
+containing relevant function parameters.}
+}
+\value{
+None.
 }
 \description{
 Create a page for a BentoBox layout

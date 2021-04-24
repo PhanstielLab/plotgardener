@@ -1,55 +1,83 @@
 #' Plot paired-end BEDPE data in an arch style
 #'
-#' @param data A string specifying the BEDPE file path or a dataframe in BEDPE format specifying data to be plotted.
+#' @param data A string specifying the BEDPE file path or a dataframe
+#' in BEDPE format specifying data to be plotted.
 #' @param chrom Chromosome of region to be plotted, as a string.
 #' @param chromstart Integer start position on chromosome to be plotted.
 #' @param chromend Integer end position on chromosome to be plotted.
-#' @param assembly Default genome assembly as a string or a \link[BentoBox]{bb_assembly} object. Default value is \code{assembly = "hg19"}.
-#' @param style Character value describing the style of arches. Default value is \code{style = "2D"}. Options are:
+#' @param assembly Default genome assembly as a string or a
+#' \link[BentoBox]{bb_assembly} object.
+#' Default value is \code{assembly = "hg19"}.
+#' @param style Character value describing the style of arches.
+#' Default value is \code{style = "2D"}. Options are:
 #' \itemize{
 #' \item{\code{"2D"}: }{Arches will be drawn in a 2-dimensional style.}
 #' \item{\code{"3D"}: }{Arches will be drawn in a 3-dimensional style.}
 #' }
-#' @param position Character value indicating the position of arches relative to the x-axis. Default value is \code{position = "top"}. Options are:
-#' \itemize{
-#' \item{\code{"top"}: }{Arches will be drawn above the x-axis.}
-#' \item{\code{"bottom"}: }{Arches will be drawn reflected over and below the x-axis.}
-#' }
-#' @param curvature Numeric indicating the number of points along the arch curvature. Default value is \code{curvature = 5}.
-#' @param archHeight Single numeric value or numeric vector specifying the arch heights. When NULL, all arches will be the same height, filling up the given plot area
-#' @param fill Character value(s) as a single value, vector, or palette specifying fill colors of arches. Default value is \code{fill = #1f4297"}.
-#' @param colorby A "\link[BentoBox]{colorby}" object specifying information for scaling colors in data.
-#' @param linecolor A character value specifying the color of the lines outlining arches. Default value is \code{linecolor = NA}. Special options include:
+#' @param flip Logical value indicating whether to reflect arches over
+#' the x-axis. Default value is \code{flip = FALSE}.
+#' @param curvature Numeric indicating the number of points along the
+#' arch curvature. Default value is \code{curvature = 5}.
+#' @param archHeight Single numeric value or numeric vector specifying
+#' the arch heights. When NULL, all arches will be the same height,
+#' filling up the given plot area
+#' @param fill Character value(s) as a single value, vector, or palette
+#' specifying fill colors of arches. Default value is \code{fill = #1f4297"}.
+#' @param colorby A "\link[BentoBox]{colorby}" object specifying
+#' information for scaling colors in data.
+#' @param linecolor A character value specifying the color of the lines
+#' outlining arches. Default value is \code{linecolor = NA}.
+#' Special options include:
 #' \itemize{
 #' \item{\code{NA}: }{No line color.}
 #' \item{\code{"fill"}: }{Same color as \code{fill}.}
 #' }
-#' @param alpha Numeric value specifying transparency. Default value is \code{alpha = 0.4}.
-#' @param bg Character value indicating background color. Default value is \code{bg = NA}.
-#' @param clip A logical value indicating whether to clip any arches that get cutoff in the given genomic region. Default value is \code{clip = FALSE}.
-#' @param baseline Logical value indicating whether to include a baseline along the x-axis. Default value is \code{baseline = FALSE}.
-#' @param baseline.color Baseline color. Default value is \code{baseline.color = "grey"}.
-#' @param baseline.lwd Baseline line width. Default value is \code{baseline.lwd = 1}.
+#' @param alpha Numeric value specifying transparency.
+#' Default value is \code{alpha = 0.4}.
+#' @param bg Character value indicating background color.
+#' Default value is \code{bg = NA}.
+#' @param clip A logical value indicating whether to clip any
+#' arches that get cutoff in the given genomic region.
+#' Default value is \code{clip = FALSE}.
+#' @param baseline Logical value indicating whether to include
+#' a baseline along the x-axis. Default value is \code{baseline = FALSE}.
+#' @param baseline.color Baseline color.
+#' Default value is \code{baseline.color = "grey"}.
+#' @param baseline.lwd Baseline line width.
+#' Default value is \code{baseline.lwd = 1}.
 #' @param x A numeric or unit object specifying BEDPE arches plot x-location.
-#' @param y A numeric, unit object, or character containing a "b" combined with a numeric value specifying BEDPE arches plot y-location. The character value will
-#' place the BEDPE arches plot y relative to the bottom of the most recently plotted BentoBox plot according to the units of the BentoBox page.
+#' @param y A numeric, unit object, or character containing a "b"
+#' combined with a numeric value specifying BEDPE arches plot y-location.
+#' The character value will
+#' place the BEDPE arches plot y relative to the bottom of the most
+#' recently plotted BentoBox plot according to the units of the BentoBox page.
 #' @param width A numeric or unit object specifying BEDPE arches plot width.
 #' @param height A numeric or unit object specifying BEDPE arches plot height.
-#' @param just Justification of BEDPE arches plot relative to its (x, y) location. If there are two values, the first value specifies horizontal justification and the second value specifies vertical justification.
-#' Possible string values are: \code{"left"}, \code{"right"}, \code{"centre"}, \code{"center"}, \code{"bottom"}, and \code{"top"}. Default value is \code{just = c("left", "top")}.
-#' @param default.units A string indicating the default units to use if \code{x}, \code{y}, \code{width}, or \code{height} are only given as numerics. Default value is \code{default.units = "inches"}.
-#' @param draw A logical value indicating whether graphics output should be produced. Default value is \code{draw = TRUE}.
-#' @param params An optional \link[BentoBox]{bb_params} object containing relevant function parameters.
+#' @param just Justification of BEDPE arches plot relative to its (x, y)
+#' location. If there are two values, the first value specifies horizontal
+#' justification and the second value specifies vertical justification.
+#' Possible string values are: \code{"left"}, \code{"right"},
+#' \code{"centre"}, \code{"center"}, \code{"bottom"}, and \code{"top"}.
+#' Default value is \code{just = c("left", "top")}.
+#' @param default.units A string indicating the default units to use if
+#' \code{x}, \code{y}, \code{width}, or \code{height} are only given as
+#' numerics. Default value is \code{default.units = "inches"}.
+#' @param draw A logical value indicating whether graphics output should be
+#' produced. Default value is \code{draw = TRUE}.
+#' @param params An optional \link[BentoBox]{bb_params} object containing
+#' relevant function parameters.
 #' @param ... Additional grid graphical parameters. See \link[grid]{gpar}.
 #'
-#' @return Returns a \code{bb_arches} object containing relevant genomic region, placement, and \link[grid]{grob} information.
+#' @return Returns a \code{bb_arches} object containing relevant
+#' genomic region, placement, and \link[grid]{grob} information.
 #'
 #' @examples
 #' ## Load BEDPE data
 #' data("bb_bedpeData")
 #'
 #' ## Set the coordinates
-#' params = bb_params(chrom = "chr21", chromstart = 27900000, chromend = 30700000,
+#' params = bb_params(chrom = "chr21",
+#'                    chromstart = 27900000, chromend = 30700000,
 #'                    width = 7)
 #'
 #' ## Create a page
@@ -68,18 +96,21 @@
 #'                                 colorby = colorby("length"),
 #'                                 archHeight = heights, alpha = 1,
 #'                                 x = 0.25, y = 0.25,  height = 1.5,
-#'                                 just = c("left", "top"), default.units = "inches")
+#'                                 just = c("left", "top"),
+#'                                 default.units = "inches")
 #'
 #' ## Annotate genome label
 #' bb_annoGenomeLabel(plot = bedpePlot, x = 0.25, y = 1.78, scale = "Mb")
 #'
 #'
 #' ## Annotate heatmap legend
-#' bb_annoHeatmapLegend(plot = bedpePlot, fontcolor = "black", x = 7.0, y = 0.25,
+#' bb_annoHeatmapLegend(plot = bedpePlot, fontcolor = "black",
+#'                      x = 7.0, y = 0.25,
 #'                      width = 0.10, height = 1, fontsize = 10)
 #'
 #' ## Add the heatmap legend title
-#' bb_plotText(label = "Kb", rot = 90, x = 6.9, y = 0.75, just = c("center","center"),
+#' bb_plotText(label = "Kb", rot = 90, x = 6.9, y = 0.75,
+#'             just = c("center","center"),
 #'             fontsize = 10)
 #'
 #'
@@ -101,18 +132,27 @@
 #' }
 #'
 #' @export
-bb_plotBedpeArches <- function(data, chrom, chromstart = NULL, chromend = NULL, assembly = "hg19", style = "2D", position = "top", curvature = 5, archHeight = NULL,
-                               fill = "#1f4297", colorby = NULL, linecolor = NA, alpha = 0.4, bg = NA, clip = FALSE, baseline = FALSE, baseline.color = "grey", baseline.lwd = 1,
-                               x = NULL, y = NULL, width = NULL, height = NULL, just = c("left", "top"), default.units = "inches", draw = TRUE, params = NULL, ...){
+bb_plotBedpeArches <- function(data, chrom, chromstart = NULL, chromend = NULL,
+                               assembly = "hg19", style = "2D", flip = FALSE,
+                               curvature = 5, archHeight = NULL,
+                               fill = "#1f4297", colorby = NULL,
+                               linecolor = NA, alpha = 0.4, bg = NA,
+                               clip = FALSE, baseline = FALSE,
+                               baseline.color = "grey", baseline.lwd = 1,
+                               x = NULL, y = NULL, width = NULL, height = NULL,
+                               just = c("left", "top"),
+                               default.units = "inches", draw = TRUE,
+                               params = NULL, ...){
 
   # ======================================================================================================================================================================================
   # FUNCTIONS
   # ======================================================================================================================================================================================
 
   ## Define a function that catches errors
-  errorcheck_bbArches <- function(bedpe, arches_plot, style, position, colorby){
+  errorcheck_bbArches <- function(bedpe, arches_plot, style, colorby){
     ## Can't have only one NULL chromstart or chromend
-    if ((is.null(arches_plot$chromstart) & !is.null(arches_plot$chromend)) | (is.null(arches_plot$chromend) & !is.null(arches_plot$chromstart))){
+    if ((is.null(arches_plot$chromstart) & !is.null(arches_plot$chromend)) |
+        (is.null(arches_plot$chromend) & !is.null(arches_plot$chromstart))){
 
       stop("Cannot have one \'NULL\' \'chromstart\' or \'chromend\'.", call. = FALSE)
 
@@ -128,7 +168,8 @@ bb_plotBedpeArches <- function(data, chrom, chromstart = NULL, chromend = NULL, 
       ## chromend > chromstart
       if (arches_plot$chromend < arches_plot$chromstart){
 
-        stop("\'chromstart\' should not be larger than \'chromend\'.", call. = FALSE)
+        stop("\'chromstart\' should not be larger than \'chromend\'.",
+             call. = FALSE)
 
 
       }
@@ -136,19 +177,15 @@ bb_plotBedpeArches <- function(data, chrom, chromstart = NULL, chromend = NULL, 
     }
 
     if (!style %in% c("3D", "2D")){
-      stop("Invalid \'style\' input. Options are \'3D\' and \'2D\'.", call. = FALSE)
-    }
-
-    if (!position %in% c("top", "bottom")){
-      stop("Invalid \'position\' input. Options are \'top\' and \'bottom\'.", call. = FALSE)
+      stop("Invalid \'style\' input. Options are \'3D\' and \'2D\'.",
+           call. = FALSE)
     }
 
     if (!is.null(colorby)){
 
-
-
       if (!any(colnames(bedpe) == colorby$column)){
-        stop("Colorby column not found in data. Check colorby column name.", call. = FALSE)
+        stop("Colorby column not found in data. Check colorby column name.",
+             call. = FALSE)
       }
 
       if (length(which(colnames(bedpe) == colorby$column)) > 1){
@@ -157,12 +194,12 @@ bb_plotBedpeArches <- function(data, chrom, chromstart = NULL, chromend = NULL, 
     }
 }
 
-  ## Define a function that will produce a yscale for arches based on height/position
-  height_yscale <- function(heights, position){
+  ## Define a function that will produce a yscale for arches based on height
+  height_yscale <- function(heights, flip){
 
     if (length(heights) == 1){
 
-      if (position == "top"){
+      if (flip == FALSE){
         yscale <- c(0, heights)
       } else {
         yscale <- c(heights, 0)
@@ -170,7 +207,7 @@ bb_plotBedpeArches <- function(data, chrom, chromstart = NULL, chromend = NULL, 
 
     } else {
 
-      if (position == "top"){
+      if (flip == FALSE){
         yscale <- c(0, max(heights))
       } else {
         yscale <- c(max(heights), 0)
@@ -182,7 +219,7 @@ bb_plotBedpeArches <- function(data, chrom, chromstart = NULL, chromend = NULL, 
   }
 
   ## Define a function that normalizes arch heights
-  normHeights <- function(height, position, min, max){
+  normHeights <- function(height, min, max){
 
     ## First normalize from 0 to 1
     newHeight <- (height - min)/(max-min)
@@ -195,7 +232,7 @@ bb_plotBedpeArches <- function(data, chrom, chromstart = NULL, chromend = NULL, 
   }
 
   ## Define a function that creates ribbon arch grobs
-  drawRibbons <- function(df, style, arch, position, transp, gp){
+  drawRibbons <- function(df, style, arch, flip, transp, gp){
 
     x1 <- df[[2]]
     x2 <- df[[3]]
@@ -215,10 +252,16 @@ bb_plotBedpeArches <- function(data, chrom, chromstart = NULL, chromend = NULL, 
     }
 
     ## Designate bezier control points
-    innerX = unit(seq(x2, y1, length.out = arch)[c(1:2, (arch-1):arch)], "native")
-    outerX = unit(seq(x1, y2, length.out = arch)[c(1:2, (arch-1):arch)], "native")
+    # innerX = unit(seq(x2, y1, length.out = arch)[c(1:2, (arch-1):arch)],
+    #               "native")
+    innerX = unit(seq(x2, y1, length.out = arch)[c(1,2, seq((arch-1),arch))],
+                  "native")
+    # outerX = unit(seq(x1, y2, length.out = arch)[c(1:2, (arch-1):arch)],
+    #               "native")
+    outerX = unit(seq(x1, y2, length.out = arch)[c(1,2, seq((arch-1),arch))],
+                  "native")
 
-    if (position == "top"){
+    if (flip == FALSE){
       ## Switch y-positions for top plotting
       innerY = unit(c(0, innerHeight, innerHeight, 0), "npc")
       outerY = unit(c(0, outerHeight, outerHeight, 0), "npc")
@@ -238,10 +281,16 @@ bb_plotBedpeArches <- function(data, chrom, chromstart = NULL, chromend = NULL, 
     outerBP <- bezierPoints(outerLoop)
 
     ## Connect points, convert to proper units and draw polygons
-    archGrob <- polygonGrob(x = unit(c(convertX(outerBP$x, "native"), rev(convertX(innerBP$x, "native"))), "native"),
-                 y = unit(c(convertY(outerBP$y, "npc"), rev(convertY(innerBP$y, "npc"))), "npc"),
-                 gp = gp)
-    assign("arches_grobs", addGrob(gTree = get("arches_grobs", envir = bbEnv), child = archGrob), envir = bbEnv)
+    archGrob <- polygonGrob(x = unit(c(convertX(outerBP$x, "native"),
+                                       rev(convertX(innerBP$x, "native"))),
+                                     "native"),
+                            y = unit(c(convertY(outerBP$y, "npc"),
+                                       rev(convertY(innerBP$y, "npc"))),
+                                     "npc"),
+                            gp = gp)
+    assign("arches_grobs",
+           addGrob(gTree = get("arches_grobs", envir = bbEnv),
+                   child = archGrob), envir = bbEnv)
 
 
   }
@@ -254,7 +303,7 @@ bb_plotBedpeArches <- function(data, chrom, chromstart = NULL, chromend = NULL, 
   if(missing(clip)) clip <- NULL
   if(missing(style)) style <- NULL
   if(missing(curvature)) curvature <- NULL
-  if(missing(position)) position <- NULL
+  if(missing(flip)) flip <- NULL
   if(missing(fill)) fill <- NULL
   if(missing(linecolor)) linecolor <- NULL
   if(missing(assembly)) assembly <- NULL
@@ -272,19 +321,31 @@ bb_plotBedpeArches <- function(data, chrom, chromstart = NULL, chromend = NULL, 
   if(!hasArg(chrom)) chrom <- NULL
 
   ## Compile all parameters into an internal object
-  bb_archInternal <- structure(list(data = data, chrom = chrom, chromstart = chromstart, chromend = chromend, clip = clip, archHeight = archHeight, style = style,
-                                    curvature = curvature, position = position, fill = fill, linecolor = linecolor, colorby = colorby,
-                                    assembly = assembly, alpha = alpha, baseline = baseline, baseline.color = baseline.color, baseline.lwd = baseline.lwd,
-                                    bg = bg, x = x, y = y, width = width, height = height, just = just,
-                                    default.units = default.units, draw = draw, gp = gpar()), class = "bb_archInternal")
+  bb_archInternal <- structure(list(data = data, chrom = chrom,
+                                    chromstart = chromstart,
+                                    chromend = chromend,
+                                    clip = clip, archHeight = archHeight,
+                                    style = style,
+                                    curvature = curvature, flip = flip,
+                                    fill = fill, linecolor = linecolor,
+                                    colorby = colorby, assembly = assembly,
+                                    alpha = alpha, baseline = baseline,
+                                    baseline.color = baseline.color,
+                                    baseline.lwd = baseline.lwd,
+                                    bg = bg, x = x, y = y, width = width,
+                                    height = height, just = just,
+                                    default.units = default.units,
+                                    draw = draw, gp = gpar()),
+                               class = "bb_archInternal")
 
-  bb_archInternal <- parseParams(bb_params = params, object_params = bb_archInternal)
+  bb_archInternal <- parseParams(bb_params = params,
+                                 object_params = bb_archInternal)
 
   ## For any defaults that are still NULL, set back to default
   if(is.null(bb_archInternal$clip)) bb_archInternal$clip <- FALSE
   if(is.null(bb_archInternal$style)) bb_archInternal$style <- "2D"
   if(is.null(bb_archInternal$curvature)) bb_archInternal$curvature <- 5
-  if(is.null(bb_archInternal$position)) bb_archInternal$position <- "top"
+  if(is.null(bb_archInternal$flip)) bb_archInternal$flip <- FALSE
   if(is.null(bb_archInternal$fill)) bb_archInternal$fill <- "#1f4297"
   if(is.null(bb_archInternal$linecolor)) bb_archInternal$linecolor <- NA
   if(is.null(bb_archInternal$assembly)) bb_archInternal$assembly <- "hg19"
@@ -298,7 +359,8 @@ bb_plotBedpeArches <- function(data, chrom, chromstart = NULL, chromend = NULL, 
   if(is.null(bb_archInternal$draw)) bb_archInternal$draw <- TRUE
 
   ## Set gp
-  bb_archInternal$gp <- setGP(gpList = bb_archInternal$gp, params = bb_archInternal, ...)
+  bb_archInternal$gp <- setGP(gpList = bb_archInternal$gp,
+                              params = bb_archInternal, ...)
 
   # ======================================================================================================================================================================================
   # CHECK ARGUMENT ERRORS
@@ -315,9 +377,17 @@ bb_plotBedpeArches <- function(data, chrom, chromstart = NULL, chromend = NULL, 
   # INITIALIZE OBJECT
   # ======================================================================================================================================================================================
 
-  arches_plot <- structure(list(bedpe = NULL, chrom = bb_archInternal$chrom, chromstart = bb_archInternal$chromstart, chromend = bb_archInternal$chromend, assembly = bb_archInternal$assembly,
-                                color_palette = NULL, zrange = bb_archInternal$colorby$range, x = bb_archInternal$x, y = bb_archInternal$y, width = bb_archInternal$width, height = bb_archInternal$height,
-                                just = bb_archInternal$just, grobs = NULL), class = "bb_arches")
+  arches_plot <- structure(list(bedpe = NULL, chrom = bb_archInternal$chrom,
+                                chromstart = bb_archInternal$chromstart,
+                                chromend = bb_archInternal$chromend,
+                                assembly = bb_archInternal$assembly,
+                                color_palette = NULL,
+                                zrange = bb_archInternal$colorby$range,
+                                x = bb_archInternal$x, y = bb_archInternal$y,
+                                width = bb_archInternal$width,
+                                height = bb_archInternal$height,
+                                just = bb_archInternal$just, grobs = NULL),
+                           class = "bb_arches")
   attr(x = arches_plot, which = "plotted") <- bb_archInternal$draw
 
   # ======================================================================================================================================================================================
@@ -336,7 +406,8 @@ bb_plotBedpeArches <- function(data, chrom, chromstart = NULL, chromend = NULL, 
   # PARSE UNITS
   # ======================================================================================================================================================================================
 
-  arches_plot <- defaultUnits(object = arches_plot, default.units = bb_archInternal$default.units)
+  arches_plot <- defaultUnits(object = arches_plot,
+                              default.units = bb_archInternal$default.units)
 
   # ======================================================================================================================================================================================
   # READ IN FILE OR DATAFRAME
@@ -352,7 +423,9 @@ bb_plotBedpeArches <- function(data, chrom, chromstart = NULL, chromend = NULL, 
   # CATCH ERRORS
   # ======================================================================================================================================================================================
 
-  errorcheck_bbArches(bedpe = bedpe, arches_plot = arches_plot, style = bb_archInternal$style, position = bb_archInternal$position, colorby = bb_archInternal$colorby)
+  errorcheck_bbArches(bedpe = bedpe, arches_plot = arches_plot,
+                      style = bb_archInternal$style,
+                      colorby = bb_archInternal$colorby)
 
   # ======================================================================================================================================================================================
   # WHOLE CHROM DATA AND XSCALE
@@ -363,8 +436,11 @@ bb_plotBedpeArches <- function(data, chrom, chromstart = NULL, chromend = NULL, 
     if (class(arches_plot$assembly$TxDb) == "TxDb"){
       txdbChecks <- TRUE
     } else {
-      txdbChecks <- check_loadedPackage(package = arches_plot$assembly$TxDb, message = paste(paste0("`", arches_plot$assembly$TxDb,"`"),
-                                                                                             "not loaded. Please install and load to plot full chromosome ribbon arches."))
+      txdbChecks <- check_loadedPackage(package = arches_plot$assembly$TxDb,
+                                        message = paste(paste0("`",
+                                                               arches_plot$assembly$TxDb,
+                                                               "`"),
+                                                        "not loaded. Please install and load to plot full chromosome ribbon arches."))
     }
 
     xscale <- c(0, 1)
@@ -375,11 +451,18 @@ bb_plotBedpeArches <- function(data, chrom, chromstart = NULL, chromend = NULL, 
         tx_db <- eval(parse(text = arches_plot$assembly$TxDb))
       }
 
-      assembly_data <- seqlengths(tx_db)
+      assembly_data <- GenomeInfoDb::seqlengths(tx_db)
 
       if (!arches_plot$chrom %in% names(assembly_data)){
         txdbChecks <- FALSE
-        warning(paste("Chromosome", paste0("'", arches_plot$chrom, "'"), "not found in", paste0("`", arches_plot$assembly$TxDb, "`"), "and data for entire chromosome cannot be plotted."), call. = FALSE)
+        warning(paste("Chromosome", paste0("'",
+                                           arches_plot$chrom,
+                                           "'"),
+                      "not found in", paste0("`",
+                                             arches_plot$assembly$TxDb,
+                                             "`"),
+                      "and data for entire chromosome cannot be plotted."),
+                call. = FALSE)
       } else {
         arches_plot$chromstart <- 1
         arches_plot$chromend <- assembly_data[[arches_plot$chrom]]
@@ -401,14 +484,20 @@ bb_plotBedpeArches <- function(data, chrom, chromstart = NULL, chromend = NULL, 
   if (!is.null(arches_plot$chromstart) & !is.null(arches_plot$chromend)){
 
     if (bb_archInternal$clip == TRUE){
-      bedpe <- bedpe[which(bedpe[,1] == arches_plot$chrom & bedpe[,4] == arches_plot$chrom
-                           & bedpe[,2] >= arches_plot$chromstart & bedpe[,3] <= arches_plot$chromend
-                           & bedpe[,5] >= arches_plot$chromstart & bedpe[,6] <= arches_plot$chromend),]
+      bedpe <- bedpe[which(bedpe[,1] == arches_plot$chrom
+                           & bedpe[,4] == arches_plot$chrom
+                           & bedpe[,2] >= arches_plot$chromstart
+                           & bedpe[,3] <= arches_plot$chromend
+                           & bedpe[,5] >= arches_plot$chromstart
+                           & bedpe[,6] <= arches_plot$chromend),]
     } else {
 
-      bedpe <- bedpe[which(bedpe[,1] == arches_plot$chrom & bedpe[,4] == arches_plot$chrom &
-                       ((bedpe[,3] >= arches_plot$chromstart & bedpe[,3] <= arches_plot$chromend) |
-                          (bedpe[,5] <= arches_plot$chromstart & bedpe[,5] >= arches_plot$chromend))),]
+      bedpe <- bedpe[which(bedpe[,1] == arches_plot$chrom
+                           & bedpe[,4] == arches_plot$chrom
+                           & ((bedpe[,3] >= arches_plot$chromstart
+                               & bedpe[,3] <= arches_plot$chromend)
+                              | (bedpe[,5] <= arches_plot$chromstart
+                                 & bedpe[,5] >= arches_plot$chromend))),]
     }
 
   } else {
@@ -417,6 +506,7 @@ bb_plotBedpeArches <- function(data, chrom, chromstart = NULL, chromend = NULL, 
   }
 
   arches_plot$bedpe <- bedpe
+
   # ======================================================================================================================================================================================
   # COLORBY AND COLORS
   # ======================================================================================================================================================================================
@@ -437,13 +527,17 @@ bb_plotBedpeArches <- function(data, chrom, chromstart = NULL, chromend = NULL, 
     }
 
     if (class(bb_archInternal$fill) == "function"){
-      colors <- bb_maptocolors(colorbyCol, bb_archInternal$fill, range = arches_plot$zrange)
+      colors <- bb_maptocolors(colorbyCol, bb_archInternal$fill,
+                               range = arches_plot$zrange)
       arches_plot$color_palette <- bb_archInternal$fill
 
     } else {
       colorbyColfac <- factor(colorbyCol)
-      mappedColors <- rep(bb_archInternal$fill, ceiling(length(levels(colorbyColfac))/length(bb_archInternal$fill)))
-      colors <- mappedColors[colorbyCol]
+      mappedColors <- rep(bb_archInternal$fill,
+                          ceiling(length(levels(colorbyColfac))/length(bb_archInternal$fill)))
+
+      names(mappedColors) <- levels(colorbyColfac)
+      colors <- mappedColors[colorbyColfac]
 
     }
 
@@ -454,13 +548,14 @@ bb_plotBedpeArches <- function(data, chrom, chromstart = NULL, chromend = NULL, 
       if (length(bb_archInternal$fill) == 1){
         colors <- rep(bb_archInternal$fill, nrow(bedpe))
       } else {
-        colors <- rep(bb_archInternal$fill, ceiling(nrow(bedpe)/length(bb_archInternal$fill)))[1:nrow(bedpe)]
+        colors <- rep(bb_archInternal$fill,
+                      ceiling(nrow(bedpe)/length(bb_archInternal$fill)))[seq(1, nrow(bedpe))]
       }
     }
 
   }
 
-  bedpe <- bedpe[,c(1:6)]
+  bedpe <- bedpe[,c(seq(1, 6))]
   bedpe$color <- colors
 
   # Set actual line color to fill color if requested by user
@@ -484,7 +579,9 @@ bb_plotBedpeArches <- function(data, chrom, chromstart = NULL, chromend = NULL, 
 
   ## Get viewport name
   currentViewports <- current_viewports()
-  vp_name <- paste0("bb_arches", length(grep(pattern = "bb_arches", x = currentViewports)) + 1)
+  vp_name <- paste0("bb_arches",
+                    length(grep(pattern = "bb_arches",
+                                x = currentViewports)) + 1)
 
   ## If placing information is provided but plot == TRUE, set up it's own viewport separate from bb_makepage
   ## Not translating into page_coordinates
@@ -529,16 +626,19 @@ bb_plotBedpeArches <- function(data, chrom, chromstart = NULL, chromend = NULL, 
     bedpe$height <- rep(1, nrow(bedpe))
   } else if (length(bb_archInternal$archHeight) == 1){
     bedpe$height <- rep(bb_archInternal$archHeight, nrow(bedpe))
-    yscale <- height_yscale(heights = bb_archInternal$archHeight, position = bb_archInternal$position)
+    yscale <- height_yscale(heights = bb_archInternal$archHeight,
+                            flip = bb_archInternal$flip)
     vp$yscale <- yscale
   } else {
-    bedpe$height <- bb_archInternal$archHeight[1:nrow(bedpe)]
-    yscale <- height_yscale(heights = bb_archInternal$archHeight, position = bb_archInternal$position)
+    bedpe$height <- bb_archInternal$archHeight[seq(1, nrow(bedpe))]
+    yscale <- height_yscale(heights = bb_archInternal$archHeight,
+                            flip = bb_archInternal$flip)
     vp$yscale <- yscale
   }
 
   if (length(bedpe$height) > 0){
-    bedpe$normHeight <- lapply(bedpe$height, normHeights, position = bb_archInternal$position, min = 0, max = max(bedpe$height))
+    bedpe$normHeight <- lapply(bedpe$height, normHeights, min = 0,
+                               max = max(bedpe$height))
   }
 
 
@@ -548,8 +648,10 @@ bb_plotBedpeArches <- function(data, chrom, chromstart = NULL, chromend = NULL, 
   # INITIALIZE GTREE FOR GROBS WITH BACKGROUND
   # ======================================================================================================================================================================================
 
-  backgroundGrob <- rectGrob(gp = gpar(fill = bb_archInternal$bg, col = NA), name = "background")
-  assign("arches_grobs", gTree(vp = vp, children = gList(backgroundGrob)), envir = bbEnv)
+  backgroundGrob <- rectGrob(gp = gpar(fill = bb_archInternal$bg, col = NA),
+                             name = "background")
+  assign("arches_grobs", gTree(vp = vp, children = gList(backgroundGrob)),
+         envir = bbEnv)
 
   # ======================================================================================================================================================================================
   # GROBS
@@ -558,13 +660,20 @@ bb_plotBedpeArches <- function(data, chrom, chromstart = NULL, chromend = NULL, 
   if (nrow(bedpe) > 0){
 
     if (bb_archInternal$baseline == TRUE){
-      baselineGrob <- segmentsGrob(x0 = unit(0, "npc"), y0 = 0, x1 = unit(1, "npc"), y1 = 0, default.units = "native",
-                                   gp = gpar(col = bb_archInternal$baseline.color, lwd = bb_archInternal$baseline.lwd))
-      assign("arches_grobs", addGrob(gTree = get("arches_grobs", envir = bbEnv), child = baselineGrob), envir = bbEnv)
+      baselineGrob <- segmentsGrob(x0 = unit(0, "npc"), y0 = 0,
+                                   x1 = unit(1, "npc"), y1 = 0,
+                                   default.units = "native",
+                                   gp = gpar(col = bb_archInternal$baseline.color,
+                                             lwd = bb_archInternal$baseline.lwd))
+      assign("arches_grobs",
+             addGrob(gTree = get("arches_grobs", envir = bbEnv),
+                     child = baselineGrob), envir = bbEnv)
 
     }
 
-    invisible(apply(bedpe, 1, drawRibbons, style = bb_archInternal$style, arch = bb_archInternal$curvature, position = bb_archInternal$position,
+    invisible(apply(bedpe, 1, drawRibbons, style = bb_archInternal$style,
+                    arch = bb_archInternal$curvature,
+                    flip = bb_archInternal$flip,
                     transp = bb_archInternal$alpha, gp = bb_archInternal$gp))
 
   } else {

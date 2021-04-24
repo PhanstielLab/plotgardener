@@ -1,27 +1,43 @@
 #' Plot a circle within a BentoBox layout
 #'
-#' @param x A numeric vector or unit object specifying circle x-locations relative to center.
-#' @param y A numeric vector, unit object, or a character vector of values containing a "b" combined with a numeric value specifying circle y-locations relative to center.
-#' The character vector will place circle y-locations relative to the bottom of the most recently plotted BentoBox plot according to the units of the BentoBox page.
+#' @param x A numeric vector or unit object specifying circle
+#' x-locations relative to center.
+#' @param y A numeric vector, unit object, or a character vector
+#' of values containing a "b" combined with a numeric value
+#' specifying circle y-locations relative to center.
+#' The character vector will place circle y-locations relative to
+#' the bottom of the most recently plotted BentoBox plot according
+#' to the units of the BentoBox page.
 #' @param r A numeric vector or unit object specifying radii.
-#' @param default.units A string indicating the default units to use if \code{r}, \code{x}, or \code{y} are only given as numerics or numeric vectors. Default value is \code{default.units = "inches"}.
-#' @param linecolor A character value specifying circle line color. Default value is \code{linecolor = "black"}.
-#' @param lwd A numeric specifying circle line width. Default value is \code{lwd = 1}.
-#' @param lty A numeric specifying circle line type. Default value is \code{lty = 1}.
-#' @param fill A character value specifying circle fill color. Default value is \code{fill = NA}.
-#' @param alpha Numeric value specifying color transparency. Default value is \code{alpha = 1}.
-#' @param params An optional \link[BentoBox]{bb_params} object containing relevant function parameters.
+#' @param default.units A string indicating the default units to use
+#' if \code{r}, \code{x}, or \code{y} are only given as numerics or
+#' numeric vectors. Default value is \code{default.units = "inches"}.
+#' @param linecolor A character value specifying circle line color.
+#' Default value is \code{linecolor = "black"}.
+#' @param lwd A numeric specifying circle line width.
+#' Default value is \code{lwd = 1}.
+#' @param lty A numeric specifying circle line type.
+#' Default value is \code{lty = 1}.
+#' @param fill A character value specifying circle fill color.
+#' Default value is \code{fill = NA}.
+#' @param alpha Numeric value specifying color transparency.
+#' Default value is \code{alpha = 1}.
+#' @param params An optional \link[BentoBox]{bb_params} object
+#' containing relevant function parameters.
 #' @param ... Additional grid graphical parameters. See \link[grid]{gpar}.
 #'
-#' @return Returns a \code{bb_circle} object containing relevant placement and \link[grid]{grob} information.
+#' @return Returns a \code{bb_circle} object containing
+#' relevant placement and \link[grid]{grob} information.
 #'
 #' @examples
 #' ## Create a BentoBox page
 #' bb_pageCreate(width = 2, height = 2, default.units = "inches")
 #'
 #' ## Plot two circles, one at a time
-#' bb_plotCircle(x = 0.6, y = 0.5, r = 0.1, fill = "black", default.units = "inches")
-#' bb_plotCircle(x = 1.4, y = 0.5, r = 0.1, fill = "black", default.units = "inches")
+#' bb_plotCircle(x = 0.6, y = 0.5, r = 0.1, fill = "black",
+#'               default.units = "inches")
+#' bb_plotCircle(x = 1.4, y = 0.5, r = 0.1, fill = "black",
+#'               default.units = "inches")
 #'
 #' ## Plot a vector of circles
 #' xVals <- 1 + (0.5*cos(seq(0, pi, pi/8)))
@@ -34,7 +50,9 @@
 #' @seealso \link[grid]{grid.circle}
 #'
 #' @export
-bb_plotCircle <- function(x, y, r, default.units = "inches", linecolor = "black", lwd = 1, lty = 1, fill = NA, alpha = 1, params = NULL, ...){
+bb_plotCircle <- function(x, y, r, default.units = "inches",
+                          linecolor = "black", lwd = 1, lty = 1,
+                          fill = NA, alpha = 1, params = NULL, ...){
 
 
   # ======================================================================================================================================================================================
@@ -55,10 +73,14 @@ bb_plotCircle <- function(x, y, r, default.units = "inches", linecolor = "black"
   if(!hasArg(r)) r <- NULL
 
   ## Compile all parameters into an internal object
-  bb_circleInternal <- structure(list(x = x, y = y, r = r, linecolor = linecolor, fill = fill,
-                                      lwd = lwd, lty = lty, alpha = alpha, default.units = default.units), class = "bb_circleInternal")
+  bb_circleInternal <- structure(list(x = x, y = y, r = r,
+                                      linecolor = linecolor, fill = fill,
+                                      lwd = lwd, lty = lty, alpha = alpha,
+                                      default.units = default.units),
+                                 class = "bb_circleInternal")
 
-  bb_circleInternal <- parseParams(bb_params = params, object_params = bb_circleInternal)
+  bb_circleInternal <- parseParams(bb_params = params,
+                                   object_params = bb_circleInternal)
 
   ## For any defaults that are still NULL, set back to default
   if(is.null(bb_circleInternal$linecolor)) bb_circleInternal$linecolor <- "black"
@@ -69,16 +91,22 @@ bb_plotCircle <- function(x, y, r, default.units = "inches", linecolor = "black"
   if(is.null(bb_circleInternal$default.units)) bb_circleInternal$default.units <- "inches"
 
   ## Set gp
-  bb_circleInternal$gp <- gpar(col = bb_circleInternal$linecolor, fill = bb_circleInternal$fill, lwd = bb_circleInternal$lwd,
-                               lty = bb_circleInternal$lty, alpha = bb_circleInternal$alpha)
-  bb_circleInternal$gp <- setGP(gpList = bb_circleInternal$gp, params = bb_circleInternal, ...)
+  bb_circleInternal$gp <- gpar(col = bb_circleInternal$linecolor,
+                               fill = bb_circleInternal$fill,
+                               lwd = bb_circleInternal$lwd,
+                               lty = bb_circleInternal$lty,
+                               alpha = bb_circleInternal$alpha)
+  bb_circleInternal$gp <- setGP(gpList = bb_circleInternal$gp,
+                                params = bb_circleInternal, ...)
 
 
   # ======================================================================================================================================================================================
   # INITIALIZE OBJECT
   # ======================================================================================================================================================================================
 
-  bb_circle <- structure(list(x = bb_circleInternal$x, y = bb_circleInternal$y, r = bb_circleInternal$r, grobs = NULL,
+  bb_circle <- structure(list(x = bb_circleInternal$x,
+                              y = bb_circleInternal$y,
+                              r = bb_circleInternal$r, grobs = NULL,
                               gp = bb_circleInternal$gp), class = "bb_circle")
 
   # ======================================================================================================================================================================================
@@ -86,9 +114,12 @@ bb_plotCircle <- function(x, y, r, default.units = "inches", linecolor = "black"
   # ======================================================================================================================================================================================
 
   check_bbpage(error = "Cannot plot circle without a BentoBox page.")
-  if(is.null(bb_circle$x)) stop("argument \"x\" is missing, with no default.", call. = FALSE)
-  if(is.null(bb_circle$y)) stop("argument \"y\" is missing, with no default.", call. = FALSE)
-  if(is.null(bb_circle$r)) stop("argument \"r\" is missing, with no default.", call. = FALSE)
+  if(is.null(bb_circle$x)) stop("argument \"x\" is missing, with no default.",
+                                call. = FALSE)
+  if(is.null(bb_circle$y)) stop("argument \"y\" is missing, with no default.",
+                                call. = FALSE)
+  if(is.null(bb_circle$r)) stop("argument \"r\" is missing, with no default.",
+                                call. = FALSE)
 
   # ======================================================================================================================================================================================
   # DEFINE PARAMETERS
@@ -128,7 +159,8 @@ bb_plotCircle <- function(x, y, r, default.units = "inches", linecolor = "black"
         stop("\'below\' y-coordinate(s) does not have a numeric associated with it. Cannot parse y-coordinate(s).", call. = FALSE)
       }
 
-      bb_circle$y <- unit(unlist(lapply(bb_circle$y, plot_belowY)), get("page_units", envir = bbEnv))
+      bb_circle$y <- unit(unlist(lapply(bb_circle$y, plot_belowY)),
+                          get("page_units", envir = bbEnv))
 
     } else {
 
@@ -164,7 +196,8 @@ bb_plotCircle <- function(x, y, r, default.units = "inches", linecolor = "black"
 
     if (is.null(bb_circleInternal$default.units)){
 
-      stop("Radius detected as numeric.\'default.units\' must be specified.", call. = FALSE)
+      stop("Radius detected as numeric.\'default.units\' must be specified.",
+           call. = FALSE)
 
     }
 
@@ -181,7 +214,9 @@ bb_plotCircle <- function(x, y, r, default.units = "inches", linecolor = "black"
   # MAKE GROB
   # ======================================================================================================================================================================================
 
-  circle <- grid.circle(x = unit(new_x, page_units), y = unit(page_height - new_y, page_units), r = unit(new_r, page_units),
+  circle <- grid.circle(x = unit(new_x, page_units),
+                        y = unit(page_height - new_y, page_units),
+                        r = unit(new_r, page_units),
                         gp = bb_circle$gp)
 
   # ======================================================================================================================================================================================

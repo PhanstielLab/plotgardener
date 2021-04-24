@@ -21,30 +21,47 @@ bb_plotText(
 \arguments{
 \item{label}{Character or expression of text to be plotted.}
 
-\item{fontcolor}{A character value specifying text fontcolor. Default value is \code{fontcolor = "black"}.}
+\item{fontcolor}{A character value specifying text fontcolor.
+Default value is \code{fontcolor = "black"}.}
 
-\item{fontsize}{A numeric specifying text fontsize in points. Default value is \code{fontsize = 12}.}
+\item{fontsize}{A numeric specifying text fontsize in points.
+Default value is \code{fontsize = 12}.}
 
-\item{rot}{A numeric specifying the angle to rotate the text. Default value is \code{rot = 0}.}
+\item{rot}{A numeric specifying the angle to rotate the text.
+Default value is \code{rot = 0}.}
 
-\item{check.overlap}{A logical value to indicate whether to check for and omit overlapping text. Default value is \code{check.overlap = FALSE}.}
+\item{check.overlap}{A logical value to indicate whether to check
+for and omit overlapping text.
+Default value is \code{check.overlap = FALSE}.}
 
 \item{x}{A numeric vector or unit object specifying text x-location.}
 
-\item{y}{A numeric vector, unit object, or a character vector of values containing a "b" combined with a numeric value specifying text y-locations.
-The character vector will place text y-locations relative to the bottom of the most recently plotted BentoBox plot according to the units of the BentoBox page.}
+\item{y}{A numeric vector, unit object, or a character vector of
+values containing a "b" combined with a numeric value
+specifying text y-locations.
+The character vector will place text y-locations relative to the
+bottom of the most recently plotted BentoBox plot according to the
+units of the BentoBox page.}
 
-\item{just}{Justification of text relative to its (x, y) location. If there are two values, the first value specifies horizontal justification and the second value specifies vertical justification.
-Possible string values are: \code{"left"}, \code{"right"}, \code{"centre"}, \code{"center"}, \code{"bottom"}, and \code{"top"}. Default value is \code{just = "center"}.}
+\item{just}{Justification of text relative to its (x, y) location.
+If there are two values, the first value specifies horizontal
+justification and the second value specifies vertical justification.
+Possible string values are: \code{"left"}, \code{"right"},
+\code{"centre"}, \code{"center"}, \code{"bottom"}, and \code{"top"}.
+Default value is \code{just = "center"}.}
 
-\item{default.units}{A string indicating the default units to use if \code{x} or \code{y} are only given as numerics or numeric vectors. Default value is \code{default.units = "inches"}.}
+\item{default.units}{A string indicating the default units to use if
+\code{x} or \code{y} are only given as numerics or numeric vectors.
+Default value is \code{default.units = "inches"}.}
 
-\item{params}{An optional \link[BentoBox]{bb_params} object containing relevant function parameters.}
+\item{params}{An optional \link[BentoBox]{bb_params} object
+containing relevant function parameters.}
 
 \item{...}{Additional grid graphical parameters. See \link[grid]{gpar}.}
 }
 \value{
-Returns a \code{bb_text} object containing relevant placement and \link[grid]{grob} information.
+Returns a \code{bb_text} object containing relevant
+placement and \link[grid]{grob} information.
 }
 \description{
 Plot text within a BentoBox layout

@@ -11,7 +11,7 @@ bb_plotBedpeArches(
   chromend = NULL,
   assembly = "hg19",
   style = "2D",
-  position = "top",
+  flip = FALSE,
   curvature = 5,
   archHeight = NULL,
   fill = "#1f4297",
@@ -35,7 +35,8 @@ bb_plotBedpeArches(
 )
 }
 \arguments{
-\item{data}{A string specifying the BEDPE file path or a dataframe in BEDPE format specifying data to be plotted.}
+\item{data}{A string specifying the BEDPE file path or a dataframe
+in BEDPE format specifying data to be plotted.}
 
 \item{chrom}{Chromosome of region to be plotted, as a string.}
 
@@ -43,68 +44,94 @@ bb_plotBedpeArches(
 
 \item{chromend}{Integer end position on chromosome to be plotted.}
 
-\item{assembly}{Default genome assembly as a string or a \link[BentoBox]{bb_assembly} object. Default value is \code{assembly = "hg19"}.}
+\item{assembly}{Default genome assembly as a string or a
+\link[BentoBox]{bb_assembly} object.
+Default value is \code{assembly = "hg19"}.}
 
-\item{style}{Character value describing the style of arches. Default value is \code{style = "2D"}. Options are:
+\item{style}{Character value describing the style of arches.
+Default value is \code{style = "2D"}. Options are:
 \itemize{
 \item{\code{"2D"}: }{Arches will be drawn in a 2-dimensional style.}
 \item{\code{"3D"}: }{Arches will be drawn in a 3-dimensional style.}
 }}
 
-\item{position}{Character value indicating the position of arches relative to the x-axis. Default value is \code{position = "top"}. Options are:
-\itemize{
-\item{\code{"top"}: }{Arches will be drawn above the x-axis.}
-\item{\code{"bottom"}: }{Arches will be drawn reflected over and below the x-axis.}
-}}
+\item{flip}{Logical value indicating whether to reflect arches over
+the x-axis. Default value is \code{flip = FALSE}.}
 
-\item{curvature}{Numeric indicating the number of points along the arch curvature. Default value is \code{curvature = 5}.}
+\item{curvature}{Numeric indicating the number of points along the
+arch curvature. Default value is \code{curvature = 5}.}
 
-\item{archHeight}{Single numeric value or numeric vector specifying the arch heights. When NULL, all arches will be the same height, filling up the given plot area}
+\item{archHeight}{Single numeric value or numeric vector specifying
+the arch heights. When NULL, all arches will be the same height,
+filling up the given plot area}
 
-\item{fill}{Character value(s) as a single value, vector, or palette specifying fill colors of arches. Default value is \code{fill = #1f4297"}.}
+\item{fill}{Character value(s) as a single value, vector, or palette
+specifying fill colors of arches. Default value is \code{fill = #1f4297"}.}
 
-\item{colorby}{A "\link[BentoBox]{colorby}" object specifying information for scaling colors in data.}
+\item{colorby}{A "\link[BentoBox]{colorby}" object specifying
+information for scaling colors in data.}
 
-\item{linecolor}{A character value specifying the color of the lines outlining arches. Default value is \code{linecolor = NA}. Special options include:
+\item{linecolor}{A character value specifying the color of the lines
+outlining arches. Default value is \code{linecolor = NA}.
+Special options include:
 \itemize{
 \item{\code{NA}: }{No line color.}
 \item{\code{"fill"}: }{Same color as \code{fill}.}
 }}
 
-\item{alpha}{Numeric value specifying transparency. Default value is \code{alpha = 0.4}.}
+\item{alpha}{Numeric value specifying transparency.
+Default value is \code{alpha = 0.4}.}
 
-\item{bg}{Character value indicating background color. Default value is \code{bg = NA}.}
+\item{bg}{Character value indicating background color.
+Default value is \code{bg = NA}.}
 
-\item{clip}{A logical value indicating whether to clip any arches that get cutoff in the given genomic region. Default value is \code{clip = FALSE}.}
+\item{clip}{A logical value indicating whether to clip any
+arches that get cutoff in the given genomic region.
+Default value is \code{clip = FALSE}.}
 
-\item{baseline}{Logical value indicating whether to include a baseline along the x-axis. Default value is \code{baseline = FALSE}.}
+\item{baseline}{Logical value indicating whether to include
+a baseline along the x-axis. Default value is \code{baseline = FALSE}.}
 
-\item{baseline.color}{Baseline color. Default value is \code{baseline.color = "grey"}.}
+\item{baseline.color}{Baseline color.
+Default value is \code{baseline.color = "grey"}.}
 
-\item{baseline.lwd}{Baseline line width. Default value is \code{baseline.lwd = 1}.}
+\item{baseline.lwd}{Baseline line width.
+Default value is \code{baseline.lwd = 1}.}
 
 \item{x}{A numeric or unit object specifying BEDPE arches plot x-location.}
 
-\item{y}{A numeric, unit object, or character containing a "b" combined with a numeric value specifying BEDPE arches plot y-location. The character value will
-place the BEDPE arches plot y relative to the bottom of the most recently plotted BentoBox plot according to the units of the BentoBox page.}
+\item{y}{A numeric, unit object, or character containing a "b"
+combined with a numeric value specifying BEDPE arches plot y-location.
+The character value will
+place the BEDPE arches plot y relative to the bottom of the most
+recently plotted BentoBox plot according to the units of the BentoBox page.}
 
 \item{width}{A numeric or unit object specifying BEDPE arches plot width.}
 
 \item{height}{A numeric or unit object specifying BEDPE arches plot height.}
 
-\item{just}{Justification of BEDPE arches plot relative to its (x, y) location. If there are two values, the first value specifies horizontal justification and the second value specifies vertical justification.
-Possible string values are: \code{"left"}, \code{"right"}, \code{"centre"}, \code{"center"}, \code{"bottom"}, and \code{"top"}. Default value is \code{just = c("left", "top")}.}
+\item{just}{Justification of BEDPE arches plot relative to its (x, y)
+location. If there are two values, the first value specifies horizontal
+justification and the second value specifies vertical justification.
+Possible string values are: \code{"left"}, \code{"right"},
+\code{"centre"}, \code{"center"}, \code{"bottom"}, and \code{"top"}.
+Default value is \code{just = c("left", "top")}.}
 
-\item{default.units}{A string indicating the default units to use if \code{x}, \code{y}, \code{width}, or \code{height} are only given as numerics. Default value is \code{default.units = "inches"}.}
+\item{default.units}{A string indicating the default units to use if
+\code{x}, \code{y}, \code{width}, or \code{height} are only given as
+numerics. Default value is \code{default.units = "inches"}.}
 
-\item{draw}{A logical value indicating whether graphics output should be produced. Default value is \code{draw = TRUE}.}
+\item{draw}{A logical value indicating whether graphics output should be
+produced. Default value is \code{draw = TRUE}.}
 
-\item{params}{An optional \link[BentoBox]{bb_params} object containing relevant function parameters.}
+\item{params}{An optional \link[BentoBox]{bb_params} object containing
+relevant function parameters.}
 
 \item{...}{Additional grid graphical parameters. See \link[grid]{gpar}.}
 }
 \value{
-Returns a \code{bb_arches} object containing relevant genomic region, placement, and \link[grid]{grob} information.
+Returns a \code{bb_arches} object containing relevant
+genomic region, placement, and \link[grid]{grob} information.
 }
 \description{
 Plot paired-end BEDPE data in an arch style
@@ -128,7 +155,8 @@ bb_plotBedpeArches(data, chrom,
 data("bb_bedpeData")
 
 ## Set the coordinates
-params = bb_params(chrom = "chr21", chromstart = 27900000, chromend = 30700000,
+params = bb_params(chrom = "chr21",
+                   chromstart = 27900000, chromend = 30700000,
                    width = 7)
 
 ## Create a page
@@ -147,18 +175,21 @@ bedpePlot <- bb_plotBedpeArches(data = bb_bedpeData, params = params,
                                 colorby = colorby("length"),
                                 archHeight = heights, alpha = 1,
                                 x = 0.25, y = 0.25,  height = 1.5,
-                                just = c("left", "top"), default.units = "inches")
+                                just = c("left", "top"),
+                                default.units = "inches")
 
 ## Annotate genome label
 bb_annoGenomeLabel(plot = bedpePlot, x = 0.25, y = 1.78, scale = "Mb")
 
 
 ## Annotate heatmap legend
-bb_annoHeatmapLegend(plot = bedpePlot, fontcolor = "black", x = 7.0, y = 0.25,
+bb_annoHeatmapLegend(plot = bedpePlot, fontcolor = "black",
+                     x = 7.0, y = 0.25,
                      width = 0.10, height = 1, fontsize = 10)
 
 ## Add the heatmap legend title
-bb_plotText(label = "Kb", rot = 90, x = 6.9, y = 0.75, just = c("center","center"),
+bb_plotText(label = "Kb", rot = 90, x = 6.9, y = 0.75,
+            just = c("center","center"),
             fontsize = 10)
 
 

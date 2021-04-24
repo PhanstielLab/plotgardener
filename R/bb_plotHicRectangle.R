@@ -1,11 +1,20 @@
 #' Plot a triangular Hi-C interaction matrix in a rectangular format
 #'
-#' @param data Path to .hic file as a string or a 3-column dataframe of interaction counts in sparse upper triangular format.
-#' @param resolution A numeric specifying the width in basepairs of each pixel. For hic files, "auto" will attempt to choose a resolution based on the size of the region. For
-#' dataframes, "auto" will attempt to detect the resolution the dataframe contains.
-#' @param zrange A numeric vector of length 2 specifying the range of interaction scores to plot, where extreme values will be set to the max or min.
-#' @param norm Character value specifying hic data normalization method, if giving .hic file. This value must be found in the .hic file. Default value is \code{norm = "KR"}.
-#' @param matrix Character value indicating the type of matrix to output. Default value is \code{matrix = "observed"}. Options are:
+#' @param data Path to .hic file as a string or a 3-column dataframe of
+#' interaction counts in sparse upper triangular format.
+#' @param resolution A numeric specifying the width in basepairs
+#' of each pixel. For hic files, "auto" will attempt to choose a
+#' resolution based on the size of the region. For
+#' dataframes, "auto" will attempt to detect the resolution the
+#' dataframe contains.
+#' @param zrange A numeric vector of length 2 specifying the range of
+#' interaction scores to plot, where extreme values will be set to the
+#' max or min.
+#' @param norm Character value specifying hic data normalization method,
+#' if giving .hic file. This value must be found in the .hic file.
+#' Default value is \code{norm = "KR"}.
+#' @param matrix Character value indicating the type of matrix to output.
+#' Default value is \code{matrix = "observed"}. Options are:
 #' \itemize{
 #' \item{\code{"observed"}: }{Observed counts.}
 #' \item{\code{"oe"}: }{Observed/expected counts.}
@@ -14,21 +23,44 @@
 #' @param chrom Chromosome of region to be plotted, as a string.
 #' @param chromstart Integer start position on chromosome to be plotted.
 #' @param chromend Integer end position on chromosome to be plotted.
-#' @param assembly Default genome assembly as a string or a \link[BentoBox]{bb_assembly} object. Default value is \code{assembly = "hg19"}.
-#' @param palette A function describing the color palette to use for representing scale of interaction scores. Default value is \code{palette =  colorRampPalette(brewer.pal(n = 9, "YlGnBu"))}.
-#' @param colorTrans A string specifying how to scale Hi-C colors. Options are "linear", "log", "log2", or "log10". Default value is \code{colorTrans = "linear"}.
-#' @param x A numeric or unit object specifying rectangle Hi-C plot x-location.
-#' @param y A numeric, unit object, or character containing a "b" combined with a numeric value specifying rectangle Hi-C plot y-location. The character value will
-#' place the rectangle Hi-C plot y relative to the bottom of the most recently plotted BentoBox plot according to the units of the BentoBox page.
-#' @param width A numeric or unit object specifying the width of the Hi-C plot rectangle.
-#' @param height A numeric or unit object specifying the height of the Hi-C plot rectangle.
-#' @param just Justification of rectangle Hi-C plot relative to its (x, y) location. If there are two values, the first value specifies horizontal justification and the second value specifies vertical justification.
-#' Possible string values are: \code{"left"}, \code{"right"}, \code{"centre"}, \code{"center"}, \code{"bottom"}, and \code{"top"}. Default value is \code{just = c("left", "top")}.
-#' @param default.units A string indicating the default units to use if \code{x}, \code{y}, \code{width}, or \code{height} are only given as numerics. Default value is \code{default.units = "inches"}.
-#' @param draw A logical value indicating whether graphics output should be produced. Default value is \code{draw = TRUE}.
-#' @param params An optional \link[BentoBox]{bb_params} object containing relevant function parameters.
+#' @param assembly Default genome assembly as a string or a
+#' \link[BentoBox]{bb_assembly} object.
+#' Default value is \code{assembly = "hg19"}.
+#' @param palette A function describing the color palette to use for
+#' representing scale of interaction scores. Default value is
+#' \code{palette =  colorRampPalette(brewer.pal(n = 9, "YlGnBu"))}.
+#' @param colorTrans A string specifying how to scale Hi-C colors.
+#' Options are "linear", "log", "log2", or "log10".
+#' Default value is \code{colorTrans = "linear"}.
+#' @param x A numeric or unit object specifying rectangle
+#' Hi-C plot x-location.
+#' @param y A numeric, unit object, or character containing a "b" combined
+#' with a numeric value specifying rectangle Hi-C plot y-location.
+#' The character value will
+#' place the rectangle Hi-C plot y relative to the bottom of the most
+#' recently plotted BentoBox plot according to the units of the BentoBox page.
+#' @param width A numeric or unit object specifying the width of the
+#' Hi-C plot rectangle.
+#' @param height A numeric or unit object specifying the height of the
+#' Hi-C plot rectangle.
+#' @param just Justification of rectangle Hi-C plot relative to
+#' its (x, y) location. If there are two values, the first value
+#' specifies horizontal justification and the second value specifies
+#' vertical justification.
+#' Possible string values are: \code{"left"}, \code{"right"},
+#' \code{"centre"}, \code{"center"}, \code{"bottom"}, and \code{"top"}.
+#' Default value is \code{just = c("left", "top")}.
+#' @param default.units A string indicating the default units to use
+#' if \code{x}, \code{y}, \code{width}, or \code{height} are only given
+#' as numerics. Default value is \code{default.units = "inches"}.
+#' @param draw A logical value indicating whether graphics output should
+#' be produced. Default value is \code{draw = TRUE}.
+#' @param params An optional \link[BentoBox]{bb_params} object containing
+#' relevant function parameters.
 #'
-#' @return Returns a \code{bb_hicRectangle} object containing relevant genomic region, Hi-C data, placement, and \link[grid]{grob} information.
+#' @return Returns a \code{bb_hicRectangle} object containing
+#' relevant genomic region, Hi-C data, placement,
+#' and \link[grid]{grob} information.
 #'
 #' @examples
 #' ## Load Hi-C data
@@ -39,16 +71,21 @@
 #'
 #'
 #' ## Plot and place rectangle Hi-C plot
-#' hicPlot <- bb_plotHicRectangle(data = bb_imrHicData, resolution = 10000, zrange = c(0, 70),
-#'                                chrom = "chr21", chromstart = 28950000, chromend = 29800000,
+#' hicPlot <- bb_plotHicRectangle(data = bb_imrHicData, resolution = 10000,
+#'                                zrange = c(0, 70),
+#'                                chrom = "chr21",
+#'                                chromstart = 28950000, chromend = 29800000,
 #'                                x = 0.5, y = 0.5, width = 5, height = 2.5,
-#'                                just = c("left", "top"), default.units = "inches")
+#'                                just = c("left", "top"),
+#'                                default.units = "inches")
 #'
 #' ## Annotate x-axis genome label
-#' bb_annoGenomeLabel(plot = hicPlot, scale = "Kb", x = 0.5, y = 3.03, just = c("left", "top"))
+#' bb_annoGenomeLabel(plot = hicPlot, scale = "Kb", x = 0.5, y = 3.03,
+#'                    just = c("left", "top"))
 #'
 #' ## Annotate heatmap legend
-#' bb_annoHeatmapLegend(plot = hicPlot, x = 5.6, y = 0.5, width = 0.13, height = 1.5,
+#' bb_annoHeatmapLegend(plot = hicPlot, x = 5.6, y = 0.5,
+#'                      width = 0.13, height = 1.5,
 #'                      just = c("left", "top"))
 #'
 #' ## Hide page guides
@@ -56,17 +93,20 @@
 #'
 #' @details
 #'
-#' This function is similar is \link[BentoBox]{bb_plotHicTriangle} but will fill in additional pixels around the
+#' This function is similar is \link[BentoBox]{bb_plotHicTriangle} but
+#' will fill in additional pixels around the
 #' the triangular portion of the plot to make a rectangle.
 #'
-#' A rectangle Hi-C plot can be placed on a BentoBox coordinate page by providing plot placement parameters:
+#' A rectangle Hi-C plot can be placed on a BentoBox coordinate
+#' page by providing plot placement parameters:
 #' \preformatted{
 #' bb_plotHicRectangle(data, chrom,
 #'                     chromstart = NULL, chromend = NULL,
 #'                     x, y, width, height, just = c("left", "top"),
 #'                     default.units = "inches")
 #' }
-#' This function can also be used to quickly plot an unannotated rectangle Hi-C plot by ignoring plot placement parameters:
+#' This function can also be used to quickly plot an unannotated
+#' rectangle Hi-C plot by ignoring plot placement parameters:
 #' \preformatted{
 #' bb_plotHicRectangle(data, chrom,
 #'                     chromstart = NULL, chromend = NULL)
@@ -75,9 +115,16 @@
 #' @seealso \link[BentoBox]{bb_readHic}, \link[BentoBox]{bb_plotHicTriangle}
 #'
 #' @export
-bb_plotHicRectangle <- function(data, resolution = "auto", zrange = NULL, norm = "KR", matrix = "observed", chrom,  chromstart = NULL, chromend = NULL, assembly = "hg19",
-                               palette = colorRampPalette(brewer.pal(n = 9, "YlGnBu")), colorTrans = "linear", x = NULL, y = NULL, width = NULL, height = NULL,
-                               just = c("left", "top"), default.units = "inches", draw = TRUE, params = NULL){
+bb_plotHicRectangle <- function(data, resolution = "auto", zrange = NULL,
+                                norm = "KR", matrix = "observed", chrom,
+                                chromstart = NULL, chromend = NULL,
+                                assembly = "hg19",
+                                palette = colorRampPalette(brewer.pal(n = 9, "YlGnBu")),
+                                colorTrans = "linear", x = NULL, y = NULL,
+                                width = NULL, height = NULL,
+                                just = c("left", "top"),
+                                default.units = "inches", draw = TRUE,
+                                params = NULL){
 
   # ======================================================================================================================================================================================
   # FUNCTIONS
@@ -100,7 +147,8 @@ bb_plotHicRectangle <- function(data, resolution = "auto", zrange = NULL, norm =
       ## if it's a file path, it needs to be a .hic file
       if (file_ext(hic) != "hic"){
 
-        stop("Invalid input. File must have a \".hic\" extension", call. = FALSE)
+        stop("Invalid input. File must have a \".hic\" extension",
+             call. = FALSE)
 
       }
 
@@ -114,7 +162,8 @@ bb_plotHicRectangle <- function(data, resolution = "auto", zrange = NULL, norm =
       ## if it's a valid .hic file, it needs to have a valid norm parameter
       if (is.null(norm)){
 
-        stop("If providing .hic file, please specify \'norm\'.", call. = FALSE)
+        stop("If providing .hic file, please specify \'norm\'.",
+             call. = FALSE)
 
       }
 
@@ -124,9 +173,13 @@ bb_plotHicRectangle <- function(data, resolution = "auto", zrange = NULL, norm =
 
 
     ## Can't have only one NULL chromstart or chromend
-    if ((is.null(hic_plot$chromstart) & !is.null(hic_plot$chromend)) | (is.null(hic_plot$chromend) & !is.null(hic_plot$chromstart))){
+    if ((is.null(hic_plot$chromstart)
+         & !is.null(hic_plot$chromend))
+        | (is.null(hic_plot$chromend)
+           & !is.null(hic_plot$chromstart))){
 
-      stop("Cannot have one \'NULL\' \'chromstart\' or \'chromend\'.", call. = FALSE)
+      stop("Cannot have one \'NULL\' \'chromstart\' or \'chromend\'.",
+           call. = FALSE)
 
     }
 
@@ -135,7 +188,9 @@ bb_plotHicRectangle <- function(data, resolution = "auto", zrange = NULL, norm =
 
       if (grepl("chr", hic_plot$chrom) == FALSE){
 
-        stop(paste(paste0("'",hic_plot$chrom, "'"), "is an invalid input for an hg19 chromsome. Please specify chromosome as", paste0("'chr", hic_plot$chrom, "'.")), call. = FALSE)
+        stop(paste(paste0("'",hic_plot$chrom, "'"),
+                   "is an invalid input for an hg19 chromsome. Please specify chromosome as",
+                   paste0("'chr", hic_plot$chrom, "'.")), call. = FALSE)
       }
 
     }
@@ -150,7 +205,8 @@ bb_plotHicRectangle <- function(data, resolution = "auto", zrange = NULL, norm =
       ## Chromstart should be smaller than chromend
       if (hic_plot$chromstart > hic_plot$chromend){
 
-        stop("\'chromstart\' should not be larger than \'chromend\'.", call. = FALSE)
+        stop("\'chromstart\' should not be larger than \'chromend\'.",
+             call. = FALSE)
 
       }
 
@@ -263,11 +319,21 @@ bb_plotHicRectangle <- function(data, resolution = "auto", zrange = NULL, norm =
   if(!hasArg(chrom)) chrom <- NULL
 
   ## Compile all parameters into an internal object
-  bb_rhicInternal <- structure(list(data = data, chrom = chrom, chromstart = chromstart, chromend = chromend, resolution = resolution,
-                                    zrange = zrange, palette = palette, assembly = assembly, width = width, height = height, x = x, colorTrans = colorTrans,
-                                    y = y, just = just, norm = norm, default.units = default.units, draw = draw, matrix = matrix), class = "bb_rhicInternal")
+  bb_rhicInternal <- structure(list(data = data, chrom = chrom,
+                                    chromstart = chromstart,
+                                    chromend = chromend,
+                                    resolution = resolution,
+                                    zrange = zrange, palette = palette,
+                                    assembly = assembly, width = width,
+                                    height = height, x = x,
+                                    colorTrans = colorTrans,
+                                    y = y, just = just, norm = norm,
+                                    default.units = default.units,
+                                    draw = draw, matrix = matrix),
+                               class = "bb_rhicInternal")
 
-  bb_rhicInternal <- parseParams(bb_params = params, object_params = bb_rhicInternal)
+  bb_rhicInternal <- parseParams(bb_params = params,
+                                 object_params = bb_rhicInternal)
 
   ## For any defaults that are still NULL, set back to default
   if(is.null(bb_rhicInternal$resolution)) bb_rhicInternal$resolution <- "auto"
@@ -284,10 +350,23 @@ bb_plotHicRectangle <- function(data, resolution = "auto", zrange = NULL, norm =
   # INITIALIZE OBJECT
   # ======================================================================================================================================================================================
 
-  hic_plot <- structure(list(chrom = bb_rhicInternal$chrom, chromstart = bb_rhicInternal$chromstart, chromend = bb_rhicInternal$chromend, altchrom = bb_rhicInternal$chrom,
-                             altchromstart = bb_rhicInternal$chromstart, altchromend = bb_rhicInternal$chromend, assembly = bb_rhicInternal$assembly, resolution = bb_rhicInternal$resolution,
-                             x = bb_rhicInternal$x, y = bb_rhicInternal$y, width = bb_rhicInternal$width, height = bb_rhicInternal$height, just = bb_rhicInternal$just,
-                             color_palette = NULL, colorTrans = bb_rhicInternal$colorTrans, zrange = bb_rhicInternal$zrange, outsideVP = NULL, grobs = NULL), class = "bb_hicRectangle")
+  hic_plot <- structure(list(chrom = bb_rhicInternal$chrom,
+                             chromstart = bb_rhicInternal$chromstart,
+                             chromend = bb_rhicInternal$chromend,
+                             altchrom = bb_rhicInternal$chrom,
+                             altchromstart = bb_rhicInternal$chromstart,
+                             altchromend = bb_rhicInternal$chromend,
+                             assembly = bb_rhicInternal$assembly,
+                             resolution = bb_rhicInternal$resolution,
+                             x = bb_rhicInternal$x, y = bb_rhicInternal$y,
+                             width = bb_rhicInternal$width,
+                             height = bb_rhicInternal$height,
+                             just = bb_rhicInternal$just,
+                             color_palette = NULL,
+                             colorTrans = bb_rhicInternal$colorTrans,
+                             zrange = bb_rhicInternal$zrange,
+                             outsideVP = NULL, grobs = NULL),
+                        class = "bb_hicRectangle")
   attr(x = hic_plot, which = "plotted") <- bb_rhicInternal$draw
 
   # ======================================================================================================================================================================================
@@ -308,13 +387,17 @@ bb_plotHicRectangle <- function(data, resolution = "auto", zrange = NULL, norm =
   # PARSE UNITS
   # ======================================================================================================================================================================================
 
-  hic_plot <- defaultUnits(object = hic_plot, default.units = bb_rhicInternal$default.units)
+  hic_plot <- defaultUnits(object = hic_plot,
+                           default.units = bb_rhicInternal$default.units)
 
   # ======================================================================================================================================================================================
   # CATCH ERRORS
   # ======================================================================================================================================================================================
 
-  errorcheck_bb_plotHicRectangle(hic = bb_rhicInternal$data, hic_plot = hic_plot, norm = bb_rhicInternal$norm, assembly = hic_plot$assembly$Genome)
+  errorcheck_bb_plotHicRectangle(hic = bb_rhicInternal$data,
+                                 hic_plot = hic_plot,
+                                 norm = bb_rhicInternal$norm,
+                                 assembly = hic_plot$assembly$Genome)
 
   # ======================================================================================================================================================================================
   # WHOLE CHROM INFORMATION
@@ -325,7 +408,8 @@ bb_plotHicRectangle <- function(data, resolution = "auto", zrange = NULL, norm =
     if (class(hic_plot$assembly$TxDb) == "TxDb"){
       txdbChecks <- TRUE
     } else {
-      txdbChecks <- check_loadedPackage(package = hic_plot$assembly$TxDb, message = paste(paste0("`", hic_plot$assembly$TxDb,"`"),
+      txdbChecks <- check_loadedPackage(package = hic_plot$assembly$TxDb,
+                                        message = paste(paste0("`", hic_plot$assembly$TxDb,"`"),
                                                                                           "not loaded. Please install and load to plot full chromosome Hi-C map."))
     }
     if (txdbChecks == TRUE){
@@ -336,10 +420,15 @@ bb_plotHicRectangle <- function(data, resolution = "auto", zrange = NULL, norm =
         tx_db <- eval(parse(text = hic_plot$assembly$TxDb))
       }
 
-      assembly_data <- seqlengths(tx_db)
+      assembly_data <- GenomeInfoDb::seqlengths(tx_db)
 
       if (!hic_plot$chrom %in% names(assembly_data)){
-        warning(paste("Chromosome", paste0("'", hic_plot$chrom, "'"), "not found in", paste0("`", hic_plot$assembly$TxDb, "`"), "and data for entire chromosome cannot be plotted."), call. = FALSE)
+        warning(paste("Chromosome",
+                      paste0("'", hic_plot$chrom, "'"),
+                      "not found in",
+                      paste0("`", hic_plot$assembly$TxDb, "`"),
+                      "and data for entire chromosome cannot be plotted."),
+                call. = FALSE)
       } else {
         hic_plot$chromstart <- 1
         hic_plot$chromend <- assembly_data[[hic_plot$chrom]]
@@ -360,7 +449,8 @@ bb_plotHicRectangle <- function(data, resolution = "auto", zrange = NULL, norm =
   # ======================================================================================================================================================================================
 
   if (bb_rhicInternal$resolution == "auto"){
-    hic_plot <- adjust_resolution(hic = bb_rhicInternal$data, hic_plot = hic_plot)
+    hic_plot <- adjust_resolution(hic = bb_rhicInternal$data,
+                                  hic_plot = hic_plot)
   }
 
   # ======================================================================================================================================================================================
@@ -371,13 +461,18 @@ bb_plotHicRectangle <- function(data, resolution = "auto", zrange = NULL, norm =
     inputHeight <- 0.5
     inputWidth <- 1
   } else {
-    inputHeight <- convertHeight(hic_plot$height, unitTo = get("page_units", envir = bbEnv), valueOnly = TRUE)
-    inputWidth <- convertWidth(hic_plot$width, unitTo = get("page_units", envir = bbEnv), valueOnly = TRUE)
+    inputHeight <- convertHeight(hic_plot$height,
+                                 unitTo = get("page_units", envir = bbEnv),
+                                 valueOnly = TRUE)
+    inputWidth <- convertWidth(hic_plot$width,
+                               unitTo = get("page_units", envir = bbEnv),
+                               valueOnly = TRUE)
   }
 
 
   adjRegion <- rect_region(inputHeight = inputHeight, inputWidth = inputWidth,
-                           chromstart = hic_plot$chromstart, chromend = hic_plot$chromend)
+                           chromstart = hic_plot$chromstart,
+                           chromend = hic_plot$chromend)
 
   hic_plot$chromstart <- adjRegion[[1]]
   hic_plot$chromend <- adjRegion[[2]]
@@ -386,7 +481,9 @@ bb_plotHicRectangle <- function(data, resolution = "auto", zrange = NULL, norm =
   # READ IN DATA
   # ======================================================================================================================================================================================
 
-  hic <- read_data(hic = bb_rhicInternal$data, hic_plot = hic_plot, norm = bb_rhicInternal$norm, assembly = hic_plot$assembly, type = bb_rhicInternal$matrix)
+  hic <- read_data(hic = bb_rhicInternal$data, hic_plot = hic_plot,
+                   norm = bb_rhicInternal$norm, assembly = hic_plot$assembly,
+                   type = bb_rhicInternal$matrix)
 
   # ======================================================================================================================================================================================
   # SUBSET DATA
@@ -423,9 +520,15 @@ bb_plotHicRectangle <- function(data, resolution = "auto", zrange = NULL, norm =
 
 
       hic$counts <- log(hic$counts, base = logBase)
-      hic$color <- bb_maptocolors(hic$counts, col = bb_rhicInternal$palette, num = 100, range = log(hic_plot$zrange, logBase))
+      hic$color <- bb_maptocolors(hic$counts,
+                                  col = bb_rhicInternal$palette,
+                                  num = 100,
+                                  range = log(hic_plot$zrange, logBase))
     } else {
-      hic$color <- bb_maptocolors(hic$counts, col = bb_rhicInternal$palette, num = 100, range = hic_plot$zrange)
+      hic$color <- bb_maptocolors(hic$counts,
+                                  col = bb_rhicInternal$palette,
+                                  num = 100,
+                                  range = hic_plot$zrange)
     }
 
     hic_plot$color_palette <- bb_rhicInternal$palette
@@ -437,15 +540,19 @@ bb_plotHicRectangle <- function(data, resolution = "auto", zrange = NULL, norm =
   # ======================================================================================================================================================================================
 
   ## Viewport scale
-  scale <- rect_vpScale(hic_plot = hic_plot, hic_plotInternal = bb_rhicInternal)
+  scale <- rect_vpScale(hic_plot = hic_plot,
+                        hic_plotInternal = bb_rhicInternal)
 
   ## Get viewport name
   currentViewports <- current_viewports()
-  vp_name <- paste0("bb_hicRectangle", length(grep(pattern = "bb_hicRectangle", x = currentViewports)) + 1)
+  vp_name <- paste0("bb_hicRectangle",
+                    length(grep(pattern = "bb_hicRectangle",
+                                x = currentViewports)) + 1)
 
   if (is.null(hic_plot$x) & is.null(hic_plot$y)){
 
-    inside_vp <- viewport(height = unit(4/sqrt(2), "npc"), width = unit(2/sqrt(2), "npc"),
+    inside_vp <- viewport(height = unit(4/sqrt(2), "npc"),
+                          width = unit(2/sqrt(2), "npc"),
                           x = unit(scale[[1]][1], "native"),
                           y = unit(0, "npc"),
                           xscale = scale[[1]],
@@ -481,7 +588,10 @@ bb_plotHicRectangle <- function(data, resolution = "auto", zrange = NULL, norm =
     ## Get length of side of inside viewport
     vp_side <- (as.numeric(page_coords$width) + 2*as.numeric(page_coords$height))/sqrt(2)
 
-    inside_vp <- viewport(height = unit(vp_side, get("page_units", envir = bbEnv)), width = unit(vp_side, get("page_units", envir = bbEnv)),
+    inside_vp <- viewport(height = unit(vp_side,
+                                        get("page_units", envir = bbEnv)),
+                          width = unit(vp_side,
+                                       get("page_units", envir = bbEnv)),
                           x = unit(scale[[1]][1], "native"),
                           y = unit(0, "npc"),
                           xscale = scale[[1]],
@@ -526,7 +636,9 @@ bb_plotHicRectangle <- function(data, resolution = "auto", zrange = NULL, norm =
                               gp = gpar(col = NA, fill = hic$color),
                               default.units = "native")
 
-      assign("hic_grobs3", addGrob(gTree = get("hic_grobs3", envir = bbEnv), child = hic_squares), envir = bbEnv)
+      assign("hic_grobs3",
+             addGrob(gTree = get("hic_grobs3", envir = bbEnv),
+                     child = hic_squares), envir = bbEnv)
 
 
     } else {

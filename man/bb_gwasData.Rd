@@ -15,15 +15,29 @@ a dataframe with the following columns:
 }
 }
 \source{
-GWAS summary statistics were downloaded from LocusZoom \url{http://locuszoom.org/}.
+GWAS summary statistics were downloaded
+from LocusZoom \url{http://locuszoom.org/}.
 }
 \usage{
 data("bb_gwasData")
 }
 \description{
-A dataset representing GWAS data from a GWAS study of insulin response with coordinates based on the hg19 genome build.
+A dataset representing GWAS data from a GWAS study of insulin
+response with coordinates based on the hg19 genome build.
 }
 \references{
-Prokopenko I, Poon W, Mägi R, Prasad B R, Salehi SA, Almgren P, Osmark P, Bouatia-Naji N, Wierup N, Fall T, Stančáková A, Barker A, Lagou V, Osmond C, Xie W, Lahti J, Jackson AU, Cheng YC, Liu J, O'Connell JR, Blomstedt PA, Fadista J, Alkayyali S, Dayeh T, Ahlqvist E, Taneera J, Lecoeur C, Kumar A, Hansson O, Hansson K, Voight BF, Kang HM, Levy-Marchal C, Vatin V, Palotie A, Syvänen AC, Mari A, Weedon MN, Loos RJ, Ong KK, Nilsson P, Isomaa B, Tuomi T, Wareham NJ, Stumvoll M, Widen E, Lakka TA, Langenberg C, Tönjes A, Rauramaa R, Kuusisto J, Frayling TM, Froguel P, Walker M, Eriksson JG, Ling C, Kovacs P, Ingelsson E, McCarthy MI, Shuldiner AR, Silver KD, Laakso M, Groop L, Lyssenko V. A central role for GRB10 in regulation of islet function in man. PLoS Genet. 2014 Apr 3;10(4):e1004235. doi: 10.1371/journal.pgen.1004235. PMID: 24699409; PMCID: PMC3974640.
+Prokopenko I, Poon W, Mägi R, Prasad B R, Salehi SA,
+Almgren P, Osmark P, Bouatia-Naji N, Wierup N, Fall T, Stančáková A,
+Barker A, Lagou V, Osmond C, Xie W, Lahti J, Jackson AU, Cheng YC,
+Liu J, O'Connell JR, Blomstedt PA, Fadista J, Alkayyali S, Dayeh T,
+Ahlqvist E, Taneera J, Lecoeur C, Kumar A, Hansson O, Hansson K,
+Voight BF, Kang HM, Levy-Marchal C, Vatin V, Palotie A, Syvänen AC,
+Mari A, Weedon MN, Loos RJ, Ong KK, Nilsson P, Isomaa B, Tuomi T,
+Wareham NJ, Stumvoll M, Widen E, Lakka TA, Langenberg C, Tönjes A,
+Rauramaa R, Kuusisto J, Frayling TM, Froguel P, Walker M, Eriksson JG,
+Ling C, Kovacs P, Ingelsson E, McCarthy MI, Shuldiner AR, Silver KD,
+Laakso M, Groop L, Lyssenko V. A central role for GRB10 in regulation of
+islet function in man. PLoS Genet. 2014 Apr 3;10(4):e1004235.
+doi: 10.1371/journal.pgen.1004235. PMID: 24699409; PMCID: PMC3974640.
 }
 \keyword{datasets}

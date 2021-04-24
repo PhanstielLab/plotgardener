@@ -1,22 +1,39 @@
 #' Plot a rectangle within a BentoBox layout
 #'
 #' @param x A numeric vector or unit object specifying rectangle x-locations.
-#' @param y A numeric vector, unit object, or a character vector of values containing a "b" combined with a numeric value specifying rectangle y-locations.
-#' The character vector will place rectangle y-locations relative to the bottom of the most recently plotted BentoBox plot according to the units of the BentoBox page.
+#' @param y A numeric vector, unit object, or a character vector of values
+#' containing a "b" combined with a numeric value specifying
+#' rectangle y-locations.
+#' The character vector will place rectangle y-locations relative to
+#' the bottom of the most recently plotted BentoBox plot according to
+#' the units of the BentoBox page.
 #' @param width A numeric vector or unit object specifying rectangle widths.
 #' @param height A numeric vector or unit object specifying rectangle heights.
-#' @param just Justification of rectangle relative to its (x, y) location. If there are two values, the first value specifies horizontal justification and the second value specifies vertical justification.
-#' Possible string values are: \code{"left"}, \code{"right"}, \code{"centre"}, \code{"center"}, \code{"bottom"}, and \code{"top"}. Default value is \code{just = "center"}.
-#' @param default.units A string indicating the default units to use if \code{x}, \code{y}, \code{width}, and \code{height} are only given as numerics or numeric vectors. Default value is \code{default.units = "inches"}.
-#' @param linecolor A character value specifying rectangle line color. Default value is \code{linecolor = "black"}.
-#' @param lwd A numeric specifying rectangle line width. Default value is \code{lwd = 1}.
-#' @param lty A numeric specifying rectangle line type. Default value is \code{lty = 1}.
-#' @param fill A character value specifying rectangle fill color. Default value is \code{fill = NA}.
-#' @param alpha Numeric value specifying color transparency. Default value is \code{alpha = 1}.
-#' @param params An optional \link[BentoBox]{bb_params} object containing relevant function parameters.
+#' @param just Justification of rectangle relative to its (x, y) location.
+#' If there are two values, the first value specifies horizontal justification
+#' and the second value specifies vertical justification.
+#' Possible string values are: \code{"left"}, \code{"right"},
+#'  \code{"centre"}, \code{"center"}, \code{"bottom"}, and \code{"top"}.
+#'  Default value is \code{just = "center"}.
+#' @param default.units A string indicating the default units to use if
+#' \code{x}, \code{y}, \code{width}, and \code{height} are only given as
+#' numerics or numeric vectors. Default value is \code{default.units = "inches"}.
+#' @param linecolor A character value specifying rectangle line color.
+#' Default value is \code{linecolor = "black"}.
+#' @param lwd A numeric specifying rectangle line width.
+#' Default value is \code{lwd = 1}.
+#' @param lty A numeric specifying rectangle line type.
+#' Default value is \code{lty = 1}.
+#' @param fill A character value specifying rectangle fill color.
+#' Default value is \code{fill = NA}.
+#' @param alpha Numeric value specifying color transparency.
+#' Default value is \code{alpha = 1}.
+#' @param params An optional \link[BentoBox]{bb_params} object
+#' containing relevant function parameters.
 #' @param ... Additional grid graphical parameters. See \link[grid]{gpar}.
 #'
-#' @return Returns a \code{bb_rect} object containing relevant placement and \link[grid]{grob} information.
+#' @return Returns a \code{bb_rect} object containing
+#' relevant placement and \link[grid]{grob} information.
 #'
 #' @examples
 #' ## Create a BentoBox page
@@ -33,8 +50,10 @@
 #'             just = c("left", "top"), default.units = "inches",
 #'             fill = "#7ecdbb")
 #'
-#' ## Plot two rectangles with different widths, heights, locations, and colors
-#' bb_plotRect(x = 3.75, y = c(4, 5.25), width = c(6.5, 4.5), height = c(1, 0.25),
+#' ## Plot two rectangles with different widths, heights,
+#' ## locations, and colors
+#' bb_plotRect(x = 3.75, y = c(4, 5.25), width = c(6.5, 4.5),
+#'             height = c(1, 0.25),
 #'             just = "top", default.units = "inches",
 #'             fill = c("#7ecdbb", "#37a7db"), linecolor = NA, alpha = 0.4)
 #'
@@ -44,7 +63,10 @@
 #' @seealso \link[grid]{grid.rect}
 #'
 #' @export
-bb_plotRect <- function(x, y, width, height, just = "center", default.units = "inches", linecolor = "black", lwd = 1, lty = 1, fill = NA, alpha = 1, params = NULL, ...){
+bb_plotRect <- function(x, y, width, height, just = "center",
+                        default.units = "inches", linecolor = "black",
+                        lwd = 1, lty = 1, fill = NA, alpha = 1,
+                        params = NULL, ...){
 
 
   # ======================================================================================================================================================================================
@@ -67,10 +89,15 @@ bb_plotRect <- function(x, y, width, height, just = "center", default.units = "i
   if(!hasArg(height)) height <- NULL
 
   ## Compile all parameters into an internal object
-  bb_rectInternal <- structure(list(x = x, y = y, width = width, height = height, just = just, linecolor = linecolor, fill = fill,
-                                      lwd = lwd, lty = lty, alpha = alpha, default.units = default.units), class = "bb_rectInternal")
+  bb_rectInternal <- structure(list(x = x, y = y, width = width,
+                                    height = height, just = just,
+                                    linecolor = linecolor, fill = fill,
+                                      lwd = lwd, lty = lty, alpha = alpha,
+                                    default.units = default.units),
+                               class = "bb_rectInternal")
 
-  bb_rectInternal <- parseParams(bb_params = params, object_params = bb_rectInternal)
+  bb_rectInternal <- parseParams(bb_params = params,
+                                 object_params = bb_rectInternal)
 
   ## For any defaults that are still NULL, set back to default
   if(is.null(bb_rectInternal$just)) bb_rectInternal$just <- "center"
@@ -82,26 +109,38 @@ bb_plotRect <- function(x, y, width, height, just = "center", default.units = "i
   if(is.null(bb_rectInternal$default.units)) bb_rectInternal$default.units <- "inches"
 
   ## Set gp
-  bb_rectInternal$gp <- gpar(col = bb_rectInternal$linecolor, fill = bb_rectInternal$fill, lwd = bb_rectInternal$lwd,
-                               lty = bb_rectInternal$lty, alpha = bb_rectInternal$alpha)
-  bb_rectInternal$gp <- setGP(gpList = bb_rectInternal$gp, params = bb_rectInternal, ...)
+  bb_rectInternal$gp <- gpar(col = bb_rectInternal$linecolor,
+                             fill = bb_rectInternal$fill,
+                             lwd = bb_rectInternal$lwd,
+                             lty = bb_rectInternal$lty,
+                             alpha = bb_rectInternal$alpha)
+  bb_rectInternal$gp <- setGP(gpList = bb_rectInternal$gp,
+                              params = bb_rectInternal, ...)
 
   # ======================================================================================================================================================================================
   # INITIALIZE OBJECT
   # ======================================================================================================================================================================================
 
-  bb_rect <- structure(list(x = bb_rectInternal$x, y = bb_rectInternal$y, width = bb_rectInternal$width, height = bb_rectInternal$height, just = bb_rectInternal$just,
-                            grobs = NULL, gp = bb_rectInternal$gp), class = "bb_rect")
+  bb_rect <- structure(list(x = bb_rectInternal$x, y = bb_rectInternal$y,
+                            width = bb_rectInternal$width,
+                            height = bb_rectInternal$height,
+                            just = bb_rectInternal$just,
+                            grobs = NULL, gp = bb_rectInternal$gp),
+                       class = "bb_rect")
 
   # ======================================================================================================================================================================================
   # CATCH ERRORS
   # ======================================================================================================================================================================================
 
   check_bbpage(error = "Cannot plot rectangle without a BentoBox page.")
-  if(is.null(bb_rect$x)) stop("argument \"x\" is missing, with no default.", call. = FALSE)
-  if(is.null(bb_rect$y)) stop("argument \"y\" is missing, with no default.", call. = FALSE)
-  if(is.null(bb_rect$width)) stop("argument \"width\" is missing, with no default.", call. = FALSE)
-  if(is.null(bb_rect$height)) stop("argument \"height\" is missing, with no default.", call. = FALSE)
+  if(is.null(bb_rect$x)) stop("argument \"x\" is missing, with no default.",
+                              call. = FALSE)
+  if(is.null(bb_rect$y)) stop("argument \"y\" is missing, with no default.",
+                              call. = FALSE)
+  if(is.null(bb_rect$width)) stop("argument \"width\" is missing, with no default.",
+                                  call. = FALSE)
+  if(is.null(bb_rect$height)) stop("argument \"height\" is missing, with no default.",
+                                   call. = FALSE)
 
 
   # ======================================================================================================================================================================================
@@ -142,7 +181,8 @@ bb_plotRect <- function(x, y, width, height, just = "center", default.units = "i
         stop("\'below\' y-coordinate(s) does not have a numeric associated with it. Cannot parse y-coordinate(s).", call. = FALSE)
       }
 
-      bb_rect$y <- unit(unlist(lapply(bb_rect$y, plot_belowY)), get("page_units", envir = bbEnv))
+      bb_rect$y <- unit(unlist(lapply(bb_rect$y, plot_belowY)),
+                        get("page_units", envir = bbEnv))
 
     } else {
 
@@ -175,7 +215,8 @@ bb_plotRect <- function(x, y, width, height, just = "center", default.units = "i
 
     if (is.null(bb_rectInternal$default.units)){
 
-      stop("width detected as numeric.\'default.units\' must be specified.", call. = FALSE)
+      stop("width detected as numeric.\'default.units\' must be specified.",
+           call. = FALSE)
 
     }
 
@@ -203,15 +244,20 @@ bb_plotRect <- function(x, y, width, height, just = "center", default.units = "i
   ## Convert coordinates to page_units
   new_x <- convertX(bb_rect$x, unitTo = page_units, valueOnly = TRUE)
   new_y <- convertY(bb_rect$y, unitTo = page_units, valueOnly = TRUE)
-  new_width <- convertWidth(bb_rect$width, unitTo = page_units, valueOnly = TRUE)
-  new_height <- convertHeight(bb_rect$height, unitTo = page_units, valueOnly = TRUE)
+  new_width <- convertWidth(bb_rect$width,
+                            unitTo = page_units, valueOnly = TRUE)
+  new_height <- convertHeight(bb_rect$height,
+                              unitTo = page_units, valueOnly = TRUE)
 
   # ======================================================================================================================================================================================
   # MAKE GROB
   # ======================================================================================================================================================================================
 
-  rect <- grid.rect(x = unit(new_x, page_units), y = unit(page_height - new_y, page_units), width = unit(new_width, page_units),
-                    height = unit(new_height, page_units), just = bb_rect$just, gp = bb_rect$gp)
+  rect <- grid.rect(x = unit(new_x, page_units),
+                    y = unit(page_height - new_y, page_units),
+                    width = unit(new_width, page_units),
+                    height = unit(new_height, page_units),
+                    just = bb_rect$just, gp = bb_rect$gp)
 
   # ======================================================================================================================================================================================
   # ADD GROB TO OBJECT

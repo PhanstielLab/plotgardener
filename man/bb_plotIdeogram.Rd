@@ -22,48 +22,68 @@ bb_plotIdeogram(
 \arguments{
 \item{chrom}{Chromosome to be plotted, as a string.}
 
-\item{assembly}{Default genome assembly as a string or a \link[BentoBox]{bb_assembly} object. Default value is \code{assembly = "hg19"}.}
+\item{assembly}{Default genome assembly as a string or a
+\link[BentoBox]{bb_assembly} object.
+Default value is \code{assembly = "hg19"}.}
 
-\item{orientation}{Character value indicating the orientation of the ideogram. Default value is \code{orientation = "h"}. Options are:
+\item{orientation}{Character value indicating the orientation
+of the ideogram. Default value is \code{orientation = "h"}.
+Options are:
 \itemize{
 \item{\code{"v"}: }{Vertical ideogram orientation.}
 \item{\code{"h"}: }{Horizontal ideogram orientation.}
 }}
 
-\item{showBands}{Logical value indicating whether to draw colored cytobands within ideogram. Default value is \code{showBands = TRUE}.}
+\item{showBands}{Logical value indicating whether to draw
+colored cytobands within ideogram.
+Default value is \code{showBands = TRUE}.}
 
 \item{x}{A numeric or unit object specifying ideogram x-location.}
 
-\item{y}{A numeric, unit object, or character containing a "b" combined with a numeric value specifying ideogram y-location. The character value will
-place the ideogram y relative to the bottom of the most recently plotted BentoBox plot according to the units of the BentoBox page.}
+\item{y}{A numeric, unit object, or character containing a "b"
+combined with a numeric value specifying ideogram y-location.
+The character value will
+place the ideogram y relative to the bottom of the most recently
+plotted BentoBox plot according to the units of the BentoBox page.}
 
 \item{width}{A numeric or unit object specifying ideogram width.}
 
 \item{height}{A numeric or unit object specifying ideogram height.}
 
-\item{just}{Justification of ideogram relative to its (x, y) location. If there are two values, the first value specifies horizontal justification and the second value specifies vertical justification.
-Possible string values are: \code{"left"}, \code{"right"}, \code{"centre"}, \code{"center"}, \code{"bottom"}, and \code{"top"}. Default value is \code{just = c("left", "top")}.}
+\item{just}{Justification of ideogram relative to its (x, y) location.
+If there are two values, the first value specifies horizontal justification
+and the second value specifies vertical justification.
+Possible string values are: \code{"left"}, \code{"right"},
+\code{"centre"}, \code{"center"}, \code{"bottom"}, and \code{"top"}.
+Default value is \code{just = c("left", "top")}.}
 
-\item{default.units}{A string indicating the default units to use if \code{x}, \code{y}, \code{width}, or \code{height} are only given as numerics. Default value is \code{default.units = "inches"}.}
+\item{default.units}{A string indicating the default units to use if
+\code{x}, \code{y}, \code{width}, or \code{height} are only given as
+numerics. Default value is \code{default.units = "inches"}.}
 
-\item{draw}{A logical value indicating whether graphics output should be produced. Default value is \code{draw = TRUE}.}
+\item{draw}{A logical value indicating whether graphics output should be
+produced. Default value is \code{draw = TRUE}.}
 
-\item{params}{An optional \link[BentoBox]{bb_params} object containing relevant function parameters.}
+\item{params}{An optional \link[BentoBox]{bb_params} object containing
+relevant function parameters.}
 }
 \value{
-Returns a \code{bb_ideogram} object containing relevant genomic region, placement, and \link[grid]{grob} information.
+Returns a \code{bb_ideogram} object containing relevant
+genomic region, placement, and \link[grid]{grob} information.
 }
 \description{
 Plot a chromosome ideogram with or without cytobands
 }
 \details{
-An ideogram can be placed on a BentoBox coordinate page by providing plot placement parameters:
+An ideogram can be placed on a BentoBox coordinate page by
+providing plot placement parameters:
 \preformatted{
 bb_plotIdeogram(chrom,
                 x, y, width, height, just = c("left", "top"),
                 default.units = "inches")
 }
-This function can also be used to quickly plot an unannotated ideogram by ignoring plot placement parameters:
+This function can also be used to quickly plot an unannotated ideogram
+by ignoring plot placement parameters:
 \preformatted{
 bb_plotIdeogram(chrom)
 }
@@ -71,7 +91,8 @@ bb_plotIdeogram(chrom)
 Giemsa stain band data from the UCSC Genome Browser is included with BentoBox.
 }
 \examples{
-## Load Giemsa stain band information and genomic annotation data for hg19 genome assembly
+## Load Giemsa stain band information and genomic
+## annotation data for hg19 genome assembly
 library("TxDb.Hsapiens.UCSC.hg19.knownGene")
 data("cytoBand.Hsapiens.UCSC.hg19")
 
@@ -81,7 +102,8 @@ bb_pageCreate(width = 4.5, height = 1, default.units = "inches")
 ## Plot and place ideogram
 ideogramPlot <- bb_plotIdeogram(chrom = "chr2", assembly = "hg19",
                                 x = 0.25, y = 0.25, width = 4, height = 0.3,
-                               just = c("left", "top"), default.units = "inches")
+                               just = c("left", "top"),
+                               default.units = "inches")
 
 ## Plot text
 bb_plotText(label = "Chromosome 2", fontcolor = "dark grey",

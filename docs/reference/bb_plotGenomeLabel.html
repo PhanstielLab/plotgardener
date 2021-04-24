@@ -159,7 +159,7 @@
   <span class='va'>x</span>,
   <span class='va'>y</span>,
   <span class='va'>length</span>,
-  just <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"left"</span>, <span class='st'>"top"</span><span class='op'>)</span>,
+  just <span class='op'>=</span> <span class='fu'><a href='c.html'>c</a></span><span class='op'>(</span><span class='st'>"left"</span>, <span class='st'>"top"</span><span class='op'>)</span>,
   default.units <span class='op'>=</span> <span class='st'>"inches"</span>,
   params <span class='op'>=</span> <span class='cn'>NULL</span>,
   <span class='va'>...</span>
@@ -278,9 +278,6 @@ Possible string values are: <code>"left"</code>, <code>"right"</code>, <code>"ce
 <span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='st'>"org.Hs.eg.db"</span><span class='op'>)</span>
 <span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='st'>"BSgenome.Hsapiens.UCSC.hg19"</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; <span class='message'>Loading required package: BSgenome</span></div><div class='output co'>#&gt; <span class='message'>Loading required package: Biostrings</span></div><div class='output co'>#&gt; <span class='message'>Loading required package: XVector</span></div><div class='output co'>#&gt; <span class='message'></span>
-#&gt; <span class='message'>Attaching package: ‘XVector’</span></div><div class='output co'>#&gt; <span class='message'>The following object is masked from ‘package:purrr’:</span>
-#&gt; <span class='message'></span>
-#&gt; <span class='message'>    compact</span></div><div class='output co'>#&gt; <span class='message'></span>
 #&gt; <span class='message'>Attaching package: ‘Biostrings’</span></div><div class='output co'>#&gt; <span class='message'>The following object is masked from ‘package:base’:</span>
 #&gt; <span class='message'></span>
 #&gt; <span class='message'>    strsplit</span></div><div class='output co'>#&gt; <span class='message'>Loading required package: rtracklayer</span></div><div class='input'>
@@ -289,23 +286,23 @@ Possible string values are: <code>"left"</code>, <code>"right"</code>, <code>"ce
 </div><div class='input'>
 <span class='co'>## Plot and place gene track on a BentoBox page</span>
 <span class='va'>genesPlot</span> <span class='op'>&lt;-</span> <span class='fu'><a href='bb_plotGenes.html'>bb_plotGenes</a></span><span class='op'>(</span>chrom <span class='op'>=</span> <span class='st'>"chr8"</span>, chromstart <span class='op'>=</span> <span class='fl'>1000000</span>, chromend <span class='op'>=</span> <span class='fl'>2000000</span>,
-                          assembly <span class='op'>=</span> <span class='st'>"hg19"</span>, strandcolors <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"grey"</span>, <span class='st'>"grey"</span><span class='op'>)</span>,
-                          fontcolors <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"grey"</span>, <span class='st'>"grey"</span><span class='op'>)</span>,
-                          x <span class='op'>=</span> <span class='fl'>0.5</span>, y <span class='op'>=</span> <span class='fl'>0.25</span>, width <span class='op'>=</span> <span class='fl'>4</span>, height <span class='op'>=</span> <span class='fl'>1</span>, just <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"left"</span>, <span class='st'>"top"</span><span class='op'>)</span>,
+                          assembly <span class='op'>=</span> <span class='st'>"hg19"</span>, strandcolors <span class='op'>=</span> <span class='fu'><a href='c.html'>c</a></span><span class='op'>(</span><span class='st'>"grey"</span>, <span class='st'>"grey"</span><span class='op'>)</span>,
+                          fontcolors <span class='op'>=</span> <span class='fu'><a href='c.html'>c</a></span><span class='op'>(</span><span class='st'>"grey"</span>, <span class='st'>"grey"</span><span class='op'>)</span>,
+                          x <span class='op'>=</span> <span class='fl'>0.5</span>, y <span class='op'>=</span> <span class='fl'>0.25</span>, width <span class='op'>=</span> <span class='fl'>4</span>, height <span class='op'>=</span> <span class='fl'>1</span>, just <span class='op'>=</span> <span class='fu'><a href='c.html'>c</a></span><span class='op'>(</span><span class='st'>"left"</span>, <span class='st'>"top"</span><span class='op'>)</span>,
                           default.units <span class='op'>=</span> <span class='st'>"inches"</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; <span class='message'>bb_genes[bb_genes1]</span></div><div class='input'>
 <span class='co'>## Plot x-axis genome labels at different scales</span>
 <span class='fu'>bb_plotGenomeLabel</span><span class='op'>(</span>chrom <span class='op'>=</span> <span class='st'>"chr8"</span>, chromstart <span class='op'>=</span> <span class='fl'>1000000</span>, chromend <span class='op'>=</span> <span class='fl'>2000000</span>, assembly <span class='op'>=</span> <span class='st'>"hg19"</span>,
                    scale <span class='op'>=</span> <span class='st'>"Mb"</span>,
-                   x <span class='op'>=</span> <span class='fl'>0.5</span>, y <span class='op'>=</span> <span class='fl'>1.25</span>, length <span class='op'>=</span> <span class='fl'>4</span>, just <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"left"</span>, <span class='st'>"top"</span><span class='op'>)</span>,
+                   x <span class='op'>=</span> <span class='fl'>0.5</span>, y <span class='op'>=</span> <span class='fl'>1.25</span>, length <span class='op'>=</span> <span class='fl'>4</span>, just <span class='op'>=</span> <span class='fu'><a href='c.html'>c</a></span><span class='op'>(</span><span class='st'>"left"</span>, <span class='st'>"top"</span><span class='op'>)</span>,
                    default.units <span class='op'>=</span> <span class='st'>"inches"</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; <span class='message'>bb_genomeLabel[bb_genomeLabel1]</span></div><div class='input'><span class='fu'>bb_plotGenomeLabel</span><span class='op'>(</span>chrom <span class='op'>=</span> <span class='st'>"chr8"</span>, chromstart <span class='op'>=</span> <span class='fl'>1000000</span>, chromend <span class='op'>=</span> <span class='fl'>2000000</span>, assembly <span class='op'>=</span> <span class='st'>"hg19"</span>,
                    scale <span class='op'>=</span> <span class='st'>"Kb"</span>,
-                   x <span class='op'>=</span> <span class='fl'>0.5</span>, y <span class='op'>=</span> <span class='fl'>1.5</span>, length <span class='op'>=</span> <span class='fl'>4</span>, just <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"left"</span>, <span class='st'>"top"</span><span class='op'>)</span>,
+                   x <span class='op'>=</span> <span class='fl'>0.5</span>, y <span class='op'>=</span> <span class='fl'>1.5</span>, length <span class='op'>=</span> <span class='fl'>4</span>, just <span class='op'>=</span> <span class='fu'><a href='c.html'>c</a></span><span class='op'>(</span><span class='st'>"left"</span>, <span class='st'>"top"</span><span class='op'>)</span>,
                    default.units <span class='op'>=</span> <span class='st'>"inches"</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; <span class='message'>bb_genomeLabel[bb_genomeLabel2]</span></div><div class='input'><span class='fu'>bb_plotGenomeLabel</span><span class='op'>(</span>chrom <span class='op'>=</span> <span class='st'>"chr8"</span>, chromstart <span class='op'>=</span> <span class='fl'>1000000</span>, chromend <span class='op'>=</span> <span class='fl'>2000000</span>, assembly <span class='op'>=</span> <span class='st'>"hg19"</span>,
                    scale <span class='op'>=</span> <span class='st'>"bp"</span>,
-                   x <span class='op'>=</span> <span class='fl'>0.5</span>, y <span class='op'>=</span> <span class='fl'>1.75</span>, length <span class='op'>=</span> <span class='fl'>4</span>, just <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"left"</span>, <span class='st'>"top"</span><span class='op'>)</span>,
+                   x <span class='op'>=</span> <span class='fl'>0.5</span>, y <span class='op'>=</span> <span class='fl'>1.75</span>, length <span class='op'>=</span> <span class='fl'>4</span>, just <span class='op'>=</span> <span class='fu'><a href='c.html'>c</a></span><span class='op'>(</span><span class='st'>"left"</span>, <span class='st'>"top"</span><span class='op'>)</span>,
                    default.units <span class='op'>=</span> <span class='st'>"inches"</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; <span class='message'>bb_genomeLabel[bb_genomeLabel3]</span></div><div class='input'>
 <span class='co'>## Plot a different genomic label region, zooming in enough to see base pairs</span>

@@ -85,6 +85,7 @@ reference:
       - bb_defaultPackages
       - bb_genomes
       - bb_params
+      - c
       - colorby
 
   - title: "Datasets"

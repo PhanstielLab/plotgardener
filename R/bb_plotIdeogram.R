@@ -1,28 +1,47 @@
 #' Plot a chromosome ideogram with or without cytobands
 #'
 #' @param chrom Chromosome to be plotted, as a string.
-#' @param assembly Default genome assembly as a string or a \link[BentoBox]{bb_assembly} object. Default value is \code{assembly = "hg19"}.
-#' @param orientation Character value indicating the orientation of the ideogram. Default value is \code{orientation = "h"}. Options are:
+#' @param assembly Default genome assembly as a string or a
+#' \link[BentoBox]{bb_assembly} object.
+#' Default value is \code{assembly = "hg19"}.
+#' @param orientation Character value indicating the orientation
+#' of the ideogram. Default value is \code{orientation = "h"}.
+#' Options are:
 #' \itemize{
 #' \item{\code{"v"}: }{Vertical ideogram orientation.}
 #' \item{\code{"h"}: }{Horizontal ideogram orientation.}
 #' }
-#' @param showBands Logical value indicating whether to draw colored cytobands within ideogram. Default value is \code{showBands = TRUE}.
+#' @param showBands Logical value indicating whether to draw
+#' colored cytobands within ideogram.
+#' Default value is \code{showBands = TRUE}.
 #' @param x A numeric or unit object specifying ideogram x-location.
-#' @param y A numeric, unit object, or character containing a "b" combined with a numeric value specifying ideogram y-location. The character value will
-#' place the ideogram y relative to the bottom of the most recently plotted BentoBox plot according to the units of the BentoBox page.
+#' @param y A numeric, unit object, or character containing a "b"
+#' combined with a numeric value specifying ideogram y-location.
+#' The character value will
+#' place the ideogram y relative to the bottom of the most recently
+#' plotted BentoBox plot according to the units of the BentoBox page.
 #' @param width A numeric or unit object specifying ideogram width.
 #' @param height A numeric or unit object specifying ideogram height.
-#' @param just Justification of ideogram relative to its (x, y) location. If there are two values, the first value specifies horizontal justification and the second value specifies vertical justification.
-#' Possible string values are: \code{"left"}, \code{"right"}, \code{"centre"}, \code{"center"}, \code{"bottom"}, and \code{"top"}. Default value is \code{just = c("left", "top")}.
-#' @param default.units A string indicating the default units to use if \code{x}, \code{y}, \code{width}, or \code{height} are only given as numerics. Default value is \code{default.units = "inches"}.
-#' @param draw A logical value indicating whether graphics output should be produced. Default value is \code{draw = TRUE}.
-#' @param params An optional \link[BentoBox]{bb_params} object containing relevant function parameters.
+#' @param just Justification of ideogram relative to its (x, y) location.
+#' If there are two values, the first value specifies horizontal justification
+#' and the second value specifies vertical justification.
+#' Possible string values are: \code{"left"}, \code{"right"},
+#' \code{"centre"}, \code{"center"}, \code{"bottom"}, and \code{"top"}.
+#' Default value is \code{just = c("left", "top")}.
+#' @param default.units A string indicating the default units to use if
+#' \code{x}, \code{y}, \code{width}, or \code{height} are only given as
+#' numerics. Default value is \code{default.units = "inches"}.
+#' @param draw A logical value indicating whether graphics output should be
+#' produced. Default value is \code{draw = TRUE}.
+#' @param params An optional \link[BentoBox]{bb_params} object containing
+#' relevant function parameters.
 #'
-#' @return Returns a \code{bb_ideogram} object containing relevant genomic region, placement, and \link[grid]{grob} information.
+#' @return Returns a \code{bb_ideogram} object containing relevant
+#' genomic region, placement, and \link[grid]{grob} information.
 #'
 #' @examples
-#' ## Load Giemsa stain band information and genomic annotation data for hg19 genome assembly
+#' ## Load Giemsa stain band information and genomic
+#' ## annotation data for hg19 genome assembly
 #' library("TxDb.Hsapiens.UCSC.hg19.knownGene")
 #' data("cytoBand.Hsapiens.UCSC.hg19")
 #'
@@ -32,7 +51,8 @@
 #' ## Plot and place ideogram
 #' ideogramPlot <- bb_plotIdeogram(chrom = "chr2", assembly = "hg19",
 #'                                 x = 0.25, y = 0.25, width = 4, height = 0.3,
-#'                                just = c("left", "top"), default.units = "inches")
+#'                                just = c("left", "top"),
+#'                                default.units = "inches")
 #'
 #' ## Plot text
 #' bb_plotText(label = "Chromosome 2", fontcolor = "dark grey",
@@ -42,13 +62,15 @@
 #' bb_pageGuideHide()
 #'
 #' @details
-#' An ideogram can be placed on a BentoBox coordinate page by providing plot placement parameters:
+#' An ideogram can be placed on a BentoBox coordinate page by
+#' providing plot placement parameters:
 #' \preformatted{
 #' bb_plotIdeogram(chrom,
 #'                 x, y, width, height, just = c("left", "top"),
 #'                 default.units = "inches")
 #' }
-#' This function can also be used to quickly plot an unannotated ideogram by ignoring plot placement parameters:
+#' This function can also be used to quickly plot an unannotated ideogram
+#' by ignoring plot placement parameters:
 #' \preformatted{
 #' bb_plotIdeogram(chrom)
 #' }
@@ -56,8 +78,11 @@
 #' Giemsa stain band data from the UCSC Genome Browser is included with BentoBox.
 #'
 #' @export
-bb_plotIdeogram <- function(chrom, assembly = "hg19", orientation = "h", showBands = TRUE, x = NULL, y = NULL, width = NULL, height = NULL,
-                             just = c("left", "top"), default.units = "inches", draw = TRUE, params = NULL){
+bb_plotIdeogram <- function(chrom, assembly = "hg19", orientation = "h",
+                            showBands = TRUE, x = NULL, y = NULL,
+                            width = NULL, height = NULL,
+                            just = c("left", "top"), default.units = "inches",
+                            draw = TRUE, params = NULL){
 
   # ======================================================================================================================================================================================
   # FUNCTIONS
@@ -67,7 +92,8 @@ bb_plotIdeogram <- function(chrom, assembly = "hg19", orientation = "h", showBan
   errorcheck_bbIdeogram <- function(orientation){
 
     if(!orientation %in% c("v", "h")){
-      stop("Invalid /'orientation/' parameter. Options are 'v' or 'h'.", call. = FALSE)
+      stop("Invalid /'orientation/' parameter. Options are 'v' or 'h'.",
+           call. = FALSE)
 
     }
 
@@ -75,15 +101,22 @@ bb_plotIdeogram <- function(chrom, assembly = "hg19", orientation = "h", showBan
 
   ## Define a function to get cytoBand data for a genome assembly
   cytoAssembly <- function(assembly){
-    availCytos <- list(hg18 = "cytoBand.Hsapiens.UCSC.hg18", hg19 = "cytoBand.Hsapiens.UCSC.hg19", hg38 = "cytoBand.Hsapiens.UCSC.hg38",
-                       mm9 = "cytoBand.Mmusculus.UCSC.mm9", mm10 = "cytoBand.Mmusculus.UCSC.mm10", dm6 = "cytoBand.Dmelanogaster.UCSC.dm6",
-                       rn5 = "cytoBand.Rnorvegicus.UCSC.rn5", rn6 = "cytoBand.Rnorvegicus.UCSC.rn6", danRer10 = "cytoBand.Drerio.UCSC.danRer10")
+    availCytos <- list(hg18="cytoBand.Hsapiens.UCSC.hg18",
+                       hg19="cytoBand.Hsapiens.UCSC.hg19",
+                       hg38="cytoBand.Hsapiens.UCSC.hg38",
+                       mm9="cytoBand.Mmusculus.UCSC.mm9",
+                       mm10="cytoBand.Mmusculus.UCSC.mm10",
+                       dm6="cytoBand.Dmelanogaster.UCSC.dm6",
+                       rn5="cytoBand.Rnorvegicus.UCSC.rn5",
+                       rn6="cytoBand.Rnorvegicus.UCSC.rn6",
+                       danRer10="cytoBand.Drerio.UCSC.danRer10")
 
     ## Get string assembly name
     assemblyName <- assembly$Genome
 
     if (!any(names(availCytos) %in% assemblyName)){
-      warning(paste("CytoBand data not available for the given genome assembly. Ideograms can only be plotted for the following assemblies:", cat(names(availCytos), sep = ", ")), call. = FALSE)
+      warning(paste("CytoBand data not available for the given genome assembly. Ideograms can only be plotted for the following assemblies:",
+                    cat(names(availCytos), sep = ", ")), call. = FALSE)
       cytoData <- NULL
       genomeData <- NULL
     } else {
@@ -94,7 +127,9 @@ bb_plotIdeogram <- function(chrom, assembly = "hg19", orientation = "h", showBan
       ## Check that included cytoband data is loaded
       currentLoaded <- ls(envir = globalenv())
       if (!cytoData %in% currentLoaded){
-        warning(paste("Assembly cytoBand data not loaded. Run", paste0('`data("',cytoData,'")`'), "to load data."), call. = FALSE)
+        warning(paste("Assembly cytoBand data not loaded. Run",
+                      paste0('`data("',cytoData,'")`'), "to load data."),
+                call. = FALSE)
         cytoData <- NULL
       }
 
@@ -102,7 +137,10 @@ bb_plotIdeogram <- function(chrom, assembly = "hg19", orientation = "h", showBan
       if (class(assembly$TxDb) == "TxDb"){
         txdbChecks <- TRUE
       } else {
-        txdbChecks <- check_loadedPackage(package = assembly$TxDb, message = paste(paste0("`", assembly$TxDb,"`"), "not loaded. Please install and load to plot Ideogram."))
+        txdbChecks <- check_loadedPackage(package = assembly$TxDb,
+                                          message = paste(paste0("`",
+                                                                 assembly$TxDb,"`"),
+                                                          "not loaded. Please install and load to plot Ideogram."))
       }
 
 
@@ -126,11 +164,12 @@ bb_plotIdeogram <- function(chrom, assembly = "hg19", orientation = "h", showBan
       tx_db <- eval(parse(text = txdb))
     }
 
-    txdbChroms <- seqlevels(tx_db)
+    txdbChroms <- GenomeInfoDb::seqlevels(tx_db)
     if (chrom %in% txdbChroms){
       return(TRUE)
     } else {
-      warning(paste(paste0("'", chrom, "'"), "not found in", paste0(txdb, ".")), call. = FALSE)
+      warning(paste(paste0("'", chrom, "'"),
+                    "not found in", paste0(txdb, ".")), call. = FALSE)
       return(FALSE)
     }
 
@@ -147,7 +186,6 @@ bb_plotIdeogram <- function(chrom, assembly = "hg19", orientation = "h", showBan
 
     palette <- colorRampPalette(c("#dee0e4", "#a8adb8"))
 
-    #data$color <- makeTransparent(color = "black", alpha = 0.3)
     data$color <- palette(5)[5]
 
     if (assembly %in% human){
@@ -173,11 +211,15 @@ bb_plotIdeogram <- function(chrom, assembly = "hg19", orientation = "h", showBan
         if(any(data$gieStain == "gpos")) data[which(data$gieStain == "gpos"),]$color <- palette(5)[3]
 
       } else {
-        data$color <- rep(c("#FFFFFF", palette(5)[3]), ceiling(nrow(data)/2))[1:nrow(data)]
+        #data$color <- rep(c("#FFFFFF", palette(5)[3]), ceiling(nrow(data)/2))[1:nrow(data)]
+        data$color <- rep(c("#FFFFFF", palette(5)[3]),
+                          ceiling(nrow(data)/2))[seq(1, nrow(data))]
       }
     } else if (assembly %in% fly){
 
-      data$color <- rep(c("#FFFFFF", palette(5)[3]), ceiling(nrow(data)/2))[1:nrow(data)]
+      #data$color <- rep(c("#FFFFFF", palette(5)[3]), ceiling(nrow(data)/2))[1:nrow(data)]
+      data$color <- rep(c("#FFFFFF", palette(5)[3]),
+                        ceiling(nrow(data)/2))[seq(1, nrow(data))]
 
     } else {
       if(any(data$gieStain == "gneg")) data[which(data$gieStain == "gneg"),]$color <- "#FFFFFF"
@@ -206,7 +248,8 @@ bb_plotIdeogram <- function(chrom, assembly = "hg19", orientation = "h", showBan
                                 default.units = "native",
                                 gp = gpar(fill = col, col = NA))
 
-      assign("ideogram_grobs", addGrob(get("ideogram_grobs", envir = bbEnv), child = curvedGrob), envir = bbEnv)
+      assign("ideogram_grobs", addGrob(get("ideogram_grobs", envir = bbEnv),
+                                       child = curvedGrob), envir = bbEnv)
     }
 
 
@@ -230,7 +273,8 @@ bb_plotIdeogram <- function(chrom, assembly = "hg19", orientation = "h", showBan
                                 default.units = "native",
                                 gp = gpar(fill = col, col = NA))
 
-      assign("ideogram_grobs", addGrob(get("ideogram_grobs", envir = bbEnv), child = curvedGrob), envir = bbEnv)
+      assign("ideogram_grobs", addGrob(get("ideogram_grobs", envir = bbEnv),
+                                       child = curvedGrob), envir = bbEnv)
 
     }
 
@@ -253,11 +297,16 @@ bb_plotIdeogram <- function(chrom, assembly = "hg19", orientation = "h", showBan
   if(!hasArg(chrom)) chrom <- NULL
 
   ## Compile all parameters into an internal object
-  bb_ideoInternal <- structure(list(chrom = chrom, assembly = assembly, orientation = orientation, showBands = showBands,
-                                    x = x, y = y, width = width, height = height, just = just, default.units = default.units,
+  bb_ideoInternal <- structure(list(chrom = chrom, assembly = assembly,
+                                    orientation = orientation,
+                                    showBands = showBands,
+                                    x = x, y = y, width = width,
+                                    height = height, just = just,
+                                    default.units = default.units,
                                     draw = draw), class = "bb_ideoInternal")
 
-  bb_ideoInternal <- parseParams(bb_params = params, object_params = bb_ideoInternal)
+  bb_ideoInternal <- parseParams(bb_params = params,
+                                 object_params = bb_ideoInternal)
 
   ## For any defaults that are still NULL, set back to default
   if(is.null(bb_ideoInternal$assembly)) bb_ideoInternal$assembly <- "hg19"
@@ -271,15 +320,23 @@ bb_plotIdeogram <- function(chrom, assembly = "hg19", orientation = "h", showBan
   # INITIALIZE OBJECT
   # ======================================================================================================================================================================================
 
-  ideogram_plot <- structure(list(chrom = bb_ideoInternal$chrom, chromstart = 1, chromend = NULL, assembly = bb_ideoInternal$assembly, x = bb_ideoInternal$x, y = bb_ideoInternal$y,
-                                  width = bb_ideoInternal$width, height = bb_ideoInternal$height, just = bb_ideoInternal$just, grobs = NULL), class = "bb_ideogram")
+  ideogram_plot <- structure(list(chrom = bb_ideoInternal$chrom,
+                                  chromstart = 1, chromend = NULL,
+                                  assembly = bb_ideoInternal$assembly,
+                                  x = bb_ideoInternal$x, y = bb_ideoInternal$y,
+                                  width = bb_ideoInternal$width,
+                                  height = bb_ideoInternal$height,
+                                  just = bb_ideoInternal$just, grobs = NULL),
+                             class = "bb_ideogram")
   attr(x = ideogram_plot, which = "plotted") <- bb_ideoInternal$draw
 
   # ======================================================================================================================================================================================
   # CATCH ERRORS
   # ======================================================================================================================================================================================
 
-  if(is.null(ideogram_plot$chrom)) stop("argument \"chrom\" is missing, with no default.", call. = FALSE)
+  if (is.null(ideogram_plot$chrom)){
+    stop("argument \"chrom\" is missing, with no default.", call. = FALSE)
+  }
 
   check_placement(object = ideogram_plot)
   errorcheck_bbIdeogram(orientation = bb_ideoInternal$orientation)
@@ -294,7 +351,8 @@ bb_plotIdeogram <- function(chrom, assembly = "hg19", orientation = "h", showBan
   # PARSE UNITS
   # ======================================================================================================================================================================================
 
-  ideogram_plot <- defaultUnits(object = ideogram_plot, default.units = bb_ideoInternal$default.units)
+  ideogram_plot <- defaultUnits(object = ideogram_plot,
+                                default.units = bb_ideoInternal$default.units)
 
   # ======================================================================================================================================================================================
   # GET APPROPRIATE BUILD DATA
@@ -327,7 +385,7 @@ bb_plotIdeogram <- function(chrom, assembly = "hg19", orientation = "h", showBan
       data$strand <- as.character(data$strand)
       data$name <- as.character(data$name)
       data$gieStain <- as.character(data$gieStain)
-      chromLength <- seqlengths(genome)[[ideogram_plot$chrom]]
+      chromLength <- GenomeInfoDb::seqlengths(genome)[[ideogram_plot$chrom]]
       ideogram_plot$chromend <- chromLength
 
       # ======================================================================================================================================================================================
@@ -347,7 +405,8 @@ bb_plotIdeogram <- function(chrom, assembly = "hg19", orientation = "h", showBan
 
   ## Get viewport name
   currentViewports <- current_viewports()
-  vp_name <- paste0("bb_ideogram", length(grep(pattern = "bb_ideogram", x = currentViewports)) + 1)
+  vp_name <- paste0("bb_ideogram", length(grep(pattern = "bb_ideogram",
+                                               x = currentViewports)) + 1)
 
   ## If placing information is provided but plot == TRUE, set up it's own viewport separate from bb_makepage
   ## Not translating into page_coordinates
@@ -360,7 +419,8 @@ bb_plotIdeogram <- function(chrom, assembly = "hg19", orientation = "h", showBan
     yscale <- chromLength/scaleRatio
 
     if (bb_ideoInternal$orientation == "h"){
-      vp <- viewport(height = unit(height, "snpc"), width = unit(width, "snpc"),
+      vp <- viewport(height = unit(height, "snpc"),
+                     width = unit(width, "snpc"),
                      x = unit(0.5, "npc"), y = unit(0.5, "npc"),
                      xscale = c(0, chromLength),
                      yscale = c(0, yscale),
@@ -369,7 +429,8 @@ bb_plotIdeogram <- function(chrom, assembly = "hg19", orientation = "h", showBan
     } else {
       height <- 1
       width <- 0.075
-      vp <- viewport(height = unit(width, "snpc"), width = unit(height, "snpc"),
+      vp <- viewport(height = unit(width, "snpc"),
+                     width = unit(height, "snpc"),
                      x = unit(0.5, "npc"), y = unit(0.5, "npc"),
                      xscale = c(0, chromLength),
                      yscale = c(0, yscale),
@@ -393,14 +454,19 @@ bb_plotIdeogram <- function(chrom, assembly = "hg19", orientation = "h", showBan
     page_coords <- convert_page(object = ideogram_plot)
     add_bbViewport(vp_name)
 
-    height <- convertHeight(page_coords$height, unitTo = get("page_units", envir = bbEnv), valueOnly = T)
-    width <- convertWidth(page_coords$width, unitTo = get("page_units", envir = bbEnv), valueOnly = T)
+    height <- convertHeight(page_coords$height,
+                            unitTo = get("page_units", envir = bbEnv),
+                            valueOnly = TRUE)
+    width <- convertWidth(page_coords$width,
+                          unitTo = get("page_units", envir = bbEnv),
+                          valueOnly = TRUE)
     scaleRatio <- max(c(width, height))/min(c(width, height))
     yscale <- chromLength/scaleRatio
 
     if (bb_ideoInternal$orientation == "h"){
 
-      vp <- viewport(height = page_coords$height, width = page_coords$width,
+      vp <- viewport(height = page_coords$height,
+                     width = page_coords$width,
                      x = page_coords$x, y = page_coords$y,
                      xscale = c(0, chromLength),
                      yscale = c(0, yscale),
@@ -409,15 +475,17 @@ bb_plotIdeogram <- function(chrom, assembly = "hg19", orientation = "h", showBan
 
     } else {
       ## Make viewport based on user inputs
-      vpOG <- viewport(height = page_coords$height, width = page_coords$width,
-                     x = page_coords$x, y = page_coords$y,
-                     just = bb_ideoInternal$just)
+      vpOG <- viewport(height = page_coords$height,
+                       width = page_coords$width,
+                       x = page_coords$x, y = page_coords$y,
+                       just = bb_ideoInternal$just)
 
       ## Convert viewport to bottom left (bottom right of horizontal)
       vp_bottom <- vp_bottomLeft(viewport = vpOG)
 
       ## Make new rotated viewport
-      vp <- viewport(height = page_coords$width, width = page_coords$height,
+      vp <- viewport(height = page_coords$width,
+                     width = page_coords$height,
                      x = vp_bottom[[1]], y = vp_bottom[[2]],
                      xscale = c(0, chromLength),
                      yscale = c(0, yscale),
@@ -438,6 +506,7 @@ bb_plotIdeogram <- function(chrom, assembly = "hg19", orientation = "h", showBan
   if (!is.null(data) & !is.null(genome)){
 
     if (chromCheck == TRUE){
+
       # ======================================================================================================================================================================================
       # CHROMOSOME GROBS
       # ======================================================================================================================================================================================
@@ -469,11 +538,15 @@ bb_plotIdeogram <- function(chrom, assembly = "hg19", orientation = "h", showBan
         }
 
         if (bb_ideoInternal$showBands == TRUE){
-          firstBand_grob <- polygonGrob(x = firstBand_Xpoints, y = firstBand_Ypoints,
+          firstBand_grob <- polygonGrob(x = firstBand_Xpoints,
+                                        y = firstBand_Ypoints,
                                         default.units = "native",
-                                        gp = gpar(fill = firstBand$color, col = NA))
+                                        gp = gpar(fill = firstBand$color,
+                                                  col = NA))
 
-          assign("ideogram_grobs", addGrob(get("ideogram_grobs", envir = bbEnv), child = firstBand_grob), envir = bbEnv)
+          assign("ideogram_grobs",
+                 addGrob(get("ideogram_grobs", envir = bbEnv),
+                         child = firstBand_grob), envir = bbEnv)
         }
 
 
@@ -488,12 +561,16 @@ bb_plotIdeogram <- function(chrom, assembly = "hg19", orientation = "h", showBan
           lastBand_Xpoints <- rightXpoints[which(rightXpoints >= lastBand$start)]
           lastBand_Ypoints <- rightYpoints[which(rightXpoints >= lastBand$start)]
         }
-        if (bb_ideoInternal$showBands == TRUE) {
-          lastBand_grob <- polygonGrob(x = lastBand_Xpoints, y = lastBand_Ypoints,
+        if (bb_ideoInternal$showBands == TRUE){
+          lastBand_grob <- polygonGrob(x = lastBand_Xpoints,
+                                       y = lastBand_Ypoints,
                                        default.units = "native",
-                                       gp = gpar(fill = lastBand$color, col = NA))
+                                       gp = gpar(fill = lastBand$color,
+                                                 col = NA))
 
-          assign("ideogram_grobs", addGrob(get("ideogram_grobs", envir = bbEnv), child = lastBand_grob), envir = bbEnv)
+          assign("ideogram_grobs",
+                 addGrob(get("ideogram_grobs", envir = bbEnv),
+                         child = lastBand_grob), envir = bbEnv)
         }
 
 
@@ -520,7 +597,8 @@ bb_plotIdeogram <- function(chrom, assembly = "hg19", orientation = "h", showBan
 
           ## CENTER LEFT BAND ##
           if (leftCent$start < min(centerleftXpoints)){
-            leftCent_Xpoints <- c(centerleftXpoints, leftCent$start, leftCent$start)
+            leftCent_Xpoints <- c(centerleftXpoints, leftCent$start,
+                                  leftCent$start)
             leftCent_Ypoints <- c(centerleftYpoints, vp$yscale[2], 0)
           } else {
             leftCent_Xpoints <- centerleftXpoints[which(centerleftXpoints >= leftCent$start)]
@@ -528,18 +606,22 @@ bb_plotIdeogram <- function(chrom, assembly = "hg19", orientation = "h", showBan
           }
 
           if (bb_ideoInternal$showBands == TRUE){
-            leftCent_grob <- polygonGrob(x = leftCent_Xpoints, y = leftCent_Ypoints,
+            leftCent_grob <- polygonGrob(x = leftCent_Xpoints,
+                                         y = leftCent_Ypoints,
                                          default.units = "native",
                                          gp = gpar(fill = leftCent$color, col = NA))
 
-            assign("ideogram_grobs", addGrob(get("ideogram_grobs", envir = bbEnv), child = leftCent_grob), envir = bbEnv)
+            assign("ideogram_grobs",
+                   addGrob(get("ideogram_grobs", envir = bbEnv),
+                           child = leftCent_grob), envir = bbEnv)
           }
 
 
           ## CENTER RIGHT BAND ##
 
           if (rightCent$end > max(centerrightXpoints)){
-            rightCent_Xpoints <- c(centerrightXpoints, rightCent$end, rightCent$end)
+            rightCent_Xpoints <- c(centerrightXpoints, rightCent$end,
+                                   rightCent$end)
             rightCent_Ypoints <- c(centerrightYpoints, 0, vp$yscale[2])
           } else {
             rightCent_Xpoints <- centerrightXpoints[which(centerrightXpoints <= rightCent$end)]
@@ -547,19 +629,33 @@ bb_plotIdeogram <- function(chrom, assembly = "hg19", orientation = "h", showBan
           }
 
           if (bb_ideoInternal$showBands == TRUE){
-            rightCent_grob <- polygonGrob(x = rightCent_Xpoints, y = rightCent_Ypoints,
+            rightCent_grob <- polygonGrob(x = rightCent_Xpoints,
+                                          y = rightCent_Ypoints,
                                           default.units = "native",
-                                          gp = gpar(fill = rightCent$color, col = NA))
+                                          gp = gpar(fill = rightCent$color,
+                                                    col = NA))
 
-            assign("ideogram_grobs", addGrob(get("ideogram_grobs", envir = bbEnv), child = rightCent_grob), envir = bbEnv)
+            assign("ideogram_grobs",
+                   addGrob(get("ideogram_grobs", envir = bbEnv),
+                           child = rightCent_grob), envir = bbEnv)
           }
 
           ## GET ANY BANDS THAT FALL WITHIN CENTER CURVED REGIONS ##
           if (bb_ideoInternal$showBands == TRUE){
             inleftcurvedBands <- data[which(data$end > min(centerleftXpoints) & data$end <= centerX),]
             inrightcurvedBands <- data[which(data$start < max(centerrightXpoints) & data$start >= centerX),]
-            if(nrow(inleftcurvedBands > 0)) invisible(apply(inleftcurvedBands, 1, curvedBands_right, xCurve = centerleftXpoints, yCurve = centerleftYpoints, ymax = vp$yscale[2]))
-            if(nrow(inrightcurvedBands > 0)) invisible(apply(inrightcurvedBands, 1, curvedBands_left, xCurve = centerrightXpoints, yCurve = centerrightYpoints, ymax = vp$yscale[2]))
+            if(nrow(inleftcurvedBands > 0)) invisible(apply(inleftcurvedBands,
+                                                            1,
+                                                            curvedBands_right,
+                                                            xCurve = centerleftXpoints,
+                                                            yCurve = centerleftYpoints,
+                                                            ymax = vp$yscale[2]))
+            if(nrow(inrightcurvedBands > 0)) invisible(apply(inrightcurvedBands,
+                                                             1,
+                                                             curvedBands_left,
+                                                             xCurve = centerrightXpoints,
+                                                             yCurve = centerrightYpoints,
+                                                             ymax = vp$yscale[2]))
 
             ## REMAINING BANDS ##
             data <- suppressMessages(dplyr::anti_join(data, inleftcurvedBands))
@@ -575,8 +671,18 @@ bb_plotIdeogram <- function(chrom, assembly = "hg19", orientation = "h", showBan
           leftcurvedBands <- data[which(data$start < max(leftXpoints)),]
           rightcurvedBands <- data[which(data$start >= min(rightXpoints)),]
 
-          if(nrow(leftcurvedBands > 0)) invisible(apply(leftcurvedBands, 1, curvedBands_left, xCurve = leftXpoints, yCurve = leftYpoints, ymax = vp$yscale[2]))
-          if(nrow(rightcurvedBands > 0)) invisible(apply(rightcurvedBands, 1, curvedBands_right, xCurve = rightXpoints, yCurve = rightYpoints, ymax = vp$yscale[2]))
+          if(nrow(leftcurvedBands > 0)) invisible(apply(leftcurvedBands,
+                                                        1,
+                                                        curvedBands_left,
+                                                        xCurve = leftXpoints,
+                                                        yCurve = leftYpoints,
+                                                        ymax = vp$yscale[2]))
+          if(nrow(rightcurvedBands > 0)) invisible(apply(rightcurvedBands,
+                                                         1,
+                                                         curvedBands_right,
+                                                         xCurve = rightXpoints,
+                                                         yCurve = rightYpoints,
+                                                         ymax = vp$yscale[2]))
 
           ## REMAINING BANDS ##
           data <- suppressMessages(dplyr::anti_join(data, leftcurvedBands))
@@ -586,7 +692,9 @@ bb_plotIdeogram <- function(chrom, assembly = "hg19", orientation = "h", showBan
                                 width = data$width, height = unit(1, "npc"),
                                 just = "left", default.units = "native",
                                 gp = gpar(fill = data$color, col = NA))
-          assign("ideogram_grobs", addGrob(get("ideogram_grobs", envir = bbEnv), child = rectBands), envir = bbEnv)
+          assign("ideogram_grobs",
+                 addGrob(get("ideogram_grobs", envir = bbEnv),
+                         child = rectBands), envir = bbEnv)
         }
 
 
@@ -614,8 +722,10 @@ bb_plotIdeogram <- function(chrom, assembly = "hg19", orientation = "h", showBan
         ltopX <- centerleftXpoints[which(centerleftXpoints <= centerX & centerleftYpoints >= topIntersectY)]
         ltopY <- centerleftYpoints[which(centerleftXpoints <= centerX & centerleftYpoints >= topIntersectY)]
 
-        Xoutline <- c(leftXpoints, lbottomX, centerX, rbottomX, rightXpoints, rtopX, centerX, ltopX)
-        Youtline <- c(leftYpoints, lbottomY, bottomIntersectY, rbottomY, rightYpoints, rtopY, topIntersectY, ltopY)
+        Xoutline <- c(leftXpoints, lbottomX, centerX, rbottomX,
+                      rightXpoints, rtopX, centerX, ltopX)
+        Youtline <- c(leftYpoints, lbottomY, bottomIntersectY, rbottomY,
+                      rightYpoints, rtopY, topIntersectY, ltopY)
 
       } else {
 
@@ -627,7 +737,9 @@ bb_plotIdeogram <- function(chrom, assembly = "hg19", orientation = "h", showBan
       outlineGrob <- polygonGrob(x = Xoutline, y = Youtline,
                                  default.units = "native",
                                  gp = gpar(fill = NA, col = "#d0cfd4"))
-      assign("ideogram_grobs", addGrob(get("ideogram_grobs", envir = bbEnv), child = outlineGrob), envir = bbEnv)
+      assign("ideogram_grobs",
+             addGrob(get("ideogram_grobs", envir = bbEnv),
+                     child = outlineGrob), envir = bbEnv)
 
 
     }

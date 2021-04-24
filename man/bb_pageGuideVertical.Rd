@@ -15,13 +15,20 @@ bb_pageGuideVertical(
 \arguments{
 \item{x}{A numeric or unit object specifying x-coordinate of guide.}
 
-\item{default.units}{A string indicating the default units to use if \code{x} is only given as a numeric. Default value is \code{default.units = "inches"}.}
+\item{default.units}{A string indicating the default units to use
+if \code{x} is only given as a numeric.
+Default value is \code{default.units = "inches"}.}
 
-\item{linecolor}{Character value indicating color of guideline. Default value is \code{linecolor = "grey55"}.}
+\item{linecolor}{Character value indicating color of guideline.
+Default value is \code{linecolor = "grey55"}.}
 
-\item{params}{An optional \link[BentoBox]{bb_params} object containing relevant function parameters.}
+\item{params}{An optional \link[BentoBox]{bb_params} object
+containing relevant function parameters.}
 
 \item{...}{Additional grid graphical parameters. See \link[grid]{gpar}.}
+}
+\value{
+None.
 }
 \description{
 Draw a vertical guideline at a specified x-coordinate on a BentoBox page

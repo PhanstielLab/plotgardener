@@ -2,20 +2,27 @@
 #'
 #' @param plot Plot object to annotate with y-axis.
 #' @param at A numeric vector of y-value locations for tick marks.
-#' @param label A logical value indicating whether to draw the labels on the tick marks, or an expression or character vector which specify the labels to use.
+#' @param label A logical value indicating whether to draw the labels
+#' on the tick marks, or an expression or character vector which specify
+#' the labels to use.
 #' If not logical, must be the same length as the \code{at} argument.
-#' @param main A logical value indicating whether to draw the y-axis at the left of the plot. Default value is \code{main = TRUE}. Options are:
+#' @param main A logical value indicating whether to draw the y-axis at
+#' the left of the plot. Default value is \code{main = TRUE}. Options are:
 #' \itemize{
 #' \item{\code{TRUE}: }{y-axis is drawn at the left of the plot.}
 #' \item{\code{FALSE}: }{y-axis is drawn at the right of the plot.}
 #' }
-#' @param gp Grid graphical parameters. See \link[grid]{gpar}.
-#' @param scipen An integer indicating the penalty to be applied when deciding to print numeric values in fixed or exponential notation. Default value is \code{scipen = 999}.
-#' @param axisLine A logical value indicating whether to show the axis line. Default value is \code{axisLine = FALSE}.
-#' @param params An optional \link[BentoBox]{bb_params} object containing relevant function parameters.
+#' @param scipen An integer indicating the penalty to be applied when
+#' deciding to print numeric values in fixed or exponential notation.
+#' Default value is \code{scipen = 999}.
+#' @param axisLine A logical value indicating whether to show the axis line.
+#' Default value is \code{axisLine = FALSE}.
+#' @param params An optional \link[BentoBox]{bb_params} object
+#' containing relevant function parameters.
 #' @param ... Additional grid graphical parameters. See \link[grid]{gpar}.
 #'
-#' @return Returns a \code{bb_yaxis} object containing relevant \link[grid]{grob} information.
+#' @return Returns a \code{bb_yaxis} object containing
+#' relevant \link[grid]{grob} information.
 #'
 #' @examples
 #' ## Load Hi-C data
@@ -25,10 +32,13 @@
 #' bb_pageCreate(width = 4, height = 3.5, default.units = "inches")
 #'
 #' ## Plot and place a square Hi-C plot
-#' hicPlot <- bb_plotHicSquare(data = bb_imrHicData, resolution = 10000, zrange = c(0, 70),
-#'                             chrom = "chr21", chromstart = 28000000, chromend = 30300000,
+#' hicPlot <- bb_plotHicSquare(data = bb_imrHicData, resolution = 10000,
+#'                             zrange = c(0, 70),
+#'                             chrom = "chr21",
+#'                             chromstart = 28000000, chromend = 30300000,
 #'                             x = 1, y = 0.5, width = 2.5, height = 2.5,
-#'                             just = c("left", "top"), default.units = "inches")
+#'                             just = c("left", "top"),
+#'                             default.units = "inches")
 #'
 #' ## Add standard y-axis to Hi-C plot
 #' bb_annoYaxis(plot = hicPlot, at = c(28000000, 29000000, 30300000),
@@ -45,7 +55,8 @@
 #' bb_pageGuideHide()
 #'
 #' @export
-bb_annoYaxis <- function(plot, at = NULL, label = TRUE, main = TRUE, scipen = 999, axisLine = FALSE, params = NULL, ...){
+bb_annoYaxis <- function(plot, at = NULL, label = TRUE, main = TRUE,
+                         scipen = 999, axisLine = FALSE, params = NULL, ...){
 
   # ======================================================================================================================================================================================
   # PARSE PARAMETERS
@@ -61,9 +72,13 @@ bb_annoYaxis <- function(plot, at = NULL, label = TRUE, main = TRUE, scipen = 99
   if(!hasArg(plot)) plot <- NULL
 
   ## Compile all parameters into an internal object
-  bb_yInternal <- structure(list(plot = plot, at = at, label = label, main = main, gp = gpar(), scipen = scipen, axisLine = axisLine), class = "bb_yInternal")
+  bb_yInternal <- structure(list(plot = plot, at = at, label = label,
+                                 main = main, gp = gpar(), scipen = scipen,
+                                 axisLine = axisLine),
+                            class = "bb_yInternal")
 
-  bb_yInternal <- parseParams(bb_params = params, object_params = bb_yInternal)
+  bb_yInternal <- parseParams(bb_params = params,
+                              object_params = bb_yInternal)
 
   ## For any defaults that are still NULL, set back to default
   if(is.null(bb_yInternal$label)) bb_yInternal$label <- TRUE
@@ -72,7 +87,8 @@ bb_annoYaxis <- function(plot, at = NULL, label = TRUE, main = TRUE, scipen = 99
   if(is.null(bb_yInternal$axisLine)) bb_yInternal$axisLine <- FALSE
 
   ## Set gp
-  bb_yInternal$gp <- setGP(gpList = bb_yInternal$gp, params = bb_yInternal, ...)
+  bb_yInternal$gp <- setGP(gpList = bb_yInternal$gp,
+                           params = bb_yInternal, ...)
   # ======================================================================================================================================================================================
   # CATCH ERRORS
   # ======================================================================================================================================================================================
@@ -97,7 +113,9 @@ bb_annoYaxis <- function(plot, at = NULL, label = TRUE, main = TRUE, scipen = 99
   # CREATE GROB WITHOUT DRAWING
   # ======================================================================================================================================================================================
 
-  yGrob <- yaxisGrob(at = bb_yInternal$at, label = bb_yInternal$label, main = bb_yInternal$main, gp = bb_yInternal$gp, vp = bb_yInternal$plot$grobs$vp)
+  yGrob <- yaxisGrob(at = bb_yInternal$at, label = bb_yInternal$label,
+                     main = bb_yInternal$main, gp = bb_yInternal$gp,
+                     vp = bb_yInternal$plot$grobs$vp)
 
   # ======================================================================================================================================================================================
   # GET CENTER OF INPUT PLOT VIEWPORT BASED ON INPUT PLOT TYPE AND JUSTIFICATION
@@ -107,7 +125,8 @@ bb_annoYaxis <- function(plot, at = NULL, label = TRUE, main = TRUE, scipen = 99
 
     plotVP <- bb_yInternal$plot$grobs$children$background$vp
 
-  } else if (class(bb_yInternal$plot) == "bb_hicTriangle" | class(bb_yInternal$plot) == "bb_hicRectangle"){
+  } else if (class(bb_yInternal$plot) == "bb_hicTriangle"
+             | class(bb_yInternal$plot) == "bb_hicRectangle"){
 
     plotVP <- bb_yInternal$plot$outsideVP
 
@@ -134,21 +153,27 @@ bb_annoYaxis <- function(plot, at = NULL, label = TRUE, main = TRUE, scipen = 99
 
   ## Make viewport name
   currentViewports <- current_viewports()
-  vp_name <- paste0("bb_yaxis", length(grep(pattern = "bb_yaxis", x = currentViewports)) + 1)
+  vp_name <- paste0("bb_yaxis",
+                    length(grep(pattern = "bb_yaxis",
+                                x = currentViewports)) + 1)
 
   ## Define viewport
   if (bb_yInternal$main == TRUE){
 
     vp <- viewport(width = widthDetails(yGrob), height = plotVP$height,
-                   x = adjusted_vp[[1]] - 0.5 * (plotVP$width), y = adjusted_vp[[2]] - 0.5 * (plotVP$height),
-                   just = c("right", "bottom"), yscale = plotVP$yscale, name = vp_name)
+                   x = adjusted_vp[[1]] - 0.5 * (plotVP$width),
+                   y = adjusted_vp[[2]] - 0.5 * (plotVP$height),
+                   just = c("right", "bottom"), yscale = plotVP$yscale,
+                   name = vp_name)
 
 
   } else if (bb_yInternal$main == FALSE){
 
     vp <- viewport(width = widthDetails(yGrob), height = plotVP$height,
-                   x = adjusted_vp[[1]] + 0.5 * (plotVP$width), y = adjusted_vp[[2]] - 0.5 * (plotVP$height),
-                   just = c("left", "bottom"), yscale = plotVP$yscale, name = vp_name)
+                   x = adjusted_vp[[1]] + 0.5 * (plotVP$width),
+                   y = adjusted_vp[[2]] - 0.5 * (plotVP$height),
+                   just = c("left", "bottom"), yscale = plotVP$yscale,
+                   name = vp_name)
 
   }
 
@@ -156,7 +181,9 @@ bb_annoYaxis <- function(plot, at = NULL, label = TRUE, main = TRUE, scipen = 99
   # PLOT
   # ======================================================================================================================================================================================
 
-  yGrob <- grid.yaxis(at = bb_yInternal$at, label = bb_yInternal$label, main = bb_yInternal$main, gp = bb_yInternal$gp, vp = vp)
+  yGrob <- grid.yaxis(at = bb_yInternal$at, label = bb_yInternal$label,
+                      main = bb_yInternal$main, gp = bb_yInternal$gp,
+                      vp = vp)
   if(!bb_yInternal$axisLine) grid.remove(paste0(yGrob$name, "::major"))
   yaxis_grobs <- gTree(vp = vp, children = gList(yGrob))
   yAxis$grobs <- yaxis_grobs

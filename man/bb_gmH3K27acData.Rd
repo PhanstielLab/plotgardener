@@ -7,23 +7,31 @@
 \format{
 a dataframe in BED format with a "score" column
 \describe{
-\item{chrom}{The name of the chromosome on which the genome feature exists.}
+\item{chrom}{The name of the chromosome on which the genome
+feature exists.}
 \item{start}{The starting position of the feature in the chromosome.}
 \item{end}{The ending position of the feature in the chromosome.}
 \item{score}{Score value of read depth.}
 }
 }
 \source{
-Data with reference epigenome identifier \strong{E116} was downloaded from the NIH Roadmap Epigenomics Project \url{http://www.roadmapepigenomics.org/}.
+Data with reference epigenome identifier \strong{E116}
+was downloaded from the
+NIH Roadmap Epigenomics Project \url{http://www.roadmapepigenomics.org/}.
 }
 \usage{
 data("bb_gmH3K27acData")
 }
 \description{
-A dataset listing read depths across the genome resulting from H3K27ac ChIP-seq in the GM12878 cell line. Genomic coordinates
-fall within the region chr21:28000000-30300000 according to the hg19 genome build.
+A dataset listing read depths across the genome resulting from
+H3K27ac ChIP-seq in the GM12878 cell line. Genomic coordinates
+fall within the region chr21:28000000-30300000 according to the
+hg19 genome build.
 }
 \references{
-Roadmap Epigenomics Consortium., Integrative analysis coordination., Kundaje, A. et al. Integrative analysis of 111 reference human epigenomes. Nature 518, 317–330 (2015). https://doi.org/10.1038/nature14248
+Roadmap Epigenomics Consortium.,
+Integrative analysis coordination., Kundaje, A. et al.
+Integrative analysis of 111 reference human epigenomes.
+Nature 518, 317–330 (2015). https://doi.org/10.1038/nature14248
 }
 \keyword{datasets}

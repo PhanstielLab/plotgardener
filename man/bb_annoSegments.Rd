@@ -22,51 +22,67 @@ bb_annoSegments(
 )
 }
 \arguments{
-\item{x0}{A numeric vector or unit object indicating the starting x-values of the line segments.}
+\item{x0}{A numeric vector or unit object indicating the starting
+x-values of the line segments.}
 
-\item{y0}{A numeric vector or unit object indicating the starting y-values of the line segments.}
+\item{y0}{A numeric vector or unit object indicating the starting
+y-values of the line segments.}
 
-\item{x1}{A numeric vector or unit object indicating the stopping x-values of the line segments.}
+\item{x1}{A numeric vector or unit object indicating the stopping
+x-values of the line segments.}
 
-\item{y1}{A numeric vector or unit object indicating the stopping y-values of the line segments.}
+\item{y1}{A numeric vector or unit object indicating the stopping
+y-values of the line segments.}
 
-\item{plot}{Input BentoBox plot to internally plot line segments relative to.}
+\item{plot}{Input BentoBox plot to internally plot line segments
+relative to.}
 
-\item{default.units}{A string indicating the default units to use if \code{x0}, \code{y0}, \code{x1}, or \code{y1} are only given as numeric vectors. Default value is \code{default.units = "native"}.}
+\item{default.units}{A string indicating the default units to use
+if \code{x0}, \code{y0}, \code{x1}, or \code{y1} are only given
+as numeric vectors. Default value is \code{default.units = "native"}.}
 
-\item{linecolor}{A character value specifying segment line color. Default value is \code{linecolor = "black"}.}
+\item{linecolor}{A character value specifying segment line color.
+Default value is \code{linecolor = "black"}.}
 
-\item{lwd}{A numeric specifying segment line width. Default value is \code{lwd = 1}.}
+\item{lwd}{A numeric specifying segment line width.
+Default value is \code{lwd = 1}.}
 
-\item{lty}{A numeric specifying segment line type. Default value is \code{lty = 1}.}
+\item{lty}{A numeric specifying segment line type.
+Default value is \code{lty = 1}.}
 
-\item{lineend}{A character value specifying line end style. Default value is \code{lineend = "butt"}. Options are:
+\item{lineend}{A character value specifying line end style.
+Default value is \code{lineend = "butt"}. Options are:
 \itemize{
 \item{\code{"round"}: Segment ends are rounded.}
 \item{\code{"butt"}: Segment ends end exactly where ended.}
 \item{\code{"square"}: Segment ends are squared.}
 }}
 
-\item{linejoin}{A character value specifying line join style. Default value is \code{linejoin = "mitre"}. Options are:
+\item{linejoin}{A character value specifying line join style.
+Default value is \code{linejoin = "mitre"}. Options are:
 \itemize{
 \item{\code{"round"}: }{Line joins are rounded.}
 \item{\code{"mitre"}: }{Line joins are sharp corners.}
 \item{\code{"bevel"}: }{Line joins are flattened corners.}
 }}
 
-\item{arrow}{A list describing arrow heads to place at either end of the line segments, as produced by the \link[grid]{arrow} function.}
+\item{arrow}{A list describing arrow heads to place at either
+end of the line segments, as produced by the \link[grid]{arrow} function.}
 
-\item{params}{An optional \link[BentoBox]{bb_params} object containing relevant function parameters.}
+\item{params}{An optional \link[BentoBox]{bb_params} object containing
+relevant function parameters.}
 
 \item{...}{Additional grid graphical parameters. See \link[grid]{gpar}.}
 }
 \value{
-Returns a \code{bb_segments} object containing relevant placement and \link[grid]{grob} information.
+Returns a \code{bb_segments} object containing relevant
+placement and \link[grid]{grob} information.
 }
 \description{
 Annotates a line segment within a BentoBox plot
 }
 \examples{
+library(grid)
 ## Create a BentoBox page
 bb_pageCreate(width = 7.5, height = 2.5, default.units = "inches")
 
@@ -74,13 +90,16 @@ bb_pageCreate(width = 7.5, height = 2.5, default.units = "inches")
 library("TxDb.Hsapiens.UCSC.hg19.knownGene")
 data("bb_gwasData")
 manhattanPlot <- bb_plotManhattan(data = bb_gwasData, assembly = "hg19",
-                                  fill = c("grey", "#37a7db"), sigLine = TRUE,
+                                  fill = c("grey", "#37a7db"),
+                                  sigLine = TRUE,
                                   col = "grey", lty = 2, range = c(0, 14),
                                   x = 0.5, y = 0, width = 6.5, height = 2,
-                                  just = c("left", "top"), default.units = "inches")
+                                  just = c("left", "top"),
+                                  default.units = "inches")
 
 ## Annotate genome label
-bb_annoGenomeLabel(plot = manhattanPlot, x = 0.5, y = 2, fontsize = 8, just = c("left", "top"),
+bb_annoGenomeLabel(plot = manhattanPlot, x = 0.5, y = 2, fontsize = 8,
+                   just = c("left", "top"),
                    default.units = "inches" )
 bb_plotText(label = "Chromosome", fontsize = 8,
             x = 3.75, y = 2.20, just = "center", default.units = "inches")
@@ -97,7 +116,8 @@ bb_annoSegments(x0 = unit(0, "npc"), y0 = 10,
 
 ## Plot y-axis label
 bb_plotText(label = "-log10(p-value)", x = 0.15, y = 1, rot = 90,
-            fontsize = 8, fontface = "bold", just = "center", default.units = "inches")
+            fontsize = 8, fontface = "bold", just = "center",
+            default.units = "inches")
 
 ## Hide page guides
 bb_pageGuideHide()

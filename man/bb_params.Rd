@@ -4,163 +4,49 @@
 \alias{bb_params}
 \title{bb_params: BentoBox parameters object}
 \usage{
-bb_params(
-  alpha = NULL,
-  altchrom = NULL,
-  altchromend = NULL,
-  altchromstart = NULL,
-  archHeight = NULL,
-  arrow = NULL,
-  assembly = "hg19",
-  at = NULL,
-  axis = NULL,
-  axisLine = NULL,
-  baseline = NULL,
-  baseline.color = NULL,
-  baseline.lwd = NULL,
-  bg = NULL,
-  binCap = NULL,
-  binSize = NULL,
-  border = NULL,
-  boxHeight = NULL,
-  boxWidth = NULL,
-  breaks = NULL,
-  BSgenome = NULL,
-  cex = NULL,
-  check.overlap = NULL,
-  chrom = NULL,
-  chromend = NULL,
-  chromstart = NULL,
-  clip = NULL,
-  collapse = NULL,
-  colorby = NULL,
-  colorbyStrand = NULL,
-  colorTrans = NULL,
-  column = NULL,
-  commas = NULL,
-  curvature = NULL,
-  data = NULL,
-  default.units = NULL,
-  digits = NULL,
-  display.column = NULL,
-  draw = NULL,
-  file = NULL,
-  fill = NULL,
-  flip = NULL,
-  fontcolor = NULL,
-  fontcolors = NULL,
-  fontsize = NULL,
-  gene = NULL,
-  gene.id.column = NULL,
-  geneBackground = NULL,
-  geneBuffer = NULL,
-  geneHighlights = NULL,
-  geneOrder = NULL,
-  Genome = NULL,
-  half = NULL,
-  height = NULL,
-  id = NULL,
-  id.lengths = NULL,
-  image = NULL,
-  interpolate = NULL,
-  just = NULL,
-  label = NULL,
-  labels = NULL,
-  leadSNP = NULL,
-  legend = NULL,
-  length = NULL,
-  linecolor = NULL,
-  lineend = NULL,
-  linejoin = NULL,
-  lty = NULL,
-  lwd = NULL,
-  main = NULL,
-  margin = NULL,
-  matrix = NULL,
-  negData = NULL,
-  norm = NULL,
-  OrgDb = NULL,
-  orientation = NULL,
-  palette = NULL,
-  pch = NULL,
-  plot = NULL,
-  position = NULL,
-  r = NULL,
-  range = NULL,
-  res_scale = NULL,
-  resolution = NULL,
-  rot = NULL,
-  scale = NULL,
-  scaleLD = NULL,
-  scientific = NULL,
-  scipen = NULL,
-  sequence = NULL,
-  shift = NULL,
-  showBands = NULL,
-  showGuides = NULL,
-  sigCol = NULL,
-  sigLine = NULL,
-  sigVal = NULL,
-  space = NULL,
-  spaceHeight = NULL,
-  spaceWidth = NULL,
-  strand = NULL,
-  strandcolors = NULL,
-  strandLabels = NULL,
-  strandSplit = NULL,
-  stroke = NULL,
-  style = NULL,
-  tcl = NULL,
-  ticks = NULL,
-  title = NULL,
-  TxDb = NULL,
-  type = NULL,
-  width = NULL,
-  x = NULL,
-  x0 = NULL,
-  x1 = NULL,
-  xgrid = NULL,
-  y = NULL,
-  y0 = NULL,
-  y1 = NULL,
-  ygrid = NULL,
-  ymax = NULL,
-  zrange = NULL,
-  ...
-)
+bb_params(assembly = "hg19", gene = NULL, geneBuffer = NULL, ...)
 }
 \arguments{
-\item{assembly}{String defining the genome build. Default value is \code{assembly = "hg19"}.}
+\item{assembly}{String defining the genome build.
+Default value is \code{assembly = "hg19"}.}
 
-\item{gene}{(optional) String naming a gene used to set the chromosome, chromstart, and
-chromend arguments.}
+\item{gene}{(optional) String naming a gene used to set the
+chrom, chromstart, and chromend arguments.}
 
-\item{geneBuffer}{(optional) Integer base-pairs to extend the start and end of a gene
-defined by argument \code{gene}.}
+\item{geneBuffer}{(optional) Integer base-pairs to extend the
+start and end of a gene defined by argument \code{gene}.}
 
-\item{...}{This function will take any BentoBox function parameters and their values.}
+\item{...}{This function will take any BentoBox function
+parameters and their values.}
 }
 \value{
-Returns an object of class \code{bb_params} containing BentoBox function arguments.
+Returns an object of class \code{bb_params}
+containing BentoBox function arguments.
 }
 \description{
-Creates an object of class "bb_params" that can be used by BentoBox functions.
-bb_params can be used to set a set of parameters to be shared across multiple
-functions.
+Creates an object of class "bb_params" that can be used by
+BentoBox functions. bb_params can be used to set a set of parameters
+to be shared across multiple functions.
 }
 \details{
-bb_params generates arguments from exported BentoBox functions at loading time of the
-package. Arguments defined in a bb_params object can be passed into the \code{params}
-argument of BentoBox functions. bb_params arguments can be overridden from within
-BentoBox functions.
+bb_params generates arguments from exported BentoBox functions at
+loading time of the package. Arguments defined in a bb_params object
+can be passed into the \code{params} argument of BentoBox functions.
+bb_params arguments can be overridden from within BentoBox functions.
 
-bb_params also provides an alternative region definition mechanism. Given a gene name
-and genome assembly, bb_params returns the appropriate "chrom", "chromstart", and
-"chromend" with a default buffer of \code{(gene length) / 2} added to the ends of the
-gene coordinates. The buffer amount can be set manually with the \code{geneBuffer}
-parameter. Buffer extending beyond the length of the chromosome will be trimmed.
+bb_params also provides an alternative region definition mechanism.
+Given a gene name and genome assembly, bb_params returns the appropriate
+"chrom", "chromstart", and "chromend" with a default buffer of
+\code{(gene length) / 2} added to the ends of the gene coordinates.
+The buffer amount can be set manually with the \code{geneBuffer}
+parameter. Buffer extending beyond the length of the chromosome
+will be trimmed.
 }
 \examples{
+## Load hg19 genomic annotation packages
+library("TxDb.Hsapiens.UCSC.hg19.knownGene")
+library("org.Hs.eg.db")
+
 ## Define parameters
 p1 <- bb_params(gene = "IL1B", assembly = "hg19")
 
