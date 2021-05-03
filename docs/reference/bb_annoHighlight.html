@@ -6,7 +6,8 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Annotates a highlight box around a specified genomic region of a BentoBox plot — bb_annoHighlight • BentoBox</title>
+<title>Annotates a highlight box around a specified genomic region of a
+BentoBox plot — bb_annoHighlight • BentoBox</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -46,8 +47,10 @@
 
 
 
-<meta property="og:title" content="Annotates a highlight box around a specified genomic region of a BentoBox plot — bb_annoHighlight" />
-<meta property="og:description" content="Annotates a highlight box around a specified genomic region of a BentoBox plot" />
+<meta property="og:title" content="Annotates a highlight box around a specified genomic region of a
+BentoBox plot — bb_annoHighlight" />
+<meta property="og:description" content="Annotates a highlight box around a specified genomic region of a
+BentoBox plot" />
 <meta property="og:image" content="https://phanstiellab.github.io/bentobox/logo.png" />
 
 
@@ -131,13 +134,15 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Annotates a highlight box around a specified genomic region of a BentoBox plot</h1>
+    <h1>Annotates a highlight box around a specified genomic region of a
+BentoBox plot</h1>
     <small class="dont-index">Source: <a href='https://github.com/PhanstielLab/BentoBox/blob/master/R/bb_annoHighlight.R'><code>R/bb_annoHighlight.R</code></a></small>
     <div class="hidden name"><code>bb_annoHighlight.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Annotates a highlight box around a specified genomic region of a BentoBox plot</p>
+    <p>Annotates a highlight box around a specified genomic region of a
+BentoBox plot</p>
     </div>
 
     <pre class="usage"><span class='fu'>bb_annoHighlight</span><span class='op'>(</span>
@@ -177,20 +182,26 @@
     </tr>
     <tr>
       <th>fill</th>
-      <td><p>A character value specifying highlight box fill color. Default value is <code>fill = "grey"</code>.</p></td>
+      <td><p>A character value specifying highlight box fill color.
+Default value is <code>fill = "grey"</code>.</p></td>
     </tr>
     <tr>
       <th>linecolor</th>
-      <td><p>A character value specifying highlight box line color. Default value is <code>linecolor = NA</code>.</p></td>
+      <td><p>A character value specifying highlight box line color.
+Default value is <code>linecolor = NA</code>.</p></td>
     </tr>
     <tr>
       <th>alpha</th>
-      <td><p>Numeric value specifying color transparency. Default value is <code>alpha = 0.4</code>.</p></td>
+      <td><p>Numeric value specifying color transparency.
+Default value is <code>alpha = 0.4</code>.</p></td>
     </tr>
     <tr>
       <th>y</th>
-      <td><p>A numeric, unit object, or character containing a "b" combined with a numeric value specifying square highlight box y-location. The character value will
-place the highlight box y relative to the bottom of the most recently plotted BentoBox plot according to the units of the BentoBox page.</p></td>
+      <td><p>A numeric, unit object, or character containing a "b" combined
+with a numeric value specifying square highlight box y-location.
+The character value will place the highlight box y relative to the
+bottom of the most recently plotted BentoBox plot according to the
+units of the BentoBox page.</p></td>
     </tr>
     <tr>
       <th>height</th>
@@ -198,16 +209,23 @@ place the highlight box y relative to the bottom of the most recently plotted Be
     </tr>
     <tr>
       <th>just</th>
-      <td><p>Justification of highlight box relative to its (x, y) location. If there are two values, the first value specifies horizontal justification and the second value specifies vertical justification.
-Possible string values are: <code>"left"</code>, <code>"right"</code>, <code>"centre"</code>, <code>"center"</code>, <code>"bottom"</code>, and <code>"top"</code>. Default value is <code>just = c("left", "top")</code>.</p></td>
+      <td><p>Justification of highlight box relative to its (x, y)
+location. If there are two values, the first value specifies horizontal
+justification and the second value specifies vertical justification.
+Possible string values are: <code>"left"</code>, <code>"right"</code>,
+<code>"centre"</code>, <code>"center"</code>, <code>"bottom"</code>, and <code>"top"</code>.
+Default value is <code>just = c("left", "top")</code>.</p></td>
     </tr>
     <tr>
       <th>default.units</th>
-      <td><p>A string indicating the default units to use if <code>y</code> or <code>height</code> are only given as numerics or numeric vectors. Default value is <code>default.units = "inches"</code>.</p></td>
+      <td><p>A string indicating the default units to use if
+<code>y</code> or <code>height</code> are only given as numerics or numeric vectors.
+Default value is <code>default.units = "inches"</code>.</p></td>
     </tr>
     <tr>
       <th>params</th>
-      <td><p>An optional <a href='bb_params.html'>bb_params</a> object containing relevant function parameters.</p></td>
+      <td><p>An optional <a href='bb_params.html'>bb_params</a> object containing
+relevant function parameters.</p></td>
     </tr>
     <tr>
       <th>...</th>
@@ -217,7 +235,8 @@ Possible string values are: <code>"left"</code>, <code>"right"</code>, <code>"ce
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>Returns a <code>bb_highlight</code> object containing relevant genomic region, placement, and <a href='https://rdrr.io/r/grid/grid.grob.html'>grob</a> information.</p>
+    <p>Returns a <code>bb_highlight</code> object containing relevant
+genomic region, placement, and <a href='https://rdrr.io/r/grid/grid.grob.html'>grob</a> information.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'>## Create a page</span>
@@ -225,23 +244,28 @@ Possible string values are: <code>"left"</code>, <code>"right"</code>, <code>"ce
 </div><div class='input'>
 <span class='co'>## Plot and place a signal plot</span>
 <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='st'>"bb_imrH3K27acData"</span><span class='op'>)</span>
-<span class='va'>region</span> <span class='op'>&lt;-</span> <span class='fu'><a href='bb_params.html'>bb_params</a></span><span class='op'>(</span>chrom <span class='op'>=</span> <span class='st'>"chr21"</span>, chromstart <span class='op'>=</span> <span class='fl'>28000000</span>, chromend <span class='op'>=</span> <span class='fl'>30300000</span>,
+<span class='va'>region</span> <span class='op'>&lt;-</span> <span class='fu'><a href='bb_params.html'>bb_params</a></span><span class='op'>(</span>chrom <span class='op'>=</span> <span class='st'>"chr21"</span>,
+                    chromstart <span class='op'>=</span> <span class='fl'>28000000</span>, chromend <span class='op'>=</span> <span class='fl'>30300000</span>,
                     range <span class='op'>=</span> <span class='fu'><a href='c.html'>c</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>45</span><span class='op'>)</span><span class='op'>)</span>
 <span class='va'>signalPlot</span> <span class='op'>&lt;-</span> <span class='fu'><a href='bb_plotSignal.html'>bb_plotSignal</a></span><span class='op'>(</span>data <span class='op'>=</span> <span class='va'>bb_imrH3K27acData</span>, params <span class='op'>=</span> <span class='va'>region</span>,
                             x <span class='op'>=</span> <span class='fl'>0.5</span>, y <span class='op'>=</span> <span class='fl'>0.25</span>, width <span class='op'>=</span> <span class='fl'>6.5</span>, height <span class='op'>=</span> <span class='fl'>0.65</span>,
-                            just <span class='op'>=</span> <span class='fu'><a href='c.html'>c</a></span><span class='op'>(</span><span class='st'>"left"</span>, <span class='st'>"top"</span><span class='op'>)</span>, default.units <span class='op'>=</span> <span class='st'>"inches"</span><span class='op'>)</span>
+                            just <span class='op'>=</span> <span class='fu'><a href='c.html'>c</a></span><span class='op'>(</span><span class='st'>"left"</span>, <span class='st'>"top"</span><span class='op'>)</span>,
+                            default.units <span class='op'>=</span> <span class='st'>"inches"</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; <span class='message'>bb_signal[bb_signal1]</span></div><div class='input'>
 <span class='co'>## Highlight genomic region on signal plot</span>
 <span class='fu'>bb_annoHighlight</span><span class='op'>(</span>plot <span class='op'>=</span> <span class='va'>signalPlot</span>,
-                 chrom <span class='op'>=</span> <span class='st'>"chr21"</span>, chromstart <span class='op'>=</span> <span class='fl'>29000000</span>, chromend <span class='op'>=</span> <span class='fl'>29125000</span>,
-                 y <span class='op'>=</span> <span class='fl'>0.25</span>, height <span class='op'>=</span> <span class='fl'>1</span>, just <span class='op'>=</span> <span class='fu'><a href='c.html'>c</a></span><span class='op'>(</span><span class='st'>"left"</span>, <span class='st'>"top"</span><span class='op'>)</span>, default.units <span class='op'>=</span> <span class='st'>"inches"</span><span class='op'>)</span>
+                 chrom <span class='op'>=</span> <span class='st'>"chr21"</span>,
+                 chromstart <span class='op'>=</span> <span class='fl'>29000000</span>, chromend <span class='op'>=</span> <span class='fl'>29125000</span>,
+                 y <span class='op'>=</span> <span class='fl'>0.25</span>, height <span class='op'>=</span> <span class='fl'>1</span>, just <span class='op'>=</span> <span class='fu'><a href='c.html'>c</a></span><span class='op'>(</span><span class='st'>"left"</span>, <span class='st'>"top"</span><span class='op'>)</span>,
+                 default.units <span class='op'>=</span> <span class='st'>"inches"</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; <span class='message'>bb_highlight[bb_highlight1]</span></div><div class='input'>
 <span class='co'>## Plot text label</span>
 <span class='fu'><a href='bb_plotText.html'>bb_plotText</a></span><span class='op'>(</span>label <span class='op'>=</span> <span class='st'>"region of interest"</span>, fontsize <span class='op'>=</span> <span class='fl'>8</span>, fontcolor <span class='op'>=</span> <span class='st'>"black"</span>,
             x <span class='op'>=</span> <span class='fl'>3.5</span>, y <span class='op'>=</span> <span class='fl'>0.2</span>, just <span class='op'>=</span> <span class='st'>"bottom"</span>, default.units <span class='op'>=</span> <span class='st'>"inches"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>bb_text[GRID.text.127]</span></div><div class='input'>
+</div><div class='output co'>#&gt; <span class='message'>bb_text[bb_text1]</span></div><div class='input'>
 <span class='co'>## Plot genome label</span>
-<span class='fu'><a href='bb_plotGenomeLabel.html'>bb_plotGenomeLabel</a></span><span class='op'>(</span>chrom <span class='op'>=</span> <span class='st'>"chr21"</span>, chromstart <span class='op'>=</span> <span class='fl'>28000000</span>, chromend <span class='op'>=</span> <span class='fl'>30300000</span>,
+<span class='fu'><a href='bb_plotGenomeLabel.html'>bb_plotGenomeLabel</a></span><span class='op'>(</span>chrom <span class='op'>=</span> <span class='st'>"chr21"</span>,
+                   chromstart <span class='op'>=</span> <span class='fl'>28000000</span>, chromend <span class='op'>=</span> <span class='fl'>30300000</span>,
                    x <span class='op'>=</span> <span class='fl'>0.5</span>, y <span class='op'>=</span> <span class='fl'>1.3</span>, length <span class='op'>=</span> <span class='fl'>6.5</span>, default.units <span class='op'>=</span> <span class='st'>"inches"</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; <span class='message'>bb_genomeLabel[bb_genomeLabel1]</span></div><div class='img'><img src='bb_annoHighlight-1.png' alt='' width='787' height='672' /></div><div class='input'>
 <span class='co'>## Hide page guides</span>

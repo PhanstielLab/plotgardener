@@ -165,8 +165,11 @@
     </tr>
     <tr>
       <th>y</th>
-      <td><p>A numeric, unit object, or character containing a "b" combined with a numeric value specifying plot y-location. The character value will
-place the plot y relative to the bottom of the most recently plotted BentoBox plot according to the units of the BentoBox page.</p></td>
+      <td><p>A numeric, unit object, or character containing a "b"
+combined with a numeric value specifying plot y-location.
+The character value will
+place the plot y relative to the bottom of the most recently plotted
+BentoBox plot according to the units of the BentoBox page.</p></td>
     </tr>
     <tr>
       <th>width</th>
@@ -178,26 +181,35 @@ place the plot y relative to the bottom of the most recently plotted BentoBox pl
     </tr>
     <tr>
       <th>just</th>
-      <td><p>Justification of base plot relative to its (x, y) location. If there are two values, the first value specifies horizontal justification and the second value specifies vertical justification.
-Possible string values are: <code>"left"</code>, <code>"right"</code>, <code>"centre"</code>, <code>"center"</code>, <code>"bottom"</code>, and <code>"top"</code>. Default value is <code>just = c("left", "top")</code>.</p></td>
+      <td><p>Justification of base plot relative to its (x, y) location.
+If there are two values, the first value specifies horizontal
+justification and the second value specifies vertical justification.
+Possible string values are: <code>"left"</code>, <code>"right"</code>,
+<code>"centre"</code>, <code>"center"</code>, <code>"bottom"</code>, and <code>"top"</code>.
+Default value is <code>just = c("left", "top")</code>.</p></td>
     </tr>
     <tr>
       <th>default.units</th>
-      <td><p>A string indicating the default units to use if <code>x</code>, <code>y</code>, <code>width</code>, or <code>height</code> are only given as numerics. Default value is <code>default.units = "inches"</code>.</p></td>
+      <td><p>A string indicating the default units to use
+if <code>x</code>, <code>y</code>, <code>width</code>, or <code>height</code> are only given
+as numerics. Default value is <code>default.units = "inches"</code>.</p></td>
     </tr>
     <tr>
       <th>bg</th>
-      <td><p>Character value indicating background color. Default value is <code>bg = NA</code>.</p></td>
+      <td><p>Character value indicating background color.
+Default value is <code>bg = NA</code>.</p></td>
     </tr>
     <tr>
       <th>params</th>
-      <td><p>An optional <a href='bb_params.html'>bb_params</a> object containing relevant function parameters.</p></td>
+      <td><p>An optional <a href='bb_params.html'>bb_params</a> object
+containing relevant function parameters.</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>Returns a <code>bb_base</code> object containing relevant placement and <a href='https://rdrr.io/r/grid/grid.grob.html'>grob</a> information.</p>
+    <p>Returns a <code>bb_base</code> object containing
+relevant placement and <a href='https://rdrr.io/r/grid/grid.grob.html'>grob</a> information.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'>## Define base R plot</span>
@@ -212,8 +224,9 @@ Possible string values are: <code>"left"</code>, <code>"right"</code>, <code>"ce
             just <span class='op'>=</span> <span class='fu'><a href='c.html'>c</a></span><span class='op'>(</span><span class='st'>"left"</span>, <span class='st'>"top"</span><span class='op'>)</span>, default.units <span class='op'>=</span> <span class='st'>"inches"</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; <span class='message'>bb_base[bb_base1]</span></div><div class='input'>
 <span class='co'>## Add title</span>
-<span class='fu'><a href='bb_plotText.html'>bb_plotText</a></span><span class='op'>(</span>label <span class='op'>=</span> <span class='st'>"Base R Plot"</span>, fontsize <span class='op'>=</span> <span class='fl'>14</span>, fontface <span class='op'>=</span> <span class='st'>"bold"</span>, x <span class='op'>=</span> <span class='fl'>2.75</span>, y <span class='op'>=</span> <span class='fl'>0.5</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>bb_text[GRID.text.656]</span></div><div class='img'><img src='bb_plotBase-1.png' alt='' width='787' height='672' /></div><div class='input'>
+<span class='fu'><a href='bb_plotText.html'>bb_plotText</a></span><span class='op'>(</span>label <span class='op'>=</span> <span class='st'>"Base R Plot"</span>, fontsize <span class='op'>=</span> <span class='fl'>14</span>, fontface <span class='op'>=</span> <span class='st'>"bold"</span>,
+            x <span class='op'>=</span> <span class='fl'>2.75</span>, y <span class='op'>=</span> <span class='fl'>0.5</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='message'>bb_text[bb_text1]</span></div><div class='img'><img src='bb_plotBase-1.png' alt='' width='787' height='672' /></div><div class='input'>
 <span class='co'>## Remove BentoBox page guides</span>
 <span class='fu'><a href='bb_pageGuideHide.html'>bb_pageGuideHide</a></span><span class='op'>(</span><span class='op'>)</span>
 </div><div class='img'><img src='bb_plotBase-2.png' alt='' width='787' height='672' /></div><div class='input'>

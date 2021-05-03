@@ -174,7 +174,10 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>data</th>
-      <td><p>Data to be plotted; as a character value specifying a BED file path, a data frame in BED format, a character value specifying a .bam file path where a bam index file (.bam.bai) is in the same directory, or a <a href='https://rdrr.io/pkg/GenomicRanges/man/GRanges-class.html'>GRanges</a> object.</p></td>
+      <td><p>Data to be plotted; as a character value specifying
+a BED file path, a data frame in BED format, a character value
+specifying a .bam file path where a bam index file (.bam.bai)
+is in the same directory, or a <a href='https://rdrr.io/pkg/GenomicRanges/man/GRanges-class.html'>GRanges</a> object.</p></td>
     </tr>
     <tr>
       <th>chrom</th>
@@ -190,57 +193,79 @@
     </tr>
     <tr>
       <th>assembly</th>
-      <td><p>Default genome assembly as a string or a <a href='bb_assembly.html'>bb_assembly</a> object. Default value is <code>assembly = "hg19"</code>.</p></td>
+      <td><p>Default genome assembly as a string or a
+<a href='bb_assembly.html'>bb_assembly</a> object.
+Default value is <code>assembly = "hg19"</code>.</p></td>
     </tr>
     <tr>
       <th>fill</th>
-      <td><p>Character value(s) as a single value, vector, or palette specifying fill colors of BED elements. Default value is <code>fill = "#7ecdbb"</code>.</p></td>
+      <td><p>Character value(s) as a single value, vector, or palette
+specifying fill colors of BED elements.
+Default value is <code>fill = "#7ecdbb"</code>.</p></td>
     </tr>
     <tr>
       <th>colorby</th>
-      <td><p>A "<a href='colorby.html'>colorby</a>" object specifying information for scaling colors in <code>data</code>.</p></td>
+      <td><p>A "<a href='colorby.html'>colorby</a>" object specifying information
+for scaling colors in <code>data</code>.</p></td>
     </tr>
     <tr>
       <th>linecolor</th>
-      <td><p>A character value specifying the color of the lines outlining BED elements. Default value is <code>linecolor = NA</code>.</p></td>
+      <td><p>A character value specifying the color of the lines
+outlining BED elements. Default value is <code>linecolor = NA</code>.</p></td>
     </tr>
     <tr>
       <th>collapse</th>
-      <td><p>A logical value indicating whether to collapse BED elements into a single row, or into two rows if <code>strandSplit = TRUE</code>.
-If <code>collapse = TRUE</code>, <code>boxHeight</code> will be ignored and elements will be the height of the entire plot if <code>strandSplit = FALSE</code> or
-be the height of half of the entire plot if <code>strandSplit = TRUE</code>. Default value is <code>collapse = FALSE</code>.</p></td>
+      <td><p>A logical value indicating whether to collapse
+BED elements into a single row, or into
+two rows if <code>strandSplit = TRUE</code>.
+If <code>collapse = TRUE</code>, <code>boxHeight</code> will be ignored and elements
+will be the height of the entire plot if <code>strandSplit = FALSE</code> or
+be the height of half of the entire plot if <code>strandSplit = TRUE</code>.
+Default value is <code>collapse = FALSE</code>.</p></td>
     </tr>
     <tr>
       <th>boxHeight</th>
-      <td><p>A numeric or unit object specifying height of BED element boxes. Default value is <code>boxHeight = unit(2, "mm")</code>.</p></td>
+      <td><p>A numeric or unit object specifying height of BED element
+boxes. Default value is <code>boxHeight = unit(2, "mm")</code>.</p></td>
     </tr>
     <tr>
       <th>spaceWidth</th>
-      <td><p>A numeric value specifying the width of minimum spacing between BED element boxes, as a fraction of the plot's genomic range. Default value is <code>spaceWidth = 0.02</code>.</p></td>
+      <td><p>A numeric value specifying the width of minimum spacing
+between BED element boxes, as a fraction of the plot's genomic range.
+Default value is <code>spaceWidth = 0.02</code>.</p></td>
     </tr>
     <tr>
       <th>spaceHeight</th>
-      <td><p>A numeric value specifying the height of spacing between BED element boxes on different rows, as a fraction of boxHeight. Default value is <code>spaceHeight = 0.3</code>.</p></td>
+      <td><p>A numeric value specifying the height of spacing between
+BED element boxes on different rows, as a fraction of boxHeight.
+Default value is <code>spaceHeight = 0.3</code>.</p></td>
     </tr>
     <tr>
       <th>strandSplit</th>
-      <td><p>A logical value indicating whether plus and minus-stranded elements should be separated. Elements can only be split by strand if a <code>strand</code> column is found in <code>data</code>. Default value is <code>strandSplit = FALSE</code>.</p></td>
+      <td><p>A logical value indicating whether plus and
+minus-stranded elements should be separated. Elements can only be
+split by strand if a <code>strand</code> column is found in <code>data</code>.
+Default value is <code>strandSplit = FALSE</code>.</p></td>
     </tr>
     <tr>
       <th>bg</th>
-      <td><p>Character value indicating background color. Default value is <code>bg = NA</code>.</p></td>
+      <td><p>Character value indicating background color.
+Default value is <code>bg = NA</code>.</p></td>
     </tr>
     <tr>
       <th>baseline</th>
-      <td><p>Logical value indicating whether to include a baseline along the x-axis. Default value is <code>baseline = FALSE</code>.</p></td>
+      <td><p>Logical value indicating whether to include a
+baseline along the x-axis. Default value is <code>baseline = FALSE</code>.</p></td>
     </tr>
     <tr>
       <th>baseline.color</th>
-      <td><p>Baseline color. Default value is <code>baseline.color = "grey"</code>.</p></td>
+      <td><p>Baseline color.
+Default value is <code>baseline.color = "grey"</code>.</p></td>
     </tr>
     <tr>
       <th>baseline.lwd</th>
-      <td><p>Baseline line width. Default value is <code>baseline.lwd = 1</code>.</p></td>
+      <td><p>Baseline line width.
+Default value is <code>baseline.lwd = 1</code>.</p></td>
     </tr>
     <tr>
       <th>x</th>
@@ -248,8 +273,11 @@ be the height of half of the entire plot if <code>strandSplit = TRUE</code>. Def
     </tr>
     <tr>
       <th>y</th>
-      <td><p>A numeric, unit object, or character containing a "b" combined with a numeric value specifying BED plot y-location. The character value will
-place the BED plot y relative to the bottom of the most recently plotted BentoBox plot according to the units of the BentoBox page.</p></td>
+      <td><p>A numeric, unit object, or character containing a "b"
+combined with a numeric value specifying BED plot y-location.
+The character value will
+place the BED plot y relative to the bottom of the most recently
+plotted BentoBox plot according to the units of the BentoBox page.</p></td>
     </tr>
     <tr>
       <th>width</th>
@@ -261,20 +289,28 @@ place the BED plot y relative to the bottom of the most recently plotted BentoBo
     </tr>
     <tr>
       <th>just</th>
-      <td><p>Justification of BED plot relative to its (x, y) location. If there are two values, the first value specifies horizontal justification and the second value specifies vertical justification.
-Possible string values are: <code>"left"</code>, <code>"right"</code>, <code>"centre"</code>, <code>"center"</code>, <code>"bottom"</code>, and <code>"top"</code>. Default value is <code>just = c("left", "top")</code>.</p></td>
+      <td><p>Justification of BED plot relative to its (x, y) location.
+If there are two values, the first value specifies horizontal
+justification and the second value specifies vertical justification.
+Possible string values are: <code>"left"</code>, <code>"right"</code>,
+<code>"centre"</code>, <code>"center"</code>, <code>"bottom"</code>, and <code>"top"</code>.
+Default value is <code>just = c("left", "top")</code>.</p></td>
     </tr>
     <tr>
       <th>default.units</th>
-      <td><p>A string indicating the default units to use if <code>x</code>, <code>y</code>, <code>width</code>, or <code>height</code> are only given as numerics. Default value is <code>default.units = "inches"</code>.</p></td>
+      <td><p>A string indicating the default units to use
+if <code>x</code>, <code>y</code>, <code>width</code>, or <code>height</code> are only given
+as numerics. Default value is <code>default.units = "inches"</code>.</p></td>
     </tr>
     <tr>
       <th>draw</th>
-      <td><p>A logical value indicating whether graphics output should be produced. Default value <code>draw = TRUE</code>.</p></td>
+      <td><p>A logical value indicating whether graphics output should
+be produced. Default value <code>draw = TRUE</code>.</p></td>
     </tr>
     <tr>
       <th>params</th>
-      <td><p>An optional <a href='bb_params.html'>bb_params</a> object containing relevant function parameters.</p></td>
+      <td><p>An optional <a href='bb_params.html'>bb_params</a> object
+containing relevant function parameters.</p></td>
     </tr>
     <tr>
       <th>...</th>
@@ -284,15 +320,18 @@ Possible string values are: <code>"left"</code>, <code>"right"</code>, <code>"ce
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>Returns a <code>bb_bed</code> object containing relevant genomic region, coloring data, placement, and <a href='https://rdrr.io/r/grid/grid.grob.html'>grob</a> information.</p>
+    <p>Returns a <code>bb_bed</code> object containing relevant
+genomic region, coloring data, placement, and <a href='https://rdrr.io/r/grid/grid.grob.html'>grob</a> information.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>A BED plot can be placed on a BentoBox coordinate page by providing plot placement parameters:</p><pre>
+    <p>A BED plot can be placed on a BentoBox coordinate page by providing
+plot placement parameters:</p><pre>
 <span class='fu'>bb_plotBed</span><span class='op'>(</span><span class='va'>data</span>, <span class='va'>chrom</span>,
               chromstart <span class='op'>=</span> <span class='cn'>NULL</span>, chromend <span class='op'>=</span> <span class='cn'>NULL</span>,
               <span class='va'>x</span>, <span class='va'>y</span>, <span class='va'>width</span>, <span class='va'>height</span>, just <span class='op'>=</span> <span class='fu'><a href='c.html'>c</a></span><span class='op'>(</span><span class='st'>"left"</span>, <span class='st'>"top"</span><span class='op'>)</span>,
               default.units <span class='op'>=</span> <span class='st'>"inches"</span><span class='op'>)</span>
-</pre><p>This function can also be used to quickly plot an unannotated BED plot by ignoring plot placement parameters:</p><pre>
+</pre><p>This function can also be used to quickly plot an unannotated BED plot
+by ignoring plot placement parameters:</p><pre>
 <span class='fu'>bb_plotBed</span><span class='op'>(</span><span class='va'>data</span>, <span class='va'>chrom</span>,
               chromstart <span class='op'>=</span> <span class='cn'>NULL</span>, chromend <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span>
 </pre>
@@ -314,14 +353,15 @@ Possible string values are: <code>"left"</code>, <code>"right"</code>, <code>"ce
                          just <span class='op'>=</span> <span class='fu'><a href='c.html'>c</a></span><span class='op'>(</span><span class='st'>"left"</span>, <span class='st'>"top"</span><span class='op'>)</span>, default.units <span class='op'>=</span> <span class='st'>"inches"</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; <span class='warning'>Warning: Not enough plotting space for all provided plus strand BED elements.</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Not enough plotting space for all provided minus strand BED elements.</span></div><div class='output co'>#&gt; <span class='message'>bb_bed[bb_bed1]</span></div><div class='input'>
 <span class='co'>## Annotate genome label</span>
-<span class='fu'><a href='bb_annoGenomeLabel.html'>bb_annoGenomeLabel</a></span><span class='op'>(</span>plot <span class='op'>=</span> <span class='va'>pileupPlot</span>, x <span class='op'>=</span> <span class='fl'>0.5</span>, y <span class='op'>=</span> <span class='fl'>4.5</span>, just <span class='op'>=</span> <span class='fu'><a href='c.html'>c</a></span><span class='op'>(</span><span class='st'>"left"</span>, <span class='st'>"top"</span><span class='op'>)</span><span class='op'>)</span>
+<span class='fu'><a href='bb_annoGenomeLabel.html'>bb_annoGenomeLabel</a></span><span class='op'>(</span>plot <span class='op'>=</span> <span class='va'>pileupPlot</span>, x <span class='op'>=</span> <span class='fl'>0.5</span>, y <span class='op'>=</span> <span class='fl'>4.5</span>,
+                   just <span class='op'>=</span> <span class='fu'><a href='c.html'>c</a></span><span class='op'>(</span><span class='st'>"left"</span>, <span class='st'>"top"</span><span class='op'>)</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; <span class='message'>bb_genomeLabel[bb_genomeLabel1]</span></div><div class='input'>
 <span class='co'>## Add text labels</span>
 <span class='fu'><a href='bb_plotText.html'>bb_plotText</a></span><span class='op'>(</span>label <span class='op'>=</span> <span class='st'>"+ strand"</span>, fontcolor <span class='op'>=</span> <span class='st'>"#37a7db"</span>, fontsize <span class='op'>=</span> <span class='fl'>12</span>,
             x <span class='op'>=</span> <span class='fl'>0.5</span>, y <span class='op'>=</span> <span class='fl'>1.25</span>, just <span class='op'>=</span> <span class='st'>"left"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>bb_text[GRID.text.686]</span></div><div class='input'><span class='fu'><a href='bb_plotText.html'>bb_plotText</a></span><span class='op'>(</span>label <span class='op'>=</span> <span class='st'>"- strand"</span>, fontcolor <span class='op'>=</span> <span class='st'>"#7ecdbb"</span>, fontsize <span class='op'>=</span> <span class='fl'>12</span>,
+</div><div class='output co'>#&gt; <span class='message'>bb_text[bb_text1]</span></div><div class='input'><span class='fu'><a href='bb_plotText.html'>bb_plotText</a></span><span class='op'>(</span>label <span class='op'>=</span> <span class='st'>"- strand"</span>, fontcolor <span class='op'>=</span> <span class='st'>"#7ecdbb"</span>, fontsize <span class='op'>=</span> <span class='fl'>12</span>,
             x <span class='op'>=</span> <span class='fl'>0.5</span>, y <span class='op'>=</span> <span class='fl'>3.5</span>, just <span class='op'>=</span> <span class='st'>"left"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>bb_text[GRID.text.687]</span></div><div class='img'><img src='bb_plotBed-1.png' alt='' width='787' height='672' /></div><div class='input'>
+</div><div class='output co'>#&gt; <span class='message'>bb_text[bb_text2]</span></div><div class='img'><img src='bb_plotBed-1.png' alt='' width='787' height='672' /></div><div class='input'>
 <span class='co'>## Hide page guides</span>
 <span class='fu'><a href='bb_pageGuideHide.html'>bb_pageGuideHide</a></span><span class='op'>(</span><span class='op'>)</span>
 </div><div class='img'><img src='bb_plotBed-2.png' alt='' width='787' height='672' /></div><div class='input'>

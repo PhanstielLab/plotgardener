@@ -170,11 +170,13 @@
     </tr>
     <tr>
       <th>fill</th>
-      <td><p>If specified, this argument will produce boxes filled with the specified colors to appear beside the legend text.</p></td>
+      <td><p>If specified, this argument will produce boxes filled with
+the specified colors to appear beside the legend text.</p></td>
     </tr>
     <tr>
       <th>pch</th>
-      <td><p>The plotting symbols appearing in the legend, as a numeric vector.</p></td>
+      <td><p>The plotting symbols appearing in the legend, as a
+numeric vector.</p></td>
     </tr>
     <tr>
       <th>lty</th>
@@ -182,26 +184,31 @@
     </tr>
     <tr>
       <th>orientation</th>
-      <td><p>A string specifying legend orientation. Default value is <code>orientation = "v"</code>. Options are:</p><ul>
+      <td><p>A string specifying legend orientation.
+Default value is <code>orientation = "v"</code>. Options are:</p><ul>
 <li><p><code>"v"</code>: Vertical legend orientation.</p></li>
 <li><p><code>"h"</code>: Horizontal legend orientation.</p></li>
 </ul></td>
     </tr>
     <tr>
       <th>title</th>
-      <td><p>A character value giving a title to be placed at the top of the legend.</p></td>
+      <td><p>A character value giving a title to be placed at
+the top of the legend.</p></td>
     </tr>
     <tr>
       <th>fontsize</th>
-      <td><p>A numeric specifying text fontsize in points. Default value is <code>fontsize = 10</code>.</p></td>
+      <td><p>A numeric specifying text fontsize in points.
+Default value is <code>fontsize = 10</code>.</p></td>
     </tr>
     <tr>
       <th>border</th>
-      <td><p>Logical value indicating whether to add a border around heatmap legend. Default value is <code>border = TRUE</code>.</p></td>
+      <td><p>Logical value indicating whether to add a border
+around heatmap legend. Default value is <code>border = TRUE</code>.</p></td>
     </tr>
     <tr>
       <th>bg</th>
-      <td><p>Character value indicating background color. Default value is <code>bg = NA</code>.</p></td>
+      <td><p>Character value indicating background color.
+Default value is <code>bg = NA</code>.</p></td>
     </tr>
     <tr>
       <th>x</th>
@@ -209,8 +216,11 @@
     </tr>
     <tr>
       <th>y</th>
-      <td><p>A numeric, unit object, or character containing a "b" combined with a numeric value specifying legend y-location. The character value will
-place the legend y relative to the bottom of the most recently plotted BentoBox plot according to the units of the BentoBox page.</p></td>
+      <td><p>A numeric, unit object, or character containing a "b"
+combined with a numeric value specifying legend y-location.
+The character value will
+place the legend y relative to the bottom of the most recently
+plotted BentoBox plot according to the units of the BentoBox page.</p></td>
     </tr>
     <tr>
       <th>width</th>
@@ -222,20 +232,28 @@ place the legend y relative to the bottom of the most recently plotted BentoBox 
     </tr>
     <tr>
       <th>just</th>
-      <td><p>Justification of legend relative to its (x, y) location. If there are two values, the first value specifies horizontal justification and the second value specifies vertical justification.
-Possible string values are: <code>"left"</code>, <code>"right"</code>, <code>"centre"</code>, <code>"center"</code>, <code>"bottom"</code>, and <code>"top"</code>. Default value is <code>just = c("left", "top")</code>.</p></td>
+      <td><p>Justification of legend relative to its (x, y) location.
+If there are two values, the first value specifies horizontal
+justification and the second value specifies vertical justification.
+Possible string values are: <code>"left"</code>, <code>"right"</code>,
+<code>"centre"</code>, <code>"center"</code>, <code>"bottom"</code>, and <code>"top"</code>.
+Default value is <code>just = c("left", "top")</code>.</p></td>
     </tr>
     <tr>
       <th>default.units</th>
-      <td><p>A string indicating the default units to use if <code>x</code>, <code>y</code>, <code>width</code>, or <code>height</code> are only given as numerics. Default value is <code>default.units = "inches"</code>.</p></td>
+      <td><p>A string indicating the default units to use
+if <code>x</code>, <code>y</code>, <code>width</code>, or <code>height</code> are only given
+as numerics. Default value is <code>default.units = "inches"</code>.</p></td>
     </tr>
     <tr>
       <th>draw</th>
-      <td><p>A logical value indicating whether graphics output should be produced. Default value is <code>draw = TRUE</code>.</p></td>
+      <td><p>A logical value indicating whether graphics output should
+be produced. Default value is <code>draw = TRUE</code>.</p></td>
     </tr>
     <tr>
       <th>params</th>
-      <td><p>An optional <a href='bb_params.html'>bb_params</a> object containing relevant function parameters.</p></td>
+      <td><p>An optional <a href='bb_params.html'>bb_params</a> object
+containing relevant function parameters.</p></td>
     </tr>
     <tr>
       <th>...</th>
@@ -245,7 +263,8 @@ Possible string values are: <code>"left"</code>, <code>"right"</code>, <code>"ce
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>Returns a <code>bb_legend</code> object containing relevant placement and <a href='https://rdrr.io/r/grid/grid.grob.html'>grob</a> information.</p>
+    <p>Returns a <code>bb_legend</code> object containing relevant
+placement and <a href='https://rdrr.io/r/grid/grid.grob.html'>grob</a> information.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'>## Load BED data</span>
@@ -256,20 +275,24 @@ Possible string values are: <code>"left"</code>, <code>"right"</code>, <code>"ce
 </div><div class='input'>
 <span class='co'>## Plot a pileup plot, coloring elements by strand</span>
 <span class='va'>pileupPlot</span> <span class='op'>&lt;-</span> <span class='fu'><a href='bb_plotBed.html'>bb_plotBed</a></span><span class='op'>(</span>data <span class='op'>=</span> <span class='va'>bb_bedData</span>, chrom <span class='op'>=</span> <span class='st'>"chr21"</span>,
-                            chromstart <span class='op'>=</span> <span class='fl'>29072500</span>, chromend <span class='op'>=</span> <span class='fl'>29075000</span>,
-                            fill <span class='op'>=</span> <span class='fu'><a href='c.html'>c</a></span><span class='op'>(</span><span class='st'>"steel blue"</span>, <span class='st'>"light salmon"</span><span class='op'>)</span>,
-                            colorby <span class='op'>=</span> <span class='fu'><a href='colorby.html'>colorby</a></span><span class='op'>(</span><span class='st'>"strand"</span><span class='op'>)</span>,
-                            x <span class='op'>=</span> <span class='fl'>0.5</span>, y <span class='op'>=</span> <span class='fl'>3.5</span>, width <span class='op'>=</span> <span class='fl'>6.5</span>, height <span class='op'>=</span> <span class='fl'>3.5</span>,
-                            just <span class='op'>=</span> <span class='fu'><a href='c.html'>c</a></span><span class='op'>(</span><span class='st'>"left"</span>, <span class='st'>"bottom"</span><span class='op'>)</span>, default.units <span class='op'>=</span> <span class='st'>"inches"</span><span class='op'>)</span>
+                         chromstart <span class='op'>=</span> <span class='fl'>29072500</span>, chromend <span class='op'>=</span> <span class='fl'>29075000</span>,
+                         fill <span class='op'>=</span> <span class='fu'><a href='c.html'>c</a></span><span class='op'>(</span><span class='st'>"steel blue"</span>, <span class='st'>"light salmon"</span><span class='op'>)</span>,
+                         colorby <span class='op'>=</span> <span class='fu'><a href='colorby.html'>colorby</a></span><span class='op'>(</span><span class='st'>"strand"</span><span class='op'>)</span>,
+                         x <span class='op'>=</span> <span class='fl'>0.5</span>, y <span class='op'>=</span> <span class='fl'>3.5</span>, width <span class='op'>=</span> <span class='fl'>6.5</span>, height <span class='op'>=</span> <span class='fl'>3.5</span>,
+                         just <span class='op'>=</span> <span class='fu'><a href='c.html'>c</a></span><span class='op'>(</span><span class='st'>"left"</span>, <span class='st'>"bottom"</span><span class='op'>)</span>,
+                         default.units <span class='op'>=</span> <span class='st'>"inches"</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; <span class='warning'>Warning: Not enough plotting space for all provided BED elements.</span></div><div class='output co'>#&gt; <span class='message'>bb_bed[bb_bed1]</span></div><div class='input'>
 <span class='co'>## Add a legend depicting strand colors</span>
 <span class='va'>legendPlot</span> <span class='op'>&lt;-</span> <span class='fu'>bb_plotLegend</span><span class='op'>(</span>legend <span class='op'>=</span> <span class='fu'><a href='c.html'>c</a></span><span class='op'>(</span><span class='st'>"- strand"</span>, <span class='st'>"+ strand"</span><span class='op'>)</span>,
-                            fill <span class='op'>=</span> <span class='fu'><a href='c.html'>c</a></span><span class='op'>(</span><span class='st'>"steel blue"</span>, <span class='st'>"light salmon"</span><span class='op'>)</span>, border <span class='op'>=</span> <span class='cn'>FALSE</span>,
+                            fill <span class='op'>=</span> <span class='fu'><a href='c.html'>c</a></span><span class='op'>(</span><span class='st'>"steel blue"</span>, <span class='st'>"light salmon"</span><span class='op'>)</span>,
+                            border <span class='op'>=</span> <span class='cn'>FALSE</span>,
                             x <span class='op'>=</span> <span class='fl'>5</span>, y <span class='op'>=</span> <span class='fl'>0.5</span>, width <span class='op'>=</span> <span class='fl'>1.5</span>, height <span class='op'>=</span> <span class='fl'>0.7</span>,
-                            just <span class='op'>=</span> <span class='fu'><a href='c.html'>c</a></span><span class='op'>(</span><span class='st'>"left"</span>, <span class='st'>"top"</span><span class='op'>)</span>, default.units <span class='op'>=</span> <span class='st'>"inches"</span><span class='op'>)</span>
+                            just <span class='op'>=</span> <span class='fu'><a href='c.html'>c</a></span><span class='op'>(</span><span class='st'>"left"</span>, <span class='st'>"top"</span><span class='op'>)</span>,
+                            default.units <span class='op'>=</span> <span class='st'>"inches"</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; <span class='message'>bb_legend[bb_legend1]</span></div><div class='input'>
 <span class='co'>## Annotate genome label</span>
-<span class='fu'><a href='bb_annoGenomeLabel.html'>bb_annoGenomeLabel</a></span><span class='op'>(</span>plot <span class='op'>=</span> <span class='va'>pileupPlot</span>, x <span class='op'>=</span> <span class='fl'>0.5</span>, y <span class='op'>=</span> <span class='fl'>3.5</span>, just <span class='op'>=</span> <span class='fu'><a href='c.html'>c</a></span><span class='op'>(</span><span class='st'>"left"</span>, <span class='st'>"top"</span><span class='op'>)</span><span class='op'>)</span>
+<span class='fu'><a href='bb_annoGenomeLabel.html'>bb_annoGenomeLabel</a></span><span class='op'>(</span>plot <span class='op'>=</span> <span class='va'>pileupPlot</span>, x <span class='op'>=</span> <span class='fl'>0.5</span>, y <span class='op'>=</span> <span class='fl'>3.5</span>,
+                   just <span class='op'>=</span> <span class='fu'><a href='c.html'>c</a></span><span class='op'>(</span><span class='st'>"left"</span>, <span class='st'>"top"</span><span class='op'>)</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; <span class='message'>bb_genomeLabel[bb_genomeLabel1]</span></div><div class='img'><img src='bb_plotLegend-1.png' alt='' width='787' height='672' /></div><div class='input'>
 <span class='co'>## Hide page guides</span>
 <span class='fu'><a href='bb_pageGuideHide.html'>bb_pageGuideHide</a></span><span class='op'>(</span><span class='op'>)</span>

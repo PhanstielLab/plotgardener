@@ -140,7 +140,7 @@
     <p>Combine multiple bb_params objects into a vector</p>
     </div>
 
-    <pre class="usage"><span class='fu'>c</span><span class='op'>(</span><span class='va'>...</span>, recursive <span class='op'>=</span> <span class='cn'>F</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>c</span><span class='op'>(</span><span class='va'>...</span>, recursive <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -151,11 +151,16 @@
     </tr>
     <tr>
       <th>recursive</th>
-      <td><p>logical. If <code>recursive = TRUE</code>, the function recursively descends through lists
+      <td><p>logical. If <code>recursive = TRUE</code>, the function
+recursively descends through lists
 (and pairlists) combining all their elements into a vector.</p></td>
     </tr>
     </table>
 
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+
+    <p><code>NULL</code> or an expression or a vector of an appropriate mode.
+(With no arguments the value is <code>NULL</code>.)</p>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

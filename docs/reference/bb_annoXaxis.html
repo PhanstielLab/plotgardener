@@ -164,26 +164,34 @@
     </tr>
     <tr>
       <th>label</th>
-      <td><p>A logical value indicating whether to draw the labels on the tick marks, or an expression or character vector which specify the labels to use. If not logical, must be the same length as the <code>at</code> argument.</p></td>
+      <td><p>A logical value indicating whether to draw the labels on
+the tick marks, or an expression or character vector which specify
+the labels to use.
+If not logical, must be the same length as the <code>at</code> argument.</p></td>
     </tr>
     <tr>
       <th>main</th>
-      <td><p>A logical value indicating whether to draw the x-axis at the bottom of the plot. Default value is <code>main = TRUE</code>. Options are:</p><ul>
+      <td><p>A logical value indicating whether to draw the x-axis at the
+bottom of the plot. Default value is <code>main = TRUE</code>. Options are:</p><ul>
 <li><p><code>TRUE</code>: x-axis is drawn at the bottom of the plot.</p></li>
 <li><p><code>FALSE</code>: x-axis is drawn at the top of the plot.</p></li>
 </ul></td>
     </tr>
     <tr>
       <th>scipen</th>
-      <td><p>An integer indicating the penalty to be applied when deciding to print numeric values in fixed or exponential notation. Default value is <code>scipen = 999</code>.</p></td>
+      <td><p>An integer indicating the penalty to be applied when
+deciding to print numeric values in fixed or exponential notation.
+Default value is <code>scipen = 999</code>.</p></td>
     </tr>
     <tr>
       <th>axisLine</th>
-      <td><p>A logical value indicating whether to show the axis line. Default value is <code>axisLine = FALSE</code>.</p></td>
+      <td><p>A logical value indicating whether to show the axis line.
+Default value is <code>axisLine = FALSE</code>.</p></td>
     </tr>
     <tr>
       <th>params</th>
-      <td><p>An optional <a href='bb_params.html'>bb_params</a> object containing relevant function parameters.</p></td>
+      <td><p>An optional <a href='bb_params.html'>bb_params</a> object
+containing relevant function parameters.</p></td>
     </tr>
     <tr>
       <th>...</th>
@@ -193,7 +201,8 @@
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>Returns a <code>bb_xaxis</code> object containing relevant <a href='https://rdrr.io/r/grid/grid.grob.html'>grob</a> information.</p>
+    <p>Returns a <code>bb_xaxis</code> object containing
+relevant <a href='https://rdrr.io/r/grid/grid.grob.html'>grob</a> information.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'>## Load transcript information</span>
@@ -204,16 +213,21 @@
 <span class='fu'><a href='bb_pageCreate.html'>bb_pageCreate</a></span><span class='op'>(</span>width <span class='op'>=</span> <span class='fl'>7.5</span>, height <span class='op'>=</span> <span class='fl'>4.5</span>, default.units <span class='op'>=</span> <span class='st'>"inches"</span><span class='op'>)</span>
 </div><div class='input'>
 <span class='co'>## Plot gene transcripts</span>
-<span class='va'>transcriptPlot</span> <span class='op'>&lt;-</span> <span class='fu'><a href='bb_plotTranscripts.html'>bb_plotTranscripts</a></span><span class='op'>(</span>chrom <span class='op'>=</span> <span class='st'>"chr1"</span>, chromstart <span class='op'>=</span> <span class='fl'>1000000</span>, chromend <span class='op'>=</span> <span class='fl'>2000000</span>,
-                                     x <span class='op'>=</span> <span class='fl'>0.5</span>, y <span class='op'>=</span> <span class='fl'>0</span>, width <span class='op'>=</span> <span class='fl'>6.5</span>, height <span class='op'>=</span> <span class='fl'>4</span>,
-                                     just <span class='op'>=</span> <span class='fu'><a href='c.html'>c</a></span><span class='op'>(</span><span class='st'>"left"</span>, <span class='st'>"top"</span><span class='op'>)</span>, default.units <span class='op'>=</span> <span class='st'>"inches"</span><span class='op'>)</span>
+<span class='va'>transcriptPlot</span> <span class='op'>&lt;-</span> <span class='fu'><a href='bb_plotTranscripts.html'>bb_plotTranscripts</a></span><span class='op'>(</span>chrom <span class='op'>=</span> <span class='st'>"chr1"</span>,
+                                     chromstart <span class='op'>=</span> <span class='fl'>1000000</span>,
+                                     chromend <span class='op'>=</span> <span class='fl'>2000000</span>,
+                                     x <span class='op'>=</span> <span class='fl'>0.5</span>, y <span class='op'>=</span> <span class='fl'>0</span>,
+                                     width <span class='op'>=</span> <span class='fl'>6.5</span>, height <span class='op'>=</span> <span class='fl'>4</span>,
+                                     just <span class='op'>=</span> <span class='fu'><a href='c.html'>c</a></span><span class='op'>(</span><span class='st'>"left"</span>, <span class='st'>"top"</span><span class='op'>)</span>,
+                                     default.units <span class='op'>=</span> <span class='st'>"inches"</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; <span class='warning'>Warning: Not all transcripts shown.</span></div><div class='output co'>#&gt; <span class='message'>bb_transcripts[bb_transcripts1]</span></div><div class='input'>
 <span class='co'>## Add standard x-axis to transcript plot</span>
-<span class='fu'>bb_annoXaxis</span><span class='op'>(</span>plot <span class='op'>=</span> <span class='va'>transcriptPlot</span>, at <span class='op'>=</span> <span class='fu'><a href='c.html'>c</a></span><span class='op'>(</span><span class='fl'>1000000</span>, <span class='fl'>1250000</span>, <span class='fl'>1500000</span>, <span class='fl'>1750000</span>, <span class='fl'>2000000</span><span class='op'>)</span>,
+<span class='fu'>bb_annoXaxis</span><span class='op'>(</span>plot <span class='op'>=</span> <span class='va'>transcriptPlot</span>,
+             at <span class='op'>=</span> <span class='fu'><a href='c.html'>c</a></span><span class='op'>(</span><span class='fl'>1000000</span>, <span class='fl'>1250000</span>, <span class='fl'>1500000</span>, <span class='fl'>1750000</span>, <span class='fl'>2000000</span><span class='op'>)</span>,
              fontsize <span class='op'>=</span> <span class='fl'>8</span><span class='op'>)</span>
 </div><div class='img'><img src='bb_annoXaxis-1.png' alt='' width='787' height='672' /></div><div class='output co'>#&gt; <span class='message'>bb_xaxis[bb_xaxis1]</span></div><div class='input'><span class='fu'><a href='bb_plotText.html'>bb_plotText</a></span><span class='op'>(</span>label <span class='op'>=</span> <span class='st'>"Basepairs"</span>, fontsize <span class='op'>=</span> <span class='fl'>10</span>, fontface <span class='op'>=</span> <span class='st'>"bold"</span>,
             x <span class='op'>=</span> <span class='fl'>3.75</span>, y <span class='op'>=</span> <span class='fl'>4.3</span>, just <span class='op'>=</span> <span class='st'>"top"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>bb_text[GRID.text.447]</span></div><div class='img'><img src='bb_annoXaxis-2.png' alt='' width='787' height='672' /></div><div class='input'>
+</div><div class='output co'>#&gt; <span class='message'>bb_text[bb_text1]</span></div><div class='img'><img src='bb_annoXaxis-2.png' alt='' width='787' height='672' /></div><div class='input'>
 <span class='co'>## Hide page guides</span>
 <span class='fu'><a href='bb_pageGuideHide.html'>bb_pageGuideHide</a></span><span class='op'>(</span><span class='op'>)</span>
 </div><div class='img'><img src='bb_annoXaxis-3.png' alt='' width='787' height='672' /></div><div class='input'>

@@ -160,48 +160,65 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>x</th>
-      <td><p>A numeric vector or unit object specifying polygon vertex x-locations.</p></td>
+      <td><p>A numeric vector or unit object specifying polygon
+vertex x-locations.</p></td>
     </tr>
     <tr>
       <th>y</th>
-      <td><p>A numeric vector, unit object, or a character vector of values containing a "b" combined with a numeric value specifying polygon vertex y-locations.
-The character vector will place polygon vertex y-locations relative to the bottom of the most recently plotted BentoBox plot according to the units of the BentoBox page.</p></td>
+      <td><p>A numeric vector, unit object, or a character vector
+of values containing a "b" combined with a numeric value specifying
+polygon vertex y-locations.
+The character vector will place polygon vertex y-locations relative
+to the bottom of the most recently plotted BentoBox plot according
+to the units of the BentoBox page.</p></td>
     </tr>
     <tr>
       <th>default.units</th>
-      <td><p>A string indicating the default units to use if <code>x</code> or <code>y</code> are only given as numeric vectors. Default value is <code>default.units = "inches"</code>.</p></td>
+      <td><p>A string indicating the default units to use
+if <code>x</code> or <code>y</code> are only given as numeric vectors.
+Default value is <code>default.units = "inches"</code>.</p></td>
     </tr>
     <tr>
       <th>linecolor</th>
-      <td><p>A character value specifying polygon line color. Default value is <code>linecolor = "black"</code>.</p></td>
+      <td><p>A character value specifying polygon line color.
+Default value is <code>linecolor = "black"</code>.</p></td>
     </tr>
     <tr>
       <th>lwd</th>
-      <td><p>A numeric specifying polygon line width. Default value is <code>lwd = 1</code>.</p></td>
+      <td><p>A numeric specifying polygon line width.
+Default value is <code>lwd = 1</code>.</p></td>
     </tr>
     <tr>
       <th>lty</th>
-      <td><p>A numeric specifying polygon line type. Default value is <code>lty = 1</code>.</p></td>
+      <td><p>A numeric specifying polygon line type.
+Default value is <code>lty = 1</code>.</p></td>
     </tr>
     <tr>
       <th>fill</th>
-      <td><p>A character value specifying polygon fill color. Default value is <code>fill = NA</code>.</p></td>
+      <td><p>A character value specifying polygon fill color.
+Default value is <code>fill = NA</code>.</p></td>
     </tr>
     <tr>
       <th>alpha</th>
-      <td><p>Numeric value specifying color transparency. Default value is <code>alpha = 1</code>.</p></td>
+      <td><p>Numeric value specifying color transparency.
+Default value is <code>alpha = 1</code>.</p></td>
     </tr>
     <tr>
       <th>id</th>
-      <td><p>A numeric vector used to separate locations in <code>x</code> and <code>y</code> into multiple polygons. All locations with the same <code>id</code> belong to the same polygon.</p></td>
+      <td><p>A numeric vector used to separate locations in <code>x</code> and
+<code>y</code> into multiple polygons. All locations with the same <code>id</code>
+belong to the same polygon.</p></td>
     </tr>
     <tr>
       <th>id.lengths</th>
-      <td><p>A numeric vector used to separate locations in <code>x</code> and <code>y</code> into multiple polygons. Specifies consecutive blocks of locations which make up separate polygons.</p></td>
+      <td><p>A numeric vector used to separate locations in
+<code>x</code> and <code>y</code> into multiple polygons. Specifies consecutive
+blocks of locations which make up separate polygons.</p></td>
     </tr>
     <tr>
       <th>params</th>
-      <td><p>An optional <a href='bb_params.html'>bb_params</a> object containing relevant function parameters.</p></td>
+      <td><p>An optional <a href='bb_params.html'>bb_params</a> object containing
+relevant function parameters.</p></td>
     </tr>
     <tr>
       <th>...</th>
@@ -211,7 +228,8 @@ The character vector will place polygon vertex y-locations relative to the botto
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>Returns a <code>bb_polygon</code> object containing relevant placement and <a href='https://rdrr.io/r/grid/grid.grob.html'>grob</a> information.</p>
+    <p>Returns a <code>bb_polygon</code> object containing relevant
+placement and <a href='https://rdrr.io/r/grid/grid.grob.html'>grob</a> information.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><a href='https://rdrr.io/r/grid/grid.polygon.html'>grid.polygon</a></p></div>
@@ -221,21 +239,24 @@ The character vector will place polygon vertex y-locations relative to the botto
 <span class='fu'><a href='bb_pageCreate.html'>bb_pageCreate</a></span><span class='op'>(</span>width <span class='op'>=</span> <span class='fl'>7.5</span>, height <span class='op'>=</span> <span class='fl'>6</span>, default.units <span class='op'>=</span> <span class='st'>"inches"</span><span class='op'>)</span>
 </div><div class='input'>
 <span class='co'>## Plot complex polygons one at a time</span>
-<span class='fu'>bb_plotPolygon</span><span class='op'>(</span>x <span class='op'>=</span> <span class='fu'><a href='c.html'>c</a></span><span class='op'>(</span><span class='fl'>2.6</span>, <span class='fl'>4.65</span>, <span class='fl'>4.75</span>, <span class='fl'>6.05</span>, <span class='fl'>1.4</span>, <span class='fl'>1.3</span><span class='op'>)</span>, y <span class='op'>=</span> <span class='fu'><a href='c.html'>c</a></span><span class='op'>(</span><span class='fl'>2.5</span>, <span class='fl'>3.1</span>, <span class='fl'>3.5</span>, <span class='fl'>4</span>, <span class='fl'>3.15</span>, <span class='fl'>2.8</span><span class='op'>)</span>,
+<span class='fu'>bb_plotPolygon</span><span class='op'>(</span>x <span class='op'>=</span> <span class='fu'><a href='c.html'>c</a></span><span class='op'>(</span><span class='fl'>2.6</span>, <span class='fl'>4.65</span>, <span class='fl'>4.75</span>, <span class='fl'>6.05</span>, <span class='fl'>1.4</span>, <span class='fl'>1.3</span><span class='op'>)</span>,
+               y <span class='op'>=</span> <span class='fu'><a href='c.html'>c</a></span><span class='op'>(</span><span class='fl'>2.5</span>, <span class='fl'>3.1</span>, <span class='fl'>3.5</span>, <span class='fl'>4</span>, <span class='fl'>3.15</span>, <span class='fl'>2.8</span><span class='op'>)</span>,
                fill <span class='op'>=</span> <span class='st'>"#4a168e"</span>, linecolor <span class='op'>=</span> <span class='cn'>NA</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>bb_polygon[GRID.polygon.3016]</span></div><div class='input'>
-<span class='fu'>bb_plotPolygon</span><span class='op'>(</span>x <span class='op'>=</span> <span class='fu'><a href='c.html'>c</a></span><span class='op'>(</span><span class='fl'>4.65</span>, <span class='fl'>4.75</span>, <span class='fl'>6.05</span>, <span class='fl'>5.05</span>, <span class='fl'>4.4</span><span class='op'>)</span>, y <span class='op'>=</span> <span class='fu'><a href='c.html'>c</a></span><span class='op'>(</span><span class='fl'>3.1</span>, <span class='fl'>3.5</span>, <span class='fl'>4</span>, <span class='fl'>1.45</span>, <span class='fl'>1.2</span><span class='op'>)</span>,
+</div><div class='output co'>#&gt; <span class='message'>bb_polygon[GRID.polygon.2997]</span></div><div class='input'>
+<span class='fu'>bb_plotPolygon</span><span class='op'>(</span>x <span class='op'>=</span> <span class='fu'><a href='c.html'>c</a></span><span class='op'>(</span><span class='fl'>4.65</span>, <span class='fl'>4.75</span>, <span class='fl'>6.05</span>, <span class='fl'>5.05</span>, <span class='fl'>4.4</span><span class='op'>)</span>,
+               y <span class='op'>=</span> <span class='fu'><a href='c.html'>c</a></span><span class='op'>(</span><span class='fl'>3.1</span>, <span class='fl'>3.5</span>, <span class='fl'>4</span>, <span class='fl'>1.45</span>, <span class='fl'>1.2</span><span class='op'>)</span>,
                fill <span class='op'>=</span> <span class='st'>"#9d28b0"</span>, linecolor <span class='op'>=</span> <span class='cn'>NA</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>bb_polygon[GRID.polygon.3017]</span></div><div class='input'>
+</div><div class='output co'>#&gt; <span class='message'>bb_polygon[GRID.polygon.2998]</span></div><div class='input'>
 <span class='co'>## Plot multiple triangles with different id's and colors</span>
 <span class='fu'>bb_plotPolygon</span><span class='op'>(</span>x <span class='op'>=</span> <span class='fu'><a href='c.html'>c</a></span><span class='op'>(</span><span class='fl'>0.45</span>, <span class='fl'>6.05</span>, <span class='fl'>3</span>, <span class='fl'>3</span>, <span class='fl'>6.05</span>, <span class='fl'>5.25</span>, <span class='fl'>4.4</span>, <span class='fl'>5.05</span>, <span class='fl'>4.95</span>,
                      <span class='fl'>1.3</span>, <span class='fl'>2.6</span>, <span class='fl'>1</span>, <span class='fl'>4.4</span>, <span class='fl'>4.95</span>, <span class='fl'>5</span>, <span class='fl'>4.95</span>, <span class='fl'>5</span>, <span class='fl'>6.25</span><span class='op'>)</span>,
                y <span class='op'>=</span> <span class='fu'><a href='c.html'>c</a></span><span class='op'>(</span><span class='fl'>2.85</span>, <span class='fl'>4</span>, <span class='fl'>5.55</span>, <span class='fl'>5.55</span>, <span class='fl'>4</span>, <span class='fl'>5.55</span>, <span class='fl'>1.2</span>, <span class='fl'>1.45</span>, <span class='fl'>1.1</span>,
                      <span class='fl'>2.8</span>, <span class='fl'>2.5</span>, <span class='fl'>2.1</span>, <span class='fl'>1.2</span>, <span class='fl'>1.1</span>, <span class='fl'>0.45</span>, <span class='fl'>1.1</span>, <span class='fl'>0.45</span>, <span class='fl'>1.1</span><span class='op'>)</span>,
                id <span class='op'>=</span> <span class='fu'><a href='c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>,<span class='fl'>1</span>,<span class='fl'>1</span>, <span class='fl'>2</span>, <span class='fl'>2</span>, <span class='fl'>2</span>, <span class='fl'>3</span>, <span class='fl'>3</span>, <span class='fl'>3</span>, <span class='fl'>4</span>, <span class='fl'>4</span>, <span class='fl'>4</span>, <span class='fl'>5</span>, <span class='fl'>5</span>, <span class='fl'>5</span>, <span class='fl'>6</span>, <span class='fl'>6</span>, <span class='fl'>6</span><span class='op'>)</span>,
-               fill <span class='op'>=</span> <span class='fu'><a href='c.html'>c</a></span><span class='op'>(</span><span class='st'>"#ce93d9"</span>, <span class='st'>"#bb6ac9"</span>, <span class='st'>"#4a168e"</span>, <span class='st'>"#7b1fa0"</span>, <span class='st'>"#bb6ac9"</span>, <span class='st'>"#ce93d9"</span><span class='op'>)</span>,
+               fill <span class='op'>=</span> <span class='fu'><a href='c.html'>c</a></span><span class='op'>(</span><span class='st'>"#ce93d9"</span>, <span class='st'>"#bb6ac9"</span>, <span class='st'>"#4a168e"</span>,
+                       <span class='st'>"#7b1fa0"</span>, <span class='st'>"#bb6ac9"</span>, <span class='st'>"#ce93d9"</span><span class='op'>)</span>,
                linecolor <span class='op'>=</span> <span class='cn'>NA</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>bb_polygon[GRID.polygon.3018]</span></div><div class='img'><img src='bb_plotPolygon-1.png' alt='' width='787' height='672' /></div><div class='input'>
+</div><div class='output co'>#&gt; <span class='message'>bb_polygon[GRID.polygon.2999]</span></div><div class='img'><img src='bb_plotPolygon-1.png' alt='' width='787' height='672' /></div><div class='input'>
 <span class='co'>## Hide page guides</span>
 <span class='fu'><a href='bb_pageGuideHide.html'>bb_pageGuideHide</a></span><span class='op'>(</span><span class='op'>)</span>
 </div><div class='img'><img src='bb_plotPolygon-2.png' alt='' width='787' height='672' /></div><div class='input'>

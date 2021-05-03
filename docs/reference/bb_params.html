@@ -47,9 +47,9 @@
 
 
 <meta property="og:title" content="bb_params: BentoBox parameters object — bb_params" />
-<meta property="og:description" content="Creates an object of class &quot;bb_params&quot; that can be used by BentoBox functions.
-bb_params can be used to set a set of parameters to be shared across multiple
-functions." />
+<meta property="og:description" content="Creates an object of class &quot;bb_params&quot; that can be used by
+BentoBox functions. bb_params can be used to set a set of parameters
+to be shared across multiple functions." />
 <meta property="og:image" content="https://phanstiellab.github.io/bentobox/logo.png" />
 
 
@@ -139,9 +139,9 @@ functions." />
     </div>
 
     <div class="ref-description">
-    <p>Creates an object of class "bb_params" that can be used by BentoBox functions.
-bb_params can be used to set a set of parameters to be shared across multiple
-functions.</p>
+    <p>Creates an object of class "bb_params" that can be used by
+BentoBox functions. bb_params can be used to set a set of parameters
+to be shared across multiple functions.</p>
     </div>
 
     <pre class="usage"><span class='fu'>bb_params</span><span class='op'>(</span>assembly <span class='op'>=</span> <span class='st'>"hg19"</span>, gene <span class='op'>=</span> <span class='cn'>NULL</span>, geneBuffer <span class='op'>=</span> <span class='cn'>NULL</span>, <span class='va'>...</span><span class='op'>)</span></pre>
@@ -151,38 +151,43 @@ functions.</p>
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>assembly</th>
-      <td><p>String defining the genome build. Default value is <code>assembly = "hg19"</code>.</p></td>
+      <td><p>String defining the genome build.
+Default value is <code>assembly = "hg19"</code>.</p></td>
     </tr>
     <tr>
       <th>gene</th>
-      <td><p>(optional) String naming a gene used to set the chrom, chromstart, and
-chromend arguments.</p></td>
+      <td><p>(optional) String naming a gene used to set the
+chrom, chromstart, and chromend arguments.</p></td>
     </tr>
     <tr>
       <th>geneBuffer</th>
-      <td><p>(optional) Integer base-pairs to extend the start and end of a gene
-defined by argument <code>gene</code>.</p></td>
+      <td><p>(optional) Integer base-pairs to extend the
+start and end of a gene defined by argument <code>gene</code>.</p></td>
     </tr>
     <tr>
       <th>...</th>
-      <td><p>This function will take any BentoBox function parameters and their values.</p></td>
+      <td><p>This function will take any BentoBox function
+parameters and their values.</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>Returns an object of class <code>bb_params</code> containing BentoBox function arguments.</p>
+    <p>Returns an object of class <code>bb_params</code>
+containing BentoBox function arguments.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>bb_params generates arguments from exported BentoBox functions at loading time of the
-package. Arguments defined in a bb_params object can be passed into the <code>params</code>
-argument of BentoBox functions. bb_params arguments can be overridden from within
-BentoBox functions.</p>
-<p>bb_params also provides an alternative region definition mechanism. Given a gene name
-and genome assembly, bb_params returns the appropriate "chrom", "chromstart", and
-"chromend" with a default buffer of <code>(gene length) / 2</code> added to the ends of the
-gene coordinates. The buffer amount can be set manually with the <code>geneBuffer</code>
-parameter. Buffer extending beyond the length of the chromosome will be trimmed.</p>
+    <p>bb_params generates arguments from exported BentoBox functions at
+loading time of the package. Arguments defined in a bb_params object
+can be passed into the <code>params</code> argument of BentoBox functions.
+bb_params arguments can be overridden from within BentoBox functions.</p>
+<p>bb_params also provides an alternative region definition mechanism.
+Given a gene name and genome assembly, bb_params returns the appropriate
+"chrom", "chromstart", and "chromend" with a default buffer of
+<code>(gene length) / 2</code> added to the ends of the gene coordinates.
+The buffer amount can be set manually with the <code>geneBuffer</code>
+parameter. Buffer extending beyond the length of the chromosome
+will be trimmed.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'>## Load hg19 genomic annotation packages</span>

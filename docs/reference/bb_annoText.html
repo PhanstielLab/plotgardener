@@ -164,19 +164,23 @@
     </tr>
     <tr>
       <th>fontcolor</th>
-      <td><p>A character value specifying text fontcolor. Default value is <code>fontcolor = "black"</code>.</p></td>
+      <td><p>A character value specifying text fontcolor.
+Default value is <code>fontcolor = "black"</code>.</p></td>
     </tr>
     <tr>
       <th>fontsize</th>
-      <td><p>A numeric specifying text fontsize in points. Default value is <code>fontsize = 12</code>.</p></td>
+      <td><p>A numeric specifying text fontsize in points.
+Default value is <code>fontsize = 12</code>.</p></td>
     </tr>
     <tr>
       <th>rot</th>
-      <td><p>A numeric specifying the angle to rotate the text. Default value is <code>rot = 0</code>.</p></td>
+      <td><p>A numeric specifying the angle to rotate the text.
+Default value is <code>rot = 0</code>.</p></td>
     </tr>
     <tr>
       <th>check.overlap</th>
-      <td><p>A logical value to indicate whether to check for and omit overlapping text. Default value is <code>check.overlap = FALSE</code>.</p></td>
+      <td><p>A logical value to indicate whether to check for
+and omit overlapping text. Default value is <code>check.overlap = FALSE</code>.</p></td>
     </tr>
     <tr>
       <th>plot</th>
@@ -192,16 +196,23 @@
     </tr>
     <tr>
       <th>just</th>
-      <td><p>Justification of text relative to its (x, y) location. If there are two values, the first value specifies horizontal justification and the second value specifies vertical justification.
-Possible string values are: <code>"left"</code>, <code>"right"</code>, <code>"centre"</code>, <code>"center"</code>, <code>"bottom"</code>, and <code>"top"</code>. Default value is <code>just = "center"</code>.</p></td>
+      <td><p>Justification of text relative to its (x, y) location.
+If there are two values, the first value specifies horizontal
+justification and the second value specifies vertical justification.
+Possible string values are: <code>"left"</code>, <code>"right"</code>,
+<code>"centre"</code>, <code>"center"</code>, <code>"bottom"</code>, and <code>"top"</code>.
+Default value is <code>just = "center"</code>.</p></td>
     </tr>
     <tr>
       <th>default.units</th>
-      <td><p>A string indicating the default units to use if <code>x</code> or <code>y</code> are only given as numerics or numeric vectors. Default value is <code>default.units = "native"</code>.</p></td>
+      <td><p>A string indicating the default units to use if
+<code>x</code> or <code>y</code> are only given as numerics or numeric vectors.
+Default value is <code>default.units = "native"</code>.</p></td>
     </tr>
     <tr>
       <th>params</th>
-      <td><p>An optional <a href='bb_params.html'>bb_params</a> object containing relevant function parameters.</p></td>
+      <td><p>An optional <a href='bb_params.html'>bb_params</a> object
+containing relevant function parameters.</p></td>
     </tr>
     <tr>
       <th>...</th>
@@ -211,7 +222,8 @@ Possible string values are: <code>"left"</code>, <code>"right"</code>, <code>"ce
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>Returns a <code>bb_text</code> object containing relevant placement and <a href='https://rdrr.io/r/grid/grid.grob.html'>grob</a> information.</p>
+    <p>Returns a <code>bb_text</code> object containing
+relevant placement and <a href='https://rdrr.io/r/grid/grid.grob.html'>grob</a> information.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><a href='https://rdrr.io/r/grid/grid.text.html'>grid.text</a></p></div>
@@ -223,15 +235,18 @@ Possible string values are: <code>"left"</code>, <code>"right"</code>, <code>"ce
 <span class='co'>## Plot text relative to a BentoBox plot</span>
 <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='st'>"bb_imrHicData"</span><span class='op'>)</span>
 <span class='va'>hicPlot</span> <span class='op'>&lt;-</span> <span class='fu'><a href='bb_plotHicSquare.html'>bb_plotHicSquare</a></span><span class='op'>(</span>data <span class='op'>=</span> <span class='va'>bb_imrHicData</span>, chrom <span class='op'>=</span> <span class='st'>"chr21"</span>,
-                           chromstart <span class='op'>=</span> <span class='fl'>28000000</span>, chromend <span class='op'>=</span> <span class='fl'>29500000</span>, zrange <span class='op'>=</span> <span class='fu'><a href='c.html'>c</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>70</span><span class='op'>)</span>,
-                           x <span class='op'>=</span> <span class='fl'>0.5</span>, y <span class='op'>=</span> <span class='fl'>0.5</span>, width <span class='op'>=</span> <span class='fl'>3</span>, height <span class='op'>=</span> <span class='fl'>3</span>, just <span class='op'>=</span> <span class='fu'><a href='c.html'>c</a></span><span class='op'>(</span><span class='st'>"left"</span>, <span class='st'>"top"</span><span class='op'>)</span>,
+                           chromstart <span class='op'>=</span> <span class='fl'>28000000</span>, chromend <span class='op'>=</span> <span class='fl'>29500000</span>,
+                           zrange <span class='op'>=</span> <span class='fu'><a href='c.html'>c</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>70</span><span class='op'>)</span>,
+                           x <span class='op'>=</span> <span class='fl'>0.5</span>, y <span class='op'>=</span> <span class='fl'>0.5</span>, width <span class='op'>=</span> <span class='fl'>3</span>, height <span class='op'>=</span> <span class='fl'>3</span>,
+                           just <span class='op'>=</span> <span class='fu'><a href='c.html'>c</a></span><span class='op'>(</span><span class='st'>"left"</span>, <span class='st'>"top"</span><span class='op'>)</span>,
                            default.units <span class='op'>=</span> <span class='st'>"inches"</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; <span class='message'>Read in dataframe.  Assuming 'chrom' in column1 and 'altchrom' in column2. 10000 BP resolution detected.</span></div><div class='output co'>#&gt; <span class='message'>bb_hicSquare[bb_hicSquare1]</span></div><div class='input'><span class='fu'><a href='bb_annoGenomeLabel.html'>bb_annoGenomeLabel</a></span><span class='op'>(</span>plot <span class='op'>=</span> <span class='va'>hicPlot</span>, x <span class='op'>=</span> <span class='fl'>0.5</span>, y <span class='op'>=</span> <span class='fl'>3.55</span>, scale <span class='op'>=</span> <span class='st'>"Mb"</span>,
                    just <span class='op'>=</span> <span class='fu'><a href='c.html'>c</a></span><span class='op'>(</span><span class='st'>"left"</span>, <span class='st'>"top"</span><span class='op'>)</span>, default.units <span class='op'>=</span> <span class='st'>"inches"</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; <span class='message'>bb_genomeLabel[bb_genomeLabel1]</span></div><div class='input'>
-<span class='fu'>bb_annoText</span><span class='op'>(</span>label <span class='op'>=</span> <span class='st'>"Loop"</span>, fontsize <span class='op'>=</span> <span class='fl'>8</span>, plot <span class='op'>=</span> <span class='va'>hicPlot</span>, x <span class='op'>=</span> <span class='fl'>29075000</span>, y <span class='op'>=</span> <span class='fl'>28150000</span>,
+<span class='fu'>bb_annoText</span><span class='op'>(</span>label <span class='op'>=</span> <span class='st'>"Loop"</span>, fontsize <span class='op'>=</span> <span class='fl'>8</span>, plot <span class='op'>=</span> <span class='va'>hicPlot</span>,
+            x <span class='op'>=</span> <span class='fl'>29075000</span>, y <span class='op'>=</span> <span class='fl'>28150000</span>,
             just <span class='op'>=</span> <span class='st'>"center"</span>, default.units <span class='op'>=</span> <span class='st'>"native"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>bb_text[GRID.text.282]</span></div><div class='img'><img src='bb_annoText-1.png' alt='' width='787' height='672' /></div><div class='input'>
+</div><div class='output co'>#&gt; <span class='message'>bb_text[bb_text1]</span></div><div class='img'><img src='bb_annoText-1.png' alt='' width='787' height='672' /></div><div class='input'>
 <span class='co'>## Hide page guides</span>
 <span class='fu'><a href='bb_pageGuideHide.html'>bb_pageGuideHide</a></span><span class='op'>(</span><span class='op'>)</span>
 </div><div class='img'><img src='bb_annoText-2.png' alt='' width='787' height='672' /></div><div class='input'>

@@ -172,7 +172,8 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>data</th>
-      <td><p>A string specifying the BEDPE file path or a dataframe in BEDPE format specifying data to be plotted.</p></td>
+      <td><p>A string specifying the BEDPE file path or a dataframe
+in BEDPE format specifying data to be plotted.</p></td>
     </tr>
     <tr>
       <th>chrom</th>
@@ -188,47 +189,63 @@
     </tr>
     <tr>
       <th>assembly</th>
-      <td><p>Default genome assembly as a string or a <a href='bb_assembly.html'>bb_assembly</a> object. Default value is <code>assembly = "hg19"</code>.</p></td>
+      <td><p>Default genome assembly as a string or a
+<a href='bb_assembly.html'>bb_assembly</a> object.
+Default value is <code>assembly = "hg19"</code>.</p></td>
     </tr>
     <tr>
       <th>fill</th>
-      <td><p>Character value(s) as a single value, vector, or palette specifying fill colors of BEDPE elements. Default value is <code>fill = "#1f4297"</code>.</p></td>
+      <td><p>Character value(s) as a single value, vector, or palette
+specifying fill colors of BEDPE elements.
+Default value is <code>fill = "#1f4297"</code>.</p></td>
     </tr>
     <tr>
       <th>colorby</th>
-      <td><p>A "<a href='colorby.html'>colorby</a>" object specifying information for scaling colors in data.</p></td>
+      <td><p>A "<a href='colorby.html'>colorby</a>" object specifying
+information for scaling colors in data.</p></td>
     </tr>
     <tr>
       <th>linecolor</th>
-      <td><p>A character value specifying the color of the lines outlining BEDPE elements. Default value is <code>linecolor = NA</code>.</p></td>
+      <td><p>A character value specifying the color of the
+lines outlining BEDPE elements. Default value is <code>linecolor = NA</code>.</p></td>
     </tr>
     <tr>
       <th>bg</th>
-      <td><p>Character value indicating background color. Default value is <code>bg = NA</code>.</p></td>
+      <td><p>Character value indicating background color.
+Default value is <code>bg = NA</code>.</p></td>
     </tr>
     <tr>
       <th>boxHeight</th>
-      <td><p>A numeric or unit object specifying height of boxes at either end of BEDPE elements. Default value is <code>boxHeight = unit(2, "mm")</code>.</p></td>
+      <td><p>A numeric or unit object specifying height of boxes
+at either end of BEDPE elements.
+Default value is <code>boxHeight = unit(2, "mm")</code>.</p></td>
     </tr>
     <tr>
       <th>spaceWidth</th>
-      <td><p>A numeric specifying the width of spacing between BEDPE elements, as a fraction of the plot's genomic range. Default value is <code>spaceWidth = 0.02</code>.</p></td>
+      <td><p>A numeric specifying the width of spacing between
+BEDPE elements, as a fraction of the plot's genomic range.
+Default value is <code>spaceWidth = 0.02</code>.</p></td>
     </tr>
     <tr>
       <th>spaceHeight</th>
-      <td><p>A numeric specifying the height of space between boxes of BEDPE elements on different rows. Default value is <code>spaceHeight = 0.3</code>.</p></td>
+      <td><p>A numeric specifying the height of space between
+boxes of BEDPE elements on different rows.
+Default value is <code>spaceHeight = 0.3</code>.</p></td>
     </tr>
     <tr>
       <th>baseline</th>
-      <td><p>Logical value indicating whether to include a baseline along the x-axis. Default value is <code>baseline = FALSE</code>.</p></td>
+      <td><p>Logical value indicating whether to include a baseline
+along the x-axis. Default value is <code>baseline = FALSE</code>.</p></td>
     </tr>
     <tr>
       <th>baseline.color</th>
-      <td><p>Baseline color. Default value is <code>baseline.color = "grey"</code>.</p></td>
+      <td><p>Baseline color.
+Default value is <code>baseline.color = "grey"</code>.</p></td>
     </tr>
     <tr>
       <th>baseline.lwd</th>
-      <td><p>Baseline line width. Default value is <code>baseline.lwd = 1</code>.</p></td>
+      <td><p>Baseline line width.
+Default value is <code>baseline.lwd = 1</code>.</p></td>
     </tr>
     <tr>
       <th>x</th>
@@ -236,8 +253,11 @@
     </tr>
     <tr>
       <th>y</th>
-      <td><p>A numeric, unit object, or character containing a "b" combined with a numeric value specifying BEDPE plot y-location. The character value will
-place the BEDPE plot y relative to the bottom of the most recently plotted BentoBox plot according to the units of the BentoBox page.</p></td>
+      <td><p>A numeric, unit object, or character containing a "b"
+combined with a numeric value specifying BEDPE plot y-location.
+The character value will
+place the BEDPE plot y relative to the bottom of the most recently
+plotted BentoBox plot according to the units of the BentoBox page.</p></td>
     </tr>
     <tr>
       <th>width</th>
@@ -249,20 +269,28 @@ place the BEDPE plot y relative to the bottom of the most recently plotted Bento
     </tr>
     <tr>
       <th>just</th>
-      <td><p>Justification of BEDPE plot relative to its (x, y) location. If there are two values, the first value specifies horizontal justification and the second value specifies vertical justification.
-Possible string values are: <code>"left"</code>, <code>"right"</code>, <code>"centre"</code>, <code>"center"</code>, <code>"bottom"</code>, and <code>"top"</code>. Default value is <code>just = c("left", "top")</code>.</p></td>
+      <td><p>Justification of BEDPE plot relative to its (x, y) location.
+If there are two values, the first value specifies horizontal
+justification and the second value specifies vertical justification.
+Possible string values are: <code>"left"</code>, <code>"right"</code>,
+<code>"centre"</code>, <code>"center"</code>, <code>"bottom"</code>, and <code>"top"</code>.
+Default value is <code>just = c("left", "top")</code>.</p></td>
     </tr>
     <tr>
       <th>default.units</th>
-      <td><p>A string indicating the default units to use if <code>x</code>, <code>y</code>, <code>width</code>, or <code>height</code> are only given as numerics. Default value is <code>default.units = "inches"</code>.</p></td>
+      <td><p>A string indicating the default units to use
+if <code>x</code>, <code>y</code>, <code>width</code>, or <code>height</code> are only given
+as numerics. Default value is <code>default.units = "inches"</code>.</p></td>
     </tr>
     <tr>
       <th>draw</th>
-      <td><p>A logical value indicating whether graphics output should be produced.</p></td>
+      <td><p>A logical value indicating whether graphics
+output should be produced.</p></td>
     </tr>
     <tr>
       <th>params</th>
-      <td><p>An optional <a href='bb_params.html'>bb_params</a> object containing relevant function parameters.</p></td>
+      <td><p>An optional <a href='bb_params.html'>bb_params</a> object
+containing relevant function parameters.</p></td>
     </tr>
     <tr>
       <th>...</th>
@@ -272,7 +300,8 @@ Possible string values are: <code>"left"</code>, <code>"right"</code>, <code>"ce
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>Returns a <code>bb_bedpe</code> object containing relevant genomic region, placement, and <a href='https://rdrr.io/r/grid/grid.grob.html'>grob</a> information.</p>
+    <p>Returns a <code>bb_bedpe</code> object containing relevant
+genomic region, placement, and <a href='https://rdrr.io/r/grid/grid.grob.html'>grob</a> information.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>#' A BEDPE plot can be placed on a BentoBox coordinate page by providing plot placement parameters:</p><pre>
@@ -291,7 +320,8 @@ Possible string values are: <code>"left"</code>, <code>"right"</code>, <code>"ce
 <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='st'>"bb_bedpeData"</span><span class='op'>)</span>
 
 <span class='co'>## Set the coordinates</span>
-<span class='va'>params</span> <span class='op'>=</span> <span class='fu'><a href='bb_params.html'>bb_params</a></span><span class='op'>(</span>chrom <span class='op'>=</span> <span class='st'>"chr21"</span>,chromstart <span class='op'>=</span> <span class='fl'>27900000</span>, chromend <span class='op'>=</span> <span class='fl'>30700000</span>,
+<span class='va'>params</span> <span class='op'>=</span> <span class='fu'><a href='bb_params.html'>bb_params</a></span><span class='op'>(</span>chrom <span class='op'>=</span> <span class='st'>"chr21"</span>,
+                   chromstart <span class='op'>=</span> <span class='fl'>27900000</span>, chromend <span class='op'>=</span> <span class='fl'>30700000</span>,
                    width <span class='op'>=</span> <span class='fl'>7</span><span class='op'>)</span>
 
 <span class='co'>## Create a page</span>
@@ -312,13 +342,14 @@ Possible string values are: <code>"left"</code>, <code>"right"</code>, <code>"ce
 <span class='fu'><a href='bb_annoGenomeLabel.html'>bb_annoGenomeLabel</a></span><span class='op'>(</span>plot <span class='op'>=</span> <span class='va'>bedpePlot</span>, x <span class='op'>=</span> <span class='fl'>0.25</span>, y <span class='op'>=</span> <span class='fl'>1.78</span>, scale <span class='op'>=</span> <span class='st'>"Mb"</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; <span class='message'>bb_genomeLabel[bb_genomeLabel1]</span></div><div class='input'>
 <span class='co'>## Add heatmap legend</span>
-<span class='fu'><a href='bb_annoHeatmapLegend.html'>bb_annoHeatmapLegend</a></span><span class='op'>(</span>plot <span class='op'>=</span> <span class='va'>bedpePlot</span>, fontcolor <span class='op'>=</span> <span class='st'>"black"</span>, x <span class='op'>=</span> <span class='fl'>7.0</span>, y <span class='op'>=</span> <span class='fl'>0.25</span>,
+<span class='fu'><a href='bb_annoHeatmapLegend.html'>bb_annoHeatmapLegend</a></span><span class='op'>(</span>plot <span class='op'>=</span> <span class='va'>bedpePlot</span>, fontcolor <span class='op'>=</span> <span class='st'>"black"</span>,
+                     x <span class='op'>=</span> <span class='fl'>7.0</span>, y <span class='op'>=</span> <span class='fl'>0.25</span>,
                      width <span class='op'>=</span> <span class='fl'>0.10</span>, height <span class='op'>=</span> <span class='fl'>1</span>, fontsize <span class='op'>=</span> <span class='fl'>10</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; <span class='message'>bb_heatmapLegend[bb_heatmapLegend1]</span></div><div class='input'>
 <span class='co'>## Add heatmap legend label</span>
 <span class='fu'><a href='bb_plotText.html'>bb_plotText</a></span><span class='op'>(</span>label <span class='op'>=</span> <span class='st'>"Kb"</span>, rot <span class='op'>=</span> <span class='fl'>90</span>, x <span class='op'>=</span> <span class='fl'>6.9</span>, y <span class='op'>=</span> <span class='fl'>0.75</span>,
              just <span class='op'>=</span> <span class='fu'><a href='c.html'>c</a></span><span class='op'>(</span><span class='st'>"center"</span>,<span class='st'>"center"</span><span class='op'>)</span>, fontsize <span class='op'>=</span> <span class='fl'>10</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>bb_text[GRID.text.721]</span></div><div class='img'><img src='bb_plotBedpe-1.png' alt='' width='787' height='672' /></div><div class='input'>
+</div><div class='output co'>#&gt; <span class='message'>bb_text[bb_text1]</span></div><div class='img'><img src='bb_plotBedpe-1.png' alt='' width='787' height='672' /></div><div class='input'>
 <span class='co'>## Hide page guides</span>
 <span class='fu'><a href='bb_pageGuideHide.html'>bb_pageGuideHide</a></span><span class='op'>(</span><span class='op'>)</span>
 </div><div class='img'><img src='bb_plotBedpe-2.png' alt='' width='787' height='672' /></div><div class='input'>

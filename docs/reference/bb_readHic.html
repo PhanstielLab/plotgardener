@@ -178,42 +178,54 @@
     </tr>
     <tr>
       <th>altchrom</th>
-      <td><p>Alternate chromosome for interchromosomal data, as a string.</p></td>
+      <td><p>Alternate chromosome for interchromosomal data,
+as a string.</p></td>
     </tr>
     <tr>
       <th>altchromstart</th>
-      <td><p>Alternate chromosome integer start position for interchromosomal data.</p></td>
+      <td><p>Alternate chromosome integer start position
+for interchromosomal data.</p></td>
     </tr>
     <tr>
       <th>altchromend</th>
-      <td><p>Alternate chromosome integer end position for interchromosomal data.</p></td>
+      <td><p>Alternate chromosome integer end position
+for interchromosomal data.</p></td>
     </tr>
     <tr>
       <th>assembly</th>
-      <td><p>Default genome assembly as a string or a <a href='bb_assembly.html'>bb_assembly</a> object. Default value is <code>assembly = "hg19"</code>.</p></td>
+      <td><p>Default genome assembly as a string or a
+<a href='bb_assembly.html'>bb_assembly</a> object.
+Default value is <code>assembly = "hg19"</code>.</p></td>
     </tr>
     <tr>
       <th>resolution</th>
-      <td><p>A numeric specifying the width of each pixel. "auto" will attempt to choose a resolution in basepairs based on the size of the region.</p></td>
+      <td><p>A numeric specifying the width of each pixel.
+"auto" will attempt to choose a resolution in basepairs based on
+the size of the region.</p></td>
     </tr>
     <tr>
       <th>res_scale</th>
-      <td><p>A character value specifying the resolution scale. Default value is <code>res_scale = "BP"</code>. Options are:</p><ul>
+      <td><p>A character value specifying the resolution scale.
+Default value is <code>res_scale = "BP"</code>. Options are:</p><ul>
 <li><p><code>"BP"</code>: Base pairs.</p></li>
 <li><p><code>"FRAG"</code>: Fragments.</p></li>
 </ul></td>
     </tr>
     <tr>
       <th>zrange</th>
-      <td><p>A numeric vector of length 2 specifying the range of interaction scores, where extreme values will be set to the max or min.</p></td>
+      <td><p>A numeric vector of length 2 specifying the range of
+interaction scores, where extreme values will be set to the max or min.</p></td>
     </tr>
     <tr>
       <th>norm</th>
-      <td><p>Character value specifying hic data normalization method. This value must be found in the .hic file. Default value is <code>norm = "KR"</code>.</p></td>
+      <td><p>Character value specifying hic data normalization method.
+This value must be found in the .hic file.
+Default value is <code>norm = "KR"</code>.</p></td>
     </tr>
     <tr>
       <th>matrix</th>
-      <td><p>Character value indicating the type of matrix to output. Default value is <code>matrix = "observed"</code>. Options are:</p><ul>
+      <td><p>Character value indicating the type of matrix to output.
+Default value is <code>matrix = "observed"</code>. Options are:</p><ul>
 <li><p><code>"observed"</code>: Observed counts.</p></li>
 <li><p><code>"oe"</code>: Observed/expected counts.</p></li>
 <li><p><code>"log2oe"</code>: Log2 transformed observed/expected counts.</p></li>
@@ -221,13 +233,16 @@
     </tr>
     <tr>
       <th>params</th>
-      <td><p>An optional <a href='bb_params.html'>bb_params</a> object containing relevant function parameters.</p></td>
+      <td><p>An optional <a href='bb_params.html'>bb_params</a> object
+containing relevant function parameters.</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>Returns a 3-column dataframe in sparse upper triangular format with the following columns: <code>chrom</code>, <code>altchrom</code>, <code>counts</code>.</p>
+    <p>Returns a 3-column dataframe in sparse upper triangular
+format with the following columns: <code>chrom</code>, <code>altchrom</code>,
+<code>counts</code>.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><a href='https://rdrr.io/pkg/strawr/man/straw.html'>straw</a></p></div>

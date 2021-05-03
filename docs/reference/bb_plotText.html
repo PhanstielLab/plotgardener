@@ -163,19 +163,24 @@
     </tr>
     <tr>
       <th>fontcolor</th>
-      <td><p>A character value specifying text fontcolor. Default value is <code>fontcolor = "black"</code>.</p></td>
+      <td><p>A character value specifying text fontcolor.
+Default value is <code>fontcolor = "black"</code>.</p></td>
     </tr>
     <tr>
       <th>fontsize</th>
-      <td><p>A numeric specifying text fontsize in points. Default value is <code>fontsize = 12</code>.</p></td>
+      <td><p>A numeric specifying text fontsize in points.
+Default value is <code>fontsize = 12</code>.</p></td>
     </tr>
     <tr>
       <th>rot</th>
-      <td><p>A numeric specifying the angle to rotate the text. Default value is <code>rot = 0</code>.</p></td>
+      <td><p>A numeric specifying the angle to rotate the text.
+Default value is <code>rot = 0</code>.</p></td>
     </tr>
     <tr>
       <th>check.overlap</th>
-      <td><p>A logical value to indicate whether to check for and omit overlapping text. Default value is <code>check.overlap = FALSE</code>.</p></td>
+      <td><p>A logical value to indicate whether to check
+for and omit overlapping text.
+Default value is <code>check.overlap = FALSE</code>.</p></td>
     </tr>
     <tr>
       <th>x</th>
@@ -183,21 +188,32 @@
     </tr>
     <tr>
       <th>y</th>
-      <td><p>A numeric vector, unit object, or a character vector of values containing a "b" combined with a numeric value specifying text y-locations.
-The character vector will place text y-locations relative to the bottom of the most recently plotted BentoBox plot according to the units of the BentoBox page.</p></td>
+      <td><p>A numeric vector, unit object, or a character vector of
+values containing a "b" combined with a numeric value
+specifying text y-locations.
+The character vector will place text y-locations relative to the
+bottom of the most recently plotted BentoBox plot according to the
+units of the BentoBox page.</p></td>
     </tr>
     <tr>
       <th>just</th>
-      <td><p>Justification of text relative to its (x, y) location. If there are two values, the first value specifies horizontal justification and the second value specifies vertical justification.
-Possible string values are: <code>"left"</code>, <code>"right"</code>, <code>"centre"</code>, <code>"center"</code>, <code>"bottom"</code>, and <code>"top"</code>. Default value is <code>just = "center"</code>.</p></td>
+      <td><p>Justification of text relative to its (x, y) location.
+If there are two values, the first value specifies horizontal
+justification and the second value specifies vertical justification.
+Possible string values are: <code>"left"</code>, <code>"right"</code>,
+<code>"centre"</code>, <code>"center"</code>, <code>"bottom"</code>, and <code>"top"</code>.
+Default value is <code>just = "center"</code>.</p></td>
     </tr>
     <tr>
       <th>default.units</th>
-      <td><p>A string indicating the default units to use if <code>x</code> or <code>y</code> are only given as numerics or numeric vectors. Default value is <code>default.units = "inches"</code>.</p></td>
+      <td><p>A string indicating the default units to use if
+<code>x</code> or <code>y</code> are only given as numerics or numeric vectors.
+Default value is <code>default.units = "inches"</code>.</p></td>
     </tr>
     <tr>
       <th>params</th>
-      <td><p>An optional <a href='bb_params.html'>bb_params</a> object containing relevant function parameters.</p></td>
+      <td><p>An optional <a href='bb_params.html'>bb_params</a> object
+containing relevant function parameters.</p></td>
     </tr>
     <tr>
       <th>...</th>
@@ -207,7 +223,8 @@ Possible string values are: <code>"left"</code>, <code>"right"</code>, <code>"ce
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>Returns a <code>bb_text</code> object containing relevant placement and <a href='https://rdrr.io/r/grid/grid.grob.html'>grob</a> information.</p>
+    <p>Returns a <code>bb_text</code> object containing relevant
+placement and <a href='https://rdrr.io/r/grid/grid.grob.html'>grob</a> information.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><a href='https://rdrr.io/r/grid/grid.text.html'>grid.text</a></p></div>
@@ -219,20 +236,20 @@ Possible string values are: <code>"left"</code>, <code>"right"</code>, <code>"ce
 <span class='co'>## Plot text, adjusting fontsize and fontface</span>
 <span class='fu'>bb_plotText</span><span class='op'>(</span>label <span class='op'>=</span> <span class='st'>"BentoBox"</span>, fontsize <span class='op'>=</span> <span class='fl'>14</span>, fontface <span class='op'>=</span> <span class='st'>"bold"</span>,
             x <span class='op'>=</span> <span class='fl'>1</span>, y <span class='op'>=</span> <span class='fl'>1</span>, just <span class='op'>=</span> <span class='st'>"center"</span>, default.units <span class='op'>=</span> <span class='st'>"inches"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>bb_text[GRID.text.3127]</span></div><div class='input'>
+</div><div class='output co'>#&gt; <span class='message'>bb_text[bb_text1]</span></div><div class='input'>
 <span class='co'>## Plot text, adjusting color, rotation, and fontfamily</span>
 <span class='fu'>bb_plotText</span><span class='op'>(</span>label <span class='op'>=</span> <span class='st'>"coordinate-based"</span>, fontcolor <span class='op'>=</span> <span class='st'>"#225EA8"</span>, rot <span class='op'>=</span> <span class='fl'>90</span>,
             fontfamily <span class='op'>=</span> <span class='st'>"HersheyScript"</span>, x <span class='op'>=</span> <span class='fl'>2</span>, y <span class='op'>=</span> <span class='fl'>1</span>, just <span class='op'>=</span> <span class='st'>"center"</span>,
             default.units <span class='op'>=</span> <span class='st'>"inches"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>bb_text[GRID.text.3128]</span></div><div class='input'>
+</div><div class='output co'>#&gt; <span class='message'>bb_text[bb_text2]</span></div><div class='input'>
 <span class='co'>## Plot a text label in multiple places at once</span>
 <span class='fu'>bb_plotText</span><span class='op'>(</span>label <span class='op'>=</span> <span class='st'>"R"</span>, x <span class='op'>=</span> <span class='fu'><a href='c.html'>c</a></span><span class='op'>(</span><span class='fl'>0.5</span>, <span class='fl'>1</span>, <span class='fl'>1.5</span><span class='op'>)</span>, y <span class='op'>=</span> <span class='fl'>1.5</span>, just <span class='op'>=</span> <span class='st'>"center"</span>,
             default.units <span class='op'>=</span> <span class='st'>"inches"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>bb_text[GRID.text.3129]</span></div><div class='input'>
+</div><div class='output co'>#&gt; <span class='message'>bb_text[bb_text2]</span></div><div class='input'>
 <span class='co'>## Plot a vector of text labels</span>
 <span class='fu'>bb_plotText</span><span class='op'>(</span>label <span class='op'>=</span> <span class='fu'><a href='c.html'>c</a></span><span class='op'>(</span><span class='st'>"bb"</span>, <span class='st'>"Bento"</span>, <span class='st'>"Box"</span><span class='op'>)</span>, x <span class='op'>=</span> <span class='fl'>3</span>, y <span class='op'>=</span> <span class='fu'><a href='c.html'>c</a></span><span class='op'>(</span><span class='fl'>0.5</span>, <span class='fl'>1</span>, <span class='fl'>1.75</span><span class='op'>)</span>,
             just <span class='op'>=</span> <span class='st'>"center"</span>, default.units <span class='op'>=</span> <span class='st'>"inches"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>bb_text[GRID.text.3130]</span></div><div class='img'><img src='bb_plotText-1.png' alt='' width='787' height='672' /></div><div class='input'>
+</div><div class='output co'>#&gt; <span class='message'>bb_text[bb_text2]</span></div><div class='img'><img src='bb_plotText-1.png' alt='' width='787' height='672' /></div><div class='input'>
 <span class='co'>## Hide page guides</span>
 <span class='fu'><a href='bb_pageGuideHide.html'>bb_pageGuideHide</a></span><span class='op'>(</span><span class='op'>)</span>
 </div><div class='img'><img src='bb_plotText-2.png' alt='' width='787' height='672' /></div><div class='input'>

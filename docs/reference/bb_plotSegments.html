@@ -161,41 +161,57 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>x0</th>
-      <td><p>A numeric vector or unit object indicating the starting x-values of the line segments.</p></td>
+      <td><p>A numeric vector or unit object indicating the
+starting x-values of the line segments.</p></td>
     </tr>
     <tr>
       <th>y0</th>
-      <td><p>A numeric vector, unit object, or a character vector of values containing a "b" combined with a numeric value specifying starting y-values of the line segments.
-The character vector will place starting y-values relative to the bottom of the most recently plotted BentoBox plot according to the units of the BentoBox page.</p></td>
+      <td><p>A numeric vector, unit object, or a character vector
+of values containing a "b" combined with a numeric value specifying
+starting y-values of the line segments.
+The character vector will place starting y-values relative to the
+bottom of the most recently plotted BentoBox plot according to the
+units of the BentoBox page.</p></td>
     </tr>
     <tr>
       <th>x1</th>
-      <td><p>A numeric vector or unit object indicating the stopping x-values of the line segments.</p></td>
+      <td><p>A numeric vector or unit object indicating the stopping
+x-values of the line segments.</p></td>
     </tr>
     <tr>
       <th>y1</th>
-      <td><p>A numeric vector, unit object, or a character vector of values containing a "b" combined with a numeric value specifying stopping y-values of the line segments.
-The character vector will place stopping y-values relative to the bottom of the most recently plotted BentoBox plot according to the units of the BentoBox page.</p></td>
+      <td><p>A numeric vector, unit object, or a character vector of v
+alues containing a "b" combined with a numeric value specifying
+stopping y-values of the line segments.
+The character vector will place stopping y-values relative to the
+bottom of the most recently plotted BentoBox plot according to the
+units of the BentoBox page.</p></td>
     </tr>
     <tr>
       <th>default.units</th>
-      <td><p>A string indicating the default units to use if <code>x0</code>, <code>y0</code>, <code>x1</code>, or <code>y1</code> are only given as numeric vectors. Default value is <code>default.units = "inches"</code>.</p></td>
+      <td><p>A string indicating the default units to use
+if <code>x0</code>, <code>y0</code>, <code>x1</code>, or <code>y1</code> are only given as
+numeric vectors. Default value is <code>default.units = "inches"</code>.</p></td>
     </tr>
     <tr>
       <th>linecolor</th>
-      <td><p>A character value specifying segment line color. Default value is <code>linecolor = "black"</code>.</p></td>
+      <td><p>A character value specifying segment line color.
+Default value is <code>linecolor = "black"</code>.</p></td>
     </tr>
     <tr>
       <th>lwd</th>
-      <td><p>A numeric specifying segment line width. Default value is <code>lwd = 1</code>.</p></td>
+      <td><p>A numeric specifying segment line width.
+Default value is <code>lwd = 1</code>.</p></td>
     </tr>
     <tr>
       <th>lty</th>
-      <td><p>A numeric specifying segment line type. Default value is <code>lty = 1</code>.</p></td>
+      <td><p>A numeric specifying segment line type.
+Default value is <code>lty = 1</code>.</p></td>
     </tr>
     <tr>
       <th>lineend</th>
-      <td><p>A character value specifying line end style. Default value is <code>lineend = "butt"</code>. Options are:</p><ul>
+      <td><p>A character value specifying line end style.
+Default value is <code>lineend = "butt"</code>. Options are:</p><ul>
 <li><p><code>"round"</code>: Segment ends are rounded.</p></li>
 <li><p><code>"butt"</code>: Segment ends end exactly where ended.</p></li>
 <li><p><code>"square"</code>: Segment ends are squared.</p></li>
@@ -203,7 +219,8 @@ The character vector will place stopping y-values relative to the bottom of the 
     </tr>
     <tr>
       <th>linejoin</th>
-      <td><p>A character value specifying line join style. Default value is <code>linejoin = "mitre"</code>. Options are:</p><ul>
+      <td><p>A character value specifying line join style.
+Default value is <code>linejoin = "mitre"</code>. Options are:</p><ul>
 <li><p><code>"round"</code>: Line joins are rounded.</p></li>
 <li><p><code>"mitre"</code>: Line joins are sharp corners.</p></li>
 <li><p><code>"bevel"</code>: Line joins are flattened corners.</p></li>
@@ -211,11 +228,13 @@ The character vector will place stopping y-values relative to the bottom of the 
     </tr>
     <tr>
       <th>arrow</th>
-      <td><p>A list describing arrow heads to place at either end of the line segments, as produced by the <a href='https://rdrr.io/r/grid/arrow.html'>arrow</a> function.</p></td>
+      <td><p>A list describing arrow heads to place at either end of
+the line segments, as produced by the <a href='https://rdrr.io/r/grid/arrow.html'>arrow</a> function.</p></td>
     </tr>
     <tr>
       <th>params</th>
-      <td><p>An optional <a href='bb_params.html'>bb_params</a> object containing relevant function parameters.</p></td>
+      <td><p>An optional <a href='bb_params.html'>bb_params</a> object containing
+relevant function parameters.</p></td>
     </tr>
     <tr>
       <th>...</th>
@@ -225,7 +244,8 @@ The character vector will place stopping y-values relative to the bottom of the 
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>Returns a <code>bb_segments</code> object containing relevant placement and <a href='https://rdrr.io/r/grid/grid.grob.html'>grob</a> information.</p>
+    <p>Returns a <code>bb_segments</code> object containing relevant
+placement and <a href='https://rdrr.io/r/grid/grid.grob.html'>grob</a> information.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><a href='https://rdrr.io/r/grid/grid.segments.html'>grid.segments</a>, <a href='https://rdrr.io/r/grid/arrow.html'>arrow</a></p></div>
@@ -236,23 +256,25 @@ The character vector will place stopping y-values relative to the bottom of the 
 <span class='fu'><a href='bb_pageCreate.html'>bb_pageCreate</a></span><span class='op'>(</span>width <span class='op'>=</span> <span class='fl'>7.5</span>, height <span class='op'>=</span> <span class='fl'>6</span>, default.units <span class='op'>=</span> <span class='st'>"inches"</span><span class='op'>)</span>
 </div><div class='input'>
 <span class='co'>## Plot one line segment</span>
-<span class='fu'>bb_plotSegments</span><span class='op'>(</span>x0 <span class='op'>=</span> <span class='fl'>3.75</span>, y0 <span class='op'>=</span> <span class='fl'>0.25</span>, x1 <span class='op'>=</span> <span class='fl'>3.75</span>, y1 <span class='op'>=</span> <span class='fl'>5.75</span>, default.units <span class='op'>=</span> <span class='st'>"inches"</span>,
+<span class='fu'>bb_plotSegments</span><span class='op'>(</span>x0 <span class='op'>=</span> <span class='fl'>3.75</span>, y0 <span class='op'>=</span> <span class='fl'>0.25</span>, x1 <span class='op'>=</span> <span class='fl'>3.75</span>, y1 <span class='op'>=</span> <span class='fl'>5.75</span>,
+                default.units <span class='op'>=</span> <span class='st'>"inches"</span>,
                 lwd <span class='op'>=</span> <span class='fl'>3</span>, lty <span class='op'>=</span> <span class='fl'>2</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>bb_segments[GRID.segments.3073]</span></div><div class='input'>
+</div><div class='output co'>#&gt; <span class='message'>bb_segments[bb_segments1]</span></div><div class='input'>
 <span class='co'>## Plot multiple line segments at different locations in different colors</span>
 <span class='fu'>bb_plotSegments</span><span class='op'>(</span>x0 <span class='op'>=</span> <span class='fl'>0.5</span>, y0 <span class='op'>=</span> <span class='fu'><a href='c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>3</span>, <span class='fl'>5</span><span class='op'>)</span>, x1 <span class='op'>=</span> <span class='fl'>3.25</span>, y1 <span class='op'>=</span> <span class='fu'><a href='c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>3</span>, <span class='fl'>5</span><span class='op'>)</span>,
                 default.units <span class='op'>=</span> <span class='st'>"inches"</span>,
                 lwd <span class='op'>=</span> <span class='fl'>2</span>, linecolor <span class='op'>=</span> <span class='fu'><a href='c.html'>c</a></span><span class='op'>(</span><span class='st'>"#7ecdbb"</span>, <span class='st'>"#37a7db"</span>, <span class='st'>"grey"</span><span class='op'>)</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>bb_segments[GRID.segments.3074]</span></div><div class='input'>
+</div><div class='output co'>#&gt; <span class='message'>bb_segments[bb_segments2]</span></div><div class='input'>
 <span class='co'>## Plot a line segment with an arrowhead</span>
-<span class='fu'>bb_plotSegments</span><span class='op'>(</span>x0 <span class='op'>=</span> <span class='fl'>4.5</span>, y0 <span class='op'>=</span> <span class='fl'>0.5</span>, x1 <span class='op'>=</span> <span class='fl'>7</span>, y1 <span class='op'>=</span> <span class='fl'>3</span>, default.units <span class='op'>=</span> <span class='st'>"inches"</span>,
+<span class='fu'>bb_plotSegments</span><span class='op'>(</span>x0 <span class='op'>=</span> <span class='fl'>4.5</span>, y0 <span class='op'>=</span> <span class='fl'>0.5</span>, x1 <span class='op'>=</span> <span class='fl'>7</span>, y1 <span class='op'>=</span> <span class='fl'>3</span>,
+                default.units <span class='op'>=</span> <span class='st'>"inches"</span>,
                 arrow <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/grid/arrow.html'>arrow</a></span><span class='op'>(</span>type <span class='op'>=</span> <span class='st'>"closed"</span><span class='op'>)</span>, fill <span class='op'>=</span> <span class='st'>"black"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>bb_segments[GRID.segments.3075]</span></div><div class='input'>
+</div><div class='output co'>#&gt; <span class='message'>bb_segments[bb_segments2]</span></div><div class='input'>
 <span class='co'>## Plot lines with round lineends</span>
 <span class='fu'>bb_plotSegments</span><span class='op'>(</span>x0 <span class='op'>=</span> <span class='fu'><a href='c.html'>c</a></span><span class='op'>(</span><span class='fl'>4</span>, <span class='fl'>7</span><span class='op'>)</span>, y0 <span class='op'>=</span> <span class='fl'>3.5</span>, x1 <span class='op'>=</span> <span class='fl'>5.5</span>, y1 <span class='op'>=</span> <span class='fl'>4.5</span>,
                 default.units <span class='op'>=</span> <span class='st'>"inches"</span>,
                 lwd <span class='op'>=</span> <span class='fl'>5</span>, lineend <span class='op'>=</span> <span class='st'>"round"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>bb_segments[GRID.segments.3076]</span></div><div class='img'><img src='bb_plotSegments-1.png' alt='' width='787' height='672' /></div><div class='input'>
+</div><div class='output co'>#&gt; <span class='message'>bb_segments[bb_segments2]</span></div><div class='img'><img src='bb_plotSegments-1.png' alt='' width='787' height='672' /></div><div class='input'>
 <span class='co'>## Hide page guides</span>
 <span class='fu'><a href='bb_pageGuideHide.html'>bb_pageGuideHide</a></span><span class='op'>(</span><span class='op'>)</span>
 </div><div class='img'><img src='bb_plotSegments-2.png' alt='' width='787' height='672' /></div><div class='input'>

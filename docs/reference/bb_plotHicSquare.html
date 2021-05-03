@@ -171,24 +171,33 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>data</th>
-      <td><p>Path to .hic file as a string or a 3-column dataframe of interaction counts in sparse upper triangular format.</p></td>
+      <td><p>Path to .hic file as a string or a 3-column dataframe of
+interaction counts in sparse upper triangular format.</p></td>
     </tr>
     <tr>
       <th>resolution</th>
-      <td><p>A numeric specifying the width in basepairs of each pixel. For hic files, "auto" will attempt to choose a resolution based on the size of the region. For
-dataframes, "auto" will attempt to detect the resolution the dataframe contains.</p></td>
+      <td><p>A numeric specifying the width in
+basepairs of each pixel. For hic files, "auto" will attempt
+to choose a resolution based on the size of the region. For
+dataframes, "auto" will attempt to detect the resolution the
+dataframe contains.</p></td>
     </tr>
     <tr>
       <th>zrange</th>
-      <td><p>A numeric vector of length 2 specifying the range of interaction scores to plot, where extreme values will be set to the max or min.</p></td>
+      <td><p>A numeric vector of length 2 specifying the range
+of interaction scores to plot, where extreme values will be set
+to the max or min.</p></td>
     </tr>
     <tr>
       <th>norm</th>
-      <td><p>Character value specifying hic data normalization method, if giving .hic file. This value must be found in the .hic file. Default value is <code>norm = "KR"</code>.</p></td>
+      <td><p>Character value specifying hic data normalization method,
+if giving .hic file. This value must be found in the .hic file.
+Default value is <code>norm = "KR"</code>.</p></td>
     </tr>
     <tr>
       <th>matrix</th>
-      <td><p>Character value indicating the type of matrix to output. Default value is <code>matrix = "observed"</code>. Options are:</p><ul>
+      <td><p>Character value indicating the type of matrix to output.
+Default value is <code>matrix = "observed"</code>. Options are:</p><ul>
 <li><p><code>"observed"</code>: Observed counts.</p></li>
 <li><p><code>"oe"</code>: Observed/expected counts.</p></li>
 <li><p><code>"log2oe"</code>: Log2 transformed observed/expected counts.</p></li>
@@ -208,31 +217,45 @@ dataframes, "auto" will attempt to detect the resolution the dataframe contains.
     </tr>
     <tr>
       <th>altchrom</th>
-      <td><p>Alternate chromosome for off-diagonal plotting or interchromosomal plotting, as a string.</p></td>
+      <td><p>Alternate chromosome for off-diagonal plotting
+or interchromosomal plotting, as a string.</p></td>
     </tr>
     <tr>
       <th>altchromstart</th>
-      <td><p>Alternate chromosome integer start position for off-diagonal plotting or interchromosomal plotting.</p></td>
+      <td><p>Alternate chromosome integer start position
+for off-diagonal plotting or interchromosomal plotting.</p></td>
     </tr>
     <tr>
       <th>altchromend</th>
-      <td><p>Alternate chromosome integer end position for off-diagonal plotting or interchromosomal plotting.</p></td>
+      <td><p>Alternate chromosome integer end position
+for off-diagonal plotting or interchromosomal plotting.</p></td>
     </tr>
     <tr>
       <th>assembly</th>
-      <td><p>Default genome assembly as a string or a <a href='bb_assembly.html'>bb_assembly</a> object. Default value is <code>assembly = "hg19"</code>.</p></td>
+      <td><p>Default genome assembly as a string or a
+<a href='bb_assembly.html'>bb_assembly</a> object.
+Default value is <code>assembly = "hg19"</code>.</p></td>
     </tr>
     <tr>
       <th>palette</th>
-      <td><p>A function describing the color palette to use for representing scale of interaction scores. Default value is <code>palette =  colorRampPalette(brewer.pal(n = 9, "YlGnBu"))</code>.</p></td>
+      <td><p>A function describing the color palette to use for
+representing scale of interaction scores.
+Default value is
+<code>palette =  colorRampPalette(brewer.pal(n = 9, "YlGnBu"))</code>.</p></td>
     </tr>
     <tr>
       <th>colorTrans</th>
-      <td><p>A string specifying how to scale Hi-C colors. Options are "linear", "log", "log2", or "log10". Default value is <code>colorTrans = "linear"</code>.</p></td>
+      <td><p>A string specifying how to scale Hi-C colors.
+Options are "linear", "log", "log2", or "log10".
+Default value is <code>colorTrans = "linear"</code>.</p></td>
     </tr>
     <tr>
       <th>half</th>
-      <td><p>A character value indicating which diagonal regions to plot. For intrachromosomal plotting, options are <code>"both"</code>, <code>"top"</code>, or <code>"bottom"</code>. For off-diagonal or interchromosomal plotting, options are <code>"top"</code> or <code>"bottom"</code>. Default value is <code>half = "both"</code>.</p><ul>
+      <td><p>A character value indicating which diagonal regions to plot.
+For intrachromosomal plotting, options are <code>"both"</code>, <code>"top"</code>,
+or <code>"bottom"</code>. For off-diagonal or interchromosomal plotting,
+options are <code>"top"</code> or <code>"bottom"</code>.
+Default value is <code>half = "both"</code>.</p><ul>
 <li><p><code>"both"</code>: Both diagonal halves.</p></li>
 <li><p><code>"top"</code>: Half above the diagonal.</p></li>
 <li><p><code>"bottom"</code>: Half below the diagonal.</p></li>
@@ -244,8 +267,11 @@ dataframes, "auto" will attempt to detect the resolution the dataframe contains.
     </tr>
     <tr>
       <th>y</th>
-      <td><p>A numeric, unit object, or character containing a "b" combined with a numeric value specifying square Hi-C plot y-location. The character value will
-place the square Hi-C plot y relative to the bottom of the most recently plotted BentoBox plot according to the units of the BentoBox page.</p></td>
+      <td><p>A numeric, unit object, or character containing a "b" combined
+with a numeric value specifying square Hi-C plot y-location.
+The character value will
+place the square Hi-C plot y relative to the bottom of the most recently
+plotted BentoBox plot according to the units of the BentoBox page.</p></td>
     </tr>
     <tr>
       <th>width</th>
@@ -257,34 +283,46 @@ place the square Hi-C plot y relative to the bottom of the most recently plotted
     </tr>
     <tr>
       <th>just</th>
-      <td><p>Justification of square Hi-C plot relative to its (x, y) location. If there are two values, the first value specifies horizontal justification and the second value specifies vertical justification.
-Possible string values are: <code>"left"</code>, <code>"right"</code>, <code>"centre"</code>, <code>"center"</code>, <code>"bottom"</code>, and <code>"top"</code>. Default value is <code>just = c("left", "top")</code>.</p></td>
+      <td><p>Justification of square Hi-C plot relative to
+its (x, y) location. If there are two values, the first value specifies
+horizontal justification and the second value specifies vertical
+justification.
+Possible string values are: <code>"left"</code>, <code>"right"</code>,
+<code>"centre"</code>, <code>"center"</code>, <code>"bottom"</code>, and <code>"top"</code>.
+Default value is <code>just = c("left", "top")</code>.</p></td>
     </tr>
     <tr>
       <th>default.units</th>
-      <td><p>A string indicating the default units to use if <code>x</code>, <code>y</code>, <code>width</code>, or <code>height</code> are only given as numerics. Default value is <code>default.units = "inches"</code>.</p></td>
+      <td><p>A string indicating the default units to use if
+<code>x</code>, <code>y</code>, <code>width</code>, or <code>height</code> are only given as
+numerics. Default value is <code>default.units = "inches"</code>.</p></td>
     </tr>
     <tr>
       <th>draw</th>
-      <td><p>A logical value indicating whether graphics output should be produced. Default value is <code>draw = TRUE</code>.</p></td>
+      <td><p>A logical value indicating whether graphics output should be
+produced. Default value is <code>draw = TRUE</code>.</p></td>
     </tr>
     <tr>
       <th>params</th>
-      <td><p>An optional <a href='bb_params.html'>bb_params</a> object containing relevant function parameters.</p></td>
+      <td><p>An optional <a href='bb_params.html'>bb_params</a> object containing
+relevant function parameters.</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>Returns a <code>bb_hicSquare</code> object containing relevant genomic region, Hi-C data, placement, and <a href='https://rdrr.io/r/grid/grid.grob.html'>grob</a> information.</p>
+    <p>Returns a <code>bb_hicSquare</code> object containing relevant
+genomic region, Hi-C data, placement, and <a href='https://rdrr.io/r/grid/grid.grob.html'>grob</a> information.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>A square Hi-C plot can be placed on a BentoBox coordinate page by providing plot placement parameters:</p><pre>
+    <p>A square Hi-C plot can be placed on a BentoBox coordinate page
+by providing plot placement parameters:</p><pre>
 <span class='fu'>bb_plotHicSquare</span><span class='op'>(</span><span class='va'>data</span>, <span class='va'>chrom</span>,
                  chromstart <span class='op'>=</span> <span class='cn'>NULL</span>, chromend <span class='op'>=</span> <span class='cn'>NULL</span>,
                  <span class='va'>x</span>, <span class='va'>y</span>, <span class='va'>width</span>, <span class='va'>height</span>, just <span class='op'>=</span> <span class='fu'><a href='c.html'>c</a></span><span class='op'>(</span><span class='st'>"left"</span>, <span class='st'>"top"</span><span class='op'>)</span>,
                  default.units <span class='op'>=</span> <span class='st'>"inches"</span><span class='op'>)</span>
-</pre><p>This function can be used to quickly plot an unannotated square Hi-C plot by ignoring plot placement parameters:</p><pre>
+</pre><p>This function can be used to quickly plot an unannotated
+square Hi-C plot by ignoring plot placement parameters:</p><pre>
 <span class='fu'>bb_plotHicSquare</span><span class='op'>(</span><span class='va'>data</span>, <span class='va'>chrom</span>,
                  chromstart <span class='op'>=</span> <span class='cn'>NULL</span>, chromend <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span>
 </pre>
@@ -301,13 +339,17 @@ Possible string values are: <code>"left"</code>, <code>"right"</code>, <code>"ce
 <span class='fu'><a href='bb_pageCreate.html'>bb_pageCreate</a></span><span class='op'>(</span>width <span class='op'>=</span> <span class='fl'>3</span>, height <span class='op'>=</span> <span class='fl'>3</span>, default.units <span class='op'>=</span> <span class='st'>"inches"</span><span class='op'>)</span>
 </div><div class='input'>
 <span class='co'>## Plot and place Hi-C plot</span>
-<span class='va'>hicPlot</span> <span class='op'>&lt;-</span> <span class='fu'>bb_plotHicSquare</span><span class='op'>(</span>data <span class='op'>=</span> <span class='va'>bb_imrHicData</span>, resolution <span class='op'>=</span> <span class='fl'>10000</span>, zrange <span class='op'>=</span> <span class='fu'><a href='c.html'>c</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>70</span><span class='op'>)</span>,
-                            chrom <span class='op'>=</span> <span class='st'>"chr21"</span>, chromstart <span class='op'>=</span> <span class='fl'>28000000</span>, chromend <span class='op'>=</span> <span class='fl'>30300000</span>,
+<span class='va'>hicPlot</span> <span class='op'>&lt;-</span> <span class='fu'>bb_plotHicSquare</span><span class='op'>(</span>data <span class='op'>=</span> <span class='va'>bb_imrHicData</span>, resolution <span class='op'>=</span> <span class='fl'>10000</span>,
+                            zrange <span class='op'>=</span> <span class='fu'><a href='c.html'>c</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>70</span><span class='op'>)</span>,
+                            chrom <span class='op'>=</span> <span class='st'>"chr21"</span>,
+                            chromstart <span class='op'>=</span> <span class='fl'>28000000</span>, chromend <span class='op'>=</span> <span class='fl'>30300000</span>,
                             x <span class='op'>=</span> <span class='fl'>0.5</span>, y <span class='op'>=</span> <span class='fl'>0.5</span>, width <span class='op'>=</span> <span class='fl'>2</span>, height <span class='op'>=</span> <span class='fl'>2</span>,
-                            just <span class='op'>=</span> <span class='fu'><a href='c.html'>c</a></span><span class='op'>(</span><span class='st'>"left"</span>, <span class='st'>"top"</span><span class='op'>)</span>, default.units <span class='op'>=</span> <span class='st'>"inches"</span><span class='op'>)</span>
+                            just <span class='op'>=</span> <span class='fu'><a href='c.html'>c</a></span><span class='op'>(</span><span class='st'>"left"</span>, <span class='st'>"top"</span><span class='op'>)</span>,
+                            default.units <span class='op'>=</span> <span class='st'>"inches"</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; <span class='message'>Read in dataframe.  Assuming 'chrom' in column1 and 'altchrom' in column2. 10000 BP resolution detected.</span></div><div class='output co'>#&gt; <span class='message'>bb_hicSquare[bb_hicSquare1]</span></div><div class='input'>
 <span class='co'>## Annotate heatmap legend</span>
-<span class='fu'><a href='bb_annoHeatmapLegend.html'>bb_annoHeatmapLegend</a></span><span class='op'>(</span>plot <span class='op'>=</span> <span class='va'>hicPlot</span>, x <span class='op'>=</span> <span class='fl'>2.6</span>, y <span class='op'>=</span> <span class='fl'>0.5</span>, width <span class='op'>=</span> <span class='fl'>0.12</span>, height <span class='op'>=</span> <span class='fl'>1.2</span>,
+<span class='fu'><a href='bb_annoHeatmapLegend.html'>bb_annoHeatmapLegend</a></span><span class='op'>(</span>plot <span class='op'>=</span> <span class='va'>hicPlot</span>, x <span class='op'>=</span> <span class='fl'>2.6</span>, y <span class='op'>=</span> <span class='fl'>0.5</span>,
+                     width <span class='op'>=</span> <span class='fl'>0.12</span>, height <span class='op'>=</span> <span class='fl'>1.2</span>,
                      just <span class='op'>=</span> <span class='fu'><a href='c.html'>c</a></span><span class='op'>(</span><span class='st'>"left"</span>, <span class='st'>"top"</span><span class='op'>)</span>, default.units <span class='op'>=</span> <span class='st'>"inches"</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; <span class='message'>bb_heatmapLegend[bb_heatmapLegend1]</span></div><div class='input'>
 <span class='co'>## Annotate x-axis and y-axis genome labels</span>
