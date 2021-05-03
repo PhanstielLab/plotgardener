@@ -18,7 +18,8 @@ bb_readHic(
   zrange = NULL,
   norm = "KR",
   matrix = "observed",
-  params = NULL
+  params = NULL,
+  quiet = FALSE
 )
 }
 \arguments{
@@ -71,6 +72,8 @@ Default value is \code{matrix = "observed"}. Options are:
 
 \item{params}{An optional \link[BentoBox]{bb_params} object
 containing relevant function parameters.}
+
+\item{quiet}{A logical indicating whether or not to print messages.}
 }
 \value{
 Returns a 3-column dataframe in sparse upper triangular

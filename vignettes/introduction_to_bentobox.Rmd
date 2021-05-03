@@ -1220,7 +1220,7 @@ bb_plotRaster(image = rlogo,
                just = "left")
 ```
 
-Add line segments with arrows to our workflow:
+And add line segments with arrows to our workflow:
 ```{r eval=FALSE, echo=TRUE, message=FALSE}
 bb_plotSegments(x0 = 2.7, y0 = 2.5, x1 = 3.1, y1 = 2.5, 
                 linecolor = "grey", fill = "grey",
@@ -1285,63 +1285,6 @@ bb_plotSegments(x0 = 5.45, y0 = 2.5, x1 = 5.85, y1 = 2.5,
 
 ```
 
-And add a star to highlight a step in our workflow:
-
-```{r eval=FALSE, echo=TRUE, message=FALSE}
-bb_plotPolygon(x = c(7.5, 7.6, 7.33, 7.67, 7.4),
-               y = c(1.25, 1.55, 1.35, 1.35, 1.55), 
-               linecolor = NA, fill = "yellow",
-               default.units = "inches")
-```
-```{r shapes_05, eval=TRUE, echo=FALSE, message=FALSE, fig.height = 5.5, fig.width=10}
-bb_pageCreate(width = 8, height = 4.5, default.units = "inches")
-
-bb_plotSignal(data = bb_imrH3K27acData,
-              chrom = "chr21", chromstart = 28000000, chromend = 30300000,
-              x = 0.25, y = 2, width = 2.25, height = 1, 
-              just = c("left", "top"), default.units = "inches")
-
-bb_plotHicSquare(data = bb_imrHicData,
-                 chrom = "chr21", chromstart = 28000000, chromend = 30300000,
-                 x = 3.25, y = 1.5, width = 2, height = 2,
-                 just = c("left", "top"), default.units = "inches")
-
-bb_plotText(label = "EXPERIMENTAL WORKFLOW", fontsize = 24, fontface = "bold",
-            x = 0.25, y = 0.5, just = "left")
-
-bb_plotText(label = "H3K27ac", fontsize = 16,
-            x = 1.375, y = 4, just = "center", default.units = "inches")
-
-bb_plotText(label = "Hi-C", fontsize = 16,
-            x = 4.25, y = 4, just = "center", default.units = "inches")
-
-bb_plotText(label = "Analysis", fontsize = 16,
-            x = 6.875, y = 4, just = "center", default.units = "inches")
-library(png)
-rlogo <- readPNG(system.file("images", "Rlogo.png", package = "BentoBox"))
-bb_plotRaster(image = rlogo,
-               x = 6, y = 2.5, width = 1.75, height = 1.55,
-               just = "left")
-bb_plotSegments(x0 = 2.7, y0 = 2.5, x1 = 3.1, y1 = 2.5, 
-                linecolor = "grey", fill = "grey",
-                arrow = arrow(angle = 30,
-                              length = unit(0.1, "inches"),
-                              ends = "last",
-                              type = "closed"),
-                default.units = "inches")
-
-bb_plotSegments(x0 = 5.45, y0 = 2.5, x1 = 5.85, y1 = 2.5, 
-                linecolor = "grey", fill = "grey",
-                arrow = arrow(angle = 30,
-                              length = unit(0.1, "inches"),
-                              ends = "last",
-                              type = "closed"),
-                default.units = "inches")
-bb_plotPolygon(x = c(7.5, 7.6, 7.33, 7.67, 7.4),
-               y = c(1.25, 1.55, 1.35, 1.35, 1.55), 
-               linecolor = NA, fill = "yellow",
-               default.units = "inches")
-```
 
 This makes our final `BentoBox` plot a combination of genomic data and other helpful figure elements:
 
@@ -1390,10 +1333,6 @@ bb_plotSegments(x0 = 5.45, y0 = 2.5, x1 = 5.85, y1 = 2.5,
                               ends = "last",
                               type = "closed"),
                 default.units = "inches")
-bb_plotPolygon(x = c(7.5, 7.6, 7.33, 7.67, 7.4),
-               y = c(1.25, 1.55, 1.35, 1.35, 1.55), 
-               linecolor = NA, fill = "yellow",
-               default.units = "inches")
 ```
 
 For more detailed usage of basic shape functions, see the function-specific reference examples with `?function()` (e.g. `?bb_plotCircle()`).

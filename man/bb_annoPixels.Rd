@@ -11,6 +11,7 @@ bb_annoPixels(
   half = "inherit",
   shift = 4,
   params = NULL,
+  quiet = FALSE,
   ...
 )
 }
@@ -49,6 +50,8 @@ for the length of an arrow.}
 
 \item{params}{An optional \link[BentoBox]{bb_params} object
 containing relevant function parameters.}
+
+\item{quiet}{A logical indicating whether or not to print messages.}
 
 \item{...}{Additional grid graphical parameters. See \link[grid]{gpar}.}
 }

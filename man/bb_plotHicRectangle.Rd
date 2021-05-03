@@ -23,7 +23,8 @@ bb_plotHicRectangle(
   just = c("left", "top"),
   default.units = "inches",
   draw = TRUE,
-  params = NULL
+  params = NULL,
+  quiet = FALSE
 )
 }
 \arguments{
@@ -102,6 +103,8 @@ be produced. Default value is \code{draw = TRUE}.}
 
 \item{params}{An optional \link[BentoBox]{bb_params} object containing
 relevant function parameters.}
+
+\item{quiet}{A logical indicating whether or not to print messages.}
 }
 \value{
 Returns a \code{bb_hicRectangle} object containing

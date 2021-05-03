@@ -56,6 +56,7 @@
 #' be produced. Default value is \code{draw = TRUE}.
 #' @param params An optional \link[BentoBox]{bb_params} object containing
 #' relevant function parameters.
+#' @param quiet A logical indicating whether or not to print messages.
 #'
 #' @return Returns a \code{bb_hicTriangle} object containing relevant
 #' genomic region, Hi-C data, placement, and \link[grid]{grob} information.
@@ -118,7 +119,7 @@ bb_plotHicTriangle <- function(data, resolution = "auto", zrange = NULL,
                                width = NULL, height = NULL,
                                just = c("left", "top"),
                                default.units = "inches", draw = TRUE,
-                               params = NULL){
+                               params = NULL, quiet = FALSE){
 
   # ======================================================================================================================================================================================
   # FUNCTIONS
@@ -128,7 +129,7 @@ bb_plotHicTriangle <- function(data, resolution = "auto", zrange = NULL,
   two <- mpfr(2, 120)
 
   ## Define a function that resets the just based on if the final plot will be a triangle or a trapezoid
-  reset_just <- function(just, x, y, width, height){
+  reset_just <- function(just, x, y, width, height, quiet){
 
     if (!is.null(x) & !is.null(y)){
 
@@ -152,7 +153,7 @@ bb_plotHicTriangle <- function(data, resolution = "auto", zrange = NULL,
               | identical(just, c("right", "top"))){
 
             just <- "top"
-            message("Entire triangle will be plotted.  Auto-adjusting plot justifiction to top.")
+            if (!quiet) message("Entire triangle will be plotted.  Auto-adjusting plot justifiction to top.")
           }
 
         }
@@ -544,6 +545,7 @@ bb_plotHicTriangle <- function(data, resolution = "auto", zrange = NULL,
   if(missing(draw)) draw <- NULL
   if(missing(matrix)) matrix <- NULL
   if(missing(colorTrans)) colorTrans <- NULL
+  if(missing(quiet)) quiet <- NULL
 
   ## Check if hic/chrom arguments are missing (could be in object)
   if(!hasArg(data)) data <- NULL
@@ -560,7 +562,8 @@ bb_plotHicTriangle <- function(data, resolution = "auto", zrange = NULL,
                                     colorTrans = colorTrans,
                                     y = y, just = just, norm = norm,
                                     default.units = default.units,
-                                    draw = draw, matrix = matrix),
+                                    draw = draw, matrix = matrix,
+                                    quiet = quiet),
                                class = "bb_thicInternal")
 
   bb_thicInternal <- parseParams(bb_params = params,
@@ -576,7 +579,7 @@ bb_plotHicTriangle <- function(data, resolution = "auto", zrange = NULL,
   if(is.null(bb_thicInternal$draw)) bb_thicInternal$draw <- TRUE
   if(is.null(bb_thicInternal$matrix)) bb_thicInternal$matrix <- "observed"
   if(is.null(bb_thicInternal$colorTrans)) bb_thicInternal$colorTrans <- "linear"
-
+  if(is.null(bb_thicInternal$quiet)) bb_thicInternal$quiet <- FALSE
   # ======================================================================================================================================================================================
   # INITIALIZE OBJECT
   # ======================================================================================================================================================================================
@@ -636,7 +639,8 @@ bb_plotHicTriangle <- function(data, resolution = "auto", zrange = NULL,
 
   new_just <- reset_just(just = bb_thicInternal$just,
                          x = hic_plot$x, y = hic_plot$y,
-                         width = hic_plot$width, height = hic_plot$height)
+                         width = hic_plot$width, height = hic_plot$height,
+                         quiet = bb_thicInternal$quiet)
   hic_plot$just <- new_just
 
   # ======================================================================================================================================================================================
@@ -701,7 +705,8 @@ bb_plotHicTriangle <- function(data, resolution = "auto", zrange = NULL,
 
   hic <- read_data(hic = bb_thicInternal$data, hic_plot = hic_plot,
                    norm = bb_thicInternal$norm, assembly = hic_plot$assembly,
-                   type = bb_thicInternal$matrix)
+                   type = bb_thicInternal$matrix,
+                   quiet = bb_thicInternal$quiet)
 
   # ======================================================================================================================================================================================
   # SUBSET DATA

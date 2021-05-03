@@ -249,8 +249,7 @@ bb_plotRaster <- function(image, x, y, width, height, just = "center",
                       height = unit(new_height, page_units),
                       just = bb_rast$just,
                       interpolate = bb_rast$interpolate,
-                      gp = bb_rast$gp,
-                      name = name)
+                      gp = bb_rast$gp)
 
   # ======================================================================================================================================================================================
   # ADD GROB TO OBJECT
@@ -262,6 +261,6 @@ bb_plotRaster <- function(image, x, y, width, height, just = "center",
   # RETURN OBJECT
   # ======================================================================================================================================================================================
 
-  message(paste0("bb_raster[", rast$name, "]"))
+  message(paste0("bb_raster[", name, "]"))
   invisible(bb_rast)
 }

@@ -57,6 +57,7 @@
 #' be produced. Default value is \code{draw = TRUE}.
 #' @param params An optional \link[BentoBox]{bb_params} object containing
 #' relevant function parameters.
+#' @param quiet A logical indicating whether or not to print messages.
 #'
 #' @return Returns a \code{bb_hicRectangle} object containing
 #' relevant genomic region, Hi-C data, placement,
@@ -124,7 +125,7 @@ bb_plotHicRectangle <- function(data, resolution = "auto", zrange = NULL,
                                 width = NULL, height = NULL,
                                 just = c("left", "top"),
                                 default.units = "inches", draw = TRUE,
-                                params = NULL){
+                                params = NULL, quiet = FALSE){
 
   # ======================================================================================================================================================================================
   # FUNCTIONS
@@ -313,6 +314,7 @@ bb_plotHicRectangle <- function(data, resolution = "auto", zrange = NULL,
   if(missing(draw)) draw <- NULL
   if(missing(matrix)) matrix <- NULL
   if(missing(colorTrans)) colorTrans <- NULL
+  if(missing(quiet)) quiet <- NULL
 
   ## Check if hic/chrom arguments are missing (could be in object)
   if(!hasArg(data)) data <- NULL
@@ -329,7 +331,8 @@ bb_plotHicRectangle <- function(data, resolution = "auto", zrange = NULL,
                                     colorTrans = colorTrans,
                                     y = y, just = just, norm = norm,
                                     default.units = default.units,
-                                    draw = draw, matrix = matrix),
+                                    draw = draw, matrix = matrix,
+                                    quiet = quiet),
                                class = "bb_rhicInternal")
 
   bb_rhicInternal <- parseParams(bb_params = params,
@@ -345,7 +348,7 @@ bb_plotHicRectangle <- function(data, resolution = "auto", zrange = NULL,
   if(is.null(bb_rhicInternal$draw)) bb_rhicInternal$draw <- TRUE
   if(is.null(bb_rhicInternal$matrix)) bb_rhicInternal$matrix <- "observed"
   if(is.null(bb_rhicInternal$colorTrans)) bb_rhicInternal$colorTrans <- "linear"
-
+  if(is.null(bb_rhicInternal$quiet)) bb_rhicInternal$quiet <- FALSE
   # ======================================================================================================================================================================================
   # INITIALIZE OBJECT
   # ======================================================================================================================================================================================
@@ -483,7 +486,8 @@ bb_plotHicRectangle <- function(data, resolution = "auto", zrange = NULL,
 
   hic <- read_data(hic = bb_rhicInternal$data, hic_plot = hic_plot,
                    norm = bb_rhicInternal$norm, assembly = hic_plot$assembly,
-                   type = bb_rhicInternal$matrix)
+                   type = bb_rhicInternal$matrix,
+                   quiet = bb_rhicInternal$quiet)
 
   # ======================================================================================================================================================================================
   # SUBSET DATA

@@ -71,6 +71,7 @@
 #' produced. Default value is \code{draw = TRUE}.
 #' @param params An optional \link[BentoBox]{bb_params} object containing
 #' relevant function parameters.
+#' @param quiet A logical indicating whether or not to print messages.
 #'
 #' @return Returns a \code{bb_hicSquare} object containing relevant
 #' genomic region, Hi-C data, placement, and \link[grid]{grob} information.
@@ -135,7 +136,7 @@ bb_plotHicSquare <- function(data, resolution = "auto", zrange = NULL,
                              half = "both", x = NULL, y = NULL, width = NULL,
                              height = NULL, just = c("left", "top"),
                              default.units = "inches",
-                             draw = TRUE, params = NULL){
+                             draw = TRUE, params = NULL, quiet = FALSE){
 
   # ======================================================================================================================================================================================
   # FUNCTIONS
@@ -555,6 +556,7 @@ bb_plotHicSquare <- function(data, resolution = "auto", zrange = NULL,
   if(missing(norm)) norm <- NULL
   if(missing(matrix)) matrix <- NULL
   if(missing(colorTrans)) colorTrans <- NULL
+  if(missing(quiet)) quiet <- NULL
 
   ## Check if hic/chrom arguments are missing (could be in object)
   if(!hasArg(data)) data <- NULL
@@ -573,7 +575,7 @@ bb_plotHicSquare <- function(data, resolution = "auto", zrange = NULL,
                                    altchromstart = altchromstart,
                                    altchromend = altchromend,
                                    norm = norm, matrix = matrix,
-                                   colorTrans = colorTrans),
+                                   colorTrans = colorTrans, quiet = quiet),
                               class = "bb_hicInternal")
 
   bb_hicInternal <- parseParams(bb_params = params,
@@ -590,6 +592,7 @@ bb_plotHicSquare <- function(data, resolution = "auto", zrange = NULL,
   if(is.null(bb_hicInternal$norm)) bb_hicInternal$norm <- "KR"
   if(is.null(bb_hicInternal$matrix)) bb_hicInternal$matrix <- "observed"
   if(is.null(bb_hicInternal$colorTrans)) bb_hicInternal$colorTrans <- "linear"
+  if(is.null(bb_hicInternal$quiet)) bb_hicInternal$quiet <- FALSE
 
   if(is.null(bb_hicInternal$data)) stop("argument \"data\" is missing, with no default.", call. = FALSE)
   if(is.null(bb_hicInternal$chrom)) stop("argument \"chrom\" is missing, with no default.", call. = FALSE)
@@ -679,7 +682,8 @@ bb_plotHicSquare <- function(data, resolution = "auto", zrange = NULL,
                    hic_plot = hic_plot,
                    norm = bb_hicInternal$norm,
                    assembly = hic_plot$assembly,
-                   type = bb_hicInternal$matrix)
+                   type = bb_hicInternal$matrix,
+                   quiet = bb_hicInternal$quiet)
 
   # ======================================================================================================================================================================================
   # SUBSET DATA

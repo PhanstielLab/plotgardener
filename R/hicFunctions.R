@@ -50,7 +50,7 @@ adjust_resolution <- function(hic, hic_plot){
 }
 
 ## Define a function that reads in hic data for plotHic functions
-read_data <- function(hic, hic_plot, norm, assembly, type){
+read_data <- function(hic, hic_plot, norm, assembly, type, quiet){
 
   ## if .hic file, read in with bb_rhic
   if (!("data.frame" %in% class(hic))){
@@ -81,7 +81,8 @@ read_data <- function(hic, hic_plot, norm, assembly, type){
 
     if (!is.null(hic_plot$chromstart) & !is.null(hic_plot$chromend)){
 
-      message(paste("Read in dataframe.  Assuming \'chrom\' in column1 and \'altchrom\' in column2.", hic_plot$resolution, "BP resolution detected."))
+      if (!quiet) message(paste("Read in dataframe.  Assuming \'chrom\' in column1 and \'altchrom\' in column2.",
+                                hic_plot$resolution, "BP resolution detected."))
 
       if (hic_plot$chromstart < min(hic[,1]) | hic_plot$chromend > max(hic[,1])){
         warning("Data is missing for inputted region. Some data may be missing from Hi-C plot.", call. = FALSE)

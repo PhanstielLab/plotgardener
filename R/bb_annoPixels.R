@@ -30,6 +30,7 @@
 #' @param params An optional \link[BentoBox]{bb_params} object
 #' containing relevant function parameters.
 #' @param ... Additional grid graphical parameters. See \link[grid]{gpar}.
+#' @param quiet A logical indicating whether or not to print messages.
 #'
 #' @return Returns a \code{bb_pixel} object containing relevant
 #' genomic region, placement, and \link[grid]{grob} information.
@@ -77,7 +78,7 @@
 #'
 #' @export
 bb_annoPixels <- function(plot, data, type = "box", half = "inherit",
-                          shift = 4, params = NULL, ...){
+                          shift = 4, params = NULL, quiet = FALSE,...){
 
   # ======================================================================================================================================================================================
   # FUNCTIONS
@@ -86,7 +87,7 @@ bb_annoPixels <- function(plot, data, type = "box", half = "inherit",
   two <- mpfr(2, 120)
 
   ## Define a function to catch errors for bb_annoPixels
-  errorcheck_bb_annoLoops <- function(hic, loops, half, type){
+  errorcheck_bb_annoLoops <- function(hic, loops, half, type, quiet){
 
     ###### hic #####
 
@@ -161,15 +162,15 @@ bb_annoPixels <- function(plot, data, type = "box", half = "inherit",
 
         if (hic$althalf == "bottom"){
 
-          message(paste("Attempting to annotate pixels where",
-                        hic$chrom, "is on the x-axis and",
-                        hic$altchrom, "is on the y-axis."), call. = FALSE)
+          if (!quiet) message(paste("Attempting to annotate pixels where",
+                                    hic$chrom, "is on the x-axis and",
+                                    hic$altchrom, "is on the y-axis."), call. = FALSE)
 
         } else if (hic$althalf == "top"){
 
-          message(paste("Attempting to annotate pixels where",
-                        hic$altchrom, "is on the x-axis and",
-                        hic$chrom, "is on the y-axis."), call. = FALSE)
+          if (!quiet) message(paste("Attempting to annotate pixels where",
+                                    hic$altchrom, "is on the x-axis and",
+                                    hic$chrom, "is on the y-axis."), call. = FALSE)
 
         }
 
@@ -450,6 +451,7 @@ bb_annoPixels <- function(plot, data, type = "box", half = "inherit",
   if(missing(half)) half <- NULL
   if(missing(shift)) shift <- NULL
   if(missing(type)) type <- NULL
+  if(missing(quiet)) quiet <- NULL
 
   ## Check if hic/loops arguments are missing (could be in object)
   if(!hasArg(plot)) plot <- NULL
@@ -457,7 +459,7 @@ bb_annoPixels <- function(plot, data, type = "box", half = "inherit",
 
   ## Compile all parameters into an internal object
   bb_loopsInternal <- structure(list(plot = plot, data = data, half = half,
-                                     shift = shift, type = type,
+                                     shift = shift, type = type, quiet = quiet,
                                      gp = gpar()), class = "bb_loopsInternal")
 
   bb_loopsInternal <- parseParams(bb_params = params,
@@ -467,6 +469,7 @@ bb_annoPixels <- function(plot, data, type = "box", half = "inherit",
   if(is.null(bb_loopsInternal$half)) bb_loopsInternal$half <- "inherit"
   if(is.null(bb_loopsInternal$shift)) bb_loopsInternal$shift <- 4
   if(is.null(bb_loopsInternal$type)) bb_loopsInternal$type <- "box"
+  if(is.null(bb_loopsInternal$quiet)) bb_loopsInternal$quiet <- FALSE
 
   ## Set gp
   bb_loopsInternal$gp <- setGP(gpList = bb_loopsInternal$gp,
@@ -502,7 +505,8 @@ bb_annoPixels <- function(plot, data, type = "box", half = "inherit",
   errorcheck_bb_annoLoops(hic = bb_loopsInternal$plot,
                           loops = bb_loopsInternal$data,
                           half = bb_loopsInternal$half,
-                          type = bb_loopsInternal$type)
+                          type = bb_loopsInternal$type,
+                          quiet = bb_loopsInternal$quiet)
 
   # ======================================================================================================================================================================================
   # PARSE INHERITED HALF

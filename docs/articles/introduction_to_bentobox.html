@@ -92,7 +92,7 @@
       <h1 data-toc-skip>Introduction to BentoBox</h1>
                         <h4 class="author">Nicole Kramer, Eric S. Davis, Craig Wenger, Sarah Parker, Erika Deoudes, and Douglas H. Phanstiel</h4>
             
-            <h4 class="date">2021-05-02</h4>
+            <h4 class="date">2021-05-03</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/PhanstielLab/BentoBox/blob/master/vignettes/introduction_to_bentobox.Rmd"><code>vignettes/introduction_to_bentobox.Rmd</code></a></small>
       <div class="hidden name"><code>introduction_to_bentobox.Rmd</code></div>
@@ -892,7 +892,7 @@
                x <span class="op">=</span> <span class="fl">6</span>, y <span class="op">=</span> <span class="fl">2.5</span>, width <span class="op">=</span> <span class="fl">1.75</span>, height <span class="op">=</span> <span class="fl">1.55</span>,
                just <span class="op">=</span> <span class="st">"left"</span><span class="op">)</span></code></pre></div>
 <p><img src="introduction_to_bentobox_files/figure-html/shapes_03-1.png" width="960" style="display: block; margin: auto;"></p>
-<p>Add line segments with arrows to our workflow:</p>
+<p>And add line segments with arrows to our workflow:</p>
 <div class="sourceCode" id="cb46"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/bb_plotSegments.html">bb_plotSegments</a></span><span class="op">(</span>x0 <span class="op">=</span> <span class="fl">2.7</span>, y0 <span class="op">=</span> <span class="fl">2.5</span>, x1 <span class="op">=</span> <span class="fl">3.1</span>, y1 <span class="op">=</span> <span class="fl">2.5</span>, 
                 linecolor <span class="op">=</span> <span class="st">"grey"</span>, fill <span class="op">=</span> <span class="st">"grey"</span>,
@@ -910,13 +910,6 @@
                               type <span class="op">=</span> <span class="st">"closed"</span><span class="op">)</span>,
                 default.units <span class="op">=</span> <span class="st">"inches"</span><span class="op">)</span></code></pre></div>
 <p><img src="introduction_to_bentobox_files/figure-html/shapes_04-1.png" width="960" style="display: block; margin: auto;"></p>
-<p>And add a star to highlight a step in our workflow:</p>
-<div class="sourceCode" id="cb47"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/bb_plotPolygon.html">bb_plotPolygon</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="../reference/c.html">c</a></span><span class="op">(</span><span class="fl">7.5</span>, <span class="fl">7.6</span>, <span class="fl">7.33</span>, <span class="fl">7.67</span>, <span class="fl">7.4</span><span class="op">)</span>,
-               y <span class="op">=</span> <span class="fu"><a href="../reference/c.html">c</a></span><span class="op">(</span><span class="fl">1.25</span>, <span class="fl">1.55</span>, <span class="fl">1.35</span>, <span class="fl">1.35</span>, <span class="fl">1.55</span><span class="op">)</span>, 
-               linecolor <span class="op">=</span> <span class="cn">NA</span>, fill <span class="op">=</span> <span class="st">"yellow"</span>,
-               default.units <span class="op">=</span> <span class="st">"inches"</span><span class="op">)</span></code></pre></div>
-<p><img src="introduction_to_bentobox_files/figure-html/shapes_05-1.png" width="960" style="display: block; margin: auto;"></p>
 <p>This makes our final <code>BentoBox</code> plot a combination of genomic data and other helpful figure elements:</p>
 <p><img src="introduction_to_bentobox_files/figure-html/shapes_06-1.png" width="960" style="display: block; margin: auto;"></p>
 <p>For more detailed usage of basic shape functions, see the function-specific reference examples with <code>?function()</code> (e.g. <code>?bb_plotCircle()</code>).</p>
@@ -931,7 +924,7 @@
 <a href="#genome-labels" class="anchor"></a>Genome labels</h2>
 <p>Genome labels are some of the most important annotations for giving context to the genomic region of data. <code><a href="../reference/bb_annoGenomeLabel.html">bb_annoGenomeLabel()</a></code>can add genome labels with various customizations.</p>
 <p>Genome labels can be shown at three different basepair scales (Mb, Kb, and bp) depending on the size of the region and the desired accuracy of the start and end labels. In the genomic region <code>chr21:28000000-30300000</code> we can use a Mb scale:</p>
-<div class="sourceCode" id="cb48"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb47"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="st">"bb_imrHicData"</span><span class="op">)</span>
 <span class="fu"><a href="../reference/bb_pageCreate.html">bb_pageCreate</a></span><span class="op">(</span>width <span class="op">=</span> <span class="fl">3</span>, height <span class="op">=</span> <span class="fl">3.25</span>, default.units <span class="op">=</span> <span class="st">"inches"</span><span class="op">)</span>
 <span class="va">hicPlot</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/bb_plotHicSquare.html">bb_plotHicSquare</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">bb_imrHicData</span>,
@@ -946,7 +939,7 @@
 #&gt; Warning: End label is rounded.</code></pre>
 <p><img src="introduction_to_bentobox_files/figure-html/anno_02-1.png" width="576" style="display: block; margin: auto;"></p>
 <p>Thus, it makes more sense to use the bp scale for ultimate accuracy:</p>
-<div class="sourceCode" id="cb50"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb49"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="st">"bb_imrHicData"</span><span class="op">)</span>
 <span class="fu"><a href="../reference/bb_pageCreate.html">bb_pageCreate</a></span><span class="op">(</span>width <span class="op">=</span> <span class="fl">3</span>, height <span class="op">=</span> <span class="fl">3.25</span>, default.units <span class="op">=</span> <span class="st">"inches"</span><span class="op">)</span>
 <span class="va">hicPlot</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/bb_plotHicSquare.html">bb_plotHicSquare</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">bb_imrHicData</span>,
@@ -960,7 +953,7 @@
 <p>At even finer scales, <code><a href="../reference/bb_annoGenomeLabel.html">bb_annoGenomeLabel()</a></code> will then represent nucleotides with colored letters:</p>
 <p><img src="introduction_to_bentobox_files/figure-html/anno_05-1.png" width="672" style="display: block; margin: auto;"></p>
 <p>In the specific case of square Hi-C plots (<code>bb_hicSquare</code> objects), <code><a href="../reference/bb_annoGenomeLabel.html">bb_annoGenomeLabel()</a></code> can annotate the genome label along the y-axis:</p>
-<div class="sourceCode" id="cb51"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb50"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="st">"bb_imrHicData"</span><span class="op">)</span>
 <span class="fu"><a href="../reference/bb_pageCreate.html">bb_pageCreate</a></span><span class="op">(</span>width <span class="op">=</span> <span class="fl">3.25</span>, height <span class="op">=</span> <span class="fl">3</span>, default.units <span class="op">=</span> <span class="st">"inches"</span><span class="op">)</span>
 <span class="va">hicPlot</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/bb_plotHicSquare.html">bb_plotHicSquare</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">bb_imrHicData</span>,
@@ -976,7 +969,7 @@
 <h2 class="hasAnchor">
 <a href="#plot-axes" class="anchor"></a>Plot axes</h2>
 <p>In addition to genomic axes, it is also common to annotate standard x and y-axes for measures of scale. This functionality is provided by the <code><a href="../reference/bb_annoXaxis.html">bb_annoXaxis()</a></code> and <code><a href="../reference/bb_annoYaxis.html">bb_annoYaxis()</a></code> functions. For example, a Manhattan plot requires a y-axis to indicate the range of p-values:</p>
-<div class="sourceCode" id="cb52"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb51"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st">"TxDb.Hsapiens.UCSC.hg19.knownGene"</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="st">"bb_gwasData"</span><span class="op">)</span>
 
@@ -1007,7 +1000,7 @@
 <h2 class="hasAnchor">
 <a href="#heatmap-legends" class="anchor"></a>Heatmap legends</h2>
 <p>Heatmap-style plots with numbers translated to a palette of colors require a specific type of legend. This legend can be plotted with <code><a href="../reference/bb_annoHeatmapLegend.html">bb_annoHeatmapLegend()</a></code> in both vertical and horizontal orientations. Genomic plots that typically require this annotation are Hi-C plots made with <code><a href="../reference/bb_plotHicRectangle.html">bb_plotHicRectangle()</a></code>, <code><a href="../reference/bb_plotHicSquare.html">bb_plotHicSquare()</a></code>, or <code><a href="../reference/bb_plotHicTriangle.html">bb_plotHicTriangle()</a></code>.</p>
-<div class="sourceCode" id="cb53"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb52"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="st">"bb_imrHicData"</span><span class="op">)</span>
 
 <span class="fu"><a href="../reference/bb_pageCreate.html">bb_pageCreate</a></span><span class="op">(</span>width <span class="op">=</span> <span class="fl">3.25</span>, height <span class="op">=</span> <span class="fl">3.25</span>, default.units <span class="op">=</span> <span class="st">"inches"</span><span class="op">)</span>
@@ -1036,7 +1029,7 @@
 <h2 class="hasAnchor">
 <a href="#hi-c-pixels" class="anchor"></a>Hi-C pixels</h2>
 <p>It is also possible to annotate the pixels on a Hi-C plot with provided BEDPE data. Pixels can be annotated with boxes, circles, or squares.</p>
-<div class="sourceCode" id="cb54"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb53"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="st">"bb_imrHicData"</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="st">"bb_bedpeData"</span><span class="op">)</span>
 
@@ -1052,7 +1045,7 @@
                         half <span class="op">=</span> <span class="st">"both"</span><span class="op">)</span></code></pre></div>
 <p><img src="introduction_to_bentobox_files/figure-html/anno_09-1.png" width="504" style="display: block; margin: auto;"></p>
 <p>If we want to annotate one pixel of interest, we can subset our BEDPE data and <code><a href="../reference/bb_annoPixels.html">bb_annoPixels()</a></code> will only annotate the specified pixels:</p>
-<div class="sourceCode" id="cb55"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb54"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="st">"bb_imrHicData"</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="st">"bb_bedpeData"</span><span class="op">)</span>
 
@@ -1076,7 +1069,7 @@
 <a href="#genomic-region-highlights-and-zooms" class="anchor"></a>Genomic region highlights and zooms</h2>
 <p>The last category of annotations that is often used in plotting genomic data is highlighting and zooming. Many figures benefit from providing a broader context of data and then highlighting a smaller genomic region to show data at a finer scale. In this example, we will plot an ideogram and highlight and zoom in on a genomic region of interest to see the signal track data in that region.</p>
 <p>First we can plot our ideogram. We’ll remove gridlines from our page to better see the annotations we make:</p>
-<div class="sourceCode" id="cb56"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb55"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="st">"cytoBand.Hsapiens.UCSC.hg19"</span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">TxDb.Hsapiens.UCSC.hg19.knownGene</span><span class="op">)</span>
 
@@ -1086,14 +1079,14 @@
                                 x <span class="op">=</span> <span class="fl">0.25</span>, y <span class="op">=</span> <span class="fl">0.5</span>, width <span class="op">=</span> <span class="fl">5.75</span>, height <span class="op">=</span> <span class="fl">0.3</span>, just <span class="op">=</span> <span class="st">"left"</span><span class="op">)</span></code></pre></div>
 <p><img src="introduction_to_bentobox_files/figure-html/anno_11-1.png" width="792" style="display: block; margin: auto;"></p>
 <p>We can then use <code><a href="../reference/bb_annoHighlight.html">bb_annoHighlight()</a></code> to highlight our genomic region of interest (<code>chr21:28000000-30300000</code>) with a box of our desired <code>height</code>:</p>
-<div class="sourceCode" id="cb57"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb56"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">region</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/bb_params.html">bb_params</a></span><span class="op">(</span>chrom <span class="op">=</span> <span class="st">"chr21"</span>, chromstart <span class="op">=</span> <span class="fl">28000000</span>, chromend <span class="op">=</span> <span class="fl">30300000</span><span class="op">)</span>
 <span class="fu"><a href="../reference/bb_annoHighlight.html">bb_annoHighlight</a></span><span class="op">(</span>plot <span class="op">=</span> <span class="va">ideogramPlot</span>, params <span class="op">=</span> <span class="va">region</span>,
                  fill <span class="op">=</span> <span class="st">"red"</span>, 
                  y <span class="op">=</span> <span class="fl">0.25</span>, height <span class="op">=</span> <span class="fl">0.5</span>, just <span class="op">=</span> <span class="fu"><a href="../reference/c.html">c</a></span><span class="op">(</span><span class="st">"left"</span>, <span class="st">"top"</span><span class="op">)</span>, default.units <span class="op">=</span> <span class="st">"inches"</span><span class="op">)</span></code></pre></div>
 <p><img src="introduction_to_bentobox_files/figure-html/anno_12-1.png" width="792" style="display: block; margin: auto;"></p>
 <p>To make it clearer that we are zooming in on a genomic region, we can then use <code><a href="../reference/bb_annoZoomLines.html">bb_annoZoomLines()</a></code> to add zoom lines from the genomic region we highlighted:</p>
-<div class="sourceCode" id="cb58"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb57"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/bb_annoZoomLines.html">bb_annoZoomLines</a></span><span class="op">(</span>plot <span class="op">=</span> <span class="va">ideogramPlot</span>, params <span class="op">=</span> <span class="va">region</span>,
                  y0 <span class="op">=</span> <span class="fl">0.75</span>, x1 <span class="op">=</span> <span class="fu"><a href="../reference/c.html">c</a></span><span class="op">(</span><span class="fl">0.25</span>, <span class="fl">6</span><span class="op">)</span>, y1 <span class="op">=</span> <span class="fl">1.25</span>, default.units <span class="op">=</span> <span class="st">"inches"</span><span class="op">)</span></code></pre></div>
 <p><img src="introduction_to_bentobox_files/figure-html/anno_13-1.png" width="792" style="display: block; margin: auto;"></p>
@@ -1105,7 +1098,7 @@
 <h1 class="hasAnchor">
 <a href="#bioconductor-integration" class="anchor"></a>Bioconductor integration</h1>
 <p><code>BentoBox</code> is designed to be compatible with typical Bioconductor classes of genomic data to easily integrate genomic data analysis and visualization. In addition to handling various genomic file types and <code>R</code> objects, many <code>BentoBox</code> functions can also handle <code>GRanges</code> objects as input data. Internally, <code>BentoBox</code> utilizes <code>TxDb</code>, <code>OrgDb</code>, and <code>BSgenome</code> objects for various genomic annotations, including gene and transcript structures and names, chromosome sizes, and nucleotide sequences. For standard genomic assemblies (i.e. hg19, hg38, mm10), <code>BentoBox</code> uses a set of default packages that can be displayed by calling <code><a href="../reference/bb_defaultPackages.html">bb_defaultPackages()</a></code>:</p>
-<div class="sourceCode" id="cb59"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb58"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/bb_defaultPackages.html">bb_defaultPackages</a></span><span class="op">(</span><span class="st">"hg19"</span><span class="op">)</span>
 <span class="co">#&gt; List of 6</span>
 <span class="co">#&gt;  $ Genome        : chr "hg19"</span>
@@ -1134,7 +1127,7 @@
 <span class="co">#&gt;  $ BSgenome      : chr "BSgenome.Mmusculus.UCSC.mm10"</span>
 <span class="co">#&gt;  - attr(*, "class")= chr "bb_assembly"</span></code></pre></div>
 <p>To see which assemblies have defaults within <code>BentoBox</code>, call <code><a href="../reference/bb_genomes.html">bb_genomes()</a></code>:</p>
-<div class="sourceCode" id="cb60"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb59"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/bb_genomes.html">bb_genomes</a></span><span class="op">(</span><span class="op">)</span>
 <span class="co">#&gt; bosTau8</span>
 <span class="co">#&gt; bosTau9</span>
@@ -1166,11 +1159,11 @@
 <span class="co">#&gt; susScr3</span>
 <span class="co">#&gt; susScr11</span></code></pre></div>
 <p><code>BentoBox</code> functions default to an “hg19” assembly. To create custom genomic assemblies and combinations of <code>TxDb</code>, <code>orgDb</code>, and <code>BSgenome</code> packages for use in <code>BentoBox</code> functions, we can use the <code><a href="../reference/bb_assembly.html">bb_assembly()</a></code> constructor. For example, we can create our own <code>TxDb</code> from the current human Ensembl release:</p>
-<div class="sourceCode" id="cb61"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb60"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://bioconductor.org/packages/GenomicFeatures">GenomicFeatures</a></span><span class="op">)</span>
 <span class="va">TxDb.Hsapiens.Ensembl.GrCh38.103</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/GenomicFeatures/man/makeTxDbFromEnsembl.html">makeTxDbFromEnsembl</a></span><span class="op">(</span>organism <span class="op">=</span> <span class="st">"Homo sapiens"</span><span class="op">)</span></code></pre></div>
 <p>We can now create a new <code>bb_assembly</code> with this <code>TxDb</code> and combinations of other Bioconductor packages. The <code>Genome</code> parameter can be any string to name or describe this assembly. Since the <code>TxDb</code> is now from ENSEMBL, we will change the <code>gene.id</code> field to <code>"ENSEMBL"</code> to map gene IDs and symbols between our <code>TxDb</code> and <code>orgDb</code> objects. Most gene ID types can be found by calling <code><a href="https://rdrr.io/pkg/AnnotationDbi/man/AnnotationDb-class.html">AnnotationDbi::keytypes()</a></code> on an <code>orgDb</code>.</p>
-<div class="sourceCode" id="cb62"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb61"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">Ensembl38</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/bb_assembly.html">bb_assembly</a></span><span class="op">(</span>Genome <span class="op">=</span> <span class="st">"Ensembl.GRCh38.103"</span>,
                          TxDb <span class="op">=</span> <span class="va">TxDb.Hsapiens.Ensembl.GrCh38.103</span>,
                          OrgDb <span class="op">=</span> <span class="st">"org.Hs.eg.db"</span>,
@@ -1256,14 +1249,14 @@
 <h2 class="hasAnchor">
 <a href="#backgrounds-and-baselines" class="anchor"></a>Backgrounds and baselines</h2>
 <p>By default, <code>BentoBox</code> plots have transparent backgrounds when placed on a <code>bb_page</code>. In many functions, this background color can be changed with the parameter <code>bg</code>.</p>
-<div class="sourceCode" id="cb63"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb62"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/bb_plotGenes.html">bb_plotGenes</a></span><span class="op">(</span>chrom <span class="op">=</span> <span class="st">"chr8"</span>, chromstart <span class="op">=</span> <span class="fl">1000000</span>, chromend <span class="op">=</span> <span class="fl">2000000</span>,
              bg <span class="op">=</span> <span class="st">"#f6f6f6"</span>,
              x <span class="op">=</span> <span class="fl">0.5</span>, y <span class="op">=</span> <span class="fl">0.5</span>, width <span class="op">=</span> <span class="fl">2</span>, height <span class="op">=</span> <span class="fl">1</span>, just <span class="op">=</span> <span class="fu"><a href="../reference/c.html">c</a></span><span class="op">(</span><span class="st">"left"</span>, <span class="st">"top"</span><span class="op">)</span>, 
              default.units <span class="op">=</span> <span class="st">"inches"</span><span class="op">)</span></code></pre></div>
 <p><img src="introduction_to_bentobox_files/figure-html/aes_01-1.png" width="480" style="display: block; margin: auto;"> This makes it easy to clearly see the precise dimensional boundaries of <code>BentoBox</code> plots.</p>
 <p>Some plots also benefit from baselines to quickly show where y = 0. This can aid in data interpretation and guide plot annotation placement. Baselines can be plotted in selective plots with <code>baseline = TRUE</code>.</p>
-<div class="sourceCode" id="cb64"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb63"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/bb_plotBed.html">bb_plotBed</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">bb_bedData</span>, 
            chrom <span class="op">=</span> <span class="st">"chr21"</span>, chromstart <span class="op">=</span> <span class="fl">29073000</span>, chromend <span class="op">=</span> <span class="fl">29074000</span>,
            fill <span class="op">=</span> <span class="fu"><a href="../reference/c.html">c</a></span><span class="op">(</span><span class="st">"#7ecdbb"</span>, <span class="st">"#37a7db"</span><span class="op">)</span>,
@@ -1278,7 +1271,7 @@
 </h2>
 <p>The <code>colorby</code> constructor allows us to color the data elements in <code>BentoBox</code> plots by various data features. These features can be a numerical range, like some kind of score value, or categorical values, like positive or negative strand. The <code>colorby</code> object is constructed by specifying the name of the data column to color by and an optional range for numerical values.</p>
 <p>For example, if we revist the BED plot above, <code>bb_bedData</code> has an additional <code>strand</code> column for each BED element:</p>
-<div class="sourceCode" id="cb65"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb64"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="st">"bb_bedData"</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">bb_bedData</span><span class="op">)</span>
 <span class="co">#&gt;          chrom    start      end strand</span>
@@ -1289,7 +1282,7 @@
 <span class="co">#&gt; 15554866 chr21 28000335 28000371      -</span>
 <span class="co">#&gt; 15554867 chr21 28000500 28000536      +</span></code></pre></div>
 <p>Thus, we can use the <code>colorby</code> constructor to color BED elements by positive or negative strand. The <code>strand</code> column will be converted to a factor with a <code><a href="https://rdrr.io/r/base/Arithmetic.html">-</a></code> level and <code><a href="https://rdrr.io/r/base/Arithmetic.html">+</a></code> level. These values will be assigned to the <code>fill</code> colors in the order of these factors.</p>
-<div class="sourceCode" id="cb66"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb65"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/bb_plotBed.html">bb_plotBed</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">bb_bedData</span>, 
            chrom <span class="op">=</span> <span class="st">"chr21"</span>, chromstart <span class="op">=</span> <span class="fl">29073000</span>, chromend <span class="op">=</span> <span class="fl">29074000</span>,
            fill <span class="op">=</span> <span class="fu"><a href="../reference/c.html">c</a></span><span class="op">(</span><span class="st">"#7ecdbb"</span>, <span class="st">"#37a7db"</span><span class="op">)</span>,
@@ -1298,7 +1291,7 @@
            just <span class="op">=</span> <span class="fu"><a href="../reference/c.html">c</a></span><span class="op">(</span><span class="st">"left"</span>, <span class="st">"top"</span><span class="op">)</span>, default.units <span class="op">=</span> <span class="st">"inches"</span><span class="op">)</span></code></pre></div>
 <p><img src="introduction_to_bentobox_files/figure-html/aes_03-1.png" width="912" style="display: block; margin: auto;"></p>
 <p>To further control the order of color assignment, we can set our categorical <code>colorby</code> column as a factor with our own order of levels before plotting:</p>
-<div class="sourceCode" id="cb67"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb66"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="st">"bb_bedData"</span><span class="op">)</span>
 <span class="va">bb_bedData</span><span class="op">$</span><span class="va">strand</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">as.factor</a></span><span class="op">(</span><span class="va">bb_bedData</span><span class="op">$</span><span class="va">strand</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/base/levels.html">levels</a></span><span class="op">(</span><span class="va">bb_bedData</span><span class="op">$</span><span class="va">strand</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/c.html">c</a></span><span class="op">(</span><span class="st">"+"</span>, <span class="st">"-"</span><span class="op">)</span>
@@ -1308,13 +1301,13 @@
 <p>Now we’ve set the <code><a href="https://rdrr.io/r/base/Arithmetic.html">+</a></code> level as our first level, so the first value in <code>fill</code> will color the plus-stranded elements and the second <code>fill</code> value will color the minus-stranded elements:</p>
 <p><img src="introduction_to_bentobox_files/figure-html/aes_04-1.png" width="912" style="display: block; margin: auto;"></p>
 <p>In this example, we will color BEDPE arches by a range of numerical values we will add as a <code>length</code> column:</p>
-<div class="sourceCode" id="cb68"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb67"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="st">"bb_bedpeData"</span><span class="op">)</span>
 <span class="va">bb_bedpeData</span><span class="op">$</span><span class="va">length</span> <span class="op">&lt;-</span> <span class="op">(</span><span class="va">bb_bedpeData</span><span class="op">$</span><span class="va">start2</span> <span class="op">-</span> <span class="va">bb_bedpeData</span><span class="op">$</span><span class="va">start1</span><span class="op">)</span> <span class="op">/</span> <span class="fl">1000</span>
 <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">bb_bedpeData</span><span class="op">$</span><span class="va">length</span><span class="op">)</span>
 <span class="co">#&gt; [1]   65 1960 2100  850 1200 1485</span></code></pre></div>
 <p>Now we can set <code>fill</code> as a palette to color the BEDPE <code>length</code> column by:</p>
-<div class="sourceCode" id="cb69"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb68"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">bedpePlot</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/bb_plotBedpeArches.html">bb_plotBedpeArches</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">bb_bedpeData</span>, 
                                 chrom <span class="op">=</span> <span class="st">"chr21"</span>, chromstart <span class="op">=</span> <span class="fl">27900000</span>, chromend <span class="op">=</span> <span class="fl">30700000</span>,
                                 fill <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grDevices/colorRamp.html">colorRampPalette</a></span><span class="op">(</span><span class="fu"><a href="../reference/c.html">c</a></span><span class="op">(</span><span class="st">"dodgerblue2"</span>, <span class="st">"firebrick2"</span><span class="op">)</span><span class="op">)</span>,
@@ -1327,7 +1320,7 @@
                                 default.units <span class="op">=</span> <span class="st">"inches"</span><span class="op">)</span></code></pre></div>
 <p><img src="introduction_to_bentobox_files/figure-html/aes_05-1.png" width="912" style="display: block; margin: auto;"></p>
 <p>And now since we have numbers mapped to colors, we can use <code><a href="../reference/bb_annoHeatmapLegend.html">bb_annoHeatmapLegend()</a></code> with our <code>bb_arches</code> object to add a legend for the <code>colorby</code> we performed:</p>
-<div class="sourceCode" id="cb70"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb69"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/bb_annoHeatmapLegend.html">bb_annoHeatmapLegend</a></span><span class="op">(</span>plot <span class="op">=</span> <span class="va">bedpePlot</span>, fontcolor <span class="op">=</span> <span class="st">"black"</span>,
                      x <span class="op">=</span> <span class="fl">7.0</span>, y <span class="op">=</span> <span class="fl">0.25</span>,
                      width <span class="op">=</span> <span class="fl">0.10</span>, height <span class="op">=</span> <span class="fl">1</span>, fontsize <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></code></pre></div>
@@ -1342,12 +1335,12 @@
 <a href="#labels" class="anchor"></a>Labels</h3>
 <p>Since <code>BentoBox</code> utilizes <code>TxDb</code> objects, <code>orgDb</code> objects, and internal citation information, <code>BentoBox</code> has access to numerous gene and transcript identifiers and can customize annotation labels in a variety of ways.</p>
 <p>By default, <code>BentoBox</code> will rank gene labels according to citation number to prevent label overcrowding. However, we can provide our own list of prioritized genes to label in a plot. For example, if we plot the hg19 genes in the region <code>chr2:1000000-20000000</code>, our plot will show these labels:</p>
-<div class="sourceCode" id="cb71"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb70"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/bb_pageCreate.html">bb_pageCreate</a></span><span class="op">(</span>width <span class="op">=</span> <span class="fl">5</span>, height <span class="op">=</span> <span class="fl">1.25</span>, showGuides <span class="op">=</span> <span class="cn">FALSE</span>, xgrid <span class="op">=</span> <span class="fl">0</span>, ygrid <span class="op">=</span> <span class="fl">0</span><span class="op">)</span>
 <span class="va">genePlot</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/bb_plotGenes.html">bb_plotGenes</a></span><span class="op">(</span>chrom <span class="op">=</span> <span class="st">"chr2"</span>, chromstart <span class="op">=</span> <span class="fl">1000000</span>, chromend <span class="op">=</span> <span class="fl">20000000</span>,
                          x <span class="op">=</span> <span class="fl">0.25</span>, y <span class="op">=</span> <span class="fl">0.25</span>, width <span class="op">=</span> <span class="fl">4.75</span>, height <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></code></pre></div>
 <p><img src="introduction_to_bentobox_files/figure-html/aes_07-1.png" width="480" style="display: block; margin: auto;"> Looking in the <code>bb_genes</code> object, we can see that there were numerous genes that were not labeled.</p>
-<div class="sourceCode" id="cb72"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb71"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">genePlot</span><span class="op">$</span><span class="va">genes</span>
 <span class="co">#&gt;  [1] "MIR3125"      "RNASEH1-AS1"  "LOC100506274" "MIR4757"      "LINC00570"   </span>
 <span class="co">#&gt;  [6] "C2orf50"      "SLC66A3"      "SILC1"        "LRATD1"       "DDX1"        </span>
@@ -1366,14 +1359,14 @@
 <span class="co">#&gt; [71] "EIPR1"        "LINC01249"    "RAD51AP2"     "PXDN"         "SMC6"        </span>
 <span class="co">#&gt; [76] "NOL10"        "CYRIA"        "ITGB1BP1"     "NT5C1B"       "ROCK2"</span></code></pre></div>
 <p>If we were particularly interested in MIR3125, we could include this in the <code>geneOrder</code> parameter to prioritize its labeling:</p>
-<div class="sourceCode" id="cb73"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb72"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/bb_pageCreate.html">bb_pageCreate</a></span><span class="op">(</span>width <span class="op">=</span> <span class="fl">5</span>, height <span class="op">=</span> <span class="fl">1.25</span>, showGuides <span class="op">=</span> <span class="cn">FALSE</span>, xgrid <span class="op">=</span> <span class="fl">0</span>, ygrid <span class="op">=</span> <span class="fl">0</span><span class="op">)</span>
 <span class="va">genePlot</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/bb_plotGenes.html">bb_plotGenes</a></span><span class="op">(</span>chrom <span class="op">=</span> <span class="st">"chr2"</span>, chromstart <span class="op">=</span> <span class="fl">1000000</span>, chromend <span class="op">=</span> <span class="fl">20000000</span>,
                          geneOrder <span class="op">=</span> <span class="fu"><a href="../reference/c.html">c</a></span><span class="op">(</span><span class="st">"MIR3125"</span><span class="op">)</span>,
                          x <span class="op">=</span> <span class="fl">0.25</span>, y <span class="op">=</span> <span class="fl">0.25</span>, width <span class="op">=</span> <span class="fl">4.75</span>, height <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></code></pre></div>
 <p><img src="introduction_to_bentobox_files/figure-html/aes_08-1.png" width="480" style="display: block; margin: auto;"></p>
 <p>If we wanted to change the type of label in our plot, we can change the <code>display.column</code> parameter in a <code><a href="../reference/bb_assembly.html">bb_assembly()</a></code> object. The default <code>display.column = "SYMBOL"</code>, but we could change this value to other available <code>keytypes</code> in the <code>orgDb</code> we are using. For example, if we wanted to display the associated Ensembl IDs, we would set <code>display.column = "ENSEMBL"</code>:</p>
-<div class="sourceCode" id="cb74"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb73"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">new_hg19</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/bb_assembly.html">bb_assembly</a></span><span class="op">(</span>Genome <span class="op">=</span> <span class="st">"id_hg19"</span>,
                         TxDb <span class="op">=</span> <span class="st">"TxDb.Hsapiens.UCSC.hg19.knownGene"</span>,
                         OrgDb <span class="op">=</span> <span class="st">"org.Hs.eg.db"</span>,
@@ -1385,7 +1378,7 @@
                          x <span class="op">=</span> <span class="fl">0.25</span>, y <span class="op">=</span> <span class="fl">0.25</span>, width <span class="op">=</span> <span class="fl">4.75</span>, height <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></code></pre></div>
 <p><img src="introduction_to_bentobox_files/figure-html/aes_09-1.png" width="480" style="display: block; margin: auto;"></p>
 <p>Label IDs used in transcript plots can be customized through <code><a href="../reference/bb_assembly.html">bb_assembly()</a></code> objects, and transcript label formatting can be changed through the <code>labels</code> parameter. For example, if we wish to display both transcript names and their associated gene names, we can set <code>labels = "both"</code>:</p>
-<div class="sourceCode" id="cb75"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb74"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/bb_pageCreate.html">bb_pageCreate</a></span><span class="op">(</span>width <span class="op">=</span> <span class="fl">6</span>, height <span class="op">=</span> <span class="fl">5</span>, showGuides <span class="op">=</span> <span class="cn">FALSE</span>, xgrid <span class="op">=</span> <span class="fl">0</span>, ygrid <span class="op">=</span> <span class="fl">0</span><span class="op">)</span>
 <span class="va">transcriptPlot</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/bb_plotTranscripts.html">bb_plotTranscripts</a></span><span class="op">(</span>chrom <span class="op">=</span> <span class="st">"chr2"</span>, chromstart <span class="op">=</span> <span class="fl">1000000</span>, chromend <span class="op">=</span> <span class="fl">20000000</span>,
                                      labels <span class="op">=</span> <span class="st">"both"</span>,
@@ -1396,17 +1389,17 @@
 <h3 class="hasAnchor">
 <a href="#highlighting-genes-by-color" class="anchor"></a>Highlighting genes by color</h3>
 <p>In addition to changing <code>fill</code> and <code>fontcolor</code> to change the colors of all genes in a plot, specific gene structures and their labels can be highlighted in a different color with <code>geneHighlights</code>. If we revisit the <code>bb_genes</code> plot above, we can highlight RRM2 by creating a <code>data.frame</code> with “RRM2” in the first column and its highlight color in the second column:</p>
-<div class="sourceCode" id="cb76"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb75"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">geneHighlights</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span><span class="st">"geneName"</span> <span class="op">=</span> <span class="st">"RRM2"</span>, <span class="st">"color"</span> <span class="op">=</span> <span class="st">"steel blue"</span><span class="op">)</span></code></pre></div>
 <p>We can then pass this into our <code><a href="../reference/bb_plotGenes.html">bb_plotGenes()</a></code> call:</p>
-<div class="sourceCode" id="cb77"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb76"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/bb_pageCreate.html">bb_pageCreate</a></span><span class="op">(</span>width <span class="op">=</span> <span class="fl">5</span>, height <span class="op">=</span> <span class="fl">1.25</span>, showGuides <span class="op">=</span> <span class="cn">FALSE</span>, xgrid <span class="op">=</span> <span class="fl">0</span>, ygrid <span class="op">=</span> <span class="fl">0</span><span class="op">)</span>
 <span class="va">genePlot</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/bb_plotGenes.html">bb_plotGenes</a></span><span class="op">(</span>chrom <span class="op">=</span> <span class="st">"chr2"</span>, chromstart <span class="op">=</span> <span class="fl">1000000</span>, chromend <span class="op">=</span> <span class="fl">20000000</span>,
                          geneHighlights <span class="op">=</span> <span class="va">geneHighlights</span>, geneBackground <span class="op">=</span> <span class="st">"grey"</span>,
                          x <span class="op">=</span> <span class="fl">0.25</span>, y <span class="op">=</span> <span class="fl">0.25</span>, width <span class="op">=</span> <span class="fl">4.75</span>, height <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></code></pre></div>
 <p><img src="introduction_to_bentobox_files/figure-html/aes_11-1.png" width="480" style="display: block; margin: auto;"></p>
 <p>Since <code>geneHighlights</code> is a <code>data.frame</code>, we can highlight multiple genes in different colors at once. For example, let’s now highlight RRM2 in “steel blue” and PXDN in “red”:</p>
-<div class="sourceCode" id="cb78"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb77"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">geneHighlights</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span><span class="st">"geneName"</span> <span class="op">=</span> <span class="fu"><a href="../reference/c.html">c</a></span><span class="op">(</span><span class="st">"RRM2"</span>, <span class="st">"PXDN"</span><span class="op">)</span>, <span class="st">"color"</span> <span class="op">=</span> <span class="fu"><a href="../reference/c.html">c</a></span><span class="op">(</span><span class="st">"steel blue"</span>, <span class="st">"red"</span><span class="op">)</span><span class="op">)</span>
 
 <span class="fu"><a href="../reference/bb_pageCreate.html">bb_pageCreate</a></span><span class="op">(</span>width <span class="op">=</span> <span class="fl">5</span>, height <span class="op">=</span> <span class="fl">1.25</span>, showGuides <span class="op">=</span> <span class="cn">FALSE</span>, xgrid <span class="op">=</span> <span class="fl">0</span>, ygrid <span class="op">=</span> <span class="fl">0</span><span class="op">)</span>
@@ -1419,7 +1412,7 @@
 <h3 class="hasAnchor">
 <a href="#customizing-transcripts-by-strand" class="anchor"></a>Customizing transcripts by strand</h3>
 <p>To distinguish which strand a transcript belongs to, <code><a href="../reference/bb_plotTranscripts.html">bb_plotTranscripts()</a></code> colors transcripts by strand with the parameter <code>colorbyStrand</code>. The first value in <code>fill</code> colors positive strand transcripts and the second <code>fill</code> value colors negative strand transcripts. To further organize transcripts by strand, we can use <code>strandSplit</code> to separate transcript elements into groups of positive and negative strands:</p>
-<div class="sourceCode" id="cb79"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb78"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/bb_pageCreate.html">bb_pageCreate</a></span><span class="op">(</span>width <span class="op">=</span> <span class="fl">6</span>, height <span class="op">=</span> <span class="fl">5</span>, showGuides <span class="op">=</span> <span class="cn">FALSE</span>, xgrid <span class="op">=</span> <span class="fl">0</span>, ygrid <span class="op">=</span> <span class="fl">0</span><span class="op">)</span>
 <span class="va">transcriptPlot</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/bb_plotTranscripts.html">bb_plotTranscripts</a></span><span class="op">(</span>chrom <span class="op">=</span> <span class="st">"chr2"</span>, chromstart <span class="op">=</span> <span class="fl">1000000</span>, chromend <span class="op">=</span> <span class="fl">20000000</span>,
                                      strandSplit <span class="op">=</span> <span class="cn">TRUE</span>,
@@ -1439,7 +1432,7 @@
 </ul>
 <p>All Hi-C plot types can use different color palettes, and colors can be linearly or log-scaled with the <code>colorTrans</code> parameter.</p>
 <p><code>bb_hicSquare</code> plots can be further customized to include two datasets in one plot. Instead of plotting both symmetrical halves of the plot, we can set one dataset as <code>half = "top"</code> and the other dataset as <code>half = "bottom"</code>:</p>
-<div class="sourceCode" id="cb80"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb79"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="st">"bb_gmHicData"</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="st">"bb_imrHicData"</span><span class="op">)</span>
 

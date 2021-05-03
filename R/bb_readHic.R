@@ -36,6 +36,7 @@
 #' }
 #' @param params An optional \link[BentoBox]{bb_params} object
 #' containing relevant function parameters.
+#' @param quiet A logical indicating whether or not to print messages.
 #'
 #' @return Returns a 3-column dataframe in sparse upper triangular
 #' format with the following columns: \code{chrom}, \code{altchrom},
@@ -49,7 +50,7 @@ bb_readHic <- function(file, chrom, chromstart = NULL, chromend = NULL,
                        altchromend = NULL, assembly = "hg19",
                        resolution = "auto", res_scale = "BP",
                        zrange = NULL, norm = "KR", matrix = "observed",
-                       params = NULL){
+                       params = NULL, quiet = FALSE){
 
 
   # ======================================================================================================================================================================================
@@ -382,6 +383,7 @@ bb_readHic <- function(file, chrom, chromstart = NULL, chromend = NULL,
   if(missing(res_scale)) res_scale <- NULL
   if(missing(assembly)) assembly <- NULL
   if(missing(matrix)) matrix <- NULL
+  if(missing(quiet)) quiet <- NULL
 
   ## Check if hic/chrom arguments are missing (could be in object)
   if(!hasArg(file)) file <- NULL
@@ -395,7 +397,8 @@ bb_readHic <- function(file, chrom, chromstart = NULL, chromend = NULL,
                             assembly = assembly, matrix = matrix,
                             altchrom = altchrom,
                             altchromstart = altchromstart,
-                            altchromend = altchromend), class = "bb_rhic")
+                            altchromend = altchromend,
+                            quiet = quiet), class = "bb_rhic")
 
   bb_rhic <- parseParams(bb_params = params, object_params = bb_rhic)
 
@@ -405,6 +408,7 @@ bb_readHic <- function(file, chrom, chromstart = NULL, chromend = NULL,
   if(is.null(bb_rhic$res_scale)) bb_rhic$res_scale <- "BP"
   if(is.null(bb_rhic$assembly)) bb_rhic$assembly <- "hg19"
   if(is.null(bb_rhic$matrix)) bb_rhic$matrix <- "observed"
+  if(is.null(bb_rhic$quiet)) bb_rhic$quiet <- FALSE
 
   if(is.null(bb_rhic$file)) stop("argument \"file\" is missing, with no default.", call. = FALSE)
   if(is.null(bb_rhic$chrom)) stop("argument \"chrom\" is missing, with no default.", call. = FALSE)
@@ -562,10 +566,10 @@ bb_readHic <- function(file, chrom, chromstart = NULL, chromend = NULL,
   if (nrow(renamed_data) == 0){
     warning("No data found in region.", call. = FALSE)
   } else {
-    message(paste("Read in hic file with",
-                  bb_rhic$norm, "normalization at",
-                  bb_rhic$resolution, bb_rhic$res_scale,
-                  "resolution."))
+    if (!bb_rhic$quiet) message(paste("Read in hic file with",
+                              bb_rhic$norm, "normalization at",
+                              bb_rhic$resolution, bb_rhic$res_scale,
+                              "resolution."))
   }
   return(renamed_data)
 }

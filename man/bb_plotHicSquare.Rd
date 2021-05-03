@@ -27,7 +27,8 @@ bb_plotHicSquare(
   just = c("left", "top"),
   default.units = "inches",
   draw = TRUE,
-  params = NULL
+  params = NULL,
+  quiet = FALSE
 )
 }
 \arguments{
@@ -124,6 +125,8 @@ produced. Default value is \code{draw = TRUE}.}
 
 \item{params}{An optional \link[BentoBox]{bb_params} object containing
 relevant function parameters.}
+
+\item{quiet}{A logical indicating whether or not to print messages.}
 }
 \value{
 Returns a \code{bb_hicSquare} object containing relevant
