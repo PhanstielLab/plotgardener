@@ -2,7 +2,7 @@
 % Please edit documentation in R/bb_readBigwig.R
 \name{bb_readBigwig}
 \alias{bb_readBigwig}
-\title{Read a bigwig file and return it as a data frame}
+\title{Read a bigWig file and return it as a data frame}
 \usage{
 bb_readBigwig(
   file,
@@ -38,5 +38,5 @@ containing relevant function parameters.}
 Returns a 6-column dataframe of bigwig information.
 }
 \description{
-Read a bigwig file and return it as a data frame
+Read a bigWig file and return it as a data frame
 }

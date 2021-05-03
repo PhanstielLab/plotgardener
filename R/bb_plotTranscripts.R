@@ -364,7 +364,12 @@ bb_plotTranscripts <- function(chrom, chromstart = NULL, chromend = NULL,
     }
 
     genome <- GenomeInfoDb::seqlengths(tx_db)
-    displayCol <- bb_transcripts$assembly$display.column
+
+    if (bb_transcripts$assembly$gene.id.column == bb_transcripts$assembly$display.column){
+      displayCol <- "GENEID"
+    } else {
+      displayCol <- bb_transcripts$assembly$display.column
+    }
 
     if (!bb_transcripts$chrom %in% names(genome)){
       warning(paste("Chromosome",

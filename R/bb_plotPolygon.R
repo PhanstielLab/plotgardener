@@ -211,7 +211,10 @@ bb_plotPolygon <- function(x, y, default.units = "inches",
   # ======================================================================================================================================================================================
   # MAKE GROB
   # ======================================================================================================================================================================================
-
+  name <- paste0("bb_polygon",
+                 length(grep(pattern = "bb_polygon",
+                             x = grid.ls(print = FALSE,
+                                         recursive = FALSE))) + 1)
   polygon <- grid.polygon(x = unit(new_x, page_units),
                           y = unit(page_height - new_y, page_units),
                           id = bb_polygon$id,

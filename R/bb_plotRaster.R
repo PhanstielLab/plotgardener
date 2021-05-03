@@ -239,14 +239,18 @@ bb_plotRaster <- function(image, x, y, width, height, just = "center",
   # ======================================================================================================================================================================================
   # MAKE GROB
   # ======================================================================================================================================================================================
-
+  name <- paste0("bb_raster",
+                 length(grep(pattern = "bb_raster",
+                             x = grid.ls(print = FALSE,
+                                         recursive = FALSE))) + 1)
   rast <- grid.raster(image = bb_rast$image, x = unit(new_x, page_units),
                       y = unit(page_height - new_y, page_units),
                       width = unit(new_width, page_units),
                       height = unit(new_height, page_units),
                       just = bb_rast$just,
                       interpolate = bb_rast$interpolate,
-                      gp = bb_rast$gp)
+                      gp = bb_rast$gp,
+                      name = name)
 
   # ======================================================================================================================================================================================
   # ADD GROB TO OBJECT

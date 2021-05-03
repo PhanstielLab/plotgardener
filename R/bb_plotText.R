@@ -197,10 +197,15 @@ bb_plotText <- function(label, fontcolor = "black", fontsize = 12, rot = 0,
   # MAKE GROB
   # ======================================================================================================================================================================================
 
+  name <- paste0("bb_text",
+                 length(grep(pattern = "bb_text",
+                             x = grid.ls(print = FALSE,
+                                         recursive = FALSE))) + 1)
   text <- grid.text(label = bb_text$label, x = unit(new_x, page_units),
                     y = unit(new_y, page_units), just = bb_text$just,
                     gp = bb_textInternal$gp, rot = bb_textInternal$rot,
-                    check.overlap = bb_textInternal$check.overlap)
+                    check.overlap = bb_textInternal$check.overlap,
+                    name = name)
 
   # ======================================================================================================================================================================================
   # ADD GROB TO OBJECT

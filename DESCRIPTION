@@ -50,5 +50,5 @@ Remotes: PhanstielLab/straw/R
 biocViews: AnnotationData, BSgenome, GenomicSequence, OrgDb, SequenceAnnotation, TxDb 
 LinkingTo: 
     Rcpp
-Suggests: TxDb.Hsapiens.UCSC.hg19.knownGene, org.Hs.eg.db, BSgenome.Hsapiens.UCSC.hg19, png, ggplot2, knitr, rmarkdown
+Suggests: TxDb.Hsapiens.UCSC.hg19.knownGene, org.Hs.eg.db, BSgenome.Hsapiens.UCSC.hg19, png, ggplot2, scales, knitr, rmarkdown
 VignetteBuilder: knitr

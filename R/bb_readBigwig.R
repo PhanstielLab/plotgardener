@@ -1,4 +1,4 @@
-#' Read a bigwig file and return it as a data frame
+#' Read a bigWig file and return it as a data frame
 #'
 #' @param file A character value specifying the path to the bigwig file.
 #' @param chrom Chromosome of data as a string, if data for a specific

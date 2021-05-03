@@ -252,12 +252,16 @@ bb_plotRect <- function(x, y, width, height, just = "center",
   # ======================================================================================================================================================================================
   # MAKE GROB
   # ======================================================================================================================================================================================
-
+  name <- paste0("bb_rect",
+                 length(grep(pattern = "bb_rect",
+                             x = grid.ls(print = FALSE,
+                                         recursive = FALSE))) + 1)
   rect <- grid.rect(x = unit(new_x, page_units),
                     y = unit(page_height - new_y, page_units),
                     width = unit(new_width, page_units),
                     height = unit(new_height, page_units),
-                    just = bb_rect$just, gp = bb_rect$gp)
+                    just = bb_rect$just, gp = bb_rect$gp,
+                    name = name)
 
   # ======================================================================================================================================================================================
   # ADD GROB TO OBJECT

@@ -72,6 +72,48 @@
 #'
 "bb_bedpeData"
 
+#' BentoBox example data for COVID-19 cases in New York and Florida
+#'
+#' A timeline dataset tracking positive COVID-19 cases in New York and Florida from
+#' 2020-01-29 to 2021-03-07.
+#'
+#' @format a dataframe with 3 columns
+#' \describe{
+#' \item{date}{The date of the case count.}
+#' \item{state}{The state of the case count. Either `"new york`" or `"florida"`.}
+#' \item{caseIncrease}{The increase number of positive COVID-19 cases.}
+#' }
+#'
+#' @docType data
+#'
+#' @usage data("bb_CasesNYFL")
+#'
+#' @source Data was downloaded from The COVID Tracking Project
+#' \url{https://covidtracking.com/}.
+"bb_CasesNYFL"
+
+#' BentoBox example data for COVID-19 deaths in the United States
+#'
+#' A data frame of United States map data and COVID-19 deaths as of 2021-03-07.
+#'
+#' @format a dataframe with 5 columns
+#' \describe{
+#' \item{state}{The associated state in the United States.}
+#' \item{group}{Numeric value describing a group for each `state`.}
+#' \item{long}{Longitude value.}
+#' \item{lat}{Latitude value.}
+#' \item{deaths}{The cumulative number of COVID-19 deaths.}
+#' }
+#'
+#' @docType data
+#'
+#' @usage data("bb_DeathsUSA")
+#'
+#' @source COVID-19 death data was downloaded from The COVID Tracking Project
+#' \url{https://covidtracking.com/}. Data was turned into map data with
+#' \link[ggplot2]{map_data}.
+"bb_DeathsUSA"
+
 #' BentoBox example GM12878 CTCF signal data
 #'
 #' A dataset listing read depths across the genome resulting from CTCF
@@ -292,6 +334,28 @@
 #' PMID: 25497547; PMCID: PMC5635824.
 #' (\href{https://pubmed.ncbi.nlm.nih.gov/25497547/}{PubMed})
 "bb_imrHicData"
+
+#' BentoBox example data for COVID-19 vaccinations in New York and Florida
+#'
+#' A dataset describing groups of COVID-19 vaccinations in New York and Florida.
+#'
+#' @format a dataframe with 4 columns
+#' \describe{
+#' \item{state}{The state of the vaccinations. Either `"new york`" or `"florida"`.}
+#' \item{vax_group}{Character value describing the 3 possibilities for vaccination status:
+#' `"No_Doses"`, `"One_Dose"`, or `"Two_Doses"`.}
+#' \item{value}{Raw state population value in vaccination group.}
+#' \item{percent}{State percentage in vaccination group.}
+#' }
+#'
+#' @docType data
+#'
+#' @usage data("bb_VaccinesNYFL")
+#'
+#' @source State population data and state COVID-19 vaccination data were
+#' downloaded from the John Hopkins Centers for Civic Impact COVID-19 GitHub
+#' repository \url{"https://github.com/govex/COVID-19/"}.
+"bb_VaccinesNYFL"
 
 #' UCSC CytoBand information for the dm6 genome assembly
 #'

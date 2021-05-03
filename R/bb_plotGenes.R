@@ -349,7 +349,11 @@ bb_plotGenes <- function(chrom, chromstart = NULL, chromend = NULL,
       tx_db <- eval(parse(text = bb_genes$assembly$TxDb))
     }
     genome <- GenomeInfoDb::seqlengths(tx_db)
-    displayCol <- bb_genes$assembly$display.column
+    if (bb_genes$assembly$gene.id.column == bb_genes$assembly$display.column){
+      displayCol <- "GENEID"
+    } else {
+      displayCol <- bb_genes$assembly$display.column
+    }
 
     if (!bb_genes$chrom %in% names(genome)){
       warning(paste("Chromosome", paste0("'", bb_genes$chrom, "'"),
@@ -370,7 +374,6 @@ bb_plotGenes <- function(chrom, chromstart = NULL, chromend = NULL,
     }
 
   }
-
 
   # ======================================================================================================================================================================================
   # SUBSET DATA BY STRAND
