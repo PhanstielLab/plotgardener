@@ -92,7 +92,7 @@
       <h1 data-toc-skip>Introduction to BentoBox</h1>
                         <h4 class="author">Nicole Kramer, Eric S. Davis, Craig Wenger, Sarah Parker, Erika Deoudes, and Douglas H. Phanstiel</h4>
             
-            <h4 class="date">2021-05-03</h4>
+            <h4 class="date">2021-05-05</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/PhanstielLab/BentoBox/blob/master/vignettes/introduction_to_bentobox.Rmd"><code>vignettes/introduction_to_bentobox.Rmd</code></a></small>
       <div class="hidden name"><code>introduction_to_bentobox.Rmd</code></div>
@@ -346,36 +346,36 @@
 <col width="40%">
 </colgroup>
 <thead><tr class="header">
-<th align="left">Coordinate System</th>
+<th align="right">Coordinate System</th>
 <th align="left">Description</th>
 </tr></thead>
 <tbody>
 <tr class="odd">
-<td align="left">“npc”</td>
+<td align="right"><strong>“npc”</strong></td>
 <td align="left">Normalized Parent Coordinates. Treats the bottom-left corner of the plotting region as the location (0,0) and the top-right corner as (1,1).</td>
 </tr>
 <tr class="even">
-<td align="left">“snpc”</td>
+<td align="right"><strong>“snpc”</strong></td>
 <td align="left">Squared Normalized Parent Coordiantes. Placements and sizes are expressed as a proportion of the smaller of the width and height of the plotting region.</td>
 </tr>
 <tr class="odd">
-<td align="left">“native”</td>
+<td align="right"><strong>“native”</strong></td>
 <td align="left">Placements and sizes are relative to the x- and y-scales of the plotting region.</td>
 </tr>
 <tr class="even">
-<td align="left">“inches”</td>
+<td align="right"><strong>“inches”</strong></td>
 <td align="left">Placements and sizes are in terms of physical inches.</td>
 </tr>
 <tr class="odd">
-<td align="left">“cm”</td>
+<td align="right"><strong>“cm”</strong></td>
 <td align="left">Placements and sizes are in terms of physical centimeters.</td>
 </tr>
 <tr class="even">
-<td align="left">“mm”</td>
+<td align="right"><strong>“mm”</strong></td>
 <td align="left">Placements and sizes are in terms of physical millimeters.</td>
 </tr>
 <tr class="odd">
-<td align="left">“points”</td>
+<td align="right"><strong>“points”</strong></td>
 <td align="left">Placements and sizes are in terms of physical points. There are 72.27 points per inch.</td>
 </tr>
 </tbody>
@@ -386,11 +386,12 @@
 <p><img src="introduction_to_bentobox_files/figure-html/coord_01-1.png" width="480" style="display: block; margin: auto;"></p>
 <p>But we can then switch to <strong>npc</strong> coordinates to plot something in the center of the page at (0.5, 0.5) npc. The <code><a href="https://rdrr.io/r/grid/unit.html">unit()</a></code> function allows us to easily specify <code>x</code>, <code>y</code>, <code>width</code>, and <code>height</code> in combinations of different units in one plotting function call.</p>
 <div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/bb_plotRect.html">bb_plotRect</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grid/unit.html">unit</a></span><span class="op">(</span><span class="fl">0.5</span>, <span class="st">"npc"</span><span class="op">)</span>, y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grid/unit.html">unit</a></span><span class="op">(</span><span class="fl">0.5</span>, <span class="st">"npc"</span><span class="op">)</span>, width <span class="op">=</span> <span class="fl">1</span>, height <span class="op">=</span> <span class="fl">1</span>, default.units <span class="op">=</span> <span class="st">"inches"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="fu"><a href="../reference/bb_plotRect.html">bb_plotRect</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu">unit</span><span class="op">(</span><span class="fl">0.5</span>, <span class="st">"npc"</span><span class="op">)</span>, y <span class="op">=</span> <span class="fu">unit</span><span class="op">(</span><span class="fl">0.5</span>, <span class="st">"npc"</span><span class="op">)</span>, width <span class="op">=</span> <span class="fl">1</span>, height <span class="op">=</span> <span class="fl">1</span>, default.units <span class="op">=</span> <span class="st">"inches"</span><span class="op">)</span></code></pre></div>
 <p><img src="introduction_to_bentobox_files/figure-html/coord_02-1.png" width="480" style="display: block; margin: auto;"></p>
 <p>The <strong>native</strong> coordinate system is particularly useful for annotation functions that can plot relative to the genomic scales of a plot. For example, we can use <code><a href="../reference/bb_annoText.html">bb_annoText()</a></code> to annotate some text at a specific genomic location in a plot:</p>
 <div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/bb_pageCreate.html">bb_pageCreate</a></span><span class="op">(</span>width <span class="op">=</span> <span class="fl">5</span>, height <span class="op">=</span> <span class="fl">1.5</span>, default.units <span class="op">=</span> <span class="st">"inches"</span><span class="op">)</span>
+<code class="sourceCode R"><span class="fu"><a href="../reference/bb_pageCreate.html">bb_pageCreate</a></span><span class="op">(</span>width <span class="op">=</span> <span class="fl">5</span>, height <span class="op">=</span> <span class="fl">1.5</span>, default.units <span class="op">=</span> <span class="st">"inches"</span>,
+              showGuides <span class="op">=</span> <span class="cn">FALSE</span>, xgrid <span class="op">=</span> <span class="fl">0</span>, ygrid <span class="op">=</span> <span class="fl">0</span><span class="op">)</span>
 
 <span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="st">"bb_imrH3K27acData"</span><span class="op">)</span>
 <span class="va">signalPlot</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/bb_plotSignal.html">bb_plotSignal</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">bb_imrH3K27acData</span>,
@@ -398,9 +399,12 @@
                             x <span class="op">=</span> <span class="fl">0.5</span>, y <span class="op">=</span> <span class="fl">0.25</span>, width <span class="op">=</span> <span class="fl">4</span>, height <span class="op">=</span> <span class="fl">0.75</span>, default.units <span class="op">=</span> <span class="st">"inches"</span><span class="op">)</span>
 <span class="fu"><a href="../reference/bb_annoGenomeLabel.html">bb_annoGenomeLabel</a></span><span class="op">(</span>plot <span class="op">=</span> <span class="va">signalPlot</span>, x <span class="op">=</span> <span class="fl">0.5</span>, y <span class="op">=</span> <span class="fl">1.01</span><span class="op">)</span>
 
-<span class="co">## Annotate text at an x-coordinate of 29000000 bp</span>
-<span class="fu"><a href="../reference/bb_annoText.html">bb_annoText</a></span><span class="op">(</span>plot <span class="op">=</span> <span class="va">signalPlot</span>, label <span class="op">=</span> <span class="st">"locus"</span>,
-            x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grid/unit.html">unit</a></span><span class="op">(</span><span class="fl">29000000</span>, <span class="st">"native"</span><span class="op">)</span>, y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grid/unit.html">unit</a></span><span class="op">(</span><span class="fl">1</span>, <span class="st">"npc"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<span class="co">## Annotate text at average x-coordinate of data peak</span>
+<span class="va">peakScore</span> <span class="op">&lt;-</span> <span class="va">bb_imrH3K27acData</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/which.html">which</a></span><span class="op">(</span><span class="va">bb_imrH3K27acData</span><span class="op">$</span><span class="va">score</span> <span class="op">==</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">max</a></span><span class="op">(</span><span class="va">bb_imrH3K27acData</span><span class="op">$</span><span class="va">score</span><span class="op">)</span><span class="op">)</span>,<span class="op">]</span>
+<span class="va">peakPos</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html">round</a></span><span class="op">(</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">min</a></span><span class="op">(</span><span class="va">peakScore</span><span class="op">$</span><span class="va">start</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">max</a></span><span class="op">(</span><span class="va">peakScore</span><span class="op">$</span><span class="va">end</span><span class="op">)</span><span class="op">)</span><span class="op">*</span><span class="fl">0.5</span><span class="op">)</span>
+<span class="fu"><a href="../reference/bb_annoText.html">bb_annoText</a></span><span class="op">(</span>plot <span class="op">=</span> <span class="va">signalPlot</span>, label <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/format.html">format</a></span><span class="op">(</span><span class="va">peakPos</span>, big.mark <span class="op">=</span> <span class="st">","</span><span class="op">)</span>, fontsize <span class="op">=</span> <span class="fl">8</span>,
+            x <span class="op">=</span> <span class="fu">unit</span><span class="op">(</span><span class="va">peakPos</span>, <span class="st">"native"</span><span class="op">)</span>, y <span class="op">=</span> <span class="fu">unit</span><span class="op">(</span><span class="fl">1</span>, <span class="st">"npc"</span><span class="op">)</span>,
+            just <span class="op">=</span> <span class="st">"bottom"</span><span class="op">)</span></code></pre></div>
 <p><img src="introduction_to_bentobox_files/figure-html/coord_03-1.png" width="672" style="display: block; margin: auto;"></p>
 </div>
 <div id="working-with-plot-objects" class="section level2">
@@ -499,7 +503,8 @@
 <span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="st">"bb_gwasData"</span><span class="op">)</span>
 
 <span class="co">## Create a BentoBox page</span>
-<span class="fu"><a href="../reference/bb_pageCreate.html">bb_pageCreate</a></span><span class="op">(</span>width <span class="op">=</span> <span class="fl">3</span>, height <span class="op">=</span> <span class="fl">5</span>, default.units <span class="op">=</span> <span class="st">"inches"</span><span class="op">)</span>
+<span class="fu"><a href="../reference/bb_pageCreate.html">bb_pageCreate</a></span><span class="op">(</span>width <span class="op">=</span> <span class="fl">3</span>, height <span class="op">=</span> <span class="fl">5</span>, default.units <span class="op">=</span> <span class="st">"inches"</span>,
+              showGuides <span class="op">=</span> <span class="cn">FALSE</span>, xgrid <span class="op">=</span> <span class="fl">0</span>, ygrid <span class="op">=</span> <span class="fl">0</span><span class="op">)</span>
 
 <span class="co">## Plot Hi-C data in region</span>
 <span class="fu"><a href="../reference/bb_plotHicSquare.html">bb_plotHicSquare</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">bb_imrHicData</span>,
@@ -557,7 +562,8 @@
 <span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="st">"bb_gwasData"</span><span class="op">)</span>
 
 <span class="co">## Create a BentoBox page</span>
-<span class="fu"><a href="../reference/bb_pageCreate.html">bb_pageCreate</a></span><span class="op">(</span>width <span class="op">=</span> <span class="fl">3</span>, height <span class="op">=</span> <span class="fl">5</span>, default.units <span class="op">=</span> <span class="st">"inches"</span><span class="op">)</span>
+<span class="fu"><a href="../reference/bb_pageCreate.html">bb_pageCreate</a></span><span class="op">(</span>width <span class="op">=</span> <span class="fl">3</span>, height <span class="op">=</span> <span class="fl">5</span>, default.units <span class="op">=</span> <span class="st">"inches"</span>,
+              showGuides <span class="op">=</span> <span class="cn">FALSE</span>, xgrid <span class="op">=</span> <span class="fl">0</span>, ygrid <span class="op">=</span> <span class="fl">0</span><span class="op">)</span>
 
 <span class="co">## Plot Hi-C data in region</span>
 <span class="fu"><a href="../reference/bb_plotHicSquare.html">bb_plotHicSquare</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">bb_imrHicData</span>,
@@ -622,7 +628,8 @@
                     width <span class="op">=</span> <span class="fl">2</span>, length <span class="op">=</span> <span class="fl">2</span>, default.units <span class="op">=</span> <span class="st">"inches"</span><span class="op">)</span>
 
 <span class="co">## Create a BentoBox page</span>
-<span class="fu"><a href="../reference/bb_pageCreate.html">bb_pageCreate</a></span><span class="op">(</span>width <span class="op">=</span> <span class="fl">3</span>, height <span class="op">=</span> <span class="fl">5</span>, default.units <span class="op">=</span> <span class="st">"inches"</span><span class="op">)</span>
+<span class="fu"><a href="../reference/bb_pageCreate.html">bb_pageCreate</a></span><span class="op">(</span>width <span class="op">=</span> <span class="fl">3</span>, height <span class="op">=</span> <span class="fl">5</span>, default.units <span class="op">=</span> <span class="st">"inches"</span>,
+              showGuides <span class="op">=</span> <span class="cn">FALSE</span>, xgrid <span class="op">=</span> <span class="fl">0</span>, ygrid <span class="op">=</span> <span class="fl">0</span><span class="op">)</span>
 
 <span class="co">## Plot Hi-C data in region</span>
 <span class="fu"><a href="../reference/bb_plotHicSquare.html">bb_plotHicSquare</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">bb_imrHicData</span>,
@@ -676,27 +683,44 @@
 <code class="sourceCode R"><span class="co">## Load cytoband data</span>
 <span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="st">"cytoBand.Hsapiens.UCSC.hg19"</span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">TxDb.Hsapiens.UCSC.hg19.knownGene</span><span class="op">)</span>
-<span class="fu"><a href="../reference/bb_pageCreate.html">bb_pageCreate</a></span><span class="op">(</span>width <span class="op">=</span> <span class="fl">0.5</span>, height <span class="op">=</span> <span class="fl">6.25</span>, default.units <span class="op">=</span> <span class="st">"inches"</span>,
-              showGuides <span class="op">=</span> <span class="cn">FALSE</span>, xgrid <span class="op">=</span> <span class="fl">0</span>, ygrid <span class="op">=</span> <span class="fl">0</span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://bioconductor.org/packages/GenomeInfoDb">GenomeInfoDb</a></span><span class="op">)</span>
 
-<span class="fu"><a href="../reference/bb_plotIdeogram.html">bb_plotIdeogram</a></span><span class="op">(</span>chrom <span class="op">=</span> <span class="st">"chr1"</span>, assembly <span class="op">=</span> <span class="st">"hg19"</span>,
-                orientation <span class="op">=</span> <span class="st">"v"</span>,
-                x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grid/unit.html">unit</a></span><span class="op">(</span><span class="fl">0.25</span>, <span class="st">"npc"</span><span class="op">)</span>, y <span class="op">=</span> <span class="fl">0.25</span>, width <span class="op">=</span> <span class="fl">0.3</span>, height <span class="op">=</span> <span class="fl">5.75</span><span class="op">)</span></code></pre></div>
-<p><img src="introduction_to_bentobox_files/figure-html/ideogram_01-1.png" width="240" style="display: block; margin: auto;"></p>
+<span class="co">## Get sizes of chromosomes to scale their sizes</span>
+<span class="va">tx_db</span> <span class="op">&lt;-</span> <span class="va">TxDb.Hsapiens.UCSC.hg19.knownGene</span>
+<span class="va">chromSizes</span> <span class="op">&lt;-</span> <span class="fu">GenomeInfoDb</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/GenomeInfoDb/man/seqinfo.html">seqlengths</a></span><span class="op">(</span><span class="va">tx_db</span><span class="op">)</span>
+<span class="va">maxChromSize</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">max</a></span><span class="op">(</span><span class="va">chromSizes</span><span class="op">)</span>
+
+<span class="fu"><a href="../reference/bb_pageCreate.html">bb_pageCreate</a></span><span class="op">(</span>width <span class="op">=</span> <span class="fl">8</span>, height <span class="op">=</span> <span class="fl">4.25</span>, default.units <span class="op">=</span> <span class="st">"inches"</span>,
+              showGuides <span class="op">=</span> <span class="cn">FALSE</span>, xgrid <span class="op">=</span> <span class="fl">0</span>, ygrid <span class="op">=</span> <span class="fl">0</span><span class="op">)</span>
+<span class="va">xCoord</span> <span class="op">&lt;-</span> <span class="fl">0.15</span>
+<span class="kw">for</span> <span class="op">(</span><span class="va">chr</span> <span class="kw">in</span> <span class="fu"><a href="../reference/c.html">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="st">"chr"</span>, <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">22</span><span class="op">)</span><span class="op">)</span>, <span class="st">"chrX"</span><span class="op">)</span><span class="op">)</span><span class="op">{</span>
+
+  <span class="va">height</span> <span class="op">&lt;-</span> <span class="op">(</span><span class="fl">4</span><span class="op">*</span><span class="va">chromSizes</span><span class="op">[[</span><span class="va">chr</span><span class="op">]</span><span class="op">]</span><span class="op">)</span><span class="op">/</span><span class="va">maxChromSize</span>
+  <span class="fu"><a href="../reference/bb_plotIdeogram.html">bb_plotIdeogram</a></span><span class="op">(</span>chrom <span class="op">=</span> <span class="va">chr</span>, assembly <span class="op">=</span> <span class="st">"hg19"</span>,
+                  orientation <span class="op">=</span> <span class="st">"v"</span>,
+                  x <span class="op">=</span> <span class="va">xCoord</span>, y <span class="op">=</span> <span class="fl">4</span>, 
+                  width <span class="op">=</span> <span class="fl">0.2</span>, height <span class="op">=</span> <span class="va">height</span>,
+                  just <span class="op">=</span> <span class="st">"bottom"</span><span class="op">)</span>
+  <span class="fu"><a href="../reference/bb_plotText.html">bb_plotText</a></span><span class="op">(</span>label <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/grep.html">gsub</a></span><span class="op">(</span><span class="st">"chr"</span>, <span class="st">""</span>, <span class="va">chr</span><span class="op">)</span>, 
+              x <span class="op">=</span> <span class="va">xCoord</span>, y <span class="op">=</span> <span class="fl">4.1</span>, fontsize <span class="op">=</span> <span class="fl">10</span><span class="op">)</span>
+  <span class="va">xCoord</span> <span class="op">&lt;-</span> <span class="va">xCoord</span> <span class="op">+</span> <span class="fl">0.35</span>
+  
+<span class="op">}</span></code></pre></div>
+<p><img src="introduction_to_bentobox_files/figure-html/ideogram_01-1.png" width="960" style="display: block; margin: auto;"></p>
 <div class="sourceCode" id="cb34"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/bb_pageCreate.html">bb_pageCreate</a></span><span class="op">(</span>width <span class="op">=</span> <span class="fl">6.25</span>, height <span class="op">=</span> <span class="fl">0.5</span>, default.units <span class="op">=</span> <span class="st">"inches"</span>,
               showGuides <span class="op">=</span> <span class="cn">FALSE</span>, xgrid <span class="op">=</span> <span class="fl">0</span>, ygrid <span class="op">=</span> <span class="fl">0</span><span class="op">)</span>
 
 <span class="fu"><a href="../reference/bb_plotIdeogram.html">bb_plotIdeogram</a></span><span class="op">(</span>chrom <span class="op">=</span> <span class="st">"chr1"</span>, assembly <span class="op">=</span> <span class="st">"hg19"</span>,
                 orientation <span class="op">=</span> <span class="st">"h"</span>,
-                x <span class="op">=</span> <span class="fl">0.25</span>, y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grid/unit.html">unit</a></span><span class="op">(</span><span class="fl">0.25</span>, <span class="st">"npc"</span><span class="op">)</span>, width <span class="op">=</span> <span class="fl">5.75</span>, height <span class="op">=</span> <span class="fl">0.3</span><span class="op">)</span></code></pre></div>
+                x <span class="op">=</span> <span class="fl">0.25</span>, y <span class="op">=</span> <span class="fu">unit</span><span class="op">(</span><span class="fl">0.25</span>, <span class="st">"npc"</span><span class="op">)</span>, width <span class="op">=</span> <span class="fl">5.75</span>, height <span class="op">=</span> <span class="fl">0.3</span><span class="op">)</span></code></pre></div>
 <p><img src="introduction_to_bentobox_files/figure-html/ideogram_02-1.png" width="792" style="display: block; margin: auto;"></p>
 <p>The cytobands can also be hidden if a more minimal ideogram is preferred:</p>
 <div class="sourceCode" id="cb35"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/bb_plotIdeogram.html">bb_plotIdeogram</a></span><span class="op">(</span>showBands <span class="op">=</span> <span class="cn">FALSE</span>,
                 chrom <span class="op">=</span> <span class="st">"chr1"</span>, assembly <span class="op">=</span> <span class="st">"hg19"</span>,
                 orientation <span class="op">=</span> <span class="st">"h"</span>,
-                x <span class="op">=</span> <span class="fl">0.25</span>, y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grid/unit.html">unit</a></span><span class="op">(</span><span class="fl">0.25</span>, <span class="st">"npc"</span><span class="op">)</span>, width <span class="op">=</span> <span class="fl">5.75</span>, height <span class="op">=</span> <span class="fl">0.3</span><span class="op">)</span></code></pre></div>
+                x <span class="op">=</span> <span class="fl">0.25</span>, y <span class="op">=</span> <span class="fu">unit</span><span class="op">(</span><span class="fl">0.25</span>, <span class="st">"npc"</span><span class="op">)</span>, width <span class="op">=</span> <span class="fl">5.75</span>, height <span class="op">=</span> <span class="fl">0.3</span><span class="op">)</span></code></pre></div>
 <p><img src="introduction_to_bentobox_files/figure-html/ideogram_03-1.png" width="792" style="display: block; margin: auto;"></p>
 <p>To highlight a specific genomic region on an ideogram, see the section <code>Genomic region highlights and zooms</code>.</p>
 </div>
@@ -712,14 +736,13 @@
 <div class="sourceCode" id="cb36"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org">ggplot2</a></span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://scales.r-lib.org">scales</a></span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="st">"bb_DeathsUSA"</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="st">"bb_CasesUSA"</span><span class="op">)</span>
 
-<span class="va">US_map</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">bb_DeathsUSA</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">long</span>, <span class="va">lat</span>, group <span class="op">=</span> <span class="va">group</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+<span class="va">US_map</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">bb_CasesUSA</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">long</span>, <span class="va">lat</span>, group <span class="op">=</span> <span class="va">group</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_void</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_polygon.html">geom_polygon</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="va">deaths</span><span class="op">)</span>, color <span class="op">=</span> <span class="st">"white"</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_brewer.html">scale_fill_distiller</a></span><span class="op">(</span>palette <span class="op">=</span> <span class="st">"YlGnBu"</span>,
-                       labels <span class="op">=</span> <span class="fu"><a href="https://scales.r-lib.org/reference/label_number.html">label_number</a></span><span class="op">(</span>suffix <span class="op">=</span> <span class="st">""</span>, 
-                                             scale <span class="op">=</span> <span class="fl">1e-6</span>, accuracy <span class="op">=</span> <span class="fl">1</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_polygon.html">geom_polygon</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="va">cases_100K</span><span class="op">)</span>, color <span class="op">=</span> <span class="st">"white"</span><span class="op">)</span><span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_brewer.html">scale_fill_distiller</a></span><span class="op">(</span>palette <span class="op">=</span> <span class="st">"YlGnBu"</span>, direction <span class="op">=</span> <span class="fl">1</span>,
+                       labels <span class="op">=</span> <span class="fu"><a href="https://scales.r-lib.org/reference/label_number.html">label_number</a></span><span class="op">(</span>suffix <span class="op">=</span> <span class="st">""</span>, scale <span class="op">=</span> <span class="fl">1e-3</span>, accuracy <span class="op">=</span> <span class="fl">1</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>legend.position <span class="op">=</span> <span class="st">"left"</span>,
         legend.justification <span class="op">=</span> <span class="fu"><a href="../reference/c.html">c</a></span><span class="op">(</span><span class="fl">0.5</span>, <span class="fl">0.95</span><span class="op">)</span>,
         legend.title <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_blank</a></span><span class="op">(</span><span class="op">)</span>,
@@ -727,8 +750,8 @@
         legend.key.width <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grid/unit.html">unit</a></span><span class="op">(</span><span class="fl">0.3</span>, <span class="st">"cm"</span><span class="op">)</span>,
         legend.key.height <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grid/unit.html">unit</a></span><span class="op">(</span><span class="fl">0.4</span>, <span class="st">"cm"</span><span class="op">)</span>,
         plot.title <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_text</a></span><span class="op">(</span>hjust <span class="op">=</span> <span class="fl">0</span>, vjust <span class="op">=</span> <span class="op">-</span><span class="fl">1</span><span class="op">)</span>,
-        plot.title.position <span class="op">=</span> <span class="st">"plot"</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Millions of Deaths"</span><span class="op">)</span> <span class="op">+</span>
+        plot.title.position <span class="op">=</span> <span class="st">"plot"</span><span class="op">)</span><span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Thousands of COVID-19 Cases per 100,000 People"</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/coord_fixed.html">coord_fixed</a></span><span class="op">(</span><span class="fl">1.3</span><span class="op">)</span>
 
 <span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">US_map</span><span class="op">)</span></code></pre></div>
@@ -748,16 +771,22 @@
 <span class="va">cases_NYline</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">bb_CasesNYFL</span><span class="op">[</span><span class="va">bb_CasesNYFL</span><span class="op">$</span><span class="va">state</span> <span class="op">==</span> <span class="st">"new york"</span>,<span class="op">]</span>, 
                        <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">date</span>, y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/cumsum.html">cumsum</a></span><span class="op">(</span><span class="va">caseIncrease</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">0.3</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_date.html">scale_x_date</a></span><span class="op">(</span>labels <span class="op">=</span> <span class="fu"><a href="https://scales.r-lib.org/reference/label_date.html">date_format</a></span><span class="op">(</span><span class="st">"%b '%y"</span><span class="op">)</span>,
+               breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html">as.Date</a></span><span class="op">(</span><span class="fu"><a href="../reference/c.html">c</a></span><span class="op">(</span><span class="st">"2020-05-01"</span>, <span class="st">"2020-09-01"</span>, <span class="st">"2021-01-01"</span><span class="op">)</span><span class="op">)</span>,
+               limits <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html">as.Date</a></span><span class="op">(</span><span class="fu"><a href="../reference/c.html">c</a></span><span class="op">(</span><span class="st">"2020-01-29"</span>, <span class="st">"2021-03-07"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html">scale_y_continuous</a></span><span class="op">(</span>labels <span class="op">=</span> <span class="va">ylabels</span>, position <span class="op">=</span> <span class="st">"right"</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/coord_cartesian.html">coord_cartesian</a></span><span class="op">(</span>ylim <span class="op">=</span> <span class="fu"><a href="../reference/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">2000000</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>panel.background <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_rect</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="st">"transparent"</span>, color <span class="op">=</span> <span class="cn">NA</span><span class="op">)</span>,
         plot.background <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_rect</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="st">"transparent"</span>, color <span class="op">=</span> <span class="cn">NA</span><span class="op">)</span>,
         axis.line.x.bottom <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_line</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">0.1</span>, color <span class="op">=</span> <span class="st">"grey"</span><span class="op">)</span>,
-        axis.text.x <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_blank</a></span><span class="op">(</span><span class="op">)</span>,
-        axis.title <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_blank</a></span><span class="op">(</span><span class="op">)</span>,
-        axis.ticks.x <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_blank</a></span><span class="op">(</span><span class="op">)</span>,
+        axis.line.y <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_line</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">0.1</span>, color <span class="op">=</span> <span class="st">"grey"</span><span class="op">)</span>,
+        axis.text.x <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_text</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">5</span>, hjust <span class="op">=</span> <span class="op">-</span><span class="fl">0.1</span>, vjust <span class="op">=</span> <span class="fl">3</span>, color <span class="op">=</span> <span class="st">"black"</span><span class="op">)</span>,
+        axis.title.x <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_blank</a></span><span class="op">(</span><span class="op">)</span>,
+        axis.ticks.x <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_line</a></span><span class="op">(</span>color <span class="op">=</span> <span class="st">"grey"</span><span class="op">)</span>,
+        axis.title.y <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_blank</a></span><span class="op">(</span><span class="op">)</span>,
         axis.text.y <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_text</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">7</span><span class="op">)</span>,
-        axis.ticks.y <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_line</a></span><span class="op">(</span>color <span class="op">=</span> <span class="st">"grey"</span><span class="op">)</span>,
+        axis.ticks.y <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_blank</a></span><span class="op">(</span><span class="op">)</span>,
+        axis.ticks.length.x.bottom <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grid/unit.html">unit</a></span><span class="op">(</span><span class="op">-</span><span class="fl">0.15</span>, <span class="st">"cm"</span><span class="op">)</span>,
         plot.title <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_text</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">8</span>, hjust <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>,
         plot.title.position <span class="op">=</span> <span class="st">"plot"</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">cases_NYline</span><span class="op">)</span></code></pre></div>
@@ -766,18 +795,24 @@
 <code class="sourceCode R"><span class="va">cases_FLline</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">bb_CasesNYFL</span><span class="op">[</span><span class="va">bb_CasesNYFL</span><span class="op">$</span><span class="va">state</span> <span class="op">==</span> <span class="st">"florida"</span>,<span class="op">]</span>, 
                        <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">date</span>, y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/cumsum.html">cumsum</a></span><span class="op">(</span><span class="va">caseIncrease</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">0.3</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_date.html">scale_x_date</a></span><span class="op">(</span>date_labels <span class="op">=</span> <span class="st">"%b '%y"</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_date.html">scale_x_date</a></span><span class="op">(</span>labels <span class="op">=</span> <span class="fu"><a href="https://scales.r-lib.org/reference/label_date.html">date_format</a></span><span class="op">(</span><span class="st">"%b '%y"</span><span class="op">)</span>,
+               breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html">as.Date</a></span><span class="op">(</span><span class="fu"><a href="../reference/c.html">c</a></span><span class="op">(</span><span class="st">"2020-05-01"</span>, <span class="st">"2020-09-01"</span>, <span class="st">"2021-01-01"</span><span class="op">)</span><span class="op">)</span>,
+               limits <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html">as.Date</a></span><span class="op">(</span><span class="fu"><a href="../reference/c.html">c</a></span><span class="op">(</span><span class="st">"2020-01-29"</span>, <span class="st">"2021-03-07"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html">scale_y_continuous</a></span><span class="op">(</span>labels <span class="op">=</span> <span class="va">ylabels</span>, position <span class="op">=</span> <span class="st">"right"</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/coord_cartesian.html">coord_cartesian</a></span><span class="op">(</span>ylim <span class="op">=</span> <span class="fu"><a href="../reference/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">2000000</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>panel.background <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_rect</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="st">"transparent"</span>, color <span class="op">=</span> <span class="cn">NA</span><span class="op">)</span>,
         plot.background <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_rect</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="st">"transparent"</span>, color <span class="op">=</span> <span class="cn">NA</span><span class="op">)</span>,
         axis.line.x.bottom <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_line</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">0.1</span>, color <span class="op">=</span> <span class="st">"grey"</span><span class="op">)</span>,
+        axis.line.y <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_line</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">0.1</span>, color <span class="op">=</span> <span class="st">"grey"</span><span class="op">)</span>,
         axis.title <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_blank</a></span><span class="op">(</span><span class="op">)</span>,
         axis.text.y <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_text</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">7</span><span class="op">)</span>,
-        axis.text.x <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_text</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">8</span><span class="op">)</span>,
+        axis.text.x <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_text</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">5</span>, hjust <span class="op">=</span> <span class="op">-</span><span class="fl">0.1</span>, vjust <span class="op">=</span> <span class="fl">3</span>, color <span class="op">=</span> <span class="st">"black"</span><span class="op">)</span>,
         axis.ticks <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_line</a></span><span class="op">(</span>color <span class="op">=</span> <span class="st">"grey"</span><span class="op">)</span>,
+        axis.ticks.y <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_blank</a></span><span class="op">(</span><span class="op">)</span>,
+        axis.ticks.length.x.bottom <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grid/unit.html">unit</a></span><span class="op">(</span><span class="op">-</span><span class="fl">0.15</span>, <span class="st">"cm"</span><span class="op">)</span>,
         plot.title <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_text</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">8</span>, hjust <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>,
         plot.title.position <span class="op">=</span> <span class="st">"plot"</span><span class="op">)</span>
+
 <span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">cases_FLline</span><span class="op">)</span></code></pre></div>
 <p><img src="introduction_to_bentobox_files/figure-html/ggplot_03-1.png" width="288" style="display: block; margin: auto;"></p>
 <ol start="3" style="list-style-type: decimal">
@@ -786,23 +821,23 @@
 <div class="sourceCode" id="cb39"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="st">"bb_VaccinesNYFL"</span><span class="op">)</span>
 
-<span class="va">vaccines_NYpie</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">bb_VaccinesNYFL</span><span class="op">[</span><span class="va">bb_VaccinesNYFL</span><span class="op">$</span><span class="va">state</span> <span class="op">==</span> <span class="st">"new york"</span>,<span class="op">]</span>,
+<span class="va">vaccines_NYpie</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">bb_VaccinesNYFL</span><span class="op">[</span><span class="va">bb_VaccinesNYFL</span><span class="op">$</span><span class="va">state</span> <span class="op">==</span> <span class="st">"new york"</span>,<span class="op">]</span>, 
                          <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="st">""</span>, y <span class="op">=</span> <span class="va">value</span>, fill <span class="op">=</span> <span class="va">vax_group</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_bar</a></span><span class="op">(</span>width <span class="op">=</span> <span class="fl">1</span>, stat <span class="op">=</span> <span class="st">"identity"</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_void</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_manual.html">scale_fill_manual</a></span><span class="op">(</span>values <span class="op">=</span> <span class="fu"><a href="../reference/c.html">c</a></span><span class="op">(</span><span class="st">"#002b84"</span>, <span class="st">"#2196c2"</span>, <span class="st">"light grey"</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/coord_polar.html">coord_polar</a></span><span class="op">(</span>theta <span class="op">=</span> <span class="st">"y"</span>, start <span class="op">=</span> <span class="fl">15</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_text.html">geom_text</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fl">1.1</span>, label <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="va">percent</span>, <span class="st">"%"</span><span class="op">)</span><span class="op">)</span>,
-            color <span class="op">=</span> <span class="fu"><a href="../reference/c.html">c</a></span><span class="op">(</span><span class="st">"black"</span>, <span class="st">"white"</span>, <span class="st">"white"</span><span class="op">)</span>,
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_manual.html">scale_fill_manual</a></span><span class="op">(</span>values <span class="op">=</span> <span class="fu"><a href="../reference/c.html">c</a></span><span class="op">(</span><span class="st">"light grey"</span>, <span class="st">"#85a9d5"</span>,<span class="st">"#3a6dab"</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/coord_polar.html">coord_polar</a></span><span class="op">(</span>theta <span class="op">=</span> <span class="st">"y"</span>, start <span class="op">=</span> <span class="op">-</span><span class="va">pi</span><span class="op">/</span><span class="fl">2</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_text.html">geom_text</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fl">1.1</span>, label<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="va">percent</span>, <span class="st">"%"</span><span class="op">)</span><span class="op">)</span>,
+            color <span class="op">=</span> <span class="fu"><a href="../reference/c.html">c</a></span><span class="op">(</span><span class="st">"white"</span>, <span class="st">"white"</span>, <span class="st">"black"</span><span class="op">)</span>,
             size <span class="op">=</span> <span class="fl">2.5</span>,
             position <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/position_stack.html">position_stack</a></span><span class="op">(</span>vjust <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/annotate.html">annotate</a></span><span class="op">(</span>geom <span class="op">=</span> <span class="st">"text"</span>,
-           x <span class="op">=</span> <span class="fu"><a href="../reference/c.html">c</a></span><span class="op">(</span><span class="fl">1.7</span>, <span class="fl">1.9</span>, <span class="fl">2.1</span><span class="op">)</span>,
-           y <span class="op">=</span> <span class="fu"><a href="../reference/c.html">c</a></span><span class="op">(</span><span class="fl">3e6</span>, <span class="fl">7.5e6</span>, <span class="fl">1.44e7</span><span class="op">)</span>,
-           label <span class="op">=</span> <span class="fu"><a href="../reference/c.html">c</a></span><span class="op">(</span><span class="st">"None"</span>, <span class="st">"One"</span>, <span class="st">"Two Doses"</span><span class="op">)</span>,
+           x <span class="op">=</span> <span class="fu"><a href="../reference/c.html">c</a></span><span class="op">(</span><span class="fl">1.8</span>, <span class="fl">1.9</span>, <span class="fl">2</span><span class="op">)</span>,
+           y <span class="op">=</span> <span class="fu"><a href="../reference/c.html">c</a></span><span class="op">(</span><span class="fl">2.1e7</span>, <span class="fl">1.1e7</span>, <span class="fl">2e6</span><span class="op">)</span>,
+           label <span class="op">=</span> <span class="fu"><a href="../reference/c.html">c</a></span><span class="op">(</span><span class="st">"None"</span>, <span class="st">"One"</span>, <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste</a></span><span class="op">(</span><span class="st">"Two"</span>, <span class="st">"Doses"</span>, sep <span class="op">=</span> <span class="st">"\n"</span><span class="op">)</span><span class="op">)</span>,
            size <span class="op">=</span> <span class="fl">2.25</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>legend.position <span class="op">=</span> <span class="st">"none"</span>,
-        plot.title <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_text</a></span><span class="op">(</span>hjust <span class="op">=</span> <span class="fl">0.5</span>, vjust <span class="op">=</span> <span class="op">-</span><span class="fl">3.5</span>, size <span class="op">=</span> <span class="fl">12</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+        plot.title <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_text</a></span><span class="op">(</span>hjust <span class="op">=</span> <span class="fl">0.5</span>, vjust <span class="op">=</span> <span class="op">-</span><span class="fl">3.5</span>, size <span class="op">=</span> <span class="fl">13</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"New York"</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">vaccines_NYpie</span><span class="op">)</span></code></pre></div>
 <p><img src="introduction_to_bentobox_files/figure-html/ggplot_04-1.png" width="288" style="display: block; margin: auto;"></p>
@@ -811,49 +846,48 @@
 <span class="va">vaccines_FLpie</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">bb_VaccinesNYFL</span><span class="op">[</span><span class="va">bb_VaccinesNYFL</span><span class="op">$</span><span class="va">state</span> <span class="op">==</span> <span class="st">"florida"</span>,<span class="op">]</span>, 
                          <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="st">""</span>, y <span class="op">=</span> <span class="va">value</span>, fill <span class="op">=</span> <span class="va">vax_group</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_bar</a></span><span class="op">(</span>width <span class="op">=</span> <span class="fl">1</span>, stat <span class="op">=</span> <span class="st">"identity"</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_manual.html">scale_fill_manual</a></span><span class="op">(</span>values <span class="op">=</span> <span class="fu"><a href="../reference/c.html">c</a></span><span class="op">(</span><span class="st">"#002b84"</span>, <span class="st">"#2196c2"</span>, <span class="st">"light grey"</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_manual.html">scale_fill_manual</a></span><span class="op">(</span>values <span class="op">=</span> <span class="fu"><a href="../reference/c.html">c</a></span><span class="op">(</span><span class="st">"light grey"</span>, <span class="st">"#85a9d5"</span>,<span class="st">"#3a6dab"</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_void</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/coord_polar.html">coord_polar</a></span><span class="op">(</span>theta <span class="op">=</span> <span class="st">"y"</span>, start <span class="op">=</span> <span class="fl">15.15</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_text.html">geom_text</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fl">1.1</span>, label <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="va">percent</span>, <span class="st">"%"</span><span class="op">)</span><span class="op">)</span>,
-            color <span class="op">=</span> <span class="fu"><a href="../reference/c.html">c</a></span><span class="op">(</span><span class="st">"black"</span>, <span class="st">"white"</span>, <span class="st">"white"</span><span class="op">)</span>,
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/coord_polar.html">coord_polar</a></span><span class="op">(</span>theta <span class="op">=</span> <span class="st">"y"</span>, start <span class="op">=</span> <span class="op">-</span><span class="fl">3.5</span><span class="op">*</span><span class="va">pi</span><span class="op">/</span><span class="fl">8</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_text.html">geom_text</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fl">1.1</span>, label<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="va">percent</span>, <span class="st">"%"</span><span class="op">)</span><span class="op">)</span>,
+            color <span class="op">=</span> <span class="fu"><a href="../reference/c.html">c</a></span><span class="op">(</span><span class="st">"white"</span>, <span class="st">"white"</span>, <span class="st">"black"</span><span class="op">)</span>,
             size <span class="op">=</span> <span class="fl">2.5</span>,
             position <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/position_stack.html">position_stack</a></span><span class="op">(</span>vjust <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/annotate.html">annotate</a></span><span class="op">(</span>geom <span class="op">=</span> <span class="st">"text"</span>,
-           x <span class="op">=</span> <span class="fu"><a href="../reference/c.html">c</a></span><span class="op">(</span><span class="fl">1.7</span>, <span class="fl">1.9</span>, <span class="fl">2.1</span><span class="op">)</span>,
-           y <span class="op">=</span> <span class="fu"><a href="../reference/c.html">c</a></span><span class="op">(</span><span class="fl">3e6</span>, <span class="fl">7.5e6</span>, <span class="fl">1.51e7</span><span class="op">)</span>,
-           label <span class="op">=</span> <span class="fu"><a href="../reference/c.html">c</a></span><span class="op">(</span><span class="st">"None"</span>, <span class="st">"One"</span>, <span class="st">"Two Doses"</span><span class="op">)</span>,
+           x <span class="op">=</span> <span class="fu"><a href="../reference/c.html">c</a></span><span class="op">(</span><span class="fl">1.8</span>, <span class="fl">1.9</span>, <span class="fl">2</span><span class="op">)</span>,
+           y <span class="op">=</span> <span class="fu"><a href="../reference/c.html">c</a></span><span class="op">(</span><span class="fl">2.1e7</span>, <span class="fl">1.07e7</span>, <span class="fl">1.25e6</span><span class="op">)</span>,
+           label <span class="op">=</span> <span class="fu"><a href="../reference/c.html">c</a></span><span class="op">(</span><span class="st">"None"</span>, <span class="st">"One"</span>, <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste</a></span><span class="op">(</span><span class="st">"Two"</span>, <span class="st">"Doses"</span>, sep <span class="op">=</span> <span class="st">"\n"</span><span class="op">)</span><span class="op">)</span>,
            size <span class="op">=</span> <span class="fl">2.25</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>legend.position <span class="op">=</span> <span class="st">"none"</span>,
-        plot.title <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_text</a></span><span class="op">(</span>hjust <span class="op">=</span> <span class="fl">0.5</span>, vjust <span class="op">=</span> <span class="op">-</span><span class="fl">3.5</span>, size <span class="op">=</span> <span class="fl">12</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+        plot.title <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_text</a></span><span class="op">(</span>hjust <span class="op">=</span> <span class="fl">0.5</span>, vjust <span class="op">=</span> <span class="op">-</span><span class="fl">3.5</span>, size <span class="op">=</span> <span class="fl">13</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Florida"</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">vaccines_FLpie</span><span class="op">)</span></code></pre></div>
 <p><img src="introduction_to_bentobox_files/figure-html/ggplot_05-1.png" width="288" style="display: block; margin: auto;"></p>
 <p>We can now easily overlap and size all these <code>ggplots</code> by passing our saved plot objects into <code><a href="../reference/bb_plotGG.html">bb_plotGG()</a></code>:</p>
 <div class="sourceCode" id="cb41"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/bb_pageCreate.html">bb_pageCreate</a></span><span class="op">(</span>width <span class="op">=</span> <span class="fl">7.25</span>, height <span class="op">=</span> <span class="fl">3.5</span>, default.units <span class="op">=</span> <span class="st">"inches"</span><span class="op">)</span>
+<code class="sourceCode R"><span class="fu"><a href="../reference/bb_pageCreate.html">bb_pageCreate</a></span><span class="op">(</span>width <span class="op">=</span> <span class="fl">10</span>, height <span class="op">=</span> <span class="fl">3.5</span>, default.units <span class="op">=</span> <span class="st">"inches"</span><span class="op">)</span>
 
 <span class="fu"><a href="../reference/bb_plotGG.html">bb_plotGG</a></span><span class="op">(</span>plot <span class="op">=</span> <span class="va">US_map</span>,
-          x <span class="op">=</span> <span class="fl">0.1</span>, y <span class="op">=</span> <span class="fl">1.625</span>,
-          width <span class="op">=</span> <span class="fl">4.6</span>, height <span class="op">=</span> <span class="fl">2.8</span>, just <span class="op">=</span> <span class="st">"left"</span><span class="op">)</span>
-
+          x <span class="op">=</span> <span class="fl">0.1</span>,y <span class="op">=</span> <span class="fl">0</span>,
+          width <span class="op">=</span> <span class="fl">6.5</span>, height <span class="op">=</span> <span class="fl">3.5</span>, just <span class="op">=</span> <span class="fu"><a href="../reference/c.html">c</a></span><span class="op">(</span><span class="st">"left"</span>, <span class="st">"top"</span><span class="op">)</span><span class="op">)</span>
 <span class="fu"><a href="../reference/bb_plotGG.html">bb_plotGG</a></span><span class="op">(</span>plot <span class="op">=</span> <span class="va">cases_NYline</span>,
-          x <span class="op">=</span> <span class="fl">4.3</span>,  y <span class="op">=</span> <span class="fl">1.75</span>,
-          width <span class="op">=</span> <span class="fl">2.75</span>, height <span class="op">=</span> <span class="fl">1.6</span>, just <span class="op">=</span> <span class="fu"><a href="../reference/c.html">c</a></span><span class="op">(</span><span class="st">"left"</span>, <span class="st">"bottom"</span><span class="op">)</span><span class="op">)</span>
+          x <span class="op">=</span> <span class="fl">6.5</span>, y <span class="op">=</span> <span class="fl">1.8</span>,
+          width <span class="op">=</span> <span class="fl">2.9</span>, height <span class="op">=</span> <span class="fl">1.7</span>, just <span class="op">=</span> <span class="fu"><a href="../reference/c.html">c</a></span><span class="op">(</span><span class="st">"left"</span>, <span class="st">"bottom"</span><span class="op">)</span><span class="op">)</span>
 <span class="fu"><a href="../reference/bb_plotGG.html">bb_plotGG</a></span><span class="op">(</span>plot <span class="op">=</span> <span class="va">cases_FLline</span>,
-          x <span class="op">=</span> <span class="fl">4.3</span>, y <span class="op">=</span> <span class="fl">3.25</span>,
-          width <span class="op">=</span> <span class="fl">2.75</span>, height <span class="op">=</span> <span class="fl">1.6</span>, just <span class="op">=</span> <span class="fu"><a href="../reference/c.html">c</a></span><span class="op">(</span><span class="st">"left"</span>, <span class="st">"bottom"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<p><img src="introduction_to_bentobox_files/figure-html/gg_plot05-1.png" width="888" style="display: block; margin: auto;"></p>
+          x <span class="op">=</span> <span class="fl">6.5</span>, y <span class="op">=</span> <span class="fl">3.5</span>,
+          width <span class="op">=</span> <span class="fl">2.9</span>, height <span class="op">=</span> <span class="fl">1.7</span>, just <span class="op">=</span> <span class="fu"><a href="../reference/c.html">c</a></span><span class="op">(</span><span class="st">"left"</span>, <span class="st">"bottom"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<p><img src="introduction_to_bentobox_files/figure-html/gg_plot05-1.png" width="1152" style="display: block; margin: auto;"></p>
 <p>In particular, <code>BentoBox</code> makes it easy to resize and place our pie charts in a layout that overlaps our line plots without it affecting the sizing of the other plots on the page:</p>
 <div class="sourceCode" id="cb42"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/bb_plotGG.html">bb_plotGG</a></span><span class="op">(</span>plot <span class="op">=</span> <span class="va">vaccines_NYpie</span>,
-          x <span class="op">=</span> <span class="fl">4.35</span>, y <span class="op">=</span> <span class="fl">0</span>,
-          width <span class="op">=</span> <span class="fl">1.25</span>, height <span class="op">=</span> <span class="fl">1.25</span>, just <span class="op">=</span> <span class="fu"><a href="../reference/c.html">c</a></span><span class="op">(</span><span class="st">"left"</span>, <span class="st">"top"</span><span class="op">)</span><span class="op">)</span>
+          x <span class="op">=</span> <span class="fl">6.5</span>, y <span class="op">=</span> <span class="op">-</span><span class="fl">0.1</span>,
+          width <span class="op">=</span> <span class="fl">1.5</span>, height <span class="op">=</span> <span class="fl">1.5</span>, just <span class="op">=</span> <span class="fu"><a href="../reference/c.html">c</a></span><span class="op">(</span><span class="st">"left"</span>, <span class="st">"top"</span><span class="op">)</span><span class="op">)</span>
 <span class="fu"><a href="../reference/bb_plotGG.html">bb_plotGG</a></span><span class="op">(</span>plot <span class="op">=</span> <span class="va">vaccines_FLpie</span>,
-          x <span class="op">=</span> <span class="fl">4.35</span>, y <span class="op">=</span> <span class="fl">1.6</span>,
-          width <span class="op">=</span> <span class="fl">1.25</span>, height <span class="op">=</span> <span class="fl">1.25</span>, just <span class="op">=</span> <span class="fu"><a href="../reference/c.html">c</a></span><span class="op">(</span><span class="st">"left"</span>, <span class="st">"top"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<p><img src="introduction_to_bentobox_files/figure-html/gg_plot06-1.png" width="888" style="display: block; margin: auto;"></p>
+          x <span class="op">=</span> <span class="fl">6.5</span>, y <span class="op">=</span> <span class="fl">1.8</span>,
+          width <span class="op">=</span> <span class="fl">1.5</span>, height <span class="op">=</span> <span class="fl">1.5</span>, just <span class="op">=</span> <span class="fu"><a href="../reference/c.html">c</a></span><span class="op">(</span><span class="st">"left"</span>, <span class="st">"top"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<p><img src="introduction_to_bentobox_files/figure-html/gg_plot06-1.png" width="1152" style="display: block; margin: auto;"></p>
 <p>We are then left with a complex, elegant arrangement of <code>ggplots</code> as if we had arranged them together with graphic design software:</p>
-<p><img src="introduction_to_bentobox_files/figure-html/gg_plot07-1.png" width="888" style="display: block; margin: auto;"></p>
+<p><img src="introduction_to_bentobox_files/figure-html/gg_plot07-1.png" width="1152" style="display: block; margin: auto;"></p>
 </div>
 <div id="basic-shapes" class="section level2">
 <h2 class="hasAnchor">
@@ -926,7 +960,8 @@
 <p>Genome labels can be shown at three different basepair scales (Mb, Kb, and bp) depending on the size of the region and the desired accuracy of the start and end labels. In the genomic region <code>chr21:28000000-30300000</code> we can use a Mb scale:</p>
 <div class="sourceCode" id="cb47"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="st">"bb_imrHicData"</span><span class="op">)</span>
-<span class="fu"><a href="../reference/bb_pageCreate.html">bb_pageCreate</a></span><span class="op">(</span>width <span class="op">=</span> <span class="fl">3</span>, height <span class="op">=</span> <span class="fl">3.25</span>, default.units <span class="op">=</span> <span class="st">"inches"</span><span class="op">)</span>
+<span class="fu"><a href="../reference/bb_pageCreate.html">bb_pageCreate</a></span><span class="op">(</span>width <span class="op">=</span> <span class="fl">3</span>, height <span class="op">=</span> <span class="fl">3.25</span>, default.units <span class="op">=</span> <span class="st">"inches"</span>,
+              showGuides <span class="op">=</span> <span class="cn">FALSE</span>, xgrid <span class="op">=</span> <span class="fl">0</span>, ygrid <span class="op">=</span> <span class="fl">0</span><span class="op">)</span>
 <span class="va">hicPlot</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/bb_plotHicSquare.html">bb_plotHicSquare</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">bb_imrHicData</span>,
                             chrom <span class="op">=</span> <span class="st">"chr21"</span>, chromstart <span class="op">=</span> <span class="fl">28000000</span>, chromend <span class="op">=</span> <span class="fl">30300000</span>,
                             x <span class="op">=</span> <span class="fl">0.25</span>, y <span class="op">=</span> <span class="fl">0.25</span>, width <span class="op">=</span> <span class="fl">2.5</span>, height <span class="op">=</span> <span class="fl">2.5</span>, default.units <span class="op">=</span> <span class="st">"inches"</span><span class="op">)</span>
@@ -941,7 +976,8 @@
 <p>Thus, it makes more sense to use the bp scale for ultimate accuracy:</p>
 <div class="sourceCode" id="cb49"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="st">"bb_imrHicData"</span><span class="op">)</span>
-<span class="fu"><a href="../reference/bb_pageCreate.html">bb_pageCreate</a></span><span class="op">(</span>width <span class="op">=</span> <span class="fl">3</span>, height <span class="op">=</span> <span class="fl">3.25</span>, default.units <span class="op">=</span> <span class="st">"inches"</span><span class="op">)</span>
+<span class="fu"><a href="../reference/bb_pageCreate.html">bb_pageCreate</a></span><span class="op">(</span>width <span class="op">=</span> <span class="fl">3</span>, height <span class="op">=</span> <span class="fl">3.25</span>, default.units <span class="op">=</span> <span class="st">"inches"</span>,
+              showGuides <span class="op">=</span> <span class="cn">FALSE</span>, xgrid <span class="op">=</span> <span class="fl">0</span>, ygrid <span class="op">=</span> <span class="fl">0</span><span class="op">)</span>
 <span class="va">hicPlot</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/bb_plotHicSquare.html">bb_plotHicSquare</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">bb_imrHicData</span>,
                             chrom <span class="op">=</span> <span class="st">"chr21"</span>, chromstart <span class="op">=</span> <span class="fl">28255554</span>, chromend <span class="op">=</span> <span class="fl">29354665</span>,
                             x <span class="op">=</span> <span class="fl">0.25</span>, y <span class="op">=</span> <span class="fl">0.25</span>, width <span class="op">=</span> <span class="fl">2.5</span>, height <span class="op">=</span> <span class="fl">2.5</span>, default.units <span class="op">=</span> <span class="st">"inches"</span><span class="op">)</span>
@@ -955,7 +991,8 @@
 <p>In the specific case of square Hi-C plots (<code>bb_hicSquare</code> objects), <code><a href="../reference/bb_annoGenomeLabel.html">bb_annoGenomeLabel()</a></code> can annotate the genome label along the y-axis:</p>
 <div class="sourceCode" id="cb50"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="st">"bb_imrHicData"</span><span class="op">)</span>
-<span class="fu"><a href="../reference/bb_pageCreate.html">bb_pageCreate</a></span><span class="op">(</span>width <span class="op">=</span> <span class="fl">3.25</span>, height <span class="op">=</span> <span class="fl">3</span>, default.units <span class="op">=</span> <span class="st">"inches"</span><span class="op">)</span>
+<span class="fu"><a href="../reference/bb_pageCreate.html">bb_pageCreate</a></span><span class="op">(</span>width <span class="op">=</span> <span class="fl">3.25</span>, height <span class="op">=</span> <span class="fl">3</span>, default.units <span class="op">=</span> <span class="st">"inches"</span>,
+              showGuides <span class="op">=</span> <span class="cn">FALSE</span>, xgrid <span class="op">=</span> <span class="fl">0</span>, ygrid <span class="op">=</span> <span class="fl">0</span><span class="op">)</span>
 <span class="va">hicPlot</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/bb_plotHicSquare.html">bb_plotHicSquare</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">bb_imrHicData</span>,
                             chrom <span class="op">=</span> <span class="st">"chr21"</span>, chromstart <span class="op">=</span> <span class="fl">28000000</span>, chromend <span class="op">=</span> <span class="fl">30300000</span>,
                             x <span class="op">=</span> <span class="fl">0.5</span>, y <span class="op">=</span> <span class="fl">0.25</span>, width <span class="op">=</span> <span class="fl">2.5</span>, height <span class="op">=</span> <span class="fl">2.5</span>, default.units <span class="op">=</span> <span class="st">"inches"</span><span class="op">)</span>
@@ -973,7 +1010,8 @@
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st">"TxDb.Hsapiens.UCSC.hg19.knownGene"</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="st">"bb_gwasData"</span><span class="op">)</span>
 
-<span class="fu"><a href="../reference/bb_pageCreate.html">bb_pageCreate</a></span><span class="op">(</span>width <span class="op">=</span> <span class="fl">7.5</span>, height <span class="op">=</span> <span class="fl">2.75</span>, default.units <span class="op">=</span> <span class="st">"inches"</span><span class="op">)</span>
+<span class="fu"><a href="../reference/bb_pageCreate.html">bb_pageCreate</a></span><span class="op">(</span>width <span class="op">=</span> <span class="fl">7.5</span>, height <span class="op">=</span> <span class="fl">2.75</span>, default.units <span class="op">=</span> <span class="st">"inches"</span>,
+              showGuides <span class="op">=</span> <span class="cn">FALSE</span>, xgrid <span class="op">=</span> <span class="fl">0</span>, ygrid <span class="op">=</span> <span class="fl">0</span><span class="op">)</span>
 <span class="va">manhattanPlot</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/bb_plotManhattan.html">bb_plotManhattan</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">bb_gwasData</span>, assembly <span class="op">=</span> <span class="st">"hg19"</span>,
                                   fill <span class="op">=</span> <span class="fu"><a href="../reference/c.html">c</a></span><span class="op">(</span><span class="st">"grey"</span>, <span class="st">"#37a7db"</span><span class="op">)</span>,
                                   sigLine <span class="op">=</span> <span class="cn">TRUE</span>,
@@ -1003,7 +1041,8 @@
 <div class="sourceCode" id="cb52"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="st">"bb_imrHicData"</span><span class="op">)</span>
 
-<span class="fu"><a href="../reference/bb_pageCreate.html">bb_pageCreate</a></span><span class="op">(</span>width <span class="op">=</span> <span class="fl">3.25</span>, height <span class="op">=</span> <span class="fl">3.25</span>, default.units <span class="op">=</span> <span class="st">"inches"</span><span class="op">)</span>
+<span class="fu"><a href="../reference/bb_pageCreate.html">bb_pageCreate</a></span><span class="op">(</span>width <span class="op">=</span> <span class="fl">3.25</span>, height <span class="op">=</span> <span class="fl">3.25</span>, default.units <span class="op">=</span> <span class="st">"inches"</span>,
+              showGuides <span class="op">=</span> <span class="cn">FALSE</span>, xgrid <span class="op">=</span> <span class="fl">0</span>, ygrid <span class="op">=</span> <span class="fl">0</span><span class="op">)</span>
 <span class="va">params</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/bb_params.html">bb_params</a></span><span class="op">(</span>chrom <span class="op">=</span> <span class="st">"chr21"</span>, chromstart <span class="op">=</span> <span class="fl">28000000</span>, chromend <span class="op">=</span> <span class="fl">30300000</span>, 
                     assembly <span class="op">=</span> <span class="st">"hg19"</span>,
                     x <span class="op">=</span> <span class="fl">0.25</span>, width <span class="op">=</span> <span class="fl">2.75</span>, just <span class="op">=</span> <span class="fu"><a href="../reference/c.html">c</a></span><span class="op">(</span><span class="st">"left"</span>, <span class="st">"top"</span><span class="op">)</span>, default.units <span class="op">=</span> <span class="st">"inches"</span><span class="op">)</span>
@@ -1033,7 +1072,8 @@
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="st">"bb_imrHicData"</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="st">"bb_bedpeData"</span><span class="op">)</span>
 
-<span class="fu"><a href="../reference/bb_pageCreate.html">bb_pageCreate</a></span><span class="op">(</span>width <span class="op">=</span> <span class="fl">3.25</span>, height <span class="op">=</span> <span class="fl">3.24</span>, default.units <span class="op">=</span> <span class="st">"inches"</span><span class="op">)</span>
+<span class="fu"><a href="../reference/bb_pageCreate.html">bb_pageCreate</a></span><span class="op">(</span>width <span class="op">=</span> <span class="fl">3.25</span>, height <span class="op">=</span> <span class="fl">3.24</span>, default.units <span class="op">=</span> <span class="st">"inches"</span>,
+              showGuides <span class="op">=</span> <span class="cn">FALSE</span>, xgrid <span class="op">=</span> <span class="fl">0</span>, ygrid <span class="op">=</span> <span class="fl">0</span><span class="op">)</span>
 <span class="va">hicPlot</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/bb_plotHicSquare.html">bb_plotHicSquare</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">bb_imrHicData</span>, resolution <span class="op">=</span> <span class="fl">10000</span>, zrange <span class="op">=</span> <span class="fu"><a href="../reference/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">70</span><span class="op">)</span>,
                              chrom <span class="op">=</span> <span class="st">"chr21"</span>, chromstart <span class="op">=</span> <span class="fl">28000000</span>, chromend <span class="op">=</span> <span class="fl">30300000</span>,
                              x <span class="op">=</span> <span class="fl">0.25</span>, y <span class="op">=</span> <span class="fl">0.25</span>, width <span class="op">=</span> <span class="fl">2.75</span>, height <span class="op">=</span> <span class="fl">2.75</span>,
@@ -1052,7 +1092,8 @@
 <span class="co">## Subset BEDPE data</span>
 <span class="va">bb_bedpeData</span> <span class="op">&lt;-</span> <span class="va">bb_bedpeData</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/which.html">which</a></span><span class="op">(</span><span class="va">bb_bedpeData</span><span class="op">$</span><span class="va">start1</span> <span class="op">==</span> <span class="fl">28220000</span> <span class="op">&amp;</span> <span class="va">bb_bedpeData</span><span class="op">$</span><span class="va">start2</span> <span class="op">==</span> <span class="fl">29070000</span><span class="op">)</span>,<span class="op">]</span>
 
-<span class="fu"><a href="../reference/bb_pageCreate.html">bb_pageCreate</a></span><span class="op">(</span>width <span class="op">=</span> <span class="fl">3.25</span>, height <span class="op">=</span> <span class="fl">3.24</span>, default.units <span class="op">=</span> <span class="st">"inches"</span><span class="op">)</span>
+<span class="fu"><a href="../reference/bb_pageCreate.html">bb_pageCreate</a></span><span class="op">(</span>width <span class="op">=</span> <span class="fl">3.25</span>, height <span class="op">=</span> <span class="fl">3.24</span>, default.units <span class="op">=</span> <span class="st">"inches"</span>,
+              showGuides <span class="op">=</span> <span class="cn">FALSE</span>, xgrid <span class="op">=</span> <span class="fl">0</span>, ygrid <span class="op">=</span> <span class="fl">0</span><span class="op">)</span>
 <span class="va">hicPlot</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/bb_plotHicSquare.html">bb_plotHicSquare</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">bb_imrHicData</span>, resolution <span class="op">=</span> <span class="fl">10000</span>, zrange <span class="op">=</span> <span class="fu"><a href="../reference/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">70</span><span class="op">)</span>,
                              chrom <span class="op">=</span> <span class="st">"chr21"</span>, chromstart <span class="op">=</span> <span class="fl">28000000</span>, chromend <span class="op">=</span> <span class="fl">30300000</span>,
                              x <span class="op">=</span> <span class="fl">0.25</span>, y <span class="op">=</span> <span class="fl">0.25</span>, width <span class="op">=</span> <span class="fl">2.75</span>, height <span class="op">=</span> <span class="fl">2.75</span>,
@@ -1068,12 +1109,13 @@
 <h2 class="hasAnchor">
 <a href="#genomic-region-highlights-and-zooms" class="anchor"></a>Genomic region highlights and zooms</h2>
 <p>The last category of annotations that is often used in plotting genomic data is highlighting and zooming. Many figures benefit from providing a broader context of data and then highlighting a smaller genomic region to show data at a finer scale. In this example, we will plot an ideogram and highlight and zoom in on a genomic region of interest to see the signal track data in that region.</p>
-<p>First we can plot our ideogram. We’ll remove gridlines from our page to better see the annotations we make:</p>
+<p>First we can plot our ideogram:</p>
 <div class="sourceCode" id="cb55"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="st">"cytoBand.Hsapiens.UCSC.hg19"</span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">TxDb.Hsapiens.UCSC.hg19.knownGene</span><span class="op">)</span>
 
-<span class="fu"><a href="../reference/bb_pageCreate.html">bb_pageCreate</a></span><span class="op">(</span>width <span class="op">=</span> <span class="fl">6.25</span>, height <span class="op">=</span> <span class="fl">2.25</span>, default.units <span class="op">=</span> <span class="st">"inches"</span>, xgrid <span class="op">=</span> <span class="fl">0</span>, ygrid <span class="op">=</span> <span class="fl">0</span><span class="op">)</span>
+<span class="fu"><a href="../reference/bb_pageCreate.html">bb_pageCreate</a></span><span class="op">(</span>width <span class="op">=</span> <span class="fl">6.25</span>, height <span class="op">=</span> <span class="fl">2.25</span>, default.units <span class="op">=</span> <span class="st">"inches"</span>, 
+              showGuides <span class="op">=</span> <span class="cn">FALSE</span>, xgrid <span class="op">=</span> <span class="fl">0</span>, ygrid <span class="op">=</span> <span class="fl">0</span><span class="op">)</span>
 <span class="va">ideogramPlot</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/bb_plotIdeogram.html">bb_plotIdeogram</a></span><span class="op">(</span>chrom <span class="op">=</span> <span class="st">"chr21"</span>, assembly <span class="op">=</span> <span class="st">"hg19"</span>,
                                 orientation <span class="op">=</span> <span class="st">"h"</span>,
                                 x <span class="op">=</span> <span class="fl">0.25</span>, y <span class="op">=</span> <span class="fl">0.5</span>, width <span class="op">=</span> <span class="fl">5.75</span>, height <span class="op">=</span> <span class="fl">0.3</span>, just <span class="op">=</span> <span class="st">"left"</span><span class="op">)</span></code></pre></div>
@@ -1186,59 +1228,59 @@
 </colgroup>
 <tbody>
 <tr class="odd">
-<td align="left">alpha</td>
+<td align="right"><strong>alpha</strong></td>
 <td align="left">Alpha channel for transparency (number between 0 and 1).</td>
 </tr>
 <tr class="even">
-<td align="left">fill</td>
+<td align="right"><strong>fill</strong></td>
 <td align="left">Fill color.</td>
 </tr>
 <tr class="odd">
-<td align="left">linecolor</td>
+<td align="right"><strong>linecolor</strong></td>
 <td align="left">Line color.</td>
 </tr>
 <tr class="even">
-<td align="left">lty</td>
+<td align="right"><strong>lty</strong></td>
 <td align="left">Line type. (0=blank, 1=solid, 2=dashed, 3=dotted, 4=dotdash, 5=longdash, 6=twodash).</td>
 </tr>
 <tr class="odd">
-<td align="left">lwd</td>
+<td align="right"><strong>lwd</strong></td>
 <td align="left">Line width.</td>
 </tr>
 <tr class="even">
-<td align="left">lineend</td>
+<td align="right"><strong>lineend</strong></td>
 <td align="left">Line end style (round, butt, square).</td>
 </tr>
 <tr class="odd">
-<td align="left">linejoin</td>
+<td align="right"><strong>linejoin</strong></td>
 <td align="left">Line join style (round, mitre, bevel).</td>
 </tr>
 <tr class="even">
-<td align="left">linemitre</td>
+<td align="right"><strong>linemitre</strong></td>
 <td align="left">Line mitre limit (number greater than 1).</td>
 </tr>
 <tr class="odd">
-<td align="left">fontsize</td>
+<td align="right"><strong>fontsize</strong></td>
 <td align="left">The size of text, in points.</td>
 </tr>
 <tr class="even">
-<td align="left">fontcolor</td>
+<td align="right"><strong>fontcolor</strong></td>
 <td align="left">Text color.</td>
 </tr>
 <tr class="odd">
-<td align="left">fontface</td>
+<td align="right"><strong>fontface</strong></td>
 <td align="left">The font face (plain, bold, italic, bold.italic, oblique).</td>
 </tr>
 <tr class="even">
-<td align="left">fontfamily</td>
+<td align="right"><strong>fontfamily</strong></td>
 <td align="left">The font family.</td>
 </tr>
 <tr class="odd">
-<td align="left">cex</td>
+<td align="right"><strong>cex</strong></td>
 <td align="left">Scaling multiplier applied to symbols.</td>
 </tr>
 <tr class="even">
-<td align="left">pch</td>
+<td align="right"><strong>pch</strong></td>
 <td align="left">Plotting character, or symbol (integer codes range from 0 to 25).</td>
 </tr>
 </tbody>
@@ -1430,13 +1472,15 @@
 <li><p><code><a href="../reference/bb_plotHicTriangle.html">bb_plotHicTriangle()</a></code>: Plots a triangular Hi-C plot where the genome region falls along the base of the triangle.</p></li>
 <li><p><code><a href="../reference/bb_plotHicRectangle.html">bb_plotHicRectangle()</a></code>: Plots a triangular Hi-C plot with additional data filling the surrounding regions to form a rectangle.</p></li>
 </ul>
+<p><img src="introduction_to_bentobox_files/figure-html/aes_14-1.png" width="936" style="display: block; margin: auto;"></p>
 <p>All Hi-C plot types can use different color palettes, and colors can be linearly or log-scaled with the <code>colorTrans</code> parameter.</p>
 <p><code>bb_hicSquare</code> plots can be further customized to include two datasets in one plot. Instead of plotting both symmetrical halves of the plot, we can set one dataset as <code>half = "top"</code> and the other dataset as <code>half = "bottom"</code>:</p>
 <div class="sourceCode" id="cb79"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="st">"bb_gmHicData"</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="st">"bb_imrHicData"</span><span class="op">)</span>
 
-<span class="fu"><a href="../reference/bb_pageCreate.html">bb_pageCreate</a></span><span class="op">(</span>width <span class="op">=</span> <span class="fl">3.25</span>, height <span class="op">=</span> <span class="fl">3.25</span>, default.units <span class="op">=</span> <span class="st">"inches"</span><span class="op">)</span>
+<span class="fu"><a href="../reference/bb_pageCreate.html">bb_pageCreate</a></span><span class="op">(</span>width <span class="op">=</span> <span class="fl">3.25</span>, height <span class="op">=</span> <span class="fl">3.25</span>, default.units <span class="op">=</span> <span class="st">"inches"</span>,
+              showGuides <span class="op">=</span> <span class="cn">FALSE</span>, xgrid <span class="op">=</span> <span class="fl">0</span>, ygrid <span class="op">=</span> <span class="fl">0</span><span class="op">)</span>
 <span class="va">params</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/bb_params.html">bb_params</a></span><span class="op">(</span>chrom <span class="op">=</span> <span class="st">"chr21"</span>, chromstart <span class="op">=</span> <span class="fl">28000000</span>, chromend <span class="op">=</span> <span class="fl">30300000</span>, 
                     assembly <span class="op">=</span> <span class="st">"hg19"</span>, resolution <span class="op">=</span> <span class="fl">10000</span>,
                     x <span class="op">=</span> <span class="fl">0.25</span>, width <span class="op">=</span> <span class="fl">2.75</span>, just <span class="op">=</span> <span class="fu"><a href="../reference/c.html">c</a></span><span class="op">(</span><span class="st">"left"</span>, <span class="st">"top"</span><span class="op">)</span>, default.units <span class="op">=</span> <span class="st">"inches"</span><span class="op">)</span>
@@ -1450,7 +1494,7 @@
                                 zrange <span class="op">=</span> <span class="fu"><a href="../reference/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">70</span><span class="op">)</span>,
                                 half <span class="op">=</span> <span class="st">"bottom"</span>,
                                 y <span class="op">=</span> <span class="fl">0.25</span>, height <span class="op">=</span> <span class="fl">2.75</span><span class="op">)</span></code></pre></div>
-<p><img src="introduction_to_bentobox_files/figure-html/aes_14-1.png" width="504" style="display: block; margin: auto;"></p>
+<p><img src="introduction_to_bentobox_files/figure-html/aes_15-1.png" width="504" style="display: block; margin: auto;"></p>
 </div>
 </div>
   </div>

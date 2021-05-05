@@ -80,7 +80,7 @@
 #' @format a dataframe with 3 columns
 #' \describe{
 #' \item{date}{The date of the case count.}
-#' \item{state}{The state of the case count. Either `"new york`" or `"florida"`.}
+#' \item{state}{The state of the case count. Either \code{"new york"} or \code{"florida"}.}
 #' \item{caseIncrease}{The increase number of positive COVID-19 cases.}
 #' }
 #'
@@ -92,27 +92,29 @@
 #' \url{https://covidtracking.com/}.
 "bb_CasesNYFL"
 
-#' BentoBox example data for COVID-19 deaths in the United States
+#' BentoBox example data for COVID-19 cases in the United States
 #'
-#' A data frame of United States map data and COVID-19 deaths as of 2021-03-07.
+#' A data frame of United States map data and COVID-19 cases as of 2021-03-07.
 #'
-#' @format a dataframe with 5 columns
+#' @format a dataframe with 7 columns
 #' \describe{
 #' \item{state}{The associated state in the United States.}
-#' \item{group}{Numeric value describing a group for each `state`.}
+#' \item{group}{Numeric value describing a group for each \code{state}.}
 #' \item{long}{Longitude value.}
 #' \item{lat}{Latitude value.}
-#' \item{deaths}{The cumulative number of COVID-19 deaths.}
+#' \item{cases}{The cumulative number of COVID-19 cases.}
+#' \item{population}{Numeric value of total \code{state} population.}
+#' \item{cases_100K}{The cumulative number of COVID-19 cases, per 100000 individuals.}
 #' }
 #'
 #' @docType data
 #'
-#' @usage data("bb_DeathsUSA")
+#' @usage data("bb_CasesUSA")
 #'
-#' @source COVID-19 death data was downloaded from The COVID Tracking Project
+#' @source COVID-19 case data was downloaded from The COVID Tracking Project
 #' \url{https://covidtracking.com/}. Data was turned into map data with
 #' \link[ggplot2]{map_data}.
-"bb_DeathsUSA"
+"bb_CasesUSA"
 
 #' BentoBox example GM12878 CTCF signal data
 #'
@@ -341,9 +343,9 @@
 #'
 #' @format a dataframe with 4 columns
 #' \describe{
-#' \item{state}{The state of the vaccinations. Either `"new york`" or `"florida"`.}
+#' \item{state}{The state of the vaccinations. Either \code{"new york"} or \code{"florida"}.}
 #' \item{vax_group}{Character value describing the 3 possibilities for vaccination status:
-#' `"No_Doses"`, `"One_Dose"`, or `"Two_Doses"`.}
+#' \code{"No_Doses"}, \code{"One_Dose"}, or \code{"Two_Doses"}.}
 #' \item{value}{Raw state population value in vaccination group.}
 #' \item{percent}{State percentage in vaccination group.}
 #' }

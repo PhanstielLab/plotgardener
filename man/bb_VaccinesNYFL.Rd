@@ -7,9 +7,9 @@
 \format{
 a dataframe with 4 columns
 \describe{
-\item{state}{The state of the vaccinations. Either `"new york`" or `"florida"`.}
+\item{state}{The state of the vaccinations. Either \code{"new york"} or \code{"florida"}.}
 \item{vax_group}{Character value describing the 3 possibilities for vaccination status:
-`"No_Doses"`, `"One_Dose"`, or `"Two_Doses"`.}
+\code{"No_Doses"}, \code{"One_Dose"}, or \code{"Two_Doses"}.}
 \item{value}{Raw state population value in vaccination group.}
 \item{percent}{State percentage in vaccination group.}
 }

@@ -92,6 +92,9 @@ reference:
     contents:
       - ends_with("Data")
       - starts_with("cytoBand")
+      - bb_CasesNYFL
+      - bb_CasesUSA
+      - bb_VaccinesNYFL
 
 figures:
   fig.height: 7

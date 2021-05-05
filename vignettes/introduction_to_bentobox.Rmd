@@ -954,14 +954,13 @@ For example, let's say we wanted to make a complex multi-panel ggplot about COVI
 ```{r ggplot_01, eval = TRUE, echo = TRUE}
 library(ggplot2)
 library(scales)
-data("bb_DeathsUSA")
+data("bb_CasesUSA")
 
-US_map <- ggplot(bb_DeathsUSA, aes(long, lat, group = group)) +
+US_map <- ggplot(bb_CasesUSA, aes(long, lat, group = group)) +
   theme_void() +
-  geom_polygon(aes(fill = deaths), color = "white") +
-  scale_fill_distiller(palette = "YlGnBu",
-                       labels = label_number(suffix = "", 
-                                             scale = 1e-6, accuracy = 1)) +
+  geom_polygon(aes(fill = cases_100K), color = "white")+
+  scale_fill_distiller(palette = "YlGnBu", direction = 1,
+                       labels = label_number(suffix = "", scale = 1e-3, accuracy = 1)) +
   theme(legend.position = "left",
         legend.justification = c(0.5, 0.95),
         legend.title = element_blank(),
@@ -969,8 +968,8 @@ US_map <- ggplot(bb_DeathsUSA, aes(long, lat, group = group)) +
         legend.key.width = unit(0.3, "cm"),
         legend.key.height = unit(0.4, "cm"),
         plot.title = element_text(hjust = 0, vjust = -1),
-        plot.title.position = "plot") +
-  labs(title = "Millions of Deaths") +
+        plot.title.position = "plot")+
+  labs(title = "Thousands of COVID-19 Cases per 100,000 People") +
   coord_fixed(1.3)
 
 print(US_map)
@@ -990,16 +989,22 @@ ylabels[5] <- paste0(ylabels[5], "M cases")
 cases_NYline <- ggplot(bb_CasesNYFL[bb_CasesNYFL$state == "new york",], 
                        aes(x = date, y = cumsum(caseIncrease))) +
   geom_line(size = 0.3) +
+  scale_x_date(labels = date_format("%b '%y"),
+               breaks = as.Date(c("2020-05-01", "2020-09-01", "2021-01-01")),
+               limits = as.Date(c("2020-01-29", "2021-03-07"))) +
   scale_y_continuous(labels = ylabels, position = "right") +
   coord_cartesian(ylim = c(0, 2000000)) +
   theme(panel.background = element_rect(fill = "transparent", color = NA),
         plot.background = element_rect(fill = "transparent", color = NA),
         axis.line.x.bottom = element_line(size = 0.1, color = "grey"),
-        axis.text.x = element_blank(),
-        axis.title = element_blank(),
-        axis.ticks.x = element_blank(),
+        axis.line.y = element_line(size = 0.1, color = "grey"),
+        axis.text.x = element_text(size = 5, hjust = -0.1, vjust = 3, color = "black"),
+        axis.title.x = element_blank(),
+        axis.ticks.x = element_line(color = "grey"),
+        axis.title.y = element_blank(),
         axis.text.y = element_text(size = 7),
-        axis.ticks.y = element_line(color = "grey"),
+        axis.ticks.y = element_blank(),
+        axis.ticks.length.x.bottom = unit(-0.15, "cm"),
         plot.title = element_text(size = 8, hjust = 1),
         plot.title.position = "plot")
 print(cases_NYline)
@@ -1009,18 +1014,24 @@ print(cases_NYline)
 cases_FLline <- ggplot(bb_CasesNYFL[bb_CasesNYFL$state == "florida",], 
                        aes(x = date, y = cumsum(caseIncrease))) +
   geom_line(size = 0.3) +
-  scale_x_date(date_labels = "%b '%y") +
+  scale_x_date(labels = date_format("%b '%y"),
+               breaks = as.Date(c("2020-05-01", "2020-09-01", "2021-01-01")),
+               limits = as.Date(c("2020-01-29", "2021-03-07"))) +
   scale_y_continuous(labels = ylabels, position = "right") +
   coord_cartesian(ylim = c(0, 2000000)) +
   theme(panel.background = element_rect(fill = "transparent", color = NA),
         plot.background = element_rect(fill = "transparent", color = NA),
         axis.line.x.bottom = element_line(size = 0.1, color = "grey"),
+        axis.line.y = element_line(size = 0.1, color = "grey"),
         axis.title = element_blank(),
         axis.text.y = element_text(size = 7),
-        axis.text.x = element_text(size = 8),
+        axis.text.x = element_text(size = 5, hjust = -0.1, vjust = 3, color = "black"),
         axis.ticks = element_line(color = "grey"),
+        axis.ticks.y = element_blank(),
+        axis.ticks.length.x.bottom = unit(-0.15, "cm"),
         plot.title = element_text(size = 8, hjust = 1),
         plot.title.position = "plot")
+
 print(cases_FLline)
 ```
 
@@ -1029,23 +1040,23 @@ print(cases_FLline)
 ```{r ggplot_04, eval = TRUE, echo = TRUE}
 data("bb_VaccinesNYFL")
 
-vaccines_NYpie <- ggplot(bb_VaccinesNYFL[bb_VaccinesNYFL$state == "new york",],
+vaccines_NYpie <- ggplot(bb_VaccinesNYFL[bb_VaccinesNYFL$state == "new york",], 
                          aes(x = "", y = value, fill = vax_group)) +
   geom_bar(width = 1, stat = "identity") +
   theme_void() +
-  scale_fill_manual(values = c("#002b84", "#2196c2", "light grey")) +
-  coord_polar(theta = "y", start = 15) +
-  geom_text(aes(x = 1.1, label = paste0(percent, "%")),
-            color = c("black", "white", "white"),
+  scale_fill_manual(values = c("light grey", "#85a9d5","#3a6dab")) +
+  coord_polar(theta = "y", start = -pi/2) +
+  geom_text(aes(x = 1.1, label=paste0(percent, "%")),
+            color = c("white", "white", "black"),
             size = 2.5,
             position = position_stack(vjust = 0.5)) +
   annotate(geom = "text",
-           x = c(1.7, 1.9, 2.1),
-           y = c(3e6, 7.5e6, 1.44e7),
-           label = c("None", "One", "Two Doses"),
+           x = c(1.8, 1.9, 2),
+           y = c(2.1e7, 1.1e7, 2e6),
+           label = c("None", "One", paste("Two", "Doses", sep = "\n")),
            size = 2.25) +
   theme(legend.position = "none",
-        plot.title = element_text(hjust = 0.5, vjust = -3.5, size = 12)) +
+        plot.title = element_text(hjust = 0.5, vjust = -3.5, size = 13)) +
   labs(title = "New York")
 print(vaccines_NYpie)
 ```
@@ -1054,95 +1065,92 @@ print(vaccines_NYpie)
 vaccines_FLpie <- ggplot(bb_VaccinesNYFL[bb_VaccinesNYFL$state == "florida",], 
                          aes(x = "", y = value, fill = vax_group)) +
   geom_bar(width = 1, stat = "identity") +
-  scale_fill_manual(values = c("#002b84", "#2196c2", "light grey")) +
+  scale_fill_manual(values = c("light grey", "#85a9d5","#3a6dab")) +
   theme_void() +
-  coord_polar(theta = "y", start = 15.15) +
-  geom_text(aes(x = 1.1, label = paste0(percent, "%")),
-            color = c("black", "white", "white"),
+  coord_polar(theta = "y", start = -3.5*pi/8) +
+  geom_text(aes(x = 1.1, label=paste0(percent, "%")),
+            color = c("white", "white", "black"),
             size = 2.5,
             position = position_stack(vjust = 0.5)) +
   annotate(geom = "text",
-           x = c(1.7, 1.9, 2.1),
-           y = c(3e6, 7.5e6, 1.51e7),
-           label = c("None", "One", "Two Doses"),
+           x = c(1.8, 1.9, 2),
+           y = c(2.1e7, 1.07e7, 1.25e6),
+           label = c("None", "One", paste("Two", "Doses", sep = "\n")),
            size = 2.25) +
   theme(legend.position = "none",
-        plot.title = element_text(hjust = 0.5, vjust = -3.5, size = 12)) +
+        plot.title = element_text(hjust = 0.5, vjust = -3.5, size = 13)) +
   labs(title = "Florida")
 print(vaccines_FLpie)
 ```
 
 We can now easily overlap and size all these `ggplots` by passing our saved plot objects into `bb_plotGG()`:
 
-```{r gg_plot05, eval=TRUE,echo=TRUE,message=FALSE,fig.width=9.25, fig.height=4.5}
-bb_pageCreate(width = 7.25, height = 3.5, default.units = "inches")
+```{r gg_plot05, eval=TRUE,echo=TRUE,message=FALSE,fig.width=12, fig.height=4.5}
+bb_pageCreate(width = 10, height = 3.5, default.units = "inches")
 
 bb_plotGG(plot = US_map,
-          x = 0.1, y = 1.625,
-          width = 4.6, height = 2.8, just = "left")
-
+          x = 0.1,y = 0,
+          width = 6.5, height = 3.5, just = c("left", "top"))
 bb_plotGG(plot = cases_NYline,
-          x = 4.3,  y = 1.75,
-          width = 2.75, height = 1.6, just = c("left", "bottom"))
+          x = 6.5, y = 1.8,
+          width = 2.9, height = 1.7, just = c("left", "bottom"))
 bb_plotGG(plot = cases_FLline,
-          x = 4.3, y = 3.25,
-          width = 2.75, height = 1.6, just = c("left", "bottom"))
+          x = 6.5, y = 3.5,
+          width = 2.9, height = 1.7, just = c("left", "bottom"))
 ```
 
 In particular, `BentoBox` makes it easy to resize and place our pie charts in a layout that overlaps our line plots without it affecting the sizing of the other plots on the page:
 
 ```{r eval = FALSE, echo = TRUE}
 bb_plotGG(plot = vaccines_NYpie,
-          x = 4.35, y = 0,
-          width = 1.25, height = 1.25, just = c("left", "top"))
+          x = 6.5, y = -0.1,
+          width = 1.5, height = 1.5, just = c("left", "top"))
 bb_plotGG(plot = vaccines_FLpie,
-          x = 4.35, y = 1.6,
-          width = 1.25, height = 1.25, just = c("left", "top"))
+          x = 6.5, y = 1.8,
+          width = 1.5, height = 1.5, just = c("left", "top"))
 ```
 
-```{r gg_plot06, eval=TRUE, echo=FALSE, message=FALSE,fig.width=9.25,fig.height=4.5}
-bb_pageCreate(width = 7.25, height = 3.5, default.units = "inches")
+```{r gg_plot06, eval=TRUE, echo=FALSE, message=FALSE,fig.width=12,fig.height=4.5}
+bb_pageCreate(width = 10, height = 3.5, default.units = "inches")
 
 bb_plotGG(plot = US_map,
-          x = 0.1, y = 1.625,
-          width = 4.6, height = 2.8, just = "left")
-
+          x = 0.1,y = 0,
+          width = 6.5, height = 3.5, just = c("left", "top"))
 bb_plotGG(plot = cases_NYline,
-          x = 4.3,  y = 1.75,
-          width = 2.75, height = 1.6, just = c("left", "bottom"))
+          x = 6.5, y = 1.8,
+          width = 2.9, height = 1.7, just = c("left", "bottom"))
 bb_plotGG(plot = cases_FLline,
-          x = 4.3, y = 3.25,
-          width = 2.75, height = 1.6, just = c("left", "bottom"))
+          x = 6.5, y = 3.5,
+          width = 2.9, height = 1.7, just = c("left", "bottom"))
 bb_plotGG(plot = vaccines_NYpie,
-          x = 4.35, y = 0,
-          width = 1.25, height = 1.25, just = c("left", "top"))
+          x = 6.5, y = -0.1,
+          width = 1.5, height = 1.5, just = c("left", "top"))
 bb_plotGG(plot = vaccines_FLpie,
-          x = 4.35, y = 1.6,
-          width = 1.25, height = 1.25, just = c("left", "top"))
+          x = 6.5, y = 1.8,
+          width = 1.5, height = 1.5, just = c("left", "top"))
 ```
 
 We are then left with a complex, elegant arrangement of `ggplots` as if we had arranged them together with graphic design software:
 
-```{r gg_plot07, eval=TRUE, echo=FALSE, message=FALSE,fig.width=9.25,fig.height=4.5}
-bb_pageCreate(width = 7.25, height = 3.5, default.units = "inches",
+```{r gg_plot07, eval=TRUE, echo=FALSE, message=FALSE,fig.width=12,fig.height=4.5}
+bb_pageCreate(width = 10, height = 3.5, default.units = "inches",
               showGuides = FALSE, xgrid = 0, ygrid = 0)
 
 bb_plotGG(plot = US_map,
-          x = 0.1, y = 1.625,
-          width = 4.6, height = 2.8, just = "left")
-
+          x = 0.1,y = 0,
+          width = 6.5, height = 3.5, just = c("left", "top"))
 bb_plotGG(plot = cases_NYline,
-          x = 4.3,  y = 1.75,
-          width = 2.75, height = 1.6, just = c("left", "bottom"))
+          x = 6.5, y = 1.8,
+          width = 2.9, height = 1.7, just = c("left", "bottom"))
 bb_plotGG(plot = cases_FLline,
-          x = 4.3, y = 3.25,
-          width = 2.75, height = 1.6, just = c("left", "bottom"))
+          x = 6.5, y = 3.5,
+          width = 2.9, height = 1.7, just = c("left", "bottom"))
 bb_plotGG(plot = vaccines_NYpie,
-          x = 4.35, y = 0,
-          width = 1.25, height = 1.25, just = c("left", "top"))
+          x = 6.5, y = -0.1,
+          width = 1.5, height = 1.5, just = c("left", "top"))
 bb_plotGG(plot = vaccines_FLpie,
-          x = 4.35, y = 1.6,
-          width = 1.25, height = 1.25, just = c("left", "top"))
+          x = 6.5, y = 1.8,
+          width = 1.5, height = 1.5, just = c("left", "top"))
 ```
 
 
