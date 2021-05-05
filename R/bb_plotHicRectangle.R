@@ -412,7 +412,7 @@ bb_plotHicRectangle <- function(data, resolution = "auto", zrange = NULL,
       txdbChecks <- TRUE
     } else {
       txdbChecks <- check_loadedPackage(package = hic_plot$assembly$TxDb,
-                                        message = paste(paste0("`", hic_plot$assembly$TxDb,"`"),
+                                        message = paste(paste0("`", hic_plot$assembly$TxDb$packageName,"`"),
                                                                                           "not loaded. Please install and load to plot full chromosome Hi-C map."))
     }
     if (txdbChecks == TRUE){
@@ -429,7 +429,7 @@ bb_plotHicRectangle <- function(data, resolution = "auto", zrange = NULL,
         warning(paste("Chromosome",
                       paste0("'", hic_plot$chrom, "'"),
                       "not found in",
-                      paste0("`", hic_plot$assembly$TxDb, "`"),
+                      paste0("`", hic_plot$assembly$TxDb$packageName, "`"),
                       "and data for entire chromosome cannot be plotted."),
                 call. = FALSE)
       } else {

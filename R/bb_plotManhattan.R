@@ -636,7 +636,7 @@ bb_plotManhattan <- function(data, sigVal = 5e-08, chrom = NULL,
         txdbChecks <- TRUE
       } else {
         txdbChecks <- check_loadedPackage(package = man_plot$assembly$TxDb,
-                                          message = paste(paste0("`", man_plot$assembly$TxDb,"`"),
+                                          message = paste(paste0("`", man_plot$assembly$TxDb$packageName,"`"),
                                                           "not loaded. Please install and load to generate full genome assembly Manhattan plot."))
       }
 
@@ -658,7 +658,7 @@ bb_plotManhattan <- function(data, sigVal = 5e-08, chrom = NULL,
           warning(paste("Chromosome(s)",
                         paste0("'", non_txdb, "'", collapse = ", "),
                         "not found in",
-                        paste0("`", man_plot$assembly$TxDb, "`"),
+                        paste0("`", man_plot$assembly$TxDb$packageName, "`"),
                         "and will be ignored."), call. = FALSE)
         }
 
@@ -699,7 +699,7 @@ bb_plotManhattan <- function(data, sigVal = 5e-08, chrom = NULL,
           txdbChecks <- TRUE
         } else {
           txdbChecks <- check_loadedPackage(package = man_plot$assembly$TxDb,
-                                            message = paste(paste0("`", man_plot$assembly$TxDb,"`"),
+                                            message = paste(paste0("`", man_plot$assembly$TxDb$packageName,"`"),
                                                             "not loaded. Please install and load to generate full chromosome Manhattan plot."))
         }
 
@@ -717,7 +717,7 @@ bb_plotManhattan <- function(data, sigVal = 5e-08, chrom = NULL,
             warning(paste("Chromosome",
                           paste0("'", man_plot$chrom, "'"),
                           "not found in",
-                          paste0("`", man_plot$assembly$TxDb, "`"),
+                          paste0("`", man_plot$assembly$TxDb$packageName, "`"),
                           "and data for entire chromosome cannot be plotted."),
                     call. = FALSE)
             xscale <- c(0, 1)

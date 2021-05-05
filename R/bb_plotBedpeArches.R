@@ -1,7 +1,8 @@
 #' Plot paired-end BEDPE data in an arch style
 #'
-#' @param data A string specifying the BEDPE file path or a dataframe
-#' in BEDPE format specifying data to be plotted.
+#' @param data A string specifying the BEDPE file path, a dataframe
+#' in BEDPE format specifying data to be plotted, or a
+#' \link[GenomicInteractions]{GenomicInteractions} object.
 #' @param chrom Chromosome of region to be plotted, as a string.
 #' @param chromstart Integer start position on chromosome to be plotted.
 #' @param chromend Integer end position on chromosome to be plotted.
@@ -413,10 +414,23 @@ bb_plotBedpeArches <- function(data, chrom, chromstart = NULL, chromend = NULL,
   # READ IN FILE OR DATAFRAME
   # ======================================================================================================================================================================================
 
-  if ("data.frame" %in% class(bb_archInternal$data)){
-    bedpe <- as.data.frame(bb_archInternal$data)
+  if (!"data.frame" %in% class(bb_archInternal$data)){
+    if (!"GenomicInteractions" %in% class(bb_archInternal$data)){
+      bedpe <- as.data.frame(data.table::fread(bb_archInternal$data))
+    } else {
+
+      ## Reorder GenomicInteractions columns
+      bedpe <- as.data.frame(bb_archInternal$data)
+      bedpeSubset <- bedpe[,c("seqnames1", "start1", "end1",
+                              "seqnames2", "start2", "end2")]
+
+      bedpe <- bedpe[,which(!colnames(bedpe) %in% colnames(bedpeSubset))]
+      bedpe <- cbind(bedpeSubset, bedpe)
+
+    }
+
   } else {
-    bedpe <- as.data.frame(data.table::fread(bb_archInternal$data))
+    bedpe <- as.data.frame(bb_archInternal$data)
   }
 
   # ======================================================================================================================================================================================
@@ -438,7 +452,7 @@ bb_plotBedpeArches <- function(data, chrom, chromstart = NULL, chromend = NULL,
     } else {
       txdbChecks <- check_loadedPackage(package = arches_plot$assembly$TxDb,
                                         message = paste(paste0("`",
-                                                               arches_plot$assembly$TxDb,
+                                                               arches_plot$assembly$TxDb$packageName,
                                                                "`"),
                                                         "not loaded. Please install and load to plot full chromosome ribbon arches."))
     }
@@ -459,7 +473,7 @@ bb_plotBedpeArches <- function(data, chrom, chromstart = NULL, chromend = NULL,
                                            arches_plot$chrom,
                                            "'"),
                       "not found in", paste0("`",
-                                             arches_plot$assembly$TxDb,
+                                             arches_plot$assembly$TxDb$packageName,
                                              "`"),
                       "and data for entire chromosome cannot be plotted."),
                 call. = FALSE)

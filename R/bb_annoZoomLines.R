@@ -284,7 +284,7 @@ bb_annoZoomLines <- function(plot, chrom, chromstart = NULL, chromend = NULL,
     } else {
       txdbChecks <- check_loadedPackage(package = bb_zoom$assembly$TxDb,
                                         message = paste(paste0("`",
-                                                               bb_zoom$assembly$TxDb,
+                                                               bb_zoom$assembly$TxDb$packageName,
                                                                "`"),
                                                         "not loaded. Please install and load to annotate zoom lines for full chromosome region of plot."))
     }
@@ -302,7 +302,7 @@ bb_annoZoomLines <- function(plot, chrom, chromstart = NULL, chromend = NULL,
         warning(paste("Chromosome",
                       paste0("'", bb_zoom$chrom, "'"),
                       "not found in",
-                      paste0("`", bb_zoom$assembly$TxDb, "`"),
+                      paste0("`", bb_zoom$assembly$TxDb$packageName, "`"),
                       "and zoom lines for entire chromosome cannot be annotated."),
                 call. = FALSE)
       } else {

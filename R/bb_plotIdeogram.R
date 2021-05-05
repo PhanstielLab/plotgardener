@@ -139,7 +139,7 @@ bb_plotIdeogram <- function(chrom, assembly = "hg19", orientation = "h",
       } else {
         txdbChecks <- check_loadedPackage(package = assembly$TxDb,
                                           message = paste(paste0("`",
-                                                                 assembly$TxDb,"`"),
+                                                                 assembly$TxDb$packageName,"`"),
                                                           "not loaded. Please install and load to plot Ideogram."))
       }
 
@@ -169,7 +169,7 @@ bb_plotIdeogram <- function(chrom, assembly = "hg19", orientation = "h",
       return(TRUE)
     } else {
       warning(paste(paste0("'", chrom, "'"),
-                    "not found in", paste0(txdb, ".")), call. = FALSE)
+                    "not found in", paste0(txdb$packageName, ".")), call. = FALSE)
       return(FALSE)
     }
 
@@ -480,17 +480,15 @@ bb_plotIdeogram <- function(chrom, assembly = "hg19", orientation = "h",
                        x = page_coords$x, y = page_coords$y,
                        just = bb_ideoInternal$just)
 
-      ## Convert viewport to bottom left (bottom right of horizontal)
-      vp_bottom <- vp_bottomLeft(viewport = vpOG)
-
-      ## Make new rotated viewport
+      ## Convert viewport to top right (top right of horizontal)
+      vp_tr <- vp_topRight(viewport = vpOG)
       vp <- viewport(height = page_coords$width,
                      width = page_coords$height,
-                     x = vp_bottom[[1]], y = vp_bottom[[2]],
+                     x = vp_tr[[1]], y = vp_tr[[2]],
                      xscale = c(0, chromLength),
                      yscale = c(0, yscale),
                      angle = -90,
-                     just = c("right", "bottom"),
+                     just = c("left", "top"),
                      name = vp_name)
 
     }

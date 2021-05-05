@@ -1,7 +1,8 @@
 #' Plot paired-end BEDPE data for a single chromosome
 #'
-#' @param data A string specifying the BEDPE file path or a dataframe
-#' in BEDPE format specifying data to be plotted.
+#' @param data A string specifying the BEDPE file path, a dataframe
+#' in BEDPE format specifying data to be plotted, or a
+#' \link[GenomicInteractions]{GenomicInteractions} object.
 #' @param chrom Chromosome of region to be plotted, as a string.
 #' @param chromstart Integer start position on chromosome to be plotted.
 #' @param chromend Integer end position on chromosome to be plotted.
@@ -299,7 +300,21 @@ bb_plotBedpe <- function(data, chrom, chromstart = NULL, chromend = NULL,
   # ======================================================================================================================================================================================
 
   if (!"data.frame" %in% class(bb_bedpeInternal$data)){
-    bedpe <- as.data.frame(data.table::fread(bb_bedpeInternal$data))
+    if (!"GenomicInteractions" %in% class(bb_bedpeInternal$data)){
+      bedpe <- as.data.frame(data.table::fread(bb_bedpeInternal$data))
+    } else {
+
+      ## Reorder GenomicInteractions columns
+      bedpe <- as.data.frame(bb_bedpeInternal$data)
+      bedpeSubset <- bedpe[,c("seqnames1", "start1", "end1",
+                              "seqnames2", "start2", "end2")]
+
+      bedpe <- bedpe[,which(!colnames(bedpe) %in% colnames(bedpeSubset))]
+      bedpe <- cbind(bedpeSubset, bedpe)
+
+    }
+
+
   } else {
     bedpe <- as.data.frame(bb_bedpeInternal$data)
   }
@@ -336,7 +351,7 @@ bb_plotBedpe <- function(data, chrom, chromstart = NULL, chromend = NULL,
     } else {
       txdbChecks <- check_loadedPackage(package = bb_bedpe$assembly$TxDb,
                                         message = paste(paste0("`",
-                                                               bb_bedpe$assembly$TxDb,
+                                                               bb_bedpe$assembly$TxDb$packageName,
                                                                "`"),
                                                         "not loaded. Please install and load to plot full chromosome paired-end data."))
     }
@@ -356,7 +371,7 @@ bb_plotBedpe <- function(data, chrom, chromstart = NULL, chromend = NULL,
         warning(paste("Chromosome",
                       paste0("'", bb_bedpe$chrom, "'"),
                       "not found in",
-                      paste0("`", bb_bedpe$assembly$TxDb, "`"),
+                      paste0("`", bb_bedpe$assembly$TxDb$packageName, "`"),
                       "and data for entire chromosome cannot be plotted."),
                 call. = FALSE)
       } else {

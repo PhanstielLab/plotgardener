@@ -329,7 +329,7 @@ bb_plotGenes <- function(chrom, chromstart = NULL, chromend = NULL,
   } else {
     txdbChecks <- check_loadedPackage(package = bb_genes$assembly$TxDb,
                                       message = paste(paste0("`",
-                                                             bb_genes$assembly$TxDb,
+                                                             bb_genes$assembly$TxDb$packageName,
                                                              "`"),
                                                       "not loaded. Please install and load to plot genes."))
   }
@@ -357,7 +357,7 @@ bb_plotGenes <- function(chrom, chromstart = NULL, chromend = NULL,
 
     if (!bb_genes$chrom %in% names(genome)){
       warning(paste("Chromosome", paste0("'", bb_genes$chrom, "'"),
-                    "not found in", paste0("`", bb_genes$assembly$TxDb, "`"),
+                    "not found in", paste0("`", bb_genes$assembly$TxDb$packageName, "`"),
                     "and genes cannot be plotted."), call. = FALSE)
     } else {
       if (is.null(bb_genes$chromstart) & is.null(bb_genes$chromend)){

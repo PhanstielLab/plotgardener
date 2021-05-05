@@ -358,7 +358,7 @@ bb_plotHicSquare <- function(data, resolution = "auto", zrange = NULL,
       txdbChecks <- TRUE
     } else {
       txdbChecks <- check_loadedPackage(package = assembly$TxDb,
-                                        message = paste(paste0("`", assembly$TxDb,"`"),
+                                        message = paste(paste0("`", assembly$TxDb$packageName,"`"),
                                                         "not loaded. Please install and load to plot full chromosome Hi-C map."))
     }
     if (txdbChecks == TRUE){
@@ -374,7 +374,7 @@ bb_plotHicSquare <- function(data, resolution = "auto", zrange = NULL,
       if (!chrom %in% names(assembly_data)){
         warning(paste("Chromosome",
                       paste0("'", chrom, "'"),
-                      "not found in", paste0("`", assembly$TxDb, "`"),
+                      "not found in", paste0("`", assembly$TxDb$packageName, "`"),
                       "and data for entire chromosome cannot be plotted."),
                 call. = FALSE)
       } else {

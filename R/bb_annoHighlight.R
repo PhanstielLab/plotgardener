@@ -294,7 +294,7 @@ bb_annoHighlight <- function(plot, chrom, chromstart = NULL, chromend = NULL,
     } else {
       txdbChecks <- check_loadedPackage(package = bb_highlight$assembly$TxDb,
                                         message = paste(paste0("`",
-                                                               bb_highlight$assembly$TxDb,
+                                                               bb_highlight$assembly$TxDb$packageName,
                                                                "`"),
                                                         "not loaded. Please install and load to annotate full chromosome region of plot."))
     }
@@ -312,7 +312,7 @@ bb_annoHighlight <- function(plot, chrom, chromstart = NULL, chromend = NULL,
         warning(paste("Chromosome",
                       paste0("'", bb_highlight$chrom, "'"),
                       "not found in",
-                      paste0("`", bb_highlight$assembly$TxDb, "`"),
+                      paste0("`", bb_highlight$assembly$TxDb$packageName, "`"),
                       "and data for entire chromosome cannot be highlighted."),
                 call. = FALSE)
       } else {

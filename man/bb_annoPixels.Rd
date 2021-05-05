@@ -19,8 +19,10 @@ bb_annoPixels(
 \item{plot}{Hi-C plot object from \code{bb_plotHicSquare} or
 \code{bb_plotHicTriangle} on which to annotate pixels.}
 
-\item{data}{A string specifying the BEDPE file path or a dataframe in BEDPE
-format specifying pixel positions.}
+\item{data}{A string specifying the BEDPE file path, a dataframe in BEDPE
+format specifying pixel positions, or a
+\link[GenomicInteractions]{GenomicInteractions} object specifying pixel
+positions.}
 
 \item{type}{Character value specifying type of annotation.
 Default value is \code{type = "box"}. Options are:

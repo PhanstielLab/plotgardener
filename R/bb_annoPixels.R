@@ -2,8 +2,10 @@
 #'
 #' @param plot Hi-C plot object from \code{bb_plotHicSquare} or
 #' \code{bb_plotHicTriangle} on which to annotate pixels.
-#' @param data A string specifying the BEDPE file path or a dataframe in BEDPE
-#' format specifying pixel positions.
+#' @param data A string specifying the BEDPE file path, a dataframe in BEDPE
+#' format specifying pixel positions, or a
+#' \link[GenomicInteractions]{GenomicInteractions} object specifying pixel
+#' positions.
 #' @param type Character value specifying type of annotation.
 #' Default value is \code{type = "box"}. Options are:
 #' \itemize{
@@ -533,7 +535,21 @@ bb_annoPixels <- function(plot, data, type = "box", half = "inherit",
   loops <- bb_loopsInternal$data
   if (!"data.frame" %in% class(loops)){
 
-    loops <- as.data.frame(data.table::fread(loops))
+    if (!"GenomicInteractions" %in% class(bb_bedpeInternal$data)){
+      loops <- as.data.frame(data.table::fread(loops))
+    } else {
+
+      ## Reorder GenomicInteractions columns
+      loops <- as.data.frame(loops)
+      loopsSubset <- loops[,c("seqnames1", "start1", "end1",
+                              "seqnames2", "start2", "end2")]
+
+      loops <- loops[,which(!colnames(loops) %in% colnames(loopsSubset))]
+      loops <- cbind(loopsSubset, loops)
+
+    }
+
+
     if (nrow(loops) < 1){
       warning("\'data\' input contains no values.", call. = FALSE)
     }

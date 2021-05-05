@@ -36,7 +36,7 @@ current_viewports <- function(){
 adjust_vpCoords <- function(viewport){
   vp_y <- viewport$y
 
-  if (length(viewport$justification == 2)){
+  if (length(viewport$justification) == 2){
 
     if ("left" %in% viewport$justification
         & "center" %in% viewport$justification){
@@ -82,7 +82,7 @@ adjust_vpCoords <- function(viewport){
       vp_x <- viewport$x
     }
 
-  } else if (length(viewport$justification == 1)){
+  } else if (length(viewport$justification) == 1){
 
     if (viewport$justification == "left"){
       ## convert the x-coordinate only
@@ -112,7 +112,7 @@ adjust_vpCoords <- function(viewport){
 ## Define a function to change viewport x and y-coordinates to top left based on justification
 vp_topLeft <- function(viewport){
 
-  if (length(viewport$justification == 2)){
+  if (length(viewport$justification) == 2){
 
     if ("left" %in% viewport$justification
         & "center" %in% viewport$justification){
@@ -151,7 +151,7 @@ vp_topLeft <- function(viewport){
       vp_y <- viewport$y + (0.5 * viewport$height)
     }
 
-  } else if (length(viewport$justification == 1)){
+  } else if (length(viewport$justification) == 1){
 
     if (viewport$justification == "left"){
       vp_x <- viewport$x
@@ -179,7 +179,7 @@ vp_topLeft <- function(viewport){
 ## Define a function to change viewport x and y-coordinates to bottom left based on justification
 vp_bottomLeft <- function(viewport){
 
-  if (length(viewport$justification == 2)){
+  if (length(viewport$justification) == 2){
 
     if ("left" %in% viewport$justification
         & "center" %in% viewport$justification){
@@ -218,7 +218,7 @@ vp_bottomLeft <- function(viewport){
       vp_y <- viewport$y - (0.5 * viewport$height)
     }
 
-  } else if (length(viewport$justification == 1)){
+  } else if (length(viewport$justification) == 1){
 
     if (viewport$justification == "left"){
       vp_x <- viewport$x
@@ -246,7 +246,7 @@ vp_bottomLeft <- function(viewport){
 ## Define a function to change viewport x and y-coordinates to bottom right based on justification
 vp_bottomRight <- function(viewport){
 
-  if (length(viewport$justification == 2)){
+  if (length(viewport$justification) == 2){
 
     if ("left" %in% viewport$justification
         & "center" %in% viewport$justification){
@@ -285,7 +285,7 @@ vp_bottomRight <- function(viewport){
       vp_y <- viewport$y - (0.5 * viewport$height)
     }
 
-  } else if (length(viewport$justification == 1)){
+  } else if (length(viewport$justification) == 1){
 
     if (viewport$justification == "left"){
       vp_x <- viewport$x + viewport$width
@@ -302,6 +302,71 @@ vp_bottomRight <- function(viewport){
     } else {
       vp_x <- viewport$x + (0.5 * viewport$width)
       vp_y <- viewport$y - (0.5 * viewport$height)
+    }
+
+  }
+
+  return(list(vp_x, vp_y))
+
+}
+
+vp_topRight <- function(viewport){
+
+  if (length(viewport$justification) == 2){
+    if ("left" %in% viewport$justification
+        & "center" %in% viewport$justification){
+      vp_x <- viewport$x + viewport$width
+      vp_y <- viewport$y + (0.5 * viewport$height)
+    } else if ("right" %in% viewport$justification
+               & "center" %in% viewport$justification){
+      vp_x <- viewport$x
+      vp_y <- viewport$y + (0.5 * viewport$height)
+    } else if ("center" %in% viewport$justification
+               & "bottom" %in% viewport$justification){
+      vp_x <- viewport$x + (0.5 * viewport$width)
+      vp_y <- viewport$y + viewport$height
+    } else if ("center" %in% viewport$justification
+               & "top" %in% viewport$justification){
+      vp_x <- viewport$x + (0.5 * viewport$width)
+      vp_y <- viewport$y
+    } else if ("left" %in% viewport$justification
+               & "top" %in% viewport$justification){
+      vp_x <- viewport$x + viewport$width
+      vp_y <- viewport$y
+    } else if ("right" %in% viewport$justification
+               & "top" %in% viewport$justification){
+      vp_x <- viewport$x
+      vp_y <- viewport$y
+    } else if ("left" %in% viewport$justification
+               & "bottom" %in% viewport$justification){
+      vp_x <- viewport$x + viewport$width
+      vp_y <- viewport$y + viewport$height
+    } else if ("right" %in% viewport$justification
+               & "bottom" %in% viewport$justification){
+      vp_x <- viewport$x
+      vp_y <- viewport$y + viewport$height
+    } else {
+      vp_x <- viewport$x + (0.5 * viewport$width)
+      vp_y <- viewport$y + (0.5 * viewport$height)
+    }
+
+  } else if (length(viewport$justification) == 1){
+
+    if (viewport$justification == "left"){
+      vp_x <- viewport$x + viewport$width
+      vp_y <- viewport$y + (0.5 * viewport$height)
+    } else if (viewport$justification == "right"){
+      vp_x <- viewport$x
+      vp_y <- viewport$y + (0.5 * viewport$height)
+    } else if (viewport$justification == "bottom"){
+      vp_x <- viewport$x + (0.5 * viewport$width)
+      vp_y <- viewport$y + viewport$height
+    } else if (viewport$justification == "top"){
+      vp_x <- viewport$x + (0.5 * viewport$width)
+      vp_y <- viewport$y
+    } else {
+      vp_x <- viewport$x + (0.5 * viewport$width)
+      vp_y <- viewport$y + (0.5 * viewport$height)
     }
 
   }

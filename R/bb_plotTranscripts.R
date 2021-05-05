@@ -343,7 +343,7 @@ bb_plotTranscripts <- function(chrom, chromstart = NULL, chromend = NULL,
   } else {
     txdbChecks <- check_loadedPackage(package = bb_transcripts$assembly$TxDb,
                                       message = paste(paste0("`",
-                                                             bb_transcripts$assembly$TxDb,
+                                                             bb_transcripts$assembly$TxDb$packageName,
                                                              "`"),
                                                       "not loaded. Please install and load to plot gene transcripts."))
   }
@@ -375,7 +375,7 @@ bb_plotTranscripts <- function(chrom, chromstart = NULL, chromend = NULL,
       warning(paste("Chromosome",
                     paste0("'", bb_transcripts$chrom, "'"),
                     "not found in",
-                    paste0("`", bb_transcripts$assembly$TxDb, "`"),
+                    paste0("`", bb_transcripts$assembly$TxDb$packageName, "`"),
                     "and gene transcripts cannot be plotted."), call. = FALSE)
     } else {
       if (is.null(bb_transcripts$chromstart)

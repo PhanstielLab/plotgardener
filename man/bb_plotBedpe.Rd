@@ -32,8 +32,9 @@ bb_plotBedpe(
 )
 }
 \arguments{
-\item{data}{A string specifying the BEDPE file path or a dataframe
-in BEDPE format specifying data to be plotted.}
+\item{data}{A string specifying the BEDPE file path, a dataframe
+in BEDPE format specifying data to be plotted, or a
+\link[GenomicInteractions]{GenomicInteractions} object.}
 
 \item{chrom}{Chromosome of region to be plotted, as a string.}
 

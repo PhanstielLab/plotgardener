@@ -28,7 +28,12 @@ bb_assembly <- function(Genome, TxDb, OrgDb, gene.id.column = "ENTREZID",
                            gene.id.column = gene.id.column,
                            display.column = display.column),
                       class = "bb_assembly")
-  if(!is.null(BSgenome)){
+
+  if (class(object$TxDb) == "TxDb"){
+    object$TxDb$packageName <- paste0("TxDb.", Genome)
+  }
+
+  if (!is.null(BSgenome)){
     object$BSgenome <- BSgenome
   }
 

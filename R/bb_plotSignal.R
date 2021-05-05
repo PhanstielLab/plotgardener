@@ -667,7 +667,7 @@ bb_plotSignal <- function(data, binSize = NA, binCap = TRUE, negData = FALSE,
       txdbChecks <- TRUE
     } else {
       txdbChecks <- check_loadedPackage(package = signal_track$assembly$TxDb,
-                                        message = paste(paste0("`", signal_track$assembly$TxDb,"`"),
+                                        message = paste(paste0("`", signal_track$assembly$TxDb$packageName,"`"),
                                                         "not loaded. Please install and load to generate full chromosome signal track."))
     }
 
@@ -685,7 +685,7 @@ bb_plotSignal <- function(data, binSize = NA, binCap = TRUE, negData = FALSE,
         warning(paste("Chromosome",
                       paste0("'", signal_track$chrom, "'"),
                       "not found in",
-                      paste0("`", signal_track$assembly$TxDb, "`"),
+                      paste0("`", signal_track$assembly$TxDb$packageName, "`"),
                       "and data for entire chromosome cannot be plotted."), call. = FALSE)
       } else {
         signal_track$chromstart <- 1
