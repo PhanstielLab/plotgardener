@@ -8,7 +8,7 @@
 a dataframe with 3 columns
 \describe{
 \item{date}{The date of the case count.}
-\item{state}{The state of the case count. Either `"new york`" or `"florida"`.}
+\item{state}{The state of the case count. Either \code{"new york"} or \code{"florida"}.}
 \item{caseIncrease}{The increase number of positive COVID-19 cases.}
 }
 }
