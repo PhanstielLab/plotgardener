@@ -120,7 +120,7 @@ bb_plotGG <- function(plot, x, y, width, height, just = c("left", "top"),
 
   add_bbViewport(vp_name)
 
-  ## Make viewport for gene track
+  ## Make viewport for ggplot
   vp <- viewport(height = page_coords$height, width = page_coords$width,
                  x = page_coords$x, y = page_coords$y,
                  just = bb_ggInternal$just, name = vp_name)

@@ -412,7 +412,7 @@ bb_plotHicRectangle <- function(data, resolution = "auto", zrange = NULL,
       txdbChecks <- TRUE
     } else {
       txdbChecks <- check_loadedPackage(package = hic_plot$assembly$TxDb,
-                                        message = paste(paste0("`", hic_plot$assembly$TxDb$packageName,"`"),
+                                        message = paste(paste0("`", hic_plot$assembly$TxDb,"`"),
                                                                                           "not loaded. Please install and load to plot full chromosome Hi-C map."))
     }
     if (txdbChecks == TRUE){

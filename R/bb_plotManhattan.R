@@ -636,7 +636,7 @@ bb_plotManhattan <- function(data, sigVal = 5e-08, chrom = NULL,
         txdbChecks <- TRUE
       } else {
         txdbChecks <- check_loadedPackage(package = man_plot$assembly$TxDb,
-                                          message = paste(paste0("`", man_plot$assembly$TxDb$packageName,"`"),
+                                          message = paste(paste0("`", man_plot$assembly$TxDb,"`"),
                                                           "not loaded. Please install and load to generate full genome assembly Manhattan plot."))
       }
 
@@ -699,7 +699,7 @@ bb_plotManhattan <- function(data, sigVal = 5e-08, chrom = NULL,
           txdbChecks <- TRUE
         } else {
           txdbChecks <- check_loadedPackage(package = man_plot$assembly$TxDb,
-                                            message = paste(paste0("`", man_plot$assembly$TxDb$packageName,"`"),
+                                            message = paste(paste0("`", man_plot$assembly$TxDb,"`"),
                                                             "not loaded. Please install and load to generate full chromosome Manhattan plot."))
         }
 

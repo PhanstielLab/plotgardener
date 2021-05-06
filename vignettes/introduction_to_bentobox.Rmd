@@ -986,7 +986,7 @@ ylabels[c(1,3,5)] <- round(ylabels[c(1,3,5)], digits = 0)
 ylabels[c(2,4)] <- round(ylabels[c(2,4)], digits = 1)
 ylabels[5] <- paste0(ylabels[5], "M cases")
 
-cases_NYline <- ggplot(bb_CasesNYFL[bb_CasesNYFL$state == "new york",], 
+cases_NYline <- ggplot(bb_CasesNYFL[bb_CasesNYFL$state == "new york",],
                        aes(x = date, y = cumsum(caseIncrease))) +
   geom_line(size = 0.3) +
   scale_x_date(labels = date_format("%b '%y"),
@@ -1011,7 +1011,7 @@ print(cases_NYline)
 ```
 
 ```{r ggplot_03, eval = TRUE, echo = TRUE}
-cases_FLline <- ggplot(bb_CasesNYFL[bb_CasesNYFL$state == "florida",], 
+cases_FLline <- ggplot(bb_CasesNYFL[bb_CasesNYFL$state == "florida",],
                        aes(x = date, y = cumsum(caseIncrease))) +
   geom_line(size = 0.3) +
   scale_x_date(labels = date_format("%b '%y"),
@@ -1040,62 +1040,62 @@ print(cases_FLline)
 ```{r ggplot_04, eval = TRUE, echo = TRUE}
 data("bb_VaccinesNYFL")
 
-vaccines_NYpie <- ggplot(bb_VaccinesNYFL[bb_VaccinesNYFL$state == "new york",], 
+vaccines_NYpie <- ggplot(bb_VaccinesNYFL[bb_VaccinesNYFL$state == "new york",],
                          aes(x = "", y = value, fill = vax_group)) +
   geom_bar(width = 1, stat = "identity") +
   theme_void() +
-  scale_fill_manual(values = c("light grey", "#85a9d5","#3a6dab")) +
-  coord_polar(theta = "y", start = -pi/2) +
-  geom_text(aes(x = 1.1, label=paste0(percent, "%")),
+  scale_fill_manual(values = c("#3a6dab", "light grey","#85a9d5")) +
+  coord_polar(theta = "y", start = 2.125) +
+  geom_text(aes(x = 1.1, label= paste0(percent, "%")),
             color = c("white", "white", "black"),
-            size = 2.5,
+            size = 1.75,
             position = position_stack(vjust = 0.5)) +
   annotate(geom = "text",
-           x = c(1.8, 1.9, 2),
-           y = c(2.1e7, 1.1e7, 2e6),
-           label = c("None", "One", paste("Two", "Doses", sep = "\n")),
+           x = c(1.9, 1.95, 2.4),
+           y = c(8.5e6, 9e5, 1.6e7),
+           label = c("not", "partially", paste("fully", "vaccinated", sep ="\n")),
            size = 2.25) +
   theme(legend.position = "none",
-        plot.title = element_text(hjust = 0.5, vjust = -3.5, size = 13)) +
+        plot.title = element_text(hjust = 0.5, vjust = -6.5, size = 13)) +
   labs(title = "New York")
 print(vaccines_NYpie)
 ```
 ```{r ggplot_05, echo = TRUE, eval = TRUE}
 
-vaccines_FLpie <- ggplot(bb_VaccinesNYFL[bb_VaccinesNYFL$state == "florida",], 
+vaccines_FLpie <- ggplot(bb_VaccinesNYFL[bb_VaccinesNYFL$state == "florida",],
                          aes(x = "", y = value, fill = vax_group)) +
   geom_bar(width = 1, stat = "identity") +
-  scale_fill_manual(values = c("light grey", "#85a9d5","#3a6dab")) +
+  scale_fill_manual(values = c("#3a6dab", "light grey","#85a9d5")) +
   theme_void() +
-  coord_polar(theta = "y", start = -3.5*pi/8) +
+  coord_polar(theta = "y", start = pi/1.78) +
   geom_text(aes(x = 1.1, label=paste0(percent, "%")),
             color = c("white", "white", "black"),
-            size = 2.5,
+            size = 1.75,
             position = position_stack(vjust = 0.5)) +
   annotate(geom = "text",
-           x = c(1.8, 1.9, 2),
-           y = c(2.1e7, 1.07e7, 1.25e6),
-           label = c("None", "One", paste("Two", "Doses", sep = "\n")),
+           x = c(1.9, 2.05, 2.4),
+           y = c(1.05e7, 9.25e5, 1.865e7),
+           label = c("not", "partially", paste("fully", "vaccinated", sep ="\n")),
            size = 2.25) +
   theme(legend.position = "none",
-        plot.title = element_text(hjust = 0.5, vjust = -3.5, size = 13)) +
+        plot.title = element_text(hjust = 0.5, vjust = -7, size = 13)) +
   labs(title = "Florida")
 print(vaccines_FLpie)
 ```
 
 We can now easily overlap and size all these `ggplots` by passing our saved plot objects into `bb_plotGG()`:
 
-```{r gg_plot05, eval=TRUE,echo=TRUE,message=FALSE,fig.width=12, fig.height=4.5}
-bb_pageCreate(width = 10, height = 3.5, default.units = "inches")
+```{r gg_plot05, eval=TRUE,echo=TRUE,message=FALSE,fig.width=11.5, fig.height=4.5}
+bb_pageCreate(width = 9.5, height = 3.5, default.units = "inches")
 
 bb_plotGG(plot = US_map,
           x = 0.1,y = 0,
           width = 6.5, height = 3.5, just = c("left", "top"))
 bb_plotGG(plot = cases_NYline,
-          x = 6.5, y = 1.8,
+          x = 6.3, y = 1.8,
           width = 2.9, height = 1.7, just = c("left", "bottom"))
 bb_plotGG(plot = cases_FLline,
-          x = 6.5, y = 3.5,
+          x = 6.3, y = 3.5,
           width = 2.9, height = 1.7, just = c("left", "bottom"))
 ```
 
@@ -1103,54 +1103,53 @@ In particular, `BentoBox` makes it easy to resize and place our pie charts in a 
 
 ```{r eval = FALSE, echo = TRUE}
 bb_plotGG(plot = vaccines_NYpie,
-          x = 6.5, y = -0.1,
-          width = 1.5, height = 1.5, just = c("left", "top"))
+          x = 6.2, y = -0.2,
+          width = 1.8, height = 1.8, just = c("left", "top"))
 bb_plotGG(plot = vaccines_FLpie,
-          x = 6.5, y = 1.8,
-          width = 1.5, height = 1.5, just = c("left", "top"))
+          x = 6.2, y = 1.5,
+          width = 1.8, height = 1.8, just = c("left", "top"))
 ```
 
-```{r gg_plot06, eval=TRUE, echo=FALSE, message=FALSE,fig.width=12,fig.height=4.5}
-bb_pageCreate(width = 10, height = 3.5, default.units = "inches")
+```{r gg_plot06, eval=TRUE, echo=FALSE, message=FALSE,fig.width=11.5,fig.height=4.5}
+bb_pageCreate(width = 9.5, height = 3.5, default.units = "inches")
 
 bb_plotGG(plot = US_map,
           x = 0.1,y = 0,
           width = 6.5, height = 3.5, just = c("left", "top"))
 bb_plotGG(plot = cases_NYline,
-          x = 6.5, y = 1.8,
+          x = 6.3, y = 1.8,
           width = 2.9, height = 1.7, just = c("left", "bottom"))
 bb_plotGG(plot = cases_FLline,
-          x = 6.5, y = 3.5,
+          x = 6.3, y = 3.5,
           width = 2.9, height = 1.7, just = c("left", "bottom"))
 bb_plotGG(plot = vaccines_NYpie,
-          x = 6.5, y = -0.1,
-          width = 1.5, height = 1.5, just = c("left", "top"))
+          x = 6.2, y = -0.2,
+          width = 1.8, height = 1.8, just = c("left", "top"))
 bb_plotGG(plot = vaccines_FLpie,
-          x = 6.5, y = 1.8,
-          width = 1.5, height = 1.5, just = c("left", "top"))
+          x = 6.2, y = 1.5,
+          width = 1.8, height = 1.8, just = c("left", "top"))
 ```
 
 We are then left with a complex, elegant arrangement of `ggplots` as if we had arranged them together with graphic design software:
 
-```{r gg_plot07, eval=TRUE, echo=FALSE, message=FALSE,fig.width=12,fig.height=4.5}
-bb_pageCreate(width = 10, height = 3.5, default.units = "inches",
+```{r gg_plot07, eval=TRUE, echo=FALSE, message=FALSE,fig.width=11.5,fig.height=4.5}
+bb_pageCreate(width = 9.5, height = 3.5, default.units = "inches",
               showGuides = FALSE, xgrid = 0, ygrid = 0)
-
 bb_plotGG(plot = US_map,
           x = 0.1,y = 0,
           width = 6.5, height = 3.5, just = c("left", "top"))
 bb_plotGG(plot = cases_NYline,
-          x = 6.5, y = 1.8,
+          x = 6.3, y = 1.8,
           width = 2.9, height = 1.7, just = c("left", "bottom"))
 bb_plotGG(plot = cases_FLline,
-          x = 6.5, y = 3.5,
+          x = 6.3, y = 3.5,
           width = 2.9, height = 1.7, just = c("left", "bottom"))
 bb_plotGG(plot = vaccines_NYpie,
-          x = 6.5, y = -0.1,
-          width = 1.5, height = 1.5, just = c("left", "top"))
+          x = 6.2, y = -0.2,
+          width = 1.8, height = 1.8, just = c("left", "top"))
 bb_plotGG(plot = vaccines_FLpie,
-          x = 6.5, y = 1.8,
-          width = 1.5, height = 1.5, just = c("left", "top"))
+          x = 6.2, y = 1.5,
+          width = 1.8, height = 1.8, just = c("left", "top"))
 ```
 
 

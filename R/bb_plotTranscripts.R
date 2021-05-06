@@ -343,7 +343,7 @@ bb_plotTranscripts <- function(chrom, chromstart = NULL, chromend = NULL,
   } else {
     txdbChecks <- check_loadedPackage(package = bb_transcripts$assembly$TxDb,
                                       message = paste(paste0("`",
-                                                             bb_transcripts$assembly$TxDb$packageName,
+                                                             bb_transcripts$assembly$TxDb,
                                                              "`"),
                                                       "not loaded. Please install and load to plot gene transcripts."))
   }

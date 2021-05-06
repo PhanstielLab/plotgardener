@@ -358,7 +358,7 @@ bb_plotHicSquare <- function(data, resolution = "auto", zrange = NULL,
       txdbChecks <- TRUE
     } else {
       txdbChecks <- check_loadedPackage(package = assembly$TxDb,
-                                        message = paste(paste0("`", assembly$TxDb$packageName,"`"),
+                                        message = paste(paste0("`", assembly$TxDb,"`"),
                                                         "not loaded. Please install and load to plot full chromosome Hi-C map."))
     }
     if (txdbChecks == TRUE){

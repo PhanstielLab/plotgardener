@@ -139,7 +139,7 @@ bb_plotIdeogram <- function(chrom, assembly = "hg19", orientation = "h",
       } else {
         txdbChecks <- check_loadedPackage(package = assembly$TxDb,
                                           message = paste(paste0("`",
-                                                                 assembly$TxDb$packageName,"`"),
+                                                                 assembly$TxDb,"`"),
                                                           "not loaded. Please install and load to plot Ideogram."))
       }
 

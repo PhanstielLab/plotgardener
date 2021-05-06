@@ -667,7 +667,7 @@ bb_plotSignal <- function(data, binSize = NA, binCap = TRUE, negData = FALSE,
       txdbChecks <- TRUE
     } else {
       txdbChecks <- check_loadedPackage(package = signal_track$assembly$TxDb,
-                                        message = paste(paste0("`", signal_track$assembly$TxDb$packageName,"`"),
+                                        message = paste(paste0("`", signal_track$assembly$TxDb,"`"),
                                                         "not loaded. Please install and load to generate full chromosome signal track."))
     }
 

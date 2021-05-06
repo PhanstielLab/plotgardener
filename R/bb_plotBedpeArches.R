@@ -452,7 +452,7 @@ bb_plotBedpeArches <- function(data, chrom, chromstart = NULL, chromend = NULL,
     } else {
       txdbChecks <- check_loadedPackage(package = arches_plot$assembly$TxDb,
                                         message = paste(paste0("`",
-                                                               arches_plot$assembly$TxDb$packageName,
+                                                               arches_plot$assembly$TxDb,
                                                                "`"),
                                                         "not loaded. Please install and load to plot full chromosome ribbon arches."))
     }

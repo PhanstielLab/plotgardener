@@ -329,7 +329,7 @@ bb_plotGenes <- function(chrom, chromstart = NULL, chromend = NULL,
   } else {
     txdbChecks <- check_loadedPackage(package = bb_genes$assembly$TxDb,
                                       message = paste(paste0("`",
-                                                             bb_genes$assembly$TxDb$packageName,
+                                                             bb_genes$assembly$TxDb,
                                                              "`"),
                                                       "not loaded. Please install and load to plot genes."))
   }

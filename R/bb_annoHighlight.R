@@ -294,7 +294,7 @@ bb_annoHighlight <- function(plot, chrom, chromstart = NULL, chromend = NULL,
     } else {
       txdbChecks <- check_loadedPackage(package = bb_highlight$assembly$TxDb,
                                         message = paste(paste0("`",
-                                                               bb_highlight$assembly$TxDb$packageName,
+                                                               bb_highlight$assembly$TxDb,
                                                                "`"),
                                                         "not loaded. Please install and load to annotate full chromosome region of plot."))
     }

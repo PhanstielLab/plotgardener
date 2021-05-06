@@ -351,7 +351,7 @@ bb_plotBedpe <- function(data, chrom, chromstart = NULL, chromend = NULL,
     } else {
       txdbChecks <- check_loadedPackage(package = bb_bedpe$assembly$TxDb,
                                         message = paste(paste0("`",
-                                                               bb_bedpe$assembly$TxDb$packageName,
+                                                               bb_bedpe$assembly$TxDb,
                                                                "`"),
                                                         "not loaded. Please install and load to plot full chromosome paired-end data."))
     }

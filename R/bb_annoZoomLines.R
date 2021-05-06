@@ -284,7 +284,7 @@ bb_annoZoomLines <- function(plot, chrom, chromstart = NULL, chromend = NULL,
     } else {
       txdbChecks <- check_loadedPackage(package = bb_zoom$assembly$TxDb,
                                         message = paste(paste0("`",
-                                                               bb_zoom$assembly$TxDb$packageName,
+                                                               bb_zoom$assembly$TxDb,
                                                                "`"),
                                                         "not loaded. Please install and load to annotate zoom lines for full chromosome region of plot."))
     }

@@ -302,7 +302,7 @@ bb_plotGenomeLabel <- function(chrom, chromstart = NULL, chromend = NULL,
       } else {
         txdbChecks <- check_loadedPackage(package = object$assembly$TxDb,
                                           message = paste(paste0("`",
-                                                                 object$assembly$TxDb$packageName,
+                                                                 object$assembly$TxDb,
                                                                  "`"),
                                                           "not loaded. Please install and load to label genome."))
       }

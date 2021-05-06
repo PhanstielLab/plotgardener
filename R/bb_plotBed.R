@@ -372,7 +372,7 @@ bb_plotBed <- function(data, chrom, chromstart = NULL, chromend = NULL,
     } else {
       txdbChecks <- check_loadedPackage(package = pileup_plot$assembly$TxDb,
                                         message = paste(paste0("`",
-                                                               pileup_plot$assembly$TxDb$packageName,
+                                                               pileup_plot$assembly$TxDb,
                                                                "`"),
                                                         "not loaded. Please install and load to plot full chromosome pileup plot."))
     }
