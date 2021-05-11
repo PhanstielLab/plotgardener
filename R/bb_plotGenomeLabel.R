@@ -943,8 +943,8 @@ bb_plotGenomeLabel <- function(chrom, chromstart = NULL, chromend = NULL,
     commaLabels <- comma_labels(object = bb_genomeLabel,
                                 commas = bb_genomeLabelInternal$commas,
                                 format = format, fact = fact)
-    chromstartlabel <- commaLabels[[1]]
-    chromendlabel <- commaLabels[[2]]
+    chromstartlabel <- format(commaLabels[[1]], ...)
+    chromendlabel <- format(commaLabels[[2]],...)
 
   }
   ########## END comma parsing

@@ -16,7 +16,7 @@ knitr::opts_chunk$set(
   fig.height = 3,
   collapse = TRUE,
   comment = "#>",
-  fig.retina = 5
+  fig.retina = 1
 )
 library(grid)
 library(BentoBox)
@@ -49,7 +49,7 @@ library(BentoBox)
   
     Functions that display `BentoBox` properties or operate on other `BentoBox` functions, or constructors for `BentoBox` objects.
 
-This vignette provides a best-practices guide for utilizing `BentoBox`. It begins with a Quick Start section that outlines usage examples for reading in and plotting the most commonly used genomic data. Then the following sections explore how BentoBox works in more detail, highlighting helpful topics that showcase the capabilities of BentoBox. For detailed usage of each function, see the function-specific reference examples with `?function()` (e.g. `?bb_plotBedpe()`).
+This vignette provides a best-practices guide for utilizing `BentoBox`. It begins with a Quick Start section that outlines usage examples for reading in and plotting the most commonly used genomic data. Then the following sections explore how BentoBox works in more detail, highlighting helpful topics that showcase the capabilities of BentoBox. For detailed usage of each function, see the function-specific reference examples with `?function()` (e.g. `?bb_plotPairs()`).
 
 
 # Quick Start
@@ -215,7 +215,7 @@ bb_annoGenomeLabel(plot = hicPlot,
                    x = 0.25, y = 2.75, width = 2.5, height = 0.25, default.units = "inches")
 ```
 
-For more information about how to place plots and annotations on a `BentoBox` page, check out the section `Working with plot objects`.
+For more information about how to place plots and annotations on a `BentoBox` page, check out the section [Working with plot objects](introduction_to_bentobox.html#working-with-plot-objects-1).
 
 ## Exporting plots
 
@@ -614,7 +614,7 @@ bb_plotHicSquare(data = bb_imrHicData,
                  just = c("left", "top"), default.units = "inches")
 
 ## Plot loop annotations
-bb_plotBedpeArches(data = bb_bedpeData,
+bb_plotPairsArches(data = bb_bedpeData,
                    chrom = "chr21", chromstart = 28000000, chromend = 30300000,
                    x = 0.5, y = 2.5, width = 2, height = 0.25, 
                    just = c("left", "top"), default.units = "inches",
@@ -678,7 +678,7 @@ bb_plotHicSquare(data = bb_imrHicData,
                  y = 0.5, height = 2)
 
 ## Plot loop annotations
-bb_plotBedpeArches(data = bb_bedpeData,
+bb_plotPairsArches(data = bb_bedpeData,
                    params = params,
                    y = 2.5, height = 0.25, 
                    fill = "black", linecolor = "black", flip = TRUE)
@@ -731,7 +731,7 @@ bb_plotHicSquare(data = bb_imrHicData,
                  y = 0.5, height = 2)
 
 ## Plot loop annotations
-bb_plotBedpeArches(data = bb_bedpeData,
+bb_plotPairsArches(data = bb_bedpeData,
                    params = params,
                    y = 2.5, height = 0.25, 
                    fill = "black", linecolor = "black", flip = TRUE)
@@ -783,7 +783,7 @@ bb_plotHicSquare(data = bb_imrHicData,
                  y = 0.5, height = 2)
 
 ## Plot loop annotations
-bb_plotBedpeArches(data = bb_bedpeData,
+bb_plotPairsArches(data = bb_bedpeData,
                    params = params,
                    y = 2.5, height = 0.25, 
                    fill = "black", linecolor = "black", flip = TRUE)
@@ -839,7 +839,7 @@ bb_plotHicSquare(data = bb_imrHicData,
                  y = 0.5, height = 2)
 
 ## Plot loop annotations
-bb_plotBedpeArches(data = bb_bedpeData,
+bb_plotPairsArches(data = bb_bedpeData,
                    params = params,
                    y = "0b", 
                    height = 0.25, 
@@ -941,24 +941,36 @@ bb_plotIdeogram(showBands = FALSE,
 
 ```
 
-To highlight a specific genomic region on an ideogram, see the section `Genomic region highlights and zooms`. 
+To highlight a specific genomic region on an ideogram, see the section [Genomic region highlights and zooms](introduction_to_bentobox.html#genomic-region-highlights-and-zooms-1). 
 
 ## Incorporating `ggplots`
+
+```{r eval=TRUE, echo=FALSE, message=FALSE}
+library(showtext)
+font_add(family = "ProximaNova",
+         regular = system.file("extdata", 
+                               "proximanova-regular.otf",
+                               package = "BentoBox"),
+         bold = system.file("extdata",
+                            "proximanova-semibold.otf",
+                            package = "BentoBox"))
+showtext_auto()
+```
 
 In addition to its numerous genomic functions, `BentoBox` can size and place `ggplots` within a `BentoBox` layout. Rather than arranging `ggplots` in a relative manner, `BentoBox` can make and place `ggplots` in absolute sizes and locations. This makes it simple and intuitive to make complex `ggplot` arrangements beyond a basic grid-style layout.
 
 For example, let's say we wanted to make a complex multi-panel ggplot about COVID-19 data consisting of the following plots:
 
-1) A United States map
+1) A United States map depicting COVID-19 cases:
 
-```{r ggplot_01, eval = TRUE, echo = TRUE}
+```{r ggplot_01, eval = TRUE, echo = TRUE, message=FALSE, warning=FALSE, fig.showtext=TRUE}
 library(ggplot2)
 library(scales)
 data("bb_CasesUSA")
 
 US_map <- ggplot(bb_CasesUSA, aes(long, lat, group = group)) +
   theme_void() +
-  geom_polygon(aes(fill = cases_100K), color = "white")+
+  geom_polygon(aes(fill = cases_100K), color = "white", size = 0.3) +
   scale_fill_distiller(palette = "YlGnBu", direction = 1,
                        labels = label_number(suffix = "", scale = 1e-3, accuracy = 1)) +
   theme(legend.position = "left",
@@ -967,404 +979,271 @@ US_map <- ggplot(bb_CasesUSA, aes(long, lat, group = group)) +
         legend.text = element_text(size = 7),
         legend.key.width = unit(0.3, "cm"),
         legend.key.height = unit(0.4, "cm"),
-        plot.title = element_text(hjust = 0, vjust = -1),
-        plot.title.position = "plot")+
+        plot.title = element_text(hjust = 0, vjust = -1,
+                                  family = "ProximaNova", face = "bold",
+                                  size = 12),
+        plot.title.position = "plot") +
   labs(title = "Thousands of COVID-19 Cases per 100,000 People") +
   coord_fixed(1.3)
 
 print(US_map)
 ```
 
-2) Timeline line plots:
+2) Line plots showing the accumulation of COVID-19 cases over time:
 
-```{r ggplot_02, eval = TRUE, echo = TRUE}
+```{r ggplot_02, eval = TRUE, echo = TRUE, message=FALSE, warning=FALSE, fig.showtext=TRUE}
 data("bb_CasesNYFL")
 
 # Format y-labels
 ylabels <- seq(0, 2000000, by = 500000)/1e6
-ylabels[c(1,3,5)] <- round(ylabels[c(1,3,5)], digits = 0)
+ylabels[c(3,5)] <- round(ylabels[c(3,5)], digits = 0)
 ylabels[c(2,4)] <- round(ylabels[c(2,4)], digits = 1)
 ylabels[5] <- paste0(ylabels[5], "M cases")
+ylabels[1] <- ""
 
-cases_NYline <- ggplot(bb_CasesNYFL[bb_CasesNYFL$state == "new york",],
+bb_CasesNY <- bb_CasesNYFL[bb_CasesNYFL$state == "new york",]
+bb_CasesNYpoly <- rbind(bb_CasesNY,
+                        data.frame("date" = as.Date("2021-03-07"),
+                                   "state" = "new york",
+                                   "caseIncrease" = -1*sum(bb_CasesNY$caseIncrease)))
+
+cases_NYline <- ggplot(bb_CasesNY,
                        aes(x = date, y = cumsum(caseIncrease))) +
-  geom_line(size = 0.3) +
+  geom_polygon(data = bb_CasesNYpoly, fill = "#B8E6E6") +
   scale_x_date(labels = date_format("%b '%y"),
                breaks = as.Date(c("2020-05-01", "2020-09-01", "2021-01-01")),
-               limits = as.Date(c("2020-01-29", "2021-03-07"))) +
-  scale_y_continuous(labels = ylabels, position = "right") +
+               limits = as.Date(c("2020-01-29", "2021-03-07")),
+               expand = c(0, 0)) +
+  scale_y_continuous(labels = ylabels, position = "right", expand = c(0, 0)) +
+  geom_hline(yintercept = c(500000, 1000000, 1500000, 2000000),
+             color = "white", linetype = "dashed", size = 0.3) +
   coord_cartesian(ylim = c(0, 2000000)) +
   theme(panel.background = element_rect(fill = "transparent", color = NA),
+        text = element_text(family = "ProximaNova"),
+        panel.grid = element_blank(),
+        panel.border = element_blank(),
         plot.background = element_rect(fill = "transparent", color = NA),
-        axis.line.x.bottom = element_line(size = 0.1, color = "grey"),
-        axis.line.y = element_line(size = 0.1, color = "grey"),
-        axis.text.x = element_text(size = 5, hjust = -0.1, vjust = 3, color = "black"),
+        axis.line.x.bottom = element_blank(),
+        axis.line.y = element_line(size = 0.1, color = "#8F9BB3"),
+        axis.text.x = element_text(size = 7, hjust = 0.5, vjust = 7.75, color = "black"),
         axis.title.x = element_blank(),
-        axis.ticks.x = element_line(color = "grey"),
+        axis.ticks.x = element_line(size = 0.2, color = "black"),
         axis.title.y = element_blank(),
-        axis.text.y = element_text(size = 7),
+        axis.text.y = element_text(size = 7, color = "black"),
         axis.ticks.y = element_blank(),
-        axis.ticks.length.x.bottom = unit(-0.15, "cm"),
+        axis.ticks.length.x.bottom = unit(-0.1, "cm"),
         plot.title = element_text(size = 8, hjust = 1),
         plot.title.position = "plot")
+
 print(cases_NYline)
 ```
 
-```{r ggplot_03, eval = TRUE, echo = TRUE}
-cases_FLline <- ggplot(bb_CasesNYFL[bb_CasesNYFL$state == "florida",],
+```{r ggplot_03, eval = TRUE, echo = TRUE, message=FALSE, warning=FALSE, fig.showtext=TRUE}
+bb_CasesFL <- bb_CasesNYFL[bb_CasesNYFL$state == "florida",]
+bb_CasesFLpoly <- rbind(bb_CasesFL,
+                        data.frame("date" = as.Date("2021-03-07"),
+                                   "state" = "florida",
+                                   "caseIncrease" = -1*sum(bb_CasesFL$caseIncrease)))
+
+cases_FLline <- ggplot(bb_CasesFL,
                        aes(x = date, y = cumsum(caseIncrease))) +
-  geom_line(size = 0.3) +
+  geom_polygon(data = bb_CasesFLpoly, fill = "#B8E6E6") +
   scale_x_date(labels = date_format("%b '%y"),
                breaks = as.Date(c("2020-05-01", "2020-09-01", "2021-01-01")),
-               limits = as.Date(c("2020-01-29", "2021-03-07"))) +
-  scale_y_continuous(labels = ylabels, position = "right") +
+               limits = as.Date(c("2020-01-29", "2021-03-07")),
+               expand = c(0, 0)) +
+  scale_y_continuous(labels = ylabels, position = "right", expand = c(0, 0)) +
+  geom_hline(yintercept = c(500000, 1000000, 1500000, 2000000),
+             color = "white", linetype = "dashed", size = 0.3) +
   coord_cartesian(ylim = c(0, 2000000)) +
   theme(panel.background = element_rect(fill = "transparent", color = NA),
         plot.background = element_rect(fill = "transparent", color = NA),
-        axis.line.x.bottom = element_line(size = 0.1, color = "grey"),
-        axis.line.y = element_line(size = 0.1, color = "grey"),
+        text = element_text(family = "ProximaNova"),
+        panel.grid = element_blank(),
+        panel.border = element_blank(),
+        axis.line.x.bottom = element_blank(),
+        axis.line.y = element_line(size = 0.1, color = "#8F9BB3"),
         axis.title = element_blank(),
-        axis.text.y = element_text(size = 7),
-        axis.text.x = element_text(size = 5, hjust = -0.1, vjust = 3, color = "black"),
-        axis.ticks = element_line(color = "grey"),
+        axis.text.y = element_text(size = 7, color = "black"),
+        axis.text.x = element_text(size = 7, hjust = 0.5, vjust = 7.75, color = "black"),
+        axis.ticks = element_line(color = "black", size = 0.2),
         axis.ticks.y = element_blank(),
-        axis.ticks.length.x.bottom = unit(-0.15, "cm"),
+        axis.ticks.length.x.bottom = unit(-0.1, "cm"),
         plot.title = element_text(size = 8, hjust = 1),
         plot.title.position = "plot")
 
 print(cases_FLline)
 ```
 
-3) Pie charts:
+3) Pie charts of COVID-19 vaccination status:
 
-```{r ggplot_04, eval = TRUE, echo = TRUE}
+```{r ggplot_04, eval = TRUE, echo = TRUE, message=FALSE, warning=FALSE, fig.showtext=TRUE}
 data("bb_VaccinesNYFL")
 
 vaccines_NYpie <- ggplot(bb_VaccinesNYFL[bb_VaccinesNYFL$state == "new york",],
                          aes(x = "", y = value, fill = vax_group)) +
   geom_bar(width = 1, stat = "identity") +
   theme_void() +
-  scale_fill_manual(values = c("#3a6dab", "light grey","#85a9d5")) +
-  coord_polar(theta = "y", start = 2.125) +
-  geom_text(aes(x = 1.1, label= paste0(percent, "%")),
-            color = c("white", "white", "black"),
-            size = 1.75,
-            position = position_stack(vjust = 0.5)) +
-  annotate(geom = "text",
-           x = c(1.9, 1.95, 2.4),
-           y = c(8.5e6, 9e5, 1.6e7),
-           label = c("not", "partially", paste("fully", "vaccinated", sep ="\n")),
-           size = 2.25) +
+  scale_fill_manual(values = c("#FBAA7E", "#F7EEBF","#FBCB88")) +
+  coord_polar(theta = "y", start = 2.125, clip = "off") +
+  geom_text(aes(x = c(1.9, 2, 1.9),
+                y = c(1.65e7, 1.3e6, 7.8e6),
+                label = paste0(percent, "%")),
+            size = 2.25, color = "black") +
   theme(legend.position = "none",
-        plot.title = element_text(hjust = 0.5, vjust = -6.5, size = 13)) +
+        plot.title = element_text(hjust = 0.5, vjust = -3.5, size = 10, 
+                                  family = "ProximaNova", face = "bold"),
+        text = element_text(family = "ProximaNova")) +
   labs(title = "New York")
+
 print(vaccines_NYpie)
 ```
 ```{r ggplot_05, echo = TRUE, eval = TRUE}
-
 vaccines_FLpie <- ggplot(bb_VaccinesNYFL[bb_VaccinesNYFL$state == "florida",],
                          aes(x = "", y = value, fill = vax_group)) +
   geom_bar(width = 1, stat = "identity") +
-  scale_fill_manual(values = c("#3a6dab", "light grey","#85a9d5")) +
+  scale_fill_manual(values = c("#FBAA7E", "#F7EEBF","#FBCB88")) +
   theme_void() +
-  coord_polar(theta = "y", start = pi/1.78) +
-  geom_text(aes(x = 1.1, label=paste0(percent, "%")),
-            color = c("white", "white", "black"),
-            size = 1.75,
-            position = position_stack(vjust = 0.5)) +
-  annotate(geom = "text",
-           x = c(1.9, 2.05, 2.4),
-           y = c(1.05e7, 9.25e5, 1.865e7),
-           label = c("not", "partially", paste("fully", "vaccinated", sep ="\n")),
-           size = 2.25) +
+  coord_polar(theta = "y", start = pi/1.78, clip = "off") +
+  geom_text(aes(x = c(1.95, 2, 1.9),
+                y = c(1.9e7, 1.83e6, 9.6e6),
+                label = paste0(percent, "%")),
+            color = "black",
+            size = 2.25) +
   theme(legend.position = "none",
-        plot.title = element_text(hjust = 0.5, vjust = -7, size = 13)) +
+        plot.title = element_text(hjust = 0.5, vjust = -4, size = 10, 
+                                  family = "ProximaNova", face = "bold"),
+        text = element_text(family = "ProximaNova")) +
   labs(title = "Florida")
+
 print(vaccines_FLpie)
 ```
 
 We can now easily overlap and size all these `ggplots` by passing our saved plot objects into `bb_plotGG()`:
 
-```{r gg_plot05, eval=TRUE,echo=TRUE,message=FALSE,fig.width=11.5, fig.height=4.5}
+```{r gg_plot05, eval=TRUE,echo=TRUE,message=FALSE,fig.width=11.5, fig.height=4.5, warning=FALSE, fig.showtext=TRUE}
 bb_pageCreate(width = 9.5, height = 3.5, default.units = "inches")
 
 bb_plotGG(plot = US_map,
           x = 0.1,y = 0,
           width = 6.5, height = 3.5, just = c("left", "top"))
 bb_plotGG(plot = cases_NYline,
-          x = 6.3, y = 1.8,
-          width = 2.9, height = 1.7, just = c("left", "bottom"))
+          x = 6.25, y = 1.8,
+          width = 3.025, height = 1.4, just = c("left", "bottom"))
 bb_plotGG(plot = cases_FLline,
-          x = 6.3, y = 3.5,
-          width = 2.9, height = 1.7, just = c("left", "bottom"))
+          x = 6.25, y = 3.5,
+          width = 3.025, height = 1.4, just = c("left", "bottom"))
 ```
 
 In particular, `BentoBox` makes it easy to resize and place our pie charts in a layout that overlaps our line plots without it affecting the sizing of the other plots on the page:
 
 ```{r eval = FALSE, echo = TRUE}
 bb_plotGG(plot = vaccines_NYpie,
-          x = 6.2, y = -0.2,
-          width = 1.8, height = 1.8, just = c("left", "top"))
+          x = 6.37, y = -0.05,
+          width = 1.45, height = 1.45, just = c("left", "top"))
 bb_plotGG(plot = vaccines_FLpie,
-          x = 6.2, y = 1.5,
-          width = 1.8, height = 1.8, just = c("left", "top"))
+          x = 6.37, y = 1.67,
+          width = 1.45, height = 1.45, just = c("left", "top"))
 ```
 
-```{r gg_plot06, eval=TRUE, echo=FALSE, message=FALSE,fig.width=11.5,fig.height=4.5}
+```{r gg_plot06, eval=TRUE, echo=FALSE, message=FALSE,fig.width=11.5,fig.height=4.5, warning=FALSE, fig.showtext=TRUE}
 bb_pageCreate(width = 9.5, height = 3.5, default.units = "inches")
 
 bb_plotGG(plot = US_map,
           x = 0.1,y = 0,
           width = 6.5, height = 3.5, just = c("left", "top"))
 bb_plotGG(plot = cases_NYline,
-          x = 6.3, y = 1.8,
-          width = 2.9, height = 1.7, just = c("left", "bottom"))
+          x = 6.25, y = 1.8,
+          width = 3.025, height = 1.4, just = c("left", "bottom"))
 bb_plotGG(plot = cases_FLline,
-          x = 6.3, y = 3.5,
-          width = 2.9, height = 1.7, just = c("left", "bottom"))
+          x = 6.25, y = 3.5,
+          width = 3.025, height = 1.4, just = c("left", "bottom"))
 bb_plotGG(plot = vaccines_NYpie,
-          x = 6.2, y = -0.2,
-          width = 1.8, height = 1.8, just = c("left", "top"))
+          x = 6.37, y = -0.05,
+          width = 1.45, height = 1.45, just = c("left", "top"))
 bb_plotGG(plot = vaccines_FLpie,
-          x = 6.2, y = 1.5,
-          width = 1.8, height = 1.8, just = c("left", "top"))
+          x = 6.37, y = 1.67,
+          width = 1.45, height = 1.45, just = c("left", "top"))
 ```
 
-We are then left with a complex, elegant arrangement of `ggplots` as if we had arranged them together with graphic design software:
+We can also easily add additional elements to further enhance our complex `ggplot` arrangments, like a precise placement of text labels:
 
-```{r gg_plot07, eval=TRUE, echo=FALSE, message=FALSE,fig.width=11.5,fig.height=4.5}
+```{r eval = FALSE, echo = TRUE}
+bb_plotText(label = c("not", "partially", "fully vaccinated"),
+            fontfamily = "ProximaNova", fontcolor = "black", fontsize = 7,
+            x = c(6.58, 7.3, 7.435),
+            y = c(0.74, 1.12, 0.51), just = c("left", "bottom"))
+bb_plotText(label = c("not", "partially", "fully vaccinated"),
+            fontfamily = "ProximaNova", fontcolor = "black", fontsize = 7,
+            x = c(6.58, 7.39, 7.435),
+            y = c(2.47, 2.75, 2.2), just = c("left", "bottom"))
+```
+
+We are then left with a complex, precise, and elegant arrangement of `ggplots` as if we had arranged them together with graphic design software:
+
+```{r gg_plot07, eval=TRUE, echo=FALSE, message=FALSE,fig.width=11.5,fig.height=4.5, warning=FALSE, fig.showtext=TRUE}
 bb_pageCreate(width = 9.5, height = 3.5, default.units = "inches",
               showGuides = FALSE, xgrid = 0, ygrid = 0)
 bb_plotGG(plot = US_map,
           x = 0.1,y = 0,
           width = 6.5, height = 3.5, just = c("left", "top"))
 bb_plotGG(plot = cases_NYline,
-          x = 6.3, y = 1.8,
-          width = 2.9, height = 1.7, just = c("left", "bottom"))
+          x = 6.25, y = 1.8,
+          width = 3.025, height = 1.4, just = c("left", "bottom"))
 bb_plotGG(plot = cases_FLline,
-          x = 6.3, y = 3.5,
-          width = 2.9, height = 1.7, just = c("left", "bottom"))
+          x = 6.25, y = 3.5,
+          width = 3.025, height = 1.4, just = c("left", "bottom"))
 bb_plotGG(plot = vaccines_NYpie,
-          x = 6.2, y = -0.2,
-          width = 1.8, height = 1.8, just = c("left", "top"))
+          x = 6.37, y = -0.05,
+          width = 1.45, height = 1.45, just = c("left", "top"))
 bb_plotGG(plot = vaccines_FLpie,
-          x = 6.2, y = 1.5,
-          width = 1.8, height = 1.8, just = c("left", "top"))
+          x = 6.37, y = 1.67,
+          width = 1.45, height = 1.45, just = c("left", "top"))
+bb_plotText(label = c("not", "partially", "fully vaccinated"),
+            fontfamily = "ProximaNova", fontcolor = "black", fontsize = 7,
+            x = c(6.58, 7.3, 7.435),
+            y = c(0.74, 1.12, 0.51), just = c("left", "bottom"))
+bb_plotText(label = c("not", "partially", "fully vaccinated"),
+            fontfamily = "ProximaNova", fontcolor = "black", fontsize = 7,
+            x = c(6.58, 7.39, 7.435),
+            y = c(2.47, 2.75, 2.2), just = c("left", "bottom"))
 ```
 
 
-## Basic shapes
+## Images and basic shapes
 
-It is also possible to plot basic shapes and images to further enhance a `BentoBox` layout. These functions include `bb_plotCircle()`, `bb_plotPolygon()`, `bb_plotRaster()`, `bb_plotRect()`, `bb_plotSegments()`, and `bb_plotText()`. 
+`BentoBox` also allows users to plot images and basic shapes and elements to further enhance and customize plot layouts. The functions `bb_plotCircle()`, `bb_plotPolygon()`, `bb_plotRaster()`, `bb_plotRect()`, `bb_plotSegments()`, and `bb_plotText()` provide an intuitive way to plot basic `grid` `grobs` without requiring any knowledge of `grid` graphics.
 
-For example, perhaps we want to create a presentation slide detailing an experimental workflow. Not only can we add `BentoBox` plots based on genomic data:
+For example, we can include the `BentoBox` mascot Edamaman in our figures!
 
-```{r shapes_01, eval=TRUE, echo=TRUE, message=FALSE, fig.height=5.5, fig.width=10}
-data("bb_imrH3K27acData")
-data("bb_imrHicData")
-bb_pageCreate(width = 8, height = 4.5, default.units = "inches")
-bb_plotSignal(data = bb_imrH3K27acData,
-              chrom = "chr21", chromstart = 28000000, chromend = 30300000,
-              x = 0.25, y = 2, width = 2.25, height = 1, 
-              just = c("left", "top"), default.units = "inches")
-bb_plotHicSquare(data = bb_imrHicData,
-                 chrom = "chr21", chromstart = 28000000, chromend = 30300000,
-                 x = 3.25, y = 1.5, width = 2, height = 2,
-                 just = c("left", "top"), default.units = "inches")
-```
-
-But we can also add some text labels for the title of our slide and the the steps of our workflow:
-
-```{r eval=FALSE, echo=TRUE, message=FALSE}
-bb_plotText(label = "EXPERIMENTAL WORKFLOW", fontsize = 24, fontface = "bold",
-            x = 0.25, y = 0.5, just = "left")
-bb_plotText(label = "H3K27ac", fontsize = 16,
-            x = 1.375, y = 4, just = "center", default.units = "inches")
-bb_plotText(label = "Hi-C", fontsize = 16,
-            x = 4.25, y = 4, just = "center", default.units = "inches")
-bb_plotText(label = "Analysis", fontsize = 16,
-            x = 6.875, y = 4, just = "center", default.units = "inches")
-```
-```{r shapes_02, eval=TRUE, echo=FALSE, message=FALSE, fig.height = 5.5, fig.width=10}
-bb_pageCreate(width = 8, height = 4.5, default.units = "inches")
-
-bb_plotSignal(data = bb_imrH3K27acData,
-              chrom = "chr21", chromstart = 28000000, chromend = 30300000,
-              x = 0.25, y = 2, width = 2.25, height = 1, 
-              just = c("left", "top"), default.units = "inches")
-
-bb_plotHicSquare(data = bb_imrHicData,
-                 chrom = "chr21", chromstart = 28000000, chromend = 30300000,
-                 x = 3.25, y = 1.5, width = 2, height = 2,
-                 just = c("left", "top"), default.units = "inches")
-
-bb_plotText(label = "EXPERIMENTAL WORKFLOW", fontsize = 24, fontface = "bold",
-            x = 0.25, y = 0.5, just = "left")
-
-bb_plotText(label = "H3K27ac", fontsize = 16,
-            x = 1.375, y = 4, just = "center", default.units = "inches")
-
-bb_plotText(label = "Hi-C", fontsize = 16,
-            x = 4.25, y = 4, just = "center", default.units = "inches")
-
-bb_plotText(label = "Analysis", fontsize = 16,
-            x = 6.875, y = 4, just = "center", default.units = "inches")
-
-```
-
-Add an image:
-
-```{r eval=FALSE, echo=TRUE, message=FALSE}
+```{r shapes, eval=TRUE, echo=TRUE, message=FALSE, fig.height=7, fig.width=6, fig.showtext=TRUE}
 library(png)
-rlogo <- readPNG(system.file("images", "Rlogo.png", package = "BentoBox"))
-bb_plotRaster(image = rlogo,
-               x = 6, y = 2.5, width = 1.75, height = 1.55,
-               just = "left")
-```
-```{r shapes_03, eval=TRUE, echo=FALSE, message=FALSE, fig.height = 5.5, fig.width=10}
-bb_pageCreate(width = 8, height = 4.5, default.units = "inches")
+library(showtext)
+font_add(family = "ProximaNova",
+         regular = system.file("extdata", 
+                               "proximanova-regular.otf",
+                               package = "BentoBox"),
+         bold = system.file("extdata",
+                            "proximanova-semibold.otf",
+                            package = "BentoBox"))
+showtext_auto()
 
-bb_plotSignal(data = bb_imrH3K27acData,
-              chrom = "chr21", chromstart = 28000000, chromend = 30300000,
-              x = 0.25, y = 2, width = 2.25, height = 1, 
-              just = c("left", "top"), default.units = "inches")
+edamaman <- readPNG(system.file("images",
+                                "bento-edamaman.png",
+                                package = "BentoBox"))
+logotype <- readPNG(system.file("images",
+                                "bento-logotype-singleline-black.png",
+                                 package = "BentoBox"))
 
-bb_plotHicSquare(data = bb_imrHicData,
-                 chrom = "chr21", chromstart = 28000000, chromend = 30300000,
-                 x = 3.25, y = 1.5, width = 2, height = 2,
-                 just = c("left", "top"), default.units = "inches")
-
-bb_plotText(label = "EXPERIMENTAL WORKFLOW", fontsize = 24, fontface = "bold",
-            x = 0.25, y = 0.5, just = "left")
-
-bb_plotText(label = "H3K27ac", fontsize = 16,
-            x = 1.375, y = 4, just = "center", default.units = "inches")
-
-bb_plotText(label = "Hi-C", fontsize = 16,
-            x = 4.25, y = 4, just = "center", default.units = "inches")
-
-bb_plotText(label = "Analysis", fontsize = 16,
-            x = 6.875, y = 4, just = "center", default.units = "inches")
-library(png)
-rlogo <- readPNG(system.file("images", "Rlogo.png", package = "BentoBox"))
-bb_plotRaster(image = rlogo,
-               x = 6, y = 2.5, width = 1.75, height = 1.55,
-               just = "left")
-```
-
-And add line segments with arrows to our workflow:
-```{r eval=FALSE, echo=TRUE, message=FALSE}
-bb_plotSegments(x0 = 2.7, y0 = 2.5, x1 = 3.1, y1 = 2.5, 
-                linecolor = "grey", fill = "grey",
-                arrow = arrow(angle = 30,
-                              length = unit(0.1, "inches"),
-                              ends = "last",
-                              type = "closed"),
-                default.units = "inches")
-
-bb_plotSegments(x0 = 5.45, y0 = 2.5, x1 = 5.85, y1 = 2.5, 
-                linecolor = "grey", fill = "grey",
-                arrow = arrow(angle = 30,
-                              length = unit(0.1, "inches"),
-                              ends = "last",
-                              type = "closed"),
-                default.units = "inches")
-```
-```{r shapes_04, eval=TRUE, echo=FALSE, message=FALSE, fig.height = 5.5, fig.width=10}
-bb_pageCreate(width = 8, height = 4.5, default.units = "inches")
-
-bb_plotSignal(data = bb_imrH3K27acData,
-              chrom = "chr21", chromstart = 28000000, chromend = 30300000,
-              x = 0.25, y = 2, width = 2.25, height = 1, 
-              just = c("left", "top"), default.units = "inches")
-
-bb_plotHicSquare(data = bb_imrHicData,
-                 chrom = "chr21", chromstart = 28000000, chromend = 30300000,
-                 x = 3.25, y = 1.5, width = 2, height = 2,
-                 just = c("left", "top"), default.units = "inches")
-
-bb_plotText(label = "EXPERIMENTAL WORKFLOW", fontsize = 24, fontface = "bold",
-            x = 0.25, y = 0.5, just = "left")
-
-bb_plotText(label = "H3K27ac", fontsize = 16,
-            x = 1.375, y = 4, just = "center", default.units = "inches")
-
-bb_plotText(label = "Hi-C", fontsize = 16,
-            x = 4.25, y = 4, just = "center", default.units = "inches")
-
-bb_plotText(label = "Analysis", fontsize = 16,
-            x = 6.875, y = 4, just = "center", default.units = "inches")
-library(png)
-rlogo <- readPNG(system.file("images", "Rlogo.png", package = "BentoBox"))
-bb_plotRaster(image = rlogo,
-               x = 6, y = 2.5, width = 1.75, height = 1.55,
-               just = "left")
-bb_plotSegments(x0 = 2.7, y0 = 2.5, x1 = 3.1, y1 = 2.5, 
-                linecolor = "grey", fill = "grey",
-                arrow = arrow(angle = 30,
-                              length = unit(0.1, "inches"),
-                              ends = "last",
-                              type = "closed"),
-                default.units = "inches")
-
-bb_plotSegments(x0 = 5.45, y0 = 2.5, x1 = 5.85, y1 = 2.5, 
-                linecolor = "grey", fill = "grey",
-                arrow = arrow(angle = 30,
-                              length = unit(0.1, "inches"),
-                              ends = "last",
-                              type = "closed"),
-                default.units = "inches")
-
-```
-
-
-This makes our final `BentoBox` plot a combination of genomic data and other helpful figure elements:
-
-```{r shapes_06, eval=TRUE, echo=FALSE, message=FALSE, fig.height = 5.5, fig.width=10}
-bb_pageCreate(width = 8, height = 4.5, default.units = "inches",
+bb_pageCreate(width = 5, height = 6, default.units = "inches",
               showGuides = FALSE, xgrid = 0, ygrid = 0)
-
-bb_plotSignal(data = bb_imrH3K27acData,
-              chrom = "chr21", chromstart = 28000000, chromend = 30300000,
-              x = 0.25, y = 2, width = 2.25, height = 1, 
-              just = c("left", "top"), default.units = "inches")
-
-bb_plotHicSquare(data = bb_imrHicData,
-                 chrom = "chr21", chromstart = 28000000, chromend = 30300000,
-                 x = 3.25, y = 1.5, width = 2, height = 2,
-                 just = c("left", "top"), default.units = "inches")
-
-bb_plotText(label = "EXPERIMENTAL WORKFLOW", fontsize = 24, fontface = "bold",
-            x = 0.25, y = 0.5, just = "left")
-
-bb_plotText(label = "H3K27ac", fontsize = 16,
-            x = 1.375, y = 4, just = "center", default.units = "inches")
-
-bb_plotText(label = "Hi-C", fontsize = 16,
-            x = 4.25, y = 4, just = "center", default.units = "inches")
-
-bb_plotText(label = "Analysis", fontsize = 16,
-            x = 6.875, y = 4, just = "center", default.units = "inches")
-library(png)
-rlogo <- readPNG(system.file("images", "Rlogo.png", package = "BentoBox"))
-bb_plotRaster(image = rlogo,
-               x = 6, y = 2.5, width = 1.75, height = 1.55,
-               just = "left")
-bb_plotSegments(x0 = 2.7, y0 = 2.5, x1 = 3.1, y1 = 2.5, 
-                linecolor = "grey", fill = "grey",
-                arrow = arrow(angle = 30,
-                              length = unit(0.1, "inches"),
-                              ends = "last",
-                              type = "closed"),
-                default.units = "inches")
-
-bb_plotSegments(x0 = 5.45, y0 = 2.5, x1 = 5.85, y1 = 2.5, 
-                linecolor = "grey", fill = "grey",
-                arrow = arrow(angle = 30,
-                              length = unit(0.1, "inches"),
-                              ends = "last",
-                              type = "closed"),
-                default.units = "inches")
+bb_plotRaster(image = logotype,
+              x = 2.5, y = 0.25, width = 3.25, height = 0.5, just = "top")
+bb_plotRaster(image = edamaman,
+              x = 2.5, y = 5.5, width = 2, height = 4, just = "bottom")
+bb_plotText(label = "Edamaman",
+            fontsize = 20, fontfamily = "ProximaNova", fontface = "bold",
+            x = 2.5, y = 0.9, just = "top")
 ```
 
 For more detailed usage of basic shape functions, see the function-specific reference examples with `?function()` (e.g. `?bb_plotCircle()`).
@@ -1721,7 +1600,7 @@ The most common types of customizations are inherited from `grid` `gpar` options
 | **cex**           | Scaling multiplier applied to symbols.|
 | **pch**           | Plotting character, or symbol (integer codes range from 0 to 25).|
 
-Additional fonts for the `fontfamily` argument can be imported with the package `extrafont`. This makes it possible to incorporate more standard fonts like Times New Roman, Arial, etc. into `BentoBox` figures.
+Additional fonts for the `fontfamily` argument can be imported with the packages `extrafont` and `showtext`. This makes it possible to incorporate special fonts like Times New Roman, Arial, etc. into `BentoBox` figures.
 
 ## Backgrounds and baselines
 
@@ -1751,12 +1630,12 @@ This makes it easy to clearly see the precise dimensional boundaries of `BentoBo
 Some plots also benefit from baselines to quickly show where y = 0. This can aid in data interpretation and guide plot annotation placement. Baselines can be plotted in selective plots with `baseline = TRUE`.
 
 ```{r eval=FALSE, echo=TRUE}
-bb_plotBed(data = bb_bedData, 
-           chrom = "chr21", chromstart = 29073000, chromend = 29074000,
-           fill = c("#7ecdbb", "#37a7db"),
-           baseline = TRUE, baseline.color = "black",
-           x = 0.5, y = 0.25, width = 6.5, height = 4.25,
-           just = c("left", "top"), default.units = "inches")
+bb_plotRanges(data = bb_bedData, 
+              chrom = "chr21", chromstart = 29073000, chromend = 29074000,
+              fill = c("#7ecdbb", "#37a7db"),
+              baseline = TRUE, baseline.color = "black",
+              x = 0.5, y = 0.25, width = 6.5, height = 4.25,
+              just = c("left", "top"), default.units = "inches")
 ```
 
 ```{r aes_02, eval=TRUE, echo=FALSE, message=FALSE, warning=FALSE, fig.width=9.5, fig.height=6}
@@ -1764,12 +1643,12 @@ data("bb_bedData")
 bb_pageCreate(width = 7.5, height = 5, default.units = "inches",
               showGuides = FALSE, xgrid = 0, ygrid = 0)
 
-pileupPlot <- bb_plotBed(data = bb_bedData, 
-                         chrom = "chr21", chromstart = 29073000, chromend = 29074000,
-                         fill = c("#7ecdbb", "#37a7db"),
-                         x = 0.5, y = 0.25, width = 6.5, height = 4.25,
-                         baseline = TRUE, baseline.color = "black",
-                         just = c("left", "top"), default.units = "inches")
+pileupPlot <- bb_plotRanges(data = bb_bedData, 
+                            chrom = "chr21", chromstart = 29073000, chromend = 29074000,
+                            fill = c("#7ecdbb", "#37a7db"),
+                            x = 0.5, y = 0.25, width = 6.5, height = 4.25,
+                            baseline = TRUE, baseline.color = "black",
+                            just = c("left", "top"), default.units = "inches")
 ```
 
 ## `colorby`
@@ -1786,12 +1665,12 @@ head(bb_bedData)
 Thus, we can use the `colorby` constructor to color BED elements by positive or negative strand. The `strand` column will be converted to a factor with a `-` level and `+` level. These values will be assigned to the `fill` colors in the order of these factors.
 
 ```{r eval=FALSE, echo=TRUE}
-bb_plotBed(data = bb_bedData, 
-           chrom = "chr21", chromstart = 29073000, chromend = 29074000,
-           fill = c("#7ecdbb", "#37a7db"),
-           colorby = colorby("strand"),
-           x = 0.5, y = 0.25, width = 6.5, height = 4.25,
-           just = c("left", "top"), default.units = "inches")
+bb_plotRanges(data = bb_bedData, 
+              chrom = "chr21", chromstart = 29073000, chromend = 29074000,
+              fill = c("#7ecdbb", "#37a7db"),
+              colorby = colorby("strand"),
+              x = 0.5, y = 0.25, width = 6.5, height = 4.25,
+              just = c("left", "top"), default.units = "inches")
 ```
 
 ```{r aes_03, eval=TRUE, echo=FALSE, message=FALSE, warning=FALSE, fig.width=9.5, fig.height=6}
@@ -1799,13 +1678,13 @@ bb_plotBed(data = bb_bedData,
 bb_pageCreate(width = 7.5, height = 5, default.units = "inches",
               showGuides = FALSE, xgrid = 0, ygrid = 0)
 
-bb_plotBed(data = bb_bedData, 
-           chrom = "chr21", chromstart = 29073000, chromend = 29074000,
-           fill = c("#7ecdbb", "#37a7db"),
-           colorby = colorby("strand"),
-           strandSplit = TRUE,
-           x = 0.5, y = 0.25, width = 6.5, height = 4.25,
-           just = c("left", "top"), default.units = "inches")
+bb_plotRanges(data = bb_bedData, 
+              chrom = "chr21", chromstart = 29073000, chromend = 29074000,
+              fill = c("#7ecdbb", "#37a7db"),
+              colorby = colorby("strand"),
+              strandSplit = TRUE,
+              x = 0.5, y = 0.25, width = 6.5, height = 4.25,
+              just = c("left", "top"), default.units = "inches")
 ```
 
 To further control the order of color assignment, we can set our categorical `colorby` column as a factor with our own order of levels before plotting:
@@ -1823,13 +1702,13 @@ Now we've set the `+` level as our first level, so the first value in `fill` wil
 
 bb_pageCreate(width = 7.5, height = 5, default.units = "inches",
               showGuides = FALSE, xgrid = 0, ygrid = 0)
-bb_plotBed(data = bb_bedData, 
-           chrom = "chr21", chromstart = 29073000, chromend = 29074000,
-           fill = c("#7ecdbb", "#37a7db"),
-           colorby = colorby("strand"),
-           strandSplit = TRUE,
-           x = 0.5, y = 0.25, width = 6.5, height = 4.25,
-           just = c("left", "top"), default.units = "inches")
+bb_plotRanges(data = bb_bedData, 
+              chrom = "chr21", chromstart = 29073000, chromend = 29074000,
+              fill = c("#7ecdbb", "#37a7db"),
+              colorby = colorby("strand"),
+              strandSplit = TRUE,
+              x = 0.5, y = 0.25, width = 6.5, height = 4.25,
+              just = c("left", "top"), default.units = "inches")
 ```
 
 In this example, we will color BEDPE arches by a range of numerical values we will add as a `length` column:
@@ -1842,7 +1721,7 @@ head(bb_bedpeData$length)
 
 Now we can set `fill` as a palette to color the BEDPE `length` column by:
 ```{r eval=FALSE, echo=TRUE}
-bedpePlot <- bb_plotBedpeArches(data = bb_bedpeData, 
+bedpePlot <- bb_plotPairsArches(data = bb_bedpeData, 
                                 chrom = "chr21", chromstart = 27900000, chromend = 30700000,
                                 fill = colorRampPalette(c("dodgerblue2", "firebrick2")),
                                 linecolor = "fill",
@@ -1859,7 +1738,7 @@ bedpePlot <- bb_plotBedpeArches(data = bb_bedpeData,
 bb_pageCreate(width = 7.5, height = 2, default.units = "inches",
               showGuides = FALSE, xgrid = 0, ygrid = 0)
 heights <- bb_bedpeData$length / max(bb_bedpeData$length)
-bedpePlot <- bb_plotBedpeArches(data = bb_bedpeData, 
+bedpePlot <- bb_plotPairsArches(data = bb_bedpeData, 
                                 chrom = "chr21", chromstart = 27900000, chromend = 30700000,
                                 fill = colorRampPalette(c("dodgerblue2", "firebrick2")),
                                 linecolor = "fill",
@@ -1881,7 +1760,7 @@ bb_annoHeatmapLegend(plot = bedpePlot, fontcolor = "black",
 bb_pageCreate(width = 7.5, height = 2, default.units = "inches",
               showGuides = FALSE, xgrid = 0, ygrid = 0)
 heights <- bb_bedpeData$length / max(bb_bedpeData$length)
-bedpePlot <- bb_plotBedpeArches(data = bb_bedpeData, 
+bedpePlot <- bb_plotPairsArches(data = bb_bedpeData, 
                                 chrom = "chr21", chromstart = 27900000, chromend = 30700000,
                                 fill = colorRampPalette(c("dodgerblue2", "firebrick2")),
                                 linecolor = "fill",

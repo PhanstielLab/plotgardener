@@ -101,13 +101,13 @@ data("bb_bedData")
 bb_pageCreate(width = 7.5, height = 4, default.units = "inches")
 
 ## Plot a pileup plot, coloring elements by strand
-pileupPlot <- bb_plotBed(data = bb_bedData, chrom = "chr21",
-                         chromstart = 29072500, chromend = 29075000,
-                         fill = c("steel blue", "light salmon"),
-                         colorby = colorby("strand"),
-                         x = 0.5, y = 3.5, width = 6.5, height = 3.5,
-                         just = c("left", "bottom"),
-                         default.units = "inches")
+pileupPlot <- bb_plotRanges(data = bb_bedData, chrom = "chr21",
+                            chromstart = 29072500, chromend = 29075000,
+                            fill = c("steel blue", "light salmon"),
+                            colorby = colorby("strand"),
+                            x = 0.5, y = 3.5, width = 6.5, height = 3.5,
+                            just = c("left", "bottom"),
+                            default.units = "inches")
 
 ## Add a legend depicting strand colors
 legendPlot <- bb_plotLegend(legend = c("- strand", "+ strand"),

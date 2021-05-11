@@ -106,15 +106,6 @@
     <loc>https://phanstiellab.github.io/bentobox/reference/bb_plotBase.html</loc>
   </url>
   <url>
-    <loc>https://phanstiellab.github.io/bentobox/reference/bb_plotBed.html</loc>
-  </url>
-  <url>
-    <loc>https://phanstiellab.github.io/bentobox/reference/bb_plotBedpe.html</loc>
-  </url>
-  <url>
-    <loc>https://phanstiellab.github.io/bentobox/reference/bb_plotBedpeArches.html</loc>
-  </url>
-  <url>
     <loc>https://phanstiellab.github.io/bentobox/reference/bb_plotCircle.html</loc>
   </url>
   <url>
@@ -145,7 +136,16 @@
     <loc>https://phanstiellab.github.io/bentobox/reference/bb_plotManhattan.html</loc>
   </url>
   <url>
+    <loc>https://phanstiellab.github.io/bentobox/reference/bb_plotPairs.html</loc>
+  </url>
+  <url>
+    <loc>https://phanstiellab.github.io/bentobox/reference/bb_plotPairsArches.html</loc>
+  </url>
+  <url>
     <loc>https://phanstiellab.github.io/bentobox/reference/bb_plotPolygon.html</loc>
+  </url>
+  <url>
+    <loc>https://phanstiellab.github.io/bentobox/reference/bb_plotRanges.html</loc>
   </url>
   <url>
     <loc>https://phanstiellab.github.io/bentobox/reference/bb_plotRaster.html</loc>

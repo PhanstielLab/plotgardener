@@ -1,4 +1,4 @@
-#' Plot paired-end BEDPE data for a single chromosome
+#' Plot paired-end genomic range elements
 #'
 #' @param data A string specifying the BEDPE file path, a dataframe
 #' in BEDPE format specifying data to be plotted, or a
@@ -15,17 +15,17 @@
 #' @param colorby A "\link[BentoBox]{colorby}" object specifying
 #' information for scaling colors in data.
 #' @param linecolor A character value specifying the color of the
-#' lines outlining BEDPE elements. Default value is \code{linecolor = NA}.
+#' lines outlining paired range elements. Default value is \code{linecolor = NA}.
 #' @param bg Character value indicating background color.
 #' Default value is \code{bg = NA}.
 #' @param boxHeight A numeric or unit object specifying height of boxes
-#' at either end of BEDPE elements.
+#' at either end of paired range elements.
 #' Default value is \code{boxHeight = unit(2, "mm")}.
 #' @param spaceWidth A numeric specifying the width of spacing between
-#' BEDPE elements, as a fraction of the plot's genomic range.
+#' paired range elements, as a fraction of the plot's genomic range.
 #' Default value is \code{spaceWidth = 0.02}.
 #' @param spaceHeight A numeric specifying the height of space between
-#' boxes of BEDPE elements on different rows.
+#' boxes of paired range elements on different rows.
 #' Default value is \code{spaceHeight = 0.3}.
 #' @param baseline Logical value indicating whether to include a baseline
 #' along the x-axis. Default value is \code{baseline = FALSE}.
@@ -33,15 +33,15 @@
 #' Default value is \code{baseline.color = "grey"}.
 #' @param baseline.lwd Baseline line width.
 #' Default value is \code{baseline.lwd = 1}.
-#' @param x A numeric or unit object specifying BEDPE plot x-location.
+#' @param x A numeric or unit object specifying paired range plot x-location.
 #' @param y A numeric, unit object, or character containing a "b"
-#' combined with a numeric value specifying BEDPE plot y-location.
+#' combined with a numeric value specifying paired range plot y-location.
 #' The character value will
-#' place the BEDPE plot y relative to the bottom of the most recently
+#' place the paired range plot y relative to the bottom of the most recently
 #' plotted BentoBox plot according to the units of the BentoBox page.
-#' @param width A numeric or unit object specifying BEDPE plot width.
-#' @param height A numeric or unit object specifying BEDPE plot height.
-#' @param just Justification of BEDPE plot relative to its (x, y) location.
+#' @param width A numeric or unit object specifying paired range plot width.
+#' @param height A numeric or unit object specifying paired range plot height.
+#' @param just Justification of paired range plot relative to its (x, y) location.
 #' If there are two values, the first value specifies horizontal
 #' justification and the second value specifies vertical justification.
 #' Possible string values are: \code{"left"}, \code{"right"},
@@ -56,11 +56,11 @@
 #' containing relevant function parameters.
 #' @param ... Additional grid graphical parameters. See \link[grid]{gpar}.
 #'
-#' @return Returns a \code{bb_bedpe} object containing relevant
+#' @return Returns a \code{bb_pairs} object containing relevant
 #' genomic region, placement, and \link[grid]{grob} information.
 #'
 #' @examples
-#' ## Load BEDPE data
+#' ## Load paired ranges data in BEDPE format
 #' data("bb_bedpeData")
 #'
 #' ## Set the coordinates
@@ -75,7 +75,7 @@
 #' bb_bedpeData$length = (bb_bedpeData$start2 - bb_bedpeData$start1) / 1000
 #'
 #' ## Plot the data
-#' bedpePlot <- bb_plotBedpe(data = bb_bedpeData, params = params,
+#' bedpePlot <- bb_plotPairs(data = bb_bedpeData, params = params,
 #'                           fill = colorRampPalette(c("dodgerblue2", "firebrick2")),
 #'                           colorby = colorby("length"),
 #'                           lwd = 2, spaceHeight = .7,
@@ -98,21 +98,21 @@
 #' bb_pageGuideHide()
 #'
 #' @details
-#' #' A BEDPE plot can be placed on a BentoBox coordinate page by providing plot placement parameters:
+#' #' A paired ranges plot can be placed on a BentoBox coordinate page by providing plot placement parameters:
 #' \preformatted{
-#' bb_plotBedpe(data, chrom,
+#' bb_plotPairs(data, chrom,
 #'              chromstart = NULL, chromend = NULL,
 #'              x, y, width, height, just = c("left", "top"),
 #'              default.units = "inches")
 #' }
-#' This function can also be used to quickly plot an unannotated BEDPE plot by ignoring plot placement parameters:
+#' This function can also be used to quickly plot an unannotated paired ranges plot by ignoring plot placement parameters:
 #' \preformatted{
-#' bb_plotBedpe(data, chrom,
+#' bb_plotPairs(data, chrom,
 #'              chromstart = NULL, chromend = NULL)
 #' }
 #'
 #' @export
-bb_plotBedpe <- function(data, chrom, chromstart = NULL, chromend = NULL,
+bb_plotPairs <- function(data, chrom, chromstart = NULL, chromend = NULL,
                          assembly = "hg19", fill = "#1f4297", colorby = NULL,
                          linecolor = NA, bg = NA, boxHeight = unit(2, "mm"),
                          spaceWidth = 0.02, spaceHeight = 0.3,
@@ -127,7 +127,7 @@ bb_plotBedpe <- function(data, chrom, chromstart = NULL, chromend = NULL,
   # ======================================================================================================================================================================================
 
   ## Define a function that catches errors
-  errorcheck_bb_plotBedpe <- function(bedpe, bedpe_plot, colorby){
+  errorcheck_bb_plotPairs <- function(bedpe, bedpe_plot, colorby){
 
     ## Can't have only one NULL chromstart or chromend
     if ((is.null(bedpe_plot$chromstart) & !is.null(bedpe_plot$chromend))
@@ -256,7 +256,7 @@ bb_plotBedpe <- function(data, chrom, chromstart = NULL, chromend = NULL,
                              width = bb_bedpeInternal$width,
                              height = bb_bedpeInternal$height,
                              just = bb_bedpeInternal$just, grobs = NULL),
-                        class = "bb_bedpe")
+                        class = "bb_pairs")
   attr(x = bb_bedpe, which = "plotted") <- bb_bedpeInternal$draw
 
   # ======================================================================================================================================================================================
@@ -281,7 +281,7 @@ bb_plotBedpe <- function(data, chrom, chromstart = NULL, chromend = NULL,
 
     if (!is.numeric(bb_bedpeInternal$boxHeight)){
 
-      stop("\'boxHeight\' is neither a unit object or a numeric value. Cannot make bedpe plot.", call. = FALSE)
+      stop("\'boxHeight\' is neither a unit object or a numeric value. Cannot make paired ranges plot.", call. = FALSE)
 
     }
 
@@ -323,7 +323,7 @@ bb_plotBedpe <- function(data, chrom, chromstart = NULL, chromend = NULL,
   # CATCH ERRORS
   # ======================================================================================================================================================================================
 
-  errorcheck_bb_plotBedpe(bedpe = bedpe, bedpe_plot = bb_bedpe,
+  errorcheck_bb_plotPairs(bedpe = bedpe, bedpe_plot = bb_bedpe,
                           colorby = bb_bedpeInternal$colorby)
 
   # ======================================================================================================================================================================================
@@ -353,7 +353,7 @@ bb_plotBedpe <- function(data, chrom, chromstart = NULL, chromend = NULL,
                                         message = paste(paste0("`",
                                                                bb_bedpe$assembly$TxDb,
                                                                "`"),
-                                                        "not loaded. Please install and load to plot full chromosome paired-end data."))
+                                                        "not loaded. Please install and load to plot full chromosome paired data."))
     }
 
     xscale <- c(0, 1)
@@ -449,8 +449,8 @@ bb_plotBedpe <- function(data, chrom, chromstart = NULL, chromend = NULL,
 
   ## Get viewport name
   currentViewports <- current_viewports()
-  vp_name <- paste0("bb_bedpe",
-                    length(grep(pattern = "bb_bedpe",
+  vp_name <- paste0("bb_pairs",
+                    length(grep(pattern = "bb_pairs",
                                 x = currentViewports)) + 1)
 
   ## If placing information is provided but plot == TRUE, set up it's own viewport separate from bb_makepage
@@ -467,7 +467,7 @@ bb_plotBedpe <- function(data, chrom, chromstart = NULL, chromend = NULL,
 
     if (bb_bedpeInternal$draw == TRUE){
 
-      vp$name <- "bb_bedpe1"
+      vp$name <- "bb_pairs1"
       grid.newpage()
 
     }
@@ -546,7 +546,7 @@ bb_plotBedpe <- function(data, chrom, chromstart = NULL, chromend = NULL,
 
     if (any(rowBedpe$row == 0)){
       rowBedpe <- rowBedpe[which(rowBedpe$row != 0),]
-      warning("Not enough plotting space for all provided bedpe elements.",
+      warning("Not enough plotting space for all provided pair elements.",
               call. = FALSE)
 
       limitGrob <- textGrob(label = "+", x = unit(1, "npc"),
@@ -667,7 +667,7 @@ bb_plotBedpe <- function(data, chrom, chromstart = NULL, chromend = NULL,
 
   } else {
     if (txdbChecks == TRUE){
-      warning("Bedpe contains no values.", call. = FALSE)
+      warning("Data contains no values.", call. = FALSE)
     }
 
   }
@@ -692,7 +692,7 @@ bb_plotBedpe <- function(data, chrom, chromstart = NULL, chromend = NULL,
   # RETURN OBJECT
   # ======================================================================================================================================================================================
 
-  message(paste0("bb_bedpe[", vp$name, "]"))
+  message(paste0("bb_pairs[", vp$name, "]"))
   invisible(bb_bedpe)
 
 }

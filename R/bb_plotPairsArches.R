@@ -1,4 +1,4 @@
-#' Plot paired-end BEDPE data in an arch style
+#' Plot paired-end genomic range data in an arch style
 #'
 #' @param data A string specifying the BEDPE file path, a dataframe
 #' in BEDPE format specifying data to be plotted, or a
@@ -46,15 +46,15 @@
 #' Default value is \code{baseline.color = "grey"}.
 #' @param baseline.lwd Baseline line width.
 #' Default value is \code{baseline.lwd = 1}.
-#' @param x A numeric or unit object specifying BEDPE arches plot x-location.
+#' @param x A numeric or unit object specifying pair arches plot x-location.
 #' @param y A numeric, unit object, or character containing a "b"
 #' combined with a numeric value specifying BEDPE arches plot y-location.
 #' The character value will
-#' place the BEDPE arches plot y relative to the bottom of the most
+#' place the pair arches plot y relative to the bottom of the most
 #' recently plotted BentoBox plot according to the units of the BentoBox page.
-#' @param width A numeric or unit object specifying BEDPE arches plot width.
-#' @param height A numeric or unit object specifying BEDPE arches plot height.
-#' @param just Justification of BEDPE arches plot relative to its (x, y)
+#' @param width A numeric or unit object specifying pair arches plot width.
+#' @param height A numeric or unit object specifying pair arches plot height.
+#' @param just Justification of pair arches plot relative to its (x, y)
 #' location. If there are two values, the first value specifies horizontal
 #' justification and the second value specifies vertical justification.
 #' Possible string values are: \code{"left"}, \code{"right"},
@@ -73,7 +73,7 @@
 #' genomic region, placement, and \link[grid]{grob} information.
 #'
 #' @examples
-#' ## Load BEDPE data
+#' ## Load paired ranges data in BEDPE format
 #' data("bb_bedpeData")
 #'
 #' ## Set the coordinates
@@ -91,21 +91,21 @@
 #' heights = bb_bedpeData$length / max(bb_bedpeData$length)
 #'
 #' ## Plot the data
-#' bedpePlot <- bb_plotBedpeArches(data = bb_bedpeData, params = params,
-#'                                 fill = colorRampPalette(c("dodgerblue2", "firebrick2")),
-#'                                 linecolor = "fill",
-#'                                 colorby = colorby("length"),
-#'                                 archHeight = heights, alpha = 1,
-#'                                 x = 0.25, y = 0.25,  height = 1.5,
-#'                                 just = c("left", "top"),
-#'                                 default.units = "inches")
+#' archPlot <- bb_plotPairsArches(data = bb_bedpeData, params = params,
+#'                                fill = colorRampPalette(c("dodgerblue2", "firebrick2")),
+#'                                linecolor = "fill",
+#'                                colorby = colorby("length"),
+#'                                archHeight = heights, alpha = 1,
+#'                                x = 0.25, y = 0.25,  height = 1.5,
+#'                                just = c("left", "top"),
+#'                                default.units = "inches")
 #'
 #' ## Annotate genome label
-#' bb_annoGenomeLabel(plot = bedpePlot, x = 0.25, y = 1.78, scale = "Mb")
+#' bb_annoGenomeLabel(plot = archPlot, x = 0.25, y = 1.78, scale = "Mb")
 #'
 #'
 #' ## Annotate heatmap legend
-#' bb_annoHeatmapLegend(plot = bedpePlot, fontcolor = "black",
+#' bb_annoHeatmapLegend(plot = archPlot, fontcolor = "black",
 #'                      x = 7.0, y = 0.25,
 #'                      width = 0.10, height = 1, fontsize = 10)
 #'
@@ -119,21 +119,21 @@
 #' bb_pageGuideHide()
 #'
 #' @details
-#' A BEDPE Arches plot can be placed on a BentoBox coordinate page by providing plot placement parameters:
+#' A pair arches plot can be placed on a BentoBox coordinate page by providing plot placement parameters:
 #' \preformatted{
-#' bb_plotBedpeArches(data chrom,
+#' bb_plotPairsArches(data chrom,
 #'                    chromstart = NULL, chromend = NULL,
 #'                    x, y, width, height, just = c("left", "top"),
 #'                    default.units = "inches")
 #' }
-#' This function can also be used to quickly plot an unannotated BEDPE Arches plot by ignoring plot placement parameters:
+#' This function can also be used to quickly plot an unannotated pair arches plot by ignoring plot placement parameters:
 #' \preformatted{
-#' bb_plotBedpeArches(data, chrom,
+#' bb_plotPairsArches(data, chrom,
 #'                    chromstart = NULL, chromend = NULL)
 #' }
 #'
 #' @export
-bb_plotBedpeArches <- function(data, chrom, chromstart = NULL, chromend = NULL,
+bb_plotPairsArches <- function(data, chrom, chromstart = NULL, chromend = NULL,
                                assembly = "hg19", style = "2D", flip = FALSE,
                                curvature = 5, archHeight = NULL,
                                fill = "#1f4297", colorby = NULL,
@@ -454,7 +454,7 @@ bb_plotBedpeArches <- function(data, chrom, chromstart = NULL, chromend = NULL,
                                         message = paste(paste0("`",
                                                                arches_plot$assembly$TxDb,
                                                                "`"),
-                                                        "not loaded. Please install and load to plot full chromosome ribbon arches."))
+                                                        "not loaded. Please install and load to plot full chromosome paired arches."))
     }
 
     xscale <- c(0, 1)
@@ -693,7 +693,7 @@ bb_plotBedpeArches <- function(data, chrom, chromstart = NULL, chromend = NULL,
   } else {
 
     if (txdbChecks == TRUE){
-      warning("BEDPE data contains no values.", call. = FALSE)
+      warning("Data contains no values.", call. = FALSE)
     }
 
   }

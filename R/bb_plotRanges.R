@@ -1,4 +1,4 @@
-#' Plot BED elements in a pileup or collapsed format
+#' Plot genomic range elements in a pileup or collapsed format
 #'
 #' @param data Data to be plotted; as a character value specifying
 #' a BED file path, a data frame in BED format, a character value
@@ -11,26 +11,26 @@
 #' \link[BentoBox]{bb_assembly} object.
 #' Default value is \code{assembly = "hg19"}.
 #' @param fill Character value(s) as a single value, vector, or palette
-#' specifying fill colors of BED elements.
+#' specifying fill colors of range elements.
 #' Default value is \code{fill = "#7ecdbb"}.
 #' @param colorby A "\link[BentoBox]{colorby}" object specifying information
 #' for scaling colors in \code{data}.
 #' @param linecolor A character value specifying the color of the lines
-#' outlining BED elements. Default value is \code{linecolor = NA}.
+#' outlining range elements. Default value is \code{linecolor = NA}.
 #' @param collapse A logical value indicating whether to collapse
-#' BED elements into a single row, or into
+#' range elements into a single row, or into
 #' two rows if \code{strandSplit = TRUE}.
 #' If \code{collapse = TRUE}, \code{boxHeight} will be ignored and elements
 #' will be the height of the entire plot if \code{strandSplit = FALSE} or
 #' be the height of half of the entire plot if \code{strandSplit = TRUE}.
 #' Default value is \code{collapse = FALSE}.
-#' @param boxHeight A numeric or unit object specifying height of BED element
+#' @param boxHeight A numeric or unit object specifying height of range element
 #' boxes. Default value is \code{boxHeight = unit(2, "mm")}.
 #' @param spaceWidth A numeric value specifying the width of minimum spacing
-#' between BED element boxes, as a fraction of the plot's genomic range.
+#' between range element boxes, as a fraction of the plot's genomic range.
 #' Default value is \code{spaceWidth = 0.02}.
 #' @param spaceHeight A numeric value specifying the height of spacing between
-#' BED element boxes on different rows, as a fraction of boxHeight.
+#' range element boxes on different rows, as a fraction of boxHeight.
 #' Default value is \code{spaceHeight = 0.3}.
 #' @param strandSplit A logical value indicating whether plus and
 #' minus-stranded elements should be separated. Elements can only be
@@ -44,15 +44,15 @@
 #' Default value is \code{baseline.color = "grey"}.
 #' @param baseline.lwd Baseline line width.
 #' Default value is \code{baseline.lwd = 1}.
-#' @param x A numeric or unit object specifying BED plot x-location.
+#' @param x A numeric or unit object specifying ranges plot x-location.
 #' @param y A numeric, unit object, or character containing a "b"
-#' combined with a numeric value specifying BED plot y-location.
+#' combined with a numeric value specifying ranges plot y-location.
 #' The character value will
-#' place the BED plot y relative to the bottom of the most recently
+#' place the ranges plot y relative to the bottom of the most recently
 #' plotted BentoBox plot according to the units of the BentoBox page.
-#' @param width A numeric or unit object specifying BED plot width.
-#' @param height A numeric or unit object specifying BED plot height.
-#' @param just Justification of BED plot relative to its (x, y) location.
+#' @param width A numeric or unit object specifying ranges plot width.
+#' @param height A numeric or unit object specifying ranges plot height.
+#' @param just Justification of ranges plot relative to its (x, y) location.
 #' If there are two values, the first value specifies horizontal
 #' justification and the second value specifies vertical justification.
 #' Possible string values are: \code{"left"}, \code{"right"},
@@ -67,23 +67,23 @@
 #' containing relevant function parameters.
 #' @param ... Additional grid graphical parameters. See \link[grid]{gpar}.
 #'
-#' @return Returns a \code{bb_bed} object containing relevant
+#' @return Returns a \code{bb_ranges} object containing relevant
 #' genomic region, coloring data, placement, and \link[grid]{grob} information.
 #'
 #' @examples
-#' ## Load BED data
+#' ## Load ranges data in BED format
 #' data("bb_bedData")
 #'
 #' ## Create page
 #' bb_pageCreate(width = 7.5, height = 5, default.units = "inches")
 #'
-#' ## Plot and place a pileup BED plot
-#' pileupPlot <- bb_plotBed(data = bb_bedData, chrom = "chr21",
-#'                          chromstart = 29073000, chromend = 29074000,
-#'                          fill = c("#7ecdbb", "#37a7db"),
-#'                          strandSplit = TRUE, colorby = colorby("strand"),
-#'                          x = 0.5, y = 0.25, width = 6.5, height = 4.25,
-#'                          just = c("left", "top"), default.units = "inches")
+#' ## Plot and place a pileup ranges plot
+#' pileupPlot <- bb_plotRanges(data = bb_bedData, chrom = "chr21",
+#'                             chromstart = 29073000, chromend = 29074000,
+#'                             fill = c("#7ecdbb", "#37a7db"),
+#'                             strandSplit = TRUE, colorby = colorby("strand"),
+#'                             x = 0.5, y = 0.25, width = 6.5, height = 4.25,
+#'                             just = c("left", "top"), default.units = "inches")
 #'
 #' ## Annotate genome label
 #' bb_annoGenomeLabel(plot = pileupPlot, x = 0.5, y = 4.5,
@@ -99,10 +99,10 @@
 #' bb_pageGuideHide()
 #'
 #' @details
-#' A BED plot can be placed on a BentoBox coordinate page by providing
+#' A ranges plot can be placed on a BentoBox coordinate page by providing
 #' plot placement parameters:
 #' \preformatted{
-#' bb_plotBed(data, chrom,
+#' bb_plotRanges(data, chrom,
 #'               chromstart = NULL, chromend = NULL,
 #'               x, y, width, height, just = c("left", "top"),
 #'               default.units = "inches")
@@ -110,22 +110,22 @@
 #' This function can also be used to quickly plot an unannotated BED plot
 #' by ignoring plot placement parameters:
 #' \preformatted{
-#' bb_plotBed(data, chrom,
+#' bb_plotRanges(data, chrom,
 #'               chromstart = NULL, chromend = NULL)
 #' }
 #'
 #' @importFrom plyranges %>%
 #' @export
-bb_plotBed <- function(data, chrom, chromstart = NULL, chromend = NULL,
-                       assembly = "hg19", fill = "#7ecdbb", colorby = NULL,
-                       linecolor = NA, collapse = FALSE,
-                       boxHeight =  unit(2, "mm"), spaceWidth = 0.02,
-                       spaceHeight = 0.3, strandSplit = FALSE, bg = NA,
-                       baseline = FALSE, baseline.color = "grey",
-                       baseline.lwd = 1,
-                       x = NULL, y = NULL, width = NULL, height = NULL,
-                       just = c("left", "top"), default.units = "inches",
-                       draw = TRUE, params = NULL, ...){
+bb_plotRanges <- function(data, chrom, chromstart = NULL, chromend = NULL,
+                          assembly = "hg19", fill = "#7ecdbb", colorby = NULL,
+                          linecolor = NA, collapse = FALSE,
+                          boxHeight =  unit(2, "mm"), spaceWidth = 0.02,
+                          spaceHeight = 0.3, strandSplit = FALSE, bg = NA,
+                          baseline = FALSE, baseline.color = "grey",
+                          baseline.lwd = 1,
+                          x = NULL, y = NULL, width = NULL, height = NULL,
+                          just = c("left", "top"), default.units = "inches",
+                          draw = TRUE, params = NULL, ...){
 
   # ======================================================================================================================================================================================
   # FUNCTIONS
@@ -290,7 +290,7 @@ bb_plotBed <- function(data, chrom, chromstart = NULL, chromend = NULL,
                                 width = bb_pileInternal$width,
                                 height = bb_pileInternal$height,
                                 just = bb_pileInternal$just, grobs = NULL),
-                           class = "bb_bed")
+                           class = "bb_ranges")
   attr(x = pileup_plot, which = "plotted") <- bb_pileInternal$draw
 
   # ======================================================================================================================================================================================
@@ -315,7 +315,7 @@ bb_plotBed <- function(data, chrom, chromstart = NULL, chromend = NULL,
 
     if (!is.numeric(bb_pileInternal$boxHeight)){
 
-      stop("\'boxHeight\' is neither a unit object or a numeric value. Cannot make pileup plot.", call. = FALSE)
+      stop("\'boxHeight\' is neither a unit object or a numeric value. Cannot make ranges plot.", call. = FALSE)
 
     }
 
@@ -374,7 +374,7 @@ bb_plotBed <- function(data, chrom, chromstart = NULL, chromend = NULL,
                                         message = paste(paste0("`",
                                                                pileup_plot$assembly$TxDb,
                                                                "`"),
-                                                        "not loaded. Please install and load to plot full chromosome pileup plot."))
+                                                        "not loaded. Please install and load to plot full chromosome ranges plot."))
     }
 
     xscale <- c(0, 1)
@@ -473,8 +473,8 @@ bb_plotBed <- function(data, chrom, chromstart = NULL, chromend = NULL,
 
   ## Get viewport name
   currentViewports <- current_viewports()
-  vp_name <- paste0("bb_bed",
-                    length(grep(pattern = "bb_bed",
+  vp_name <- paste0("bb_ranges",
+                    length(grep(pattern = "bb_ranges",
                                 x = currentViewports)) + 1)
 
 
@@ -495,7 +495,7 @@ bb_plotBed <- function(data, chrom, chromstart = NULL, chromend = NULL,
 
     if (bb_pileInternal$draw == TRUE){
 
-      vp$name <- "bb_bed1"
+      vp$name <- "bb_ranges1"
       grid.newpage()
 
     }
@@ -585,7 +585,7 @@ bb_plotBed <- function(data, chrom, chromstart = NULL, chromend = NULL,
 
         if (any(rowDF$row == 0)){
           rowDF <- rowDF[which(rowDF$row != 0),]
-          warning("Not enough plotting space for all provided BED elements.",
+          warning("Not enough plotting space for all provided range elements.",
                   call. = FALSE)
 
           limitGrob <- textGrob(label = "+", x = unit(1, "npc"),
@@ -624,7 +624,7 @@ bb_plotBed <- function(data, chrom, chromstart = NULL, chromend = NULL,
         colnames(posDF) <- c("start", "stop", "colorby", "row")
         if (any(posDF$row == 0)){
           posDF <- posDF[which(posDF$row != 0),]
-          warning("Not enough plotting space for all provided plus strand BED elements.", call. = FALSE)
+          warning("Not enough plotting space for all provided plus strand range elements.", call. = FALSE)
           limitGrob1 <- textGrob(label = "+", x = unit(1, "npc"),
                                  y = unit(1, "npc"),
                                  just = c("right", "top"),
@@ -657,7 +657,7 @@ bb_plotBed <- function(data, chrom, chromstart = NULL, chromend = NULL,
         colnames(minDF) <- c("start", "stop", "colorby", "row")
         if (any(minDF$row == 0)){
           minDF <- minDF[which(minDF$row != 0),]
-          warning("Not enough plotting space for all provided minus strand BED elements.", call. = FALSE)
+          warning("Not enough plotting space for all provided minus strand range elements.", call. = FALSE)
           limitGrob2 <- textGrob(label = "+", x = unit(1, "npc"),
                                  y = unit(0, "npc"),
                                  just = c("right", "bottom"),
@@ -835,6 +835,6 @@ bb_plotBed <- function(data, chrom, chromstart = NULL, chromend = NULL,
   # RETURN OBJECT
   # ======================================================================================================================================================================================
 
-  message(paste0("bb_bed[", vp$name, "]"))
+  message(paste0("bb_ranges[", vp$name, "]"))
   invisible(pileup_plot)
 }

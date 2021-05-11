@@ -119,7 +119,7 @@ hicPlot <- bb_plotHicSquare(data = bb_imrHicData,
 
 
 ## Plot and align DNA loops in region
-bedpeLoops <- bb_plotBedpeArches(data = bb_bedpeData, 
+bedpeLoops <- bb_plotPairsArches(data = bb_bedpeData, 
                                  params = params, fill = "black", linecolor = "black",
                                  y = 2.6, height = 0.45,
                                  just = c("left", "top"), default.units = "inches")

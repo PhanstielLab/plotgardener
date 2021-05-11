@@ -49,9 +49,9 @@ reference:
   - title: "Plotting functions"
   - subtitle: "Genomics"
     contents:
-      - bb_plotBed
-      - bb_plotBedpe
-      - bb_plotBedpeArches
+      - bb_plotRanges
+      - bb_plotPairs
+      - bb_plotPairsArches
       - bb_plotGenes
       - bb_plotGenomeLabel
       - bb_plotHicRectangle
