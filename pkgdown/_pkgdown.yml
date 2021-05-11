@@ -49,9 +49,6 @@ reference:
   - title: "Plotting functions"
   - subtitle: "Genomics"
     contents:
-      - bb_plotRanges
-      - bb_plotPairs
-      - bb_plotPairsArches
       - bb_plotGenes
       - bb_plotGenomeLabel
       - bb_plotHicRectangle
@@ -59,6 +56,9 @@ reference:
       - bb_plotHicTriangle
       - bb_plotIdeogram
       - bb_plotManhattan
+      - bb_plotPairs
+      - bb_plotPairsArches
+      - bb_plotRanges
       - bb_plotSignal
       - bb_plotTranscripts
   - subtitle: "Shapes and Basic Elements"
