@@ -21,7 +21,7 @@ bb_annoPixels(
 
 \item{data}{A string specifying the BEDPE file path, a dataframe in BEDPE
 format specifying pixel positions, or a
-\link[GenomicInteractions]{GenomicInteractions} object specifying pixel
+\link[InteractionSet]{GInteractions} object specifying pixel
 positions.}
 
 \item{type}{Character value specifying type of annotation.

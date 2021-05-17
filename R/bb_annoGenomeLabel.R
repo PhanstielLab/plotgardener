@@ -56,7 +56,8 @@
 #' Default value is \code{default.units = "inches"}.
 #' @param params An optional \link[BentoBox]{bb_params} object containing
 #' relevant function parameters.
-#' @param ... Additional grid graphical parameters. See \link[grid]{gpar}.
+#' @param ... Additional grid graphical parameters or digit specifications.
+#' See \link[grid]{gpar} and \link[base]{formatC}.
 #'
 #' @return Returns a \code{bb_genomeLabel} object containing
 #' relevant genomic region, placement, and \link[grid]{grob} information.

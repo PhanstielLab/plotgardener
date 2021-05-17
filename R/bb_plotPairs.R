@@ -2,7 +2,7 @@
 #'
 #' @param data A string specifying the BEDPE file path, a dataframe
 #' in BEDPE format specifying data to be plotted, or a
-#' \link[GenomicInteractions]{GenomicInteractions} object.
+#' \link[InteractionSet]{GInteractions} object.
 #' @param chrom Chromosome of region to be plotted, as a string.
 #' @param chromstart Integer start position on chromosome to be plotted.
 #' @param chromend Integer end position on chromosome to be plotted.
@@ -300,11 +300,11 @@ bb_plotPairs <- function(data, chrom, chromstart = NULL, chromend = NULL,
   # ======================================================================================================================================================================================
 
   if (!"data.frame" %in% class(bb_bedpeInternal$data)){
-    if (!"GenomicInteractions" %in% class(bb_bedpeInternal$data)){
+    if (!"GInteractions" %in% class(bb_bedpeInternal$data)){
       bedpe <- as.data.frame(data.table::fread(bb_bedpeInternal$data))
     } else {
 
-      ## Reorder GenomicInteractions columns
+      ## Reorder GInteractions columns
       bedpe <- as.data.frame(bb_bedpeInternal$data)
       bedpeSubset <- bedpe[,c("seqnames1", "start1", "end1",
                               "seqnames2", "start2", "end2")]

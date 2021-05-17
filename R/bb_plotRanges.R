@@ -758,7 +758,6 @@ bb_plotRanges <- function(data, chrom, chromstart = NULL, chromend = NULL,
         pileup_plot$color_palette <- bb_pileInternal$fill
 
       } else {
-
         colorbyCol <- factor(rowDF$colorby)
         mappedColors <- rep(bb_pileInternal$fill,
                             ceiling(length(levels(colorbyCol))/length(bb_pileInternal$fill)))

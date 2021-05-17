@@ -62,7 +62,8 @@
 #' Default value is \code{default.units = "inches"}.
 #' @param params An optional \link[BentoBox]{bb_params} object
 #' containing relevant function parameters.
-#' @param ... Additional grid graphical parameters. See \link[grid]{gpar}.
+#' @param ... Additional grid graphical parameters or digit specifications.
+#' See \link[grid]{gpar} and \link[base]{formatC}.
 #'
 #' @return Returns a \code{bb_genomeLabel} object containing
 #' relevant genomic region, placement, and \link[grid]{grob} information.
@@ -172,15 +173,17 @@ bb_plotGenomeLabel <- function(chrom, chromstart = NULL, chromend = NULL,
   }
 
   ## Define a function that adds commas to chromstart/chromend labels
-  comma_labels <- function(object, commas, format, fact){
+  comma_labels <- function(object, commas, fact, ...){
 
-    roundedStart <- round(object$chromstart/fact, 1)
+    digits <- list(...)$digits
+    if(is.null(digits)) digits <- 0
+    roundedStart <- round(object$chromstart/fact, digits)
     if ((roundedStart*fact) != object$chromstart){
       roundedStart <- paste0("~", roundedStart)
       warning("Start label is rounded.", call. = FALSE)
     }
 
-    roundedEnd <- round(object$chromend/fact, 1)
+    roundedEnd <- round(object$chromend/fact, digits)
     if ((roundedEnd*fact) != object$chromend){
       roundedEnd <- paste0("~", roundedEnd)
       warning("End label is rounded.", call. = FALSE)
@@ -189,8 +192,8 @@ bb_plotGenomeLabel <- function(chrom, chromstart = NULL, chromend = NULL,
 
     if (commas == TRUE){
 
-      chromstartlabel <- formatC(roundedStart, format = format, big.mark = ",")
-      chromendlabel <- formatC(roundedEnd, format = format, big.mark = ",")
+      chromstartlabel <- formatC(roundedStart, format = "fg", big.mark = ",", digits = digits)
+      chromendlabel <- formatC(roundedEnd, format = "fg", big.mark = ",", digits = digits)
 
     } else {
 
@@ -909,15 +912,15 @@ bb_plotGenomeLabel <- function(chrom, chromstart = NULL, chromend = NULL,
   ## Determine scale of labels
   if (bb_genomeLabelInternal$scale == "bp"){
     fact = 1
-    format = "d"
+    #format = "d"
   }
   if (bb_genomeLabelInternal$scale == "Mb"){
     fact = 1000000
-    format = NULL
+    #format = NULL
   }
   if (bb_genomeLabelInternal$scale == "Kb"){
     fact = 1000
-    format = "d"
+    #format = "d"
   }
 
   margin_height <- convertHeight(bb_genomeLabelInternal$margin,
@@ -942,9 +945,9 @@ bb_plotGenomeLabel <- function(chrom, chromstart = NULL, chromend = NULL,
 
     commaLabels <- comma_labels(object = bb_genomeLabel,
                                 commas = bb_genomeLabelInternal$commas,
-                                format = format, fact = fact)
-    chromstartlabel <- format(commaLabels[[1]], ...)
-    chromendlabel <- format(commaLabels[[2]],...)
+                                fact = fact, ...)
+    chromstartlabel <- commaLabels[[1]]
+    chromendlabel <- commaLabels[[2]]
 
   }
   ########## END comma parsing

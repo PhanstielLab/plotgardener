@@ -1,6 +1,6 @@
-#' Plot a ggplot2 plot in a BentoBox layout
+#' Plot a ggplot2 plot, gtable, or grob object in a BentoBox layout
 #'
-#' @param plot ggplot object.
+#' @param plot ggplot, gtable, or grob object.
 #' @param x A numeric or unit object specifying ggplot x-location.
 #' @param y A numeric, unit object, or character containing a "b"
 #' combined with a numeric value specifying ggplot y-location.

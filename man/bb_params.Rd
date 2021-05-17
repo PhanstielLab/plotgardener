@@ -14,7 +14,10 @@ Default value is \code{assembly = "hg19"}.}
 chrom, chromstart, and chromend arguments.}
 
 \item{geneBuffer}{(optional) Integer base-pairs to extend the
-start and end of a gene defined by argument \code{gene}.}
+start and end of a gene defined by argument \code{gene}.
+Can be one integer or a vector of length 2, where the first integer
+will extend the start of the gene and the second integer
+will extend the end of the gene.}
 
 \item{...}{This function will take any BentoBox function
 parameters and their values.}

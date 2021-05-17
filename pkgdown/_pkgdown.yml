@@ -100,5 +100,7 @@ figures:
   fig.height: 7
   fig.width: 8.2
   fig.asp: ~
+  dev: svg
+  fig.ext: svg
 
 

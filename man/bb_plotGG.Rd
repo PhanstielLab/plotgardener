@@ -2,7 +2,7 @@
 % Please edit documentation in R/bb_plotGG.R
 \name{bb_plotGG}
 \alias{bb_plotGG}
-\title{Plot a ggplot2 plot in a BentoBox layout}
+\title{Plot a ggplot2 plot, gtable, or grob object in a BentoBox layout}
 \usage{
 bb_plotGG(
   plot,
@@ -16,7 +16,7 @@ bb_plotGG(
 )
 }
 \arguments{
-\item{plot}{ggplot object.}
+\item{plot}{ggplot, gtable, or grob object.}
 
 \item{x}{A numeric or unit object specifying ggplot x-location.}
 
@@ -49,7 +49,7 @@ Returns a \code{bb_gg} object containing
 relevant placement and \link[grid]{grob} information.
 }
 \description{
-Plot a ggplot2 plot in a BentoBox layout
+Plot a ggplot2 plot, gtable, or grob object in a BentoBox layout
 }
 \examples{
 ## Create a plot using ggplot2

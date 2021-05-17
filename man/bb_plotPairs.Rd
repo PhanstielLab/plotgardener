@@ -34,7 +34,7 @@ bb_plotPairs(
 \arguments{
 \item{data}{A string specifying the BEDPE file path, a dataframe
 in BEDPE format specifying data to be plotted, or a
-\link[GenomicInteractions]{GenomicInteractions} object.}
+\link[InteractionSet]{GInteractions} object.}
 
 \item{chrom}{Chromosome of region to be plotted, as a string.}
 

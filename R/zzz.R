@@ -75,10 +75,12 @@
         ## Define buffer
         if (is.null(geneBuffer)) geneBuffer <- (maxGeneEnd - minGeneStart) / 2
 
+        if (length(geneBuffer) == 1) geneBuffer <- rep(geneBuffer, 2)
+
         ## Assign values to bb_params object (with buffer)
         object$chrom      <- unique(geneData$TXCHROM)
-        object$chromstart <- minGeneStart - geneBuffer
-        object$chromend   <- maxGeneEnd  + geneBuffer
+        object$chromstart <- minGeneStart - geneBuffer[1]
+        object$chromend   <- maxGeneEnd  + geneBuffer[2]
         object$geneBuffer <- geneBuffer
 
         ## Extract chromSizes length

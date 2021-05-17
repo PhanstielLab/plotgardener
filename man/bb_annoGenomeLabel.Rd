@@ -99,7 +99,8 @@ Default value is \code{default.units = "inches"}.}
 \item{params}{An optional \link[BentoBox]{bb_params} object containing
 relevant function parameters.}
 
-\item{...}{Additional grid graphical parameters. See \link[grid]{gpar}.}
+\item{...}{Additional grid graphical parameters or digit specifications.
+See \link[grid]{gpar} and \link[base]{formatC}.}
 }
 \value{
 Returns a \code{bb_genomeLabel} object containing

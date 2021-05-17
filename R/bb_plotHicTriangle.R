@@ -128,42 +128,6 @@ bb_plotHicTriangle <- function(data, resolution = "auto", zrange = NULL,
   ## For more accurate calculation of sqrt(2)
   two <- mpfr(2, 120)
 
-  ## Define a function that resets the just based on if the final plot will be a triangle or a trapezoid
-  reset_just <- function(just, x, y, width, height, quiet){
-
-    if (!is.null(x) & !is.null(y)){
-
-      two <- mpfr(2, 120)
-      desired_height <- convertHeight(height,
-                                      unitTo = get("page_units", envir = bbEnv),
-                                      valueOnly = TRUE)
-      calc_height <- convertWidth(width,
-                                  unitTo = get("page_units", envir = bbEnv),
-                                  valueOnly = TRUE)*0.5
-      side_length <- (convertWidth(width,
-                                   unitTo = get("page_units", envir = bbEnv),
-                                   valueOnly = TRUE))/sqrt(two)
-
-      if (calc_height <= desired_height){
-
-        ## here we'll have a triangle
-        if (length(just == 2)){
-
-          if (identical(just, c("left", "top"))
-              | identical(just, c("right", "top"))){
-
-            just <- "top"
-            if (!quiet) message("Entire triangle will be plotted.  Auto-adjusting plot justifiction to top.")
-          }
-
-        }
-
-      }
-
-    }
-    return(just)
-  }
-
   ## Define a function that catches errors for bb_plotTriangleHic
   errorcheck_bb_plotTriangleHic <- function(hic, hic_plot, norm, assembly){
 
@@ -315,140 +279,6 @@ bb_plotHicTriangle <- function(data, resolution = "auto", zrange = NULL,
     return(hic)
   }
 
-  ## Define a function that converts the location to the bottom left of the triangle based on justification
-  convert_just <- function(hic_plot){
-
-    height <- convertHeight(hic_plot$height,
-                            unitTo = get("page_units", envir = bbEnv),
-                            valueOnly = TRUE)
-    width <- convertWidth(hic_plot$width,
-                          unitTo = get("page_units", envir = bbEnv),
-                          valueOnly = TRUE)
-    x <- convertX(hic_plot$x,
-                  unitTo = get("page_units", envir = bbEnv),
-                  valueOnly = TRUE)
-    y <- get("page_height", envir = bbEnv) - convertY(hic_plot$y,
-                                                      unitTo = get("page_units", envir = bbEnv),
-                                                      valueOnly = TRUE)
-    just <- hic_plot$just
-
-    ## Calculate height of triangle/trapezoid
-    two <- mpfr(2, 120)
-    desired_height <- height
-    calc_height <- width*0.5
-    side_length <- width/sqrt(two)
-
-    if (calc_height > desired_height){
-    ## here we'll have a trapezoid
-      trap_top <- 2*(calc_height - desired_height)
-
-      #height_diff <- calc_height - desired_height
-
-      if (length(just) == 2){
-
-        if (identical(just, c("left", "bottom"))){
-          new_x <- x
-          new_y <- y
-        } else if (identical(just, c("right", "bottom"))){
-          new_x <- x - width
-          new_y <- y
-        } else if (identical(just, c("left", "center"))){
-          new_x <- x - (0.25*(width - trap_top))
-          new_y <- y - (0.5*desired_height)
-        } else if (identical(just, c("right", "center"))){
-          new_x <- x - ((0.75*(width - trap_top)) + trap_top)
-          new_y <- y - (0.5*desired_height)
-        } else if (identical(just, c("center", "bottom"))){
-          new_x <- x - ((0.5*trap_top) + (0.5*(width - trap_top)))
-          new_y <- y
-        } else if (identical(just, c("center", "top"))){
-          new_x <- x - ((0.5*trap_top) + (0.5*(width - trap_top)))
-          new_y <- y - desired_height
-        } else if (identical(just, c("left", "top"))){
-          new_x <- x - (0.5*(width - trap_top))
-          new_y <- y - desired_height
-        } else if (identical(just, c("right", "top"))){
-          new_x <- x - ((0.5*(width - trap_top)) + trap_top)
-          new_y <- y - desired_height
-        } else {
-          new_x <-  x - ((0.5*trap_top) + (0.5*(width - trap_top)))
-          new_y <- y - (0.5*desired_height)
-        }
-
-      } else if (length(just) == 1){
-
-        if (just == "left"){
-          new_x <- x - (0.25*(width - trap_top))
-          new_y <- y - (0.5*desired_height)
-        } else if (just == "right"){
-          new_x <- x - ((0.75*(width - trap_top)) + trap_top)
-          new_y <- y - (0.5*desired_height)
-        } else if (just == "bottom"){
-          new_x <- x - ((0.5*trap_top) + (0.5*(width - trap_top)))
-          new_y <- y
-        } else if (just == "top"){
-          new_x <- x - ((0.5*trap_top) + (0.5*(width - trap_top)))
-          new_y <- y - desired_height
-        } else {
-          new_x <-  x - ((0.5*trap_top) + (0.5*(width - trap_top)))
-          new_y <- y - (0.5*desired_height)
-        }
-      }
-
-    } else {
-      ## here we'll just have the triangle
-      if (length(just) == 2){
-
-        if (identical(just, c("left", "bottom"))){
-          new_x <- x
-          new_y <- y
-        } else if (identical(just, c("right", "bottom"))){
-          new_x <- x - width
-          new_y <- y
-        } else if (identical(just, c("left", "center"))){
-          new_x <- x - (0.25*width)
-          new_y <- y - (0.5*calc_height)
-        } else if (identical(just, c("right", "center"))){
-          new_x <- x - (0.75*width)
-          new_y <- y - (0.5*calc_height)
-        } else if (identical(just, c("center", "bottom"))){
-          new_x <- x - (0.5*width)
-          new_y <- y
-        } else if (identical(just, c("center", "top"))){
-          new_x <- x - (0.5*width)
-          new_y <- y - calc_height
-        } else {
-          new_x <- x - (0.5*width)
-          new_y <- y - (0.5*calc_height)
-        }
-
-      } else if (length(just) == 1){
-
-        if (just == "left"){
-          new_x <- x - (0.25*width)
-          new_y <- y - (0.5*calc_height)
-        } else if (just == "right"){
-          new_x <- x - (0.75*width)
-          new_y <- y - (0.5*calc_height)
-        } else if (just == "bottom"){
-          new_x <- x - (0.5*width)
-          new_y <- y
-        } else if (just == "top"){
-          new_x <- x - (0.5*width)
-          new_y <- y - calc_height
-        } else {
-          new_x <- x - (0.5*width)
-          new_y <- y - (0.5*calc_height)
-        }
-
-      }
-
-    }
-
-    return(list(new_x, new_y))
-
-  }
-
   ## Define a function that manually "clips" squares/triangles along edges
   manual_clip <- function(hic, hic_plot){
 
@@ -595,7 +425,7 @@ bb_plotHicTriangle <- function(data, resolution = "auto", zrange = NULL,
                              x = bb_thicInternal$x, y = bb_thicInternal$y,
                              width = bb_thicInternal$width,
                              height = bb_thicInternal$height,
-                             just = NULL,
+                             just = bb_thicInternal$just,
                              color_palette = NULL,
                              colorTrans = bb_thicInternal$colorTrans,
                              zrange = bb_thicInternal$zrange,
@@ -632,16 +462,6 @@ bb_plotHicTriangle <- function(data, resolution = "auto", zrange = NULL,
                                 hic_plot = hic_plot,
                                 norm = bb_thicInternal$norm,
                                 assembly = hic_plot$assembly$Genome)
-
-  # ======================================================================================================================================================================================
-  # JUSTIFICATION OF PLOT
-  # ======================================================================================================================================================================================
-
-  new_just <- reset_just(just = bb_thicInternal$just,
-                         x = hic_plot$x, y = hic_plot$y,
-                         width = hic_plot$width, height = hic_plot$height,
-                         quiet = bb_thicInternal$quiet)
-  hic_plot$just <- new_just
 
   # ======================================================================================================================================================================================
   # WHOLE CHROM INFORMATION
@@ -804,8 +624,15 @@ bb_plotHicTriangle <- function(data, resolution = "auto", zrange = NULL,
                              unitTo = get("page_units", envir = bbEnv),
                              valueOnly = TRUE))/sqrt(two)
 
+    ## Convert coordinates into same units as page for outside vp
+    page_coords <- convert_page(object = hic_plot)
+
     ## Get bottom left point of triangle (hence bottom left of actual viewport) based on just
-    bottom_coords <- convert_just(hic_plot = hic_plot)
+    bottom_coords <- vp_bottomLeft(viewport(x = page_coords$x,
+                                            y = page_coords$y,
+                                            width = page_coords$width,
+                                            height = page_coords$height,
+                                            just = hic_plot$just))
 
     inside_vp <- viewport(height = unit(vp_side,
                                         get("page_units", envir = bbEnv)),
@@ -818,9 +645,6 @@ bb_plotHicTriangle <- function(data, resolution = "auto", zrange = NULL,
                           just = c("left", "bottom"),
                           name = paste0(vp_name, "_inside"),
                           angle = -45)
-
-    ## Convert coordinates into same units as page for outside vp
-    page_coords <- convert_page(object = hic_plot)
 
     outside_vp <- viewport(height = page_coords$height,
                            width = page_coords$width,

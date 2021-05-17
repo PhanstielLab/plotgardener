@@ -882,7 +882,7 @@ Beyond providing functions for plotting and arranging various genomic datasets, 
 In addition to a genomic axis label, it can also be useful to include an ideogram representation of a chromosome to give a broader context of the location of genomic data. UCSC Giemsa stain cytoband information for various genomic assemblies is included with `BentoBox` and must be loaded before plotting an ideogram (i.e.`data("cytoBand.Hsapiens.UCSC.hg19")`).
 
 Ideograms can be plotted both vertically and horizontally:
-```{r ideogram_01, eval=TRUE, echo=TRUE, message=FALSE, fig.height=5.25, fig.width=10}
+```{r ideogram_01, eval=TRUE, echo=TRUE, message=FALSE, fig.height=5.25, fig.width=10.35}
 ## Load cytoband data
 data("cytoBand.Hsapiens.UCSC.hg19")
 library(TxDb.Hsapiens.UCSC.hg19.knownGene)
@@ -893,10 +893,10 @@ tx_db <- TxDb.Hsapiens.UCSC.hg19.knownGene
 chromSizes <- GenomeInfoDb::seqlengths(tx_db)
 maxChromSize <- max(chromSizes)
 
-bb_pageCreate(width = 8, height = 4.25, default.units = "inches",
+bb_pageCreate(width = 8.35, height = 4.25, default.units = "inches",
               showGuides = FALSE, xgrid = 0, ygrid = 0)
 xCoord <- 0.15
-for (chr in c(paste0("chr", seq(1, 22)), "chrX")){
+for (chr in c(paste0("chr", seq(1, 22)), "chrX", "chrY")){
 
   height <- (4*chromSizes[[chr]])/maxChromSize
   bb_plotIdeogram(chrom = chr, assembly = "hg19",
@@ -1419,7 +1419,7 @@ hicPlot <- bb_plotHicSquare(data = bb_imrHicData, resolution = 10000, zrange = c
 
 ## Annotate pixels
 pixels <- bb_annoPixels(plot = hicPlot, data = bb_bedpeData, type = "box",
-                        half = "both")
+                        half = "top")
 ```
 
 If we want to annotate one pixel of interest, we can subset our BEDPE data and `bb_annoPixels()` will only annotate the specified pixels:
@@ -1933,3 +1933,7 @@ hicPlot_bottom <- bb_plotHicSquare(data = bb_imrHicData, params = params,
                                 half = "bottom",
                                 y = 0.25, height = 2.75)
 ```
+
+# Future Directions
+
+We still have many ideas to add for a second version of `BentoBox` including, but not limited to: grammar of graphics style plot arguments and plot building, templates, themes, and multi-plotting functions. If you have suggestions for ways we can improve `BentoBox`, please let us know!  

@@ -513,13 +513,13 @@ bb_readHic <- function(file, chrom, chromstart = NULL, chromend = NULL,
 
 
   upper <-
-    tryCatch(strawr::straw(bb_rhic$matrix,
-                           bb_rhic$norm,
+    tryCatch(strawr::straw(bb_rhic$norm,
                            bb_rhic$file,
                            toString(chromRegion),
                            toString(altchromRegion),
                            bb_rhic$res_scale,
-                           bb_rhic$resolution),
+                           bb_rhic$resolution,
+                           bb_rhic$matrix),
              error = errorFunction)
 
 
