@@ -535,7 +535,7 @@ bb_annoPixels <- function(plot, data, type = "box", half = "inherit",
   loops <- bb_loopsInternal$data
   if (!"data.frame" %in% class(loops)){
 
-    if (!"GInteractions" %in% class(bb_bedpeInternal$data)){
+    if (!isClass("GInteractions", loops)){
       loops <- as.data.frame(data.table::fread(loops))
     } else {
 
