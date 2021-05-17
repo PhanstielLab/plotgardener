@@ -300,7 +300,7 @@ bb_plotPairs <- function(data, chrom, chromstart = NULL, chromend = NULL,
   # ======================================================================================================================================================================================
 
   if (!"data.frame" %in% class(bb_bedpeInternal$data)){
-    if (!"GInteractions" %in% class(bb_bedpeInternal$data)){
+    if (!isClass("GInteractions", bb_bedpeInternal$data)){
       bedpe <- as.data.frame(data.table::fread(bb_bedpeInternal$data))
     } else {
 

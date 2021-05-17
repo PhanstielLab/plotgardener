@@ -415,7 +415,7 @@ bb_plotPairsArches <- function(data, chrom, chromstart = NULL, chromend = NULL,
   # ======================================================================================================================================================================================
 
   if (!"data.frame" %in% class(bb_archInternal$data)){
-    if (!"GInteractions" %in% class(bb_archInternal$data)){
+    if (!isClass("GInteractions", bb_archInternal$data)){
       bedpe <- as.data.frame(data.table::fread(bb_archInternal$data))
     } else {
 
