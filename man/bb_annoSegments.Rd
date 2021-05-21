@@ -89,39 +89,51 @@ bb_pageCreate(width = 7.5, height = 2.5, default.units = "inches")
 ## Plot a Manhattan plot
 library("TxDb.Hsapiens.UCSC.hg19.knownGene")
 data("bb_gwasData")
-manhattanPlot <- bb_plotManhattan(data = bb_gwasData, assembly = "hg19",
-                                  fill = c("grey", "#37a7db"),
-                                  sigLine = TRUE,
-                                  col = "grey", lty = 2, range = c(0, 14),
-                                  x = 0.5, y = 0, width = 6.5, height = 2,
-                                  just = c("left", "top"),
-                                  default.units = "inches")
+manhattanPlot <- bb_plotManhattan(
+    data = bb_gwasData, assembly = "hg19",
+    fill = c("grey", "#37a7db"),
+    sigLine = TRUE,
+    col = "grey", lty = 2, range = c(0, 14),
+    x = 0.5, y = 0, width = 6.5, height = 2,
+    just = c("left", "top"),
+    default.units = "inches"
+)
 
 ## Annotate genome label
-bb_annoGenomeLabel(plot = manhattanPlot, x = 0.5, y = 2, fontsize = 8,
-                   just = c("left", "top"),
-                   default.units = "inches" )
-bb_plotText(label = "Chromosome", fontsize = 8,
-            x = 3.75, y = 2.20, just = "center", default.units = "inches")
+bb_annoGenomeLabel(
+    plot = manhattanPlot, x = 0.5, y = 2, fontsize = 8,
+    just = c("left", "top"),
+    default.units = "inches"
+)
+bb_plotText(
+    label = "Chromosome", fontsize = 8,
+    x = 3.75, y = 2.20, just = "center", default.units = "inches"
+)
 
 ## Annotate y-axis
-bb_annoYaxis(plot = manhattanPlot, at = c(0, 2, 4, 6, 8, 10, 12, 14),
-             axisLine = TRUE, fontsize = 8)
+bb_annoYaxis(
+    plot = manhattanPlot, at = c(0, 2, 4, 6, 8, 10, 12, 14),
+    axisLine = TRUE, fontsize = 8
+)
 
-## Annotate a line segment for an additional significance line of the Manhattan plot
-bb_annoSegments(x0 = unit(0, "npc"), y0 = 10,
-                x1 = unit(1, "npc"), y1 = 10,
-                plot = manhattanPlot, default.units = "native",
-                linecolor = "red", lty = 2)
+## Annotate a line segment for an additional significance line of
+## the Manhattan plot
+bb_annoSegments(
+    x0 = unit(0, "npc"), y0 = 10,
+    x1 = unit(1, "npc"), y1 = 10,
+    plot = manhattanPlot, default.units = "native",
+    linecolor = "red", lty = 2
+)
 
 ## Plot y-axis label
-bb_plotText(label = "-log10(p-value)", x = 0.15, y = 1, rot = 90,
-            fontsize = 8, fontface = "bold", just = "center",
-            default.units = "inches")
+bb_plotText(
+    label = "-log10(p-value)", x = 0.15, y = 1, rot = 90,
+    fontsize = 8, fontface = "bold", just = "center",
+    default.units = "inches"
+)
 
 ## Hide page guides
 bb_pageGuideHide()
-
 }
 \seealso{
 \link[grid]{grid.segments}, \link[grid]{arrow}

@@ -2,7 +2,8 @@
 % Please edit documentation in R/bb_pageGuideHorizontal.R
 \name{bb_pageGuideHorizontal}
 \alias{bb_pageGuideHorizontal}
-\title{Draw a horizontal guideline at a specified y-coordinate on a BentoBox page}
+\title{Draw a horizontal guideline at a specified y-coordinate
+on a BentoBox page}
 \usage{
 bb_pageGuideHorizontal(
   y,
@@ -31,7 +32,8 @@ containing relevant function parameters.}
 None.
 }
 \description{
-Draw a horizontal guideline at a specified y-coordinate on a BentoBox page
+Draw a horizontal guideline at a specified y-coordinate
+on a BentoBox page
 }
 \examples{
 ## Create a BentoBox page
@@ -39,5 +41,4 @@ bb_pageCreate(width = 6, height = 5, default.units = "inches")
 
 ## Add red horizontal guideline at y = 2.5 inches
 bb_pageGuideHorizontal(y = 2.5, linecolor = "red")
-
 }

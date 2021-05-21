@@ -57,21 +57,24 @@ Plot a base R plot in a BentoBox layout
 }
 \examples{
 ## Define base R plot
-p <- ~plot(1:10) + abline(v = 2)
+p <- ~ plot(1:10) + abline(v = 2)
 
 ## Create BentoBox page
 bb_pageCreate(width = 5, height = 4, default.units = "inches")
 
 ## Place base R plot in BentoBox page
-bb_plotBase(plot = p,
-            x = 0.5, y = 0.5, width = 4, height = 3,
-            just = c("left", "top"), default.units = "inches")
+bb_plotBase(
+    plot = p,
+    x = 0.5, y = 0.5, width = 4, height = 3,
+    just = c("left", "top"), default.units = "inches"
+)
 
 ## Add title
-bb_plotText(label = "Base R Plot", fontsize = 14, fontface = "bold",
-            x = 2.75, y = 0.5)
+bb_plotText(
+    label = "Base R Plot", fontsize = 14, fontface = "bold",
+    x = 2.75, y = 0.5
+)
 
 ## Remove BentoBox page guides
 bb_pageGuideHide()
-
 }

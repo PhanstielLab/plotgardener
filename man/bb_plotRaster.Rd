@@ -65,30 +65,37 @@ library(png)
 
 ## Load images
 edamaman <- readPNG(system.file("images",
-                                "bento-edamaman.png",
-                                 package = "BentoBox"))
+    "bento-edamaman.png",
+    package = "BentoBox"
+))
 logotype <- readPNG(system.file("images",
-                                "bento-logotype-singleline-black.png",
-                                 package = "BentoBox"))
+    "bento-logotype-singleline-black.png",
+    package = "BentoBox"
+))
 rlogo <- readPNG(system.file("images", "Rlogo.png", package = "BentoBox"))
 
 ## Create page
 bb_pageCreate(width = 5, height = 6)
 
 ## Plot various images
-bb_plotRaster(image = logotype,
-              x = 2.5, y = 0.25, width = 3.25, height = 0.5, just = "top")
+bb_plotRaster(
+    image = logotype,
+    x = 2.5, y = 0.25, width = 3.25, height = 0.5, just = "top"
+)
 
-bb_plotRaster(image = edamaman,
-              x = 2.5, y = 5.5, width = 2, height = 4, just = "bottom")
+bb_plotRaster(
+    image = edamaman,
+    x = 2.5, y = 5.5, width = 2, height = 4, just = "bottom"
+)
 
-bb_plotRaster(image = rlogo,
-              x = 2.5, y = 1, width = 0.5, height = 0.45,
-              just = c("right", "top"))
+bb_plotRaster(
+    image = rlogo,
+    x = 2.5, y = 1, width = 0.5, height = 0.45,
+    just = c("right", "top")
+)
 
 ## Hide page guies
 bb_pageGuideHide()
-
 }
 \seealso{
 \link[grid]{grid.raster}

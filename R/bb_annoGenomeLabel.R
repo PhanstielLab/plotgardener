@@ -71,157 +71,197 @@
 #' bb_pageCreate(width = 5, height = 2, default.units = "inches")
 #'
 #' ## Plot and place gene track on a BentoBox page
-#' genesPlot <- bb_plotGenes(chrom = "chr8",
-#'                           chromstart = 1000000, chromend = 2000000,
-#'                           assembly = "hg19", fill = c("grey", "grey"),
-#'                           fontcolor = c("grey", "grey"),
-#'                           x = 0.5, y = 0.25, width = 4, height = 1,
-#'                           just = c("left", "top"),
-#'                           default.units = "inches")
+#' genesPlot <- bb_plotGenes(
+#'     chrom = "chr8",
+#'     chromstart = 1000000, chromend = 2000000,
+#'     assembly = "hg19", fill = c("grey", "grey"),
+#'     fontcolor = c("grey", "grey"),
+#'     x = 0.5, y = 0.25, width = 4, height = 1,
+#'     just = c("left", "top"),
+#'     default.units = "inches"
+#' )
 #'
 #' ## Annotate x-axis genome labels at different scales
-#' bb_annoGenomeLabel(plot = genesPlot, scale = "Mb",
-#'                    x = 0.5, y = 1.25, just = c("left", "top"),
-#'                    default.units = "inches")
-#' bb_annoGenomeLabel(plot = genesPlot, scale = "Kb",
-#'                    x = 0.5, y = 1.5, just = c("left", "top"),
-#'                    default.units = "inches")
-#' bb_annoGenomeLabel(plot = genesPlot, scale = "bp",
-#'                    x = 0.5, y = 1.75, just = c("left", "top"),
-#'                    default.units = "inches")
+#' bb_annoGenomeLabel(
+#'     plot = genesPlot, scale = "Mb",
+#'     x = 0.5, y = 1.25, just = c("left", "top"),
+#'     default.units = "inches"
+#' )
+#' bb_annoGenomeLabel(
+#'     plot = genesPlot, scale = "Kb",
+#'     x = 0.5, y = 1.5, just = c("left", "top"),
+#'     default.units = "inches"
+#' )
+#' bb_annoGenomeLabel(
+#'     plot = genesPlot, scale = "bp",
+#'     x = 0.5, y = 1.75, just = c("left", "top"),
+#'     default.units = "inches"
+#' )
 #'
 #' ## Hide page guides
 #' bb_pageGuideHide()
-#'
 #' @export
 bb_annoGenomeLabel <- function(plot, fontsize = 10, fontcolor = "black",
-                               linecolor = "black", margin = unit(1, "mm"),
-                               scale = "bp", commas = TRUE, sequence = TRUE,
-                               boxWidth = 0.5, axis = "x", at = NULL,
-                               tcl = 0.5, x, y, just = c("left", "top"),
-                               default.units = "inches", params = NULL, ...){
+                            linecolor = "black", margin = unit(1, "mm"),
+                            scale = "bp", commas = TRUE, sequence = TRUE,
+                            boxWidth = 0.5, axis = "x", at = NULL,
+                            tcl = 0.5, x, y, just = c("left", "top"),
+                            default.units = "inches", params = NULL, ...) {
 
 
-  # ======================================================================================================================================================================================
-  # PARSE PARAMETERS
-  # ======================================================================================================================================================================================
+    # =========================================================================
+    # PARSE PARAMETERS
+    # =========================================================================
 
-  if(missing(fontsize)) fontsize <- NULL
-  if(missing(fontcolor)) fontcolor <- NULL
-  if(missing(linecolor)) linecolor <- NULL
-  if(missing(scale)) scale <- NULL
-  if(missing(margin)) margin <- NULL
-  if(missing(commas)) commas <- NULL
-  if(missing(sequence)) sequence <- NULL
-  if(missing(boxWidth)) boxWidth <- NULL
-  if(missing(axis)) axis <- NULL
-  if(missing(tcl)) tcl <- NULL
-  if(missing(just)) just <- NULL
-  if(missing(default.units)) default.units <- NULL
+    if (missing(fontsize)) fontsize <- NULL
+    if (missing(fontcolor)) fontcolor <- NULL
+    if (missing(linecolor)) linecolor <- NULL
+    if (missing(scale)) scale <- NULL
+    if (missing(margin)) margin <- NULL
+    if (missing(commas)) commas <- NULL
+    if (missing(sequence)) sequence <- NULL
+    if (missing(boxWidth)) boxWidth <- NULL
+    if (missing(axis)) axis <- NULL
+    if (missing(tcl)) tcl <- NULL
+    if (missing(just)) just <- NULL
+    if (missing(default.units)) default.units <- NULL
 
-  ## Check if plot/x/y arguments are missing (could be in object)
-  if(!hasArg(plot)) plot <- NULL
-  if(!hasArg(x)) x <- NULL
-  if(!hasArg(y)) y <- NULL
+    ## Check if plot/x/y arguments are missing (could be in object)
+    if (!hasArg(plot)) plot <- NULL
+    if (!hasArg(x)) x <- NULL
+    if (!hasArg(y)) y <- NULL
 
-  ## Compile all parameters into an internal object
-  bb_genomeLabelInternal <- structure(list(plot = plot, x = x, y = y,
-                                           just = just, scale = scale,
-                                           margin = margin,
-                                           fontsize = fontsize,
-                                           fontcolor = fontcolor,
-                                           linecolor = linecolor,
-                                           commas = commas,
-                                           sequence = sequence, axis = axis,
-                                           boxWidth = boxWidth, at = at,
-                                           cl = tcl,
-                                           default.units = default.units),
-                                      class = "bb_genomeLabelInternal")
-  bb_genomeLabelInternal <- parseParams(bb_params = params,
-                                        object_params = bb_genomeLabelInternal)
+    ## Compile all parameters into an internal object
+    bb_genomeLabelInternal <- structure(list(
+        plot = plot, x = x, y = y,
+        just = just, scale = scale,
+        margin = margin,
+        fontsize = fontsize,
+        fontcolor = fontcolor,
+        linecolor = linecolor,
+        commas = commas,
+        sequence = sequence, axis = axis,
+        boxWidth = boxWidth, at = at,
+        cl = tcl,
+        default.units = default.units
+    ),
+    class = "bb_genomeLabelInternal"
+    )
+    bb_genomeLabelInternal <- parseParams(
+        bb_params = params,
+        object_params = bb_genomeLabelInternal
+    )
 
-  ## For any defaults that are still NULL, set back to default
-  if(is.null(bb_genomeLabelInternal$fontsize)) bb_genomeLabelInternal$fontsize <- 10
-  if(is.null(bb_genomeLabelInternal$fontcolor)) bb_genomeLabelInternal$fontcolor <- "black"
-  if(is.null(bb_genomeLabelInternal$linecolor)) bb_genomeLabelInternal$linecolor <- "black"
-  if(is.null(bb_genomeLabelInternal$margin)) bb_genomeLabelInternal$margin <- unit(1, "mm")
-  if(is.null(bb_genomeLabelInternal$scale)) bb_genomeLabelInternal$scale <- "bp"
-  if(is.null(bb_genomeLabelInternal$commas)) bb_genomeLabelInternal$commas <- TRUE
-  if(is.null(bb_genomeLabelInternal$sequence)) bb_genomeLabelInternal$sequence <- TRUE
-  if(is.null(bb_genomeLabelInternal$boxWidth)) bb_genomeLabelInternal$boxWidth <- 0.5
-  if(is.null(bb_genomeLabelInternal$axis)) bb_genomeLabelInternal$axis <- "x"
-  if(is.null(bb_genomeLabelInternal$tcl)) bb_genomeLabelInternal$tcl <- 0.5
-  if(is.null(bb_genomeLabelInternal$just)) bb_genomeLabelInternal$just <- c("left", "top")
-  if(is.null(bb_genomeLabelInternal$default.units)) bb_genomeLabelInternal$default.units <- "inches"
-
-  # ======================================================================================================================================================================================
-  # CATCH ARGUMENT/PLOT INPUT ERRORS
-  # ======================================================================================================================================================================================
-
-  if(is.null(bb_genomeLabelInternal$plot)) stop("argument \"plot\" is missing, with no default.", call. = FALSE)
-  if(is.null(bb_genomeLabelInternal$x)) stop("argument \"x\" is missing, with no default.", call. = FALSE)
-  if(is.null(bb_genomeLabelInternal$y)) stop("argument \"y\" is missing, with no default.", call. = FALSE)
-
-  ## Check that input plot is a valid type of plot to be annotated
-  if (class(bb_genomeLabelInternal$plot) != "bb_manhattan"){
-
-    ## Manhattan plots can do whole genome assembly but other plots can't
-    inputNames <- attributes(bb_genomeLabelInternal$plot)$names
-    if (!("chrom" %in% inputNames)
-        | !("chromstart" %in% inputNames)
-        | !("chromend" %in% inputNames)){
-
-      stop("Invalid input plot. Please input a plot that has genomic coordinates associated with it.", call. = FALSE)
-
+    ## For any defaults that are still NULL, set back to default
+    if (is.null(bb_genomeLabelInternal$fontsize)) {
+        bb_genomeLabelInternal$fontsize <- 10
+    }
+    if (is.null(bb_genomeLabelInternal$fontcolor)) {
+        bb_genomeLabelInternal$fontcolor <- "black"
+    }
+    if (is.null(bb_genomeLabelInternal$linecolor)) {
+        bb_genomeLabelInternal$linecolor <- "black"
+    }
+    if (is.null(bb_genomeLabelInternal$margin)) {
+        bb_genomeLabelInternal$margin <- unit(1, "mm")
+    }
+    if (is.null(bb_genomeLabelInternal$scale)) {
+        bb_genomeLabelInternal$scale <- "bp"
+    }
+    if (is.null(bb_genomeLabelInternal$commas)) {
+        bb_genomeLabelInternal$commas <- TRUE
+    }
+    if (is.null(bb_genomeLabelInternal$sequence)) {
+        bb_genomeLabelInternal$sequence <- TRUE
+    }
+    if (is.null(bb_genomeLabelInternal$boxWidth)) {
+        bb_genomeLabelInternal$boxWidth <- 0.5
+    }
+    if (is.null(bb_genomeLabelInternal$axis)) {
+        bb_genomeLabelInternal$axis <- "x"
+    }
+    if (is.null(bb_genomeLabelInternal$tcl)) {
+        bb_genomeLabelInternal$tcl <- 0.5
+    }
+    if (is.null(bb_genomeLabelInternal$just)) {
+        bb_genomeLabelInternal$just <- c("left", "top")
+    }
+    if (is.null(bb_genomeLabelInternal$default.units)) {
+        bb_genomeLabelInternal$default.units <- "inches"
     }
 
-  }
+    # =========================================================================
+    # CATCH ARGUMENT/PLOT INPUT ERRORS
+    # =========================================================================
+    if (is.null(bb_genomeLabelInternal$plot)) {
+        stop("argument \"plot\" is missing, with no default.", call. = FALSE)
+    }
+    if (is.null(bb_genomeLabelInternal$x)) {
+        stop("argument \"x\" is missing, with no default.", call. = FALSE)
+    }
+    if (is.null(bb_genomeLabelInternal$y)) {
+        stop("argument \"y\" is missing, with no default.", call. = FALSE)
+    }
 
-  # ======================================================================================================================================================================================
-  # ASSIGN PARAMETERS BASED ON PLOT INPUT
-  # ======================================================================================================================================================================================
+    ## Check that input plot is a valid type of plot to be annotated
+    if (class(bb_genomeLabelInternal$plot) != "bb_manhattan") {
 
-  chrom <- bb_genomeLabelInternal$plot$chrom
-  chromstart <- bb_genomeLabelInternal$plot$chromstart
-  chromend <- bb_genomeLabelInternal$plot$chromend
-  assembly <- bb_genomeLabelInternal$plot$assembly
-  x <- bb_genomeLabelInternal$x
-  y <- bb_genomeLabelInternal$y
-  length <- bb_genomeLabelInternal$plot$width
-  if (bb_genomeLabelInternal$axis == "y"){
-    length <- bb_genomeLabelInternal$plot$height
-  }
-  just <- bb_genomeLabelInternal$just
+        ## Manhattan plots can do whole genome assembly but other plots can't
+        inputNames <- attributes(bb_genomeLabelInternal$plot)$names
+        if (!("chrom" %in% inputNames) |
+            !("chromstart" %in% inputNames) |
+            !("chromend" %in% inputNames)) {
+            stop("Invalid input plot. Please input a plot that has genomic
+            coordinates associated with it.", call. = FALSE)
+        }
+    }
 
-  ## Whole genome Manhattan plot spacing
-  space <- bb_genomeLabelInternal$plot$space
+    # =========================================================================
+    # ASSIGN PARAMETERS BASED ON PLOT INPUT
+    # =========================================================================
 
-  # ======================================================================================================================================================================================
-  # CALL BB_PLOTGENOMELABEL
-  # ======================================================================================================================================================================================
+    chrom <- bb_genomeLabelInternal$plot$chrom
+    chromstart <- bb_genomeLabelInternal$plot$chromstart
+    chromend <- bb_genomeLabelInternal$plot$chromend
+    assembly <- bb_genomeLabelInternal$plot$assembly
+    x <- bb_genomeLabelInternal$x
+    y <- bb_genomeLabelInternal$y
+    length <- bb_genomeLabelInternal$plot$width
+    if (bb_genomeLabelInternal$axis == "y") {
+        length <- bb_genomeLabelInternal$plot$height
+    }
+    just <- bb_genomeLabelInternal$just
 
-  bb_genomeLabel <- bb_plotGenomeLabel(chrom = chrom, chromstart = chromstart,
-                                       chromend = chromend, assembly = assembly,
-                                       fontsize = bb_genomeLabelInternal$fontsize,
-                                       fontcolor = bb_genomeLabelInternal$fontcolor,
-                                       linecolor = bb_genomeLabelInternal$linecolor,
-                                       margin = bb_genomeLabelInternal$margin,
-                                       scale = bb_genomeLabelInternal$scale,
-                                       commas = bb_genomeLabelInternal$commas,
-                                       sequence = bb_genomeLabelInternal$sequence,
-                                       boxWidth = bb_genomeLabelInternal$boxWidth,
-                                       axis = bb_genomeLabelInternal$axis,
-                                       at = bb_genomeLabelInternal$at,
-                                       tcl = bb_genomeLabelInternal$tcl,
-                                       x = x, y = y, length = length,
-                                       just = just,
-                                       default.units = bb_genomeLabelInternal$default.units,
-                                       space = space, params = params, ...)
+    ## Whole genome Manhattan plot spacing
+    space <- bb_genomeLabelInternal$plot$space
 
-  # ======================================================================================================================================================================================
-  # RETURN OBJECT
-  # ======================================================================================================================================================================================
+    # =========================================================================
+    # CALL BB_PLOTGENOMELABEL
+    # =========================================================================
 
-  invisible(bb_genomeLabel)
+    bb_genomeLabel <- bb_plotGenomeLabel(
+        chrom = chrom, chromstart = chromstart,
+        chromend = chromend, assembly = assembly,
+        fontsize = bb_genomeLabelInternal$fontsize,
+        fontcolor = bb_genomeLabelInternal$fontcolor,
+        linecolor = bb_genomeLabelInternal$linecolor,
+        margin = bb_genomeLabelInternal$margin,
+        scale = bb_genomeLabelInternal$scale,
+        commas = bb_genomeLabelInternal$commas,
+        sequence = bb_genomeLabelInternal$sequence,
+        boxWidth = bb_genomeLabelInternal$boxWidth,
+        axis = bb_genomeLabelInternal$axis,
+        at = bb_genomeLabelInternal$at,
+        tcl = bb_genomeLabelInternal$tcl,
+        x = x, y = y, length = length,
+        just = just,
+        default.units = bb_genomeLabelInternal$default.units,
+        space = space, params = params, ...
+    )
 
+    # =========================================================================
+    # RETURN OBJECT
+    # =========================================================================
+
+    invisible(bb_genomeLabel)
 }

@@ -69,22 +69,27 @@ bb_pageCreate(width = 4, height = 4, default.units = "inches")
 
 ## Plot text relative to a BentoBox plot
 data("bb_imrHicData")
-hicPlot <- bb_plotHicSquare(data = bb_imrHicData, chrom = "chr21",
-                           chromstart = 28000000, chromend = 29500000,
-                           zrange = c(0, 70),
-                           x = 0.5, y = 0.5, width = 3, height = 3,
-                           just = c("left", "top"),
-                           default.units = "inches")
-bb_annoGenomeLabel(plot = hicPlot, x = 0.5, y = 3.55, scale = "Mb",
-                   just = c("left", "top"), default.units = "inches")
+hicPlot <- bb_plotHicSquare(
+    data = bb_imrHicData, chrom = "chr21",
+    chromstart = 28000000, chromend = 29500000,
+    zrange = c(0, 70),
+    x = 0.5, y = 0.5, width = 3, height = 3,
+    just = c("left", "top"),
+    default.units = "inches"
+)
+bb_annoGenomeLabel(
+    plot = hicPlot, x = 0.5, y = 3.55, scale = "Mb",
+    just = c("left", "top"), default.units = "inches"
+)
 
-bb_annoText(label = "Loop", fontsize = 8, plot = hicPlot,
-            x = 29075000, y = 28150000,
-            just = "center", default.units = "native")
+bb_annoText(
+    label = "Loop", fontsize = 8, plot = hicPlot,
+    x = 29075000, y = 28150000,
+    just = "center", default.units = "native"
+)
 
 ## Hide page guides
 bb_pageGuideHide()
-
 }
 \seealso{
 \link[grid]{grid.text}

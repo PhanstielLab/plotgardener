@@ -54,22 +54,26 @@ Plot a ggplot2 plot, gtable, or grob object in a BentoBox layout
 \examples{
 ## Create a plot using ggplot2
 library(ggplot2)
-p <- ggplot(mtcars) + geom_point(aes(mpg, disp))
+p <- ggplot(mtcars) +
+    geom_point(aes(mpg, disp))
 
 ## Create a BentoBox page
 bb_pageCreate(width = 4, height = 4, default.units = "inches")
 
 ## Place ggplot in BentoBox page
-bb_plotGG(plot = p, x = 0.5, y = 0.5, width = 3, height = 3,
-          just = c("left", "top"), default.units = "inches")
+bb_plotGG(
+    plot = p, x = 0.5, y = 0.5, width = 3, height = 3,
+    just = c("left", "top"), default.units = "inches"
+)
 
 ## Add title
-bb_plotText(label = "mtcars", fontsize = 14, fontface = "bold",
-            x = 1, y = 0.35)
+bb_plotText(
+    label = "mtcars", fontsize = 14, fontface = "bold",
+    x = 1, y = 0.35
+)
 
 ## Hide page guides
 bb_pageGuideHide()
-
 }
 \seealso{
 \link[ggplot2]{ggplot}

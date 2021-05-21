@@ -13,7 +13,8 @@ a dataframe with 7 columns
 \item{lat}{Latitude value.}
 \item{cases}{The cumulative number of COVID-19 cases.}
 \item{population}{Numeric value of total \code{state} population.}
-\item{cases_100K}{The cumulative number of COVID-19 cases, per 100000 individuals.}
+\item{cases_100K}{The cumulative number of COVID-19 cases,
+per 100000 individuals.}
 }
 }
 \source{

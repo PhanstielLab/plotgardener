@@ -1,0 +1,72 @@
+* using log directory ‘/Users/nicolekramer/Phanstiel Lab Dropbox/Nicole Kramer/BentoBox/development/BentoBox/BentoBox.Rcheck’
+* using R version 4.1.0 Patched (2021-05-19 r80339)
+* using platform: x86_64-apple-darwin17.0 (64-bit)
+* using session charset: UTF-8
+* checking for file ‘BentoBox/DESCRIPTION’ ... OK
+* this is package ‘BentoBox’ version ‘0.1.0’
+* package encoding: UTF-8
+* checking package namespace information ... OK
+* checking package dependencies ... OK
+* checking if this is a source package ... OK
+* checking if there is a namespace ... OK
+* checking for hidden files and directories ... OK
+* checking for portable file names ... OK
+* checking for sufficient/correct file permissions ... OK
+* checking whether package ‘BentoBox’ can be installed ... [50s/53s] OK
+* checking installed package size ... NOTE
+  installed size is 14.4Mb
+  sub-directories of 1Mb or more:
+    R      1.6Mb
+    data   2.7Mb
+    doc    5.4Mb
+    help   4.3Mb
+* checking package directory ... OK
+* checking for future file timestamps ... OK
+* checking ‘build’ directory ... OK
+* checking DESCRIPTION meta-information ... OK
+* checking top-level files ... OK
+* checking for left-over files ... OK
+* checking index information ... OK
+* checking package subdirectories ... OK
+* checking R files for non-ASCII characters ... OK
+* checking R files for syntax errors ... OK
+* checking whether the package can be loaded ... OK
+* checking whether the package can be loaded with stated dependencies ... OK
+* checking whether the package can be unloaded cleanly ... OK
+* checking whether the namespace can be loaded with stated dependencies ... OK
+* checking whether the namespace can be unloaded cleanly ... OK
+* checking use of S3 registration ... OK
+* checking dependencies in R code ... OK
+* checking S3 generic/method consistency ... OK
+* checking replacement functions ... OK
+* checking foreign function calls ... OK
+* checking R code for possible problems ... [35s/36s] OK
+* checking Rd files ... [0s/0s] OK
+* checking Rd metadata ... OK
+* checking Rd line widths ... OK
+* checking Rd cross-references ... OK
+* checking for missing documentation entries ... OK
+* checking for code/documentation mismatches ... OK
+* checking Rd \usage sections ... OK
+* checking Rd contents ... OK
+* checking for unstated dependencies in examples ... OK
+* checking contents of ‘data’ directory ... OK
+* checking data for non-ASCII characters ... OK
+* checking data for ASCII and uncompressed saves ... OK
+* checking R/sysdata.rda ... OK
+* checking line endings in C/C++/Fortran sources/headers ... OK
+* checking pragmas in C/C++ headers and code ... OK
+* checking compilation flags used ... OK
+* checking compiled code ... OK
+* checking installed files from ‘inst/doc’ ... OK
+* checking files in ‘vignettes’ ... OK
+* checking examples ... [51s/52s] OK
+* checking for unstated dependencies in vignettes ... OK
+* checking package vignettes in ‘inst/doc’ ... OK
+* checking running R code from vignettes ... [1s/1s] NONE
+  ‘introduction_to_bentobox.Rmd’ using ‘UTF-8’... [0s/0s] OK
+  ‘our_philosophy.Rmd’ using ‘UTF-8’... [0s/0s] OK
+* checking re-building of vignette outputs ... [81s/89s] OK
+* checking PDF version of manual ... OK
+* DONE
+Status: 1 NOTE

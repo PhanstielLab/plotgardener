@@ -118,26 +118,33 @@ library("org.Hs.eg.db")
 bb_pageCreate(width = 5, height = 2, default.units = "inches")
 
 ## Plot and place gene track on a BentoBox page
-genesPlot <- bb_plotGenes(chrom = "chr8",
-                          chromstart = 1000000, chromend = 2000000,
-                          assembly = "hg19", fill = c("grey", "grey"),
-                          fontcolor = c("grey", "grey"),
-                          x = 0.5, y = 0.25, width = 4, height = 1,
-                          just = c("left", "top"),
-                          default.units = "inches")
+genesPlot <- bb_plotGenes(
+    chrom = "chr8",
+    chromstart = 1000000, chromend = 2000000,
+    assembly = "hg19", fill = c("grey", "grey"),
+    fontcolor = c("grey", "grey"),
+    x = 0.5, y = 0.25, width = 4, height = 1,
+    just = c("left", "top"),
+    default.units = "inches"
+)
 
 ## Annotate x-axis genome labels at different scales
-bb_annoGenomeLabel(plot = genesPlot, scale = "Mb",
-                   x = 0.5, y = 1.25, just = c("left", "top"),
-                   default.units = "inches")
-bb_annoGenomeLabel(plot = genesPlot, scale = "Kb",
-                   x = 0.5, y = 1.5, just = c("left", "top"),
-                   default.units = "inches")
-bb_annoGenomeLabel(plot = genesPlot, scale = "bp",
-                   x = 0.5, y = 1.75, just = c("left", "top"),
-                   default.units = "inches")
+bb_annoGenomeLabel(
+    plot = genesPlot, scale = "Mb",
+    x = 0.5, y = 1.25, just = c("left", "top"),
+    default.units = "inches"
+)
+bb_annoGenomeLabel(
+    plot = genesPlot, scale = "Kb",
+    x = 0.5, y = 1.5, just = c("left", "top"),
+    default.units = "inches"
+)
+bb_annoGenomeLabel(
+    plot = genesPlot, scale = "bp",
+    x = 0.5, y = 1.75, just = c("left", "top"),
+    default.units = "inches"
+)
 
 ## Hide page guides
 bb_pageGuideHide()
-
 }

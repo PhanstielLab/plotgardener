@@ -54,7 +54,8 @@ Default value is \code{fill = "#1f4297"}.}
 information for scaling colors in data.}
 
 \item{linecolor}{A character value specifying the color of the
-lines outlining paired range elements. Default value is \code{linecolor = NA}.}
+lines outlining paired range elements.
+Default value is \code{linecolor = NA}.}
 
 \item{bg}{Character value indicating background color.
 Default value is \code{bg = NA}.}
@@ -92,7 +93,8 @@ plotted BentoBox plot according to the units of the BentoBox page.}
 
 \item{height}{A numeric or unit object specifying paired range plot height.}
 
-\item{just}{Justification of paired range plot relative to its (x, y) location.
+\item{just}{Justification of paired range plot relative
+to its (x, y) location.
 If there are two values, the first value specifies horizontal
 justification and the second value specifies vertical justification.
 Possible string values are: \code{"left"}, \code{"right"},
@@ -119,14 +121,16 @@ genomic region, placement, and \link[grid]{grob} information.
 Plot paired-end genomic range elements
 }
 \details{
-#' A paired ranges plot can be placed on a BentoBox coordinate page by providing plot placement parameters:
+#' A paired ranges plot can be placed on a BentoBox coordinate page
+by providing plot placement parameters:
 \preformatted{
 bb_plotPairs(data, chrom,
              chromstart = NULL, chromend = NULL,
              x, y, width, height, just = c("left", "top"),
              default.units = "inches")
 }
-This function can also be used to quickly plot an unannotated paired ranges plot by ignoring plot placement parameters:
+This function can also be used to quickly plot an unannotated paired
+ranges plot by ignoring plot placement parameters:
 \preformatted{
 bb_plotPairs(data, chrom,
              chromstart = NULL, chromend = NULL)
@@ -137,37 +141,44 @@ bb_plotPairs(data, chrom,
 data("bb_bedpeData")
 
 ## Set the coordinates
-params = bb_params(chrom = "chr21",
-                   chromstart = 27900000, chromend = 30700000,
-                   width = 7)
+params <- bb_params(
+    chrom = "chr21",
+    chromstart = 27900000, chromend = 30700000,
+    width = 7
+)
 
 ## Create a page
 bb_pageCreate(width = 7.5, height = 2.1, default.units = "inches")
 
 ## Add a length column
-bb_bedpeData$length = (bb_bedpeData$start2 - bb_bedpeData$start1) / 1000
+bb_bedpeData$length <- (bb_bedpeData$start2 - bb_bedpeData$start1) / 1000
 
 ## Plot the data
-bedpePlot <- bb_plotPairs(data = bb_bedpeData, params = params,
-                          fill = colorRampPalette(c("dodgerblue2", "firebrick2")),
-                          colorby = colorby("length"),
-                          lwd = 2, spaceHeight = .7,
-                          x = 0.25, y = 0.25, height = 1.5,
-                          just = c("left", "top"), default.units = "inches")
+bedpePlot <- bb_plotPairs(
+    data = bb_bedpeData, params = params,
+    fill = colorRampPalette(c("dodgerblue2", "firebrick2")),
+    colorby = colorby("length"),
+    lwd = 2, spaceHeight = .7,
+    x = 0.25, y = 0.25, height = 1.5,
+    just = c("left", "top"), default.units = "inches"
+)
 
 ## Annotate genome label
 bb_annoGenomeLabel(plot = bedpePlot, x = 0.25, y = 1.78, scale = "Mb")
 
 ## Add heatmap legend
-bb_annoHeatmapLegend(plot = bedpePlot, fontcolor = "black",
-                     x = 7.0, y = 0.25,
-                     width = 0.10, height = 1, fontsize = 10)
+bb_annoHeatmapLegend(
+    plot = bedpePlot, fontcolor = "black",
+    x = 7.0, y = 0.25,
+    width = 0.10, height = 1, fontsize = 10
+)
 
 ## Add heatmap legend label
-bb_plotText(label = "Kb", rot = 90, x = 6.9, y = 0.75,
-             just = c("center","center"), fontsize = 10)
+bb_plotText(
+    label = "Kb", rot = 90, x = 6.9, y = 0.75,
+    just = c("center", "center"), fontsize = 10
+)
 
 ## Hide page guides
 bb_pageGuideHide()
-
 }

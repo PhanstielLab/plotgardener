@@ -1,4 +1,5 @@
-#' Draw a horizontal guideline at a specified y-coordinate on a BentoBox page
+#' Draw a horizontal guideline at a specified y-coordinate
+#' on a BentoBox page
 #'
 #' @param y A numeric or unit object specifying y-coordinate of guide.
 #' @param default.units A string indicating the default units to use
@@ -16,94 +17,98 @@
 #'
 #' ## Add red horizontal guideline at y = 2.5 inches
 #' bb_pageGuideHorizontal(y = 2.5, linecolor = "red")
-#'
 #' @return None.
 #'
 #' @export
 bb_pageGuideHorizontal <- function(y, default.units = "inches",
-                                   linecolor = "grey55", params = NULL, ...){
+                                linecolor = "grey55", params = NULL, ...) {
 
 
-  # ======================================================================================================================================================================================
-  # PARSE PARAMETERS
-  # ======================================================================================================================================================================================
+    # =========================================================================
+    # PARSE PARAMETERS
+    # =========================================================================
 
-  ## Check which defaults are not overwritten and set to NULL
-  if(missing(linecolor)) linecolor <- NULL
-  if(missing(default.units)) default.units <- NULL
+    ## Check which defaults are not overwritten and set to NULL
+    if (missing(linecolor)) linecolor <- NULL
+    if (missing(default.units)) default.units <- NULL
 
-  ## Check if y argument is missing (could be in object)
-  if(!hasArg(y)) y <- NULL
+    ## Check if y argument is missing (could be in object)
+    if (!hasArg(y)) y <- NULL
 
-  ## Compile all parameters into an internal object
-  bb_hguide <- structure(list(y = y, linecolor = linecolor,
-                              default.units = default.units),
-                         class = "bb_hguide")
+    ## Compile all parameters into an internal object
+    bb_hguide <- structure(list(
+        y = y, linecolor = linecolor,
+        default.units = default.units
+    ),
+    class = "bb_hguide"
+    )
 
-  bb_hguide <- parseParams(bb_params = params, object_params = bb_hguide)
+    bb_hguide <- parseParams(bb_params = params, object_params = bb_hguide)
 
-  ## For any defaults that are still NULL, set back to default
-  if(is.null(bb_hguide$linecolor)) bb_hguide$linecolor <- "grey55"
-  if(is.null(bb_hguide$default.units)) bb_hguide$default.units <- "inches"
+    ## For any defaults that are still NULL, set back to default
+    if (is.null(bb_hguide$linecolor)) bb_hguide$linecolor <- "grey55"
+    if (is.null(bb_hguide$default.units)) bb_hguide$default.units <- "inches"
 
-  ## Set gp
-  bb_hguide$gp <- gpar(col = bb_hguide$linecolor)
-  bb_hguide$gp <- setGP(gpList = bb_hguide$gp, params = bb_hguide, ...)
-  # ======================================================================================================================================================================================
-  # ERRORS
-  # ======================================================================================================================================================================================
+    ## Set gp
+    bb_hguide$gp <- gpar(col = bb_hguide$linecolor)
+    bb_hguide$gp <- setGP(gpList = bb_hguide$gp, params = bb_hguide, ...)
+    # =========================================================================
+    # ERRORS
+    # =========================================================================
 
-  if(is.null(bb_hguide$y)) stop("argument \"y\" is missing, with no default.",
-                                call. = FALSE)
-
-  # ======================================================================================================================================================================================
-  # DEFAULT UNITS
-  # ======================================================================================================================================================================================
-
-  if (!"unit" %in% class(bb_hguide$y)){
-
-    ## Check for "below" y-coords
-    if (any(grepl("b", bb_hguide$y)) == TRUE){
-
-      stop("\'below\' y-coordinate detected. Cannot parse \'below\' y-coordinate for bb_pageGuideHorizontal.", call. = FALSE)
-
-
-    } else {
-
-      if (!is.numeric(bb_hguide$y)){
-
-        stop("y-coordinate is neither a unit object or a numeric value. Cannot place Hguide.", call. = FALSE)
-
-      }
-
-      if (is.null(bb_hguide$default.units)){
-
-        stop("y-coordinate detected as numeric.\'default.units\' must be specified.", call. = FALSE)
-
-      }
-
-      y <- unit(bb_hguide$y, bb_hguide$default.units)
-
+    if (is.null(bb_hguide$y)) {
+        stop("argument \"y\" is missing, with no default.",
+            call. = FALSE
+        )
     }
 
+    # =========================================================================
+    # DEFAULT UNITS
+    # =========================================================================
 
+    if (!"unit" %in% class(bb_hguide$y)) {
 
-  }
+        ## Check for "below" y-coords
+        if (any(grepl("b", bb_hguide$y)) == TRUE) {
+            stop("\'below\' y-coordinate detected. Cannot parse \'below\'
+                y-coordinate for bb_pageGuideHorizontal.", call. = FALSE)
+        } else {
+            if (!is.numeric(bb_hguide$y)) {
+                stop("y-coordinate is neither a unit object or a
+                    numeric value. Cannot place Hguide.", call. = FALSE)
+            }
 
-  # ======================================================================================================================================================================================
-  # MAKE GROB AND ASSIGN TO GTREE
-  # ======================================================================================================================================================================================
+            if (is.null(bb_hguide$default.units)) {
+                stop("y-coordinate detected as numeric.\'default.units\'
+                    must be specified.", call. = FALSE)
+            }
 
-  y <- convertY(y, unitTo = get("page_units", envir = bbEnv), valueOnly = TRUE)
+            y <- unit(bb_hguide$y, bb_hguide$default.units)
+        }
+    }
 
-  guide <- grid.segments(x0 = unit(0, units = "npc"),
-                         x1 = unit(1, units = "npc"),
-                         y0 = get("page_height", envir = bbEnv) - y,
-                         y1 = get("page_height", envir = bbEnv) - y,
-                         default.units = get("page_units", envir = bbEnv),
-                         gp = bb_hguide$gp)
-  assign("guide_grobs",
-         addGrob(gTree = get("guide_grobs", envir = bbEnv),
-                 child = guide), envir = bbEnv)
+    # =========================================================================
+    # MAKE GROB AND ASSIGN TO GTREE
+    # =========================================================================
 
+    y <- convertY(y,
+        unitTo = get("page_units", envir = bbEnv),
+        valueOnly = TRUE
+    )
+
+    guide <- grid.segments(
+        x0 = unit(0, units = "npc"),
+        x1 = unit(1, units = "npc"),
+        y0 = get("page_height", envir = bbEnv) - y,
+        y1 = get("page_height", envir = bbEnv) - y,
+        default.units = get("page_units", envir = bbEnv),
+        gp = bb_hguide$gp
+    )
+    assign("guide_grobs",
+        addGrob(
+            gTree = get("guide_grobs", envir = bbEnv),
+            child = guide
+        ),
+        envir = bbEnv
+    )
 }

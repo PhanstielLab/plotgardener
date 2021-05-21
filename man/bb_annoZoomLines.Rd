@@ -84,52 +84,67 @@ bb_pageCreate(width = 7.5, height = 4.75, default.units = "inches")
 ## Plot and place a Manhattan plot
 library("TxDb.Hsapiens.UCSC.hg19.knownGene")
 data("bb_gwasData")
-manhattanPlot <- bb_plotManhattan(data = bb_gwasData, assembly = "hg19",
-                                  fill = c("grey", "#37a7db"),
-                                  sigLine = FALSE,
-                                  col = "grey", lty = 2, range = c(0, 14),
-                                  x = 0.5, y = 0, width = 6.5, height = 2,
-                                  just = c("left", "top"),
-                                  default.units = "inches")
-bb_annoYaxis(plot = manhattanPlot, at = c(0, 2, 4, 6, 8, 10, 12, 14),
-             axisLine = TRUE, fontsize = 8)
+manhattanPlot <- bb_plotManhattan(
+    data = bb_gwasData, assembly = "hg19",
+    fill = c("grey", "#37a7db"),
+    sigLine = FALSE,
+    col = "grey", lty = 2, range = c(0, 14),
+    x = 0.5, y = 0, width = 6.5, height = 2,
+    just = c("left", "top"),
+    default.units = "inches"
+)
+bb_annoYaxis(
+    plot = manhattanPlot, at = c(0, 2, 4, 6, 8, 10, 12, 14),
+    axisLine = TRUE, fontsize = 8
+)
 
 ## Annotate zoom lines for a region on chromsome 21
-zoomRegion <- bb_params(chrom = "chr21",
-                        chromstart = 28000000, chromend = 30300000)
-bb_annoZoomLines(plot = manhattanPlot, params = zoomRegion,
-                 y0 = 2, x1 = c(0.5, 7), y1 = 2.5, extend = c(0, 1.1),
-                 default.units = "inches",
-                 lty = 3)
+zoomRegion <- bb_params(
+    chrom = "chr21",
+    chromstart = 28000000, chromend = 30300000
+)
+bb_annoZoomLines(
+    plot = manhattanPlot, params = zoomRegion,
+    y0 = 2, x1 = c(0.5, 7), y1 = 2.5, extend = c(0, 1.1),
+    default.units = "inches",
+    lty = 3
+)
 
 ## Annotate highlight region for zoom region
-bb_annoHighlight(plot = manhattanPlot, params = zoomRegion,
-                 y = 2, height = 2, just = c("left", "bottom"),
-                 default.units = "inches",
-                 fill = "red", alpha = 0.8)
+bb_annoHighlight(
+    plot = manhattanPlot, params = zoomRegion,
+    y = 2, height = 2, just = c("left", "bottom"),
+    default.units = "inches",
+    fill = "red", alpha = 0.8
+)
 
 ## Plot Manhattan plot data and signal track under zoom lines
-manhattanPlotZoom <- bb_plotManhattan(data = bb_gwasData, fill = "grey",
-                                      sigLine = FALSE,
-                                      baseline = TRUE,
-                                      params = zoomRegion, range = c(0, 14),
-                                      x = 0.5, y = 2.6,
-                                      width = 6.5, height = 1)
+manhattanPlotZoom <- bb_plotManhattan(
+    data = bb_gwasData, fill = "grey",
+    sigLine = FALSE,
+    baseline = TRUE,
+    params = zoomRegion, range = c(0, 14),
+    x = 0.5, y = 2.6,
+    width = 6.5, height = 1
+)
 data("bb_imrH3K27acData")
-signalPlot <- bb_plotSignal(data = bb_imrH3K27acData, params = zoomRegion,
-                            range = c(0, 45),
-                            x = 0.5, y = "b0.1",
-                            width = 6.5, height = 0.65,
-                            just = c("left", "top"),
-                            default.units = "inches")
+signalPlot <- bb_plotSignal(
+    data = bb_imrH3K27acData, params = zoomRegion,
+    range = c(0, 45),
+    x = 0.5, y = "b0.1",
+    width = 6.5, height = 0.65,
+    just = c("left", "top"),
+    default.units = "inches"
+)
 
 ## Plot genome label
-bb_plotGenomeLabel(chrom = "chr21",
-                   chromstart = 28000000, chromend = 30300000,
-                   x = 0.5, y = 4.4, length = 6.5,
-                   default.units = "inches")
+bb_plotGenomeLabel(
+    chrom = "chr21",
+    chromstart = 28000000, chromend = 30300000,
+    x = 0.5, y = 4.4, length = 6.5,
+    default.units = "inches"
+)
 
 ## Hide page guides
 bb_pageGuideHide()
-
 }

@@ -74,13 +74,14 @@
 
 #' BentoBox example data for COVID-19 cases in New York and Florida
 #'
-#' A timeline dataset tracking positive COVID-19 cases in New York and Florida from
-#' 2020-01-29 to 2021-03-07.
+#' A timeline dataset tracking positive COVID-19 cases in
+#' New York and Florida from 2020-01-29 to 2021-03-07.
 #'
 #' @format a dataframe with 3 columns
 #' \describe{
 #' \item{date}{The date of the case count.}
-#' \item{state}{The state of the case count. Either \code{"new york"} or \code{"florida"}.}
+#' \item{state}{The state of the case count.
+#' Either \code{"new york"} or \code{"florida"}.}
 #' \item{caseIncrease}{The increase number of positive COVID-19 cases.}
 #' }
 #'
@@ -104,7 +105,8 @@
 #' \item{lat}{Latitude value.}
 #' \item{cases}{The cumulative number of COVID-19 cases.}
 #' \item{population}{Numeric value of total \code{state} population.}
-#' \item{cases_100K}{The cumulative number of COVID-19 cases, per 100000 individuals.}
+#' \item{cases_100K}{The cumulative number of COVID-19 cases,
+#' per 100000 individuals.}
 #' }
 #'
 #' @docType data
@@ -343,8 +345,10 @@
 #'
 #' @format a dataframe with 4 columns
 #' \describe{
-#' \item{state}{The state of the vaccinations. Either \code{"new york"} or \code{"florida"}.}
-#' \item{vax_group}{Character value describing the 3 possibilities for vaccination status:
+#' \item{state}{The state of the vaccinations.
+#' Either \code{"new york"} or \code{"florida"}.}
+#' \item{vax_group}{Character value describing the
+#' 3 possibilities for vaccination status:
 #' \code{"not"}, \code{"partially"}, or \code{"fully"} vaccinated.}
 #' \item{value}{Raw state population value in vaccination group.}
 #' \item{percent}{State percentage in vaccination group.}

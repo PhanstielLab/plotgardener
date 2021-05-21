@@ -139,25 +139,30 @@ data("bb_imrHicData")
 bb_pageCreate(width = 4, height = 2.5, default.units = "inches")
 
 ## Plot and place triangle Hi-C plot
-hicPlot <- bb_plotHicTriangle(data = bb_imrHicData, resolution = 10000,
-                              zrange = c(0, 70),
-                              chrom = "chr21",
-                              chromstart = 28000000, chromend = 30300000,
-                              x = 2, y = 0.5, width = 3, height = 1.5,
-                              just = "top", default.units = "inches")
+hicPlot <- bb_plotHicTriangle(
+    data = bb_imrHicData, resolution = 10000,
+    zrange = c(0, 70),
+    chrom = "chr21",
+    chromstart = 28000000, chromend = 30300000,
+    x = 2, y = 0.5, width = 3, height = 1.5,
+    just = "top", default.units = "inches"
+)
 
 ## Annotate x-axis genome label
-bb_annoGenomeLabel(plot = hicPlot, scale = "Mb", x = 0.5, y = 2.03,
-                   just = c("left", "top"))
+bb_annoGenomeLabel(
+    plot = hicPlot, scale = "Mb", x = 0.5, y = 2.03,
+    just = c("left", "top")
+)
 
 ## Annotate heatmap legend
-bb_annoHeatmapLegend(plot = hicPlot, x = 3.5, y = 0.5,
-                     width = 0.13, height = 1.2,
-                     just = c("right", "top"))
+bb_annoHeatmapLegend(
+    plot = hicPlot, x = 3.5, y = 0.5,
+    width = 0.13, height = 1.2,
+    just = c("right", "top")
+)
 
 ## Hide page guides
 bb_pageGuideHide()
-
 }
 \seealso{
 \link[BentoBox]{bb_readHic}

@@ -53,5 +53,4 @@ bb_pageCreate(width = 6, height = 4.5, default.units = "inches")
 
 ## Create a 14-cm wide, 10-cm high Bentobox page
 bb_pageCreate(width = 14, height = 10, default.units = "cm")
-
 }

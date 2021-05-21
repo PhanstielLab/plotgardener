@@ -43,7 +43,8 @@ Possible string values are: \code{"left"}, \code{"right"},
 
 \item{default.units}{A string indicating the default units to use if
 \code{x}, \code{y}, \code{width}, and \code{height} are only given as
-numerics or numeric vectors. Default value is \code{default.units = "inches"}.}
+numerics or numeric vectors.
+Default value is \code{default.units = "inches"}.}
 
 \item{linecolor}{A character value specifying rectangle line color.
 Default value is \code{linecolor = "black"}.}
@@ -77,26 +78,31 @@ Plot a rectangle within a BentoBox layout
 bb_pageCreate(width = 7.5, height = 6, default.units = "inches")
 
 ## Plot one rectangle with no fill
-bb_plotRect(x = 0.5, y = 0.5, width = 3, height = 3,
-            just = c("left", "top"), default.units = "inches",
-            lwd = 2, fill = NA)
+bb_plotRect(
+    x = 0.5, y = 0.5, width = 3, height = 3,
+    just = c("left", "top"), default.units = "inches",
+    lwd = 2, fill = NA
+)
 
 
 ## Plot two rectangles with same width and height at different locations
-bb_plotRect(x = 4, y = c(0.5, 2.25), width = 3, height = 1.25,
-            just = c("left", "top"), default.units = "inches",
-            fill = "#7ecdbb")
+bb_plotRect(
+    x = 4, y = c(0.5, 2.25), width = 3, height = 1.25,
+    just = c("left", "top"), default.units = "inches",
+    fill = "#7ecdbb"
+)
 
 ## Plot two rectangles with different widths, heights,
 ## locations, and colors
-bb_plotRect(x = 3.75, y = c(4, 5.25), width = c(6.5, 4.5),
-            height = c(1, 0.25),
-            just = "top", default.units = "inches",
-            fill = c("#7ecdbb", "#37a7db"), linecolor = NA, alpha = 0.4)
+bb_plotRect(
+    x = 3.75, y = c(4, 5.25), width = c(6.5, 4.5),
+    height = c(1, 0.25),
+    just = "top", default.units = "inches",
+    fill = c("#7ecdbb", "#37a7db"), linecolor = NA, alpha = 0.4
+)
 
 ## Hide page guides
 bb_pageGuideHide()
-
 }
 \seealso{
 \link[grid]{grid.rect}

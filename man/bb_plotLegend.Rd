@@ -101,27 +101,32 @@ data("bb_bedData")
 bb_pageCreate(width = 7.5, height = 4, default.units = "inches")
 
 ## Plot a pileup plot, coloring elements by strand
-pileupPlot <- bb_plotRanges(data = bb_bedData, chrom = "chr21",
-                            chromstart = 29072500, chromend = 29075000,
-                            fill = c("steel blue", "light salmon"),
-                            colorby = colorby("strand"),
-                            x = 0.5, y = 3.5, width = 6.5, height = 3.5,
-                            just = c("left", "bottom"),
-                            default.units = "inches")
+pileupPlot <- bb_plotRanges(
+    data = bb_bedData, chrom = "chr21",
+    chromstart = 29072500, chromend = 29075000,
+    fill = c("steel blue", "light salmon"),
+    colorby = colorby("strand"),
+    x = 0.5, y = 3.5, width = 6.5, height = 3.5,
+    just = c("left", "bottom"),
+    default.units = "inches"
+)
 
 ## Add a legend depicting strand colors
-legendPlot <- bb_plotLegend(legend = c("- strand", "+ strand"),
-                            fill = c("steel blue", "light salmon"),
-                            border = FALSE,
-                            x = 5, y = 0.5, width = 1.5, height = 0.7,
-                            just = c("left", "top"),
-                            default.units = "inches")
+legendPlot <- bb_plotLegend(
+    legend = c("- strand", "+ strand"),
+    fill = c("steel blue", "light salmon"),
+    border = FALSE,
+    x = 5, y = 0.5, width = 1.5, height = 0.7,
+    just = c("left", "top"),
+    default.units = "inches"
+)
 
 ## Annotate genome label
-bb_annoGenomeLabel(plot = pileupPlot, x = 0.5, y = 3.5,
-                   just = c("left", "top"))
+bb_annoGenomeLabel(
+    plot = pileupPlot, x = 0.5, y = 3.5,
+    just = c("left", "top")
+)
 
 ## Hide page guides
 bb_pageGuideHide()
-
 }

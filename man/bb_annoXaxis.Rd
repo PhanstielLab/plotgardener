@@ -60,22 +60,27 @@ library("org.Hs.eg.db")
 bb_pageCreate(width = 7.5, height = 4.5, default.units = "inches")
 
 ## Plot gene transcripts
-transcriptPlot <- bb_plotTranscripts(chrom = "chr1",
-                                     chromstart = 1000000,
-                                     chromend = 2000000,
-                                     x = 0.5, y = 0,
-                                     width = 6.5, height = 4,
-                                     just = c("left", "top"),
-                                     default.units = "inches")
+transcriptPlot <- bb_plotTranscripts(
+    chrom = "chr1",
+    chromstart = 1000000,
+    chromend = 2000000,
+    x = 0.5, y = 0,
+    width = 6.5, height = 4,
+    just = c("left", "top"),
+    default.units = "inches"
+)
 
 ## Add standard x-axis to transcript plot
-bb_annoXaxis(plot = transcriptPlot,
-             at = c(1000000, 1250000, 1500000, 1750000, 2000000),
-             fontsize = 8)
-bb_plotText(label = "Basepairs", fontsize = 10, fontface = "bold",
-            x = 3.75, y = 4.3, just = "top")
+bb_annoXaxis(
+    plot = transcriptPlot,
+    at = c(1000000, 1250000, 1500000, 1750000, 2000000),
+    fontsize = 8
+)
+bb_plotText(
+    label = "Basepairs", fontsize = 10, fontface = "bold",
+    x = 3.75, y = 4.3, just = "top"
+)
 
 ## Hide page guides
 bb_pageGuideHide()
-
 }

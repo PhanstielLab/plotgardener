@@ -77,31 +77,40 @@ bb_pageCreate(width = 7.5, height = 1.5, default.units = "inches")
 
 ## Plot and place a signal plot
 data("bb_imrH3K27acData")
-region <- bb_params(chrom = "chr21",
-                    chromstart = 28000000, chromend = 30300000,
-                    range = c(0, 45))
-signalPlot <- bb_plotSignal(data = bb_imrH3K27acData, params = region,
-                            x = 0.5, y = 0.25, width = 6.5, height = 0.65,
-                            just = c("left", "top"),
-                            default.units = "inches")
+region <- bb_params(
+    chrom = "chr21",
+    chromstart = 28000000, chromend = 30300000,
+    range = c(0, 45)
+)
+signalPlot <- bb_plotSignal(
+    data = bb_imrH3K27acData, params = region,
+    x = 0.5, y = 0.25, width = 6.5, height = 0.65,
+    just = c("left", "top"),
+    default.units = "inches"
+)
 
 ## Highlight genomic region on signal plot
-bb_annoHighlight(plot = signalPlot,
-                 chrom = "chr21",
-                 chromstart = 29000000, chromend = 29125000,
-                 y = 0.25, height = 1, just = c("left", "top"),
-                 default.units = "inches")
+bb_annoHighlight(
+    plot = signalPlot,
+    chrom = "chr21",
+    chromstart = 29000000, chromend = 29125000,
+    y = 0.25, height = 1, just = c("left", "top"),
+    default.units = "inches"
+)
 
 ## Plot text label
-bb_plotText(label = "region of interest", fontsize = 8, fontcolor = "black",
-            x = 3.5, y = 0.2, just = "bottom", default.units = "inches")
+bb_plotText(
+    label = "region of interest", fontsize = 8, fontcolor = "black",
+    x = 3.5, y = 0.2, just = "bottom", default.units = "inches"
+)
 
 ## Plot genome label
-bb_plotGenomeLabel(chrom = "chr21",
-                   chromstart = 28000000, chromend = 30300000,
-                   x = 0.5, y = 1.3, length = 6.5, default.units = "inches")
+bb_plotGenomeLabel(
+    chrom = "chr21",
+    chromstart = 28000000, chromend = 30300000,
+    x = 0.5, y = 1.3, length = 6.5, default.units = "inches"
+)
 
 ## Hide page guides
 bb_pageGuideHide()
-
 }

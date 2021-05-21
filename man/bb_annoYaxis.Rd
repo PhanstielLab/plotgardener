@@ -59,26 +59,31 @@ data("bb_imrHicData")
 bb_pageCreate(width = 4, height = 3.5, default.units = "inches")
 
 ## Plot and place a square Hi-C plot
-hicPlot <- bb_plotHicSquare(data = bb_imrHicData, resolution = 10000,
-                            zrange = c(0, 70),
-                            chrom = "chr21",
-                            chromstart = 28000000, chromend = 30300000,
-                            x = 1, y = 0.5, width = 2.5, height = 2.5,
-                            just = c("left", "top"),
-                            default.units = "inches")
+hicPlot <- bb_plotHicSquare(
+    data = bb_imrHicData, resolution = 10000,
+    zrange = c(0, 70),
+    chrom = "chr21",
+    chromstart = 28000000, chromend = 30300000,
+    x = 1, y = 0.5, width = 2.5, height = 2.5,
+    just = c("left", "top"),
+    default.units = "inches"
+)
 
 ## Add standard y-axis to Hi-C plot
-bb_annoYaxis(plot = hicPlot, at = c(28000000, 29000000, 30300000),
-             fontsize = 10)
+bb_annoYaxis(
+    plot = hicPlot, at = c(28000000, 29000000, 30300000),
+    fontsize = 10
+)
 
 ## Annotate genome label on x-axis
 bb_annoGenomeLabel(plot = hicPlot, x = 1, y = 3.03)
 
 ## Annotate heatmap legend
-bb_annoHeatmapLegend(plot = hicPlot,
-                     x = 3.6, y = 0.5, width = 0.12, height = 1.2)
+bb_annoHeatmapLegend(
+    plot = hicPlot,
+    x = 3.6, y = 0.5, width = 0.12, height = 1.2
+)
 
 ## Hide page guides
 bb_pageGuideHide()
-
 }

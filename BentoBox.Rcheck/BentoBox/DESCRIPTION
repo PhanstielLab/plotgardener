@@ -1,0 +1,58 @@
+Package: BentoBox
+Title: Coordinate-based Genomic Visualization Package for R
+Version: 0.1.0
+Date: 2021-01-23
+Authors@R: c(person("Nicole", "Kramer", 
+             email = "nekramer@live.unc.edu", 
+             role = c("aut", "cre"),
+             comment = c(ORCID = "0000-0001-9617-9671")),
+             person(c("Eric", "S."), "Davis", 
+             email = "esdavis@live.unc.edu", 
+             role = c("aut"),
+             comment = c(ORCID = "0000-0003-4051-3217")),
+             person("Craig", "Wenger", 
+             email = "craig.wenger@gmail.com", 
+             role = c("aut"),
+             comment = c(ORCID = "0000-0002-7361-8456")),
+             person("Sarah", "Parker", 
+             email = "sarmae@live.unc.edu", 
+             role = c("ctb")),
+             person("Erika", "Deoudes", 
+             email = "ed@erikadudes.com", 
+             role = c("art")),
+             person(c("Douglas", "H."), "Phanstiel", 
+             email = "douglas_phanstiel@med.unc.edu", 
+             role = c("aut", "cph")))
+Description: >
+    BentoBox is a coordinate-based genomic visualization package for R. It grants users
+    the ability to programmatically produce complex, multi-paneled figures. Tailored for
+    genomics, BentoBox allows users to visualize large complex genomic datasets and
+    provides exquisite control over how plots are placed and arranged on a page. 
+Depends: R (>= 4.0)
+License: GPL (>= 2) | file LICENSE
+URL: https://phanstiellab.github.io/bentobox,
+        https://github.com/PhanstielLab/BentoBox
+Encoding: UTF-8
+RoxygenNote: 7.1.1
+Imports: stats, utils, grDevices, grid, methods, strawr, GenomicRanges,
+        IRanges, Rcpp, rtracklayer, BSgenome, GenomeInfoDb, plyranges,
+        data.table, Rmpfr, ggplotify, RColorBrewer, tools, dplyr,
+        purrr, AnnotationDbi, rlang, GenomicFeatures
+Remotes: PhanstielLab/straw/R
+biocViews: AnnotationData, BSgenome, GenomicSequence, OrgDb,
+        SequenceAnnotation, TxDb
+LinkingTo: Rcpp
+Suggests: TxDb.Hsapiens.UCSC.hg19.knownGene, org.Hs.eg.db,
+        BSgenome.Hsapiens.UCSC.hg19, png, ggplot2, scales, showtext,
+        knitr, rmarkdown
+VignetteBuilder: knitr
+NeedsCompilation: yes
+Packaged: 2021-05-21 20:38:39 UTC; nicolekramer
+Author: Nicole Kramer [aut, cre] (<https://orcid.org/0000-0001-9617-9671>),
+  Eric S. Davis [aut] (<https://orcid.org/0000-0003-4051-3217>),
+  Craig Wenger [aut] (<https://orcid.org/0000-0002-7361-8456>),
+  Sarah Parker [ctb],
+  Erika Deoudes [art],
+  Douglas H. Phanstiel [aut, cph]
+Maintainer: Nicole Kramer <nekramer@live.unc.edu>
+Built: R 4.1.0; x86_64-apple-darwin17.0; 2021-05-21 20:59:38 UTC; unix

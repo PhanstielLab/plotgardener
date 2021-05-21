@@ -54,253 +54,297 @@
 #' bb_pageCreate(width = 7.5, height = 6, default.units = "inches")
 #'
 #' ## Plot one line segment
-#' bb_plotSegments(x0 = 3.75, y0 = 0.25, x1 = 3.75, y1 = 5.75,
-#'                 default.units = "inches",
-#'                 lwd = 3, lty = 2)
+#' bb_plotSegments(
+#'     x0 = 3.75, y0 = 0.25, x1 = 3.75, y1 = 5.75,
+#'     default.units = "inches",
+#'     lwd = 3, lty = 2
+#' )
 #'
 #' ## Plot multiple line segments at different locations in different colors
-#' bb_plotSegments(x0 = 0.5, y0 = c(1, 3, 5), x1 = 3.25, y1 = c(1, 3, 5),
-#'                 default.units = "inches",
-#'                 lwd = 2, linecolor = c("#7ecdbb", "#37a7db", "grey"))
+#' bb_plotSegments(
+#'     x0 = 0.5, y0 = c(1, 3, 5), x1 = 3.25, y1 = c(1, 3, 5),
+#'     default.units = "inches",
+#'     lwd = 2, linecolor = c("#7ecdbb", "#37a7db", "grey")
+#' )
 #'
 #' ## Plot a line segment with an arrowhead
-#' bb_plotSegments(x0 = 4.5, y0 = 0.5, x1 = 7, y1 = 3,
-#'                 default.units = "inches",
-#'                 arrow = arrow(type = "closed"), fill = "black")
+#' bb_plotSegments(
+#'     x0 = 4.5, y0 = 0.5, x1 = 7, y1 = 3,
+#'     default.units = "inches",
+#'     arrow = arrow(type = "closed"), fill = "black"
+#' )
 #'
 #' ## Plot lines with round lineends
-#' bb_plotSegments(x0 = c(4, 7), y0 = 3.5, x1 = 5.5, y1 = 4.5,
-#'                 default.units = "inches",
-#'                 lwd = 5, lineend = "round")
+#' bb_plotSegments(
+#'     x0 = c(4, 7), y0 = 3.5, x1 = 5.5, y1 = 4.5,
+#'     default.units = "inches",
+#'     lwd = 5, lineend = "round"
+#' )
 #'
 #' ## Hide page guides
 #' bb_pageGuideHide()
-#'
 #' @seealso \link[grid]{grid.segments}, \link[grid]{arrow}
 #'
 #' @export
 bb_plotSegments <- function(x0, y0, x1, y1, default.units = "inches",
                             linecolor = "black", lwd = 1, lty = 1,
                             lineend = "butt", linejoin = "mitre",
-                            arrow = NULL, params = NULL, ...){
+                            arrow = NULL, params = NULL, ...) {
 
 
-  # ======================================================================================================================================================================================
-  # PARSE PARAMETERS
-  # ======================================================================================================================================================================================
+    # =========================================================================
+    # PARSE PARAMETERS
+    # =========================================================================
 
-  ## Check which defaults are not overwritten and set to NULL
-  if(missing(arrow)) arrow <- NULL
-  if(missing(linecolor)) linecolor <- NULL
-  if(missing(lwd)) lwd <- NULL
-  if(missing(lty)) lty <- NULL
-  if(missing(lineend)) lineend <- NULL
-  if(missing(linejoin)) linejoin <- NULL
-  if(missing(default.units)) default.units <- NULL
+    ## Check which defaults are not overwritten and set to NULL
+    if (missing(arrow)) arrow <- NULL
+    if (missing(linecolor)) linecolor <- NULL
+    if (missing(lwd)) lwd <- NULL
+    if (missing(lty)) lty <- NULL
+    if (missing(lineend)) lineend <- NULL
+    if (missing(linejoin)) linejoin <- NULL
+    if (missing(default.units)) default.units <- NULL
 
-  ## Check if x0/y0/x1/y1 arguments are missing (could be in object)
-  if(!hasArg(x0)) x0 <- NULL
-  if(!hasArg(y0)) y0 <- NULL
-  if(!hasArg(x1)) x1 <- NULL
-  if(!hasArg(y1)) y1 <- NULL
+    ## Check if x0/y0/x1/y1 arguments are missing (could be in object)
+    if (!hasArg(x0)) x0 <- NULL
+    if (!hasArg(y0)) y0 <- NULL
+    if (!hasArg(x1)) x1 <- NULL
+    if (!hasArg(y1)) y1 <- NULL
 
-  ## Compile all parameters into an internal object
-  bb_segmentsInternal <- structure(list(x0 = x0, y0 = y0, x1 = x1, y1 = y1,
-                                        arrow = arrow, linecolor = linecolor,
-                                      lwd = lwd, lty = lty,
-                                      lineend = lineend, linejoin = linejoin,
-                                      default.units = default.units),
-                                   class = "bb_segmentsInternal")
+    ## Compile all parameters into an internal object
+    bb_segmentsInternal <- structure(list(
+        x0 = x0, y0 = y0, x1 = x1, y1 = y1,
+        arrow = arrow, linecolor = linecolor,
+        lwd = lwd, lty = lty,
+        lineend = lineend, linejoin = linejoin,
+        default.units = default.units
+    ),
+    class = "bb_segmentsInternal"
+    )
 
-  bb_segmentsInternal <- parseParams(bb_params = params,
-                                     object_params = bb_segmentsInternal)
+    bb_segmentsInternal <- parseParams(
+        bb_params = params,
+        object_params = bb_segmentsInternal
+    )
 
-  ## For any defaults that are still NULL, set back to default
-  if(is.null(bb_segmentsInternal$arrow)) bb_segmentsInternal$arrow <- NULL
-  if(is.null(bb_segmentsInternal$linecolor)) bb_segmentsInternal$linecolor <- "black"
-  if(is.null(bb_segmentsInternal$lwd)) bb_segmentsInternal$lwd <- 1
-  if(is.null(bb_segmentsInternal$lty)) bb_segmentsInternal$lty <- 1
-  if(is.null(bb_segmentsInternal$lineend)) bb_segmentsInternal$lineend <- "butt"
-  if(is.null(bb_segmentsInternal$linejoin)) bb_segmentsInternal$linejoin <- "mitre"
-  if(is.null(bb_segmentsInternal$default.units)) bb_segmentsInternal$default.units <- "inches"
-
-  ## Set gp
-  bb_segmentsInternal$gp <- gpar(col = bb_segmentsInternal$linecolor,
-                                 lwd = bb_segmentsInternal$lwd,
-                                 lty = bb_segmentsInternal$lty,
-                                 lineend = bb_segmentsInternal$lineend,
-                                 linejoin = bb_segmentsInternal$linejoin)
-  bb_segmentsInternal$gp <- setGP(gpList = bb_segmentsInternal$gp,
-                                  params = bb_segmentsInternal, ...)
-
-  # ======================================================================================================================================================================================
-  # INITIALIZE OBJECT
-  # ======================================================================================================================================================================================
-
-  bb_segments <- structure(list(x0 = bb_segmentsInternal$x0,
-                                y0 = bb_segmentsInternal$y0,
-                                x1 = bb_segmentsInternal$x1,
-                                y1 = bb_segmentsInternal$y1,
-                                arrow = bb_segmentsInternal$arrow,
-                                grobs = NULL,
-                                gp = bb_segmentsInternal$gp),
-                           class = "bb_segmentsInternal")
-
-  # ======================================================================================================================================================================================
-  # CATCH ERRORS
-  # ======================================================================================================================================================================================
-
-  check_bbpage(error = "Cannot plot segment without a BentoBox page.")
-  if(is.null(bb_segments$x0)) stop("argument \"x0\" is missing, with no default.", call. = FALSE)
-  if(is.null(bb_segments$y0)) stop("argument \"y0\" is missing, with no default.", call. = FALSE)
-  if(is.null(bb_segments$x1)) stop("argument \"x1\" is missing, with no default.", call. = FALSE)
-  if(is.null(bb_segments$y1)) stop("argument \"y1\" is missing, with no default.", call. = FALSE)
-
-  # ======================================================================================================================================================================================
-  # DEFINE PARAMETERS
-  # ======================================================================================================================================================================================
-
-  ## Get page_height and its units from bbEnv through bb_pageCreate
-  page_height <- get("page_height", envir = bbEnv)
-  page_units <- get("page_units", envir = bbEnv)
-
-  if (!"unit" %in% class(bb_segments$x0)){
-
-    if (!is.numeric(bb_segments$x0)){
-
-      stop("x0-coordinate is neither a unit object or a numeric value. Cannot plot segment.", call. = FALSE)
-
+    ## For any defaults that are still NULL, set back to default
+    if (is.null(bb_segmentsInternal$arrow)) bb_segmentsInternal$arrow <- NULL
+    if (is.null(bb_segmentsInternal$linecolor)) {
+        bb_segmentsInternal$linecolor <- "black"
+    }
+    if (is.null(bb_segmentsInternal$lwd)) bb_segmentsInternal$lwd <- 1
+    if (is.null(bb_segmentsInternal$lty)) bb_segmentsInternal$lty <- 1
+    if (is.null(bb_segmentsInternal$lineend)) {
+        bb_segmentsInternal$lineend <- "butt"
+    }
+    if (is.null(bb_segmentsInternal$linejoin)) {
+        bb_segmentsInternal$linejoin <- "mitre"
+    }
+    if (is.null(bb_segmentsInternal$default.units)) {
+        bb_segmentsInternal$default.units <- "inches"
     }
 
-    if (is.null(bb_segmentsInternal$default.units)){
+    ## Set gp
+    bb_segmentsInternal$gp <- gpar(
+        col = bb_segmentsInternal$linecolor,
+        lwd = bb_segmentsInternal$lwd,
+        lty = bb_segmentsInternal$lty,
+        lineend = bb_segmentsInternal$lineend,
+        linejoin = bb_segmentsInternal$linejoin
+    )
+    bb_segmentsInternal$gp <- setGP(
+        gpList = bb_segmentsInternal$gp,
+        params = bb_segmentsInternal, ...
+    )
 
-      stop("x0-coordinate detected as numeric.\'default.units\' must be specified.", call. = FALSE)
+    # =========================================================================
+    # INITIALIZE OBJECT
+    # =========================================================================
 
+    bb_segments <- structure(list(
+        x0 = bb_segmentsInternal$x0,
+        y0 = bb_segmentsInternal$y0,
+        x1 = bb_segmentsInternal$x1,
+        y1 = bb_segmentsInternal$y1,
+        arrow = bb_segmentsInternal$arrow,
+        grobs = NULL,
+        gp = bb_segmentsInternal$gp
+    ),
+    class = "bb_segmentsInternal"
+    )
+
+    # =========================================================================
+    # CATCH ERRORS
+    # =========================================================================
+
+    check_bbpage(error = "Cannot plot segment without a BentoBox page.")
+    if (is.null(bb_segments$x0)) stop("argument \"x0\" is missing,
+                                    with no default.", call. = FALSE)
+    if (is.null(bb_segments$y0)) stop("argument \"y0\" is missing,
+                                    with no default.", call. = FALSE)
+    if (is.null(bb_segments$x1)) stop("argument \"x1\" is missing,
+                                    with no default.", call. = FALSE)
+    if (is.null(bb_segments$y1)) stop("argument \"y1\" is missing,
+                                    with no default.", call. = FALSE)
+
+    # =========================================================================
+    # DEFINE PARAMETERS
+    # =========================================================================
+
+    ## Get page_height and its units from bbEnv through bb_pageCreate
+    page_height <- get("page_height", envir = bbEnv)
+    page_units <- get("page_units", envir = bbEnv)
+
+    if (!"unit" %in% class(bb_segments$x0)) {
+        if (!is.numeric(bb_segments$x0)) {
+            stop("x0-coordinate is neither a unit object or a
+                numeric value. Cannot plot segment.", call. = FALSE)
+        }
+
+        if (is.null(bb_segmentsInternal$default.units)) {
+            stop("x0-coordinate detected as numeric.\'default.units\'
+                must be specified.", call. = FALSE)
+        }
+
+        bb_segments$x0 <- unit(
+            bb_segments$x0,
+            bb_segmentsInternal$default.units
+        )
     }
 
-    bb_segments$x0 <- unit(bb_segments$x0, bb_segmentsInternal$default.units)
+    if (!"unit" %in% class(bb_segments$y0)) {
 
-  }
+        ## Check for "below" y0-coords
+        if (all(grepl("b", bb_segments$y0)) == TRUE) {
+            if (any(grepl("^[ac-zA-Z]+$", bb_segments$y0)) == TRUE) {
+                stop("\'below\' y0-coordinate(s) detected with
+                    additional letters. Cannot parse y0-coordinate(s).",
+                    call. = FALSE
+                )
+            }
 
-  if (!"unit" %in% class(bb_segments$y0)){
+            if (any(is.na(as.numeric(gsub("b", "", bb_segments$y0))))) {
+                stop("\'below\' y0-coordinate(s) does not have a
+                    numeric associated with it. Cannot
+                    parse y0-coordinate(s).", call. = FALSE)
+            }
 
-    ## Check for "below" y0-coords
-    if (all(grepl("b", bb_segments$y0)) == TRUE){
-      if (any(grepl("^[ac-zA-Z]+$", bb_segments$y0)) == TRUE){
-        stop("\'below\' y0-coordinate(s) detected with additional letters. Cannot parse y0-coordinate(s).", call. = FALSE)
-      }
+            bb_segments$y0 <- unit(
+                unlist(lapply(bb_segments$y0, plot_belowY)),
+                get("page_units", envir = bbEnv)
+            )
+        } else {
+            if (!is.numeric(bb_segments$y0)) {
+                stop("y0-coordinate is neither a unit object or a
+                    numeric value. Cannot plot segment.", call. = FALSE)
+            }
 
-      if(any(is.na(as.numeric(gsub("b","", bb_segments$y0))))){
-        stop("\'below\' y0-coordinate(s) does not have a numeric associated with it. Cannot parse y0-coordinate(s).", call. = FALSE)
-      }
+            if (is.null(bb_segmentsInternal$default.units)) {
+                stop("y0-coordinate detected as numeric.\'default.units\'
+                    must be specified.", call. = FALSE)
+            }
 
-      bb_segments$y0 <- unit(unlist(lapply(bb_segments$y0, plot_belowY)),
-                             get("page_units", envir = bbEnv))
-
-    } else {
-
-      if (!is.numeric(bb_segments$y0)){
-
-        stop("y0-coordinate is neither a unit object or a numeric value. Cannot plot segment.", call. = FALSE)
-
-      }
-
-      if (is.null(bb_segmentsInternal$default.units)){
-
-        stop("y0-coordinate detected as numeric.\'default.units\' must be specified.", call. = FALSE)
-
-      }
-
-      bb_segments$y0 <- unit(bb_segments$y0, bb_segmentsInternal$default.units)
-
+            bb_segments$y0 <- unit(
+                bb_segments$y0,
+                bb_segmentsInternal$default.units
+            )
+        }
     }
 
+    if (!"unit" %in% class(bb_segments$x1)) {
+        if (!is.numeric(bb_segments$x1)) {
+            stop("x1-coordinate is neither a unit object or a
+                numeric value. Cannot plot segment.", call. = FALSE)
+        }
 
-  }
+        if (is.null(bb_segmentsInternal$default.units)) {
+            stop("x1-coordinate detected as numeric.\'default.units\'
+                must be specified.", call. = FALSE)
+        }
 
-  if (!"unit" %in% class(bb_segments$x1)){
-
-    if (!is.numeric(bb_segments$x1)){
-
-      stop("x1-coordinate is neither a unit object or a numeric value. Cannot plot segment.", call. = FALSE)
-
+        bb_segments$x1 <- unit(
+            bb_segments$x1,
+            bb_segmentsInternal$default.units
+        )
     }
 
-    if (is.null(bb_segmentsInternal$default.units)){
+    if (!"unit" %in% class(bb_segments$y1)) {
 
-      stop("x1-coordinate detected as numeric.\'default.units\' must be specified.", call. = FALSE)
+        ## Check for "below" y1-coords
+        if (all(grepl("b", bb_segments$y1)) == TRUE) {
+            if (any(grepl("^[ac-zA-Z]+$", bb_segments$y1)) == TRUE) {
+                stop("\'below\' y1-coordinate(s) detected with
+                    additional letters. Cannot parse y1-coordinate(s).",
+                    call. = FALSE
+                )
+            }
 
+            if (any(is.na(as.numeric(gsub("b", "", bb_segments$y1))))) {
+                stop("\'below\' y1-coordinate(s) does not have a
+                    numeric associated with it. Cannot
+                    parse y1-coordinate(s).", call. = FALSE)
+            }
+
+            bb_segments$y1 <- unit(
+                unlist(lapply(bb_segments$y1, plot_belowY)),
+                get("page_units", envir = bbEnv)
+            )
+        } else {
+            if (!is.numeric(bb_segments$y1)) {
+                stop("y1-coordinate is neither a unit object or a
+                    numeric value. Cannot plot segment.", call. = FALSE)
+            }
+
+            if (is.null(bb_segmentsInternal$default.units)) {
+                stop("y1-coordinate detected as numeric.\'default.units\'
+                    must be specified.", call. = FALSE)
+            }
+
+            bb_segments$y1 <- unit(
+                bb_segments$y1,
+                bb_segmentsInternal$default.units
+            )
+        }
     }
+    ## Convert coordinates to page_units
+    new_x0 <- convertX(bb_segments$x0, unitTo = page_units, valueOnly = TRUE)
+    new_y0 <- convertY(bb_segments$y0, unitTo = page_units, valueOnly = TRUE)
+    new_x1 <- convertX(bb_segments$x1, unitTo = page_units, valueOnly = TRUE)
+    new_y1 <- convertY(bb_segments$y1, unitTo = page_units, valueOnly = TRUE)
 
-    bb_segments$x1 <- unit(bb_segments$x1, bb_segmentsInternal$default.units)
+    # =========================================================================
+    # MAKE GROB
+    # =========================================================================
+    name <- paste0(
+        "bb_segments",
+        length(grep(
+            pattern = "bb_segments",
+            x = grid.ls(
+                print = FALSE,
+                recursive = FALSE
+            )
+        )) + 1
+    )
+    segments <- grid.segments(
+        x0 = unit(new_x0, page_units),
+        y0 = unit(page_height - new_y0, page_units),
+        x1 = unit(new_x1, page_units),
+        y1 = unit(page_height - new_y1, page_units),
+        arrow = bb_segments$arrow,
+        gp = bb_segments$gp,
+        name = name
+    )
 
-  }
+    # =========================================================================
+    # ADD GROB TO OBJECT
+    # =========================================================================
 
-  if (!"unit" %in% class(bb_segments$y1)){
+    bb_segments$grobs <- segments
 
-    ## Check for "below" y1-coords
-    if (all(grepl("b", bb_segments$y1)) == TRUE){
-      if (any(grepl("^[ac-zA-Z]+$", bb_segments$y1)) == TRUE){
-        stop("\'below\' y1-coordinate(s) detected with additional letters. Cannot parse y1-coordinate(s).", call. = FALSE)
-      }
+    # =========================================================================
+    # RETURN OBJECT
+    # =========================================================================
 
-      if(any(is.na(as.numeric(gsub("b","", bb_segments$y1))))){
-        stop("\'below\' y1-coordinate(s) does not have a numeric associated with it. Cannot parse y1-coordinate(s).", call. = FALSE)
-      }
-
-      bb_segments$y1 <- unit(unlist(lapply(bb_segments$y1, plot_belowY)),
-                             get("page_units", envir = bbEnv))
-
-    } else {
-      if (!is.numeric(bb_segments$y1)){
-
-        stop("y1-coordinate is neither a unit object or a numeric value. Cannot plot segment.", call. = FALSE)
-
-      }
-
-      if (is.null(bb_segmentsInternal$default.units)){
-
-        stop("y1-coordinate detected as numeric.\'default.units\' must be specified.", call. = FALSE)
-
-      }
-
-      bb_segments$y1 <- unit(bb_segments$y1, bb_segmentsInternal$default.units)
-
-    }
-
-
-  }
-  ## Convert coordinates to page_units
-  new_x0 <- convertX(bb_segments$x0, unitTo = page_units, valueOnly = TRUE)
-  new_y0 <- convertY(bb_segments$y0, unitTo = page_units, valueOnly = TRUE)
-  new_x1 <- convertX(bb_segments$x1, unitTo = page_units, valueOnly = TRUE)
-  new_y1 <- convertY(bb_segments$y1, unitTo = page_units, valueOnly = TRUE)
-
-  # ======================================================================================================================================================================================
-  # MAKE GROB
-  # ======================================================================================================================================================================================
-  name <- paste0("bb_segments",
-                 length(grep(pattern = "bb_segments",
-                             x = grid.ls(print = FALSE,
-                                         recursive = FALSE))) + 1)
-   segments <- grid.segments(x0 = unit(new_x0, page_units),
-                             y0 = unit(page_height - new_y0, page_units),
-                             x1 = unit(new_x1, page_units),
-                             y1 = unit(page_height - new_y1, page_units),
-                             arrow = bb_segments$arrow,
-                             gp = bb_segments$gp,
-                             name = name)
-
-  # ======================================================================================================================================================================================
-  # ADD GROB TO OBJECT
-  # ======================================================================================================================================================================================
-
-  bb_segments$grobs <- segments
-
-  # ======================================================================================================================================================================================
-  # RETURN OBJECT
-  # ======================================================================================================================================================================================
-
-  message(paste0("bb_segments[", segments$name, "]"))
-  invisible(bb_segments)
+    message("bb_segments[", segments$name, "]")
+    invisible(bb_segments)
 }

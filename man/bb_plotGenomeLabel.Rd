@@ -133,46 +133,57 @@ library("BSgenome.Hsapiens.UCSC.hg19")
 bb_pageCreate(width = 5, height = 3, default.units = "inches")
 
 ## Plot and place gene track on a BentoBox page
-genesPlot <- bb_plotGenes(chrom = "chr8",
-                          chromstart = 1000000, chromend = 2000000,
-                          assembly = "hg19", fill = c("grey", "grey"),
-                          fontcolor = c("grey", "grey"),
-                          x = 0.5, y = 0.25, width = 4, height = 1,
-                          just = c("left", "top"),
-                          default.units = "inches")
+genesPlot <- bb_plotGenes(
+    chrom = "chr8",
+    chromstart = 1000000, chromend = 2000000,
+    assembly = "hg19", fill = c("grey", "grey"),
+    fontcolor = c("grey", "grey"),
+    x = 0.5, y = 0.25, width = 4, height = 1,
+    just = c("left", "top"),
+    default.units = "inches"
+)
 
 ## Plot x-axis genome labels at different scales
-bb_plotGenomeLabel(chrom = "chr8",
-                   chromstart = 1000000, chromend = 2000000,
-                   assembly = "hg19",
-                   scale = "Mb",
-                   x = 0.5, y = 1.25, length = 4, just = c("left", "top"),
-                   default.units = "inches")
-bb_plotGenomeLabel(chrom = "chr8",
-                   chromstart = 1000000, chromend = 2000000,
-                   assembly = "hg19",
-                   scale = "Kb",
-                   x = 0.5, y = 1.5, length = 4, just = c("left", "top"),
-                   default.units = "inches")
-bb_plotGenomeLabel(chrom = "chr8",
-                   chromstart = 1000000, chromend = 2000000,
-                   assembly = "hg19",
-                   scale = "bp",
-                   x = 0.5, y = 1.75, length = 4, just = c("left", "top"),
-                   default.units = "inches")
+bb_plotGenomeLabel(
+    chrom = "chr8",
+    chromstart = 1000000, chromend = 2000000,
+    assembly = "hg19",
+    scale = "Mb",
+    x = 0.5, y = 1.25, length = 4, just = c("left", "top"),
+    default.units = "inches"
+)
+bb_plotGenomeLabel(
+    chrom = "chr8",
+    chromstart = 1000000, chromend = 2000000,
+    assembly = "hg19",
+    scale = "Kb",
+    x = 0.5, y = 1.5, length = 4, just = c("left", "top"),
+    default.units = "inches"
+)
+bb_plotGenomeLabel(
+    chrom = "chr8",
+    chromstart = 1000000, chromend = 2000000,
+    assembly = "hg19",
+    scale = "bp",
+    x = 0.5, y = 1.75, length = 4, just = c("left", "top"),
+    default.units = "inches"
+)
 
 ## Plot a different genomic label region, zooming in enough
 ## to see base pairs
-bb_plotGenomeLabel(chrom = "chr8",
-                   chromstart = 1000000, chromend = 1000050,
-                   assembly = "hg19",
-                   x = 0.25, y = 2.2, length = 4.5)
-bb_plotGenomeLabel(chrom = "chr8",
-                   chromstart = 1000000, chromend = 1000020,
-                   assembly = "hg19",
-                   x = 0, y = 2.6, length = 5)
+bb_plotGenomeLabel(
+    chrom = "chr8",
+    chromstart = 1000000, chromend = 1000050,
+    assembly = "hg19",
+    x = 0.25, y = 2.2, length = 4.5
+)
+bb_plotGenomeLabel(
+    chrom = "chr8",
+    chromstart = 1000000, chromend = 1000020,
+    assembly = "hg19",
+    x = 0, y = 2.6, length = 5
+)
 
 ## Hide page guides
 bb_pageGuideHide()
-
 }

@@ -10,10 +10,9 @@
 #'
 #' @return Returns a "\code{bb_colorby}" object.
 #' @export
-colorby <- function(column, range = NULL){
-
-  colorbyObject <- structure(list(column = column, range = range),
-                             class = "bb_colorby")
-  return(colorbyObject)
-
+colorby <- function(column, range = NULL) {
+    colorbyObject <- structure(list(column = column, range = range),
+        class = "bb_colorby"
+    )
+    return(colorbyObject)
 }

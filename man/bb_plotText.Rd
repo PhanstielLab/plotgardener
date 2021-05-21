@@ -71,25 +71,32 @@ Plot text within a BentoBox layout
 bb_pageCreate(width = 4, height = 2, default.units = "inches")
 
 ## Plot text, adjusting fontsize and fontface
-bb_plotText(label = "BentoBox", fontsize = 14, fontface = "bold",
-            x = 1, y = 1, just = "center", default.units = "inches")
+bb_plotText(
+    label = "BentoBox", fontsize = 14, fontface = "bold",
+    x = 1, y = 1, just = "center", default.units = "inches"
+)
 
 ## Plot text, adjusting color, rotation, and fontfamily
-bb_plotText(label = "coordinate-based", fontcolor = "#225EA8", rot = 90,
-            fontfamily = "HersheyScript", x = 2, y = 1, just = "center",
-            default.units = "inches")
+bb_plotText(
+    label = "coordinate-based", fontcolor = "#225EA8", rot = 90,
+    fontfamily = "HersheyScript", x = 2, y = 1, just = "center",
+    default.units = "inches"
+)
 
 ## Plot a text label in multiple places at once
-bb_plotText(label = "R", x = c(0.5, 1, 1.5), y = 1.5, just = "center",
-            default.units = "inches")
+bb_plotText(
+    label = "R", x = c(0.5, 1, 1.5), y = 1.5, just = "center",
+    default.units = "inches"
+)
 
 ## Plot a vector of text labels
-bb_plotText(label = c("bb", "Bento", "Box"), x = 3, y = c(0.5, 1, 1.75),
-            just = "center", default.units = "inches")
+bb_plotText(
+    label = c("bb", "Bento", "Box"), x = 3, y = c(0.5, 1, 1.75),
+    just = "center", default.units = "inches"
+)
 
 ## Hide page guides
 bb_pageGuideHide()
-
 }
 \seealso{
 \link[grid]{grid.text}

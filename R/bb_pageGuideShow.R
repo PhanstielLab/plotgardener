@@ -7,14 +7,10 @@
 #'
 #' @return None.
 #' @export
-bb_pageGuideShow <- function(){
+bb_pageGuideShow <- function() {
+    if (length(get("guide_grobs", envir = bbEnv)$children) == 0) {
+        stop("No BentoBox page guides were previously drawn.")
+    }
 
-  if (length(get("guide_grobs", envir = bbEnv)$children) == 0) {
-
-    stop("No BentoBox page guides were previously drawn.")
-
-  }
-
-  grid.draw(get("guide_grobs", envir = bbEnv))
-
+    grid.draw(get("guide_grobs", envir = bbEnv))
 }

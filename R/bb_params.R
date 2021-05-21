@@ -49,15 +49,14 @@
 #'
 #' ## Combine parameters and pass them to a BentoBox function
 #' bb_plotGenes(params = c(p1, p2))
-#'
-#'
 #' @export bb_params
 #' @export c
 
 ## Define bb_params function skeleton (defined onLoad in zzz.R)
-bb_params <- function(){}
+bb_params <- function() {}
 
-## Define concatenate method for bb_params objects within default concatenate method to use when
+## Define concatenate method for bb_params objects within default concatenate
+## method to use when
 ## any bb_params object is found
 
 #' Combine multiple bb_params objects into a vector
@@ -69,48 +68,55 @@ bb_params <- function(){}
 #'
 #' @return \code{NULL} or an expression or a vector of an appropriate mode.
 #' (With no arguments the value is \code{NULL}.)
-"c" <- function(..., recursive = FALSE){
+"c" <- function(..., recursive = FALSE) {
 
-  ## Check all classes of inputs to concatenate
-  inputClasses <- unlist(lapply(list(...), class))
-  ## If any are found to be `bb_params` objects, they will all be combined into one `bb_params` object
-  if(any(inputClasses == "bb_params")){
+    ## Check all classes of inputs to concatenate
+    inputClasses <- unlist(lapply(list(...), class))
+    ## If any are found to be `bb_params` objects, they will all be combined
+    ## into one `bb_params` object
+    if (any(inputClasses == "bb_params")) {
+        if (!all(inputClasses == "bb_params")) {
+            warning("Attempting to concatenate parameters not of
+                    class `bb_params` with `bb_params` objects.
+                    Coercing all parameters into a `bb_params` object.",
+                call. = FALSE
+            )
+        }
 
-    if (!all(inputClasses == "bb_params")){
-      warning("Attempting to concatenate parameters not of class `bb_params` with `bb_params` objects. Coercing all parameters into a `bb_params` object.", call. = FALSE)
+        ## Combine arguments into a single list
+        combArgs <- unlist(list(...), recursive = FALSE)
+        ## Define allowed duplicates (i.e assembly="hg19")
+        allowed <- c("assembly")
 
+        ## Find duplicated argument names
+        dupArgs <- combArgs[duplicated(names(combArgs))]
+
+        ## Check for duplicate arguments that aren't allowed
+        if (any(!names(dupArgs) %in% allowed)) {
+            badDupArgs <- names(dupArgs)[!names(dupArgs) %in% allowed]
+            message <- sprintf(
+                "Parameter(s) %s are duplicated.",
+                paste(shQuote(badDupArgs), collapse = ",")
+            )
+            stop(message, call. = FALSE)
+        }
+
+        ## Check that each allowed duplicate argument name has the same value
+        for (a in allowed) {
+            dups <- combArgs[names(combArgs) %in% a]
+            if (length(unique(unlist(dups))) != 1) {
+                stop(sQuote(a), "must be the same when combining
+                    bb_params objects.", call. = FALSE)
+            }
+        }
+
+        ## Return combined object
+        return(structure(
+            .Data = combArgs[!duplicated(names(combArgs))],
+            class = "bb_params"
+        ))
+    } else {
+        ## Otherwise we will just call the primitive concatenate function
+        .Primitive("c")(...)
     }
-
-    ## Combine arguments into a single list
-    combArgs <- unlist(list(...), recursive = FALSE)
-    ## Define allowed duplicates (i.e assembly="hg19")
-    allowed <- c("assembly")
-
-    ## Find duplicated argument names
-    dupArgs <- combArgs[duplicated(names(combArgs))]
-
-    ## Check for duplicate arguments that aren't allowed
-    if (any(!names(dupArgs) %in% allowed)) {
-      badDupArgs <- names(dupArgs)[!names(dupArgs) %in% allowed]
-      stop(sprintf("Parameter(s) %s are duplicated.",
-                   paste(shQuote(badDupArgs), collapse = ",")),
-           call. = FALSE)
-    }
-
-    ## Check that each allowed duplicate argument name has the same value
-    for (a in allowed) {
-      dups <- combArgs[names(combArgs) %in% a]
-      if (length(unique(unlist(dups))) != 1) {
-        stop(paste(sQuote(a), "must be the same when combining bb_params objects."), call. = FALSE)
-      }
-    }
-
-    ## Return combined object
-    return(structure(.Data = combArgs[!duplicated(names(combArgs))],
-                     class = "bb_params"))
-  } else {
-    ## Otherwise we will just call the primitive concatenate function
-    .Primitive("c")(...)
-  }
-
 }

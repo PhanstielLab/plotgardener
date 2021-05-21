@@ -61,27 +61,32 @@ Place a BentoBox plot that has been previously created but not drawn
 data("bb_imrHicData")
 
 ## Create, but do not plot, square Hi-C plot
-hicPlot <- bb_plotHicSquare(data = bb_imrHicData, resolution = 10000,
-                            zrange = c(0, 70),
-                            chrom = "chr21",
-                            chromstart = 28000000, chromend = 30300000,
-                            draw = FALSE)
+hicPlot <- bb_plotHicSquare(
+    data = bb_imrHicData, resolution = 10000,
+    zrange = c(0, 70),
+    chrom = "chr21",
+    chromstart = 28000000, chromend = 30300000,
+    draw = FALSE
+)
 
 ## Create BentoBox page
 bb_pageCreate(width = 3.75, height = 3.5, default.units = "inches")
 
 ## Place Hi-C plot on BentoBox page
-bb_pagePlotPlace(plot = hicPlot,
-                 x = 0.25, y = 0.25, width = 3, height = 3,
-                 just = c("left", "top"),
-                 default.units = "inches", draw = TRUE)
+bb_pagePlotPlace(
+    plot = hicPlot,
+    x = 0.25, y = 0.25, width = 3, height = 3,
+    just = c("left", "top"),
+    default.units = "inches", draw = TRUE
+)
 
 ## Annotate heatmap legend
-bb_annoHeatmapLegend(plot = hicPlot,
-                     x = 3.4, y = 0.25, width = 0.12, height = 1.2,
-                     just = c("left", "top"), default.units = "inches")
+bb_annoHeatmapLegend(
+    plot = hicPlot,
+    x = 3.4, y = 0.25, width = 0.12, height = 1.2,
+    just = c("left", "top"), default.units = "inches"
+)
 
 ## Hide page guides
 bb_pageGuideHide()
-
 }

@@ -2,7 +2,8 @@
 % Please edit documentation in R/bb_assembly.R
 \name{bb_assembly}
 \alias{bb_assembly}
-\title{Make a \code{bb_assembly} object for alternate TxDb, OrgDb,and BSgenome genomic annotation packages}
+\title{Make a \code{bb_assembly} object for alternate TxDb, OrgDb,and BSgenome
+genomic annotation packages}
 \usage{
 bb_assembly(
   Genome,
@@ -20,10 +21,12 @@ bb_assembly(
 
 \item{OrgDb}{String of the desired OrgDb package name.}
 
-\item{gene.id.column}{String of the TxDb column name that refers to the given TxDb gene IDs.
+\item{gene.id.column}{String of the TxDb column name that refers to
+the given TxDb gene IDs.
 Default value is \code{gene.id.column = "ENTREZID"}.}
 
-\item{display.column}{String of the OrgDb column name that refers to the type of gene symbol to be displayed in plots.
+\item{display.column}{String of the OrgDb column name that refers to
+the type of gene symbol to be displayed in plots.
 Default value is \code{display.column = "SYMBOL"}.}
 
 \item{BSgenome}{String of the desired BSgenome package name.}
@@ -32,16 +35,19 @@ Default value is \code{display.column = "SYMBOL"}.}
 Returns a \code{bb_assembly} object containing all input parameters.
 }
 \description{
-Make a \code{bb_assembly} object for alternate TxDb, OrgDb,and BSgenome genomic annotation packages
+Make a \code{bb_assembly} object for alternate TxDb, OrgDb,and BSgenome
+genomic annotation packages
 }
 \examples{
 ## Create a custom bb_assembly object for hg38/GRCh38 packages
-newAssembly <- bb_assembly(Genome = "hg38_GRCh38",
-                           TxDb = "TxDb.Hsapiens.UCSC.hg38.knownGene",
-                           OrgDb = "org.Hs.eg.db",
-                           BSgenome = "BSgenome.Hsapiens.NCBI.GRCh38")
-
+newAssembly <- bb_assembly(
+    Genome = "hg38_GRCh38",
+    TxDb = "TxDb.Hsapiens.UCSC.hg38.knownGene",
+    OrgDb = "org.Hs.eg.db",
+    BSgenome = "BSgenome.Hsapiens.NCBI.GRCh38"
+)
 }
 \seealso{
-\link[GenomicFeatures]{TxDb}, \link[AnnotationDbi]{OrgDb-class}, \link[BSgenome]{BSgenome}
+\link[GenomicFeatures]{TxDb}, \link[AnnotationDbi]{OrgDb-class},
+\link[BSgenome]{BSgenome}
 }

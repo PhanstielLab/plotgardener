@@ -88,7 +88,8 @@ by ignoring plot placement parameters:
 bb_plotIdeogram(chrom)
 }
 
-Giemsa stain band data from the UCSC Genome Browser is included with BentoBox.
+Giemsa stain band data from the UCSC Genome Browser is
+included with BentoBox.
 }
 \examples{
 ## Load Giemsa stain band information and genomic
@@ -100,16 +101,19 @@ data("cytoBand.Hsapiens.UCSC.hg19")
 bb_pageCreate(width = 4.5, height = 1, default.units = "inches")
 
 ## Plot and place ideogram
-ideogramPlot <- bb_plotIdeogram(chrom = "chr2", assembly = "hg19",
-                                x = 0.25, y = 0.25, width = 4, height = 0.3,
-                               just = c("left", "top"),
-                               default.units = "inches")
+ideogramPlot <- bb_plotIdeogram(
+    chrom = "chr2", assembly = "hg19",
+    x = 0.25, y = 0.25, width = 4, height = 0.3,
+    just = c("left", "top"),
+    default.units = "inches"
+)
 
 ## Plot text
-bb_plotText(label = "Chromosome 2", fontcolor = "dark grey",
-            x = 4.25, y = 0.65, just = "right" )
+bb_plotText(
+    label = "Chromosome 2", fontcolor = "dark grey",
+    x = 4.25, y = 0.65, just = "right"
+)
 
 ## Hide page guides
 bb_pageGuideHide()
-
 }

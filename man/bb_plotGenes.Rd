@@ -139,44 +139,57 @@ library("org.Hs.eg.db")
 data("bb_bedpeData")
 
 ## Set genomic coordinates
-paramssmall <- bb_params(chrom = "chr8",
-                         chromstart = 0000000, chromend = 3000000,
-                         assembly = "hg19", width = 7)
-paramsbig <- bb_params(chrom = "chr8",
-                       chromstart = 0, chromend = 146364022,
-                       assembly = "hg19", width = 7)
+paramssmall <- bb_params(
+    chrom = "chr8",
+    chromstart = 0000000, chromend = 3000000,
+    assembly = "hg19", width = 7
+)
+paramsbig <- bb_params(
+    chrom = "chr8",
+    chromstart = 0, chromend = 146364022,
+    assembly = "hg19", width = 7
+)
 ## Set colors
-cols = c("#41B6C4","#225EA8")
+cols <- c("#41B6C4", "#225EA8")
 
 ## Create page
 bb_pageCreate(width = 7.5, height = 3.5, default.units = "inches")
 
 ## Plot genes big
-genesPlot <- bb_plotGenes(params = paramsbig, fill = cols,
-                          fontcolor = cols,
-                          x = 0.25, y = 0.25, height = 0.75,
-                          just = c("left", "top"),
-                          default.units = "inches")
+genesPlot <- bb_plotGenes(
+    params = paramsbig, fill = cols,
+    fontcolor = cols,
+    x = 0.25, y = 0.25, height = 0.75,
+    just = c("left", "top"),
+    default.units = "inches"
+)
 
 ## Annotate genome label
-bb_annoGenomeLabel(plot = genesPlot, x = 0.25, y = 1.0,
-                   scale = "Mb", just = c("left", "top"))
+bb_annoGenomeLabel(
+    plot = genesPlot, x = 0.25, y = 1.0,
+    scale = "Mb", just = c("left", "top")
+)
 
 ## Plot genes small
-genesPlot <- bb_plotGenes(params = paramssmall,
-                         geneHighlights = data.frame("gene" = c("DLGAP2"),
-                                                     "color" = c("#225EA8")),
-                         geneBackground = "grey",
-                         x = 0.25, y = 2.25, height = 0.75,
-                         just = c("left", "top"), default.units = "inches")
+genesPlot <- bb_plotGenes(
+    params = paramssmall,
+    geneHighlights = data.frame(
+        "gene" = c("DLGAP2"),
+        "color" = c("#225EA8")
+    ),
+    geneBackground = "grey",
+    x = 0.25, y = 2.25, height = 0.75,
+    just = c("left", "top"), default.units = "inches"
+)
 
 ## Annotate genome label
-bb_annoGenomeLabel(plot = genesPlot, x = 0.25, y = 3.0, scale = "Mb",
-                   just = c("left", "top"))
+bb_annoGenomeLabel(
+    plot = genesPlot, x = 0.25, y = 3.0, scale = "Mb",
+    just = c("left", "top")
+)
 
 ## Hide page guides
 bb_pageGuideHide()
-
 }
 \seealso{
 \link[BentoBox]{bb_assembly},

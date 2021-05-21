@@ -1,0 +1,890 @@
+This is pdfTeX, Version 3.14159265-2.6-1.40.19 (TeX Live 2018) (preloaded format=pdflatex 2018.4.16)  21 MAY 2021 17:05
+entering extended mode
+ restricted \write18 enabled.
+ %&-line parsing enabled.
+**\nonstopmode \input ./Rd2.tex \input ./Rd2.tex \input ./Rd2.tex \input ./Rd2.
+tex
+(./Rd2.tex
+(/usr/local/texlive/2018/texmf-dist/tex/latex/base/book.cls
+Document Class: book 2014/09/29 v1.4h Standard LaTeX document class
+(/usr/local/texlive/2018/texmf-dist/tex/latex/base/bk10.clo
+File: bk10.clo 2014/09/29 v1.4h Standard LaTeX file (size option)
+)
+\c@part=\count80
+\c@chapter=\count81
+\c@section=\count82
+\c@subsection=\count83
+\c@subsubsection=\count84
+\c@paragraph=\count85
+\c@subparagraph=\count86
+\c@figure=\count87
+\c@table=\count88
+\abovecaptionskip=\skip41
+\belowcaptionskip=\skip42
+\bibindent=\dimen102
+)
+(/Library/Frameworks/R.framework/Resources/share/texmf/tex/latex/Rd.sty
+Package: Rd 
+
+(/usr/local/texlive/2018/texmf-dist/tex/latex/base/ifthen.sty
+Package: ifthen 2014/09/29 v1.1c Standard LaTeX ifthen package (DPC)
+)
+(/usr/local/texlive/2018/texmf-dist/tex/latex/tools/longtable.sty
+Package: longtable 2014/10/28 v4.11 Multi-page Table package (DPC)
+\LTleft=\skip43
+\LTright=\skip44
+\LTpre=\skip45
+\LTpost=\skip46
+\LTchunksize=\count89
+\LTcapwidth=\dimen103
+\LT@head=\box26
+\LT@firsthead=\box27
+\LT@foot=\box28
+\LT@lastfoot=\box29
+\LT@cols=\count90
+\LT@rows=\count91
+\c@LT@tables=\count92
+\c@LT@chunks=\count93
+\LT@p@ftn=\toks14
+)
+(/usr/local/texlive/2018/texmf-dist/tex/latex/tools/bm.sty
+Package: bm 2017/01/16 v1.2c Bold Symbol Support (DPC/FMi)
+\symboldoperators=\mathgroup4
+\symboldletters=\mathgroup5
+\symboldsymbols=\mathgroup6
+LaTeX Font Info:    Redeclaring math alphabet \mathbf on input line 141.
+LaTeX Info: Redefining \bm on input line 207.
+)
+(/usr/local/texlive/2018/texmf-dist/tex/latex/base/alltt.sty
+Package: alltt 1997/06/16 v2.0g defines alltt environment
+)
+(/usr/local/texlive/2018/texmf-dist/tex/latex/tools/verbatim.sty
+Package: verbatim 2014/10/28 v1.5q LaTeX2e package for verbatim enhancements
+\every@verbatim=\toks15
+\verbatim@line=\toks16
+\verbatim@in@stream=\read1
+)
+(/usr/local/texlive/2018/texmf-dist/tex/latex/url/url.sty
+\Urlmuskip=\muskip10
+Package: url 2013/09/16  ver 3.4  Verb mode for urls, etc.
+)
+(/usr/local/texlive/2018/texmf-dist/tex/latex/base/textcomp.sty
+Package: textcomp 2017/04/05 v2.0i Standard LaTeX package
+Package textcomp Info: Sub-encoding information:
+(textcomp)               5 = only ISO-Adobe without \textcurrency
+(textcomp)               4 = 5 + \texteuro
+(textcomp)               3 = 4 + \textohm
+(textcomp)               2 = 3 + \textestimated + \textcurrency
+(textcomp)               1 = TS1 - \textcircled - \t
+(textcomp)               0 = TS1 (full)
+(textcomp)             Font families with sub-encoding setting implement
+(textcomp)             only a restricted character set as indicated.
+(textcomp)             Family '?' is the default used for unknown fonts.
+(textcomp)             See the documentation for details.
+Package textcomp Info: Setting ? sub-encoding to TS1/1 on input line 79.
+
+(/usr/local/texlive/2018/texmf-dist/tex/latex/base/ts1enc.def
+File: ts1enc.def 2001/06/05 v3.0e (jk/car/fm) Standard LaTeX file
+Now handling font encoding TS1 ...
+... processing UTF-8 mapping file for font encoding TS1
+
+(/usr/local/texlive/2018/texmf-dist/tex/latex/base/ts1enc.dfu
+File: ts1enc.dfu 2018/04/05 v1.2c UTF-8 support for inputenc
+   defining Unicode char U+00A2 (decimal 162)
+   defining Unicode char U+00A3 (decimal 163)
+   defining Unicode char U+00A4 (decimal 164)
+   defining Unicode char U+00A5 (decimal 165)
+   defining Unicode char U+00A6 (decimal 166)
+   defining Unicode char U+00A7 (decimal 167)
+   defining Unicode char U+00A8 (decimal 168)
+   defining Unicode char U+00A9 (decimal 169)
+   defining Unicode char U+00AA (decimal 170)
+   defining Unicode char U+00AC (decimal 172)
+   defining Unicode char U+00AE (decimal 174)
+   defining Unicode char U+00AF (decimal 175)
+   defining Unicode char U+00B0 (decimal 176)
+   defining Unicode char U+00B1 (decimal 177)
+   defining Unicode char U+00B2 (decimal 178)
+   defining Unicode char U+00B3 (decimal 179)
+   defining Unicode char U+00B4 (decimal 180)
+   defining Unicode char U+00B5 (decimal 181)
+   defining Unicode char U+00B6 (decimal 182)
+   defining Unicode char U+00B7 (decimal 183)
+   defining Unicode char U+00B9 (decimal 185)
+   defining Unicode char U+00BA (decimal 186)
+   defining Unicode char U+00BC (decimal 188)
+   defining Unicode char U+00BD (decimal 189)
+   defining Unicode char U+00BE (decimal 190)
+   defining Unicode char U+00D7 (decimal 215)
+   defining Unicode char U+00F7 (decimal 247)
+   defining Unicode char U+0192 (decimal 402)
+   defining Unicode char U+02C7 (decimal 711)
+   defining Unicode char U+02D8 (decimal 728)
+   defining Unicode char U+02DD (decimal 733)
+   defining Unicode char U+0E3F (decimal 3647)
+   defining Unicode char U+2016 (decimal 8214)
+   defining Unicode char U+2020 (decimal 8224)
+   defining Unicode char U+2021 (decimal 8225)
+   defining Unicode char U+2022 (decimal 8226)
+   defining Unicode char U+2030 (decimal 8240)
+   defining Unicode char U+2031 (decimal 8241)
+   defining Unicode char U+203B (decimal 8251)
+   defining Unicode char U+203D (decimal 8253)
+   defining Unicode char U+2044 (decimal 8260)
+   defining Unicode char U+204E (decimal 8270)
+   defining Unicode char U+2052 (decimal 8274)
+   defining Unicode char U+20A1 (decimal 8353)
+   defining Unicode char U+20A4 (decimal 8356)
+   defining Unicode char U+20A6 (decimal 8358)
+   defining Unicode char U+20A9 (decimal 8361)
+   defining Unicode char U+20AB (decimal 8363)
+   defining Unicode char U+20AC (decimal 8364)
+   defining Unicode char U+20B1 (decimal 8369)
+   defining Unicode char U+2103 (decimal 8451)
+   defining Unicode char U+2116 (decimal 8470)
+   defining Unicode char U+2117 (decimal 8471)
+   defining Unicode char U+211E (decimal 8478)
+   defining Unicode char U+2120 (decimal 8480)
+   defining Unicode char U+2122 (decimal 8482)
+   defining Unicode char U+2126 (decimal 8486)
+   defining Unicode char U+2127 (decimal 8487)
+   defining Unicode char U+212E (decimal 8494)
+   defining Unicode char U+2190 (decimal 8592)
+   defining Unicode char U+2191 (decimal 8593)
+   defining Unicode char U+2192 (decimal 8594)
+   defining Unicode char U+2193 (decimal 8595)
+   defining Unicode char U+2329 (decimal 9001)
+   defining Unicode char U+232A (decimal 9002)
+   defining Unicode char U+2422 (decimal 9250)
+   defining Unicode char U+25E6 (decimal 9702)
+   defining Unicode char U+25EF (decimal 9711)
+   defining Unicode char U+266A (decimal 9834)
+   defining Unicode char U+FEFF (decimal 65279)
+))
+LaTeX Info: Redefining \oldstylenums on input line 334.
+Package textcomp Info: Setting cmr sub-encoding to TS1/0 on input line 349.
+Package textcomp Info: Setting cmss sub-encoding to TS1/0 on input line 350.
+Package textcomp Info: Setting cmtt sub-encoding to TS1/0 on input line 351.
+Package textcomp Info: Setting cmvtt sub-encoding to TS1/0 on input line 352.
+Package textcomp Info: Setting cmbr sub-encoding to TS1/0 on input line 353.
+Package textcomp Info: Setting cmtl sub-encoding to TS1/0 on input line 354.
+Package textcomp Info: Setting ccr sub-encoding to TS1/0 on input line 355.
+Package textcomp Info: Setting ptm sub-encoding to TS1/4 on input line 356.
+Package textcomp Info: Setting pcr sub-encoding to TS1/4 on input line 357.
+Package textcomp Info: Setting phv sub-encoding to TS1/4 on input line 358.
+Package textcomp Info: Setting ppl sub-encoding to TS1/3 on input line 359.
+Package textcomp Info: Setting pag sub-encoding to TS1/4 on input line 360.
+Package textcomp Info: Setting pbk sub-encoding to TS1/4 on input line 361.
+Package textcomp Info: Setting pnc sub-encoding to TS1/4 on input line 362.
+Package textcomp Info: Setting pzc sub-encoding to TS1/4 on input line 363.
+Package textcomp Info: Setting bch sub-encoding to TS1/4 on input line 364.
+Package textcomp Info: Setting put sub-encoding to TS1/5 on input line 365.
+Package textcomp Info: Setting uag sub-encoding to TS1/5 on input line 366.
+Package textcomp Info: Setting ugq sub-encoding to TS1/5 on input line 367.
+Package textcomp Info: Setting ul8 sub-encoding to TS1/4 on input line 368.
+Package textcomp Info: Setting ul9 sub-encoding to TS1/4 on input line 369.
+Package textcomp Info: Setting augie sub-encoding to TS1/5 on input line 370.
+Package textcomp Info: Setting dayrom sub-encoding to TS1/3 on input line 371.
+Package textcomp Info: Setting dayroms sub-encoding to TS1/3 on input line 372.
+
+Package textcomp Info: Setting pxr sub-encoding to TS1/0 on input line 373.
+Package textcomp Info: Setting pxss sub-encoding to TS1/0 on input line 374.
+Package textcomp Info: Setting pxtt sub-encoding to TS1/0 on input line 375.
+Package textcomp Info: Setting txr sub-encoding to TS1/0 on input line 376.
+Package textcomp Info: Setting txss sub-encoding to TS1/0 on input line 377.
+Package textcomp Info: Setting txtt sub-encoding to TS1/0 on input line 378.
+Package textcomp Info: Setting lmr sub-encoding to TS1/0 on input line 379.
+Package textcomp Info: Setting lmdh sub-encoding to TS1/0 on input line 380.
+Package textcomp Info: Setting lmss sub-encoding to TS1/0 on input line 381.
+Package textcomp Info: Setting lmssq sub-encoding to TS1/0 on input line 382.
+Package textcomp Info: Setting lmvtt sub-encoding to TS1/0 on input line 383.
+Package textcomp Info: Setting lmtt sub-encoding to TS1/0 on input line 384.
+Package textcomp Info: Setting qhv sub-encoding to TS1/0 on input line 385.
+Package textcomp Info: Setting qag sub-encoding to TS1/0 on input line 386.
+Package textcomp Info: Setting qbk sub-encoding to TS1/0 on input line 387.
+Package textcomp Info: Setting qcr sub-encoding to TS1/0 on input line 388.
+Package textcomp Info: Setting qcs sub-encoding to TS1/0 on input line 389.
+Package textcomp Info: Setting qpl sub-encoding to TS1/0 on input line 390.
+Package textcomp Info: Setting qtm sub-encoding to TS1/0 on input line 391.
+Package textcomp Info: Setting qzc sub-encoding to TS1/0 on input line 392.
+Package textcomp Info: Setting qhvc sub-encoding to TS1/0 on input line 393.
+Package textcomp Info: Setting futs sub-encoding to TS1/4 on input line 394.
+Package textcomp Info: Setting futx sub-encoding to TS1/4 on input line 395.
+Package textcomp Info: Setting futj sub-encoding to TS1/4 on input line 396.
+Package textcomp Info: Setting hlh sub-encoding to TS1/3 on input line 397.
+Package textcomp Info: Setting hls sub-encoding to TS1/3 on input line 398.
+Package textcomp Info: Setting hlst sub-encoding to TS1/3 on input line 399.
+Package textcomp Info: Setting hlct sub-encoding to TS1/5 on input line 400.
+Package textcomp Info: Setting hlx sub-encoding to TS1/5 on input line 401.
+Package textcomp Info: Setting hlce sub-encoding to TS1/5 on input line 402.
+Package textcomp Info: Setting hlcn sub-encoding to TS1/5 on input line 403.
+Package textcomp Info: Setting hlcw sub-encoding to TS1/5 on input line 404.
+Package textcomp Info: Setting hlcf sub-encoding to TS1/5 on input line 405.
+Package textcomp Info: Setting pplx sub-encoding to TS1/3 on input line 406.
+Package textcomp Info: Setting pplj sub-encoding to TS1/3 on input line 407.
+Package textcomp Info: Setting ptmx sub-encoding to TS1/4 on input line 408.
+Package textcomp Info: Setting ptmj sub-encoding to TS1/4 on input line 409.
+)
+\ldescriptionwidth=\skip47
+
+(/usr/local/texlive/2018/texmf-dist/tex/latex/base/fontenc.sty
+Package: fontenc 2017/04/05 v2.0i Standard LaTeX package
+
+(/usr/local/texlive/2018/texmf-dist/tex/latex/base/t1enc.def
+File: t1enc.def 2017/04/05 v2.0i Standard LaTeX file
+LaTeX Font Info:    Redeclaring font encoding T1 on input line 48.
+))
+(/usr/local/texlive/2018/texmf-dist/tex/latex/psnfss/times.sty
+Package: times 2005/04/12 PSNFSS-v9.2a (SPQR) 
+)
+(/usr/local/texlive/2018/texmf-dist/tex/latex/inconsolata/zi4.sty
+Package: zi4 2017/01/04 v1.112
+
+`inconsolata-zi4' v1.112, 2017/01/04 Text macros for Inconsolata (msharpe)
+(/usr/local/texlive/2018/texmf-dist/tex/latex/xkeyval/xkeyval.sty
+Package: xkeyval 2014/12/03 v2.7a package option processing (HA)
+
+(/usr/local/texlive/2018/texmf-dist/tex/generic/xkeyval/xkeyval.tex
+(/usr/local/texlive/2018/texmf-dist/tex/generic/xkeyval/xkvutils.tex
+\XKV@toks=\toks17
+\XKV@tempa@toks=\toks18
+
+(/usr/local/texlive/2018/texmf-dist/tex/generic/xkeyval/keyval.tex))
+\XKV@depth=\count94
+File: xkeyval.tex 2014/12/03 v2.7a key=value parser (HA)
+))
+\zifour@ocount=\count95
+)
+(/usr/local/texlive/2018/texmf-dist/tex/latex/graphics/color.sty
+Package: color 2016/07/10 v1.1e Standard LaTeX Color (DPC)
+
+(/usr/local/texlive/2018/texmf-dist/tex/latex/graphics-cfg/color.cfg
+File: color.cfg 2016/01/02 v1.6 sample color configuration
+)
+Package color Info: Driver file: pdftex.def on input line 147.
+
+(/usr/local/texlive/2018/texmf-dist/tex/latex/graphics-def/pdftex.def
+File: pdftex.def 2018/01/08 v1.0l Graphics/color driver for pdftex
+))
+(/usr/local/texlive/2018/texmf-dist/tex/latex/hyperref/hyperref.sty
+Package: hyperref 2018/02/06 v6.86b Hypertext links for LaTeX
+
+(/usr/local/texlive/2018/texmf-dist/tex/generic/oberdiek/hobsub-hyperref.sty
+Package: hobsub-hyperref 2016/05/16 v1.14 Bundle oberdiek, subset hyperref (HO)
+
+
+(/usr/local/texlive/2018/texmf-dist/tex/generic/oberdiek/hobsub-generic.sty
+Package: hobsub-generic 2016/05/16 v1.14 Bundle oberdiek, subset generic (HO)
+Package: hobsub 2016/05/16 v1.14 Construct package bundles (HO)
+Package: infwarerr 2016/05/16 v1.4 Providing info/warning/error messages (HO)
+Package: ltxcmds 2016/05/16 v1.23 LaTeX kernel commands for general use (HO)
+Package: ifluatex 2016/05/16 v1.4 Provides the ifluatex switch (HO)
+Package ifluatex Info: LuaTeX not detected.
+Package: ifvtex 2016/05/16 v1.6 Detect VTeX and its facilities (HO)
+Package ifvtex Info: VTeX not detected.
+Package: intcalc 2016/05/16 v1.2 Expandable calculations with integers (HO)
+Package: ifpdf 2017/03/15 v3.2 Provides the ifpdf switch
+Package: etexcmds 2016/05/16 v1.6 Avoid name clashes with e-TeX commands (HO)
+Package etexcmds Info: Could not find \expanded.
+(etexcmds)             That can mean that you are not using pdfTeX 1.50 or
+(etexcmds)             that some package has redefined \expanded.
+(etexcmds)             In the latter case, load this package earlier.
+Package: kvsetkeys 2016/05/16 v1.17 Key value parser (HO)
+Package: kvdefinekeys 2016/05/16 v1.4 Define keys (HO)
+Package: pdftexcmds 2018/01/30 v0.27 Utility functions of pdfTeX for LuaTeX (HO
+)
+Package pdftexcmds Info: LuaTeX not detected.
+Package pdftexcmds Info: \pdf@primitive is available.
+Package pdftexcmds Info: \pdf@ifprimitive is available.
+Package pdftexcmds Info: \pdfdraftmode found.
+Package: pdfescape 2016/05/16 v1.14 Implements pdfTeX's escape features (HO)
+Package: bigintcalc 2016/05/16 v1.4 Expandable calculations on big integers (HO
+)
+Package: bitset 2016/05/16 v1.2 Handle bit-vector datatype (HO)
+Package: uniquecounter 2016/05/16 v1.3 Provide unlimited unique counter (HO)
+)
+Package hobsub Info: Skipping package `hobsub' (already loaded).
+Package: letltxmacro 2016/05/16 v1.5 Let assignment for LaTeX macros (HO)
+Package: hopatch 2016/05/16 v1.3 Wrapper for package hooks (HO)
+Package: xcolor-patch 2016/05/16 xcolor patch
+Package: atveryend 2016/05/16 v1.9 Hooks at the very end of document (HO)
+Package atveryend Info: \enddocument detected (standard20110627).
+Package: atbegshi 2016/06/09 v1.18 At begin shipout hook (HO)
+Package: refcount 2016/05/16 v3.5 Data extraction from label references (HO)
+Package: hycolor 2016/05/16 v1.8 Color options for hyperref/bookmark (HO)
+)
+(/usr/local/texlive/2018/texmf-dist/tex/generic/ifxetex/ifxetex.sty
+Package: ifxetex 2010/09/12 v0.6 Provides ifxetex conditional
+)
+(/usr/local/texlive/2018/texmf-dist/tex/latex/oberdiek/auxhook.sty
+Package: auxhook 2016/05/16 v1.4 Hooks for auxiliary files (HO)
+)
+(/usr/local/texlive/2018/texmf-dist/tex/latex/oberdiek/kvoptions.sty
+Package: kvoptions 2016/05/16 v3.12 Key value format for package options (HO)
+)
+\@linkdim=\dimen104
+\Hy@linkcounter=\count96
+\Hy@pagecounter=\count97
+
+(/usr/local/texlive/2018/texmf-dist/tex/latex/hyperref/pd1enc.def
+File: pd1enc.def 2018/02/06 v6.86b Hyperref: PDFDocEncoding definition (HO)
+Now handling font encoding PD1 ...
+... no UTF-8 mapping file for font encoding PD1
+)
+\Hy@SavedSpaceFactor=\count98
+
+(/usr/local/texlive/2018/texmf-dist/tex/latex/latexconfig/hyperref.cfg
+File: hyperref.cfg 2002/06/06 v1.2 hyperref configuration of TeXLive
+)
+Package hyperref Info: Hyper figures OFF on input line 4509.
+Package hyperref Info: Link nesting OFF on input line 4514.
+Package hyperref Info: Hyper index ON on input line 4517.
+Package hyperref Info: Plain pages OFF on input line 4524.
+Package hyperref Info: Backreferencing OFF on input line 4529.
+Package hyperref Info: Implicit mode ON; LaTeX internals redefined.
+Package hyperref Info: Bookmarks ON on input line 4762.
+\c@Hy@tempcnt=\count99
+LaTeX Info: Redefining \url on input line 5115.
+\XeTeXLinkMargin=\dimen105
+\Fld@menulength=\count100
+\Field@Width=\dimen106
+\Fld@charsize=\dimen107
+Package hyperref Info: Hyper figures OFF on input line 6369.
+Package hyperref Info: Link nesting OFF on input line 6374.
+Package hyperref Info: Hyper index ON on input line 6377.
+Package hyperref Info: backreferencing OFF on input line 6384.
+Package hyperref Info: Link coloring OFF on input line 6389.
+Package hyperref Info: Link coloring with OCG OFF on input line 6394.
+Package hyperref Info: PDF/A mode OFF on input line 6399.
+LaTeX Info: Redefining \ref on input line 6439.
+LaTeX Info: Redefining \pageref on input line 6443.
+\Hy@abspage=\count101
+\c@Item=\count102
+\c@Hfootnote=\count103
+)
+Package hyperref Info: Driver (autodetected): hpdftex.
+
+(/usr/local/texlive/2018/texmf-dist/tex/latex/hyperref/hpdftex.def
+File: hpdftex.def 2018/02/06 v6.86b Hyperref driver for pdfTeX
+\Fld@listcount=\count104
+\c@bookmark@seq@number=\count105
+
+(/usr/local/texlive/2018/texmf-dist/tex/latex/oberdiek/rerunfilecheck.sty
+Package: rerunfilecheck 2016/05/16 v1.8 Rerun checks for auxiliary files (HO)
+Package uniquecounter Info: New unique counter `rerunfilecheck' on input line 2
+82.
+)
+\Hy@SectionHShift=\skip48
+)
+
+Package hyperref Warning: Option `hyperindex' has already been used,
+(hyperref)                setting the option has no effect on input line 377.
+
+Package hyperref Info: Option `colorlinks' set `true' on input line 377.
+
+Package hyperref Warning: Option `pagebackref' has already been used,
+(hyperref)                setting the option has no effect on input line 377.
+
+Package hyperref Info: Option `linktocpage' set `true' on input line 377.
+Package hyperref Info: Option `plainpages' set `false' on input line 377.
+) (/usr/local/texlive/2018/texmf-dist/tex/latex/base/makeidx.sty
+Package: makeidx 2014/09/29 v1.0m Standard LaTeX package
+)
+(/usr/local/texlive/2018/texmf-dist/tex/latex/base/inputenc.sty
+Package: inputenc 2018/04/06 v1.3b Input encoding file
+\inpenc@prehook=\toks19
+\inpenc@posthook=\toks20
+)
+\@indexfile=\write3
+\openout3 = `Rd2.idx'.
+
+
+Writing index file Rd2.idx
+
+(/private/var/folders/y0/02t14msn4dj1nns4r2zwybqw0000gn/T/RtmpCDDxP4/Rd2pdf51e7
+2e48082b/Rd2.aux)
+\openout1 = `Rd2.aux'.
+
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 8.
+LaTeX Font Info:    ... okay on input line 8.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 8.
+LaTeX Font Info:    ... okay on input line 8.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 8.
+LaTeX Font Info:    ... okay on input line 8.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 8.
+LaTeX Font Info:    ... okay on input line 8.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 8.
+LaTeX Font Info:    ... okay on input line 8.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 8.
+LaTeX Font Info:    ... okay on input line 8.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 8.
+LaTeX Font Info:    Try loading font information for TS1+cmr on input line 8.
+ (/usr/local/texlive/2018/texmf-dist/tex/latex/base/ts1cmr.fd
+File: ts1cmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
+)
+LaTeX Font Info:    ... okay on input line 8.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 8.
+LaTeX Font Info:    ... okay on input line 8.
+LaTeX Font Info:    Try loading font information for T1+ptm on input line 8.
+(/usr/local/texlive/2018/texmf-dist/tex/latex/psnfss/t1ptm.fd
+File: t1ptm.fd 2001/06/04 font definitions for T1/ptm.
+)
+(/usr/local/texlive/2018/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
+[Loading MPS to PDF converter (version 2006.09.02).]
+\scratchcounter=\count106
+\scratchdimen=\dimen108
+\scratchbox=\box30
+\nofMPsegments=\count107
+\nofMParguments=\count108
+\everyMPshowfont=\toks21
+\MPscratchCnt=\count109
+\MPscratchDim=\dimen109
+\MPnumerator=\count110
+\makeMPintoPDFobject=\count111
+\everyMPtoPDFconversion=\toks22
+)
+\AtBeginShipoutBox=\box31
+Package hyperref Info: Link coloring ON on input line 8.
+ (/usr/local/texlive/2018/texmf-dist/tex/latex/hyperref/nameref.sty
+Package: nameref 2016/05/21 v2.44 Cross-referencing by name of section
+
+(/usr/local/texlive/2018/texmf-dist/tex/generic/oberdiek/gettitlestring.sty
+Package: gettitlestring 2016/05/16 v1.5 Cleanup title references (HO)
+)
+\c@section@level=\count112
+)
+LaTeX Info: Redefining \ref on input line 8.
+LaTeX Info: Redefining \pageref on input line 8.
+LaTeX Info: Redefining \nameref on input line 8.
+
+(/private/var/folders/y0/02t14msn4dj1nns4r2zwybqw0000gn/T/RtmpCDDxP4/Rd2pdf51e7
+2e48082b/Rd2.out)
+(/private/var/folders/y0/02t14msn4dj1nns4r2zwybqw0000gn/T/RtmpCDDxP4/Rd2pdf51e7
+2e48082b/Rd2.out)
+\@outlinefile=\write4
+\openout4 = `Rd2.out'.
+
+LaTeX Font Info:    Font shape `T1/ptm/bx/n' in size <24.88> not available
+(Font)              Font shape `T1/ptm/b/n' tried instead on input line 9.
+LaTeX Font Info:    Font shape `T1/ptm/bx/n' in size <10> not available
+(Font)              Font shape `T1/ptm/b/n' tried instead on input line 11.
+LaTeX Font Info:    Font shape `T1/ptm/bx/n' in size <20.74> not available
+(Font)              Font shape `T1/ptm/b/n' tried instead on input line 11.
+LaTeX Font Info:    Try loading font information for T1+zi4 on input line 27.
+
+(/usr/local/texlive/2018/texmf-dist/tex/latex/inconsolata/t1zi4.fd
+File: t1zi4.fd 2018/01/14 T1/zi4 (Inconsolata)
+)
+LaTeX Font Info:    Font shape `T1/zi4/m/n' will be
+(Font)              scaled to size 10.0pt on input line 27.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <7> on input line 27.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <5> on input line 27.
+LaTeX Font Info:    Font shape `T1/ptm/bx/n' in size <14.4> not available
+(Font)              Font shape `T1/ptm/b/n' tried instead on input line 52.
+LaTeX Font Info:    Try loading font information for T1+phv on input line 52.
+
+(/usr/local/texlive/2018/texmf-dist/tex/latex/psnfss/t1phv.fd
+File: t1phv.fd 2001/06/04 scalable font definitions for T1/phv.
+)
+(/private/var/folders/y0/02t14msn4dj1nns4r2zwybqw0000gn/T/RtmpCDDxP4/Rd2pdf51e7
+2e48082b/Rd2.toc [1
+
+
+{/usr/local/texlive/2018/texmf-var/fonts/map/pdftex/updmap/pdftex.map}] [2])
+\tf@toc=\write5
+\openout5 = `Rd2.toc'.
+
+ [3]
+LaTeX Font Info:    Try loading font information for TS1+ptm on input line 106.
+
+
+(/usr/local/texlive/2018/texmf-dist/tex/latex/psnfss/ts1ptm.fd
+File: ts1ptm.fd 2001/06/04 font definitions for TS1/ptm.
+)
+LaTeX Font Info:    Font shape `T1/zi4/m/n' will be
+(Font)              scaled to size 9.0pt on input line 177.
+ [4] [5]
+Overfull \hbox (33.52013pt too wide) in paragraph at lines 296--302
+\T1/zi4/m/n/10 "centre"\T1/ptm/m/n/10 , \T1/zi4/m/n/10 "center"\T1/ptm/m/n/10 ,
+ \T1/zi4/m/n/10 "bottom"\T1/ptm/m/n/10 , and \T1/zi4/m/n/10 "top"\T1/ptm/m/n/10
+ . De-fault value is \T1/zi4/m/n/10 just = c("left","top")\T1/ptm/m/n/10 . 
+ []
+
+[6] [7]
+Overfull \hbox (2.4676pt too wide) in paragraph at lines 396--398
+[]\T1/ptm/m/n/10 A char-ac-ter value spec-i-fy-ing high-light box line color. D
+e-fault value is \T1/zi4/m/n/10 linecolor
+ []
+
+[8] [9] [10] [11]
+Overfull \hbox (6.39755pt too wide) in paragraph at lines 680--682
+[]\T1/ptm/m/n/10 A char-ac-ter value spec-i-fy-ing line join style. De-fault va
+lue is \T1/zi4/m/n/10 linejoin = "mitre"\T1/ptm/m/n/10 .
+ []
+
+[12] [13]
+Overfull \hbox (11.00793pt too wide) in paragraph at lines 796--798
+[]\T1/ptm/m/n/10 A char-ac-ter value spec-i-fy-ing text font-color. De-fault va
+lue is \T1/zi4/m/n/10 fontcolor = "black"\T1/ptm/m/n/10 . 
+ []
+
+[14] [15]
+Overfull \hbox (8.24722pt too wide) in paragraph at lines 918--920
+[]\T1/ptm/m/n/10 A log-i-cal value in-di-cat-ing whether to show the axis line.
+ De-fault value is \T1/zi4/m/n/10 axisLine
+ []
+
+[16]
+Overfull \hbox (8.24722pt too wide) in paragraph at lines 1015--1017
+[]\T1/ptm/m/n/10 A log-i-cal value in-di-cat-ing whether to show the axis line.
+ De-fault value is \T1/zi4/m/n/10 axisLine
+ []
+
+[17] [18] [19]
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [20]
+Underfull \hbox (badness 4001) in paragraph at lines 1227--1227
+[]\T1/ptm/m/it/10 Make a \T1/zi4/m/n/10 bb_assembly \T1/ptm/m/it/10 ob-ject for
+ al-ter-nate TxDb, OrgDb,and
+ []
+
+[21]
+Overfull \hbox (2.14693pt too wide) in paragraph at lines 1341--1344
+[]\T1/ptm/m/n/10 A dataset list-ing in-ter-ac-tion data along ge-nomic co-or-di
+-nates in the re-gion chr21:28000000-30300000
+ []
+
+[22]
+Overfull \hbox (6.03802pt too wide) in paragraph at lines 1374--1382
+\T1/ptm/m/n/10 prin-ci-ples of chro-matin loop-ing. Cell. 2014 Dec 18;159(7):16
+65-80. doi: 10.1016/j.cell.2014.11.021.
+ []
+
+[23]
+Overfull \hbox (6.4481pt too wide) in paragraph at lines 1447--1450
+[]\T1/ptm/m/n/10 COVID-19 case data was down-loaded from The COVID Track-ing Pr
+oject [][]$\T1/zi4/m/n/10 https : / / covidtracking .
+ []
+
+[24] [25]
+Overfull \hbox (65.76762pt too wide) in paragraph at lines 1596--1600
+\T1/ptm/m/n/10 tive anal-y-sis of 111 ref-er-ence hu-man epigenomes. Na-ture 51
+8, 317^^U330 (2015). https://doi.org/10.1038/nature14248 
+ []
+
+[26]
+Overfull \hbox (6.03802pt too wide) in paragraph at lines 1624--1632
+\T1/ptm/m/n/10 prin-ci-ples of chro-matin loop-ing. Cell. 2014 Dec 18;159(7):16
+65-80. doi: 10.1016/j.cell.2014.11.021.
+ []
+
+[27] [28]
+Overfull \hbox (65.76762pt too wide) in paragraph at lines 1767--1771
+\T1/ptm/m/n/10 tive anal-y-sis of 111 ref-er-ence hu-man epigenomes. Na-ture 51
+8, 317^^U330 (2015). https://doi.org/10.1038/nature14248 
+ []
+
+
+Overfull \hbox (6.03802pt too wide) in paragraph at lines 1795--1803
+\T1/ptm/m/n/10 prin-ci-ples of chro-matin loop-ing. Cell. 2014 Dec 18;159(7):16
+65-80. doi: 10.1016/j.cell.2014.11.021.
+ []
+
+[29] [30] [31]
+Underfull \hbox (badness 10000) in paragraph at lines 1943--1943
+[]\T1/ptm/m/it/10 Reshow guides drawn with \T1/zi4/m/n/10 bb_pageCreate\T1/ptm/
+m/it/10 ,
+ []
+
+
+Overfull \hbox (13.46016pt too wide) in paragraph at lines 1946--1948
+[]\T1/ptm/m/n/10 Reshow guides drawn with \T1/zi4/m/n/10 bb_pageCreate\T1/ptm/m
+/n/10 , \T1/zi4/m/n/10 bb_pageGuideHorizontal\T1/ptm/m/n/10 , and \T1/zi4/m/n/1
+0 bb_pageGuideVertical 
+ []
+
+[32] [33] [34] [35] [36] [37] [38] [39] [40] [41] [42] [43] [44] [45] [46]
+[47]
+Overfull \hbox (4.29765pt too wide) in paragraph at lines 2958--2963
+\T1/ptm/m/n/10 will at-tempt to choose a res-o-lu-tion based on the size of the
+ re-gion. For dataframes,
+ []
+
+
+Overfull \hbox (33.52013pt too wide) in paragraph at lines 3016--3023
+\T1/zi4/m/n/10 "centre"\T1/ptm/m/n/10 , \T1/zi4/m/n/10 "center"\T1/ptm/m/n/10 ,
+ \T1/zi4/m/n/10 "bottom"\T1/ptm/m/n/10 , and \T1/zi4/m/n/10 "top"\T1/ptm/m/n/10
+ . De-fault value is \T1/zi4/m/n/10 just = c("left","top")\T1/ptm/m/n/10 . 
+ []
+
+[48] [49] [50]
+Overfull \hbox (4.29765pt too wide) in paragraph at lines 3151--3156
+\T1/ptm/m/n/10 will at-tempt to choose a res-o-lu-tion based on the size of the
+ re-gion. For dataframes,
+ []
+
+
+Overfull \hbox (33.52013pt too wide) in paragraph at lines 3230--3237
+\T1/zi4/m/n/10 "centre"\T1/ptm/m/n/10 , \T1/zi4/m/n/10 "center"\T1/ptm/m/n/10 ,
+ \T1/zi4/m/n/10 "bottom"\T1/ptm/m/n/10 , and \T1/zi4/m/n/10 "top"\T1/ptm/m/n/10
+ . De-fault value is \T1/zi4/m/n/10 just = c("left","top")\T1/ptm/m/n/10 . 
+ []
+
+[51] [52] [53]
+Overfull \hbox (4.29765pt too wide) in paragraph at lines 3359--3364
+\T1/ptm/m/n/10 will at-tempt to choose a res-o-lu-tion based on the size of the
+ re-gion. For dataframes,
+ []
+
+
+Overfull \hbox (33.52013pt too wide) in paragraph at lines 3416--3423
+\T1/zi4/m/n/10 "centre"\T1/ptm/m/n/10 , \T1/zi4/m/n/10 "center"\T1/ptm/m/n/10 ,
+ \T1/zi4/m/n/10 "bottom"\T1/ptm/m/n/10 , and \T1/zi4/m/n/10 "top"\T1/ptm/m/n/10
+ . De-fault value is \T1/zi4/m/n/10 just = c("left","top")\T1/ptm/m/n/10 . 
+ []
+
+[54] [55] [56] [57] [58] [59] [60] [61]
+Overfull \hbox (33.52013pt too wide) in paragraph at lines 3926--3932
+\T1/zi4/m/n/10 "centre"\T1/ptm/m/n/10 , \T1/zi4/m/n/10 "center"\T1/ptm/m/n/10 ,
+ \T1/zi4/m/n/10 "bottom"\T1/ptm/m/n/10 , and \T1/zi4/m/n/10 "top"\T1/ptm/m/n/10
+ . De-fault value is \T1/zi4/m/n/10 just = c("left","top")\T1/ptm/m/n/10 . 
+ []
+
+[62]
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [63]
+[64] [65]
+Overfull \hbox (33.52013pt too wide) in paragraph at lines 4195--4202
+\T1/zi4/m/n/10 "centre"\T1/ptm/m/n/10 , \T1/zi4/m/n/10 "center"\T1/ptm/m/n/10 ,
+ \T1/zi4/m/n/10 "bottom"\T1/ptm/m/n/10 , and \T1/zi4/m/n/10 "top"\T1/ptm/m/n/10
+ . De-fault value is \T1/zi4/m/n/10 just = c("left","top")\T1/ptm/m/n/10 . 
+ []
+
+[66] [67] [68]
+Overfull \hbox (33.52013pt too wide) in paragraph at lines 4414--4420
+\T1/zi4/m/n/10 "centre"\T1/ptm/m/n/10 , \T1/zi4/m/n/10 "center"\T1/ptm/m/n/10 ,
+ \T1/zi4/m/n/10 "bottom"\T1/ptm/m/n/10 , and \T1/zi4/m/n/10 "top"\T1/ptm/m/n/10
+ . De-fault value is \T1/zi4/m/n/10 just = c("left","top")\T1/ptm/m/n/10 . 
+ []
+
+[69] [70] [71]
+LaTeX Font Info:    Try loading font information for TS1+zi4 on input line 4614
+.
+
+(/usr/local/texlive/2018/texmf-dist/tex/latex/inconsolata/ts1zi4.fd
+File: ts1zi4.fd 2018/01/14 TS1/zi4 (Inconsolata)
+)
+LaTeX Font Info:    Font shape `TS1/zi4/m/n' will be
+(Font)              scaled to size 9.0pt on input line 4614.
+ [72]
+[73]
+Overfull \hbox (7.31833pt too wide) in paragraph at lines 4714--4717
+\T1/ptm/m/n/10 ment boxes, as a frac-tion of the plot's ge-nomic range. De-faul
+t value is \T1/zi4/m/n/10 spaceWidth
+ []
+
+[74] [75]
+Overfull \hbox (14.7588pt too wide) in paragraph at lines 4882--4886
+\T1/ptm/m/n/10 given as nu-mer-ics or nu-meric vec-tors. De-fault value is \T1/
+zi4/m/n/10 default.units = "inches"\T1/ptm/m/n/10 . 
+ []
+
+[76] [77] [78] [79]
+Overfull \hbox (6.39755pt too wide) in paragraph at lines 5136--5138
+[]\T1/ptm/m/n/10 A char-ac-ter value spec-i-fy-ing line join style. De-fault va
+lue is \T1/zi4/m/n/10 linejoin = "mitre"\T1/ptm/m/n/10 .
+ []
+
+[80] [81] [82] [83] [84]
+Overfull \hbox (11.00793pt too wide) in paragraph at lines 5442--5444
+[]\T1/ptm/m/n/10 A char-ac-ter value spec-i-fy-ing text font-color. De-fault va
+lue is \T1/zi4/m/n/10 fontcolor = "black"\T1/ptm/m/n/10 . 
+ []
+
+[85] [86]
+Overfull \hbox (33.52013pt too wide) in paragraph at lines 5635--5642
+\T1/zi4/m/n/10 "centre"\T1/ptm/m/n/10 , \T1/zi4/m/n/10 "center"\T1/ptm/m/n/10 ,
+ \T1/zi4/m/n/10 "bottom"\T1/ptm/m/n/10 , and \T1/zi4/m/n/10 "top"\T1/ptm/m/n/10
+ . De-fault value is \T1/zi4/m/n/10 just = c("left","top")\T1/ptm/m/n/10 . 
+ []
+
+[87] [88] [89] [90]
+Overfull \hbox (10.09732pt too wide) in paragraph at lines 5891--5894
+[]\T1/ptm/m/n/10 Character value de-scrib-ing the 3 pos-si-bil-i-ties for vac-c
+i-na-tion sta-tus: \T1/zi4/m/n/10 "not"\T1/ptm/m/n/10 , \T1/zi4/m/n/10 "partial
+ly"\T1/ptm/m/n/10 ,
+ []
+
+
+Overfull \hbox (18.58858pt too wide) in paragraph at lines 5902--5905
+\T1/ptm/m/n/10 kins Cen-ters for Civic Im-pact COVID-19 GitHub repos-i-tory [][
+]$\T1/zi4/m/n/10 "https : / / github . com / govex / COVID-[]19 /
+ []
+
+[91] [92]
+Overfull \hbox (1.27722pt too wide) in paragraph at lines 6042--6049
+\T1/ptm/m/n/10 The UCSC Genome Browser database: 2021 up-date. Nu-cleic Acids R
+es. 2021 Jan 8;49(D1):D1046-
+ []
+
+[93]
+Overfull \hbox (1.27722pt too wide) in paragraph at lines 6084--6091
+\T1/ptm/m/n/10 The UCSC Genome Browser database: 2021 up-date. Nu-cleic Acids R
+es. 2021 Jan 8;49(D1):D1046-
+ []
+
+[94]
+Overfull \hbox (1.27722pt too wide) in paragraph at lines 6126--6133
+\T1/ptm/m/n/10 The UCSC Genome Browser database: 2021 up-date. Nu-cleic Acids R
+es. 2021 Jan 8;49(D1):D1046-
+ []
+
+[95]
+Overfull \hbox (1.27722pt too wide) in paragraph at lines 6168--6175
+\T1/ptm/m/n/10 The UCSC Genome Browser database: 2021 up-date. Nu-cleic Acids R
+es. 2021 Jan 8;49(D1):D1046-
+ []
+
+
+Overfull \hbox (1.27722pt too wide) in paragraph at lines 6210--6217
+\T1/ptm/m/n/10 The UCSC Genome Browser database: 2021 up-date. Nu-cleic Acids R
+es. 2021 Jan 8;49(D1):D1046-
+ []
+
+[96]
+Overfull \hbox (1.27722pt too wide) in paragraph at lines 6252--6259
+\T1/ptm/m/n/10 The UCSC Genome Browser database: 2021 up-date. Nu-cleic Acids R
+es. 2021 Jan 8;49(D1):D1046-
+ []
+
+[97]
+Overfull \hbox (1.27722pt too wide) in paragraph at lines 6294--6301
+\T1/ptm/m/n/10 The UCSC Genome Browser database: 2021 up-date. Nu-cleic Acids R
+es. 2021 Jan 8;49(D1):D1046-
+ []
+
+[98]
+Overfull \hbox (1.27722pt too wide) in paragraph at lines 6336--6343
+\T1/ptm/m/n/10 The UCSC Genome Browser database: 2021 up-date. Nu-cleic Acids R
+es. 2021 Jan 8;49(D1):D1046-
+ []
+
+
+Overfull \hbox (1.27722pt too wide) in paragraph at lines 6378--6385
+\T1/ptm/m/n/10 The UCSC Genome Browser database: 2021 up-date. Nu-cleic Acids R
+es. 2021 Jan 8;49(D1):D1046-
+ []
+
+[99]
+(/private/var/folders/y0/02t14msn4dj1nns4r2zwybqw0000gn/T/RtmpCDDxP4/Rd2pdf51e7
+2e48082b/Rd2.ind [100]
+
+LaTeX Font Warning: Font shape `T1/zi4/m/it' undefined
+(Font)              using `T1/zi4/m/n' instead on input line 143.
+
+[101
+
+] [102
+
+])
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 6387.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 6387.
+
+(/private/var/folders/y0/02t14msn4dj1nns4r2zwybqw0000gn/T/RtmpCDDxP4/Rd2pdf51e7
+2e48082b/Rd2.aux)
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 6387.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 6387.
+
+Package rerunfilecheck Info: File `Rd2.out' has not changed.
+(rerunfilecheck)             Checksum: DFB60108EDAB8D993766078FDEDCB717;4722.
+
+
+LaTeX Font Warning: Some font shapes were not available, defaults substituted.
+
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 6387.
+ ) 
+Here is how much of TeX's memory you used:
+ 6948 strings out of 492649
+ 102125 string characters out of 6129622
+ 181127 words of memory out of 5000000
+ 10142 multiletter control sequences out of 15000+600000
+ 41364 words of font info for 51 fonts, out of 8000000 for 9000
+ 1141 hyphenation exceptions out of 8191
+ 38i,6n,36p,382b,594s stack positions out of 5000i,500n,10000p,200000b,80000s
+pdfTeX warning (dest): name{Rfn.straw} has been referenced but does not exist
+, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.grid.rect} has been referenced but does not exi
+st, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.grid.raster} has been referenced but does not e
+xist, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.grid.polygon} has been referenced but does not 
+exist, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.GRanges} has been referenced but does not exist
+, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.ggplot} has been referenced but does not exist,
+ replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.grid.circle} has been referenced but does not e
+xist, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.map.Rul.data} has been referenced but does not 
+exist, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.BSgenome} has been referenced but does not exis
+t, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.OrgDb.Rdash.class} has been referenced but does
+ not exist, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.TxDb} has been referenced but does not exist, r
+eplaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.grid.text} has been referenced but does not exi
+st, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.grid.segments} has been referenced but does not
+ exist, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.arrow} has been referenced but does not exist, 
+replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.GInteractions} has been referenced but does not
+ exist, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.grob} has been referenced but does not exist, r
+eplaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.formatC} has been referenced but does not exist
+, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.gpar} has been referenced but does not exist, r
+eplaced by a fixed one
+
+{/usr/local/texlive/2018/texmf-dist/fonts/enc/dvips/inconsolata/i4-ts1.enc}{/us
+r/local/texlive/2018/texmf-dist/fonts/enc/dvips/base/8r.enc}{/usr/local/texlive
+/2018/texmf-dist/fonts/enc/dvips/inconsolata/i4-t1-0.enc}</usr/local/texlive/20
+18/texmf-dist/fonts/type1/public/inconsolata/Inconsolata-zi4r.pfb></usr/local/t
+exlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/local/te
+xlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texl
+ive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texli
+ve/2018/texmf-dist/fonts/type1/urw/helvetic/uhvr8a.pfb></usr/local/texlive/2018
+/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/local/texlive/2018/texmf-dis
+t/fonts/type1/urw/times/utmr8a.pfb></usr/local/texlive/2018/texmf-dist/fonts/ty
+pe1/urw/times/utmr8a.pfb></usr/local/texlive/2018/texmf-dist/fonts/type1/urw/ti
+mes/utmri8a.pfb>
+Output written on Rd2.pdf (102 pages, 311383 bytes).
+PDF statistics:
+ 1795 PDF objects out of 2073 (max. 8388607)
+ 1665 compressed objects within 17 object streams
+ 598 named destinations out of 1000 (max. 500000)
+ 545 words of extra memory for PDF output out of 10000 (max. 10000000)
+

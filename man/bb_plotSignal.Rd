@@ -153,35 +153,46 @@ data("bb_gmH3K27acData")
 bb_pageCreate(width = 7.5, height = 2.1, default.units = "inches")
 
 ## Define region
-region <- bb_params(chrom = "chr21",
-                    chromstart = 28000000, chromend = 30300000,
-                    range = c(0, 45))
+region <- bb_params(
+    chrom = "chr21",
+    chromstart = 28000000, chromend = 30300000,
+    range = c(0, 45)
+)
 
 ## Plot and place signal plots
-signal1 <- bb_plotSignal(data = bb_imrH3K27acData, params = region,
-                         x = 0.5, y = 0.25, width = 6.5, height = 0.65,
-                         just = c("left", "top"), default.units = "inches")
+signal1 <- bb_plotSignal(
+    data = bb_imrH3K27acData, params = region,
+    x = 0.5, y = 0.25, width = 6.5, height = 0.65,
+    just = c("left", "top"), default.units = "inches"
+)
 
-signal2 <- bb_plotSignal(data = bb_gmH3K27acData, params = region,
-                         linecolor = "#7ecdbb",
-                         x = 0.5, y = 1, width = 6.5, height = 0.65,
-                         just = c("left", "top"), default.units = "inches")
+signal2 <- bb_plotSignal(
+    data = bb_gmH3K27acData, params = region,
+    linecolor = "#7ecdbb",
+    x = 0.5, y = 1, width = 6.5, height = 0.65,
+    just = c("left", "top"), default.units = "inches"
+)
 
 ## Plot genome label
-bb_plotGenomeLabel(chrom = "chr21",
-                   chromstart = 28000000, chromend = 30300000,
-                   x = 0.5, y = 1.68, length = 6.5,
-                   default.units = "inches")
+bb_plotGenomeLabel(
+    chrom = "chr21",
+    chromstart = 28000000, chromend = 30300000,
+    x = 0.5, y = 1.68, length = 6.5,
+    default.units = "inches"
+)
 
 ## Add text labels
-bb_plotText(label = "IMR90", fonsize = 10, fontcolor = "#37a7db",
-            x = 0.5, y = 0.25, just = c("left", "top"),
-            default.units = "inches")
-bb_plotText(label = "GM12878", fonsize = 10, fontcolor = "#7ecdbb",
-            x = 0.5, y = 1, just = c("left", "top"),
-            default.units = "inches")
+bb_plotText(
+    label = "IMR90", fonsize = 10, fontcolor = "#37a7db",
+    x = 0.5, y = 0.25, just = c("left", "top"),
+    default.units = "inches"
+)
+bb_plotText(
+    label = "GM12878", fonsize = 10, fontcolor = "#7ecdbb",
+    x = 0.5, y = 1, just = c("left", "top"),
+    default.units = "inches"
+)
 
 ## Hide page guides
 bb_pageGuideHide()
-
 }

@@ -1,0 +1,2716 @@
+
+R version 4.1.0 Patched (2021-05-19 r80339) -- "Camp Pontanezen"
+Copyright (C) 2021 The R Foundation for Statistical Computing
+Platform: x86_64-apple-darwin17.0 (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> pkgname <- "BentoBox"
+> source(file.path(R.home("share"), "R", "examples-header.R"))
+> options(warn = 1)
+> library('BentoBox')
+
+Attaching package: ‘BentoBox’
+
+The following object is masked from ‘package:base’:
+
+    c
+
+> 
+> base::assign(".oldSearch", base::search(), pos = 'CheckExEnv')
+> base::assign(".old_wd", base::getwd(), pos = 'CheckExEnv')
+> cleanEx()
+> nameEx("bb_annoGenomeLabel")
+> ### * bb_annoGenomeLabel
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: bb_annoGenomeLabel
+> ### Title: Annotate genomic coordinates along the x or y-axis of a BentoBox
+> ###   plot
+> ### Aliases: bb_annoGenomeLabel
+> 
+> ### ** Examples
+> 
+> ## Load hg19 genomic annotation packages
+> library("TxDb.Hsapiens.UCSC.hg19.knownGene")
+Loading required package: GenomicFeatures
+Loading required package: BiocGenerics
+Loading required package: parallel
+
+Attaching package: ‘BiocGenerics’
+
+The following objects are masked from ‘package:parallel’:
+
+    clusterApply, clusterApplyLB, clusterCall, clusterEvalQ,
+    clusterExport, clusterMap, parApply, parCapply, parLapply,
+    parLapplyLB, parRapply, parSapply, parSapplyLB
+
+The following objects are masked from ‘package:stats’:
+
+    IQR, mad, sd, var, xtabs
+
+The following objects are masked from ‘package:base’:
+
+    Filter, Find, Map, Position, Reduce, anyDuplicated, append,
+    as.data.frame, basename, cbind, colnames, dirname, do.call,
+    duplicated, eval, evalq, get, grep, grepl, intersect, is.unsorted,
+    lapply, mapply, match, mget, order, paste, pmax, pmax.int, pmin,
+    pmin.int, rank, rbind, rownames, sapply, setdiff, sort, table,
+    tapply, union, unique, unsplit, which.max, which.min
+
+Loading required package: S4Vectors
+Loading required package: stats4
+
+Attaching package: ‘S4Vectors’
+
+The following objects are masked from ‘package:base’:
+
+    I, expand.grid, unname
+
+Loading required package: IRanges
+Loading required package: GenomeInfoDb
+Loading required package: GenomicRanges
+Loading required package: AnnotationDbi
+Loading required package: Biobase
+Welcome to Bioconductor
+
+    Vignettes contain introductory material; view with
+    'browseVignettes()'. To cite Bioconductor, see
+    'citation("Biobase")', and for packages 'citation("pkgname")'.
+
+Found more than one class "atomicVector" in cache; using the first, from namespace 'Rmpfr'
+Also defined by ‘Matrix’
+Found more than one class "atomicVector" in cache; using the first, from namespace 'Rmpfr'
+Also defined by ‘Matrix’
+Found more than one class "atomicVector" in cache; using the first, from namespace 'Rmpfr'
+Also defined by ‘Matrix’
+Found more than one class "atomicVector" in cache; using the first, from namespace 'Rmpfr'
+Also defined by ‘Matrix’
+Found more than one class "atomicVector" in cache; using the first, from namespace 'Rmpfr'
+Also defined by ‘Matrix’
+Found more than one class "atomicVector" in cache; using the first, from namespace 'Rmpfr'
+Also defined by ‘Matrix’
+Found more than one class "atomicVector" in cache; using the first, from namespace 'Rmpfr'
+Also defined by ‘Matrix’
+Found more than one class "atomicVector" in cache; using the first, from namespace 'Rmpfr'
+Also defined by ‘Matrix’
+Found more than one class "atomicVector" in cache; using the first, from namespace 'Rmpfr'
+Also defined by ‘Matrix’
+Found more than one class "atomicVector" in cache; using the first, from namespace 'Rmpfr'
+Also defined by ‘Matrix’
+Found more than one class "atomicVector" in cache; using the first, from namespace 'Rmpfr'
+Also defined by ‘Matrix’
+Found more than one class "atomicVector" in cache; using the first, from namespace 'Rmpfr'
+Also defined by ‘Matrix’
+> library("org.Hs.eg.db")
+
+> 
+> ## Create BentoBox page
+> bb_pageCreate(width = 5, height = 2, default.units = "inches")
+> 
+> ## Plot and place gene track on a BentoBox page
+> genesPlot <- bb_plotGenes(
++     chrom = "chr8",
++     chromstart = 1000000, chromend = 2000000,
++     assembly = "hg19", fill = c("grey", "grey"),
++     fontcolor = c("grey", "grey"),
++     x = 0.5, y = 0.25, width = 4, height = 1,
++     just = c("left", "top"),
++     default.units = "inches"
++ )
+bb_genes[bb_genes1]
+> 
+> ## Annotate x-axis genome labels at different scales
+> bb_annoGenomeLabel(
++     plot = genesPlot, scale = "Mb",
++     x = 0.5, y = 1.25, just = c("left", "top"),
++     default.units = "inches"
++ )
+bb_genomeLabel[bb_genomeLabel1]
+> bb_annoGenomeLabel(
++     plot = genesPlot, scale = "Kb",
++     x = 0.5, y = 1.5, just = c("left", "top"),
++     default.units = "inches"
++ )
+bb_genomeLabel[bb_genomeLabel1]
+> bb_annoGenomeLabel(
++     plot = genesPlot, scale = "bp",
++     x = 0.5, y = 1.75, just = c("left", "top"),
++     default.units = "inches"
++ )
+bb_genomeLabel[bb_genomeLabel1]
+> 
+> ## Hide page guides
+> bb_pageGuideHide()
+> 
+> 
+> 
+> cleanEx()
+
+detaching ‘package:org.Hs.eg.db’,
+  ‘package:TxDb.Hsapiens.UCSC.hg19.knownGene’,
+  ‘package:GenomicFeatures’, ‘package:AnnotationDbi’,
+  ‘package:Biobase’, ‘package:GenomicRanges’, ‘package:GenomeInfoDb’,
+  ‘package:IRanges’, ‘package:S4Vectors’, ‘package:stats4’,
+  ‘package:BiocGenerics’, ‘package:parallel’
+
+> nameEx("bb_annoHeatmapLegend")
+> ### * bb_annoHeatmapLegend
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: bb_annoHeatmapLegend
+> ### Title: Add a color scale legend for heatmap-style plots
+> ### Aliases: bb_annoHeatmapLegend
+> 
+> ### ** Examples
+> 
+> ## Load Hi-C data
+> data("bb_imrHicData")
+> 
+> ## Create BentoBox page
+> bb_pageCreate(width = 4, height = 3.5, default.units = "inches")
+> 
+> ## Plot and place a square Hi-C plot
+> hicPlot <- bb_plotHicSquare(
++     data = bb_imrHicData, resolution = 10000,
++     zrange = c(0, 70),
++     chrom = "chr21",
++     chromstart = 28000000, chromend = 30300000,
++     x = 0.5, y = 0.5, width = 2.5, height = 2.5,
++     just = c("left", "top"),
++     default.units = "inches"
++ )
+Read in dataframe.  Assuming 'chrom' in column1
+                        and 'altchrom' in column2.10000BP resolution detected.
+bb_hicSquare[bb_hicSquare1]
+> 
+> ## Add heatmap legend
+> bb_annoHeatmapLegend(
++     plot = hicPlot,
++     x = 3.2, y = 0.5, width = 0.12, height = 1.2,
++     just = c("left", "top"), default.units = "inches"
++ )
+bb_heatmapLegend[bb_heatmapLegend1]
+> 
+> ## Annotate genome label
+> bb_annoGenomeLabel(
++     plot = hicPlot, x = 0.5, y = 3.03, scale = "Mb",
++     just = c("left", "top")
++ )
+Warning: End label is rounded.
+bb_genomeLabel[bb_genomeLabel1]
+> 
+> ## Hide page guides
+> bb_pageGuideHide()
+> 
+> 
+> 
+> cleanEx()
+> nameEx("bb_annoHighlight")
+> ### * bb_annoHighlight
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: bb_annoHighlight
+> ### Title: Annotates a highlight box around a specified genomic region of a
+> ###   BentoBox plot
+> ### Aliases: bb_annoHighlight
+> 
+> ### ** Examples
+> 
+> ## Create a page
+> bb_pageCreate(width = 7.5, height = 1.5, default.units = "inches")
+> 
+> ## Plot and place a signal plot
+> data("bb_imrH3K27acData")
+> region <- bb_params(
++     chrom = "chr21",
++     chromstart = 28000000, chromend = 30300000,
++     range = c(0, 45)
++ )
+> signalPlot <- bb_plotSignal(
++     data = bb_imrH3K27acData, params = region,
++     x = 0.5, y = 0.25, width = 6.5, height = 0.65,
++     just = c("left", "top"),
++     default.units = "inches"
++ )
+bb_signal[bb_signal1]
+> 
+> ## Highlight genomic region on signal plot
+> bb_annoHighlight(
++     plot = signalPlot,
++     chrom = "chr21",
++     chromstart = 29000000, chromend = 29125000,
++     y = 0.25, height = 1, just = c("left", "top"),
++     default.units = "inches"
++ )
+bb_highlight[bb_highlight1]
+> 
+> ## Plot text label
+> bb_plotText(
++     label = "region of interest", fontsize = 8, fontcolor = "black",
++     x = 3.5, y = 0.2, just = "bottom", default.units = "inches"
++ )
+bb_text[bb_text1]
+> 
+> ## Plot genome label
+> bb_plotGenomeLabel(
++     chrom = "chr21",
++     chromstart = 28000000, chromend = 30300000,
++     x = 0.5, y = 1.3, length = 6.5, default.units = "inches"
++ )
+bb_genomeLabel[bb_genomeLabel1]
+> 
+> ## Hide page guides
+> bb_pageGuideHide()
+> 
+> 
+> 
+> cleanEx()
+> nameEx("bb_annoPixels")
+> ### * bb_annoPixels
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: bb_annoPixels
+> ### Title: Annotate pixels in a Hi-C plot
+> ### Aliases: bb_annoPixels
+> 
+> ### ** Examples
+> 
+> ## Load Hi-C data and BEDPE data
+> data("bb_imrHicData")
+> data("bb_bedpeData")
+> 
+> ## Create BentoBox page
+> bb_pageCreate(width = 4.5, height = 4, default.units = "inches")
+> 
+> ## Plot and place a square Hi-C plot
+> hicPlot <- bb_plotHicSquare(
++     data = bb_imrHicData, resolution = 10000,
++     zrange = c(0, 70),
++     chrom = "chr21",
++     chromstart = 28000000, chromend = 30300000,
++     x = 0.5, y = 0.5, width = 3, height = 3,
++     just = c("left", "top"),
++     default.units = "inches"
++ )
+Read in dataframe.  Assuming 'chrom' in column1
+                        and 'altchrom' in column2.10000BP resolution detected.
+bb_hicSquare[bb_hicSquare1]
+> 
+> ## Annotate loops of both sides of Hi-C plot with squares
+> pixels <- bb_annoPixels(
++     plot = hicPlot, data = bb_bedpeData, type = "box",
++     half = "both"
++ )
+bb_pixel[bb_pixel1]
+> 
+> ## Annotate loops on one side of Hi-C plot with arrows
+> ## and the other side with circles
+> bb_pagePlotRemove(plot = pixels)
+> pixels1 <- bb_annoPixels(
++     plot = hicPlot, data = bb_bedpeData,
++     type = "arrow", half = "top", shift = 8
++ )
+bb_pixel[bb_pixel1]
+> pixels2 <- bb_annoPixels(
++     plot = hicPlot, data = bb_bedpeData,
++     type = "circle", half = "bottom"
++ )
+bb_pixel[bb_pixel1]
+> 
+> ## Annotate heatmap legend
+> bb_annoHeatmapLegend(
++     plot = hicPlot,
++     x = 3.6, y = 0.5, width = 0.12, height = 1.2,
++     just = c("left", "top"), default.units = "inches"
++ )
+bb_heatmapLegend[bb_heatmapLegend1]
+> 
+> ## Annotate genome label
+> bb_annoGenomeLabel(
++     plot = hicPlot, x = 0.5, y = 3.53, scale = "Mb",
++     just = c("left", "top")
++ )
+Warning: End label is rounded.
+bb_genomeLabel[bb_genomeLabel1]
+> 
+> ## Hide page guides
+> bb_pageGuideHide()
+> 
+> 
+> 
+> cleanEx()
+> nameEx("bb_annoSegments")
+> ### * bb_annoSegments
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: bb_annoSegments
+> ### Title: Annotates a line segment within a BentoBox plot
+> ### Aliases: bb_annoSegments
+> 
+> ### ** Examples
+> 
+> library(grid)
+> ## Create a BentoBox page
+> bb_pageCreate(width = 7.5, height = 2.5, default.units = "inches")
+> 
+> ## Plot a Manhattan plot
+> library("TxDb.Hsapiens.UCSC.hg19.knownGene")
+Loading required package: GenomicFeatures
+Loading required package: BiocGenerics
+Loading required package: parallel
+
+Attaching package: ‘BiocGenerics’
+
+The following objects are masked from ‘package:parallel’:
+
+    clusterApply, clusterApplyLB, clusterCall, clusterEvalQ,
+    clusterExport, clusterMap, parApply, parCapply, parLapply,
+    parLapplyLB, parRapply, parSapply, parSapplyLB
+
+The following objects are masked from ‘package:stats’:
+
+    IQR, mad, sd, var, xtabs
+
+The following objects are masked from ‘package:base’:
+
+    Filter, Find, Map, Position, Reduce, anyDuplicated, append,
+    as.data.frame, basename, cbind, colnames, dirname, do.call,
+    duplicated, eval, evalq, get, grep, grepl, intersect, is.unsorted,
+    lapply, mapply, match, mget, order, paste, pmax, pmax.int, pmin,
+    pmin.int, rank, rbind, rownames, sapply, setdiff, sort, table,
+    tapply, union, unique, unsplit, which.max, which.min
+
+Loading required package: S4Vectors
+Loading required package: stats4
+
+Attaching package: ‘S4Vectors’
+
+The following objects are masked from ‘package:base’:
+
+    I, expand.grid, unname
+
+Loading required package: IRanges
+Loading required package: GenomeInfoDb
+Loading required package: GenomicRanges
+Loading required package: AnnotationDbi
+Loading required package: Biobase
+Welcome to Bioconductor
+
+    Vignettes contain introductory material; view with
+    'browseVignettes()'. To cite Bioconductor, see
+    'citation("Biobase")', and for packages 'citation("pkgname")'.
+
+> data("bb_gwasData")
+> manhattanPlot <- bb_plotManhattan(
++     data = bb_gwasData, assembly = "hg19",
++     fill = c("grey", "#37a7db"),
++     sigLine = TRUE,
++     col = "grey", lty = 2, range = c(0, 14),
++     x = 0.5, y = 0, width = 6.5, height = 2,
++     just = c("left", "top"),
++     default.units = "inches"
++ )
+bb_manhattan[bb_manhattan1]
+> 
+> ## Annotate genome label
+> bb_annoGenomeLabel(
++     plot = manhattanPlot, x = 0.5, y = 2, fontsize = 8,
++     just = c("left", "top"),
++     default.units = "inches"
++ )
+bb_genomeLabel[bb_genomeLabel1]
+> bb_plotText(
++     label = "Chromosome", fontsize = 8,
++     x = 3.75, y = 2.20, just = "center", default.units = "inches"
++ )
+bb_text[bb_text1]
+> 
+> ## Annotate y-axis
+> bb_annoYaxis(
++     plot = manhattanPlot, at = c(0, 2, 4, 6, 8, 10, 12, 14),
++     axisLine = TRUE, fontsize = 8
++ )
+bb_yaxis[bb_yaxis1]
+> 
+> ## Annotate a line segment for an additional significance line of
+> ## the Manhattan plot
+> bb_annoSegments(
++     x0 = unit(0, "npc"), y0 = 10,
++     x1 = unit(1, "npc"), y1 = 10,
++     plot = manhattanPlot, default.units = "native",
++     linecolor = "red", lty = 2
++ )
+bb_segments[bb_segments1]
+> 
+> ## Plot y-axis label
+> bb_plotText(
++     label = "-log10(p-value)", x = 0.15, y = 1, rot = 90,
++     fontsize = 8, fontface = "bold", just = "center",
++     default.units = "inches"
++ )
+bb_text[bb_text2]
+> 
+> ## Hide page guides
+> bb_pageGuideHide()
+> 
+> 
+> 
+> cleanEx()
+
+detaching ‘package:TxDb.Hsapiens.UCSC.hg19.knownGene’,
+  ‘package:GenomicFeatures’, ‘package:AnnotationDbi’,
+  ‘package:Biobase’, ‘package:GenomicRanges’, ‘package:GenomeInfoDb’,
+  ‘package:IRanges’, ‘package:S4Vectors’, ‘package:stats4’,
+  ‘package:BiocGenerics’, ‘package:parallel’, ‘package:grid’
+
+> nameEx("bb_annoText")
+> ### * bb_annoText
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: bb_annoText
+> ### Title: Annotates text within a BentoBox plot
+> ### Aliases: bb_annoText
+> 
+> ### ** Examples
+> 
+> ## Create a BentoBox page
+> bb_pageCreate(width = 4, height = 4, default.units = "inches")
+> 
+> ## Plot text relative to a BentoBox plot
+> data("bb_imrHicData")
+> hicPlot <- bb_plotHicSquare(
++     data = bb_imrHicData, chrom = "chr21",
++     chromstart = 28000000, chromend = 29500000,
++     zrange = c(0, 70),
++     x = 0.5, y = 0.5, width = 3, height = 3,
++     just = c("left", "top"),
++     default.units = "inches"
++ )
+Read in dataframe.  Assuming 'chrom' in column1
+                        and 'altchrom' in column2.10000BP resolution detected.
+bb_hicSquare[bb_hicSquare1]
+> bb_annoGenomeLabel(
++     plot = hicPlot, x = 0.5, y = 3.55, scale = "Mb",
++     just = c("left", "top"), default.units = "inches"
++ )
+Warning: End label is rounded.
+bb_genomeLabel[bb_genomeLabel1]
+> 
+> bb_annoText(
++     label = "Loop", fontsize = 8, plot = hicPlot,
++     x = 29075000, y = 28150000,
++     just = "center", default.units = "native"
++ )
+bb_text[bb_text1]
+> 
+> ## Hide page guides
+> bb_pageGuideHide()
+> 
+> 
+> 
+> cleanEx()
+> nameEx("bb_annoXaxis")
+> ### * bb_annoXaxis
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: bb_annoXaxis
+> ### Title: Add an x-axis to a plot
+> ### Aliases: bb_annoXaxis
+> 
+> ### ** Examples
+> 
+> ## Load transcript information
+> library("TxDb.Hsapiens.UCSC.hg19.knownGene")
+Loading required package: GenomicFeatures
+Loading required package: BiocGenerics
+Loading required package: parallel
+
+Attaching package: ‘BiocGenerics’
+
+The following objects are masked from ‘package:parallel’:
+
+    clusterApply, clusterApplyLB, clusterCall, clusterEvalQ,
+    clusterExport, clusterMap, parApply, parCapply, parLapply,
+    parLapplyLB, parRapply, parSapply, parSapplyLB
+
+The following objects are masked from ‘package:stats’:
+
+    IQR, mad, sd, var, xtabs
+
+The following objects are masked from ‘package:base’:
+
+    Filter, Find, Map, Position, Reduce, anyDuplicated, append,
+    as.data.frame, basename, cbind, colnames, dirname, do.call,
+    duplicated, eval, evalq, get, grep, grepl, intersect, is.unsorted,
+    lapply, mapply, match, mget, order, paste, pmax, pmax.int, pmin,
+    pmin.int, rank, rbind, rownames, sapply, setdiff, sort, table,
+    tapply, union, unique, unsplit, which.max, which.min
+
+Loading required package: S4Vectors
+Loading required package: stats4
+
+Attaching package: ‘S4Vectors’
+
+The following objects are masked from ‘package:base’:
+
+    I, expand.grid, unname
+
+Loading required package: IRanges
+Loading required package: GenomeInfoDb
+Loading required package: GenomicRanges
+Loading required package: AnnotationDbi
+Loading required package: Biobase
+Welcome to Bioconductor
+
+    Vignettes contain introductory material; view with
+    'browseVignettes()'. To cite Bioconductor, see
+    'citation("Biobase")', and for packages 'citation("pkgname")'.
+
+> library("org.Hs.eg.db")
+> 
+> ## Create BentoBox page
+> bb_pageCreate(width = 7.5, height = 4.5, default.units = "inches")
+> 
+> ## Plot gene transcripts
+> transcriptPlot <- bb_plotTranscripts(
++     chrom = "chr1",
++     chromstart = 1000000,
++     chromend = 2000000,
++     x = 0.5, y = 0,
++     width = 6.5, height = 4,
++     just = c("left", "top"),
++     default.units = "inches"
++ )
+Warning: Not all transcripts shown.
+bb_transcripts[bb_transcripts1]
+> 
+> ## Add standard x-axis to transcript plot
+> bb_annoXaxis(
++     plot = transcriptPlot,
++     at = c(1000000, 1250000, 1500000, 1750000, 2000000),
++     fontsize = 8
++ )
+bb_xaxis[bb_xaxis1]
+> bb_plotText(
++     label = "Basepairs", fontsize = 10, fontface = "bold",
++     x = 3.75, y = 4.3, just = "top"
++ )
+bb_text[bb_text1]
+> 
+> ## Hide page guides
+> bb_pageGuideHide()
+> 
+> 
+> 
+> cleanEx()
+
+detaching ‘package:org.Hs.eg.db’,
+  ‘package:TxDb.Hsapiens.UCSC.hg19.knownGene’,
+  ‘package:GenomicFeatures’, ‘package:AnnotationDbi’,
+  ‘package:Biobase’, ‘package:GenomicRanges’, ‘package:GenomeInfoDb’,
+  ‘package:IRanges’, ‘package:S4Vectors’, ‘package:stats4’,
+  ‘package:BiocGenerics’, ‘package:parallel’
+
+> nameEx("bb_annoYaxis")
+> ### * bb_annoYaxis
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: bb_annoYaxis
+> ### Title: Add a y-axis to a plot
+> ### Aliases: bb_annoYaxis
+> 
+> ### ** Examples
+> 
+> ## Load Hi-C data
+> data("bb_imrHicData")
+> 
+> ## Create BentoBox page
+> bb_pageCreate(width = 4, height = 3.5, default.units = "inches")
+> 
+> ## Plot and place a square Hi-C plot
+> hicPlot <- bb_plotHicSquare(
++     data = bb_imrHicData, resolution = 10000,
++     zrange = c(0, 70),
++     chrom = "chr21",
++     chromstart = 28000000, chromend = 30300000,
++     x = 1, y = 0.5, width = 2.5, height = 2.5,
++     just = c("left", "top"),
++     default.units = "inches"
++ )
+Read in dataframe.  Assuming 'chrom' in column1
+                        and 'altchrom' in column2.10000BP resolution detected.
+bb_hicSquare[bb_hicSquare1]
+> 
+> ## Add standard y-axis to Hi-C plot
+> bb_annoYaxis(
++     plot = hicPlot, at = c(28000000, 29000000, 30300000),
++     fontsize = 10
++ )
+bb_yaxis[bb_yaxis1]
+> 
+> ## Annotate genome label on x-axis
+> bb_annoGenomeLabel(plot = hicPlot, x = 1, y = 3.03)
+bb_genomeLabel[bb_genomeLabel1]
+> 
+> ## Annotate heatmap legend
+> bb_annoHeatmapLegend(
++     plot = hicPlot,
++     x = 3.6, y = 0.5, width = 0.12, height = 1.2
++ )
+bb_heatmapLegend[bb_heatmapLegend1]
+> 
+> ## Hide page guides
+> bb_pageGuideHide()
+> 
+> 
+> 
+> cleanEx()
+> nameEx("bb_annoZoomLines")
+> ### * bb_annoZoomLines
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: bb_annoZoomLines
+> ### Title: Annotates zoom lines for a specified genomic region of a
+> ###   BentoBox plot
+> ### Aliases: bb_annoZoomLines
+> 
+> ### ** Examples
+> 
+> ## Create a page
+> bb_pageCreate(width = 7.5, height = 4.75, default.units = "inches")
+> 
+> ## Plot and place a Manhattan plot
+> library("TxDb.Hsapiens.UCSC.hg19.knownGene")
+Loading required package: GenomicFeatures
+Loading required package: BiocGenerics
+Loading required package: parallel
+
+Attaching package: ‘BiocGenerics’
+
+The following objects are masked from ‘package:parallel’:
+
+    clusterApply, clusterApplyLB, clusterCall, clusterEvalQ,
+    clusterExport, clusterMap, parApply, parCapply, parLapply,
+    parLapplyLB, parRapply, parSapply, parSapplyLB
+
+The following objects are masked from ‘package:stats’:
+
+    IQR, mad, sd, var, xtabs
+
+The following objects are masked from ‘package:base’:
+
+    Filter, Find, Map, Position, Reduce, anyDuplicated, append,
+    as.data.frame, basename, cbind, colnames, dirname, do.call,
+    duplicated, eval, evalq, get, grep, grepl, intersect, is.unsorted,
+    lapply, mapply, match, mget, order, paste, pmax, pmax.int, pmin,
+    pmin.int, rank, rbind, rownames, sapply, setdiff, sort, table,
+    tapply, union, unique, unsplit, which.max, which.min
+
+Loading required package: S4Vectors
+Loading required package: stats4
+
+Attaching package: ‘S4Vectors’
+
+The following objects are masked from ‘package:base’:
+
+    I, expand.grid, unname
+
+Loading required package: IRanges
+Loading required package: GenomeInfoDb
+Loading required package: GenomicRanges
+Loading required package: AnnotationDbi
+Loading required package: Biobase
+Welcome to Bioconductor
+
+    Vignettes contain introductory material; view with
+    'browseVignettes()'. To cite Bioconductor, see
+    'citation("Biobase")', and for packages 'citation("pkgname")'.
+
+> data("bb_gwasData")
+> manhattanPlot <- bb_plotManhattan(
++     data = bb_gwasData, assembly = "hg19",
++     fill = c("grey", "#37a7db"),
++     sigLine = FALSE,
++     col = "grey", lty = 2, range = c(0, 14),
++     x = 0.5, y = 0, width = 6.5, height = 2,
++     just = c("left", "top"),
++     default.units = "inches"
++ )
+bb_manhattan[bb_manhattan1]
+> bb_annoYaxis(
++     plot = manhattanPlot, at = c(0, 2, 4, 6, 8, 10, 12, 14),
++     axisLine = TRUE, fontsize = 8
++ )
+bb_yaxis[bb_yaxis1]
+> 
+> ## Annotate zoom lines for a region on chromsome 21
+> zoomRegion <- bb_params(
++     chrom = "chr21",
++     chromstart = 28000000, chromend = 30300000
++ )
+> bb_annoZoomLines(
++     plot = manhattanPlot, params = zoomRegion,
++     y0 = 2, x1 = c(0.5, 7), y1 = 2.5, extend = c(0, 1.1),
++     default.units = "inches",
++     lty = 3
++ )
+bb_zoom[bb_zoom1]
+> 
+> ## Annotate highlight region for zoom region
+> bb_annoHighlight(
++     plot = manhattanPlot, params = zoomRegion,
++     y = 2, height = 2, just = c("left", "bottom"),
++     default.units = "inches",
++     fill = "red", alpha = 0.8
++ )
+bb_highlight[bb_highlight1]
+> 
+> ## Plot Manhattan plot data and signal track under zoom lines
+> manhattanPlotZoom <- bb_plotManhattan(
++     data = bb_gwasData, fill = "grey",
++     sigLine = FALSE,
++     baseline = TRUE,
++     params = zoomRegion, range = c(0, 14),
++     x = 0.5, y = 2.6,
++     width = 6.5, height = 1
++ )
+bb_manhattan[bb_manhattan1]
+> data("bb_imrH3K27acData")
+> signalPlot <- bb_plotSignal(
++     data = bb_imrH3K27acData, params = zoomRegion,
++     range = c(0, 45),
++     x = 0.5, y = "b0.1",
++     width = 6.5, height = 0.65,
++     just = c("left", "top"),
++     default.units = "inches"
++ )
+bb_signal[bb_signal1]
+> 
+> ## Plot genome label
+> bb_plotGenomeLabel(
++     chrom = "chr21",
++     chromstart = 28000000, chromend = 30300000,
++     x = 0.5, y = 4.4, length = 6.5,
++     default.units = "inches"
++ )
+bb_genomeLabel[bb_genomeLabel1]
+> 
+> ## Hide page guides
+> bb_pageGuideHide()
+> 
+> 
+> 
+> cleanEx()
+
+detaching ‘package:TxDb.Hsapiens.UCSC.hg19.knownGene’,
+  ‘package:GenomicFeatures’, ‘package:AnnotationDbi’,
+  ‘package:Biobase’, ‘package:GenomicRanges’, ‘package:GenomeInfoDb’,
+  ‘package:IRanges’, ‘package:S4Vectors’, ‘package:stats4’,
+  ‘package:BiocGenerics’, ‘package:parallel’
+
+> nameEx("bb_assembly")
+> ### * bb_assembly
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: bb_assembly
+> ### Title: Make a 'bb_assembly' object for alternate TxDb, OrgDb,and
+> ###   BSgenome genomic annotation packages
+> ### Aliases: bb_assembly
+> 
+> ### ** Examples
+> 
+> ## Create a custom bb_assembly object for hg38/GRCh38 packages
+> newAssembly <- bb_assembly(
++     Genome = "hg38_GRCh38",
++     TxDb = "TxDb.Hsapiens.UCSC.hg38.knownGene",
++     OrgDb = "org.Hs.eg.db",
++     BSgenome = "BSgenome.Hsapiens.NCBI.GRCh38"
++ )
+> 
+> 
+> 
+> cleanEx()
+> nameEx("bb_defaultPackages")
+> ### * bb_defaultPackages
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: bb_defaultPackages
+> ### Title: Display the default genomic annotation packages associated with
+> ###   a genome build
+> ### Aliases: bb_defaultPackages
+> 
+> ### ** Examples
+> 
+> ## View default genomic annotation packages associated with "hg19"
+> bb_defaultPackages(Genome = "hg19")
+List of 6
+ $ Genome        : chr "hg19"
+ $ TxDb          : chr "TxDb.Hsapiens.UCSC.hg19.knownGene"
+ $ OrgDb         : chr "org.Hs.eg.db"
+ $ gene.id.column: chr "ENTREZID"
+ $ display.column: chr "SYMBOL"
+ $ BSgenome      : chr "BSgenome.Hsapiens.UCSC.hg19"
+ - attr(*, "class")= chr "bb_assembly"
+> 
+> ## View default genomic annotation packages associated with "mm9"
+> bb_defaultPackages(Genome = "mm9")
+List of 6
+ $ Genome        : chr "mm9"
+ $ TxDb          : chr "TxDb.Mmusculus.UCSC.mm9.knownGene"
+ $ OrgDb         : chr "org.Mm.eg.db"
+ $ gene.id.column: chr "ENTREZID"
+ $ display.column: chr "SYMBOL"
+ $ BSgenome      : chr "BSgenome.Mmusculus.UCSC.mm9"
+ - attr(*, "class")= chr "bb_assembly"
+> 
+> 
+> 
+> cleanEx()
+> nameEx("bb_genomes")
+> ### * bb_genomes
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: bb_genomes
+> ### Title: Display the included available default genome assemblies
+> ### Aliases: bb_genomes
+> 
+> ### ** Examples
+> 
+> bb_genomes()
+bosTau8
+bosTau9
+canFam3
+ce6
+ce11
+danRer10
+danRer11
+dm3
+dm6
+galGal4
+galGal5
+galGal6
+hg18
+hg19
+hg38
+mm9
+mm10
+rheMac3
+rheMac8
+rehMac10
+panTro5
+panTro6
+rn4
+rn5
+rn6
+sacCer2
+sacCer3
+susScr3
+susScr11
+> 
+> 
+> 
+> cleanEx()
+> nameEx("bb_pageCreate")
+> ### * bb_pageCreate
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: bb_pageCreate
+> ### Title: Create a page for a BentoBox layout
+> ### Aliases: bb_pageCreate
+> 
+> ### ** Examples
+> 
+> ## Create a 6-inch wide, 4.5-inch high BentoBox page
+> bb_pageCreate(width = 6, height = 4.5, default.units = "inches")
+> 
+> ## Create a 14-cm wide, 10-cm high Bentobox page
+> bb_pageCreate(width = 14, height = 10, default.units = "cm")
+> 
+> 
+> 
+> cleanEx()
+> nameEx("bb_pageGuideHorizontal")
+> ### * bb_pageGuideHorizontal
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: bb_pageGuideHorizontal
+> ### Title: Draw a horizontal guideline at a specified y-coordinate on a
+> ###   BentoBox page
+> ### Aliases: bb_pageGuideHorizontal
+> 
+> ### ** Examples
+> 
+> ## Create a BentoBox page
+> bb_pageCreate(width = 6, height = 5, default.units = "inches")
+> 
+> ## Add red horizontal guideline at y = 2.5 inches
+> bb_pageGuideHorizontal(y = 2.5, linecolor = "red")
+> 
+> 
+> 
+> cleanEx()
+> nameEx("bb_pageGuideVertical")
+> ### * bb_pageGuideVertical
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: bb_pageGuideVertical
+> ### Title: Draw a vertical guideline at a specified x-coordinate on a
+> ###   BentoBox page
+> ### Aliases: bb_pageGuideVertical
+> 
+> ### ** Examples
+> 
+> ## Create a BentoBox page
+> bb_pageCreate(width = 6, height = 5, default.units = "inches")
+> 
+> ## Add blue vertical guideline at x = 1.7 inches
+> bb_pageGuideVertical(x = 1.7, linecolor = "blue")
+> 
+> 
+> 
+> cleanEx()
+> nameEx("bb_pagePlotPlace")
+> ### * bb_pagePlotPlace
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: bb_pagePlotPlace
+> ### Title: Place a BentoBox plot that has been previously created but not
+> ###   drawn
+> ### Aliases: bb_pagePlotPlace
+> 
+> ### ** Examples
+> 
+> ## Load Hi-C data
+> data("bb_imrHicData")
+> 
+> ## Create, but do not plot, square Hi-C plot
+> hicPlot <- bb_plotHicSquare(
++     data = bb_imrHicData, resolution = 10000,
++     zrange = c(0, 70),
++     chrom = "chr21",
++     chromstart = 28000000, chromend = 30300000,
++     draw = FALSE
++ )
+Read in dataframe.  Assuming 'chrom' in column1
+                        and 'altchrom' in column2.10000BP resolution detected.
+bb_hicSquare[bb_hicSquare1]
+> 
+> ## Create BentoBox page
+> bb_pageCreate(width = 3.75, height = 3.5, default.units = "inches")
+> 
+> ## Place Hi-C plot on BentoBox page
+> bb_pagePlotPlace(
++     plot = hicPlot,
++     x = 0.25, y = 0.25, width = 3, height = 3,
++     just = c("left", "top"),
++     default.units = "inches", draw = TRUE
++ )
+bb_hicSquare[bb_hicSquare1]
+> 
+> ## Annotate heatmap legend
+> bb_annoHeatmapLegend(
++     plot = hicPlot,
++     x = 3.4, y = 0.25, width = 0.12, height = 1.2,
++     just = c("left", "top"), default.units = "inches"
++ )
+bb_heatmapLegend[bb_heatmapLegend1]
+> 
+> ## Hide page guides
+> bb_pageGuideHide()
+> 
+> 
+> 
+> cleanEx()
+> nameEx("bb_pagePlotRemove")
+> ### * bb_pagePlotRemove
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: bb_pagePlotRemove
+> ### Title: Remove BentoBox plots and annotations
+> ### Aliases: bb_pagePlotRemove
+> 
+> ### ** Examples
+> 
+> ## Load Hi-C data
+> data("bb_imrHicData")
+> 
+> ## Create BentoBox page
+> bb_pageCreate(width = 5.5, height = 4, default.units = "inches")
+> 
+> ## Plot and place a square Hi-C plot
+> hicPlot <- bb_plotHicSquare(
++     data = bb_imrHicData, resolution = 10000,
++     zrange = c(0, 70),
++     chrom = "chr21",
++     chromstart = 28000000, chromend = 30300000,
++     x = 0.5, y = 0.5, width = 2.5, height = 2.5,
++     just = c("left", "top"),
++     default.units = "inches"
++ )
+Read in dataframe.  Assuming 'chrom' in column1
+                        and 'altchrom' in column2.10000BP resolution detected.
+bb_hicSquare[bb_hicSquare1]
+> 
+> ## Remove square Hi-C plot from page
+> bb_pagePlotRemove(plot = hicPlot)
+> 
+> 
+> 
+> cleanEx()
+> nameEx("bb_params")
+> ### * bb_params
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: bb_params
+> ### Title: bb_params: BentoBox parameters object
+> ### Aliases: bb_params
+> 
+> ### ** Examples
+> 
+> ## Load hg19 genomic annotation packages
+> library("TxDb.Hsapiens.UCSC.hg19.knownGene")
+Loading required package: GenomicFeatures
+Loading required package: BiocGenerics
+Loading required package: parallel
+
+Attaching package: ‘BiocGenerics’
+
+The following objects are masked from ‘package:parallel’:
+
+    clusterApply, clusterApplyLB, clusterCall, clusterEvalQ,
+    clusterExport, clusterMap, parApply, parCapply, parLapply,
+    parLapplyLB, parRapply, parSapply, parSapplyLB
+
+The following objects are masked from ‘package:stats’:
+
+    IQR, mad, sd, var, xtabs
+
+The following objects are masked from ‘package:base’:
+
+    Filter, Find, Map, Position, Reduce, anyDuplicated, append,
+    as.data.frame, basename, cbind, colnames, dirname, do.call,
+    duplicated, eval, evalq, get, grep, grepl, intersect, is.unsorted,
+    lapply, mapply, match, mget, order, paste, pmax, pmax.int, pmin,
+    pmin.int, rank, rbind, rownames, sapply, setdiff, sort, table,
+    tapply, union, unique, unsplit, which.max, which.min
+
+Loading required package: S4Vectors
+Loading required package: stats4
+
+Attaching package: ‘S4Vectors’
+
+The following objects are masked from ‘package:base’:
+
+    I, expand.grid, unname
+
+Loading required package: IRanges
+Loading required package: GenomeInfoDb
+Loading required package: GenomicRanges
+Loading required package: AnnotationDbi
+Loading required package: Biobase
+Welcome to Bioconductor
+
+    Vignettes contain introductory material; view with
+    'browseVignettes()'. To cite Bioconductor, see
+    'citation("Biobase")', and for packages 'citation("pkgname")'.
+
+> library("org.Hs.eg.db")
+> 
+> ## Define parameters
+> p1 <- bb_params(gene = "IL1B", assembly = "hg19")
+> 
+> ## Optionally add more parameters
+> p2 <- bb_params(fontsize = 10)
+> 
+> ## Combine parameters and pass them to a BentoBox function
+> bb_plotGenes(params = c(p1, p2))
+bb_genes[bb_genes1]
+> 
+> 
+> 
+> cleanEx()
+
+detaching ‘package:org.Hs.eg.db’,
+  ‘package:TxDb.Hsapiens.UCSC.hg19.knownGene’,
+  ‘package:GenomicFeatures’, ‘package:AnnotationDbi’,
+  ‘package:Biobase’, ‘package:GenomicRanges’, ‘package:GenomeInfoDb’,
+  ‘package:IRanges’, ‘package:S4Vectors’, ‘package:stats4’,
+  ‘package:BiocGenerics’, ‘package:parallel’
+
+> nameEx("bb_plotBase")
+> ### * bb_plotBase
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: bb_plotBase
+> ### Title: Plot a base R plot in a BentoBox layout
+> ### Aliases: bb_plotBase
+> 
+> ### ** Examples
+> 
+> ## Define base R plot
+> p <- ~ plot(1:10) + abline(v = 2)
+> 
+> ## Create BentoBox page
+> bb_pageCreate(width = 5, height = 4, default.units = "inches")
+> 
+> ## Place base R plot in BentoBox page
+> bb_plotBase(
++     plot = p,
++     x = 0.5, y = 0.5, width = 4, height = 3,
++     just = c("left", "top"), default.units = "inches"
++ )
+bb_base[bb_base1]
+> 
+> ## Add title
+> bb_plotText(
++     label = "Base R Plot", fontsize = 14, fontface = "bold",
++     x = 2.75, y = 0.5
++ )
+bb_text[bb_text1]
+> 
+> ## Remove BentoBox page guides
+> bb_pageGuideHide()
+> 
+> 
+> 
+> cleanEx()
+> nameEx("bb_plotCircle")
+> ### * bb_plotCircle
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: bb_plotCircle
+> ### Title: Plot a circle within a BentoBox layout
+> ### Aliases: bb_plotCircle
+> 
+> ### ** Examples
+> 
+> ## Create a BentoBox page
+> bb_pageCreate(width = 2, height = 2, default.units = "inches")
+> 
+> ## Plot two circles, one at a time
+> bb_plotCircle(
++     x = 0.6, y = 0.5, r = 0.1, fill = "black",
++     default.units = "inches"
++ )
+bb_circle[bb_circle1]
+> bb_plotCircle(
++     x = 1.4, y = 0.5, r = 0.1, fill = "black",
++     default.units = "inches"
++ )
+bb_circle[bb_circle2]
+> 
+> ## Plot a vector of circles
+> xVals <- 1 + (0.5 * cos(seq(0, pi, pi / 8)))
+> yVals <- 1 + (0.5 * sin(seq(0, pi, pi / 8)))
+> bb_plotCircle(x = xVals, y = yVals, r = 0.05, default.units = "inches")
+bb_circle[bb_circle2]
+> 
+> ## Hide page guides
+> bb_pageGuideHide()
+> 
+> 
+> 
+> cleanEx()
+> nameEx("bb_plotGG")
+> ### * bb_plotGG
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: bb_plotGG
+> ### Title: Plot a ggplot2 plot, gtable, or grob object in a BentoBox layout
+> ### Aliases: bb_plotGG
+> 
+> ### ** Examples
+> 
+> ## Create a plot using ggplot2
+> library(ggplot2)
+> p <- ggplot(mtcars) +
++     geom_point(aes(mpg, disp))
+> 
+> ## Create a BentoBox page
+> bb_pageCreate(width = 4, height = 4, default.units = "inches")
+> 
+> ## Place ggplot in BentoBox page
+> bb_plotGG(
++     plot = p, x = 0.5, y = 0.5, width = 3, height = 3,
++     just = c("left", "top"), default.units = "inches"
++ )
+bb_gg[bb_gg1]
+> 
+> ## Add title
+> bb_plotText(
++     label = "mtcars", fontsize = 14, fontface = "bold",
++     x = 1, y = 0.35
++ )
+bb_text[bb_text1]
+> 
+> ## Hide page guides
+> bb_pageGuideHide()
+> 
+> 
+> 
+> cleanEx()
+
+detaching ‘package:ggplot2’
+
+> nameEx("bb_plotGenes")
+> ### * bb_plotGenes
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: bb_plotGenes
+> ### Title: Plot a gene track for a specified genomic region
+> ### Aliases: bb_plotGenes
+> 
+> ### ** Examples
+> 
+> ## Load hg19 genomic annotation packages
+> library("TxDb.Hsapiens.UCSC.hg19.knownGene")
+Loading required package: GenomicFeatures
+Loading required package: BiocGenerics
+Loading required package: parallel
+
+Attaching package: ‘BiocGenerics’
+
+The following objects are masked from ‘package:parallel’:
+
+    clusterApply, clusterApplyLB, clusterCall, clusterEvalQ,
+    clusterExport, clusterMap, parApply, parCapply, parLapply,
+    parLapplyLB, parRapply, parSapply, parSapplyLB
+
+The following objects are masked from ‘package:stats’:
+
+    IQR, mad, sd, var, xtabs
+
+The following objects are masked from ‘package:base’:
+
+    Filter, Find, Map, Position, Reduce, anyDuplicated, append,
+    as.data.frame, basename, cbind, colnames, dirname, do.call,
+    duplicated, eval, evalq, get, grep, grepl, intersect, is.unsorted,
+    lapply, mapply, match, mget, order, paste, pmax, pmax.int, pmin,
+    pmin.int, rank, rbind, rownames, sapply, setdiff, sort, table,
+    tapply, union, unique, unsplit, which.max, which.min
+
+Loading required package: S4Vectors
+Loading required package: stats4
+
+Attaching package: ‘S4Vectors’
+
+The following objects are masked from ‘package:base’:
+
+    I, expand.grid, unname
+
+Loading required package: IRanges
+Loading required package: GenomeInfoDb
+Loading required package: GenomicRanges
+Loading required package: AnnotationDbi
+Loading required package: Biobase
+Welcome to Bioconductor
+
+    Vignettes contain introductory material; view with
+    'browseVignettes()'. To cite Bioconductor, see
+    'citation("Biobase")', and for packages 'citation("pkgname")'.
+
+> library("org.Hs.eg.db")
+> 
+> ## Load BEDPE data
+> data("bb_bedpeData")
+> 
+> ## Set genomic coordinates
+> paramssmall <- bb_params(
++     chrom = "chr8",
++     chromstart = 0000000, chromend = 3000000,
++     assembly = "hg19", width = 7
++ )
+> paramsbig <- bb_params(
++     chrom = "chr8",
++     chromstart = 0, chromend = 146364022,
++     assembly = "hg19", width = 7
++ )
+> ## Set colors
+> cols <- c("#41B6C4", "#225EA8")
+> 
+> ## Create page
+> bb_pageCreate(width = 7.5, height = 3.5, default.units = "inches")
+> 
+> ## Plot genes big
+> genesPlot <- bb_plotGenes(
++     params = paramsbig, fill = cols,
++     fontcolor = cols,
++     x = 0.25, y = 0.25, height = 0.75,
++     just = c("left", "top"),
++     default.units = "inches"
++ )
+bb_genes[bb_genes1]
+> 
+> ## Annotate genome label
+> bb_annoGenomeLabel(
++     plot = genesPlot, x = 0.25, y = 1.0,
++     scale = "Mb", just = c("left", "top")
++ )
+Warning: End label is rounded.
+bb_genomeLabel[bb_genomeLabel1]
+> 
+> ## Plot genes small
+> genesPlot <- bb_plotGenes(
++     params = paramssmall,
++     geneHighlights = data.frame(
++         "gene" = c("DLGAP2"),
++         "color" = c("#225EA8")
++     ),
++     geneBackground = "grey",
++     x = 0.25, y = 2.25, height = 0.75,
++     just = c("left", "top"), default.units = "inches"
++ )
+bb_genes[bb_genes1]
+> 
+> ## Annotate genome label
+> bb_annoGenomeLabel(
++     plot = genesPlot, x = 0.25, y = 3.0, scale = "Mb",
++     just = c("left", "top")
++ )
+bb_genomeLabel[bb_genomeLabel1]
+> 
+> ## Hide page guides
+> bb_pageGuideHide()
+> 
+> 
+> 
+> cleanEx()
+
+detaching ‘package:org.Hs.eg.db’,
+  ‘package:TxDb.Hsapiens.UCSC.hg19.knownGene’,
+  ‘package:GenomicFeatures’, ‘package:AnnotationDbi’,
+  ‘package:Biobase’, ‘package:GenomicRanges’, ‘package:GenomeInfoDb’,
+  ‘package:IRanges’, ‘package:S4Vectors’, ‘package:stats4’,
+  ‘package:BiocGenerics’, ‘package:parallel’
+
+> nameEx("bb_plotGenomeLabel")
+> ### * bb_plotGenomeLabel
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: bb_plotGenomeLabel
+> ### Title: Plot genomic coordinates along the x or y-axis of a BentoBox
+> ###   plot
+> ### Aliases: bb_plotGenomeLabel
+> 
+> ### ** Examples
+> 
+> ## Load hg19 genomic annotation packages
+> library("TxDb.Hsapiens.UCSC.hg19.knownGene")
+Loading required package: GenomicFeatures
+Loading required package: BiocGenerics
+Loading required package: parallel
+
+Attaching package: ‘BiocGenerics’
+
+The following objects are masked from ‘package:parallel’:
+
+    clusterApply, clusterApplyLB, clusterCall, clusterEvalQ,
+    clusterExport, clusterMap, parApply, parCapply, parLapply,
+    parLapplyLB, parRapply, parSapply, parSapplyLB
+
+The following objects are masked from ‘package:stats’:
+
+    IQR, mad, sd, var, xtabs
+
+The following objects are masked from ‘package:base’:
+
+    Filter, Find, Map, Position, Reduce, anyDuplicated, append,
+    as.data.frame, basename, cbind, colnames, dirname, do.call,
+    duplicated, eval, evalq, get, grep, grepl, intersect, is.unsorted,
+    lapply, mapply, match, mget, order, paste, pmax, pmax.int, pmin,
+    pmin.int, rank, rbind, rownames, sapply, setdiff, sort, table,
+    tapply, union, unique, unsplit, which.max, which.min
+
+Loading required package: S4Vectors
+Loading required package: stats4
+
+Attaching package: ‘S4Vectors’
+
+The following objects are masked from ‘package:base’:
+
+    I, expand.grid, unname
+
+Loading required package: IRanges
+Loading required package: GenomeInfoDb
+Loading required package: GenomicRanges
+Loading required package: AnnotationDbi
+Loading required package: Biobase
+Welcome to Bioconductor
+
+    Vignettes contain introductory material; view with
+    'browseVignettes()'. To cite Bioconductor, see
+    'citation("Biobase")', and for packages 'citation("pkgname")'.
+
+> library("org.Hs.eg.db")
+> library("BSgenome.Hsapiens.UCSC.hg19")
+Loading required package: BSgenome
+Loading required package: Biostrings
+Loading required package: XVector
+
+Attaching package: ‘Biostrings’
+
+The following object is masked from ‘package:base’:
+
+    strsplit
+
+Loading required package: rtracklayer
+> 
+> ## Create BentoBox page
+> bb_pageCreate(width = 5, height = 3, default.units = "inches")
+> 
+> ## Plot and place gene track on a BentoBox page
+> genesPlot <- bb_plotGenes(
++     chrom = "chr8",
++     chromstart = 1000000, chromend = 2000000,
++     assembly = "hg19", fill = c("grey", "grey"),
++     fontcolor = c("grey", "grey"),
++     x = 0.5, y = 0.25, width = 4, height = 1,
++     just = c("left", "top"),
++     default.units = "inches"
++ )
+bb_genes[bb_genes1]
+> 
+> ## Plot x-axis genome labels at different scales
+> bb_plotGenomeLabel(
++     chrom = "chr8",
++     chromstart = 1000000, chromend = 2000000,
++     assembly = "hg19",
++     scale = "Mb",
++     x = 0.5, y = 1.25, length = 4, just = c("left", "top"),
++     default.units = "inches"
++ )
+bb_genomeLabel[bb_genomeLabel1]
+> bb_plotGenomeLabel(
++     chrom = "chr8",
++     chromstart = 1000000, chromend = 2000000,
++     assembly = "hg19",
++     scale = "Kb",
++     x = 0.5, y = 1.5, length = 4, just = c("left", "top"),
++     default.units = "inches"
++ )
+bb_genomeLabel[bb_genomeLabel1]
+> bb_plotGenomeLabel(
++     chrom = "chr8",
++     chromstart = 1000000, chromend = 2000000,
++     assembly = "hg19",
++     scale = "bp",
++     x = 0.5, y = 1.75, length = 4, just = c("left", "top"),
++     default.units = "inches"
++ )
+bb_genomeLabel[bb_genomeLabel1]
+> 
+> ## Plot a different genomic label region, zooming in enough
+> ## to see base pairs
+> bb_plotGenomeLabel(
++     chrom = "chr8",
++     chromstart = 1000000, chromend = 1000050,
++     assembly = "hg19",
++     x = 0.25, y = 2.2, length = 4.5
++ )
+bb_genomeLabel[bb_genomeLabel1]
+> bb_plotGenomeLabel(
++     chrom = "chr8",
++     chromstart = 1000000, chromend = 1000020,
++     assembly = "hg19",
++     x = 0, y = 2.6, length = 5
++ )
+bb_genomeLabel[bb_genomeLabel1]
+> 
+> ## Hide page guides
+> bb_pageGuideHide()
+> 
+> 
+> 
+> cleanEx()
+
+detaching ‘package:BSgenome.Hsapiens.UCSC.hg19’, ‘package:BSgenome’,
+  ‘package:rtracklayer’, ‘package:Biostrings’, ‘package:XVector’,
+  ‘package:org.Hs.eg.db’, ‘package:TxDb.Hsapiens.UCSC.hg19.knownGene’,
+  ‘package:GenomicFeatures’, ‘package:AnnotationDbi’,
+  ‘package:Biobase’, ‘package:GenomicRanges’, ‘package:GenomeInfoDb’,
+  ‘package:IRanges’, ‘package:S4Vectors’, ‘package:stats4’,
+  ‘package:BiocGenerics’, ‘package:parallel’
+
+> nameEx("bb_plotHicRectangle")
+> ### * bb_plotHicRectangle
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: bb_plotHicRectangle
+> ### Title: Plot a triangular Hi-C interaction matrix in a rectangular
+> ###   format
+> ### Aliases: bb_plotHicRectangle
+> 
+> ### ** Examples
+> 
+> ## Load Hi-C data
+> data("bb_imrHicData")
+> 
+> ## Create a page
+> bb_pageCreate(width = 6, height = 3.5, default.units = "inches")
+> 
+> 
+> ## Plot and place rectangle Hi-C plot
+> hicPlot <- bb_plotHicRectangle(
++     data = bb_imrHicData, resolution = 10000,
++     zrange = c(0, 70),
++     chrom = "chr21",
++     chromstart = 28950000, chromend = 29800000,
++     x = 0.5, y = 0.5, width = 5, height = 2.5,
++     just = c("left", "top"),
++     default.units = "inches"
++ )
+Read in dataframe.  Assuming 'chrom' in column1
+                        and 'altchrom' in column2.10000BP resolution detected.
+bb_hicRectangle[bb_hicRectangle1]
+> 
+> ## Annotate x-axis genome label
+> bb_annoGenomeLabel(
++     plot = hicPlot, scale = "Kb", x = 0.5, y = 3.03,
++     just = c("left", "top")
++ )
+bb_genomeLabel[bb_genomeLabel1]
+> 
+> ## Annotate heatmap legend
+> bb_annoHeatmapLegend(
++     plot = hicPlot, x = 5.6, y = 0.5,
++     width = 0.13, height = 1.5,
++     just = c("left", "top")
++ )
+bb_heatmapLegend[bb_heatmapLegend1]
+> 
+> ## Hide page guides
+> bb_pageGuideHide()
+> 
+> 
+> 
+> cleanEx()
+> nameEx("bb_plotHicSquare")
+> ### * bb_plotHicSquare
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: bb_plotHicSquare
+> ### Title: Plot a Hi-C interaction matrix in a square format
+> ### Aliases: bb_plotHicSquare
+> 
+> ### ** Examples
+> 
+> ## Load Hi-C data
+> data("bb_imrHicData")
+> 
+> ## Create a page
+> bb_pageCreate(width = 3, height = 3, default.units = "inches")
+> 
+> ## Plot and place Hi-C plot
+> hicPlot <- bb_plotHicSquare(
++     data = bb_imrHicData, resolution = 10000,
++     zrange = c(0, 70),
++     chrom = "chr21",
++     chromstart = 28000000, chromend = 30300000,
++     x = 0.5, y = 0.5, width = 2, height = 2,
++     just = c("left", "top"),
++     default.units = "inches"
++ )
+Read in dataframe.  Assuming 'chrom' in column1
+                        and 'altchrom' in column2.10000BP resolution detected.
+bb_hicSquare[bb_hicSquare1]
+> 
+> ## Annotate heatmap legend
+> bb_annoHeatmapLegend(
++     plot = hicPlot, x = 2.6, y = 0.5,
++     width = 0.12, height = 1.2,
++     just = c("left", "top"), default.units = "inches"
++ )
+bb_heatmapLegend[bb_heatmapLegend1]
+> 
+> ## Annotate x-axis and y-axis genome labels
+> bb_annoGenomeLabel(
++     plot = hicPlot, scale = "Mb", axis = "x",
++     x = 0.5, y = 2.53, just = c("left", "top")
++ )
+Warning: End label is rounded.
+bb_genomeLabel[bb_genomeLabel1]
+> bb_annoGenomeLabel(
++     plot = hicPlot, scale = "Mb", axis = "y",
++     x = 0.47, y = 0.5, just = c("right", "top")
++ )
+Warning: End label is rounded.
+bb_genomeLabel[bb_genomeLabel1]
+> 
+> ## Hide page guides
+> bb_pageGuideHide()
+> 
+> 
+> 
+> cleanEx()
+> nameEx("bb_plotHicTriangle")
+> ### * bb_plotHicTriangle
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: bb_plotHicTriangle
+> ### Title: Plot a Hi-C interaction matrix in a triangular format
+> ### Aliases: bb_plotHicTriangle
+> 
+> ### ** Examples
+> 
+> ## Load Hi-C data
+> data("bb_imrHicData")
+> 
+> ## Create a page
+> bb_pageCreate(width = 4, height = 2.5, default.units = "inches")
+> 
+> ## Plot and place triangle Hi-C plot
+> hicPlot <- bb_plotHicTriangle(
++     data = bb_imrHicData, resolution = 10000,
++     zrange = c(0, 70),
++     chrom = "chr21",
++     chromstart = 28000000, chromend = 30300000,
++     x = 2, y = 0.5, width = 3, height = 1.5,
++     just = "top", default.units = "inches"
++ )
+Read in dataframe.  Assuming 'chrom' in column1
+                        and 'altchrom' in column2.10000BP resolution detected.
+bb_hicTriangle[bb_hicTriangle1]
+> 
+> ## Annotate x-axis genome label
+> bb_annoGenomeLabel(
++     plot = hicPlot, scale = "Mb", x = 0.5, y = 2.03,
++     just = c("left", "top")
++ )
+Warning: End label is rounded.
+bb_genomeLabel[bb_genomeLabel1]
+> 
+> ## Annotate heatmap legend
+> bb_annoHeatmapLegend(
++     plot = hicPlot, x = 3.5, y = 0.5,
++     width = 0.13, height = 1.2,
++     just = c("right", "top")
++ )
+bb_heatmapLegend[bb_heatmapLegend1]
+> 
+> ## Hide page guides
+> bb_pageGuideHide()
+> 
+> 
+> 
+> cleanEx()
+> nameEx("bb_plotIdeogram")
+> ### * bb_plotIdeogram
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: bb_plotIdeogram
+> ### Title: Plot a chromosome ideogram with or without cytobands
+> ### Aliases: bb_plotIdeogram
+> 
+> ### ** Examples
+> 
+> ## Load Giemsa stain band information and genomic
+> ## annotation data for hg19 genome assembly
+> library("TxDb.Hsapiens.UCSC.hg19.knownGene")
+Loading required package: GenomicFeatures
+Loading required package: BiocGenerics
+Loading required package: parallel
+
+Attaching package: ‘BiocGenerics’
+
+The following objects are masked from ‘package:parallel’:
+
+    clusterApply, clusterApplyLB, clusterCall, clusterEvalQ,
+    clusterExport, clusterMap, parApply, parCapply, parLapply,
+    parLapplyLB, parRapply, parSapply, parSapplyLB
+
+The following objects are masked from ‘package:stats’:
+
+    IQR, mad, sd, var, xtabs
+
+The following objects are masked from ‘package:base’:
+
+    Filter, Find, Map, Position, Reduce, anyDuplicated, append,
+    as.data.frame, basename, cbind, colnames, dirname, do.call,
+    duplicated, eval, evalq, get, grep, grepl, intersect, is.unsorted,
+    lapply, mapply, match, mget, order, paste, pmax, pmax.int, pmin,
+    pmin.int, rank, rbind, rownames, sapply, setdiff, sort, table,
+    tapply, union, unique, unsplit, which.max, which.min
+
+Loading required package: S4Vectors
+Loading required package: stats4
+
+Attaching package: ‘S4Vectors’
+
+The following objects are masked from ‘package:base’:
+
+    I, expand.grid, unname
+
+Loading required package: IRanges
+Loading required package: GenomeInfoDb
+Loading required package: GenomicRanges
+Loading required package: AnnotationDbi
+Loading required package: Biobase
+Welcome to Bioconductor
+
+    Vignettes contain introductory material; view with
+    'browseVignettes()'. To cite Bioconductor, see
+    'citation("Biobase")', and for packages 'citation("pkgname")'.
+
+> data("cytoBand.Hsapiens.UCSC.hg19")
+> 
+> ## Create page
+> bb_pageCreate(width = 4.5, height = 1, default.units = "inches")
+> 
+> ## Plot and place ideogram
+> ideogramPlot <- bb_plotIdeogram(
++     chrom = "chr2", assembly = "hg19",
++     x = 0.25, y = 0.25, width = 4, height = 0.3,
++     just = c("left", "top"),
++     default.units = "inches"
++ )
+bb_ideogram[bb_ideogram1]
+> 
+> ## Plot text
+> bb_plotText(
++     label = "Chromosome 2", fontcolor = "dark grey",
++     x = 4.25, y = 0.65, just = "right"
++ )
+bb_text[bb_text1]
+> 
+> ## Hide page guides
+> bb_pageGuideHide()
+> 
+> 
+> 
+> cleanEx()
+
+detaching ‘package:TxDb.Hsapiens.UCSC.hg19.knownGene’,
+  ‘package:GenomicFeatures’, ‘package:AnnotationDbi’,
+  ‘package:Biobase’, ‘package:GenomicRanges’, ‘package:GenomeInfoDb’,
+  ‘package:IRanges’, ‘package:S4Vectors’, ‘package:stats4’,
+  ‘package:BiocGenerics’, ‘package:parallel’
+
+> nameEx("bb_plotLegend")
+> ### * bb_plotLegend
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: bb_plotLegend
+> ### Title: Plot a legend
+> ### Aliases: bb_plotLegend
+> 
+> ### ** Examples
+> 
+> ## Load BED data
+> data("bb_bedData")
+> 
+> ## Create BentoBox page
+> bb_pageCreate(width = 7.5, height = 4, default.units = "inches")
+> 
+> ## Plot a pileup plot, coloring elements by strand
+> pileupPlot <- bb_plotRanges(
++     data = bb_bedData, chrom = "chr21",
++     chromstart = 29072500, chromend = 29075000,
++     fill = c("steel blue", "light salmon"),
++     colorby = colorby("strand"),
++     x = 0.5, y = 3.5, width = 6.5, height = 3.5,
++     just = c("left", "bottom"),
++     default.units = "inches"
++ )
+Warning: Not enough plotting space for all
+                            provided range elements.
+bb_ranges[bb_ranges1]
+> 
+> ## Add a legend depicting strand colors
+> legendPlot <- bb_plotLegend(
++     legend = c("- strand", "+ strand"),
++     fill = c("steel blue", "light salmon"),
++     border = FALSE,
++     x = 5, y = 0.5, width = 1.5, height = 0.7,
++     just = c("left", "top"),
++     default.units = "inches"
++ )
+bb_legend[bb_legend1]
+> 
+> ## Annotate genome label
+> bb_annoGenomeLabel(
++     plot = pileupPlot, x = 0.5, y = 3.5,
++     just = c("left", "top")
++ )
+bb_genomeLabel[bb_genomeLabel1]
+> 
+> ## Hide page guides
+> bb_pageGuideHide()
+> 
+> 
+> 
+> cleanEx()
+> nameEx("bb_plotManhattan")
+> ### * bb_plotManhattan
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: bb_plotManhattan
+> ### Title: Plot a Manhattan plot
+> ### Aliases: bb_plotManhattan
+> 
+> ### ** Examples
+> 
+> ## Load genomic assembly information
+> library("TxDb.Hsapiens.UCSC.hg19.knownGene")
+Loading required package: GenomicFeatures
+Loading required package: BiocGenerics
+Loading required package: parallel
+
+Attaching package: ‘BiocGenerics’
+
+The following objects are masked from ‘package:parallel’:
+
+    clusterApply, clusterApplyLB, clusterCall, clusterEvalQ,
+    clusterExport, clusterMap, parApply, parCapply, parLapply,
+    parLapplyLB, parRapply, parSapply, parSapplyLB
+
+The following objects are masked from ‘package:stats’:
+
+    IQR, mad, sd, var, xtabs
+
+The following objects are masked from ‘package:base’:
+
+    Filter, Find, Map, Position, Reduce, anyDuplicated, append,
+    as.data.frame, basename, cbind, colnames, dirname, do.call,
+    duplicated, eval, evalq, get, grep, grepl, intersect, is.unsorted,
+    lapply, mapply, match, mget, order, paste, pmax, pmax.int, pmin,
+    pmin.int, rank, rbind, rownames, sapply, setdiff, sort, table,
+    tapply, union, unique, unsplit, which.max, which.min
+
+Loading required package: S4Vectors
+Loading required package: stats4
+
+Attaching package: ‘S4Vectors’
+
+The following objects are masked from ‘package:base’:
+
+    I, expand.grid, unname
+
+Loading required package: IRanges
+Loading required package: GenomeInfoDb
+Loading required package: GenomicRanges
+Loading required package: AnnotationDbi
+Loading required package: Biobase
+Welcome to Bioconductor
+
+    Vignettes contain introductory material; view with
+    'browseVignettes()'. To cite Bioconductor, see
+    'citation("Biobase")', and for packages 'citation("pkgname")'.
+
+> ## Load GWAS data
+> data("bb_gwasData")
+> 
+> ## Create a page
+> bb_pageCreate(width = 7.5, height = 4.5, default.units = "inches")
+> 
+> ## Plot all GWAS data
+> manhattanPlot <- bb_plotManhattan(
++     data = bb_gwasData, assembly = "hg19",
++     fill = c("grey", "#37a7db"),
++     sigLine = TRUE,
++     col = "grey", lty = 2, range = c(0, 14),
++     x = 0.5, y = 0, width = 6.5, height = 2,
++     just = c("left", "top"),
++     default.units = "inches"
++ )
+bb_manhattan[bb_manhattan1]
+> ## Annotate genome label
+> bb_annoGenomeLabel(
++     plot = manhattanPlot, x = 0.5, y = 2, fontsize = 8,
++     just = c("left", "top"),
++     default.units = "inches"
++ )
+bb_genomeLabel[bb_genomeLabel1]
+> bb_plotText(
++     label = "Chromosome", fontsize = 8,
++     x = 3.75, y = 2.20, just = "center", default.units = "inches"
++ )
+bb_text[bb_text1]
+> 
+> ## Annotate y-axis
+> bb_annoYaxis(
++     plot = manhattanPlot, at = c(0, 2, 4, 6, 8, 10, 12, 14),
++     axisLine = TRUE, fontsize = 8
++ )
+bb_yaxis[bb_yaxis1]
+> 
+> ## Plot y-axis label
+> bb_plotText(
++     label = "-log10(p-value)", x = 0.15, y = 1, rot = 90,
++     fontsize = 8, fontface = "bold", just = "center",
++     default.units = "inches"
++ )
+bb_text[bb_text2]
+> 
+> 
+> ## Plot GWAS data zooming in on chromosome 11
+> ## highlighting a lead SNP, and coloring by LD score
+> leadSNP_p <- min(bb_gwasData[which(bb_gwasData$chr == "chr11"), ]$p)
+> leadSNP <- bb_gwasData[which(bb_gwasData$p == leadSNP_p), ]$snp
+> chr11_manhattanPlot <- bb_plotManhattan(
++     data = bb_gwasData, chrom = "chr11",
++     chromstart = 60000000,
++     chromend = 130000000,
++     fill = c(
++         "#1f4297",
++         "#37a7db", "green",
++         "orange", "red"
++     ),
++     sigLine = TRUE, col = "grey",
++     lty = 2, range = c(0, 16),
++     leadSNP = list(
++         snp = leadSNP,
++         pch = 18,
++         cex = 0.75,
++         fill = "#7ecdbb",
++         fontsize = 8
++     ),
++     scaleLD = "LD",
++     x = 0.5, y = 2.5, width = 6.5,
++     height = 1.5,
++     just = c("left", "top"),
++     default.units = "inches"
++ )
+bb_manhattan[bb_manhattan1]
+> 
+> ## Plot legend for LD scores
+> bb_plotLegend(
++     legend = c(
++         "LD Ref Var",
++         expression(paste("0.4", ">", "r"^{
++             paste("2")
++         }, "", ">=", "0.2")),
++         expression(paste("0.2", ">", "r"^{
++             paste("2")
++         }, "", ">=", "0")),
++         "no LD data"
++     ),
++     fill = c("#7ecdbb", "#37a7db", "#1f4297", "grey"), cex = 0.75,
++     pch = c(18, 19, 19, 19), border = FALSE, x = 7, y = 2.5,
++     width = 1.5, height = 0.6, just = c("right", "top"),
++     default.units = "inches"
++ )
+bb_legend[bb_legend1]
+> 
+> 
+> ## Annotate genome label
+> bb_annoGenomeLabel(
++     plot = chr11_manhattanPlot, x = 0.5, y = 4.01,
++     fontsize = 8, scale = "Mb",
++     just = c("left", "top"), default.units = "inches"
++ )
+bb_genomeLabel[bb_genomeLabel1]
+> 
+> ## Annotate y-axis
+> bb_annoYaxis(
++     plot = chr11_manhattanPlot,
++     at = c(0, 2, 4, 6, 8, 10, 12, 14, 16),
++     axisLine = TRUE, fontsize = 8
++ )
+bb_yaxis[bb_yaxis1]
+> 
+> ## Plot y-axis label
+> bb_plotText(
++     label = "-log10(p-value)", x = 0.15, y = 3.25, rot = 90,
++     fontsize = 8, fontface = "bold", just = "center",
++     default.units = "inches"
++ )
+bb_text[bb_text2]
+> 
+> ## Hide page guides
+> bb_pageGuideHide()
+> 
+> 
+> 
+> cleanEx()
+
+detaching ‘package:TxDb.Hsapiens.UCSC.hg19.knownGene’,
+  ‘package:GenomicFeatures’, ‘package:AnnotationDbi’,
+  ‘package:Biobase’, ‘package:GenomicRanges’, ‘package:GenomeInfoDb’,
+  ‘package:IRanges’, ‘package:S4Vectors’, ‘package:stats4’,
+  ‘package:BiocGenerics’, ‘package:parallel’
+
+> nameEx("bb_plotPairs")
+> ### * bb_plotPairs
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: bb_plotPairs
+> ### Title: Plot paired-end genomic range elements
+> ### Aliases: bb_plotPairs
+> 
+> ### ** Examples
+> 
+> ## Load paired ranges data in BEDPE format
+> data("bb_bedpeData")
+> 
+> ## Set the coordinates
+> params <- bb_params(
++     chrom = "chr21",
++     chromstart = 27900000, chromend = 30700000,
++     width = 7
++ )
+> 
+> ## Create a page
+> bb_pageCreate(width = 7.5, height = 2.1, default.units = "inches")
+> 
+> ## Add a length column
+> bb_bedpeData$length <- (bb_bedpeData$start2 - bb_bedpeData$start1) / 1000
+> 
+> ## Plot the data
+> bedpePlot <- bb_plotPairs(
++     data = bb_bedpeData, params = params,
++     fill = colorRampPalette(c("dodgerblue2", "firebrick2")),
++     colorby = colorby("length"),
++     lwd = 2, spaceHeight = .7,
++     x = 0.25, y = 0.25, height = 1.5,
++     just = c("left", "top"), default.units = "inches"
++ )
+bb_pairs[bb_pairs1]
+> 
+> ## Annotate genome label
+> bb_annoGenomeLabel(plot = bedpePlot, x = 0.25, y = 1.78, scale = "Mb")
+Warning: Start label is rounded.
+Warning: End label is rounded.
+bb_genomeLabel[bb_genomeLabel1]
+> 
+> ## Add heatmap legend
+> bb_annoHeatmapLegend(
++     plot = bedpePlot, fontcolor = "black",
++     x = 7.0, y = 0.25,
++     width = 0.10, height = 1, fontsize = 10
++ )
+bb_heatmapLegend[bb_heatmapLegend1]
+> 
+> ## Add heatmap legend label
+> bb_plotText(
++     label = "Kb", rot = 90, x = 6.9, y = 0.75,
++     just = c("center", "center"), fontsize = 10
++ )
+bb_text[bb_text1]
+> 
+> ## Hide page guides
+> bb_pageGuideHide()
+> 
+> 
+> 
+> cleanEx()
+> nameEx("bb_plotPairsArches")
+> ### * bb_plotPairsArches
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: bb_plotPairsArches
+> ### Title: Plot paired-end genomic range data in an arch style
+> ### Aliases: bb_plotPairsArches
+> 
+> ### ** Examples
+> 
+> ## Load paired ranges data in BEDPE format
+> data("bb_bedpeData")
+> 
+> ## Set the coordinates
+> params <- bb_params(
++     chrom = "chr21",
++     chromstart = 27900000, chromend = 30700000,
++     width = 7
++ )
+> 
+> ## Create a page
+> bb_pageCreate(width = 7.5, height = 2.1, default.units = "inches")
+> 
+> ## Add a length column to color by
+> bb_bedpeData$length <- (bb_bedpeData$start2 - bb_bedpeData$start1) / 1000
+> 
+> ## Translate lengths into heights
+> heights <- bb_bedpeData$length / max(bb_bedpeData$length)
+> 
+> ## Plot the data
+> archPlot <- bb_plotPairsArches(
++     data = bb_bedpeData, params = params,
++     fill = colorRampPalette(c("dodgerblue2", "firebrick2")),
++     linecolor = "fill",
++     colorby = colorby("length"),
++     archHeight = heights, alpha = 1,
++     x = 0.25, y = 0.25, height = 1.5,
++     just = c("left", "top"),
++     default.units = "inches"
++ )
+bb_arches[bb_arches1]
+> 
+> ## Annotate genome label
+> bb_annoGenomeLabel(plot = archPlot, x = 0.25, y = 1.78, scale = "Mb")
+Warning: Start label is rounded.
+Warning: End label is rounded.
+bb_genomeLabel[bb_genomeLabel1]
+> 
+> 
+> ## Annotate heatmap legend
+> bb_annoHeatmapLegend(
++     plot = archPlot, fontcolor = "black",
++     x = 7.0, y = 0.25,
++     width = 0.10, height = 1, fontsize = 10
++ )
+bb_heatmapLegend[bb_heatmapLegend1]
+> 
+> ## Add the heatmap legend title
+> bb_plotText(
++     label = "Kb", rot = 90, x = 6.9, y = 0.75,
++     just = c("center", "center"),
++     fontsize = 10
++ )
+bb_text[bb_text1]
+> 
+> 
+> ## Hide page guides
+> bb_pageGuideHide()
+> 
+> 
+> 
+> cleanEx()
+> nameEx("bb_plotPolygon")
+> ### * bb_plotPolygon
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: bb_plotPolygon
+> ### Title: Plot a polygon within a BentoBox layout
+> ### Aliases: bb_plotPolygon
+> 
+> ### ** Examples
+> 
+> ## Create a BentoBox page
+> bb_pageCreate(width = 7.5, height = 6, default.units = "inches")
+> 
+> ## Plot complex polygons one at a time
+> bb_plotPolygon(
++     x = c(2.6, 4.65, 4.75, 6.05, 1.4, 1.3),
++     y = c(2.5, 3.1, 3.5, 4, 3.15, 2.8),
++     fill = "#4a168e", linecolor = NA
++ )
+bb_polygon[GRID.polygon.2999]
+> 
+> bb_plotPolygon(
++     x = c(4.65, 4.75, 6.05, 5.05, 4.4),
++     y = c(3.1, 3.5, 4, 1.45, 1.2),
++     fill = "#9d28b0", linecolor = NA
++ )
+bb_polygon[GRID.polygon.3000]
+> 
+> ## Plot multiple triangles with different id's and colors
+> bb_plotPolygon(
++     x = c(
++         0.45, 6.05, 3, 3, 6.05, 5.25, 4.4, 5.05, 4.95,
++         1.3, 2.6, 1, 4.4, 4.95, 5, 4.95, 5, 6.25
++     ),
++     y = c(
++         2.85, 4, 5.55, 5.55, 4, 5.55, 1.2, 1.45, 1.1,
++         2.8, 2.5, 2.1, 1.2, 1.1, 0.45, 1.1, 0.45, 1.1
++     ),
++     id = c(1, 1, 1, 2, 2, 2, 3, 3, 3, 4, 4, 4, 5, 5, 5, 6, 6, 6),
++     fill = c(
++         "#ce93d9", "#bb6ac9", "#4a168e",
++         "#7b1fa0", "#bb6ac9", "#ce93d9"
++     ),
++     linecolor = NA
++ )
+bb_polygon[GRID.polygon.3001]
+> 
+> ## Hide page guides
+> bb_pageGuideHide()
+> 
+> 
+> 
+> cleanEx()
+> nameEx("bb_plotRanges")
+> ### * bb_plotRanges
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: bb_plotRanges
+> ### Title: Plot genomic range elements in a pileup or collapsed format
+> ### Aliases: bb_plotRanges
+> 
+> ### ** Examples
+> 
+> ## Load ranges data in BED format
+> data("bb_bedData")
+> 
+> ## Create page
+> bb_pageCreate(width = 7.5, height = 5, default.units = "inches")
+> 
+> ## Plot and place a pileup ranges plot
+> pileupPlot <- bb_plotRanges(
++     data = bb_bedData, chrom = "chr21",
++     chromstart = 29073000, chromend = 29074000,
++     fill = c("#7ecdbb", "#37a7db"),
++     strandSplit = TRUE, colorby = colorby("strand"),
++     x = 0.5, y = 0.25, width = 6.5, height = 4.25,
++     just = c("left", "top"), default.units = "inches"
++ )
+Warning: Not enough plotting space for all
+                            provided plus strand range elements.
+Warning: Not enough plotting space for all
+                            provided minus strand range elements.
+bb_ranges[bb_ranges1]
+> 
+> ## Annotate genome label
+> bb_annoGenomeLabel(
++     plot = pileupPlot, x = 0.5, y = 4.5,
++     just = c("left", "top")
++ )
+bb_genomeLabel[bb_genomeLabel1]
+> 
+> ## Add text labels
+> bb_plotText(
++     label = "+ strand", fontcolor = "#37a7db", fontsize = 12,
++     x = 0.5, y = 1.25, just = "left"
++ )
+bb_text[bb_text1]
+> bb_plotText(
++     label = "- strand", fontcolor = "#7ecdbb", fontsize = 12,
++     x = 0.5, y = 3.5, just = "left"
++ )
+bb_text[bb_text2]
+> 
+> ## Hide page guides
+> bb_pageGuideHide()
+> 
+> 
+> 
+> cleanEx()
+> nameEx("bb_plotRaster")
+> ### * bb_plotRaster
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: bb_plotRaster
+> ### Title: Plot a raster object within a BentoBox layout
+> ### Aliases: bb_plotRaster
+> 
+> ### ** Examples
+> 
+> library(png)
+> 
+> ## Load images
+> edamaman <- readPNG(system.file("images",
++     "bento-edamaman.png",
++     package = "BentoBox"
++ ))
+> logotype <- readPNG(system.file("images",
++     "bento-logotype-singleline-black.png",
++     package = "BentoBox"
++ ))
+> rlogo <- readPNG(system.file("images", "Rlogo.png", package = "BentoBox"))
+> 
+> ## Create page
+> bb_pageCreate(width = 5, height = 6)
+> 
+> ## Plot various images
+> bb_plotRaster(
++     image = logotype,
++     x = 2.5, y = 0.25, width = 3.25, height = 0.5, just = "top"
++ )
+bb_raster[bb_raster1]
+> 
+> bb_plotRaster(
++     image = edamaman,
++     x = 2.5, y = 5.5, width = 2, height = 4, just = "bottom"
++ )
+bb_raster[bb_raster1]
+> 
+> bb_plotRaster(
++     image = rlogo,
++     x = 2.5, y = 1, width = 0.5, height = 0.45,
++     just = c("right", "top")
++ )
+bb_raster[bb_raster1]
+> 
+> ## Hide page guies
+> bb_pageGuideHide()
+> 
+> 
+> 
+> cleanEx()
+
+detaching ‘package:png’
+
+> nameEx("bb_plotRect")
+> ### * bb_plotRect
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: bb_plotRect
+> ### Title: Plot a rectangle within a BentoBox layout
+> ### Aliases: bb_plotRect
+> 
+> ### ** Examples
+> 
+> ## Create a BentoBox page
+> bb_pageCreate(width = 7.5, height = 6, default.units = "inches")
+> 
+> ## Plot one rectangle with no fill
+> bb_plotRect(
++     x = 0.5, y = 0.5, width = 3, height = 3,
++     just = c("left", "top"), default.units = "inches",
++     lwd = 2, fill = NA
++ )
+bb_rect[bb_rect1]
+> 
+> 
+> ## Plot two rectangles with same width and height at different locations
+> bb_plotRect(
++     x = 4, y = c(0.5, 2.25), width = 3, height = 1.25,
++     just = c("left", "top"), default.units = "inches",
++     fill = "#7ecdbb"
++ )
+bb_rect[bb_rect2]
+> 
+> ## Plot two rectangles with different widths, heights,
+> ## locations, and colors
+> bb_plotRect(
++     x = 3.75, y = c(4, 5.25), width = c(6.5, 4.5),
++     height = c(1, 0.25),
++     just = "top", default.units = "inches",
++     fill = c("#7ecdbb", "#37a7db"), linecolor = NA, alpha = 0.4
++ )
+bb_rect[bb_rect2]
+> 
+> ## Hide page guides
+> bb_pageGuideHide()
+> 
+> 
+> 
+> cleanEx()
+> nameEx("bb_plotSegments")
+> ### * bb_plotSegments
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: bb_plotSegments
+> ### Title: Draw a line segment within a BentoBox layout
+> ### Aliases: bb_plotSegments
+> 
+> ### ** Examples
+> 
+> library(grid)
+> ## Create a BentoBox page
+> bb_pageCreate(width = 7.5, height = 6, default.units = "inches")
+> 
+> ## Plot one line segment
+> bb_plotSegments(
++     x0 = 3.75, y0 = 0.25, x1 = 3.75, y1 = 5.75,
++     default.units = "inches",
++     lwd = 3, lty = 2
++ )
+bb_segments[bb_segments1]
+> 
+> ## Plot multiple line segments at different locations in different colors
+> bb_plotSegments(
++     x0 = 0.5, y0 = c(1, 3, 5), x1 = 3.25, y1 = c(1, 3, 5),
++     default.units = "inches",
++     lwd = 2, linecolor = c("#7ecdbb", "#37a7db", "grey")
++ )
+bb_segments[bb_segments2]
+> 
+> ## Plot a line segment with an arrowhead
+> bb_plotSegments(
++     x0 = 4.5, y0 = 0.5, x1 = 7, y1 = 3,
++     default.units = "inches",
++     arrow = arrow(type = "closed"), fill = "black"
++ )
+bb_segments[bb_segments2]
+> 
+> ## Plot lines with round lineends
+> bb_plotSegments(
++     x0 = c(4, 7), y0 = 3.5, x1 = 5.5, y1 = 4.5,
++     default.units = "inches",
++     lwd = 5, lineend = "round"
++ )
+bb_segments[bb_segments2]
+> 
+> ## Hide page guides
+> bb_pageGuideHide()
+> 
+> 
+> 
+> cleanEx()
+
+detaching ‘package:grid’
+
+> nameEx("bb_plotSignal")
+> ### * bb_plotSignal
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: bb_plotSignal
+> ### Title: Plot any kind of signal track data for a single chromosome
+> ### Aliases: bb_plotSignal
+> 
+> ### ** Examples
+> 
+> ## Load signal data
+> data("bb_imrH3K27acData")
+> data("bb_gmH3K27acData")
+> 
+> ## Create a page
+> bb_pageCreate(width = 7.5, height = 2.1, default.units = "inches")
+> 
+> ## Define region
+> region <- bb_params(
++     chrom = "chr21",
++     chromstart = 28000000, chromend = 30300000,
++     range = c(0, 45)
++ )
+> 
+> ## Plot and place signal plots
+> signal1 <- bb_plotSignal(
++     data = bb_imrH3K27acData, params = region,
++     x = 0.5, y = 0.25, width = 6.5, height = 0.65,
++     just = c("left", "top"), default.units = "inches"
++ )
+bb_signal[bb_signal1]
+> 
+> signal2 <- bb_plotSignal(
++     data = bb_gmH3K27acData, params = region,
++     linecolor = "#7ecdbb",
++     x = 0.5, y = 1, width = 6.5, height = 0.65,
++     just = c("left", "top"), default.units = "inches"
++ )
+bb_signal[bb_signal1]
+> 
+> ## Plot genome label
+> bb_plotGenomeLabel(
++     chrom = "chr21",
++     chromstart = 28000000, chromend = 30300000,
++     x = 0.5, y = 1.68, length = 6.5,
++     default.units = "inches"
++ )
+bb_genomeLabel[bb_genomeLabel1]
+> 
+> ## Add text labels
+> bb_plotText(
++     label = "IMR90", fonsize = 10, fontcolor = "#37a7db",
++     x = 0.5, y = 0.25, just = c("left", "top"),
++     default.units = "inches"
++ )
+bb_text[bb_text1]
+> bb_plotText(
++     label = "GM12878", fonsize = 10, fontcolor = "#7ecdbb",
++     x = 0.5, y = 1, just = c("left", "top"),
++     default.units = "inches"
++ )
+bb_text[bb_text2]
+> 
+> ## Hide page guides
+> bb_pageGuideHide()
+> 
+> 
+> 
+> cleanEx()
+> nameEx("bb_plotText")
+> ### * bb_plotText
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: bb_plotText
+> ### Title: Plot text within a BentoBox layout
+> ### Aliases: bb_plotText
+> 
+> ### ** Examples
+> 
+> ## Create a BentoBox page
+> bb_pageCreate(width = 4, height = 2, default.units = "inches")
+> 
+> ## Plot text, adjusting fontsize and fontface
+> bb_plotText(
++     label = "BentoBox", fontsize = 14, fontface = "bold",
++     x = 1, y = 1, just = "center", default.units = "inches"
++ )
+bb_text[bb_text1]
+> 
+> ## Plot text, adjusting color, rotation, and fontfamily
+> bb_plotText(
++     label = "coordinate-based", fontcolor = "#225EA8", rot = 90,
++     fontfamily = "HersheyScript", x = 2, y = 1, just = "center",
++     default.units = "inches"
++ )
+bb_text[bb_text2]
+> 
+> ## Plot a text label in multiple places at once
+> bb_plotText(
++     label = "R", x = c(0.5, 1, 1.5), y = 1.5, just = "center",
++     default.units = "inches"
++ )
+bb_text[bb_text2]
+> 
+> ## Plot a vector of text labels
+> bb_plotText(
++     label = c("bb", "Bento", "Box"), x = 3, y = c(0.5, 1, 1.75),
++     just = "center", default.units = "inches"
++ )
+bb_text[bb_text2]
+> 
+> ## Hide page guides
+> bb_pageGuideHide()
+> 
+> 
+> 
+> cleanEx()
+> nameEx("bb_plotTranscripts")
+> ### * bb_plotTranscripts
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: bb_plotTranscripts
+> ### Title: Plot gene transcripts in a pileup style for a single chromosome
+> ### Aliases: bb_plotTranscripts
+> 
+> ### ** Examples
+> 
+> ## Load hg19 genomic annotation packages
+> library("TxDb.Hsapiens.UCSC.hg19.knownGene")
+Loading required package: GenomicFeatures
+Loading required package: BiocGenerics
+Loading required package: parallel
+
+Attaching package: ‘BiocGenerics’
+
+The following objects are masked from ‘package:parallel’:
+
+    clusterApply, clusterApplyLB, clusterCall, clusterEvalQ,
+    clusterExport, clusterMap, parApply, parCapply, parLapply,
+    parLapplyLB, parRapply, parSapply, parSapplyLB
+
+The following objects are masked from ‘package:stats’:
+
+    IQR, mad, sd, var, xtabs
+
+The following objects are masked from ‘package:base’:
+
+    Filter, Find, Map, Position, Reduce, anyDuplicated, append,
+    as.data.frame, basename, cbind, colnames, dirname, do.call,
+    duplicated, eval, evalq, get, grep, grepl, intersect, is.unsorted,
+    lapply, mapply, match, mget, order, paste, pmax, pmax.int, pmin,
+    pmin.int, rank, rbind, rownames, sapply, setdiff, sort, table,
+    tapply, union, unique, unsplit, which.max, which.min
+
+Loading required package: S4Vectors
+Loading required package: stats4
+
+Attaching package: ‘S4Vectors’
+
+The following objects are masked from ‘package:base’:
+
+    I, expand.grid, unname
+
+Loading required package: IRanges
+Loading required package: GenomeInfoDb
+Loading required package: GenomicRanges
+Loading required package: AnnotationDbi
+Loading required package: Biobase
+Welcome to Bioconductor
+
+    Vignettes contain introductory material; view with
+    'browseVignettes()'. To cite Bioconductor, see
+    'citation("Biobase")', and for packages 'citation("pkgname")'.
+
+> library("org.Hs.eg.db")
+> 
+> ## Create page
+> bb_pageCreate(width = 7.5, height = 3.5, default.units = "inches")
+> 
+> ## Plot and place transcripts
+> bb_plotTranscripts(
++     chrom = "chr8", chromstart = 1000000, chromend = 2000000,
++     assembly = "hg19", labels = "gene",
++     x = 0.5, y = 0.5, width = 6.5, height = 2.5,
++     just = c("left", "top"), default.units = "inches"
++ )
+bb_transcripts[bb_transcripts1]
+> 
+> ## Plot genome label
+> bb_plotGenomeLabel(
++     chrom = "chr8", chromstart = 1000000, chromend = 2000000,
++     x = 0.5, y = 3.03, length = 6.5, default.units = "inches"
++ )
+bb_genomeLabel[bb_genomeLabel1]
+> 
+> ## Plot a legend
+> bb_plotLegend(
++     legend = c("+ strand", "- strand"),
++     fill = c("#669fd9", "#abcc8e"), border = FALSE,
++     x = 0.5, y = 1, width = 1, height = 0.5,
++     just = c("left", "top")
++ )
+bb_legend[bb_legend1]
+> 
+> ## Hide page guides
+> bb_pageGuideHide()
+> 
+> 
+> 
+> ### * <FOOTER>
+> ###
+> cleanEx()
+
+detaching ‘package:org.Hs.eg.db’,
+  ‘package:TxDb.Hsapiens.UCSC.hg19.knownGene’,
+  ‘package:GenomicFeatures’, ‘package:AnnotationDbi’,
+  ‘package:Biobase’, ‘package:GenomicRanges’, ‘package:GenomeInfoDb’,
+  ‘package:IRanges’, ‘package:S4Vectors’, ‘package:stats4’,
+  ‘package:BiocGenerics’, ‘package:parallel’
+
+> options(digits = 7L)
+> base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
+Time elapsed:  49.204 1.942 51.88 0.002 0.002 
+> grDevices::dev.off()
+null device 
+          1 
+> ###
+> ### Local variables: ***
+> ### mode: outline-minor ***
+> ### outline-regexp: "\\(> \\)?### [*]+" ***
+> ### End: ***
+> quit('no')

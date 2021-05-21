@@ -19,64 +19,73 @@
 #'
 #' @export
 bb_readBigwig <- function(file, chrom = NULL, chromstart = 1,
-                          chromend = .Machine$integer.max,
-                          strand = '*', params = NULL) {
+                        chromend = .Machine$integer.max,
+                        strand = "*", params = NULL) {
 
-  # ======================================================================================================================================================================================
-  # PARSE PARAMETERS
-  # ======================================================================================================================================================================================
+    # =========================================================================
+    # PARSE PARAMETERS
+    # =========================================================================
 
-  bigwigDefaults <- c("chromstart", "chromend", "strand")
+    bigwigDefaults <- c("chromstart", "chromend", "strand")
 
-  ## Check which defaults are not overwritten and set to NULL
-  if(missing(chromstart)) chromstart <- NULL
-  if(missing(chromend)) chromend <- NULL
-  if(missing(strand)) strand <- NULL
+    ## Check which defaults are not overwritten and set to NULL
+    if (missing(chromstart)) chromstart <- NULL
+    if (missing(chromend)) chromend <- NULL
+    if (missing(strand)) strand <- NULL
 
-  ## Check if filename argument is missing (could be in object)
-  if(!hasArg(file)) file <- NULL
+    ## Check if filename argument is missing (could be in object)
+    if (!hasArg(file)) file <- NULL
 
-  ## Compile all parameters into an internal object
-  bb_bigwig <- structure(list(file = file, chrom = chrom,
-                              chromstart = chromstart,
-                              chromend = chromend, strand = strand),
-                         class = "bb_bigwig")
+    ## Compile all parameters into an internal object
+    bb_bigwig <- structure(list(
+        file = file, chrom = chrom,
+        chromstart = chromstart,
+        chromend = chromend, strand = strand
+    ),
+    class = "bb_bigwig"
+    )
 
-  bb_bigwig <- parseParams(bb_params = params,
-                           object_params = bb_bigwig)
+    bb_bigwig <- parseParams(
+        bb_params = params,
+        object_params = bb_bigwig
+    )
 
-  ## For any defaults that are still NULL, set back to default
-  if(is.null(bb_bigwig$chromstart)) bb_bigwig$chromstart <- 1
-  if(is.null(bb_bigwig$chromend)) bb_bigwig$chromend <- .Machine$integer.max
-  if(is.null(bb_bigwig$strand)) bb_bigwig$strand <- '*'
+    ## For any defaults that are still NULL, set back to default
+    if (is.null(bb_bigwig$chromstart)) bb_bigwig$chromstart <- 1
+    if (is.null(bb_bigwig$chromend)) bb_bigwig$chromend <- .Machine$integer.max
+    if (is.null(bb_bigwig$strand)) bb_bigwig$strand <- "*"
 
-  # ======================================================================================================================================================================================
-  # ERRORS
-  # ======================================================================================================================================================================================
+    # =========================================================================
+    # ERRORS
+    # =========================================================================
 
-  if (is.null(bb_bigwig$file)) stop("argument \"file\" is missing, with no default.",
-                                    call. = FALSE)
+    if (is.null(bb_bigwig$file)) {
+        stop("argument \"file\" is missing, with no default.",
+            call. = FALSE
+        )
+    }
 
-  if (bb_bigwig$chromend < bb_bigwig$chromstart - 1) {
+    if (bb_bigwig$chromend < bb_bigwig$chromstart - 1) {
+        stop("End must be >= start - 1.", call. = FALSE)
+    }
 
-    stop("End must be >= start - 1.", call. = FALSE)
+    # =========================================================================
+    # READ FILE
+    # =========================================================================
 
-  }
-
-  # ======================================================================================================================================================================================
-  # READ FILE
-  # ======================================================================================================================================================================================
-
-  if(!is.null(bb_bigwig$chrom)) {
-    as.data.frame(rtracklayer::import.bw(bb_bigwig$file,
-                                         which=GenomicRanges::GRanges(paste0(bb_bigwig$chrom,
-                                                                             ':',
-                                                                             bb_bigwig$chromstart,
-                                                                             '-',
-                                                                             bb_bigwig$chromend,
-                                                                             ':',
-                                                                             bb_bigwig$strand))))
-  } else {
-    as.data.frame(rtracklayer::import.bw(bb_bigwig$file))
-  }
+    if (!is.null(bb_bigwig$chrom)) {
+        as.data.frame(rtracklayer::import.bw(bb_bigwig$file,
+            which = GenomicRanges::GRanges(paste0(
+                bb_bigwig$chrom,
+                ":",
+                bb_bigwig$chromstart,
+                "-",
+                bb_bigwig$chromend,
+                ":",
+                bb_bigwig$strand
+            ))
+        ))
+    } else {
+        as.data.frame(rtracklayer::import.bw(bb_bigwig$file))
+    }
 }

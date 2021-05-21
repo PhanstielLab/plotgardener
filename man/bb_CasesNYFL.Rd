@@ -8,7 +8,8 @@
 a dataframe with 3 columns
 \describe{
 \item{date}{The date of the case count.}
-\item{state}{The state of the case count. Either \code{"new york"} or \code{"florida"}.}
+\item{state}{The state of the case count.
+Either \code{"new york"} or \code{"florida"}.}
 \item{caseIncrease}{The increase number of positive COVID-19 cases.}
 }
 }
@@ -20,7 +21,7 @@ Data was downloaded from The COVID Tracking Project
 data("bb_CasesNYFL")
 }
 \description{
-A timeline dataset tracking positive COVID-19 cases in New York and Florida from
-2020-01-29 to 2021-03-07.
+A timeline dataset tracking positive COVID-19 cases in
+New York and Florida from 2020-01-29 to 2021-03-07.
 }
 \keyword{datasets}

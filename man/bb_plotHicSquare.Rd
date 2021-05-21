@@ -159,28 +159,35 @@ data("bb_imrHicData")
 bb_pageCreate(width = 3, height = 3, default.units = "inches")
 
 ## Plot and place Hi-C plot
-hicPlot <- bb_plotHicSquare(data = bb_imrHicData, resolution = 10000,
-                            zrange = c(0, 70),
-                            chrom = "chr21",
-                            chromstart = 28000000, chromend = 30300000,
-                            x = 0.5, y = 0.5, width = 2, height = 2,
-                            just = c("left", "top"),
-                            default.units = "inches")
+hicPlot <- bb_plotHicSquare(
+    data = bb_imrHicData, resolution = 10000,
+    zrange = c(0, 70),
+    chrom = "chr21",
+    chromstart = 28000000, chromend = 30300000,
+    x = 0.5, y = 0.5, width = 2, height = 2,
+    just = c("left", "top"),
+    default.units = "inches"
+)
 
 ## Annotate heatmap legend
-bb_annoHeatmapLegend(plot = hicPlot, x = 2.6, y = 0.5,
-                     width = 0.12, height = 1.2,
-                     just = c("left", "top"), default.units = "inches")
+bb_annoHeatmapLegend(
+    plot = hicPlot, x = 2.6, y = 0.5,
+    width = 0.12, height = 1.2,
+    just = c("left", "top"), default.units = "inches"
+)
 
 ## Annotate x-axis and y-axis genome labels
-bb_annoGenomeLabel(plot = hicPlot, scale = "Mb", axis = "x",
-                   x = 0.5, y = 2.53, just = c("left", "top"))
-bb_annoGenomeLabel(plot = hicPlot, scale = "Mb", axis = "y",
-                   x = 0.47, y = 0.5, just = c("right", "top"))
+bb_annoGenomeLabel(
+    plot = hicPlot, scale = "Mb", axis = "x",
+    x = 0.5, y = 2.53, just = c("left", "top")
+)
+bb_annoGenomeLabel(
+    plot = hicPlot, scale = "Mb", axis = "y",
+    x = 0.47, y = 0.5, just = c("right", "top")
+)
 
 ## Hide page guides
 bb_pageGuideHide()
-
 }
 \seealso{
 \link[BentoBox]{bb_readHic}

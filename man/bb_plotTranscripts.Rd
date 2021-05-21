@@ -151,24 +151,29 @@ library("org.Hs.eg.db")
 bb_pageCreate(width = 7.5, height = 3.5, default.units = "inches")
 
 ## Plot and place transcripts
-bb_plotTranscripts(chrom = "chr8", chromstart = 1000000, chromend = 2000000,
-                   assembly = "hg19", labels = "gene",
-                   x = 0.5, y = 0.5, width = 6.5, height = 2.5,
-                   just = c("left", "top"), default.units = "inches")
+bb_plotTranscripts(
+    chrom = "chr8", chromstart = 1000000, chromend = 2000000,
+    assembly = "hg19", labels = "gene",
+    x = 0.5, y = 0.5, width = 6.5, height = 2.5,
+    just = c("left", "top"), default.units = "inches"
+)
 
 ## Plot genome label
-bb_plotGenomeLabel(chrom = "chr8", chromstart = 1000000, chromend = 2000000,
-                   x = 0.5, y = 3.03, length = 6.5, default.units = "inches")
+bb_plotGenomeLabel(
+    chrom = "chr8", chromstart = 1000000, chromend = 2000000,
+    x = 0.5, y = 3.03, length = 6.5, default.units = "inches"
+)
 
 ## Plot a legend
-bb_plotLegend(legend = c("+ strand", "- strand"),
-              fill = c("#669fd9", "#abcc8e"), border = FALSE,
-              x = 0.5, y = 1, width = 1, height = 0.5,
-              just = c("left", "top"))
+bb_plotLegend(
+    legend = c("+ strand", "- strand"),
+    fill = c("#669fd9", "#abcc8e"), border = FALSE,
+    x = 0.5, y = 1, width = 1, height = 0.5,
+    just = c("left", "top")
+)
 
 ## Hide page guides
 bb_pageGuideHide()
-
 }
 \seealso{
 \link[BentoBox]{bb_assembly},

@@ -58,6 +58,4 @@ p2 <- bb_params(fontsize = 10)
 
 ## Combine parameters and pass them to a BentoBox function
 bb_plotGenes(params = c(p1, p2))
-
-
 }

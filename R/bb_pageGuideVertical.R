@@ -16,72 +16,83 @@
 #'
 #' ## Add blue vertical guideline at x = 1.7 inches
 #' bb_pageGuideVertical(x = 1.7, linecolor = "blue")
-#'
 #' @return None.
 #'
 #' @export
 bb_pageGuideVertical <- function(x, default.units = "inches",
-                                 linecolor = "grey55", params = NULL, ...){
+                                linecolor = "grey55", params = NULL, ...) {
 
-  # ======================================================================================================================================================================================
-  # PARSE PARAMETERS
-  # ======================================================================================================================================================================================
+    # =========================================================================
+    # PARSE PARAMETERS
+    # =========================================================================
 
-  ## Check which defaults are not overwritten and set to NULL
-  if(missing(linecolor)) linecolor <- NULL
-  if(missing(default.units)) default.units <- NULL
+    ## Check which defaults are not overwritten and set to NULL
+    if (missing(linecolor)) linecolor <- NULL
+    if (missing(default.units)) default.units <- NULL
 
-  ## Check if x argument is missing (could be in object)
-  if(!hasArg(x)) x <- NULL
+    ## Check if x argument is missing (could be in object)
+    if (!hasArg(x)) x <- NULL
 
-  ## Compile all parameters into an internal object
-  bb_vguide <- structure(list(x = x, linecolor = linecolor,
-                              default.units = default.units),
-                         class = "bb_vguide")
+    ## Compile all parameters into an internal object
+    bb_vguide <- structure(list(
+        x = x, linecolor = linecolor,
+        default.units = default.units
+    ),
+    class = "bb_vguide"
+    )
 
-  bb_vguide <- parseParams(bb_params = params,
-                           object_params = bb_vguide)
+    bb_vguide <- parseParams(
+        bb_params = params,
+        object_params = bb_vguide
+    )
 
-  ## For any defaults that are still NULL, set back to default
-  if(is.null(bb_vguide$linecolor)) bb_vguide$linecolor <- "grey55"
-  if(is.null(bb_vguide$default.units)) bb_vguide$default.units <- "inches"
+    ## For any defaults that are still NULL, set back to default
+    if (is.null(bb_vguide$linecolor)) bb_vguide$linecolor <- "grey55"
+    if (is.null(bb_vguide$default.units)) bb_vguide$default.units <- "inches"
 
-  ## Set gp
-  bb_vguide$gp <- gpar(col = bb_vguide$linecolor)
-  bb_vguide$gp <- setGP(gpList = bb_vguide$gp,
-                        params = bb_vguide, ...)
+    ## Set gp
+    bb_vguide$gp <- gpar(col = bb_vguide$linecolor)
+    bb_vguide$gp <- setGP(
+        gpList = bb_vguide$gp,
+        params = bb_vguide, ...
+    )
 
-  # ======================================================================================================================================================================================
-  # ERRORS
-  # ======================================================================================================================================================================================
+    # =========================================================================
+    # ERRORS
+    # =========================================================================
 
-  if(is.null(bb_vguide$x)) stop("argument \"x\" is missing, with no default.",
-                                call. = FALSE)
-
-
-  if (class(bb_vguide$x) != "unit"){
-
-    if (!is.numeric(bb_vguide$x)){
-
-      stop("x-coordinate is neither a unit object or a numeric value. Cannot place object.", call. = FALSE)
-
+    if (is.null(bb_vguide$x)) {
+        stop("argument \"x\" is missing, with no default.",
+            call. = FALSE
+        )
     }
 
-    if (is.null(bb_vguide$default.units)){
 
-      stop("x-coordinate detected as numeric.\'default.units\' must be specified.", call. = FALSE)
+    if (class(bb_vguide$x) != "unit") {
+        if (!is.numeric(bb_vguide$x)) {
+            stop("x-coordinate is neither a unit object or a numeric value.
+                Cannot place object.", call. = FALSE)
+        }
 
+        if (is.null(bb_vguide$default.units)) {
+            stop("x-coordinate detected as numeric.\'default.units\'
+                must be specified.", call. = FALSE)
+        }
+
+        x <- unit(bb_vguide$x, bb_vguide$default.units)
     }
 
-    x <- unit(bb_vguide$x, bb_vguide$default.units)
-  }
-
-  guide <- grid.segments(x0 = x, x1 = x,
-                         y0 = unit(0, units = "npc"),
-                         y1 = unit(1, units = "npc"),
-                         gp = bb_vguide$gp)
-  assign("guide_grobs",
-         addGrob(gTree = get("guide_grobs", envir = bbEnv),
-                 child = guide), envir = bbEnv)
-
+    guide <- grid.segments(
+        x0 = x, x1 = x,
+        y0 = unit(0, units = "npc"),
+        y1 = unit(1, units = "npc"),
+        gp = bb_vguide$gp
+    )
+    assign("guide_grobs",
+        addGrob(
+            gTree = get("guide_grobs", envir = bbEnv),
+            child = guide
+        ),
+        envir = bbEnv
+    )
 }

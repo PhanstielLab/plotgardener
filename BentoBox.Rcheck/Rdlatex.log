@@ -1,0 +1,1331 @@
+Hmm ... looks like a package
+
+This is pdfTeX, Version 3.14159265-2.6-1.40.19 (TeX Live 2018) (preloaded format=pdflatex)
+ restricted \write18 enabled.
+entering extended mode
+LaTeX2e <2018-04-01> patch level 2
+Babel <3.18> and hyphenation patterns for 84 language(s) loaded.
+
+(./Rd2.tex
+(/usr/local/texlive/2018/texmf-dist/tex/latex/base/book.cls
+Document Class: book 2014/09/29 v1.4h Standard LaTeX document class
+(/usr/local/texlive/2018/texmf-dist/tex/latex/base/bk10.clo))
+(/Library/Frameworks/R.framework/Resources/share/texmf/tex/latex/Rd.sty
+(/usr/local/texlive/2018/texmf-dist/tex/latex/base/ifthen.sty)
+(/usr/local/texlive/2018/texmf-dist/tex/latex/tools/longtable.sty)
+(/usr/local/texlive/2018/texmf-dist/tex/latex/tools/bm.sty)
+(/usr/local/texlive/2018/texmf-dist/tex/latex/base/alltt.sty)
+(/usr/local/texlive/2018/texmf-dist/tex/latex/tools/verbatim.sty)
+(/usr/local/texlive/2018/texmf-dist/tex/latex/url/url.sty)
+(/usr/local/texlive/2018/texmf-dist/tex/latex/base/textcomp.sty
+(/usr/local/texlive/2018/texmf-dist/tex/latex/base/ts1enc.def
+(/usr/local/texlive/2018/texmf-dist/tex/latex/base/ts1enc.dfu)))
+(/usr/local/texlive/2018/texmf-dist/tex/latex/base/fontenc.sty
+(/usr/local/texlive/2018/texmf-dist/tex/latex/base/t1enc.def))
+(/usr/local/texlive/2018/texmf-dist/tex/latex/psnfss/times.sty)
+(/usr/local/texlive/2018/texmf-dist/tex/latex/inconsolata/zi4.sty
+`inconsolata-zi4' v1.112, 2017/01/04 Text macros for Inconsolata (msharpe)
+(/usr/local/texlive/2018/texmf-dist/tex/latex/xkeyval/xkeyval.sty
+(/usr/local/texlive/2018/texmf-dist/tex/generic/xkeyval/xkeyval.tex
+(/usr/local/texlive/2018/texmf-dist/tex/generic/xkeyval/xkvutils.tex
+(/usr/local/texlive/2018/texmf-dist/tex/generic/xkeyval/keyval.tex)))))
+(/usr/local/texlive/2018/texmf-dist/tex/latex/graphics/color.sty
+(/usr/local/texlive/2018/texmf-dist/tex/latex/graphics-cfg/color.cfg)
+(/usr/local/texlive/2018/texmf-dist/tex/latex/graphics-def/pdftex.def))
+(/usr/local/texlive/2018/texmf-dist/tex/latex/hyperref/hyperref.sty
+(/usr/local/texlive/2018/texmf-dist/tex/generic/oberdiek/hobsub-hyperref.sty
+(/usr/local/texlive/2018/texmf-dist/tex/generic/oberdiek/hobsub-generic.sty))
+(/usr/local/texlive/2018/texmf-dist/tex/generic/ifxetex/ifxetex.sty)
+(/usr/local/texlive/2018/texmf-dist/tex/latex/oberdiek/auxhook.sty)
+(/usr/local/texlive/2018/texmf-dist/tex/latex/oberdiek/kvoptions.sty)
+(/usr/local/texlive/2018/texmf-dist/tex/latex/hyperref/pd1enc.def)
+(/usr/local/texlive/2018/texmf-dist/tex/latex/latexconfig/hyperref.cfg))
+(/usr/local/texlive/2018/texmf-dist/tex/latex/hyperref/hpdftex.def
+(/usr/local/texlive/2018/texmf-dist/tex/latex/oberdiek/rerunfilecheck.sty))
+
+Package hyperref Warning: Option `hyperindex' has already been used,
+(hyperref)                setting the option has no effect on input line 377.
+
+
+Package hyperref Warning: Option `pagebackref' has already been used,
+(hyperref)                setting the option has no effect on input line 377.
+
+) (/usr/local/texlive/2018/texmf-dist/tex/latex/base/makeidx.sty)
+(/usr/local/texlive/2018/texmf-dist/tex/latex/base/inputenc.sty)
+Writing index file Rd2.idx
+No file Rd2.aux.
+(/usr/local/texlive/2018/texmf-dist/tex/latex/base/ts1cmr.fd)
+(/usr/local/texlive/2018/texmf-dist/tex/latex/psnfss/t1ptm.fd)
+(/usr/local/texlive/2018/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
+[Loading MPS to PDF converter (version 2006.09.02).]
+) (/usr/local/texlive/2018/texmf-dist/tex/latex/hyperref/nameref.sty
+(/usr/local/texlive/2018/texmf-dist/tex/generic/oberdiek/gettitlestring.sty))
+(/usr/local/texlive/2018/texmf-dist/tex/latex/inconsolata/t1zi4.fd)
+(/usr/local/texlive/2018/texmf-dist/tex/latex/psnfss/t1phv.fd) [1{/usr/local/te
+xlive/2018/texmf-var/fonts/map/pdftex/updmap/pdftex.map}]
+(/usr/local/texlive/2018/texmf-dist/tex/latex/psnfss/ts1ptm.fd) [2] [3]
+[4]
+Overfull \hbox (33.52013pt too wide) in paragraph at lines 296--302
+\T1/zi4/m/n/10 "centre"\T1/ptm/m/n/10 , \T1/zi4/m/n/10 "center"\T1/ptm/m/n/10 ,
+ \T1/zi4/m/n/10 "bottom"\T1/ptm/m/n/10 , and \T1/zi4/m/n/10 "top"\T1/ptm/m/n/10
+ . De-fault value is \T1/zi4/m/n/10 just = c("left","top")\T1/ptm/m/n/10 . 
+[5] [6]
+Overfull \hbox (2.4676pt too wide) in paragraph at lines 396--398
+[]\T1/ptm/m/n/10 A char-ac-ter value spec-i-fy-ing high-light box line color. D
+e-fault value is \T1/zi4/m/n/10 linecolor
+[7] [8] [9] [10]
+Overfull \hbox (6.39755pt too wide) in paragraph at lines 680--682
+[]\T1/ptm/m/n/10 A char-ac-ter value spec-i-fy-ing line join style. De-fault va
+lue is \T1/zi4/m/n/10 linejoin = "mitre"\T1/ptm/m/n/10 .
+[11] [12]
+Overfull \hbox (11.00793pt too wide) in paragraph at lines 796--798
+[]\T1/ptm/m/n/10 A char-ac-ter value spec-i-fy-ing text font-color. De-fault va
+lue is \T1/zi4/m/n/10 fontcolor = "black"\T1/ptm/m/n/10 . 
+[13] [14]
+Overfull \hbox (8.24722pt too wide) in paragraph at lines 918--920
+[]\T1/ptm/m/n/10 A log-i-cal value in-di-cat-ing whether to show the axis line.
+ De-fault value is \T1/zi4/m/n/10 axisLine
+[15]
+Overfull \hbox (8.24722pt too wide) in paragraph at lines 1015--1017
+[]\T1/ptm/m/n/10 A log-i-cal value in-di-cat-ing whether to show the axis line.
+ De-fault value is \T1/zi4/m/n/10 axisLine
+[16] [17] [18]
+Underfull \hbox (badness 4001) in paragraph at lines 1227--1227
+[]\T1/ptm/m/it/10 Make a \T1/zi4/m/n/10 bb_assembly \T1/ptm/m/it/10 ob-ject for
+ al-ter-nate TxDb, OrgDb,and
+[19] [20]
+Overfull \hbox (2.14693pt too wide) in paragraph at lines 1341--1344
+[]\T1/ptm/m/n/10 A dataset list-ing in-ter-ac-tion data along ge-nomic co-or-di
+-nates in the re-gion chr21:28000000-30300000
+
+Overfull \hbox (6.03802pt too wide) in paragraph at lines 1374--1382
+\T1/ptm/m/n/10 prin-ci-ples of chro-matin loop-ing. Cell. 2014 Dec 18;159(7):16
+65-80. doi: 10.1016/j.cell.2014.11.021.
+[21] [22]
+Overfull \hbox (6.4481pt too wide) in paragraph at lines 1447--1450
+[]\T1/ptm/m/n/10 COVID-19 case data was down-loaded from The COVID Track-ing Pr
+oject [][]$\T1/zi4/m/n/10 https : / / covidtracking .
+[23] [24]
+Overfull \hbox (65.76762pt too wide) in paragraph at lines 1596--1600
+\T1/ptm/m/n/10 tive anal-y-sis of 111 ref-er-ence hu-man epigenomes. Na-ture 51
+8, 317^^U330 (2015). https://doi.org/10.1038/nature14248 
+[25]
+Overfull \hbox (6.03802pt too wide) in paragraph at lines 1624--1632
+\T1/ptm/m/n/10 prin-ci-ples of chro-matin loop-ing. Cell. 2014 Dec 18;159(7):16
+65-80. doi: 10.1016/j.cell.2014.11.021.
+[26] [27]
+Overfull \hbox (65.76762pt too wide) in paragraph at lines 1767--1771
+\T1/ptm/m/n/10 tive anal-y-sis of 111 ref-er-ence hu-man epigenomes. Na-ture 51
+8, 317^^U330 (2015). https://doi.org/10.1038/nature14248 
+
+Overfull \hbox (6.03802pt too wide) in paragraph at lines 1795--1803
+\T1/ptm/m/n/10 prin-ci-ples of chro-matin loop-ing. Cell. 2014 Dec 18;159(7):16
+65-80. doi: 10.1016/j.cell.2014.11.021.
+[28] [29] [30]
+Underfull \hbox (badness 10000) in paragraph at lines 1943--1943
+[]\T1/ptm/m/it/10 Reshow guides drawn with \T1/zi4/m/n/10 bb_pageCreate\T1/ptm/
+m/it/10 ,
+
+Overfull \hbox (13.46016pt too wide) in paragraph at lines 1946--1948
+[]\T1/ptm/m/n/10 Reshow guides drawn with \T1/zi4/m/n/10 bb_pageCreate\T1/ptm/m
+/n/10 , \T1/zi4/m/n/10 bb_pageGuideHorizontal\T1/ptm/m/n/10 , and \T1/zi4/m/n/1
+0 bb_pageGuideVertical 
+[31] [32] [33] [34] [35] [36] [37] [38] [39] [40] [41] [42] [43] [44] [45]
+[46]
+Overfull \hbox (4.29765pt too wide) in paragraph at lines 2958--2963
+\T1/ptm/m/n/10 will at-tempt to choose a res-o-lu-tion based on the size of the
+ re-gion. For dataframes,
+
+Overfull \hbox (33.52013pt too wide) in paragraph at lines 3016--3023
+\T1/zi4/m/n/10 "centre"\T1/ptm/m/n/10 , \T1/zi4/m/n/10 "center"\T1/ptm/m/n/10 ,
+ \T1/zi4/m/n/10 "bottom"\T1/ptm/m/n/10 , and \T1/zi4/m/n/10 "top"\T1/ptm/m/n/10
+ . De-fault value is \T1/zi4/m/n/10 just = c("left","top")\T1/ptm/m/n/10 . 
+[47] [48] [49]
+Overfull \hbox (4.29765pt too wide) in paragraph at lines 3151--3156
+\T1/ptm/m/n/10 will at-tempt to choose a res-o-lu-tion based on the size of the
+ re-gion. For dataframes,
+
+Overfull \hbox (33.52013pt too wide) in paragraph at lines 3230--3237
+\T1/zi4/m/n/10 "centre"\T1/ptm/m/n/10 , \T1/zi4/m/n/10 "center"\T1/ptm/m/n/10 ,
+ \T1/zi4/m/n/10 "bottom"\T1/ptm/m/n/10 , and \T1/zi4/m/n/10 "top"\T1/ptm/m/n/10
+ . De-fault value is \T1/zi4/m/n/10 just = c("left","top")\T1/ptm/m/n/10 . 
+[50] [51] [52]
+Overfull \hbox (4.29765pt too wide) in paragraph at lines 3359--3364
+\T1/ptm/m/n/10 will at-tempt to choose a res-o-lu-tion based on the size of the
+ re-gion. For dataframes,
+
+Overfull \hbox (33.52013pt too wide) in paragraph at lines 3416--3423
+\T1/zi4/m/n/10 "centre"\T1/ptm/m/n/10 , \T1/zi4/m/n/10 "center"\T1/ptm/m/n/10 ,
+ \T1/zi4/m/n/10 "bottom"\T1/ptm/m/n/10 , and \T1/zi4/m/n/10 "top"\T1/ptm/m/n/10
+ . De-fault value is \T1/zi4/m/n/10 just = c("left","top")\T1/ptm/m/n/10 . 
+[53] [54] [55] [56] [57] [58] [59] [60]
+Overfull \hbox (33.52013pt too wide) in paragraph at lines 3926--3932
+\T1/zi4/m/n/10 "centre"\T1/ptm/m/n/10 , \T1/zi4/m/n/10 "center"\T1/ptm/m/n/10 ,
+ \T1/zi4/m/n/10 "bottom"\T1/ptm/m/n/10 , and \T1/zi4/m/n/10 "top"\T1/ptm/m/n/10
+ . De-fault value is \T1/zi4/m/n/10 just = c("left","top")\T1/ptm/m/n/10 . 
+[61]
+Underfull \vbox (badness 10000) has occurred while \output is active [62]
+[63] [64]
+Overfull \hbox (33.52013pt too wide) in paragraph at lines 4195--4202
+\T1/zi4/m/n/10 "centre"\T1/ptm/m/n/10 , \T1/zi4/m/n/10 "center"\T1/ptm/m/n/10 ,
+ \T1/zi4/m/n/10 "bottom"\T1/ptm/m/n/10 , and \T1/zi4/m/n/10 "top"\T1/ptm/m/n/10
+ . De-fault value is \T1/zi4/m/n/10 just = c("left","top")\T1/ptm/m/n/10 . 
+[65] [66] [67]
+Overfull \hbox (33.52013pt too wide) in paragraph at lines 4414--4420
+\T1/zi4/m/n/10 "centre"\T1/ptm/m/n/10 , \T1/zi4/m/n/10 "center"\T1/ptm/m/n/10 ,
+ \T1/zi4/m/n/10 "bottom"\T1/ptm/m/n/10 , and \T1/zi4/m/n/10 "top"\T1/ptm/m/n/10
+ . De-fault value is \T1/zi4/m/n/10 just = c("left","top")\T1/ptm/m/n/10 . 
+[68] [69] [70]
+(/usr/local/texlive/2018/texmf-dist/tex/latex/inconsolata/ts1zi4.fd) [71]
+[72]
+Overfull \hbox (7.31833pt too wide) in paragraph at lines 4714--4717
+\T1/ptm/m/n/10 ment boxes, as a frac-tion of the plot's ge-nomic range. De-faul
+t value is \T1/zi4/m/n/10 spaceWidth
+[73] [74]
+Overfull \hbox (14.7588pt too wide) in paragraph at lines 4882--4886
+\T1/ptm/m/n/10 given as nu-mer-ics or nu-meric vec-tors. De-fault value is \T1/
+zi4/m/n/10 default.units = "inches"\T1/ptm/m/n/10 . 
+[75] [76] [77] [78]
+Overfull \hbox (6.39755pt too wide) in paragraph at lines 5136--5138
+[]\T1/ptm/m/n/10 A char-ac-ter value spec-i-fy-ing line join style. De-fault va
+lue is \T1/zi4/m/n/10 linejoin = "mitre"\T1/ptm/m/n/10 .
+[79] [80] [81] [82] [83]
+Overfull \hbox (11.00793pt too wide) in paragraph at lines 5442--5444
+[]\T1/ptm/m/n/10 A char-ac-ter value spec-i-fy-ing text font-color. De-fault va
+lue is \T1/zi4/m/n/10 fontcolor = "black"\T1/ptm/m/n/10 . 
+[84] [85]
+Overfull \hbox (33.52013pt too wide) in paragraph at lines 5635--5642
+\T1/zi4/m/n/10 "centre"\T1/ptm/m/n/10 , \T1/zi4/m/n/10 "center"\T1/ptm/m/n/10 ,
+ \T1/zi4/m/n/10 "bottom"\T1/ptm/m/n/10 , and \T1/zi4/m/n/10 "top"\T1/ptm/m/n/10
+ . De-fault value is \T1/zi4/m/n/10 just = c("left","top")\T1/ptm/m/n/10 . 
+[86] [87] [88] [89]
+Overfull \hbox (10.09732pt too wide) in paragraph at lines 5891--5894
+[]\T1/ptm/m/n/10 Character value de-scrib-ing the 3 pos-si-bil-i-ties for vac-c
+i-na-tion sta-tus: \T1/zi4/m/n/10 "not"\T1/ptm/m/n/10 , \T1/zi4/m/n/10 "partial
+ly"\T1/ptm/m/n/10 ,
+
+Overfull \hbox (18.58858pt too wide) in paragraph at lines 5902--5905
+\T1/ptm/m/n/10 kins Cen-ters for Civic Im-pact COVID-19 GitHub repos-i-tory [][
+]$\T1/zi4/m/n/10 "https : / / github . com / govex / COVID-[]19 /
+[90] [91]
+Overfull \hbox (1.27722pt too wide) in paragraph at lines 6042--6049
+\T1/ptm/m/n/10 The UCSC Genome Browser database: 2021 up-date. Nu-cleic Acids R
+es. 2021 Jan 8;49(D1):D1046-
+[92]
+Overfull \hbox (1.27722pt too wide) in paragraph at lines 6084--6091
+\T1/ptm/m/n/10 The UCSC Genome Browser database: 2021 up-date. Nu-cleic Acids R
+es. 2021 Jan 8;49(D1):D1046-
+[93]
+Overfull \hbox (1.27722pt too wide) in paragraph at lines 6126--6133
+\T1/ptm/m/n/10 The UCSC Genome Browser database: 2021 up-date. Nu-cleic Acids R
+es. 2021 Jan 8;49(D1):D1046-
+[94]
+Overfull \hbox (1.27722pt too wide) in paragraph at lines 6168--6175
+\T1/ptm/m/n/10 The UCSC Genome Browser database: 2021 up-date. Nu-cleic Acids R
+es. 2021 Jan 8;49(D1):D1046-
+
+Overfull \hbox (1.27722pt too wide) in paragraph at lines 6210--6217
+\T1/ptm/m/n/10 The UCSC Genome Browser database: 2021 up-date. Nu-cleic Acids R
+es. 2021 Jan 8;49(D1):D1046-
+[95]
+Overfull \hbox (1.27722pt too wide) in paragraph at lines 6252--6259
+\T1/ptm/m/n/10 The UCSC Genome Browser database: 2021 up-date. Nu-cleic Acids R
+es. 2021 Jan 8;49(D1):D1046-
+[96]
+Overfull \hbox (1.27722pt too wide) in paragraph at lines 6294--6301
+\T1/ptm/m/n/10 The UCSC Genome Browser database: 2021 up-date. Nu-cleic Acids R
+es. 2021 Jan 8;49(D1):D1046-
+[97]
+Overfull \hbox (1.27722pt too wide) in paragraph at lines 6336--6343
+\T1/ptm/m/n/10 The UCSC Genome Browser database: 2021 up-date. Nu-cleic Acids R
+es. 2021 Jan 8;49(D1):D1046-
+
+Overfull \hbox (1.27722pt too wide) in paragraph at lines 6378--6385
+\T1/ptm/m/n/10 The UCSC Genome Browser database: 2021 up-date. Nu-cleic Acids R
+es. 2021 Jan 8;49(D1):D1046-
+[98]
+No file Rd2.ind.
+[99]
+(/private/var/folders/y0/02t14msn4dj1nns4r2zwybqw0000gn/T/RtmpCDDxP4/Rd2pdf51e7
+2e48082b/Rd2.aux)
+
+Package rerunfilecheck Warning: File `Rd2.out' has changed.
+(rerunfilecheck)                Rerun to get outlines right
+(rerunfilecheck)                or use package `bookmark'.
+
+ )
+(see the transcript file for additional information)pdfTeX warning (dest): name
+{Rfn.straw} has been referenced but does not exist, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.grid.rect} has been referenced but does not exi
+st, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.grid.raster} has been referenced but does not e
+xist, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.grid.polygon} has been referenced but does not 
+exist, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.GRanges} has been referenced but does not exist
+, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.ggplot} has been referenced but does not exist,
+ replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.grid.circle} has been referenced but does not e
+xist, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.map.Rul.data} has been referenced but does not 
+exist, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.BSgenome} has been referenced but does not exis
+t, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.OrgDb.Rdash.class} has been referenced but does
+ not exist, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.TxDb} has been referenced but does not exist, r
+eplaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.grid.text} has been referenced but does not exi
+st, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.grid.segments} has been referenced but does not
+ exist, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.arrow} has been referenced but does not exist, 
+replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.GInteractions} has been referenced but does not
+ exist, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.grob} has been referenced but does not exist, r
+eplaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.formatC} has been referenced but does not exist
+, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.gpar} has been referenced but does not exist, r
+eplaced by a fixed one
+
+{/usr/local/texlive/2018/texmf-dist/fonts/enc/dvips/inconsolata/i4-ts1.enc}{/us
+r/local/texlive/2018/texmf-dist/fonts/enc/dvips/base/8r.enc}{/usr/local/texlive
+/2018/texmf-dist/fonts/enc/dvips/inconsolata/i4-t1-0.enc}</usr/local/texlive/20
+18/texmf-dist/fonts/type1/public/inconsolata/Inconsolata-zi4r.pfb></usr/local/t
+exlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/local/te
+xlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texl
+ive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texli
+ve/2018/texmf-dist/fonts/type1/urw/helvetic/uhvr8a.pfb></usr/local/texlive/2018
+/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/local/texlive/2018/texmf-dis
+t/fonts/type1/urw/times/utmr8a.pfb></usr/local/texlive/2018/texmf-dist/fonts/ty
+pe1/urw/times/utmr8a.pfb></usr/local/texlive/2018/texmf-dist/fonts/type1/urw/ti
+mes/utmri8a.pfb>
+Output written on Rd2.pdf (99 pages, 294832 bytes).
+Transcript written on Rd2.log.
+This is pdfTeX, Version 3.14159265-2.6-1.40.19 (TeX Live 2018) (preloaded format=pdflatex)
+ restricted \write18 enabled.
+entering extended mode
+LaTeX2e <2018-04-01> patch level 2
+Babel <3.18> and hyphenation patterns for 84 language(s) loaded.
+
+(./Rd2.tex
+(/usr/local/texlive/2018/texmf-dist/tex/latex/base/book.cls
+Document Class: book 2014/09/29 v1.4h Standard LaTeX document class
+(/usr/local/texlive/2018/texmf-dist/tex/latex/base/bk10.clo))
+(/Library/Frameworks/R.framework/Resources/share/texmf/tex/latex/Rd.sty
+(/usr/local/texlive/2018/texmf-dist/tex/latex/base/ifthen.sty)
+(/usr/local/texlive/2018/texmf-dist/tex/latex/tools/longtable.sty)
+(/usr/local/texlive/2018/texmf-dist/tex/latex/tools/bm.sty)
+(/usr/local/texlive/2018/texmf-dist/tex/latex/base/alltt.sty)
+(/usr/local/texlive/2018/texmf-dist/tex/latex/tools/verbatim.sty)
+(/usr/local/texlive/2018/texmf-dist/tex/latex/url/url.sty)
+(/usr/local/texlive/2018/texmf-dist/tex/latex/base/textcomp.sty
+(/usr/local/texlive/2018/texmf-dist/tex/latex/base/ts1enc.def
+(/usr/local/texlive/2018/texmf-dist/tex/latex/base/ts1enc.dfu)))
+(/usr/local/texlive/2018/texmf-dist/tex/latex/base/fontenc.sty
+(/usr/local/texlive/2018/texmf-dist/tex/latex/base/t1enc.def))
+(/usr/local/texlive/2018/texmf-dist/tex/latex/psnfss/times.sty)
+(/usr/local/texlive/2018/texmf-dist/tex/latex/inconsolata/zi4.sty
+`inconsolata-zi4' v1.112, 2017/01/04 Text macros for Inconsolata (msharpe)
+(/usr/local/texlive/2018/texmf-dist/tex/latex/xkeyval/xkeyval.sty
+(/usr/local/texlive/2018/texmf-dist/tex/generic/xkeyval/xkeyval.tex
+(/usr/local/texlive/2018/texmf-dist/tex/generic/xkeyval/xkvutils.tex
+(/usr/local/texlive/2018/texmf-dist/tex/generic/xkeyval/keyval.tex)))))
+(/usr/local/texlive/2018/texmf-dist/tex/latex/graphics/color.sty
+(/usr/local/texlive/2018/texmf-dist/tex/latex/graphics-cfg/color.cfg)
+(/usr/local/texlive/2018/texmf-dist/tex/latex/graphics-def/pdftex.def))
+(/usr/local/texlive/2018/texmf-dist/tex/latex/hyperref/hyperref.sty
+(/usr/local/texlive/2018/texmf-dist/tex/generic/oberdiek/hobsub-hyperref.sty
+(/usr/local/texlive/2018/texmf-dist/tex/generic/oberdiek/hobsub-generic.sty))
+(/usr/local/texlive/2018/texmf-dist/tex/generic/ifxetex/ifxetex.sty)
+(/usr/local/texlive/2018/texmf-dist/tex/latex/oberdiek/auxhook.sty)
+(/usr/local/texlive/2018/texmf-dist/tex/latex/oberdiek/kvoptions.sty)
+(/usr/local/texlive/2018/texmf-dist/tex/latex/hyperref/pd1enc.def)
+(/usr/local/texlive/2018/texmf-dist/tex/latex/latexconfig/hyperref.cfg))
+(/usr/local/texlive/2018/texmf-dist/tex/latex/hyperref/hpdftex.def
+(/usr/local/texlive/2018/texmf-dist/tex/latex/oberdiek/rerunfilecheck.sty))
+
+Package hyperref Warning: Option `hyperindex' has already been used,
+(hyperref)                setting the option has no effect on input line 377.
+
+
+Package hyperref Warning: Option `pagebackref' has already been used,
+(hyperref)                setting the option has no effect on input line 377.
+
+) (/usr/local/texlive/2018/texmf-dist/tex/latex/base/makeidx.sty)
+(/usr/local/texlive/2018/texmf-dist/tex/latex/base/inputenc.sty)
+Writing index file Rd2.idx
+
+(/private/var/folders/y0/02t14msn4dj1nns4r2zwybqw0000gn/T/RtmpCDDxP4/Rd2pdf51e7
+2e48082b/Rd2.aux) (/usr/local/texlive/2018/texmf-dist/tex/latex/base/ts1cmr.fd)
+(/usr/local/texlive/2018/texmf-dist/tex/latex/psnfss/t1ptm.fd)
+(/usr/local/texlive/2018/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
+[Loading MPS to PDF converter (version 2006.09.02).]
+) (/usr/local/texlive/2018/texmf-dist/tex/latex/hyperref/nameref.sty
+(/usr/local/texlive/2018/texmf-dist/tex/generic/oberdiek/gettitlestring.sty))
+(/private/var/folders/y0/02t14msn4dj1nns4r2zwybqw0000gn/T/RtmpCDDxP4/Rd2pdf51e7
+2e48082b/Rd2.out)
+(/private/var/folders/y0/02t14msn4dj1nns4r2zwybqw0000gn/T/RtmpCDDxP4/Rd2pdf51e7
+2e48082b/Rd2.out)
+(/usr/local/texlive/2018/texmf-dist/tex/latex/inconsolata/t1zi4.fd)
+(/usr/local/texlive/2018/texmf-dist/tex/latex/psnfss/t1phv.fd)
+(/private/var/folders/y0/02t14msn4dj1nns4r2zwybqw0000gn/T/RtmpCDDxP4/Rd2pdf51e7
+2e48082b/Rd2.toc [1{/usr/local/texlive/2018/texmf-var/fonts/map/pdftex/updmap/p
+dftex.map}] [2]) [3]
+(/usr/local/texlive/2018/texmf-dist/tex/latex/psnfss/ts1ptm.fd) [4] [5]
+Overfull \hbox (33.52013pt too wide) in paragraph at lines 296--302
+\T1/zi4/m/n/10 "centre"\T1/ptm/m/n/10 , \T1/zi4/m/n/10 "center"\T1/ptm/m/n/10 ,
+ \T1/zi4/m/n/10 "bottom"\T1/ptm/m/n/10 , and \T1/zi4/m/n/10 "top"\T1/ptm/m/n/10
+ . De-fault value is \T1/zi4/m/n/10 just = c("left","top")\T1/ptm/m/n/10 . 
+[6] [7]
+Overfull \hbox (2.4676pt too wide) in paragraph at lines 396--398
+[]\T1/ptm/m/n/10 A char-ac-ter value spec-i-fy-ing high-light box line color. D
+e-fault value is \T1/zi4/m/n/10 linecolor
+[8] [9] [10] [11]
+Overfull \hbox (6.39755pt too wide) in paragraph at lines 680--682
+[]\T1/ptm/m/n/10 A char-ac-ter value spec-i-fy-ing line join style. De-fault va
+lue is \T1/zi4/m/n/10 linejoin = "mitre"\T1/ptm/m/n/10 .
+[12] [13]
+Overfull \hbox (11.00793pt too wide) in paragraph at lines 796--798
+[]\T1/ptm/m/n/10 A char-ac-ter value spec-i-fy-ing text font-color. De-fault va
+lue is \T1/zi4/m/n/10 fontcolor = "black"\T1/ptm/m/n/10 . 
+[14] [15]
+Overfull \hbox (8.24722pt too wide) in paragraph at lines 918--920
+[]\T1/ptm/m/n/10 A log-i-cal value in-di-cat-ing whether to show the axis line.
+ De-fault value is \T1/zi4/m/n/10 axisLine
+[16]
+Overfull \hbox (8.24722pt too wide) in paragraph at lines 1015--1017
+[]\T1/ptm/m/n/10 A log-i-cal value in-di-cat-ing whether to show the axis line.
+ De-fault value is \T1/zi4/m/n/10 axisLine
+[17] [18] [19]
+Underfull \vbox (badness 10000) has occurred while \output is active [20]
+Underfull \hbox (badness 4001) in paragraph at lines 1227--1227
+[]\T1/ptm/m/it/10 Make a \T1/zi4/m/n/10 bb_assembly \T1/ptm/m/it/10 ob-ject for
+ al-ter-nate TxDb, OrgDb,and
+[21]
+Overfull \hbox (2.14693pt too wide) in paragraph at lines 1341--1344
+[]\T1/ptm/m/n/10 A dataset list-ing in-ter-ac-tion data along ge-nomic co-or-di
+-nates in the re-gion chr21:28000000-30300000
+[22]
+Overfull \hbox (6.03802pt too wide) in paragraph at lines 1374--1382
+\T1/ptm/m/n/10 prin-ci-ples of chro-matin loop-ing. Cell. 2014 Dec 18;159(7):16
+65-80. doi: 10.1016/j.cell.2014.11.021.
+[23]
+Overfull \hbox (6.4481pt too wide) in paragraph at lines 1447--1450
+[]\T1/ptm/m/n/10 COVID-19 case data was down-loaded from The COVID Track-ing Pr
+oject [][]$\T1/zi4/m/n/10 https : / / covidtracking .
+[24] [25]
+Overfull \hbox (65.76762pt too wide) in paragraph at lines 1596--1600
+\T1/ptm/m/n/10 tive anal-y-sis of 111 ref-er-ence hu-man epigenomes. Na-ture 51
+8, 317^^U330 (2015). https://doi.org/10.1038/nature14248 
+[26]
+Overfull \hbox (6.03802pt too wide) in paragraph at lines 1624--1632
+\T1/ptm/m/n/10 prin-ci-ples of chro-matin loop-ing. Cell. 2014 Dec 18;159(7):16
+65-80. doi: 10.1016/j.cell.2014.11.021.
+[27] [28]
+Overfull \hbox (65.76762pt too wide) in paragraph at lines 1767--1771
+\T1/ptm/m/n/10 tive anal-y-sis of 111 ref-er-ence hu-man epigenomes. Na-ture 51
+8, 317^^U330 (2015). https://doi.org/10.1038/nature14248 
+
+Overfull \hbox (6.03802pt too wide) in paragraph at lines 1795--1803
+\T1/ptm/m/n/10 prin-ci-ples of chro-matin loop-ing. Cell. 2014 Dec 18;159(7):16
+65-80. doi: 10.1016/j.cell.2014.11.021.
+[29] [30] [31]
+Underfull \hbox (badness 10000) in paragraph at lines 1943--1943
+[]\T1/ptm/m/it/10 Reshow guides drawn with \T1/zi4/m/n/10 bb_pageCreate\T1/ptm/
+m/it/10 ,
+
+Overfull \hbox (13.46016pt too wide) in paragraph at lines 1946--1948
+[]\T1/ptm/m/n/10 Reshow guides drawn with \T1/zi4/m/n/10 bb_pageCreate\T1/ptm/m
+/n/10 , \T1/zi4/m/n/10 bb_pageGuideHorizontal\T1/ptm/m/n/10 , and \T1/zi4/m/n/1
+0 bb_pageGuideVertical 
+[32] [33] [34] [35] [36] [37] [38] [39] [40] [41] [42] [43] [44] [45] [46]
+[47]
+Overfull \hbox (4.29765pt too wide) in paragraph at lines 2958--2963
+\T1/ptm/m/n/10 will at-tempt to choose a res-o-lu-tion based on the size of the
+ re-gion. For dataframes,
+
+Overfull \hbox (33.52013pt too wide) in paragraph at lines 3016--3023
+\T1/zi4/m/n/10 "centre"\T1/ptm/m/n/10 , \T1/zi4/m/n/10 "center"\T1/ptm/m/n/10 ,
+ \T1/zi4/m/n/10 "bottom"\T1/ptm/m/n/10 , and \T1/zi4/m/n/10 "top"\T1/ptm/m/n/10
+ . De-fault value is \T1/zi4/m/n/10 just = c("left","top")\T1/ptm/m/n/10 . 
+[48] [49] [50]
+Overfull \hbox (4.29765pt too wide) in paragraph at lines 3151--3156
+\T1/ptm/m/n/10 will at-tempt to choose a res-o-lu-tion based on the size of the
+ re-gion. For dataframes,
+
+Overfull \hbox (33.52013pt too wide) in paragraph at lines 3230--3237
+\T1/zi4/m/n/10 "centre"\T1/ptm/m/n/10 , \T1/zi4/m/n/10 "center"\T1/ptm/m/n/10 ,
+ \T1/zi4/m/n/10 "bottom"\T1/ptm/m/n/10 , and \T1/zi4/m/n/10 "top"\T1/ptm/m/n/10
+ . De-fault value is \T1/zi4/m/n/10 just = c("left","top")\T1/ptm/m/n/10 . 
+[51] [52] [53]
+Overfull \hbox (4.29765pt too wide) in paragraph at lines 3359--3364
+\T1/ptm/m/n/10 will at-tempt to choose a res-o-lu-tion based on the size of the
+ re-gion. For dataframes,
+
+Overfull \hbox (33.52013pt too wide) in paragraph at lines 3416--3423
+\T1/zi4/m/n/10 "centre"\T1/ptm/m/n/10 , \T1/zi4/m/n/10 "center"\T1/ptm/m/n/10 ,
+ \T1/zi4/m/n/10 "bottom"\T1/ptm/m/n/10 , and \T1/zi4/m/n/10 "top"\T1/ptm/m/n/10
+ . De-fault value is \T1/zi4/m/n/10 just = c("left","top")\T1/ptm/m/n/10 . 
+[54] [55] [56] [57] [58] [59] [60] [61]
+Overfull \hbox (33.52013pt too wide) in paragraph at lines 3926--3932
+\T1/zi4/m/n/10 "centre"\T1/ptm/m/n/10 , \T1/zi4/m/n/10 "center"\T1/ptm/m/n/10 ,
+ \T1/zi4/m/n/10 "bottom"\T1/ptm/m/n/10 , and \T1/zi4/m/n/10 "top"\T1/ptm/m/n/10
+ . De-fault value is \T1/zi4/m/n/10 just = c("left","top")\T1/ptm/m/n/10 . 
+[62]
+Underfull \vbox (badness 10000) has occurred while \output is active [63]
+[64] [65]
+Overfull \hbox (33.52013pt too wide) in paragraph at lines 4195--4202
+\T1/zi4/m/n/10 "centre"\T1/ptm/m/n/10 , \T1/zi4/m/n/10 "center"\T1/ptm/m/n/10 ,
+ \T1/zi4/m/n/10 "bottom"\T1/ptm/m/n/10 , and \T1/zi4/m/n/10 "top"\T1/ptm/m/n/10
+ . De-fault value is \T1/zi4/m/n/10 just = c("left","top")\T1/ptm/m/n/10 . 
+[66] [67] [68]
+Overfull \hbox (33.52013pt too wide) in paragraph at lines 4414--4420
+\T1/zi4/m/n/10 "centre"\T1/ptm/m/n/10 , \T1/zi4/m/n/10 "center"\T1/ptm/m/n/10 ,
+ \T1/zi4/m/n/10 "bottom"\T1/ptm/m/n/10 , and \T1/zi4/m/n/10 "top"\T1/ptm/m/n/10
+ . De-fault value is \T1/zi4/m/n/10 just = c("left","top")\T1/ptm/m/n/10 . 
+[69] [70] [71]
+(/usr/local/texlive/2018/texmf-dist/tex/latex/inconsolata/ts1zi4.fd) [72]
+[73]
+Overfull \hbox (7.31833pt too wide) in paragraph at lines 4714--4717
+\T1/ptm/m/n/10 ment boxes, as a frac-tion of the plot's ge-nomic range. De-faul
+t value is \T1/zi4/m/n/10 spaceWidth
+[74] [75]
+Overfull \hbox (14.7588pt too wide) in paragraph at lines 4882--4886
+\T1/ptm/m/n/10 given as nu-mer-ics or nu-meric vec-tors. De-fault value is \T1/
+zi4/m/n/10 default.units = "inches"\T1/ptm/m/n/10 . 
+[76] [77] [78] [79]
+Overfull \hbox (6.39755pt too wide) in paragraph at lines 5136--5138
+[]\T1/ptm/m/n/10 A char-ac-ter value spec-i-fy-ing line join style. De-fault va
+lue is \T1/zi4/m/n/10 linejoin = "mitre"\T1/ptm/m/n/10 .
+[80] [81] [82] [83] [84]
+Overfull \hbox (11.00793pt too wide) in paragraph at lines 5442--5444
+[]\T1/ptm/m/n/10 A char-ac-ter value spec-i-fy-ing text font-color. De-fault va
+lue is \T1/zi4/m/n/10 fontcolor = "black"\T1/ptm/m/n/10 . 
+[85] [86]
+Overfull \hbox (33.52013pt too wide) in paragraph at lines 5635--5642
+\T1/zi4/m/n/10 "centre"\T1/ptm/m/n/10 , \T1/zi4/m/n/10 "center"\T1/ptm/m/n/10 ,
+ \T1/zi4/m/n/10 "bottom"\T1/ptm/m/n/10 , and \T1/zi4/m/n/10 "top"\T1/ptm/m/n/10
+ . De-fault value is \T1/zi4/m/n/10 just = c("left","top")\T1/ptm/m/n/10 . 
+[87] [88] [89] [90]
+Overfull \hbox (10.09732pt too wide) in paragraph at lines 5891--5894
+[]\T1/ptm/m/n/10 Character value de-scrib-ing the 3 pos-si-bil-i-ties for vac-c
+i-na-tion sta-tus: \T1/zi4/m/n/10 "not"\T1/ptm/m/n/10 , \T1/zi4/m/n/10 "partial
+ly"\T1/ptm/m/n/10 ,
+
+Overfull \hbox (18.58858pt too wide) in paragraph at lines 5902--5905
+\T1/ptm/m/n/10 kins Cen-ters for Civic Im-pact COVID-19 GitHub repos-i-tory [][
+]$\T1/zi4/m/n/10 "https : / / github . com / govex / COVID-[]19 /
+[91] [92]
+Overfull \hbox (1.27722pt too wide) in paragraph at lines 6042--6049
+\T1/ptm/m/n/10 The UCSC Genome Browser database: 2021 up-date. Nu-cleic Acids R
+es. 2021 Jan 8;49(D1):D1046-
+[93]
+Overfull \hbox (1.27722pt too wide) in paragraph at lines 6084--6091
+\T1/ptm/m/n/10 The UCSC Genome Browser database: 2021 up-date. Nu-cleic Acids R
+es. 2021 Jan 8;49(D1):D1046-
+[94]
+Overfull \hbox (1.27722pt too wide) in paragraph at lines 6126--6133
+\T1/ptm/m/n/10 The UCSC Genome Browser database: 2021 up-date. Nu-cleic Acids R
+es. 2021 Jan 8;49(D1):D1046-
+[95]
+Overfull \hbox (1.27722pt too wide) in paragraph at lines 6168--6175
+\T1/ptm/m/n/10 The UCSC Genome Browser database: 2021 up-date. Nu-cleic Acids R
+es. 2021 Jan 8;49(D1):D1046-
+
+Overfull \hbox (1.27722pt too wide) in paragraph at lines 6210--6217
+\T1/ptm/m/n/10 The UCSC Genome Browser database: 2021 up-date. Nu-cleic Acids R
+es. 2021 Jan 8;49(D1):D1046-
+[96]
+Overfull \hbox (1.27722pt too wide) in paragraph at lines 6252--6259
+\T1/ptm/m/n/10 The UCSC Genome Browser database: 2021 up-date. Nu-cleic Acids R
+es. 2021 Jan 8;49(D1):D1046-
+[97]
+Overfull \hbox (1.27722pt too wide) in paragraph at lines 6294--6301
+\T1/ptm/m/n/10 The UCSC Genome Browser database: 2021 up-date. Nu-cleic Acids R
+es. 2021 Jan 8;49(D1):D1046-
+[98]
+Overfull \hbox (1.27722pt too wide) in paragraph at lines 6336--6343
+\T1/ptm/m/n/10 The UCSC Genome Browser database: 2021 up-date. Nu-cleic Acids R
+es. 2021 Jan 8;49(D1):D1046-
+
+Overfull \hbox (1.27722pt too wide) in paragraph at lines 6378--6385
+\T1/ptm/m/n/10 The UCSC Genome Browser database: 2021 up-date. Nu-cleic Acids R
+es. 2021 Jan 8;49(D1):D1046-
+[99]
+No file Rd2.ind.
+[100]
+(/private/var/folders/y0/02t14msn4dj1nns4r2zwybqw0000gn/T/RtmpCDDxP4/Rd2pdf51e7
+2e48082b/Rd2.aux) )
+(see the transcript file for additional information)pdfTeX warning (dest): name
+{Rfn.straw} has been referenced but does not exist, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.grid.rect} has been referenced but does not exi
+st, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.grid.raster} has been referenced but does not e
+xist, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.grid.polygon} has been referenced but does not 
+exist, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.GRanges} has been referenced but does not exist
+, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.ggplot} has been referenced but does not exist,
+ replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.grid.circle} has been referenced but does not e
+xist, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.map.Rul.data} has been referenced but does not 
+exist, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.BSgenome} has been referenced but does not exis
+t, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.OrgDb.Rdash.class} has been referenced but does
+ not exist, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.TxDb} has been referenced but does not exist, r
+eplaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.grid.text} has been referenced but does not exi
+st, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.grid.segments} has been referenced but does not
+ exist, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.arrow} has been referenced but does not exist, 
+replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.GInteractions} has been referenced but does not
+ exist, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.grob} has been referenced but does not exist, r
+eplaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.formatC} has been referenced but does not exist
+, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.gpar} has been referenced but does not exist, r
+eplaced by a fixed one
+
+{/usr/local/texlive/2018/texmf-dist/fonts/enc/dvips/inconsolata/i4-ts1.enc}{/us
+r/local/texlive/2018/texmf-dist/fonts/enc/dvips/base/8r.enc}{/usr/local/texlive
+/2018/texmf-dist/fonts/enc/dvips/inconsolata/i4-t1-0.enc}</usr/local/texlive/20
+18/texmf-dist/fonts/type1/public/inconsolata/Inconsolata-zi4r.pfb></usr/local/t
+exlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/local/te
+xlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texl
+ive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texli
+ve/2018/texmf-dist/fonts/type1/urw/helvetic/uhvr8a.pfb></usr/local/texlive/2018
+/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/local/texlive/2018/texmf-dis
+t/fonts/type1/urw/times/utmr8a.pfb></usr/local/texlive/2018/texmf-dist/fonts/ty
+pe1/urw/times/utmr8a.pfb></usr/local/texlive/2018/texmf-dist/fonts/type1/urw/ti
+mes/utmri8a.pfb>
+Output written on Rd2.pdf (100 pages, 301478 bytes).
+Transcript written on Rd2.log.
+This is makeindex, version 2.15 [TeX Live 2018] (kpathsea + Thai support).
+Scanning input file Rd2.idx....done (240 entries accepted, 0 rejected).
+Sorting entries.....done (2092 comparisons).
+Generating output file Rd2.ind....done (252 lines written, 0 warnings).
+Output written in Rd2.ind.
+Transcript written in Rd2.ilg.
+This is pdfTeX, Version 3.14159265-2.6-1.40.19 (TeX Live 2018) (preloaded format=pdflatex)
+ restricted \write18 enabled.
+entering extended mode
+LaTeX2e <2018-04-01> patch level 2
+Babel <3.18> and hyphenation patterns for 84 language(s) loaded.
+
+(./Rd2.tex
+(/usr/local/texlive/2018/texmf-dist/tex/latex/base/book.cls
+Document Class: book 2014/09/29 v1.4h Standard LaTeX document class
+(/usr/local/texlive/2018/texmf-dist/tex/latex/base/bk10.clo))
+(/Library/Frameworks/R.framework/Resources/share/texmf/tex/latex/Rd.sty
+(/usr/local/texlive/2018/texmf-dist/tex/latex/base/ifthen.sty)
+(/usr/local/texlive/2018/texmf-dist/tex/latex/tools/longtable.sty)
+(/usr/local/texlive/2018/texmf-dist/tex/latex/tools/bm.sty)
+(/usr/local/texlive/2018/texmf-dist/tex/latex/base/alltt.sty)
+(/usr/local/texlive/2018/texmf-dist/tex/latex/tools/verbatim.sty)
+(/usr/local/texlive/2018/texmf-dist/tex/latex/url/url.sty)
+(/usr/local/texlive/2018/texmf-dist/tex/latex/base/textcomp.sty
+(/usr/local/texlive/2018/texmf-dist/tex/latex/base/ts1enc.def
+(/usr/local/texlive/2018/texmf-dist/tex/latex/base/ts1enc.dfu)))
+(/usr/local/texlive/2018/texmf-dist/tex/latex/base/fontenc.sty
+(/usr/local/texlive/2018/texmf-dist/tex/latex/base/t1enc.def))
+(/usr/local/texlive/2018/texmf-dist/tex/latex/psnfss/times.sty)
+(/usr/local/texlive/2018/texmf-dist/tex/latex/inconsolata/zi4.sty
+`inconsolata-zi4' v1.112, 2017/01/04 Text macros for Inconsolata (msharpe)
+(/usr/local/texlive/2018/texmf-dist/tex/latex/xkeyval/xkeyval.sty
+(/usr/local/texlive/2018/texmf-dist/tex/generic/xkeyval/xkeyval.tex
+(/usr/local/texlive/2018/texmf-dist/tex/generic/xkeyval/xkvutils.tex
+(/usr/local/texlive/2018/texmf-dist/tex/generic/xkeyval/keyval.tex)))))
+(/usr/local/texlive/2018/texmf-dist/tex/latex/graphics/color.sty
+(/usr/local/texlive/2018/texmf-dist/tex/latex/graphics-cfg/color.cfg)
+(/usr/local/texlive/2018/texmf-dist/tex/latex/graphics-def/pdftex.def))
+(/usr/local/texlive/2018/texmf-dist/tex/latex/hyperref/hyperref.sty
+(/usr/local/texlive/2018/texmf-dist/tex/generic/oberdiek/hobsub-hyperref.sty
+(/usr/local/texlive/2018/texmf-dist/tex/generic/oberdiek/hobsub-generic.sty))
+(/usr/local/texlive/2018/texmf-dist/tex/generic/ifxetex/ifxetex.sty)
+(/usr/local/texlive/2018/texmf-dist/tex/latex/oberdiek/auxhook.sty)
+(/usr/local/texlive/2018/texmf-dist/tex/latex/oberdiek/kvoptions.sty)
+(/usr/local/texlive/2018/texmf-dist/tex/latex/hyperref/pd1enc.def)
+(/usr/local/texlive/2018/texmf-dist/tex/latex/latexconfig/hyperref.cfg))
+(/usr/local/texlive/2018/texmf-dist/tex/latex/hyperref/hpdftex.def
+(/usr/local/texlive/2018/texmf-dist/tex/latex/oberdiek/rerunfilecheck.sty))
+
+Package hyperref Warning: Option `hyperindex' has already been used,
+(hyperref)                setting the option has no effect on input line 377.
+
+
+Package hyperref Warning: Option `pagebackref' has already been used,
+(hyperref)                setting the option has no effect on input line 377.
+
+) (/usr/local/texlive/2018/texmf-dist/tex/latex/base/makeidx.sty)
+(/usr/local/texlive/2018/texmf-dist/tex/latex/base/inputenc.sty)
+Writing index file Rd2.idx
+
+(/private/var/folders/y0/02t14msn4dj1nns4r2zwybqw0000gn/T/RtmpCDDxP4/Rd2pdf51e7
+2e48082b/Rd2.aux) (/usr/local/texlive/2018/texmf-dist/tex/latex/base/ts1cmr.fd)
+(/usr/local/texlive/2018/texmf-dist/tex/latex/psnfss/t1ptm.fd)
+(/usr/local/texlive/2018/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
+[Loading MPS to PDF converter (version 2006.09.02).]
+) (/usr/local/texlive/2018/texmf-dist/tex/latex/hyperref/nameref.sty
+(/usr/local/texlive/2018/texmf-dist/tex/generic/oberdiek/gettitlestring.sty))
+(/private/var/folders/y0/02t14msn4dj1nns4r2zwybqw0000gn/T/RtmpCDDxP4/Rd2pdf51e7
+2e48082b/Rd2.out)
+(/private/var/folders/y0/02t14msn4dj1nns4r2zwybqw0000gn/T/RtmpCDDxP4/Rd2pdf51e7
+2e48082b/Rd2.out)
+(/usr/local/texlive/2018/texmf-dist/tex/latex/inconsolata/t1zi4.fd)
+(/usr/local/texlive/2018/texmf-dist/tex/latex/psnfss/t1phv.fd)
+(/private/var/folders/y0/02t14msn4dj1nns4r2zwybqw0000gn/T/RtmpCDDxP4/Rd2pdf51e7
+2e48082b/Rd2.toc [1{/usr/local/texlive/2018/texmf-var/fonts/map/pdftex/updmap/p
+dftex.map}] [2]) [3]
+(/usr/local/texlive/2018/texmf-dist/tex/latex/psnfss/ts1ptm.fd) [4] [5]
+Overfull \hbox (33.52013pt too wide) in paragraph at lines 296--302
+\T1/zi4/m/n/10 "centre"\T1/ptm/m/n/10 , \T1/zi4/m/n/10 "center"\T1/ptm/m/n/10 ,
+ \T1/zi4/m/n/10 "bottom"\T1/ptm/m/n/10 , and \T1/zi4/m/n/10 "top"\T1/ptm/m/n/10
+ . De-fault value is \T1/zi4/m/n/10 just = c("left","top")\T1/ptm/m/n/10 . 
+[6] [7]
+Overfull \hbox (2.4676pt too wide) in paragraph at lines 396--398
+[]\T1/ptm/m/n/10 A char-ac-ter value spec-i-fy-ing high-light box line color. D
+e-fault value is \T1/zi4/m/n/10 linecolor
+[8] [9] [10] [11]
+Overfull \hbox (6.39755pt too wide) in paragraph at lines 680--682
+[]\T1/ptm/m/n/10 A char-ac-ter value spec-i-fy-ing line join style. De-fault va
+lue is \T1/zi4/m/n/10 linejoin = "mitre"\T1/ptm/m/n/10 .
+[12] [13]
+Overfull \hbox (11.00793pt too wide) in paragraph at lines 796--798
+[]\T1/ptm/m/n/10 A char-ac-ter value spec-i-fy-ing text font-color. De-fault va
+lue is \T1/zi4/m/n/10 fontcolor = "black"\T1/ptm/m/n/10 . 
+[14] [15]
+Overfull \hbox (8.24722pt too wide) in paragraph at lines 918--920
+[]\T1/ptm/m/n/10 A log-i-cal value in-di-cat-ing whether to show the axis line.
+ De-fault value is \T1/zi4/m/n/10 axisLine
+[16]
+Overfull \hbox (8.24722pt too wide) in paragraph at lines 1015--1017
+[]\T1/ptm/m/n/10 A log-i-cal value in-di-cat-ing whether to show the axis line.
+ De-fault value is \T1/zi4/m/n/10 axisLine
+[17] [18] [19]
+Underfull \vbox (badness 10000) has occurred while \output is active [20]
+Underfull \hbox (badness 4001) in paragraph at lines 1227--1227
+[]\T1/ptm/m/it/10 Make a \T1/zi4/m/n/10 bb_assembly \T1/ptm/m/it/10 ob-ject for
+ al-ter-nate TxDb, OrgDb,and
+[21]
+Overfull \hbox (2.14693pt too wide) in paragraph at lines 1341--1344
+[]\T1/ptm/m/n/10 A dataset list-ing in-ter-ac-tion data along ge-nomic co-or-di
+-nates in the re-gion chr21:28000000-30300000
+[22]
+Overfull \hbox (6.03802pt too wide) in paragraph at lines 1374--1382
+\T1/ptm/m/n/10 prin-ci-ples of chro-matin loop-ing. Cell. 2014 Dec 18;159(7):16
+65-80. doi: 10.1016/j.cell.2014.11.021.
+[23]
+Overfull \hbox (6.4481pt too wide) in paragraph at lines 1447--1450
+[]\T1/ptm/m/n/10 COVID-19 case data was down-loaded from The COVID Track-ing Pr
+oject [][]$\T1/zi4/m/n/10 https : / / covidtracking .
+[24] [25]
+Overfull \hbox (65.76762pt too wide) in paragraph at lines 1596--1600
+\T1/ptm/m/n/10 tive anal-y-sis of 111 ref-er-ence hu-man epigenomes. Na-ture 51
+8, 317^^U330 (2015). https://doi.org/10.1038/nature14248 
+[26]
+Overfull \hbox (6.03802pt too wide) in paragraph at lines 1624--1632
+\T1/ptm/m/n/10 prin-ci-ples of chro-matin loop-ing. Cell. 2014 Dec 18;159(7):16
+65-80. doi: 10.1016/j.cell.2014.11.021.
+[27] [28]
+Overfull \hbox (65.76762pt too wide) in paragraph at lines 1767--1771
+\T1/ptm/m/n/10 tive anal-y-sis of 111 ref-er-ence hu-man epigenomes. Na-ture 51
+8, 317^^U330 (2015). https://doi.org/10.1038/nature14248 
+
+Overfull \hbox (6.03802pt too wide) in paragraph at lines 1795--1803
+\T1/ptm/m/n/10 prin-ci-ples of chro-matin loop-ing. Cell. 2014 Dec 18;159(7):16
+65-80. doi: 10.1016/j.cell.2014.11.021.
+[29] [30] [31]
+Underfull \hbox (badness 10000) in paragraph at lines 1943--1943
+[]\T1/ptm/m/it/10 Reshow guides drawn with \T1/zi4/m/n/10 bb_pageCreate\T1/ptm/
+m/it/10 ,
+
+Overfull \hbox (13.46016pt too wide) in paragraph at lines 1946--1948
+[]\T1/ptm/m/n/10 Reshow guides drawn with \T1/zi4/m/n/10 bb_pageCreate\T1/ptm/m
+/n/10 , \T1/zi4/m/n/10 bb_pageGuideHorizontal\T1/ptm/m/n/10 , and \T1/zi4/m/n/1
+0 bb_pageGuideVertical 
+[32] [33] [34] [35] [36] [37] [38] [39] [40] [41] [42] [43] [44] [45] [46]
+[47]
+Overfull \hbox (4.29765pt too wide) in paragraph at lines 2958--2963
+\T1/ptm/m/n/10 will at-tempt to choose a res-o-lu-tion based on the size of the
+ re-gion. For dataframes,
+
+Overfull \hbox (33.52013pt too wide) in paragraph at lines 3016--3023
+\T1/zi4/m/n/10 "centre"\T1/ptm/m/n/10 , \T1/zi4/m/n/10 "center"\T1/ptm/m/n/10 ,
+ \T1/zi4/m/n/10 "bottom"\T1/ptm/m/n/10 , and \T1/zi4/m/n/10 "top"\T1/ptm/m/n/10
+ . De-fault value is \T1/zi4/m/n/10 just = c("left","top")\T1/ptm/m/n/10 . 
+[48] [49] [50]
+Overfull \hbox (4.29765pt too wide) in paragraph at lines 3151--3156
+\T1/ptm/m/n/10 will at-tempt to choose a res-o-lu-tion based on the size of the
+ re-gion. For dataframes,
+
+Overfull \hbox (33.52013pt too wide) in paragraph at lines 3230--3237
+\T1/zi4/m/n/10 "centre"\T1/ptm/m/n/10 , \T1/zi4/m/n/10 "center"\T1/ptm/m/n/10 ,
+ \T1/zi4/m/n/10 "bottom"\T1/ptm/m/n/10 , and \T1/zi4/m/n/10 "top"\T1/ptm/m/n/10
+ . De-fault value is \T1/zi4/m/n/10 just = c("left","top")\T1/ptm/m/n/10 . 
+[51] [52] [53]
+Overfull \hbox (4.29765pt too wide) in paragraph at lines 3359--3364
+\T1/ptm/m/n/10 will at-tempt to choose a res-o-lu-tion based on the size of the
+ re-gion. For dataframes,
+
+Overfull \hbox (33.52013pt too wide) in paragraph at lines 3416--3423
+\T1/zi4/m/n/10 "centre"\T1/ptm/m/n/10 , \T1/zi4/m/n/10 "center"\T1/ptm/m/n/10 ,
+ \T1/zi4/m/n/10 "bottom"\T1/ptm/m/n/10 , and \T1/zi4/m/n/10 "top"\T1/ptm/m/n/10
+ . De-fault value is \T1/zi4/m/n/10 just = c("left","top")\T1/ptm/m/n/10 . 
+[54] [55] [56] [57] [58] [59] [60] [61]
+Overfull \hbox (33.52013pt too wide) in paragraph at lines 3926--3932
+\T1/zi4/m/n/10 "centre"\T1/ptm/m/n/10 , \T1/zi4/m/n/10 "center"\T1/ptm/m/n/10 ,
+ \T1/zi4/m/n/10 "bottom"\T1/ptm/m/n/10 , and \T1/zi4/m/n/10 "top"\T1/ptm/m/n/10
+ . De-fault value is \T1/zi4/m/n/10 just = c("left","top")\T1/ptm/m/n/10 . 
+[62]
+Underfull \vbox (badness 10000) has occurred while \output is active [63]
+[64] [65]
+Overfull \hbox (33.52013pt too wide) in paragraph at lines 4195--4202
+\T1/zi4/m/n/10 "centre"\T1/ptm/m/n/10 , \T1/zi4/m/n/10 "center"\T1/ptm/m/n/10 ,
+ \T1/zi4/m/n/10 "bottom"\T1/ptm/m/n/10 , and \T1/zi4/m/n/10 "top"\T1/ptm/m/n/10
+ . De-fault value is \T1/zi4/m/n/10 just = c("left","top")\T1/ptm/m/n/10 . 
+[66] [67] [68]
+Overfull \hbox (33.52013pt too wide) in paragraph at lines 4414--4420
+\T1/zi4/m/n/10 "centre"\T1/ptm/m/n/10 , \T1/zi4/m/n/10 "center"\T1/ptm/m/n/10 ,
+ \T1/zi4/m/n/10 "bottom"\T1/ptm/m/n/10 , and \T1/zi4/m/n/10 "top"\T1/ptm/m/n/10
+ . De-fault value is \T1/zi4/m/n/10 just = c("left","top")\T1/ptm/m/n/10 . 
+[69] [70] [71]
+(/usr/local/texlive/2018/texmf-dist/tex/latex/inconsolata/ts1zi4.fd) [72]
+[73]
+Overfull \hbox (7.31833pt too wide) in paragraph at lines 4714--4717
+\T1/ptm/m/n/10 ment boxes, as a frac-tion of the plot's ge-nomic range. De-faul
+t value is \T1/zi4/m/n/10 spaceWidth
+[74] [75]
+Overfull \hbox (14.7588pt too wide) in paragraph at lines 4882--4886
+\T1/ptm/m/n/10 given as nu-mer-ics or nu-meric vec-tors. De-fault value is \T1/
+zi4/m/n/10 default.units = "inches"\T1/ptm/m/n/10 . 
+[76] [77] [78] [79]
+Overfull \hbox (6.39755pt too wide) in paragraph at lines 5136--5138
+[]\T1/ptm/m/n/10 A char-ac-ter value spec-i-fy-ing line join style. De-fault va
+lue is \T1/zi4/m/n/10 linejoin = "mitre"\T1/ptm/m/n/10 .
+[80] [81] [82] [83] [84]
+Overfull \hbox (11.00793pt too wide) in paragraph at lines 5442--5444
+[]\T1/ptm/m/n/10 A char-ac-ter value spec-i-fy-ing text font-color. De-fault va
+lue is \T1/zi4/m/n/10 fontcolor = "black"\T1/ptm/m/n/10 . 
+[85] [86]
+Overfull \hbox (33.52013pt too wide) in paragraph at lines 5635--5642
+\T1/zi4/m/n/10 "centre"\T1/ptm/m/n/10 , \T1/zi4/m/n/10 "center"\T1/ptm/m/n/10 ,
+ \T1/zi4/m/n/10 "bottom"\T1/ptm/m/n/10 , and \T1/zi4/m/n/10 "top"\T1/ptm/m/n/10
+ . De-fault value is \T1/zi4/m/n/10 just = c("left","top")\T1/ptm/m/n/10 . 
+[87] [88] [89] [90]
+Overfull \hbox (10.09732pt too wide) in paragraph at lines 5891--5894
+[]\T1/ptm/m/n/10 Character value de-scrib-ing the 3 pos-si-bil-i-ties for vac-c
+i-na-tion sta-tus: \T1/zi4/m/n/10 "not"\T1/ptm/m/n/10 , \T1/zi4/m/n/10 "partial
+ly"\T1/ptm/m/n/10 ,
+
+Overfull \hbox (18.58858pt too wide) in paragraph at lines 5902--5905
+\T1/ptm/m/n/10 kins Cen-ters for Civic Im-pact COVID-19 GitHub repos-i-tory [][
+]$\T1/zi4/m/n/10 "https : / / github . com / govex / COVID-[]19 /
+[91] [92]
+Overfull \hbox (1.27722pt too wide) in paragraph at lines 6042--6049
+\T1/ptm/m/n/10 The UCSC Genome Browser database: 2021 up-date. Nu-cleic Acids R
+es. 2021 Jan 8;49(D1):D1046-
+[93]
+Overfull \hbox (1.27722pt too wide) in paragraph at lines 6084--6091
+\T1/ptm/m/n/10 The UCSC Genome Browser database: 2021 up-date. Nu-cleic Acids R
+es. 2021 Jan 8;49(D1):D1046-
+[94]
+Overfull \hbox (1.27722pt too wide) in paragraph at lines 6126--6133
+\T1/ptm/m/n/10 The UCSC Genome Browser database: 2021 up-date. Nu-cleic Acids R
+es. 2021 Jan 8;49(D1):D1046-
+[95]
+Overfull \hbox (1.27722pt too wide) in paragraph at lines 6168--6175
+\T1/ptm/m/n/10 The UCSC Genome Browser database: 2021 up-date. Nu-cleic Acids R
+es. 2021 Jan 8;49(D1):D1046-
+
+Overfull \hbox (1.27722pt too wide) in paragraph at lines 6210--6217
+\T1/ptm/m/n/10 The UCSC Genome Browser database: 2021 up-date. Nu-cleic Acids R
+es. 2021 Jan 8;49(D1):D1046-
+[96]
+Overfull \hbox (1.27722pt too wide) in paragraph at lines 6252--6259
+\T1/ptm/m/n/10 The UCSC Genome Browser database: 2021 up-date. Nu-cleic Acids R
+es. 2021 Jan 8;49(D1):D1046-
+[97]
+Overfull \hbox (1.27722pt too wide) in paragraph at lines 6294--6301
+\T1/ptm/m/n/10 The UCSC Genome Browser database: 2021 up-date. Nu-cleic Acids R
+es. 2021 Jan 8;49(D1):D1046-
+[98]
+Overfull \hbox (1.27722pt too wide) in paragraph at lines 6336--6343
+\T1/ptm/m/n/10 The UCSC Genome Browser database: 2021 up-date. Nu-cleic Acids R
+es. 2021 Jan 8;49(D1):D1046-
+
+Overfull \hbox (1.27722pt too wide) in paragraph at lines 6378--6385
+\T1/ptm/m/n/10 The UCSC Genome Browser database: 2021 up-date. Nu-cleic Acids R
+es. 2021 Jan 8;49(D1):D1046-
+[99]
+(/private/var/folders/y0/02t14msn4dj1nns4r2zwybqw0000gn/T/RtmpCDDxP4/Rd2pdf51e7
+2e48082b/Rd2.ind [100]
+
+LaTeX Font Warning: Font shape `T1/zi4/m/it' undefined
+(Font)              using `T1/zi4/m/n' instead on input line 143.
+
+[101] [102])
+(/private/var/folders/y0/02t14msn4dj1nns4r2zwybqw0000gn/T/RtmpCDDxP4/Rd2pdf51e7
+2e48082b/Rd2.aux)
+
+Package rerunfilecheck Warning: File `Rd2.out' has changed.
+(rerunfilecheck)                Rerun to get outlines right
+(rerunfilecheck)                or use package `bookmark'.
+
+
+LaTeX Font Warning: Some font shapes were not available, defaults substituted.
+
+ )
+(see the transcript file for additional information)pdfTeX warning (dest): name
+{Rfn.straw} has been referenced but does not exist, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.grid.rect} has been referenced but does not exi
+st, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.grid.raster} has been referenced but does not e
+xist, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.grid.polygon} has been referenced but does not 
+exist, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.GRanges} has been referenced but does not exist
+, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.ggplot} has been referenced but does not exist,
+ replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.grid.circle} has been referenced but does not e
+xist, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.map.Rul.data} has been referenced but does not 
+exist, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.BSgenome} has been referenced but does not exis
+t, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.OrgDb.Rdash.class} has been referenced but does
+ not exist, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.TxDb} has been referenced but does not exist, r
+eplaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.grid.text} has been referenced but does not exi
+st, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.grid.segments} has been referenced but does not
+ exist, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.arrow} has been referenced but does not exist, 
+replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.GInteractions} has been referenced but does not
+ exist, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.grob} has been referenced but does not exist, r
+eplaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.formatC} has been referenced but does not exist
+, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.gpar} has been referenced but does not exist, r
+eplaced by a fixed one
+
+{/usr/local/texlive/2018/texmf-dist/fonts/enc/dvips/inconsolata/i4-ts1.enc}{/us
+r/local/texlive/2018/texmf-dist/fonts/enc/dvips/base/8r.enc}{/usr/local/texlive
+/2018/texmf-dist/fonts/enc/dvips/inconsolata/i4-t1-0.enc}</usr/local/texlive/20
+18/texmf-dist/fonts/type1/public/inconsolata/Inconsolata-zi4r.pfb></usr/local/t
+exlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/local/te
+xlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texl
+ive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texli
+ve/2018/texmf-dist/fonts/type1/urw/helvetic/uhvr8a.pfb></usr/local/texlive/2018
+/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/local/texlive/2018/texmf-dis
+t/fonts/type1/urw/times/utmr8a.pfb></usr/local/texlive/2018/texmf-dist/fonts/ty
+pe1/urw/times/utmr8a.pfb></usr/local/texlive/2018/texmf-dist/fonts/type1/urw/ti
+mes/utmri8a.pfb>
+Output written on Rd2.pdf (102 pages, 311251 bytes).
+Transcript written on Rd2.log.
+This is makeindex, version 2.15 [TeX Live 2018] (kpathsea + Thai support).
+Scanning input file Rd2.idx....done (240 entries accepted, 0 rejected).
+Sorting entries.....done (2092 comparisons).
+Generating output file Rd2.ind....done (252 lines written, 0 warnings).
+Output written in Rd2.ind.
+Transcript written in Rd2.ilg.
+This is pdfTeX, Version 3.14159265-2.6-1.40.19 (TeX Live 2018) (preloaded format=pdflatex)
+ restricted \write18 enabled.
+entering extended mode
+LaTeX2e <2018-04-01> patch level 2
+Babel <3.18> and hyphenation patterns for 84 language(s) loaded.
+
+(./Rd2.tex
+(/usr/local/texlive/2018/texmf-dist/tex/latex/base/book.cls
+Document Class: book 2014/09/29 v1.4h Standard LaTeX document class
+(/usr/local/texlive/2018/texmf-dist/tex/latex/base/bk10.clo))
+(/Library/Frameworks/R.framework/Resources/share/texmf/tex/latex/Rd.sty
+(/usr/local/texlive/2018/texmf-dist/tex/latex/base/ifthen.sty)
+(/usr/local/texlive/2018/texmf-dist/tex/latex/tools/longtable.sty)
+(/usr/local/texlive/2018/texmf-dist/tex/latex/tools/bm.sty)
+(/usr/local/texlive/2018/texmf-dist/tex/latex/base/alltt.sty)
+(/usr/local/texlive/2018/texmf-dist/tex/latex/tools/verbatim.sty)
+(/usr/local/texlive/2018/texmf-dist/tex/latex/url/url.sty)
+(/usr/local/texlive/2018/texmf-dist/tex/latex/base/textcomp.sty
+(/usr/local/texlive/2018/texmf-dist/tex/latex/base/ts1enc.def
+(/usr/local/texlive/2018/texmf-dist/tex/latex/base/ts1enc.dfu)))
+(/usr/local/texlive/2018/texmf-dist/tex/latex/base/fontenc.sty
+(/usr/local/texlive/2018/texmf-dist/tex/latex/base/t1enc.def))
+(/usr/local/texlive/2018/texmf-dist/tex/latex/psnfss/times.sty)
+(/usr/local/texlive/2018/texmf-dist/tex/latex/inconsolata/zi4.sty
+`inconsolata-zi4' v1.112, 2017/01/04 Text macros for Inconsolata (msharpe)
+(/usr/local/texlive/2018/texmf-dist/tex/latex/xkeyval/xkeyval.sty
+(/usr/local/texlive/2018/texmf-dist/tex/generic/xkeyval/xkeyval.tex
+(/usr/local/texlive/2018/texmf-dist/tex/generic/xkeyval/xkvutils.tex
+(/usr/local/texlive/2018/texmf-dist/tex/generic/xkeyval/keyval.tex)))))
+(/usr/local/texlive/2018/texmf-dist/tex/latex/graphics/color.sty
+(/usr/local/texlive/2018/texmf-dist/tex/latex/graphics-cfg/color.cfg)
+(/usr/local/texlive/2018/texmf-dist/tex/latex/graphics-def/pdftex.def))
+(/usr/local/texlive/2018/texmf-dist/tex/latex/hyperref/hyperref.sty
+(/usr/local/texlive/2018/texmf-dist/tex/generic/oberdiek/hobsub-hyperref.sty
+(/usr/local/texlive/2018/texmf-dist/tex/generic/oberdiek/hobsub-generic.sty))
+(/usr/local/texlive/2018/texmf-dist/tex/generic/ifxetex/ifxetex.sty)
+(/usr/local/texlive/2018/texmf-dist/tex/latex/oberdiek/auxhook.sty)
+(/usr/local/texlive/2018/texmf-dist/tex/latex/oberdiek/kvoptions.sty)
+(/usr/local/texlive/2018/texmf-dist/tex/latex/hyperref/pd1enc.def)
+(/usr/local/texlive/2018/texmf-dist/tex/latex/latexconfig/hyperref.cfg))
+(/usr/local/texlive/2018/texmf-dist/tex/latex/hyperref/hpdftex.def
+(/usr/local/texlive/2018/texmf-dist/tex/latex/oberdiek/rerunfilecheck.sty))
+
+Package hyperref Warning: Option `hyperindex' has already been used,
+(hyperref)                setting the option has no effect on input line 377.
+
+
+Package hyperref Warning: Option `pagebackref' has already been used,
+(hyperref)                setting the option has no effect on input line 377.
+
+) (/usr/local/texlive/2018/texmf-dist/tex/latex/base/makeidx.sty)
+(/usr/local/texlive/2018/texmf-dist/tex/latex/base/inputenc.sty)
+Writing index file Rd2.idx
+
+(/private/var/folders/y0/02t14msn4dj1nns4r2zwybqw0000gn/T/RtmpCDDxP4/Rd2pdf51e7
+2e48082b/Rd2.aux) (/usr/local/texlive/2018/texmf-dist/tex/latex/base/ts1cmr.fd)
+(/usr/local/texlive/2018/texmf-dist/tex/latex/psnfss/t1ptm.fd)
+(/usr/local/texlive/2018/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
+[Loading MPS to PDF converter (version 2006.09.02).]
+) (/usr/local/texlive/2018/texmf-dist/tex/latex/hyperref/nameref.sty
+(/usr/local/texlive/2018/texmf-dist/tex/generic/oberdiek/gettitlestring.sty))
+(/private/var/folders/y0/02t14msn4dj1nns4r2zwybqw0000gn/T/RtmpCDDxP4/Rd2pdf51e7
+2e48082b/Rd2.out)
+(/private/var/folders/y0/02t14msn4dj1nns4r2zwybqw0000gn/T/RtmpCDDxP4/Rd2pdf51e7
+2e48082b/Rd2.out)
+(/usr/local/texlive/2018/texmf-dist/tex/latex/inconsolata/t1zi4.fd)
+(/usr/local/texlive/2018/texmf-dist/tex/latex/psnfss/t1phv.fd)
+(/private/var/folders/y0/02t14msn4dj1nns4r2zwybqw0000gn/T/RtmpCDDxP4/Rd2pdf51e7
+2e48082b/Rd2.toc [1{/usr/local/texlive/2018/texmf-var/fonts/map/pdftex/updmap/p
+dftex.map}] [2]) [3]
+(/usr/local/texlive/2018/texmf-dist/tex/latex/psnfss/ts1ptm.fd) [4] [5]
+Overfull \hbox (33.52013pt too wide) in paragraph at lines 296--302
+\T1/zi4/m/n/10 "centre"\T1/ptm/m/n/10 , \T1/zi4/m/n/10 "center"\T1/ptm/m/n/10 ,
+ \T1/zi4/m/n/10 "bottom"\T1/ptm/m/n/10 , and \T1/zi4/m/n/10 "top"\T1/ptm/m/n/10
+ . De-fault value is \T1/zi4/m/n/10 just = c("left","top")\T1/ptm/m/n/10 . 
+[6] [7]
+Overfull \hbox (2.4676pt too wide) in paragraph at lines 396--398
+[]\T1/ptm/m/n/10 A char-ac-ter value spec-i-fy-ing high-light box line color. D
+e-fault value is \T1/zi4/m/n/10 linecolor
+[8] [9] [10] [11]
+Overfull \hbox (6.39755pt too wide) in paragraph at lines 680--682
+[]\T1/ptm/m/n/10 A char-ac-ter value spec-i-fy-ing line join style. De-fault va
+lue is \T1/zi4/m/n/10 linejoin = "mitre"\T1/ptm/m/n/10 .
+[12] [13]
+Overfull \hbox (11.00793pt too wide) in paragraph at lines 796--798
+[]\T1/ptm/m/n/10 A char-ac-ter value spec-i-fy-ing text font-color. De-fault va
+lue is \T1/zi4/m/n/10 fontcolor = "black"\T1/ptm/m/n/10 . 
+[14] [15]
+Overfull \hbox (8.24722pt too wide) in paragraph at lines 918--920
+[]\T1/ptm/m/n/10 A log-i-cal value in-di-cat-ing whether to show the axis line.
+ De-fault value is \T1/zi4/m/n/10 axisLine
+[16]
+Overfull \hbox (8.24722pt too wide) in paragraph at lines 1015--1017
+[]\T1/ptm/m/n/10 A log-i-cal value in-di-cat-ing whether to show the axis line.
+ De-fault value is \T1/zi4/m/n/10 axisLine
+[17] [18] [19]
+Underfull \vbox (badness 10000) has occurred while \output is active [20]
+Underfull \hbox (badness 4001) in paragraph at lines 1227--1227
+[]\T1/ptm/m/it/10 Make a \T1/zi4/m/n/10 bb_assembly \T1/ptm/m/it/10 ob-ject for
+ al-ter-nate TxDb, OrgDb,and
+[21]
+Overfull \hbox (2.14693pt too wide) in paragraph at lines 1341--1344
+[]\T1/ptm/m/n/10 A dataset list-ing in-ter-ac-tion data along ge-nomic co-or-di
+-nates in the re-gion chr21:28000000-30300000
+[22]
+Overfull \hbox (6.03802pt too wide) in paragraph at lines 1374--1382
+\T1/ptm/m/n/10 prin-ci-ples of chro-matin loop-ing. Cell. 2014 Dec 18;159(7):16
+65-80. doi: 10.1016/j.cell.2014.11.021.
+[23]
+Overfull \hbox (6.4481pt too wide) in paragraph at lines 1447--1450
+[]\T1/ptm/m/n/10 COVID-19 case data was down-loaded from The COVID Track-ing Pr
+oject [][]$\T1/zi4/m/n/10 https : / / covidtracking .
+[24] [25]
+Overfull \hbox (65.76762pt too wide) in paragraph at lines 1596--1600
+\T1/ptm/m/n/10 tive anal-y-sis of 111 ref-er-ence hu-man epigenomes. Na-ture 51
+8, 317^^U330 (2015). https://doi.org/10.1038/nature14248 
+[26]
+Overfull \hbox (6.03802pt too wide) in paragraph at lines 1624--1632
+\T1/ptm/m/n/10 prin-ci-ples of chro-matin loop-ing. Cell. 2014 Dec 18;159(7):16
+65-80. doi: 10.1016/j.cell.2014.11.021.
+[27] [28]
+Overfull \hbox (65.76762pt too wide) in paragraph at lines 1767--1771
+\T1/ptm/m/n/10 tive anal-y-sis of 111 ref-er-ence hu-man epigenomes. Na-ture 51
+8, 317^^U330 (2015). https://doi.org/10.1038/nature14248 
+
+Overfull \hbox (6.03802pt too wide) in paragraph at lines 1795--1803
+\T1/ptm/m/n/10 prin-ci-ples of chro-matin loop-ing. Cell. 2014 Dec 18;159(7):16
+65-80. doi: 10.1016/j.cell.2014.11.021.
+[29] [30] [31]
+Underfull \hbox (badness 10000) in paragraph at lines 1943--1943
+[]\T1/ptm/m/it/10 Reshow guides drawn with \T1/zi4/m/n/10 bb_pageCreate\T1/ptm/
+m/it/10 ,
+
+Overfull \hbox (13.46016pt too wide) in paragraph at lines 1946--1948
+[]\T1/ptm/m/n/10 Reshow guides drawn with \T1/zi4/m/n/10 bb_pageCreate\T1/ptm/m
+/n/10 , \T1/zi4/m/n/10 bb_pageGuideHorizontal\T1/ptm/m/n/10 , and \T1/zi4/m/n/1
+0 bb_pageGuideVertical 
+[32] [33] [34] [35] [36] [37] [38] [39] [40] [41] [42] [43] [44] [45] [46]
+[47]
+Overfull \hbox (4.29765pt too wide) in paragraph at lines 2958--2963
+\T1/ptm/m/n/10 will at-tempt to choose a res-o-lu-tion based on the size of the
+ re-gion. For dataframes,
+
+Overfull \hbox (33.52013pt too wide) in paragraph at lines 3016--3023
+\T1/zi4/m/n/10 "centre"\T1/ptm/m/n/10 , \T1/zi4/m/n/10 "center"\T1/ptm/m/n/10 ,
+ \T1/zi4/m/n/10 "bottom"\T1/ptm/m/n/10 , and \T1/zi4/m/n/10 "top"\T1/ptm/m/n/10
+ . De-fault value is \T1/zi4/m/n/10 just = c("left","top")\T1/ptm/m/n/10 . 
+[48] [49] [50]
+Overfull \hbox (4.29765pt too wide) in paragraph at lines 3151--3156
+\T1/ptm/m/n/10 will at-tempt to choose a res-o-lu-tion based on the size of the
+ re-gion. For dataframes,
+
+Overfull \hbox (33.52013pt too wide) in paragraph at lines 3230--3237
+\T1/zi4/m/n/10 "centre"\T1/ptm/m/n/10 , \T1/zi4/m/n/10 "center"\T1/ptm/m/n/10 ,
+ \T1/zi4/m/n/10 "bottom"\T1/ptm/m/n/10 , and \T1/zi4/m/n/10 "top"\T1/ptm/m/n/10
+ . De-fault value is \T1/zi4/m/n/10 just = c("left","top")\T1/ptm/m/n/10 . 
+[51] [52] [53]
+Overfull \hbox (4.29765pt too wide) in paragraph at lines 3359--3364
+\T1/ptm/m/n/10 will at-tempt to choose a res-o-lu-tion based on the size of the
+ re-gion. For dataframes,
+
+Overfull \hbox (33.52013pt too wide) in paragraph at lines 3416--3423
+\T1/zi4/m/n/10 "centre"\T1/ptm/m/n/10 , \T1/zi4/m/n/10 "center"\T1/ptm/m/n/10 ,
+ \T1/zi4/m/n/10 "bottom"\T1/ptm/m/n/10 , and \T1/zi4/m/n/10 "top"\T1/ptm/m/n/10
+ . De-fault value is \T1/zi4/m/n/10 just = c("left","top")\T1/ptm/m/n/10 . 
+[54] [55] [56] [57] [58] [59] [60] [61]
+Overfull \hbox (33.52013pt too wide) in paragraph at lines 3926--3932
+\T1/zi4/m/n/10 "centre"\T1/ptm/m/n/10 , \T1/zi4/m/n/10 "center"\T1/ptm/m/n/10 ,
+ \T1/zi4/m/n/10 "bottom"\T1/ptm/m/n/10 , and \T1/zi4/m/n/10 "top"\T1/ptm/m/n/10
+ . De-fault value is \T1/zi4/m/n/10 just = c("left","top")\T1/ptm/m/n/10 . 
+[62]
+Underfull \vbox (badness 10000) has occurred while \output is active [63]
+[64] [65]
+Overfull \hbox (33.52013pt too wide) in paragraph at lines 4195--4202
+\T1/zi4/m/n/10 "centre"\T1/ptm/m/n/10 , \T1/zi4/m/n/10 "center"\T1/ptm/m/n/10 ,
+ \T1/zi4/m/n/10 "bottom"\T1/ptm/m/n/10 , and \T1/zi4/m/n/10 "top"\T1/ptm/m/n/10
+ . De-fault value is \T1/zi4/m/n/10 just = c("left","top")\T1/ptm/m/n/10 . 
+[66] [67] [68]
+Overfull \hbox (33.52013pt too wide) in paragraph at lines 4414--4420
+\T1/zi4/m/n/10 "centre"\T1/ptm/m/n/10 , \T1/zi4/m/n/10 "center"\T1/ptm/m/n/10 ,
+ \T1/zi4/m/n/10 "bottom"\T1/ptm/m/n/10 , and \T1/zi4/m/n/10 "top"\T1/ptm/m/n/10
+ . De-fault value is \T1/zi4/m/n/10 just = c("left","top")\T1/ptm/m/n/10 . 
+[69] [70] [71]
+(/usr/local/texlive/2018/texmf-dist/tex/latex/inconsolata/ts1zi4.fd) [72]
+[73]
+Overfull \hbox (7.31833pt too wide) in paragraph at lines 4714--4717
+\T1/ptm/m/n/10 ment boxes, as a frac-tion of the plot's ge-nomic range. De-faul
+t value is \T1/zi4/m/n/10 spaceWidth
+[74] [75]
+Overfull \hbox (14.7588pt too wide) in paragraph at lines 4882--4886
+\T1/ptm/m/n/10 given as nu-mer-ics or nu-meric vec-tors. De-fault value is \T1/
+zi4/m/n/10 default.units = "inches"\T1/ptm/m/n/10 . 
+[76] [77] [78] [79]
+Overfull \hbox (6.39755pt too wide) in paragraph at lines 5136--5138
+[]\T1/ptm/m/n/10 A char-ac-ter value spec-i-fy-ing line join style. De-fault va
+lue is \T1/zi4/m/n/10 linejoin = "mitre"\T1/ptm/m/n/10 .
+[80] [81] [82] [83] [84]
+Overfull \hbox (11.00793pt too wide) in paragraph at lines 5442--5444
+[]\T1/ptm/m/n/10 A char-ac-ter value spec-i-fy-ing text font-color. De-fault va
+lue is \T1/zi4/m/n/10 fontcolor = "black"\T1/ptm/m/n/10 . 
+[85] [86]
+Overfull \hbox (33.52013pt too wide) in paragraph at lines 5635--5642
+\T1/zi4/m/n/10 "centre"\T1/ptm/m/n/10 , \T1/zi4/m/n/10 "center"\T1/ptm/m/n/10 ,
+ \T1/zi4/m/n/10 "bottom"\T1/ptm/m/n/10 , and \T1/zi4/m/n/10 "top"\T1/ptm/m/n/10
+ . De-fault value is \T1/zi4/m/n/10 just = c("left","top")\T1/ptm/m/n/10 . 
+[87] [88] [89] [90]
+Overfull \hbox (10.09732pt too wide) in paragraph at lines 5891--5894
+[]\T1/ptm/m/n/10 Character value de-scrib-ing the 3 pos-si-bil-i-ties for vac-c
+i-na-tion sta-tus: \T1/zi4/m/n/10 "not"\T1/ptm/m/n/10 , \T1/zi4/m/n/10 "partial
+ly"\T1/ptm/m/n/10 ,
+
+Overfull \hbox (18.58858pt too wide) in paragraph at lines 5902--5905
+\T1/ptm/m/n/10 kins Cen-ters for Civic Im-pact COVID-19 GitHub repos-i-tory [][
+]$\T1/zi4/m/n/10 "https : / / github . com / govex / COVID-[]19 /
+[91] [92]
+Overfull \hbox (1.27722pt too wide) in paragraph at lines 6042--6049
+\T1/ptm/m/n/10 The UCSC Genome Browser database: 2021 up-date. Nu-cleic Acids R
+es. 2021 Jan 8;49(D1):D1046-
+[93]
+Overfull \hbox (1.27722pt too wide) in paragraph at lines 6084--6091
+\T1/ptm/m/n/10 The UCSC Genome Browser database: 2021 up-date. Nu-cleic Acids R
+es. 2021 Jan 8;49(D1):D1046-
+[94]
+Overfull \hbox (1.27722pt too wide) in paragraph at lines 6126--6133
+\T1/ptm/m/n/10 The UCSC Genome Browser database: 2021 up-date. Nu-cleic Acids R
+es. 2021 Jan 8;49(D1):D1046-
+[95]
+Overfull \hbox (1.27722pt too wide) in paragraph at lines 6168--6175
+\T1/ptm/m/n/10 The UCSC Genome Browser database: 2021 up-date. Nu-cleic Acids R
+es. 2021 Jan 8;49(D1):D1046-
+
+Overfull \hbox (1.27722pt too wide) in paragraph at lines 6210--6217
+\T1/ptm/m/n/10 The UCSC Genome Browser database: 2021 up-date. Nu-cleic Acids R
+es. 2021 Jan 8;49(D1):D1046-
+[96]
+Overfull \hbox (1.27722pt too wide) in paragraph at lines 6252--6259
+\T1/ptm/m/n/10 The UCSC Genome Browser database: 2021 up-date. Nu-cleic Acids R
+es. 2021 Jan 8;49(D1):D1046-
+[97]
+Overfull \hbox (1.27722pt too wide) in paragraph at lines 6294--6301
+\T1/ptm/m/n/10 The UCSC Genome Browser database: 2021 up-date. Nu-cleic Acids R
+es. 2021 Jan 8;49(D1):D1046-
+[98]
+Overfull \hbox (1.27722pt too wide) in paragraph at lines 6336--6343
+\T1/ptm/m/n/10 The UCSC Genome Browser database: 2021 up-date. Nu-cleic Acids R
+es. 2021 Jan 8;49(D1):D1046-
+
+Overfull \hbox (1.27722pt too wide) in paragraph at lines 6378--6385
+\T1/ptm/m/n/10 The UCSC Genome Browser database: 2021 up-date. Nu-cleic Acids R
+es. 2021 Jan 8;49(D1):D1046-
+[99]
+(/private/var/folders/y0/02t14msn4dj1nns4r2zwybqw0000gn/T/RtmpCDDxP4/Rd2pdf51e7
+2e48082b/Rd2.ind [100]
+
+LaTeX Font Warning: Font shape `T1/zi4/m/it' undefined
+(Font)              using `T1/zi4/m/n' instead on input line 143.
+
+[101] [102])
+(/private/var/folders/y0/02t14msn4dj1nns4r2zwybqw0000gn/T/RtmpCDDxP4/Rd2pdf51e7
+2e48082b/Rd2.aux)
+
+LaTeX Font Warning: Some font shapes were not available, defaults substituted.
+
+ )
+(see the transcript file for additional information)pdfTeX warning (dest): name
+{Rfn.straw} has been referenced but does not exist, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.grid.rect} has been referenced but does not exi
+st, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.grid.raster} has been referenced but does not e
+xist, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.grid.polygon} has been referenced but does not 
+exist, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.GRanges} has been referenced but does not exist
+, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.ggplot} has been referenced but does not exist,
+ replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.grid.circle} has been referenced but does not e
+xist, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.map.Rul.data} has been referenced but does not 
+exist, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.BSgenome} has been referenced but does not exis
+t, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.OrgDb.Rdash.class} has been referenced but does
+ not exist, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.TxDb} has been referenced but does not exist, r
+eplaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.grid.text} has been referenced but does not exi
+st, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.grid.segments} has been referenced but does not
+ exist, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.arrow} has been referenced but does not exist, 
+replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.GInteractions} has been referenced but does not
+ exist, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.grob} has been referenced but does not exist, r
+eplaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.formatC} has been referenced but does not exist
+, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.gpar} has been referenced but does not exist, r
+eplaced by a fixed one
+
+{/usr/local/texlive/2018/texmf-dist/fonts/enc/dvips/inconsolata/i4-ts1.enc}{/us
+r/local/texlive/2018/texmf-dist/fonts/enc/dvips/base/8r.enc}{/usr/local/texlive
+/2018/texmf-dist/fonts/enc/dvips/inconsolata/i4-t1-0.enc}</usr/local/texlive/20
+18/texmf-dist/fonts/type1/public/inconsolata/Inconsolata-zi4r.pfb></usr/local/t
+exlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/local/te
+xlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texl
+ive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texli
+ve/2018/texmf-dist/fonts/type1/urw/helvetic/uhvr8a.pfb></usr/local/texlive/2018
+/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/local/texlive/2018/texmf-dis
+t/fonts/type1/urw/times/utmr8a.pfb></usr/local/texlive/2018/texmf-dist/fonts/ty
+pe1/urw/times/utmr8a.pfb></usr/local/texlive/2018/texmf-dist/fonts/type1/urw/ti
+mes/utmri8a.pfb>
+Output written on Rd2.pdf (102 pages, 311383 bytes).
+Transcript written on Rd2.log.
+Saving output to ‘BentoBox-manual.pdf’ ...
+Done
+You may want to clean up by 'rm -Rf /var/folders/y0/02t14msn4dj1nns4r2zwybqw0000gn/T//RtmpCDDxP4/Rd2pdf51e72e48082b'

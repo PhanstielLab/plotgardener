@@ -14,5 +14,4 @@ Display the included available default genome assemblies
 }
 \examples{
 bb_genomes()
-
 }
