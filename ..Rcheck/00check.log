@@ -1,0 +1,9 @@
+* using log directory ‘/Users/nicolekramer/Phanstiel Lab Dropbox/Nicole Kramer/BentoBox/development/BentoBox/..Rcheck’
+* using R version 4.1.0 Patched (2021-05-19 r80339)
+* using platform: x86_64-apple-darwin17.0 (64-bit)
+* using session charset: UTF-8
+* checking for file ‘./DESCRIPTION’ ... ERROR
+Required fields missing or empty:
+  ‘Author’ ‘Maintainer’
+* DONE
+Status: 1 ERROR
