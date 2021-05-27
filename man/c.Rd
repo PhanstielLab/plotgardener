@@ -20,3 +20,13 @@ recursively descends through lists
 \description{
 Combine multiple bb_params objects into a vector
 }
+\examples{
+## Define parameters
+p1 <- bb_params(chrom = "chr1", assembly = "hg19")
+
+## Define another set of parameters
+p2 <- bb_params(fontsize = 10)
+
+## Combine parameters into one `bb_params` object
+pTotal <- c(p1, p2)
+}
