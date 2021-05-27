@@ -8,13 +8,15 @@ bb_pageGuideHide()
 }
 \value{
 None.
-
-## Make a BentoBox page
-bb_pageCreate(width = 7, height = 4, default.units = "inches)
-
-## Hide page guides
-bb_pageGuideHide()
 }
 \description{
 Remove guides from a BentoBox page
+}
+\examples{
+## Make a BentoBox page
+bb_pageCreate(width = 7, height = 4, default.units = "inches")
+
+## Hide page guides
+bb_pageGuideHide()
+
 }
