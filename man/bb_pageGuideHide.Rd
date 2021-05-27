@@ -18,5 +18,4 @@ bb_pageCreate(width = 7, height = 4, default.units = "inches")
 
 ## Hide page guides
 bb_pageGuideHide()
-
 }
