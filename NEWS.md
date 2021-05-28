@@ -1,3 +1,9 @@
+# BentoBox 0.1.2
+
+* Added unit tests with `testthat`.
+* `bb_annoDomains` function addition.
+* `bb_plotSignal` vertical orientation.
+
 # BentoBox 0.1.1
 
 * Added a `NEWS.md` file to track changes to the package.
