@@ -1,4 +1,5 @@
 test_that("Plotting fxns produce expected plots", {
+    library(BentoBoxData)
     save_png <- function(code, width = 400, height = 400) {
         path <- tempfile(fileext = ".png")
         png(path, width = width, height = height)
