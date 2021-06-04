@@ -25,7 +25,7 @@ Combine multiple bb_params objects into a vector
 p1 <- bb_params(chrom = "chr1", assembly = "hg19")
 
 ## Define another set of parameters
-p2 <- bb_params(fontsize = 10)
+p2 <- bb_params(fontsize = 10, assembly = "hg19")
 
 ## Combine parameters into one `bb_params` object
 pTotal <- c(p1, p2)
