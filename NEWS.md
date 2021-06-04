@@ -1,3 +1,9 @@
+# BentoBox 0.1.3
+
+* Data moved to `BentoBoxData` package
+* Streamlined parameter parsing and data reading logic
+* Default genome assembly updated to "hg38"
+
 # BentoBox 0.1.2
 
 * Added unit tests with `testthat`.
