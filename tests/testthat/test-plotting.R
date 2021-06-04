@@ -17,6 +17,7 @@ test_that("Plotting fxns produce expected plots", {
             chrom = "chr21",
             chromstart = 28000000,
             chromend = 30300000,
+            assembly = "hg19",
             resolution = 10000
         ))),
         "hic.png"
@@ -30,6 +31,7 @@ test_that("Plotting fxns produce expected plots", {
             chrom = "chr21",
             chromstart = 28000000,
             chromend = 30300000,
+            assembly = "hg19",
             range = c(0, 45)
         ))),
         "signal.png"
