@@ -1,0 +1,31 @@
+CHANGES IN VERSION 0.1.3
+-------------------------
+
+SIGNIFICANT USER-VISIBLE CHANGES
+
+    o Data moved to `BentoBoxData` package.
+    o Default genome assembly updated to "hg38".
+    
+BUG FIXES
+
+    o Streamlined parameter parsing and data reading logic.
+
+CHANGES IN VERSION 0.1.2
+-------------------------
+
+NEW FEATURES
+
+    o Added unit tests with `testthat`.
+    o `bb_annoDomains` function addition.
+    o `bb_plotSignal` vertical orientation.
+    
+CHANGES IN VERSION 0.1.1
+-------------------------
+
+NEW FEATURES
+
+    o Added a `NEWS` file to track changes to the package.
+    
+BUG FIXES
+
+    o Updated viewport parsing for package `grid` version 4.1.0.
