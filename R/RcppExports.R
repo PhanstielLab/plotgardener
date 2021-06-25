@@ -5,10 +5,6 @@ checkRow <- function(x, maxRows, rowCol, wig) {
     .Call('_BentoBox_checkRow', PACKAGE = 'BentoBox', x, maxRows, rowCol, wig)
 }
 
-readHicBpResolutions <- function(hicFilename) {
-    .Call('_BentoBox_readHicBpResolutions', PACKAGE = 'BentoBox', hicFilename)
-}
-
 rebinBigwig <- function(bigwig, bins) {
     .Call('_BentoBox_rebinBigwig', PACKAGE = 'BentoBox', bigwig, bins)
 }
