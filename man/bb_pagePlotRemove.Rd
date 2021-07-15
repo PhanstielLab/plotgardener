@@ -19,14 +19,14 @@ Remove BentoBox plots and annotations
 \examples{
 ## Load Hi-C data
 library(BentoBoxData)
-data("bb_imrHicData")
+data("IMR90_HiC_10kb")
 
 ## Create BentoBox page
 bb_pageCreate(width = 5.5, height = 4, default.units = "inches")
 
 ## Plot and place a square Hi-C plot
 hicPlot <- bb_plotHicSquare(
-    data = bb_imrHicData, resolution = 10000,
+    data = IMR90_HiC_10kb, resolution = 10000,
     zrange = c(0, 70),
     chrom = "chr21",
     chromstart = 28000000, chromend = 30300000,
