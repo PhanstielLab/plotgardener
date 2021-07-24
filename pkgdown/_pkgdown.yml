@@ -1,0 +1,105 @@
+url: https://phanstiellab.github.io/bentobox
+
+template:
+  params:
+    bootswatch: lumen
+
+authors:
+  Nicole Kramer:
+    href: https://github.com/nekramer
+  Eric S. Davis:
+    href: https://github.com/EricSDavis
+  Craig Wenger:
+    href: https://github.com/cwenger
+  Sarah Parker:
+    href: https://github.com/sarmapar
+  Douglas H. Phanstiel:
+    href: https://github.com/dphansti
+
+navbar:
+  type: default
+  left:
+    - icon: fa-home fa-lg
+      href: index.html
+    - text: Our Philosophy
+      href: articles/guides/our_philosophy.html
+    - text: Introduction to BentoBox
+      href: articles/introduction_to_bentobox.html
+    - text: Articles
+      menu:
+        - text: The BentoBox Page
+          href: articles/guides/bentobox_page.html
+        - text: Additional plot types and elements
+          href: articles/guides/plot_elements.html
+        - text: An in depth look at plot annotations
+          href: articles/guides/annotations.html
+        - text: A guide to plot aesthetics
+          href: articles/guides/aesthetics.html
+    - text: Reference
+      href: reference/index.html
+  right:
+    - icon: fab fa-github fa-lg
+      href: https://github.com/PhanstielLab/BentoBox
+
+reference:
+  - title: "About BentoBox"
+    contents:
+      - BentoBox
+
+  - title: "Page layout functions"
+    contents:
+      - starts_with("bb_page")
+
+  - title: "Reading functions"
+    contents:
+      - starts_with("bb_read")
+
+  - title: "Plotting functions"
+  - subtitle: "Genomics"
+    contents:
+      - bb_plotGenes
+      - bb_plotGenomeLabel
+      - bb_plotHicRectangle
+      - bb_plotHicSquare
+      - bb_plotHicTriangle
+      - bb_plotIdeogram
+      - bb_plotManhattan
+      - bb_plotPairs
+      - bb_plotPairsArches
+      - bb_plotRanges
+      - bb_plotSignal
+      - bb_plotTranscripts
+  - subtitle: "Shapes and Basic Elements"
+  - contents:
+      - bb_plotCircle
+      - bb_plotLegend
+      - bb_plotPolygon
+      - bb_plotRaster
+      - bb_plotRect
+      - bb_plotSegments
+      - bb_plotText
+  - subtitle: "External"
+  - contents:
+      - bb_plotGG
+
+  - title: "Annotation functions"
+    contents:
+      - starts_with("bb_anno")
+
+  - title: "Meta functions"
+    contents:
+      - bb_assembly
+      - bb_defaultPackages
+      - bb_genomes
+      - bb_params
+      - c
+      - colorby
+      - bb_mapColors
+
+figures:
+  fig.height: 7
+  fig.width: 8.2
+  fig.asp: ~
+  dpi: 150
+
+

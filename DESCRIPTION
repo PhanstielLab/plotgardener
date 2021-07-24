@@ -1,0 +1,84 @@
+Package: BentoBox
+Title: Coordinate-Based Genomic Visualization Package for R
+Version: 0.99.2
+Date: 2021-07-24
+Authors@R: c(person("Nicole", "Kramer", 
+             email = "nekramer@live.unc.edu", 
+             role = c("aut", "cre"),
+             comment = c(ORCID = "0000-0001-9617-9671")),
+             person(c("Eric", "S."), "Davis", 
+             email = "esdavis@live.unc.edu", 
+             role = c("aut"),
+             comment = c(ORCID = "0000-0003-4051-3217")),
+             person("Craig", "Wenger", 
+             email = "craig.wenger@gmail.com", 
+             role = c("aut"),
+             comment = c(ORCID = "0000-0002-7361-8456")),
+             person("Sarah", "Parker", 
+             email = "sarmae@live.unc.edu", 
+             role = c("ctb")),
+             person("Erika", "Deoudes", 
+             email = "ed@erikadudes.com", 
+             role = c("art")),
+             person(c("Douglas", "H."), "Phanstiel", 
+             email = "douglas_phanstiel@med.unc.edu", 
+             role = c("aut", "cph")))
+Description: 
+    Coordinate-based genomic visualization package for R. It grants users
+    the ability to programmatically produce complex, multi-paneled figures. Tailored for
+    genomics, BentoBox allows users to visualize large complex genomic datasets and
+    provides exquisite control over how plots are placed and arranged on a page. 
+Depends: R (>= 4.1.0)
+License: MIT + file LICENSE
+URL: https://phanstiellab.github.io/BentoBox, https://github.com/PhanstielLab/BentoBox
+Encoding: UTF-8
+RoxygenNote: 7.1.1
+Imports:
+    curl,
+    data.table,
+    dplyr,
+    grDevices,
+    grid,
+    ggplotify,
+    methods,
+    plyranges,
+    purrr,
+    Rcpp,
+    RColorBrewer,
+    rlang,
+    stats,
+    strawr,
+    tools,
+    utils
+biocViews: 
+    Visualization, 
+    GenomeAnnotation, 
+    FunctionalGenomics, 
+    GenomeAssembly,
+    HiC
+LinkingTo: 
+    Rcpp
+Suggests:
+    AnnotationDbi,
+    AnnotationHub,
+    BentoBoxData,
+    BSgenome,
+    BSgenome.Hsapiens.UCSC.hg19,
+    GenomicFeatures,
+    GenomeInfoDb,
+    GenomicRanges,
+    ggplot2,
+    InteractionSet,
+    IRanges,
+    knitr,
+    org.Hs.eg.db,
+    rtracklayer,
+    png,
+    rmarkdown,
+    scales,
+    showtext,
+    testthat (>= 3.0.0),
+    TxDb.Hsapiens.UCSC.hg19.knownGene
+VignetteBuilder: knitr
+Config/testthat/edition: 3
+BugReports: https://github.com/PhanstielLab/BentoBox/issues

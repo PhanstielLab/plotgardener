@@ -1,0 +1,493 @@
+---
+title: The BentoBox Page
+output: rmarkdown::html_vignette
+vignette: >
+    %\VignetteIndexEntry{The BentoBox Page}
+    %\VignetteEngine{knitr::rmarkdown}
+    %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+    collapse = TRUE,
+    comment = "#>",
+    fig.align = "center",
+    message = FALSE,
+    warning = FALSE
+)
+library(BentoBox)
+library(grid)
+library(BentoBoxData)
+```
+
+`BentoBox` uses a coordinate-based plotting system to define the size and 
+location of plots. This system makes the plotting process intuitive and 
+absolute, meaning that plots cannot be squished and stretched based 
+on their *relative* sizes. This also allows for precise control of the size 
+of each visualization and the location of all plots, annotations, and text. 
+
+All `BentoBox` page functions begin with the `bb_page` prefix. 
+
+Users can create a page in their preferred size and unit of measurement using
+`bb_pageCreate()`. Within this function the user can also set gridlines in 
+the vertical and horizontal directions with `xgrid` and `ygrid`, respectively. 
+By default these values are set to 0.5 of the unit. In the following example 
+we demonstrate creating a standard 8.5 x 11 inch page:
+
+```{r page_demo01, fig.width=11, fig.height=12}
+bb_pageCreate(width = 8.5, height = 11, default.units = "inches")
+```
+
+Or we could create a smaller sized page in a different set of units 
+with different gridlines:
+
+```{r page_demo02, fig.width=5, fig.height=4}
+bb_pageCreate(width = 8, height = 8, xgrid = 1, ygrid = 1, default.units = "cm")
+```
+
+We could turn off gridlines entirely by setting `xgrid` and `ygrid` to 0:
+
+```{r page_demo03, fig.width=5, fig.height=4}
+bb_pageCreate(
+    width = 3, height = 3, xgrid = 0, ygrid = 0,
+    default.units = "inches"
+)
+```
+
+If we want more specific gridlines on our page, we can use 
+the `bb_pageGuideHorizontal()` and `bb_pageGuideVertical()` functions:
+
+```{r page_demo04, fig.width=5, fig.height=4}
+bb_pageCreate(width = 3, height = 3, default.units = "inches")
+## Add a horizontal guide at y = 2.25 inches
+bb_pageGuideHorizontal(y = 2.25, default.units = "inches")
+## Add a vertical guide at x = 0.75 inches
+bb_pageGuideVertical(x = 0.75, default.units = "inches")
+```
+
+We can also remove all guidelines from the plot once we are finished using 
+guides by using the `bb_pageGuideHide()` function:
+
+```{r page_demo05, fig.width=5, fig.height=4}
+## Create page
+bb_pageCreate(width = 3, height = 3, default.units = "inches")
+## Remove guides
+bb_pageGuideHide()
+```
+
+## Coordinate systems and units
+
+`BentoBox` is compatible with numerous coordinate systems, which are 
+flexible enough to be used in combination. Brief descriptions of the most 
+commonly used `BentoBox` coordinate systems are as follows:
+
++-------------------+---------------------------------------------------------+
+| Coordinate System | Description                                             |
++==================:+:========================================================+
+| **"npc"**         | Normalized Parent Coordinates. Treats the bottom-left   |
+|                   | corner of the plotting region as the location (0,0) and |
+|                   | the top-right corner as (1,1).                          |
++-------------------+---------------------------------------------------------+
+| **"snpc"**        | Squared Normalized Parent Coordiantes. Placements and   |
+|                   | sizes are expressed as a proportion of the smaller of   |
+|                   | the width and height of the plotting region.            |
++-------------------+---------------------------------------------------------+
+| **"native"**      | Placements and sizes are relative to the x- and         |
+|                   | y-scales of the plotting region.                        |
++-------------------+---------------------------------------------------------+
+| **"inches"**      | Placements and sizes are in terms of physical inches.   |
++-------------------+---------------------------------------------------------+
+| **"cm"**          | Placements and sizes are in terms of physical           |
+|                   | centimeters.                                            |
++-------------------+---------------------------------------------------------+
+| **"mm"**          | Placements and sizes are in terms of physical           |
+|                   | millimeters.                                            |
++-------------------+---------------------------------------------------------+
+| **"points"**      | Placements and sizes are in terms of physical points.   |
+|                   | There are 72.27 points per inch.                        |
++-------------------+---------------------------------------------------------+
+
+We can set the `bb_page` in one coordinate system, but then place and arrange 
+our plots using other coordinate systems. For example, we can set our page 
+as 3 x 3 **inches**:
+
+```{r coord_01, eval=TRUE, message=FALSE,echo=TRUE, fig.width=5, fig.height=4}
+bb_pageCreate(width = 3, height = 3, default.units = "inches")
+```
+
+But we can then switch to **npc** coordinates to plot something in the 
+center of the page at (0.5, 0.5) npc. The `unit()` function allows us to 
+easily specify `x`, `y`, `width`, and `height` in combinations of different 
+units in one plotting function call. 
+```{r eval=FALSE, message=FALSE,echo=TRUE}
+bb_plotRect(
+    x = unit(0.5, "npc"), y = unit(0.5, "npc"), width = 1, height = 1,
+    default.units = "inches"
+)
+```
+```{r coord_02, eval=TRUE, message=FALSE,echo=FALSE, fig.width=5, fig.height=4}
+bb_pageCreate(width = 3, height = 3, default.units = "inches")
+bb_plotRect(x = unit(0.5, "npc"), y = unit(0.5, "npc"), width = 1, height = 1)
+```
+
+The **native** coordinate system is particularly useful for annotation 
+functions that can plot relative to the genomic scales of a plot. For example,
+we can use `bb_annoText()` to annotate some text at a specific genomic 
+location in a plot:
+
+```{r coord_03, echo=TRUE, fig.height=2.5, fig.width=7, message=FALSE}
+bb_pageCreate(
+    width = 5, height = 1.5, default.units = "inches",
+    showGuides = FALSE, xgrid = 0, ygrid = 0
+)
+
+library(BentoBoxData)
+data("IMR90_ChIP_H3K27ac_signal")
+signalPlot <- bb_plotSignal(
+    data = IMR90_ChIP_H3K27ac_signal,
+    chrom = "chr21", chromstart = 28000000, chromend = 30300000,
+    assembly = "hg19",
+    x = 0.5, y = 0.25, width = 4, height = 0.75, default.units = "inches"
+)
+bb_annoGenomeLabel(plot = signalPlot, x = 0.5, y = 1.01)
+
+## Annotate text at average x-coordinate of data peak
+peakScore <- IMR90_ChIP_H3K27ac_signal[which(
+    IMR90_ChIP_H3K27ac_signal$score == max(IMR90_ChIP_H3K27ac_signal$score)
+), ]
+peakPos <- round((min(peakScore$start) + max(peakScore$end)) * 0.5)
+bb_annoText(
+    plot = signalPlot, label = format(peakPos, big.mark = ","), fontsize = 8,
+    x = unit(peakPos, "native"), y = unit(1, "npc"),
+    just = "bottom"
+)
+```
+
+## Working with plot objects
+
+In `BentoBox` all plot objects are boxes, with user-defined positions and 
+sizes. All plot objects can be placed on a `bb_page` using the placement 
+arguments (e.g. `x`, `y`, `width`, `height`, `just`, `default.units`, ...). 
+The `bb_page` sets the origin of the plot at the top left corner of the page. 
+By default, the `x` and `y` arguments place the top-left corner of a plot in 
+the specified position on the `bb_page` while the `width` and `height` 
+arguments define the size of the plot.
+
+For example, if users want the top-left corner of their plot to be 0.5 inches 
+down from the top of the page and 0.5 inches from the left...
+
+```{r arrange_example01, echo=FALSE, fig.height=4, fig.width=5, message=FALSE}
+## Create page
+bb_pageCreate(width = 3, height = 3, default.units = "inches")
+
+## Draw arrows
+bb_plotSegments(
+    x0 = 0.5, y0 = 0, x1 = 0.5, y1 = 0.5,
+    arrow = arrow(
+        angle = 30,
+        length = unit(0.1, "inches"),
+        ends = "last",
+        type = "closed"
+    ),
+    fill = "black"
+)
+
+bb_plotSegments(
+    x0 = 0, y0 = 0.5, x1 = 0.5, y1 = 0.5,
+    arrow = arrow(
+        angle = 30,
+        length = unit(0.1, "inches"),
+        ends = "last",
+        type = "closed"
+    ),
+    fill = "black"
+)
+
+## Draw text
+bb_plotText(label = "0.5 in", x = 0.6, y = 0.25, just = "left")
+bb_plotText(label = "0.5 in", x = 0.25, y = 0.6, just = "top")
+```
+
+and the plot to be 2 inches wide and 1 inch tall...
+
+```{r arrange_example02, echo=FALSE, fig.height=4, fig.width=5, message=FALSE}
+## Create page
+bb_pageCreate(width = 3, height = 3, default.units = "inches")
+
+## Draw arrows
+bb_plotSegments(
+    x0 = 0.5, y0 = 0, x1 = 0.5, y1 = 0.5,
+    arrow = arrow(
+        angle = 30,
+        length = unit(0.1, "inches"),
+        ends = "last",
+        type = "closed"
+    ),
+    fill = "black"
+)
+
+bb_plotSegments(
+    x0 = 0, y0 = 0.5, x1 = 0.5, y1 = 0.5,
+    arrow = arrow(
+        angle = 30,
+        length = unit(0.1, "inches"),
+        ends = "last",
+        type = "closed"
+    ),
+    fill = "black"
+)
+
+## Draw plot dimension arrows
+bb_plotSegments(
+    x0 = 0.5, y0 = 0.5, x1 = 2.5, y1 = 0.5,
+    arrow = arrow(
+        angle = 30,
+        length = unit(0.1, "inches"),
+        ends = "both",
+        type = "closed"
+    ),
+    fill = "black"
+)
+
+bb_plotSegments(
+    x0 = 0.5, y0 = 0.5, x1 = 0.5, y1 = 1.5,
+    arrow = arrow(
+        angle = 30,
+        length = unit(0.1, "inches"),
+        ends = "both",
+        type = "closed"
+    ),
+    fill = "black"
+)
+
+## Draw text
+bb_plotText(label = "2 in", x = 1.5, y = 0.4, just = "bottom")
+bb_plotText(label = "1 in", x = 0.4, y = 1, just = "right")
+```
+
+`BentoBox` can make the plot with these exact dimensions:
+
+```{r arrange_example03, echo=TRUE, fig.height=4, fig.width=5, message=FALSE}
+## Create page
+bb_pageCreate(width = 3, height = 3, default.units = "inches")
+
+## Plot rectangle
+bb_plotRect(
+    x = 0.5, y = 0.5, width = 2, height = 1,
+    just = c("left", "top"), default.units = "inches"
+)
+```
+
+`BentoBox` also provides the helper function `bb_pagePlotPlace()` for placing 
+plot objects that have been previously defined:
+
+```{r arrange_example04, echo=TRUE, fig.height=4, fig.width=5, message=FALSE}
+## Load data
+library(BentoBoxData)
+data("IMR90_ChIP_H3K27ac_signal")
+
+## Create page
+bb_pageCreate(width = 3, height = 3, default.units = "inches")
+
+## Define signal plot
+signalPlot <- bb_plotSignal(
+    data = IMR90_ChIP_H3K27ac_signal,
+    chrom = "chr21", chromstart = 28000000, chromend = 30300000,
+    assembly = "hg19",
+    draw = FALSE
+)
+
+## Place plot on bb_page
+bb_pagePlotPlace(
+    plot = signalPlot,
+    x = 0.5, y = 0.5, width = 2, height = 1,
+    just = c("left", "top"), default.units = "inches"
+)
+```
+
+and `bb_pagePlotRemove()` for removing plots from a page:
+
+```{r arrange_example05, echo=TRUE, fig.height=4, fig.width=5, message=FALSE}
+# Load data
+library(BentoBoxData)
+data("IMR90_ChIP_H3K27ac_signal")
+
+## Create page
+bb_pageCreate(width = 3, height = 3, default.units = "inches")
+
+## Plot and place signal plot
+signalPlot <- bb_plotSignal(
+    data = IMR90_ChIP_H3K27ac_signal,
+    chrom = "chr21", chromstart = 28000000, chromend = 30300000,
+    assembly = "hg19",
+    x = 0.5, y = 0.5, width = 2, height = 1,
+    just = c("left", "top"), default.units = "inches"
+)
+## Remove signal plot
+bb_pagePlotRemove(plot = signalPlot)
+```
+
+
+These functions give the users additional flexibility in how they create 
+their R scripts and `BentoBox` layouts.
+
+## Using the `just` parameter
+
+While the `x`, `y`, `width`, and `height` parameters are relative to the 
+top-left corner of the plot by default, the `just` parameter provides 
+additional flexibility by allowing users to change the placement reference 
+point. The `just` parameter accepts a character or numeric vector of length 2 
+describing the horizontal and vertical justification (or reference point), 
+respectively.
+
+The just parameter can be set using character strings `"left"`, `"right"`, 
+`"center"`, `"bottom"` and `"top"`:
+
+```{r arrange_example06, echo=FALSE, fig.height=5, fig.width=6, message=FALSE}
+## Load libraries
+library(BentoBox)
+
+## Create page
+bb_pageCreate(
+    width = 4, height = 4, xgrid = 1, ygrid = 1,
+    default.units = "inches"
+)
+
+## Define x and y coords, colors, and justifications
+xcoords <- c(0.25, 2, 3.75, 3.75, 3.75, 2, 0.25, 0.25, 2)
+ycoords <- c(0.25, 0.25, 0.25, 2, 3.75, 3.75, 3.75, 2, 2)
+cols <- c(RColorBrewer::brewer.pal(n = 8, name = "Dark2"), "black")
+justs <- list(
+    c("left", "top"), c("center", "top"), c("right", "top"),
+    c("right", "center"), c("right", "bottom"), c("center", "bottom"),
+    c("left", "bottom"), c("left", "center"), c("center", "center")
+)
+
+## Define x and y shift vectors for adjusting text
+s <- 0.1
+xshift <- c(s, 0, -s, -s, -s, 0, s, s, 0)
+yshift <- c(s, s, s, 0, -s, -s, -s, 0, -s * 3)
+
+## Draw guides
+bb_pageGuideHorizontal(y = ycoords, linecolor = "grey90", lty = 2)
+bb_pageGuideVertical(x = xcoords, linecolor = "grey90", lty = 2)
+
+## Draw box
+bb_plotRect(
+    x = 0.25, y = 0.25, width = 3.5, height = 3.5,
+    just = c("left", "top")
+)
+
+## Plot points
+bb_plotCircle(
+    x = xcoords,
+    y = ycoords,
+    r = 0.035, linecolor = cols, fill = cols
+)
+
+## Text descriptions
+for (i in 1:9) {
+    bb_plotText(
+        label = sprintf(
+            "x = %s\ny = %s\njust = c('%s', '%s')",
+            xcoords[i], ycoords[i], justs[[i]][1], justs[[i]][2]
+        ),
+        x = xcoords[i] + xshift[i],
+        y = ycoords[i] + yshift[i],
+        just = justs[[i]],
+        fontsize = 6.5, fontcolor = cols[i], fontface = "bold"
+    )
+}
+```
+
+Or it can be set using numeric values where 0 means left/bottom, 1 means 
+right/top, and 0.5 means center: 
+
+```{r arrange_example07, echo=FALSE, fig.height=5, fig.width=6, message=FALSE}
+## Load libraries
+library(BentoBox)
+
+## Create page
+bb_pageCreate(
+    width = 4, height = 4, xgrid = 1, ygrid = 1,
+    default.units = "inches"
+)
+
+## Define x and y coords, colors, and justifications
+xcoords <- c(0.25, 2, 3.75, 3.75, 3.75, 2, 0.25, 0.25, 2)
+ycoords <- c(0.25, 0.25, 0.25, 2, 3.75, 3.75, 3.75, 2, 2)
+cols <- c(RColorBrewer::brewer.pal(n = 8, name = "Dark2"), "black")
+justs <- list(
+    c(0, 1), c(0.5, 1), c(1, 1),
+    c(1, 0.5), c(1, 0), c(0.5, 0),
+    c(0, 0), c(0, 0.5), c(0.5, 0.5)
+)
+
+## Define x and y shift vectors for adjusting text
+s <- 0.1
+xshift <- c(s, 0, -s, -s, -s, 0, s, s, 0)
+yshift <- c(s, s, s, 0, -s, -s, -s, 0, -s * 3)
+
+## Draw guides
+bb_pageGuideHorizontal(y = ycoords, linecolor = "grey90", lty = 2)
+bb_pageGuideVertical(x = xcoords, linecolor = "grey90", lty = 2)
+
+## Draw box
+bb_plotRect(
+    x = 0.25, y = 0.25, width = 3.5, height = 3.5,
+    just = c("left", "top")
+)
+
+## Plot points
+bb_plotCircle(
+    x = xcoords,
+    y = ycoords,
+    r = 0.035, linecolor = cols, fill = cols
+)
+
+## Text descriptions
+for (i in 1:9) {
+    bb_plotText(
+        label = sprintf(
+            "x = %s\ny = %s\njust = c(%s, %s)",
+            xcoords[i], ycoords[i], justs[[i]][1], justs[[i]][2]
+        ),
+        x = xcoords[i] + xshift[i],
+        y = ycoords[i] + yshift[i],
+        just = justs[[i]],
+        fontsize = 6.5, fontcolor = cols[i], fontface = "bold"
+    )
+}
+```
+
+This is particularly useful when an object needs to be aligned in reference 
+to another plot object or page marker. For example, in the Hi-C plot below we 
+might want to align the top-right corner of the heatmap legend to the 3-inch 
+mark. There is no need to calculate the top-left position 
+(i.e. `3 inches - (legend width)`) to determine where to place the heatmap 
+legend. Instead we can change the `just` parameter to `just=c('right', 'top')`:
+
+```{r arrange_example08, echo=TRUE, fig.height=5, fig.width=6, message=FALSE}
+## Load example Hi-C data
+library(BentoBoxData)
+data("IMR90_HiC_10kb")
+
+## Create a BentoBox page
+bb_pageCreate(width = 3.25, height = 3.25, default.units = "inches")
+
+## Plot Hi-C data with placing information
+hicPlot <- bb_plotHicSquare(
+    data = IMR90_HiC_10kb,
+    chrom = "chr21", chromstart = 28000000, chromend = 30300000,
+    assembly = "hg19",
+    x = 0.25, y = 0.25, width = 2.5, height = 2.5, default.units = "inches"
+)
+
+## Add color scale annotation with just = c("right", "top")
+bb_annoHeatmapLegend(
+    plot = hicPlot,
+    x = 3, y = 0.25, width = 0.1, height = 1.25,
+    just = c("right", "top"), default.units = "inches"
+)
+```
+
