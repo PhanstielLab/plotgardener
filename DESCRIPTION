@@ -1,7 +1,7 @@
 Package: BentoBox
 Title: Coordinate-Based Genomic Visualization Package for R
-Version: 0.99.2
-Date: 2021-07-24
+Version: 0.99.3
+Date: 2021-07-26
 Authors@R: c(person("Nicole", "Kramer", 
              email = "nekramer@live.unc.edu", 
              role = c("aut", "cre"),
