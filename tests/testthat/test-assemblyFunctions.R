@@ -28,9 +28,6 @@ test_that("genomicScale", {
                        "chromend" = NULL,
                        "assembly" = BentoBox:::parse_bbAssembly("mm9"))
     testObjectInternal <- list()
-    expect_warning(BentoBox:::genomicScale(object = testObject,
-                                           objectInternal = testObjectInternal,
-                                           plotType = "genes"))
     scale <- suppressWarnings(BentoBox:::genomicScale(object = testObject,
                                      objectInternal = testObjectInternal,
                                      plotType = "genes"))[[2]]$xscale
