@@ -23,15 +23,6 @@ test_that("chromDataAgreement", {
 })
 
 test_that("genomicScale", {
-    ## Doesn't have TxDb and has c(0, 1) xscale
-    testObject <- list("chromstart" = NULL,
-                       "chromend" = NULL,
-                       "assembly" = BentoBox:::parse_bbAssembly("mm9"))
-    testObjectInternal <- list()
-    scale <- suppressWarnings(BentoBox:::genomicScale(object = testObject,
-                                     objectInternal = testObjectInternal,
-                                     plotType = "genes"))[[2]]$xscale
-    expect_equal(scale, c(0, 1))
     
     ## Has TxDb and full chromosome xscale
     library("TxDb.Hsapiens.UCSC.hg19.knownGene")
