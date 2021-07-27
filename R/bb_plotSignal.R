@@ -233,8 +233,7 @@ bb_plotSignal <- function(data, binSize = NA, binCap = TRUE, negData = FALSE,
                                 assembly = signaltrack$assembly,
                                 chrom = signaltrack$chrom,
                                 start = signaltrack$chromstart,
-                                end = signaltrack$chromend,
-                                type = "signal")
+                                end = signaltrack$chromend)
         
         ## Check for overlapping data ranges
         if (any(IRanges::overlapsAny(
