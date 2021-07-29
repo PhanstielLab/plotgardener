@@ -398,7 +398,7 @@ bbPlotManhattan <- function(data, sigVal = 5e-08, chrom = NULL,
     ## Define a function that adjusts the yrange of the plot
     manhattan_range <- function(bedData, object) {
         if (is.null(object$range)) {
-            object$range <- c(0, object$ymax * max(-log10(bedData[, "pos"])))
+            object$range <- c(0, object$ymax * max(-log10(bedData[, "p"])))
         }
 
         return(object)
