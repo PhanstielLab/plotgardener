@@ -73,7 +73,7 @@ validUnits <- c(
 )
 
 ## Define a function to assign rows for pileup-style data
-## (bb_plotPairs, bb_plotRanges, bb_plotTranscripts)
+## (bbPlotPairs, bbPlotRanges, bbPlotTranscripts)
 # @param data The data to assign rows to, with start in col1 and 
 # end in col2. This can only be numeric values.
 # @param maxRows Maximum number of rows.

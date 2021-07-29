@@ -1,5 +1,5 @@
-## Define a function for `bb_params` and parameter parsing logic
-# @param params bb_params object to override default arguments of
+## Define a function for `bbParams` and parameter parsing logic
+# @param params bbParams object to override default arguments of
 # parent function
 # @param defaultArgs List of defaults for each argument of parent function
 # @param declaredArgs List of arguments to override all others
@@ -22,9 +22,9 @@ parseParams <- function(params = params,
         declaredArgs[["..."]] <- NULL
     }
 
-    ## If bb_params are supplied override matching defaultArguments
+    ## If bbParams are supplied override matching defaultArguments
     if (!is.null(params)) {
-        if (is(params, "bb_params")) {
+        if (is(params, "bbParams")) {
             ## Replace matching defaultArgs with params
             matchedParams <- params[na.omit(sort(match(
                 names(defaultArgs),
@@ -36,7 +36,7 @@ parseParams <- function(params = params,
             ))] <- matchedParams
         } else {
             warning("Input object ignored. Object must be a",
-                " \'bb_params\' class object.",
+                " \'bbParams\' class object.",
                 call. = FALSE
             )
         }
@@ -130,7 +130,7 @@ bb_justConversion <- function(just){
         just <- plotJusts[plotJusts$just == just,]$numeric
     }
     
-    just <- utils::type.convert(unlist(strsplit(just, split = ", ")), 
+    just <- as.numeric(unlist(strsplit(just, split = ", ")), 
                                 as.is = TRUE)
     
     return(just)
@@ -203,7 +203,7 @@ bb_hicErrors <- function(hic, norm){
 }
 
 ## Define a function to get the assembly info based on a string (ie default)
-## or bb_assembly object
+## or bbAssembly object
 # @param assembly assembly input from a plot object
 parse_bbAssembly <- function(assembly) {
     
@@ -213,7 +213,7 @@ parse_bbAssembly <- function(assembly) {
     if (is(assembly, "character")) {
         if (!assembly %in% availDefaults) {
             stop("\'assembly\' not available as a default. Please make a ",
-                "bb_assembly object with `bb_assembly()` or pick an assembly ",
+                "bbAssembly object with `bbAssembly()` or pick an assembly ",
                 "from the defaults listed with `bb_genomes()`.",
                 call. = FALSE
             )
@@ -221,7 +221,7 @@ parse_bbAssembly <- function(assembly) {
 
         assemblyData <- default_genomePackages[
             default_genomePackages$Genome == assembly,]
-        assemblyData <- bb_assembly(
+        assemblyData <- bbAssembly(
             Genome = assemblyData$Genome,
             TxDb = assemblyData$TxDb,
             OrgDb = assemblyData$OrgDb,
@@ -230,12 +230,12 @@ parse_bbAssembly <- function(assembly) {
             BSgenome = assemblyData$BSgenome
         )
 
-        ## If it's a bb_assembly object, use those
-    } else if (is(assembly, "bb_assembly")) {
+        ## If it's a bbAssembly object, use those
+    } else if (is(assembly, "bbAssembly")) {
         assemblyData <- assembly
     } else {
-        stop("Invalid \'assembly\' type. Please make a bb_assembly object ",
-            "with `bb_assembly()` or input an assembly string from the ",
+        stop("Invalid \'assembly\' type. Please make a bbAssembly object ",
+            "with `bbAssembly()` or input an assembly string from the ",
             "defaults listed with `bb_genomes()`.",
             call. = FALSE
         )

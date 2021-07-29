@@ -1,13 +1,13 @@
 ## Define a function to adjust/detect resolution based on .hic file/dataframe
 # @param hic hic data argument
-# @param hic_plot hic plot object
-adjust_resolution <- function(hic, hic_plot) {
+# @param hicPlot hic plot object
+adjust_resolution <- function(hic, hicPlot) {
     if (!("data.frame" %in% class(hic))) {
-        if (!is.null(hic_plot$chromstart) & !is.null(hic_plot$chromend)) {
+        if (!is.null(hicPlot$chromstart) & !is.null(hicPlot$chromend)) {
             fileResolutions <- strawr::readHicBpResolutions(hic)
 
             ## Get range of data and try to pick a resolution
-            dataRange <- hic_plot$chromend - hic_plot$chromstart
+            dataRange <- hicPlot$chromend - hicPlot$chromstart
             if (dataRange >= 150000000) {
                 bestRes <- max(fileResolutions)
             } else if (dataRange >= 75000000 & dataRange < 150000000) {
@@ -54,7 +54,7 @@ adjust_resolution <- function(hic, hic_plot) {
                 )]
             }
 
-            hic_plot$resolution <- as.integer(bestRes)
+            hicPlot$resolution <- as.integer(bestRes)
         }
     } else {
 
@@ -63,69 +63,69 @@ adjust_resolution <- function(hic, hic_plot) {
         bpDiffs <- abs(offDiag[, 2] - offDiag[, 1])
         predRes <- min(bpDiffs)
 
-        hic_plot$resolution <- as.integer(predRes)
+        hicPlot$resolution <- as.integer(predRes)
     }
 
-    return(hic_plot)
+    return(hicPlot)
 }
 
 ## Define a function that detects bin limit for plotting Hi-C data
 # @param hic hic data argument
-# @param hic_plot hic plot object
-hic_limit <- function(hic, hic_plot){
+# @param hicPlot hic plot object
+hic_limit <- function(hic, hicPlot){
     ## Calculate bin number
-    dataRange <- hic_plot$chromend - hic_plot$chromstart
-    binNumber <- dataRange/hic_plot$resolution
+    dataRange <- hicPlot$chromend - hicPlot$chromstart
+    binNumber <- dataRange/hicPlot$resolution
     
     if (binNumber > 1000){
         
         if (!("data.frame" %in% class(hic))) {
             
             ## Overwrite manual resolution for Hi-C file
-            hic_plotNew <- adjust_resolution(hic = hic, hic_plot = hic_plot)
-            newRes <- hic_plotNew$resolution
-            hic_plot$resolution <- newRes
+            hicPlotNew <- adjust_resolution(hic = hic, hicPlot = hicPlot)
+            newRes <- hicPlotNew$resolution
+            hicPlot$resolution <- newRes
             warning("Attempting to plot too many Hi-C pixels. Adjusting to ",
                     "a resolution of ", newRes, " BP.", call. = FALSE)
         } else {
-            warning(hic_plot$resolution, " BP resolution detected in ",
+            warning(hicPlot$resolution, " BP resolution detected in ",
             "dataframe. Attempting to plot too many Hi-C pixels. Please ",
             "read in data at a lower resolution before attempting to plot.", 
             call. = FALSE)
-            hic_plot$resolution <- NA
+            hicPlot$resolution <- NA
         }
     
     }
     
-    return(hic_plot)
+    return(hicPlot)
 }
 
 ## Define a function that reads in hic data for plotHic functions
 # @param hic hic data argument
-# @param hic_plot hic plot object
+# @param hicPlot hic plot object
 # @param norm normalization factor
 # @param assembly genome assembly
 # @param type matrix type
 # @param quiet message quiet parameter
-read_data <- function(hic, hic_plot, norm, assembly, type, quiet) {
+read_data <- function(hic, hicPlot, norm, assembly, type, quiet) {
 
     ## if .hic file, read in with bb_rhic
     if (!("data.frame" %in% class(hic))) {
-        if (!is.null(hic_plot$chromstart) & !is.null(hic_plot$chromend) &
-            !is.na(hic_plot$resolution)) {
-            readchromstart <- hic_plot$chromstart - hic_plot$resolution
-            readchromend <- hic_plot$chromend + hic_plot$resolution
-            readaltchromstart <- hic_plot$altchromstart - hic_plot$resolution
-            readaltchromend <- hic_plot$altchromend + hic_plot$resolution
-            hic <- suppressWarnings(bb_readHic(
-                file = hic, chrom = hic_plot$chrom,
+        if (!is.null(hicPlot$chromstart) & !is.null(hicPlot$chromend) &
+            !is.na(hicPlot$resolution)) {
+            readchromstart <- hicPlot$chromstart - hicPlot$resolution
+            readchromend <- hicPlot$chromend + hicPlot$resolution
+            readaltchromstart <- hicPlot$altchromstart - hicPlot$resolution
+            readaltchromend <- hicPlot$altchromend + hicPlot$resolution
+            hic <- suppressWarnings(bbReadHic(
+                file = hic, chrom = hicPlot$chrom,
                 chromstart = readchromstart,
                 chromend = readchromend,
                 assembly = assembly,
-                resolution = hic_plot$resolution,
-                zrange = hic_plot$zrange,
+                resolution = hicPlot$resolution,
+                zrange = hicPlot$zrange,
                 norm = norm,
-                altchrom = hic_plot$altchrom,
+                altchrom = hicPlot$altchrom,
                 altchromstart = readaltchromstart,
                 altchromend = readaltchromend,
                 matrix = type
@@ -135,22 +135,22 @@ read_data <- function(hic, hic_plot, norm, assembly, type, quiet) {
         }
     } else {
     
-        if (!is.null(hic_plot$chromstart) & !is.null(hic_plot$chromend) &
-            !is.na(hic_plot$resolution)) {
+        if (!is.null(hicPlot$chromstart) & !is.null(hicPlot$chromend) &
+            !is.na(hicPlot$resolution)) {
             if (!quiet) {
                 message(
                     "Read in dataframe.  Assuming \'chrom\' in column1 ",
                     "and \'altchrom\' in column2. ",
-                    hic_plot$resolution, " BP resolution detected."
+                    hicPlot$resolution, " BP resolution detected."
                 )
             }
-            ## bb_plotHicRectangle specific warning for missing data
-            if (hic_plot$chromstart < min(hic[, 1]) |
-                hic_plot$chromend > max(hic[, 1])) {
-                warning("`bb_plotHicRectangle` requires additional data to",
+            ## bbPlotHicRectangle specific warning for missing data
+            if (hicPlot$chromstart < min(hic[, 1]) |
+                hicPlot$chromend > max(hic[, 1])) {
+                warning("`bbPlotHicRectangle` requires additional data to",
                 " plot a rectangular plot. Data is missing from input ",
                 "dataframe for region and plot will be a trapezoid. To avoid ",
-                "this missing data, call `bb_plotHicRectangle` with full .hic",
+                "this missing data, call `bbPlotHicRectangle` with full .hic",
                 " file.", call. = FALSE
                 )
             }
@@ -168,27 +168,27 @@ read_data <- function(hic, hic_plot, norm, assembly, type, quiet) {
 
 ## Define a function that sets the Hi-C zrange
 # @param hic hic data argument
-# @param hic_plot hic plot object
-set_zrange <- function(hic, hic_plot) {
+# @param hicPlot hic plot object
+set_zrange <- function(hic, hicPlot) {
 
     ## no zrange, only one value
-    if (is.null(hic_plot$zrange) & length(unique(hic$counts)) == 1) {
+    if (is.null(hicPlot$zrange) & length(unique(hic$counts)) == 1) {
         zrange <- c(unique(hic$counts), unique(hic$counts))
-        hic_plot$zrange <- zrange
+        hicPlot$zrange <- zrange
     }
 
     ## no zrange, multiple values
-    if (is.null(hic_plot$zrange) & length(unique(hic$counts)) > 1) {
-        if (grepl("log", hic_plot$colorTrans) == TRUE) {
+    if (is.null(hicPlot$zrange) & length(unique(hic$counts)) > 1) {
+        if (grepl("log", hicPlot$colorTrans) == TRUE) {
             zrange <- c(0.0001, max(hic$counts))
         } else {
             zrange <- c(0, max(hic$counts))
         }
 
-        hic_plot$zrange <- zrange
+        hicPlot$zrange <- zrange
     }
 
-    return(hic_plot)
+    return(hicPlot)
 }
 
 ## Define a function that parses an inherited half of a Hi-C plot

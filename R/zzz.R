@@ -1,8 +1,8 @@
 .onLoad <- function(libname, pkgname) {
 
-    ## Define bb_params object  -----------------------------
+    ## Define bbParams object  -----------------------------
 
-    ## Initialize documented bb_params function names
+    ## Initialize documented bbParams function names
     x <- c("assembly", "gene", "geneBuffer")
 
     ## Set argument inputs for function definition
@@ -14,12 +14,12 @@
     allArgs1 <- paste0(allArgs1, ",...")
 
     ## Pass all arguments into function definition
-    bb_params <- parse(text = c(sprintf("
+    bbParams <- parse(text = c(sprintf("
 
-    bb_params <- function(%s) {
+    bbParams <- function(%s) {
 
     ## Construct object
-    object <- structure(.Data = list(%s), class = 'bb_params')
+    object <- structure(.Data = list(%s), class = 'bbParams')
     object[names(list(...))] <- list(...)
 
     ## Feature: setting region parameters by gene name & assembly -------------
@@ -99,7 +99,7 @@
 
         if (length(geneBuffer) == 1) geneBuffer <- rep(geneBuffer, 2)
 
-        ## Assign values to bb_params object (with buffer)
+        ## Assign values to bbParams object (with buffer)
         object$chrom      <- unique(geneData$TXCHROM)
         object$chromstart <- minGeneStart - geneBuffer[1]
         object$chromend   <- maxGeneEnd  + geneBuffer[2]
@@ -126,7 +126,7 @@
     }
 
     ## Filter out null values for pretty printing
-    object <- structure(Filter(Negate(is.null), object), class = 'bb_params')
+    object <- structure(Filter(Negate(is.null), object), class = 'bbParams')
 
     return(object)
 
@@ -134,5 +134,5 @@
                                         ", allArgs1, allArgs2)))
 
     ## Assign function in BentoBox environment
-    assign("bb_params", eval(bb_params), rlang::ns_env(pkgname))
+    assign("bbParams", eval(bbParams), rlang::ns_env(pkgname))
 }

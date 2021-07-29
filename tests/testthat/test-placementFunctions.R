@@ -31,7 +31,7 @@ test_that("check_placement", {
     expect_error(BentoBox:::check_placement(testObject))
     
     ## No errors with all checks
-    bb_pageCreate()
+    bbPageCreate()
     testObject <- list("x" = unit(2, "inches"),
                        "y" = unit(0.5, "npc"),
                        "width" = unit(3, "inches"),

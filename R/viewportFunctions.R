@@ -321,7 +321,7 @@ plot_belowY <- function(y_coord) {
 
 ## Define a function to distinguish between plots with 
 ## multiple viewports for certain annotation functions
-get_annoViewport <- function(plot){
+getAnnoViewport <- function(plot){
     
     if (is(plot, "bb_genes")){
         plotVP <- plot$grobs$children$background$vp

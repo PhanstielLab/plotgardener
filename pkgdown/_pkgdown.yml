@@ -22,19 +22,29 @@ navbar:
     - icon: fa-home fa-lg
       href: index.html
     - text: Our Philosophy
-      href: articles/guides/our_philosophy.html
+      href: articles/our_philosophy.html
     - text: Introduction to BentoBox
       href: articles/introduction_to_bentobox.html
     - text: Articles
       menu:
         - text: The BentoBox Page
-          href: articles/guides/bentobox_page.html
-        - text: Additional plot types and elements
-          href: articles/guides/plot_elements.html
-        - text: An in depth look at plot annotations
-          href: articles/guides/annotations.html
-        - text: A guide to plot aesthetics
-          href: articles/guides/aesthetics.html
+          href: articles/bentobox_page.html
+        - text: Reading Data for BentoBox
+          href: articles/reading_data_for_bentobox.html
+        - text: Plotting Multi-omic Data  
+          href: articles/plotting_multiomic_data.html
+        - text: Plot Annotations
+          href: articles/annotations.html  
+        - text: BentoBox Meta Functions 
+          href: articles/bentobox_meta_functions.html
+        - text: Bioconductor Integration
+          href: articles/bioconductor_integration.html
+        - text: Incorporating ggplots
+          href: articles/incorporating_ggplots.html
+        - text: Ideograms and Shapes
+          href: articles/ideograms_and_shapes.html
+        - text: Plot Aesthetics
+          href: articles/aesthetics.html
     - text: Reference
       href: reference/index.html
   right:
@@ -48,53 +58,53 @@ reference:
 
   - title: "Page layout functions"
     contents:
-      - starts_with("bb_page")
+      - starts_with("bbPage")
 
   - title: "Reading functions"
     contents:
-      - starts_with("bb_read")
+      - starts_with("bbRead")
 
   - title: "Plotting functions"
   - subtitle: "Genomics"
     contents:
-      - bb_plotGenes
-      - bb_plotGenomeLabel
-      - bb_plotHicRectangle
-      - bb_plotHicSquare
-      - bb_plotHicTriangle
-      - bb_plotIdeogram
-      - bb_plotManhattan
-      - bb_plotPairs
-      - bb_plotPairsArches
-      - bb_plotRanges
-      - bb_plotSignal
-      - bb_plotTranscripts
+      - bbPlotGenes
+      - bbPlotGenomeLabel
+      - bbPlotHicRectangle
+      - bbPlotHicSquare
+      - bbPlotHicTriangle
+      - bbPlotIdeogram
+      - bbPlotManhattan
+      - bbPlotPairs
+      - bbPlotPairsArches
+      - bbPlotRanges
+      - bbPlotSignal
+      - bbPlotTranscripts
   - subtitle: "Shapes and Basic Elements"
   - contents:
-      - bb_plotCircle
-      - bb_plotLegend
-      - bb_plotPolygon
-      - bb_plotRaster
-      - bb_plotRect
-      - bb_plotSegments
-      - bb_plotText
+      - bbPlotCircle
+      - bbPlotLegend
+      - bbPlotPolygon
+      - bbPlotRaster
+      - bbPlotRect
+      - bbPlotSegments
+      - bbPlotText
   - subtitle: "External"
   - contents:
-      - bb_plotGG
+      - bbPlotGG
 
   - title: "Annotation functions"
     contents:
-      - starts_with("bb_anno")
+      - starts_with("bbAnno")
 
   - title: "Meta functions"
     contents:
-      - bb_assembly
-      - bb_defaultPackages
-      - bb_genomes
-      - bb_params
+      - bbAssembly
+      - bbDefaultPackages
+      - bbGenomes
+      - bbParams
       - c
       - colorby
-      - bb_mapColors
+      - bbMapColors
 
 figures:
   fig.height: 7

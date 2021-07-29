@@ -1,0 +1,178 @@
+---
+title: Ideograms and Shapes
+output: rmarkdown::html_vignette
+vignette: >
+    %\VignetteIndexEntry{Ideograms and Shapes}
+    %\VignetteEngine{knitr::rmarkdown}
+    %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+    collapse = TRUE,
+    comment = "#>",
+    fig.align = "center",
+    message = FALSE,
+    warning = FALSE
+)
+library(BentoBox)
+library(grid)
+library(BentoBoxData)
+```
+
+Beyond providing functions for plotting and arranging various genomic 
+datasets, `BentoBox` also gives users the functionality to plot other elements
+within a `BentoBox` page layout:
+
+## Ideograms
+
+In addition to a genomic axis label, it can also be useful to include an 
+ideogram representation of a chromosome to give a broader context of the 
+location of genomic data. UCSC Giemsa stain cytoband information for various 
+genomic assemblies is retrieved from `AnnotationHub` for default assembly, 
+but users can also provide their own Giemsa stain information if they desire.
+
+Ideograms can be plotted both vertically and horizontally:
+```{r ideogram_01, echo=TRUE, fig.height=5.25, fig.width=10.35, message=FALSE}
+library(AnnotationHub)
+library(TxDb.Hsapiens.UCSC.hg19.knownGene)
+library(GenomeInfoDb)
+
+## Get sizes of chromosomes to scale their sizes
+tx_db <- TxDb.Hsapiens.UCSC.hg19.knownGene
+chromSizes <- GenomeInfoDb::seqlengths(tx_db)
+maxChromSize <- max(chromSizes)
+
+bbPageCreate(
+    width = 8.35, height = 4.25, default.units = "inches",
+    showGuides = FALSE, xgrid = 0, ygrid = 0
+)
+xCoord <- 0.15
+for (chr in c(paste0("chr", seq(1, 22)), "chrX", "chrY")) {
+    height <- (4 * chromSizes[[chr]]) / maxChromSize
+    bbPlotIdeogram(
+        chrom = chr, assembly = "hg19",
+        orientation = "v",
+        x = xCoord, y = 4,
+        width = 0.2, height = height,
+        just = "bottom"
+    )
+    bbPlotText(
+        label = gsub("chr", "", chr),
+        x = xCoord, y = 4.1, fontsize = 10
+    )
+    xCoord <- xCoord + 0.35
+}
+```
+
+```{r ideogram_02, echo=TRUE, fig.height=.5, fig.width=8.25, message=FALSE}
+bbPageCreate(
+    width = 6.25, height = 0.5, default.units = "inches",
+    showGuides = FALSE, xgrid = 0, ygrid = 0
+)
+
+bbPlotIdeogram(
+    chrom = "chr1", assembly = "hg19",
+    orientation = "h",
+    x = 0.25, y = unit(0.25, "npc"), width = 5.75, height = 0.3
+)
+```
+
+The cytobands can also be hidden if a more minimal ideogram is preferred:
+
+```{r eval=FALSE, echo=TRUE, message=FALSE}
+bbPlotIdeogram(
+    showBands = FALSE,
+    chrom = "chr1", assembly = "hg19",
+    orientation = "h",
+    x = 0.25, y = unit(0.25, "npc"), width = 5.75, height = 0.3
+)
+```
+
+```{r ideogram_03, echo=FALSE, fig.height=.5, fig.width=8.25, message=FALSE}
+bbPageCreate(
+    width = 6.25, height = 0.5, default.units = "inches",
+    showGuides = FALSE, xgrid = 0, ygrid = 0
+)
+
+bbPlotIdeogram(
+    showBands = FALSE,
+    chrom = "chr1", assembly = "hg19",
+    orientation = "h",
+    x = 0.25, y = unit(0.25, "npc"), width = 5.75, height = 0.3
+)
+```
+
+To highlight a specific genomic region on an ideogram, see the 
+article [An in depth look at plot annotations](annotations.html#genomic-region-highlights-and-zooms-1). 
+
+## Images and basic shapes
+
+`BentoBox` also allows users to plot images and basic shapes and elements to 
+further enhance and customize plot layouts. The functions `bbPlotCircle()`, 
+`bbPlotPolygon()`, `bbPlotRaster()`, `bbPlotRect()`, `bbPlotSegments()`, 
+and `bbPlotText()` provide an intuitive way to plot basic `grid` `grobs` 
+without requiring any knowledge of `grid` graphics.
+
+For example, we can include the `BentoBox` mascot Edamaman in our figures!
+
+```{r shapes, echo=TRUE, fig.height=7, fig.showtext=TRUE, fig.width=6}
+library(png)
+library(showtext)
+font_add(
+    family = "ProximaNova",
+    regular = system.file("extdata",
+        "proximanova-regular.otf",
+        package = "BentoBox"
+    ),
+    bold = system.file("extdata",
+        "proximanova-semibold.otf",
+        package = "BentoBox"
+    )
+)
+showtext_auto()
+
+edamaman <- readPNG(system.file("images",
+    "bento-edamaman.png",
+    package = "BentoBox"
+))
+logotype <- readPNG(system.file("images",
+    "bento-logotype-singleline-black.png",
+    package = "BentoBox"
+))
+
+bbPageCreate(
+    width = 5, height = 6, default.units = "inches",
+    showGuides = FALSE, xgrid = 0, ygrid = 0
+)
+bbPlotRaster(
+    image = logotype,
+    x = 2.5, y = 0.25, width = 3.25, height = 0.5, just = "top"
+)
+bbPlotRaster(
+    image = edamaman,
+    x = 2.5, y = 5.5, width = 2, height = 4, just = "bottom"
+)
+bbPlotText(
+    label = "Edamaman",
+    fontsize = 20, fontfamily = "ProximaNova", fontface = "bold",
+    x = 2.5, y = 0.9, just = "top"
+)
+```
+
+For more detailed usage of basic shape functions, see the function-specific 
+reference examples with `?function()` (e.g. `?bbPlotCircle()`).
+
+## Other grob objects
+
+We saw how to add `ggplots` to BentoBox layouts in the 
+vignette [Incoporating ggplots](incoporating_ggplots.html) with the
+`bbPlotGG()` function. Beyond customizing the coordinates and dimensions of
+`ggplots`, `bbPlotGG()` can also be used to incorporate other `grob` and
+`gtable` objects. Thus, `BentoBox` allows us to easily mix and arrange most
+kinds of plot objects for ultimate customizability.
+
+# Session Info
+```{r}
+sessionInfo()
+```

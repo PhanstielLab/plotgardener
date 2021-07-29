@@ -1,8 +1,8 @@
 #' Handle BentoBox color scaling parameters
 #'
 #' \code{colorby} should be used to create a set of parameters
-#' that specify color scaling for the functions \code{bb_plotPairs},
-#' \code{bb_plotPairsArches}, and \code{bb_plotRanges}.
+#' that specify color scaling for the functions \code{bbPlotPairs},
+#' \code{bbPlotPairsArches}, and \code{bbPlotRanges}.
 #'
 #' @param column String specifying name of data column to scale colors by.
 #' @param palette (optional) A function describing the color palette to use for
@@ -25,7 +25,7 @@
 #'         (IMR90_DNAloops_pairs$start2 - IMR90_DNAloops_pairs$start1) / 1000
 #'
 #' ## Plot pairs with colorby object set for `length` column
-#' bedpePlot <- bb_plotPairs(
+#' bedpePlot <- bbPlotPairs(
 #'     data = IMR90_DNAloops_pairs,
 #'     chrom = "chr21",
 #'     chromstart = 27900000, chromend = 30700000,

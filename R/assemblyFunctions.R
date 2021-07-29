@@ -166,7 +166,7 @@ geneData <- function(object, objectInternal) {
 ## Define a function that will by default prioritize genes by citations
 # (if available) or gene lengths
 # @param data data frame of gene or transcript data
-# @param assembly bb_assembly associated with gene data
+# @param assembly bbAssembly associated with gene data
 # @param transcsript a logical indicating whether or not we're
 # plotting transcripts or not
 defaultGenePriorities <- function(data, assembly, transcript = FALSE) {

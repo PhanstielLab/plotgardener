@@ -60,7 +60,7 @@ library("BentoBox")
 library("org.Hs.eg.db")
 library("TxDb.Hsapiens.UCSC.hg19.knownGene")
 library("BentoBoxData")
-data("cytoBand.Hsapiens.UCSC.hg19")
+library("AnnotationHub")
 data("GM12878_HiC_10kb")
 data("IMR90_HiC_10kb")
 data("GM12878_ChIP_CTCF_signal")
@@ -69,136 +69,136 @@ data("GM12878_ChIP_H3K27ac_signal")
 data("IMR90_ChIP_H3K27ac_signal")
 
 ## Create a BentoBox page
-bb_pageCreate(width = 7, height = 4.25, default.units = "inches")
+bbPageCreate(width = 7, height = 4.25, default.units = "inches")
 
 ##########################
 ######## Panel A #########
 ##########################
 ## Text section label
-bb_plotText(label = "A", fontsize = 12,
+bbPlotText(label = "A", fontsize = 12,
             x = 0.25, y = 0.25, just = "left", default.units = "inches")
-## Set genomic and dimension parameters in a `bb_params` object
-params_a <- bb_params(chrom = "chr21", chromstart = 28000000, chromend = 30300000, 
+## Set genomic and dimension parameters in a `bbParams` object
+params_a <- bbParams(chrom = "chr21", chromstart = 28000000, chromend = 30300000, 
                       assembly = "hg19",
                       x = 0.25, width = 2.75, just = c("left", "top"), default.units = "inches")
 ## Double-sided Hi-C Plot
-hicPlot_top <- bb_plotHicSquare(data = GM12878_HiC_10kb, params = params_a,
+hicPlot_top <- bbPlotHicSquare(data = GM12878_HiC_10kb, params = params_a,
                                 zrange = c(0, 200), resolution = 10000,
                                 half = "top",
                                 y = 0.5, height = 2.75)
-hicPlot_bottom <- bb_plotHicSquare(data = IMR90_HiC_10kb, params = params_a,
+hicPlot_bottom <- bbPlotHicSquare(data = IMR90_HiC_10kb, params = params_a,
                                    zrange = c(0, 70), resolution = 10000,
                                    half = "bottom",
                                    y = 0.5, height = 2.75)
 ## Annotate Hi-C heatmap legends
-bb_annoHeatmapLegend(plot = hicPlot_bottom, fontsize = 7, 
+bbAnnoHeatmapLegend(plot = hicPlot_bottom, fontsize = 7, 
                      x = 3.05, y = 0.5,
                      width = 0.07, height = 0.5, just = c("left", "top"),
                      default.units = "inches")
-bb_annoHeatmapLegend(plot = hicPlot_top, fontsize = 7, 
+bbAnnoHeatmapLegend(plot = hicPlot_top, fontsize = 7, 
                      x = .125, y = 0.5,
                      width = 0.07, height = 0.5, just = c("left", "top"),
                      default.units = "inches")
 ## Plot gene track
-genes_a <- bb_plotGenes(params = params_a, stroke = 1, fontsize = 6,
+genes_a <- bbPlotGenes(params = params_a, stroke = 1, fontsize = 6,
                         y = 3.35, height = 0.4)
 ## Annotate genome label
-bb_annoGenomeLabel(plot = genes_a, params = params_a, 
+bbAnnoGenomeLabel(plot = genes_a, params = params_a, 
                    scale = "Mb", fontsize = 7,
                    y = 3.85)
 ##########################
 ######## Panel B #########
 ##########################
 ## Text section label
-bb_plotText(label = "B", fontsize = 12,
+bbPlotText(label = "B", fontsize = 12,
             x = 3.5, y = 0.25, just = "left", default.units = "inches")
 ## Plot ideogram
-bb_plotIdeogram(chrom = "chr21", assembly = "hg19",
+bbPlotIdeogram(chrom = "chr21", assembly = "hg19",
                 x = 3.5, y = 0.5,
                 width = 3.25, height = 0.15, just = c("left", "top"), default.units = "inches")
 ## Add text to ideogram
-bb_plotText(label = "Chromosome 21", fontsize = 8, fontcolor = "darkgrey",
+bbPlotText(label = "Chromosome 21", fontsize = 8, fontcolor = "darkgrey",
             x = 6.75, y = 0.4, just = "right", default.units = "inches")
 ##########################
 ######## Panel C #########
 ##########################
 ## Text section label
-bb_plotText(label = "C", fontsize = 12,
+bbPlotText(label = "C", fontsize = 12,
             x = 3.5, y = 1, just = c("left", "top"), default.units = "inches")
-## Set genomic and dimension parameters in a `bb_params` object
-params_c <- bb_params(chrom = "chr21", chromstart = 28150000, chromend = 29150000, 
+## Set genomic and dimension parameters in a `bbParams` object
+params_c <- bbParams(chrom = "chr21", chromstart = 28150000, chromend = 29150000, 
                       assembly = "hg19",
                       x = 3.5, width = 1.5, default.units = "inches")
 ## Set signal track data ranges
-ctcf_range <- bb_params(range = c(0, 77),
+ctcf_range <- bbParams(range = c(0, 77),
                         assembly = "hg19")
-hk_range <- bb_params(range = c(0, 32.6),
+hk_range <- bbParams(range = c(0, 32.6),
                       assembly = "hg19")
 ## Plot Hi-C triangle
-hic_gm <- bb_plotHicTriangle(data = GM12878_HiC_10kb, params = params_c,
+hic_gm <- bbPlotHicTriangle(data = GM12878_HiC_10kb, params = params_c,
                              zrange = c(0, 200), resolution = 10000,
                              y = 1.75, height = 0.75, just = c("left", "bottom"))
 ## Annotate Hi-C heatmap legend
-bb_annoHeatmapLegend(plot = hic_gm, fontsize = 7, 
+bbAnnoHeatmapLegend(plot = hic_gm, fontsize = 7, 
                      x = 5, y = 1, width = 0.07, height = 0.5, 
                      just = c("right", "top"), default.units = "inches")
 ## Plot CTCF signal
-ctcf_gm <- bb_plotSignal(data = GM12878_ChIP_CTCF_signal, params = c(params_c, ctcf_range),
+ctcf_gm <- bbPlotSignal(data = GM12878_ChIP_CTCF_signal, params = c(params_c, ctcf_range),
                          fill = "#253494", linecolor = "#253494",
                          y = 1.95, height = 0.6)
 ## CTCF label
-bb_plotText(label = "CTCF", fontcolor = "#253494", fontsize = 8,
+bbPlotText(label = "CTCF", fontcolor = "#253494", fontsize = 8,
             x = 3.5, y = 1.95, just = c("left","top"), default.units = "inches")
 ## Plot H3K27ac signal
-hk_gm <- bb_plotSignal(data = GGM12878_ChIP_H3K27ac_signal, params = c(params_c, hk_range),
+hk_gm <- bbPlotSignal(data = GGM12878_ChIP_H3K27ac_signal, params = c(params_c, hk_range),
                        fill = "#37a7db", linecolor = "#37a7db",
                        y = 3.25, height = 0.6, just = c("left", "bottom"))
 ## H3K27ac label
-bb_plotText(label = "H3K27ac", fontcolor = "#37a7db", fontsize = 8,
+bbPlotText(label = "H3K27ac", fontcolor = "#37a7db", fontsize = 8,
             x = 3.5, y = 2.65, just = c("left","top"), default.units = "inches")
 ## Plot genes
-genes_gm <- bb_plotGenes(params = params_c, stroke = 1, fontsize = 6,
+genes_gm <- bbPlotGenes(params = params_c, stroke = 1, fontsize = 6,
                          strandLabels = FALSE,
                          y = 3.35, height = 0.4)
 ## Annotate genome label
-bb_annoGenomeLabel(plot = genes_gm, params = params_c, 
+bbAnnoGenomeLabel(plot = genes_gm, params = params_c, 
                    scale = "Kb", fontsize = 7,
                    y = 3.85)
 ##########################
 ######## Panel D #########
 ##########################
 ## Text section label
-bb_plotText(label = "D", fontsize = 12,
+bbPlotText(label = "D", fontsize = 12,
             x = 5.25, y = 1, just = c("left", "top"), default.units = "inches")
-## Set genomic and dimension parameters in a `bb_params` object
-params_d <- bb_params(chrom = "chr21", chromstart = 28150000, chromend = 29150000, 
+## Set genomic and dimension parameters in a `bbParams` object
+params_d <- bbParams(chrom = "chr21", chromstart = 28150000, chromend = 29150000, 
                       assembly = "hg19",
                       x = 6.75, width = 1.5, default.units = "inches")
 ## Plot Hi-C triangle
-hic_imr <- bb_plotHicTriangle(data = IMR90_HiC_10kb, params = params_d,
+hic_imr <- bbPlotHicTriangle(data = IMR90_HiC_10kb, params = params_d,
                               zrange = c(0, 70), resolution = 10000,
                               y = 1.75, height = 0.75, just = c("right", "bottom"))
 ## Annotate Hi-C heatmap legend
-bb_annoHeatmapLegend(plot = hic_imr, fontsize = 7,
+bbAnnoHeatmapLegend(plot = hic_imr, fontsize = 7,
                      x = 6.75, y = 1, width = 0.07, height = 0.5, just = c("right", "top"))
 ## Plot CTCF signal
-ctcf_imr <- bb_plotSignal(data = IMR90_ChIP_CTCF_signal, params = c(params_d, ctcf_range),
+ctcf_imr <- bbPlotSignal(data = IMR90_ChIP_CTCF_signal, params = c(params_d, ctcf_range),
                           fill = "#253494", linecolor = "#253494",
                           y = 1.95, height = 0.6, just = c("right", "top"))
 ## Plot H3K27ac signal
-hk_imr <- bb_plotSignal(data = IMR90_ChIP_H3K27ac_signal, params = c(params_d, hk_range),
+hk_imr <- bbPlotSignal(data = IMR90_ChIP_H3K27ac_signal, params = c(params_d, hk_range),
                         fill = "#37a7db", linecolor = "#37a7db",
                         y = 3.25, height = 0.6, just = c("right", "bottom"))
 ## Plot gene track
-genes_imr <- bb_plotGenes(params = params_d, stroke = 1,fontsize = 6,
+genes_imr <- bbPlotGenes(params = params_d, stroke = 1, fontsize = 6,
                           strandLabels = FALSE,
                           y = 3.35, height = 0.4, just = c("right", "top"))
 ## Annotate genome label
-bb_annoGenomeLabel(plot = genes_imr, params = params_d, 
+bbAnnoGenomeLabel(plot = genes_imr, params = params_d, 
                    scale = "Kb", fontsize = 7,
                    y = 3.85, just = c("right", "top"))
 ## Hide page guides
-bb_pageGuideHide()
+bbPageGuideHide()
 ```
 
 ## A word of caution

@@ -1,0 +1,277 @@
+---
+title: "BentoBox Meta Functions"
+output:
+    rmarkdown::html_vignette
+vignette: >
+    %\VignetteIndexEntry{BentoBox Meta Functions}
+    %\VignetteEngine{knitr::rmarkdown}
+    %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+    fig.align = "center",
+    fig.width = 3,
+    fig.height = 3,
+    collapse = TRUE,
+    comment = "#>",
+    warning = FALSE,
+    message = FALSE
+)
+library(grid)
+library(BentoBox)
+library(BentoBoxData)
+```
+
+`BentoBox` meta functions enhance the `BentoBox` user experience by providing 
+simple methods to display various genomic assembly data, simplify `BentoBox`
+code, and construct `BentoBox` objects. Functions in this category include:
+
+- **`bbGenomes`** and **`bbDefaultPackages`**
+
+Simple functions to display the strings of available default genomic builds and 
+the genomic annotation packages associated with these builds in `BentoBox` functions.
+
+```{r}
+bbGenomes()
+```
+```{r}
+bbDefaultPackages("hg19")
+```
+
+- **`bbAssembly`**
+
+A constructor to make custom combinations of genomic annotation packages for 
+use in `BentoBox` functions through the `assembly` parameter.
+
+- **`bbParams`**
+
+A constructor to capture sets of parameters to be shared across multiple
+function calls. `bbParams` objects can hold any argument from any `BentoBox`
+function. Most often, `bbParams` objects are used to store a common genomic
+region and common x-placement coordinate information. For a detailed example 
+using the `bbParams` object, refer to the vignette 
+[Plotting Multi-omic Data](plotting_multiomic_data.html).
+
+- **`colorby`** and **`bbMapColors`**
+
+The `colorby` constructor allows us to color the data elements in `BentoBox` 
+plots by various data features. These features can be a numerical range, like 
+some kind of score value, or categorical values, like positive or negative 
+strand. The `colorby` object is constructed by specifying the name of the data 
+column to color by, an optional color palette function, and an optional range 
+for numerical values. If not specified, `BentoBox` will use the `RColorBrewer`
+"YlGnBl" palette for mapping numerical data and the "Pairs" palette for 
+qualitative data.
+
+For example, if we revist the BED plot above, `IMR90_ChIP_CTCF_reads` has an additional 
+`strand` column for each BED element: 
+
+```{r eval = TRUE, echo = TRUE}
+data("IMR90_ChIP_CTCF_reads")
+head(IMR90_ChIP_CTCF_reads)
+```
+
+Thus, we can use the `colorby` constructor to color BED elements by positive 
+or negative strand. The `strand` column will be converted to a factor with a 
+`-` level and `+` level. These values will be mapped to our input `palette`:
+
+```{r eval=FALSE, echo=TRUE}
+set.seed(nrow(IMR90_ChIP_CTCF_reads))
+bbPlotRanges(
+    data = IMR90_ChIP_CTCF_reads,
+    chrom = "chr21", chromstart = 29073000, chromend = 29074000,
+    assembly = "hg19",
+    fill = colorby("strand", palette = 
+                       colorRampPalette(c("#7ecdbb", "#37a7db"))),
+    x = 0.5, y = 0.25, width = 6.5, height = 4.25,
+    just = c("left", "top"), default.units = "inches"
+)
+```
+
+```{r aes_03, echo=FALSE, fig.height=6, fig.width=9.5}
+
+bbPageCreate(
+    width = 7.5, height = 5, default.units = "inches",
+    showGuides = FALSE, xgrid = 0, ygrid = 0
+)
+
+set.seed(nrow(IMR90_ChIP_CTCF_reads))
+bbPlotRanges(
+    data = IMR90_ChIP_CTCF_reads,
+    chrom = "chr21", chromstart = 29073000, chromend = 29074000,
+    assembly = "hg19",
+    fill = colorby("strand", palette = 
+                       colorRampPalette(c("#7ecdbb", "#37a7db"))),
+    strandSplit = TRUE,
+    x = 0.5, y = 0.25, width = 6.5, height = 4.25,
+    just = c("left", "top"), default.units = "inches"
+)
+```
+
+To further control the order of color mapping, we can set our categorical 
+`colorby` column as a factor with our own order of levels before plotting:
+
+```{r eval=TRUE, echo=TRUE}
+data("IMR90_ChIP_CTCF_reads")
+IMR90_ChIP_CTCF_reads$strand <- factor(IMR90_ChIP_CTCF_reads$strand, levels = c("+", "-"))
+head(IMR90_ChIP_CTCF_reads$strand)
+```
+
+Now we've set the `+` level as our first level, so our `palette` will map
+colors in the opposite order from before:
+
+```{r aes_04, echo=FALSE, fig.height=6, fig.width=9.5}
+
+bbPageCreate(
+    width = 7.5, height = 5, default.units = "inches",
+    showGuides = FALSE, xgrid = 0, ygrid = 0
+)
+set.seed(nrow(IMR90_ChIP_CTCF_reads))
+bbPlotRanges(
+    data = IMR90_ChIP_CTCF_reads,
+    chrom = "chr21", chromstart = 29073000, chromend = 29074000,
+    assembly = "hg19",
+    fill = colorby("strand", palette = 
+                       colorRampPalette(c("#7ecdbb", "#37a7db"))),
+    strandSplit = TRUE,
+    x = 0.5, y = 0.25, width = 6.5, height = 4.25,
+    just = c("left", "top"), default.units = "inches"
+)
+```
+
+In this example, we will color BEDPE arches by a range of numerical values 
+we will add as a `length` column:
+
+```{r eval=TRUE, echo=TRUE }
+data("IMR90_DNAloops_pairs")
+IMR90_DNAloops_pairs$length <- (IMR90_DNAloops_pairs$start2 - IMR90_DNAloops_pairs$start1) / 1000
+head(IMR90_DNAloops_pairs$length)
+```
+
+Now we can set `fill` as a `colorby` object to color the BEDPE `length` column by:
+```{r eval=FALSE, echo=TRUE}
+bedpePlot <- bbPlotPairsArches(
+    data = IMR90_DNAloops_pairs,
+    chrom = "chr21", chromstart = 27900000, chromend = 30700000,
+    assembly = "hg19",
+    fill = colorby("length", 
+                   palette = colorRampPalette(c("dodgerblue2", "firebrick2"))),
+    linecolor = "fill",
+    archHeight = IMR90_DNAloops_pairs$length / max(IMR90_DNAloops_pairs$length),
+    alpha = 1,
+    x = 0.25, y = 0.25, width = 7, height = 1.5,
+    just = c("left", "top"),
+    default.units = "inches"
+)
+```
+
+```{r aes_05, echo=FALSE, fig.width=9.5, message=FALSE, height=3}
+
+bbPageCreate(
+    width = 7.5, height = 2, default.units = "inches",
+    showGuides = FALSE, xgrid = 0, ygrid = 0
+)
+heights <- IMR90_DNAloops_pairs$length / max(IMR90_DNAloops_pairs$length)
+bedpePlot <- bbPlotPairsArches(
+    data = IMR90_DNAloops_pairs,
+    chrom = "chr21", chromstart = 27900000, chromend = 30700000,
+    assembly = "hg19",
+    fill = colorby("length", 
+                   palette = colorRampPalette(c("dodgerblue2", "firebrick2"))),
+    linecolor = "fill",
+    archHeight = heights, alpha = 1,
+    x = 0.25, y = 0.25, width = 7, height = 1.5,
+    just = c("left", "top"),
+    default.units = "inches"
+)
+```
+
+And now since we have numbers mapped to colors, we can use 
+`bbAnnoHeatmapLegend()` with our `bb_arches` object to add a legend for 
+the `colorby` we performed:
+
+```{r eval=FALSE, echo=TRUE}
+bbAnnoHeatmapLegend(
+    plot = bedpePlot, fontcolor = "black",
+    x = 7.0, y = 0.25,
+    width = 0.10, height = 1, fontsize = 10
+)
+```
+```{r aes_06, echo=FALSE, fig.width=9.5, message=FALSE, height=3}
+
+bbPageCreate(
+    width = 7.5, height = 2, default.units = "inches",
+    showGuides = FALSE, xgrid = 0, ygrid = 0
+)
+heights <- IMR90_DNAloops_pairs$length / max(IMR90_DNAloops_pairs$length)
+bedpePlot <- bbPlotPairsArches(
+    data = IMR90_DNAloops_pairs,
+    chrom = "chr21", chromstart = 27900000, chromend = 30700000,
+    assembly = "hg19",
+    fill = colorby("length", 
+                   palette = colorRampPalette(c("dodgerblue2", "firebrick2"))),
+    linecolor = "fill",
+    archHeight = heights, alpha = 1,
+    x = 0.25, y = 0.25, width = 7, height = 1.5,
+    just = c("left", "top"),
+    default.units = "inches"
+)
+bbAnnoHeatmapLegend(
+    plot = bedpePlot, fontcolor = "black",
+    x = 7.0, y = 0.25,
+    width = 0.10, height = 1, fontsize = 10
+)
+```
+
+If users which to map values to a color palette before passing them into
+a `BentoBox` function, they can use `bbMapColors`:
+```{r echo=TRUE, eval=FALSE}
+colors <- bbMapColors(vector = IMR90_DNAloops_pairs$length,
+             palette = colorRampPalette(c("dodgerblue2", "firebrick2")))
+
+bedpePlot <- bbPlotPairsArches(
+    data = IMR90_DNAloops_pairs,
+    chrom = "chr21", chromstart = 27900000, chromend = 30700000,
+    assembly = "hg19",
+    fill = colors,
+    linecolor = "fill",
+    archHeight = heights, alpha = 1,
+    x = 0.25, y = 0.25, width = 7, height = 1.5,
+    just = c("left", "top"),
+    default.units = "inches"
+)
+
+```
+
+```{r aes_07, echo=FALSE, fig.width=9.5, message=FALSE, height=3}
+
+bbPageCreate(
+    width = 7.5, height = 2, default.units = "inches",
+    showGuides = FALSE, xgrid = 0, ygrid = 0
+)
+heights <- IMR90_DNAloops_pairs$length / max(IMR90_DNAloops_pairs$length)
+colors <- bbMapColors(vector = IMR90_DNAloops_pairs$length,
+             palette = colorRampPalette(c("dodgerblue2", "firebrick2")))
+bedpePlot <- bbPlotPairsArches(
+    data = IMR90_DNAloops_pairs,
+    chrom = "chr21", chromstart = 27900000, chromend = 30700000,
+    assembly = "hg19",
+    fill = colors,
+    linecolor = "fill",
+    archHeight = heights, alpha = 1,
+    x = 0.25, y = 0.25, width = 7, height = 1.5,
+    just = c("left", "top"),
+    default.units = "inches"
+)
+bbAnnoHeatmapLegend(
+    plot = bedpePlot, fontcolor = "black",
+    x = 7.0, y = 0.25,
+    width = 0.10, height = 1, fontsize = 10
+)
+```
+
+# Session Info
+```{r}
+sessionInfo()
+```

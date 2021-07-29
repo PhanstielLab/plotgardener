@@ -1,19 +1,19 @@
-test_that("bb_params object created", {
-    object <- bb_params(chrom = "chr1")
-    expect_equal(class(object), "bb_params")
+test_that("bbParams object created", {
+    object <- bbParams(chrom = "chr1")
+    expect_equal(class(object), "bbParams")
 })
 
-test_that("bb_params object concatenates", {
-    object1 <- bb_params(chrom = "chr1")
-    object2 <- bb_params(chromstart = 1000000)
-    object3 <- bb_params(chrom = "chr1", chromstart = 1000000)
+test_that("bbParams object concatenates", {
+    object1 <- bbParams(chrom = "chr1")
+    object2 <- bbParams(chromstart = 1000000)
+    object3 <- bbParams(chrom = "chr1", chromstart = 1000000)
 
-    expect_equal(class(c(object1, object2)), "bb_params")
+    expect_equal(class(c(object1, object2)), "bbParams")
     expect_equal(c(object1, object2), object3)
     expect_warning(c(object1, "gene"))
 })
 
-test_that("bb_params parameter parsing", {
+test_that("bbParams parameter parsing", {
     
     testFun <- function(data, chrom, chromstart = NULL, chromend = NULL,
                         assembly = "hg19", 
@@ -49,7 +49,7 @@ test_that("bb_params parameter parsing", {
     )
     
     ## bb_params replaces default
-    params <- bb_params(assembly = "hg38")
+    params <- bbParams(assembly = "hg38")
     expect_mapequal(
         testFun(params = params),
         list(data = NULL,

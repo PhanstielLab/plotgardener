@@ -51,7 +51,7 @@ test_that("parseParams", {
                      class = "object"
                  ))
     ## Overriding bb_params parameter
-    expect_equal(test(params = bb_params(alpha = 100), arch = "not_blah", alpha = 10),
+    expect_equal(test(params = bbParams(alpha = 100), arch = "not_blah", alpha = 10),
                  structure(
                      .Data = list("alpha" = 10,
                                   "hic" = NULL,
@@ -134,10 +134,10 @@ test_that("parse_bbAssembly", {
                                         "gene.id.column" = "ENTREZID",
                                         "display.column" = "SYMBOL",
                                         "BSgenome" = "BSgenome.Hsapiens.UCSC.hg19"),
-                           class = "bb_assembly"))
+                           class = "bbAssembly"))
     
     ## Input bb_assembly object just returns itself
-    assemblyobject <- bb_assembly(Genome = "testing",
+    assemblyobject <- bbAssembly(Genome = "testing",
                                   TxDb = "TxDb",
                                   OrgDb = "OrgDb")
     
@@ -147,7 +147,7 @@ test_that("parse_bbAssembly", {
                                         "OrgDb" = "OrgDb",
                                         "gene.id.column" = "ENTREZID",
                                         "display.column" = "SYMBOL"),
-                           class = "bb_assembly"))
+                           class = "bbAssembly"))
 })
 
 test_that("defaultUnits", {

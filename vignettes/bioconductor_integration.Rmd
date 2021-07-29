@@ -1,0 +1,86 @@
+---
+title: "Bioconductor Integration"
+output:
+    rmarkdown::html_vignette
+vignette: >
+    %\VignetteIndexEntry{Bioconductor Integration}
+    %\VignetteEngine{knitr::rmarkdown}
+    %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+    fig.align = "center",
+    fig.width = 3,
+    fig.height = 3,
+    collapse = TRUE,
+    comment = "#>",
+    warning = FALSE,
+    message = FALSE
+)
+library(grid)
+library(BentoBox)
+```
+
+`BentoBox` is designed to be flexibly compatible with typical Bioconductor 
+classes and libraries of genomic data to easily integrate genomic data 
+analysis and visualization. In addition to handling various genomic file 
+types and `R` objects, many `BentoBox` functions can also handle `GRanges` or
+`GInteractions` objects as input data. Furthermore, `BentoBox` does not hard-code 
+any genomic assemblies and can utilize `TxDb`, `OrgDb`, and `BSgenome` objects 
+for various genomic annotations, including gene and transcript structures 
+and names, chromosome sizes, and nucleotide sequences. For standard genomic 
+assemblies (i.e. hg19, hg38, mm10), `BentoBox` uses a set of default packages 
+that can be displayed by calling `bbDefaultPackages()`:
+
+```{r echo=TRUE, eval=TRUE}
+bbDefaultPackages("hg38")
+bbDefaultPackages("hg19")
+bbDefaultPackages("mm10")
+```
+
+To see which assemblies have defaults within `BentoBox`, call `bbGenomes()`:
+
+```{r echo=TRUE, eval=TRUE}
+bbGenomes()
+```
+
+`BentoBox` functions default to an "hg38" assembly, but can be customized
+with any of the other genomic assemblies included or a `bbAssembly` object.
+To create custom genomic assemblies and combinations of `TxDb`, `orgDb`, and 
+`BSgenome` packages for use in `BentoBox` functions, we can use the 
+`bbAssembly()` constructor. For example, we can create our own `TxDb` 
+from the current human Ensembl release:
+
+```{r eval=FALSE, echo=TRUE}
+library(GenomicFeatures)
+TxDb.Hsapiens.Ensembl.GrCh38.103 <- makeTxDbFromEnsembl(
+    organism =
+        "Homo sapiens"
+)
+```
+
+We can now create a new `bbAssembly` with this `TxDb` and combinations of 
+other Bioconductor packages. The `Genome` parameter can is a string to name 
+or describe this assembly. Since the `TxDb` is now from ENSEMBL, we will 
+change the `gene.id` field to `"ENSEMBL"` to map gene IDs and symbols between 
+our `TxDb` and `orgDb` objects. Most gene ID types can be found by calling
+`AnnotationDbi::keytypes()` on an `orgDb`.
+
+```{r eval=FALSE, echo=TRUE}
+Ensembl38 <- bbAssembly(
+    Genome = "Ensembl.GRCh38.103",
+    TxDb = TxDb.Hsapiens.Ensembl.GrCh38.103,
+    OrgDb = "org.Hs.eg.db",
+    BSgenome = "BSgenome.Hsapiens.NCBI.GRCh38",
+    gene.id = "ENSEMBL", display.column = "SYMBOL"
+)
+```
+
+This `bbAssembly` object can now be easily passed into `BentoBox` functions 
+through the `assembly` parameter.
+
+# Session Info
+```{r}
+sessionInfo()
+```

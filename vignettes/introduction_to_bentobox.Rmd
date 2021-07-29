@@ -71,70 +71,12 @@ following sections explore how BentoBox works in more detail, highlighting
 helpful topics that showcase the capabilities of BentoBox. For in-depth 
 demonstrations of `BentoBox`'s key features, see the additional articles.
 For detailed usage of each function, see the function-specific reference 
-examples with `?function()` (e.g. `?bb_plotPairs()`).
+examples with `?function()` (e.g. `?bbPlotPairs()`).
 
 All the data included in this vignette can be found in the supplementary
 package `BentoBoxData`.
 
 # Quick Start
-
-## Reading data
-
-`BentoBox` handles a wide array of genomic data types in various formats 
-and file types. Not only does it work with `data.frames`, `data.tables`, 
-`tibbles`, and Bioconductor `GRanges` and `GInteractions` objects, but 
-it can also read in common genomic file types like BED, BEDPE, bigWig, 
-and .hic files. While files can be read directly into `BentoBox` plotting 
-functions, `BentoBox` also provides functions for reading in these large 
-genomic data sets to work with them within the R environment:
-
-- `bb_readBigwig()`: Read in entire bigWig files, or read in specific 
-genomic regions or strands of bigWig data.
-```{r eval=FALSE, echo=TRUE, message=FALSE}
-wholeFile <- bb_readBigwig("/path/to/bigWig")
-
-region <- bb_readBigwig("/path/to/bigWig",
-    chrom = "chr1",
-    chromstart = 1000000, chromend = 2000000
-)
-
-regionPlus <- bb_readBigwig("/path/to/bigWig",
-    chrom = "chr1",
-    chromstart = 1000000, chromend = 2000000,
-    strand = "+"
-)
-```
-
-- `bb_readHic()`: Read in genomic regions of .hic files with various 
-data resolutions and normalizations.
-```{r eval=FALSE, echo=TRUE, message=FALSE}
-chrom <- bb_readHic("/path/to/hic",
-    chrom = "chr1",
-    resolution = 250000, res_scale = "BP", norm = "NONE"
-)
-
-chromRegion <- bb_readHic("/path/to/hic",
-    chrom = "chr1",
-    chromstart = 1000000, chromend = 2000000,
-    assembly = "hg19",
-    resolution = 10000, res_scale = "BP", norm = "KR"
-)
-
-twoChroms <- bb_readHic("/path/to/hic",
-    chrom = "chr1", altchrom = "chr2",
-    resolution = 250000, res_scale = "BP"
-)
-```
-
-For other filetypes, we recommend reading in files with `data.table` 
-or `rtracklayer`.
-```{r eval=FALSE, echo=TRUE, message=FALSE}
-library(data.table)
-data <- data.table::fread("/path/to/file")
-
-library(rtracklayer)
-data <- rtracklayer::import(con = "/path/to/file", format = "fileFormat")
-```
 
 ## Quick plotting
 
@@ -145,7 +87,7 @@ data <- rtracklayer::import(con = "/path/to/file", format = "fileFormat")
 2. Genomic locus arguments (`chrom`, `chromstart`, `chromend`, `assembly`)
 
 3. Placement arguments (`x`, `y`, `width`, `height`, `just`, 
-`default.units`, ...) that define where each plot resides on a `bb_page`
+`default.units`, ...) that define where each plot resides on a `bbPage`
 
 4. Attribute arguments that affect the data being plotted or the style 
 of the plot (`norm`, `fill`, `fontcolor`, ...) that vary between functions
@@ -171,7 +113,7 @@ library(BentoBoxData)
 data("IMR90_HiC_10kb")
 
 ## Quick plot Hi-C data
-bb_plotHicSquare(
+bbPlotHicSquare(
     data = IMR90_HiC_10kb,
     chrom = "chr21", chromstart = 28000000, chromend = 30300000,
     assembly = "hg19"
@@ -190,7 +132,7 @@ library(BentoBoxData)
 data("IMR90_ChIP_H3K27ac_signal")
 
 ## Quick plot signal data
-bb_plotSignal(
+bbPlotSignal(
     data = IMR90_ChIP_H3K27ac_signal,
     chrom = "chr21", chromstart = 28000000, chromend = 30300000,
     assembly = "hg19"
@@ -209,7 +151,7 @@ library(TxDb.Hsapiens.UCSC.hg19.knownGene)
 library(org.Hs.eg.db)
 
 ## Quick plot genes
-bb_plotGenes(
+bbPlotGenes(
     assembly = "hg19",
     chrom = "chr21", chromstart = 28000000, chromend = 30300000
 )
@@ -229,7 +171,7 @@ library(BentoBoxData)
 data("hg19_insulin_GWAS")
 
 ## Quick plot GWAS data
-bb_plotManhattan(
+bbPlotManhattan(
     data = hg19_insulin_GWAS, 
     assembly = "hg19",
     fill = c("steel blue", "grey"),
@@ -241,10 +183,10 @@ bb_plotManhattan(
 
 To build complex, multi-panel `BentoBox` figures with annotations, we must:
 
-1. Create a `BentoBox` coordinate page with `bb_pageCreate()`.
+1. Create a `BentoBox` coordinate page with `bbPageCreate()`.
 
 ```{r quickpage, echo=TRUE, fig.height=4, fig.width=4, message=FALSE}
-bb_pageCreate(width = 3.25, height = 3.25, default.units = "inches")
+bbPageCreate(width = 3.25, height = 3.25, default.units = "inches")
 ```
 
 2. Provide values for the placement arguments (`x`, `y`, `width`, `height`, 
@@ -253,7 +195,7 @@ plotting function.
 
 ```{r eval=FALSE, echo=TRUE, message=FALSE}
 data("IMR90_HiC_10kb")
-hicPlot <- bb_plotHicSquare(
+hicPlot <- bbPlotHicSquare(
     data = IMR90_HiC_10kb,
     chrom = "chr21", chromstart = 28000000, chromend = 30300000,
     assembly = "hg19",
@@ -261,9 +203,9 @@ hicPlot <- bb_plotHicSquare(
 )
 ```
 ```{r quickpageHic, echo=FALSE, fig.height=4, fig.width=4, message=FALSE}
-bb_pageCreate(width = 3.25, height = 3.25, default.units = "inches")
+bbPageCreate(width = 3.25, height = 3.25, default.units = "inches")
 data("IMR90_HiC_10kb")
-hicPlot <- bb_plotHicSquare(
+hicPlot <- bbPlotHicSquare(
     data = IMR90_HiC_10kb,
     chrom = "chr21", chromstart = 28000000, chromend = 30300000,
     assembly = "hg19",
@@ -275,31 +217,31 @@ hicPlot <- bb_plotHicSquare(
 argument of annotation functions.
 
 ```{r eval=FALSE, echo=TRUE, message=FALSE}
-bb_annoHeatmapLegend(
+bbAnnoHeatmapLegend(
     plot = hicPlot,
     x = 2.85, y = 0.25, width = 0.1, height = 1.25, default.units = "inches"
 )
 
-bb_annoGenomeLabel(
+bbAnnoGenomeLabel(
     plot = hicPlot,
     x = 0.25, y = 2.75, width = 2.5, height = 0.25, default.units = "inches"
 )
 ```
 ```{r quickpageAnno, echo=FALSE, fig.height=4, fig.width=4, message=FALSE}
-bb_pageCreate(width = 3.25, height = 3.25, default.units = "inches")
+bbPageCreate(width = 3.25, height = 3.25, default.units = "inches")
 data("IMR90_HiC_10kb")
-hicPlot <- bb_plotHicSquare(
+hicPlot <- bbPlotHicSquare(
     data = IMR90_HiC_10kb,
     chrom = "chr21", chromstart = 28000000, chromend = 30300000,
     assembly = "hg19",
     x = 0.25, y = 0.25, width = 2.5, height = 2.5, default.units = "inches"
 )
-bb_annoHeatmapLegend(
+bbAnnoHeatmapLegend(
     plot = hicPlot,
     x = 2.85, y = 0.25, width = 0.1, height = 1.25, default.units = "inches"
 )
 
-bb_annoGenomeLabel(
+bbAnnoGenomeLabel(
     plot = hicPlot,
     x = 0.25, y = 2.75, width = 2.5, height = 0.25, default.units = "inches"
 )
@@ -312,29 +254,29 @@ objects](introduction_to_bentobox.html#working-with-plot-objects-1).
 ## Exporting plots
 
 When a `BentoBox` plot is ready to be saved and exported, we can first 
-remove all page guides that were made with `bb_pageCreate()`:
+remove all page guides that were made with `bbPageCreate()`:
 
 ```{r eval=FALSE, echo=TRUE, message=FALSE}
-bb_pageGuideHide()
+bbPageGuideHide()
 ```
 ```{r quickpageHide, echo=FALSE, fig.height=4, fig.width=4, message=FALSE}
-bb_pageCreate(
+bbPageCreate(
     width = 3.25, height = 3.25, default.units = "inches",
     xgrid = 0, ygrid = 0, showGuides = FALSE
 )
 data("IMR90_HiC_10kb")
-hicPlot <- bb_plotHicSquare(
+hicPlot <- bbPlotHicSquare(
     data = IMR90_HiC_10kb,
     chrom = "chr21", chromstart = 28000000, chromend = 30300000,
     assembly = "hg19",
     x = 0.25, y = 0.25, width = 2.5, height = 2.5, default.units = "inches"
 )
-bb_annoHeatmapLegend(
+bbAnnoHeatmapLegend(
     plot = hicPlot,
     x = 2.85, y = 0.25, width = 0.1, height = 1.25, default.units = "inches"
 )
 
-bb_annoGenomeLabel(
+bbAnnoGenomeLabel(
     plot = hicPlot,
     x = 0.25, y = 2.75, width = 2.5, height = 0.25, default.units = "inches"
 )
@@ -346,943 +288,30 @@ or save the plot within our R code as follows:
 ```{r eval=FALSE, echo=TRUE, message=FALSE}
 pdf(width = 3.25, height = 3.25)
 
-bb_pageCreate(width = 3.25, height = 3.25, default.units = "inches")
+bbPageCreate(width = 3.25, height = 3.25, default.units = "inches")
 data("IMR90_HiC_10kb")
-hicPlot <- bb_plotHicSquare(
+hicPlot <- bbPlotHicSquare(
     data = IMR90_HiC_10kb,
     chrom = "chr21", chromstart = 28000000, chromend = 30300000,
     assembly = "hg19",
     x = 0.25, y = 0.25, width = 2.5, height = 2.5, default.units = "inches"
 )
-bb_annoHeatmapLegend(
+bbAnnoHeatmapLegend(
     plot = hicPlot,
     x = 2.85, y = 0.25, width = 0.1, height = 1.25, default.units = "inches"
 )
 
-bb_annoGenomeLabel(
+bbAnnoGenomeLabel(
     plot = hicPlot,
     x = 0.25, y = 2.75, width = 2.5, height = 0.25, default.units = "inches"
 )
-bb_pageGuideHide()
+bbPageGuideHide()
 
 dev.off()
 ```
 
-
-# Plotting multi-omic data
-
-`BentoBox` makes it easy to create reproducible, publication-quality figures 
-from multi-omic data. Since each plot can be placed in *exactly* the desired 
-location, users can stack multiple types of genomic data so that their axes 
-and data are correctly aligned. In this section we will show some examples of 
-plotting multi-omic data and how the `bb_params` object and "below" 
-y-coordinate can facilitate this process. 
-
-In the following example, we plot the same genomic region 
-(i.e. `chr21:28000000-30300000`) represented in Hi-C data, loop annotations, 
-signal track data, GWAS data, all along a common gene track and genome 
-label axis:
-
-```{r plotting_example01, echo=TRUE, fig.height=6, fig.width=5, message=FALSE}
-## Load example data
-library(BentoBoxData)
-data("IMR90_HiC_10kb")
-data("IMR90_DNAloops_pairs")
-data("IMR90_ChIP_H3K27ac_signal")
-data("hg19_insulin_GWAS")
-
-## Create a BentoBox page
-bb_pageCreate(
-    width = 3, height = 5, default.units = "inches",
-    showGuides = FALSE, xgrid = 0, ygrid = 0
-)
-
-## Plot Hi-C data in region
-bb_plotHicSquare(
-    data = IMR90_HiC_10kb,
-    chrom = "chr21", chromstart = 28000000, chromend = 30300000,
-    assembly = "hg19",
-    x = 0.5, y = 0.5, width = 2, height = 2,
-    just = c("left", "top"), default.units = "inches"
-)
-
-## Plot loop annotations
-bb_plotPairsArches(
-    data = IMR90_DNAloops_pairs,
-    chrom = "chr21", chromstart = 28000000, chromend = 30300000,
-    assembly = "hg19",
-    x = 0.5, y = 2.5, width = 2, height = 0.25,
-    just = c("left", "top"), default.units = "inches",
-    fill = "black", linecolor = "black", flip = TRUE
-)
-
-## Plot signal track data
-bb_plotSignal(
-    data = IMR90_ChIP_H3K27ac_signal,
-    chrom = "chr21", chromstart = 28000000, chromend = 30300000,
-    assembly = "hg19",
-    x = 0.5, y = 2.75, width = 2, height = 0.5,
-    just = c("left", "top"), default.units = "inches"
-)
-
-## Plot GWAS data
-bb_plotManhattan(
-    data = hg19_insulin_GWAS,
-    chrom = "chr21", chromstart = 28000000, chromend = 30300000,
-    assembly = "hg19",
-    ymax = 1.1, cex = 0.20,
-    x = 0.5, y = 3.5, width = 2, height = 0.5,
-    just = c("left", "top"), default.units = "inches"
-)
-
-## Plot gene track
-library(TxDb.Hsapiens.UCSC.hg19.knownGene)
-library(org.Hs.eg.db)
-bb_plotGenes(
-    chrom = "chr21", chromstart = 28000000, chromend = 30300000,
-    assembly = "hg19",
-    x = 0.5, y = 4, width = 2, height = 0.5,
-    just = c("left", "top"), default.units = "inches"
-)
-
-## Plot genome label
-bb_plotGenomeLabel(
-    chrom = "chr21", chromstart = 28000000, chromend = 30300000,
-    assembly = "hg19",
-    x = 0.5, y = 4.5, length = 2, scale = "Mb",
-    just = c("left", "top"), default.units = "inches"
-)
-```
-
-## Using the `bb_params` object
-
-The `bb_params()` function creates a `bb_params` object that can contain any 
-argument from `BentoBox` functions.  
-
-We can recreate and simplify the multi-omic plot above by saving the genomic 
-region, left-based x-coordinate, and width into a `bb_params` object:
-
-```{r eval=TRUE, message=FALSE, echo=TRUE}
-params <- bb_params(
-    chrom = "chr21", chromstart = 28000000, chromend = 30300000,
-    assembly = "hg19",
-    x = 0.5, just = c("left", "top"),
-    width = 2, length = 2, default.units = "inches"
-)
-```
-
-Since these values are the same for each of the functions we are using to 
-build our multi-omic figure, we can now pass the `bb_params` object into 
-our functions so we don't need to write the same parameters over and over 
-again:
-
-```{r plotting_example02, echo=TRUE, fig.height=6, fig.width=5, message=FALSE}
-## Load example data
-data("IMR90_HiC_10kb")
-data("IMR90_DNAloops_pairs")
-data("IMR90_ChIP_H3K27ac_signal")
-data("hg19_insulin_GWAS")
-
-## Create a BentoBox page
-bb_pageCreate(
-    width = 3, height = 5, default.units = "inches",
-    showGuides = FALSE, xgrid = 0, ygrid = 0
-)
-
-## Plot Hi-C data in region
-bb_plotHicSquare(
-    data = IMR90_HiC_10kb,
-    params = params,
-    y = 0.5, height = 2
-)
-
-## Plot loop annotations
-bb_plotPairsArches(
-    data = IMR90_DNAloops_pairs,
-    params = params,
-    y = 2.5, height = 0.25,
-    fill = "black", linecolor = "black", flip = TRUE
-)
-
-## Plot signal track data
-bb_plotSignal(
-    data = IMR90_ChIP_H3K27ac_signal,
-    params = params,
-    y = 2.75, height = 0.5
-)
-
-## Plot GWAS data
-bb_plotManhattan(
-    data = hg19_insulin_GWAS,
-    params = params,
-    ymax = 1.1, cex = 0.20,
-    y = 3.5, height = 0.5
-)
-
-## Plot gene track
-library(TxDb.Hsapiens.UCSC.hg19.knownGene)
-library(org.Hs.eg.db)
-bb_plotGenes(
-    params = params,
-    y = 4, height = 0.5
-)
-
-## Plot genome label
-bb_plotGenomeLabel(
-    params = params,
-    y = 4.5, scale = "Mb"
-)
-```
-
-The `bb_params` object also simplifies the code for making complex multi-omic 
-figures when we want to change the genomic region of our plots. If we want to 
-change the region for the figure above, we can simply put it into the 
-`bb_params` object and re-run the code to generate the figure:
-
-```{r eval=TRUE, echo=TRUE, message=FALSE}
-params <- bb_params(
-    chrom = "chr21", chromstart = 29000000, chromend = 30000000,
-    assembly = "hg19",
-    x = 0.5, just = c("left", "top"),
-    width = 2, length = 2, default.units = "inches"
-)
-```
-
-```{r plotting_example03, echo=FALSE, fig.height=6, fig.width=5, message=FALSE}
-## Load example data
-data("IMR90_HiC_10kb")
-data("IMR90_DNAloops_pairs")
-data("IMR90_ChIP_H3K27ac_signal")
-data("hg19_insulin_GWAS")
-
-## Create a BentoBox page
-bb_pageCreate(
-    width = 3, height = 5, default.units = "inches",
-    showGuides = FALSE, xgrid = 0, ygrid = 0
-)
-
-## Plot Hi-C data in region
-bb_plotHicSquare(
-    data = IMR90_HiC_10kb,
-    params = params,
-    y = 0.5, height = 2
-)
-
-## Plot loop annotations
-bb_plotPairsArches(
-    data = IMR90_DNAloops_pairs,
-    params = params,
-    y = 2.5, height = 0.25,
-    fill = "black", linecolor = "black", flip = TRUE
-)
-
-## Plot signal track data
-bb_plotSignal(
-    data = IMR90_ChIP_H3K27ac_signal,
-    params = params,
-    y = 2.75, height = 0.5
-)
-
-## Plot GWAS data
-bb_plotManhattan(
-    data = hg19_insulin_GWAS,
-    params = params,
-    ymax = 1.1, cex = 0.20,
-    y = 3.5, height = 0.5
-)
-
-## Plot gene track
-library(TxDb.Hsapiens.UCSC.hg19.knownGene)
-library(org.Hs.eg.db)
-bb_plotGenes(
-    params = params,
-    y = 4, height = 0.5
-)
-
-## Plot genome label
-bb_plotGenomeLabel(
-    params = params,
-    y = 4.5, scale = "Mb"
-)
-```
-
-Alternatively, if we want to plot around a particular gene rather than a 
-genomic region we can use `bb_params()` to specify `gene` and `geneBuffer`. 
-If `geneBuffer` is not included, the default buffer adds `(gene length) / 2` 
-base pairs to the ends of the gene coordinates.
-
-```{r eval=TRUE, echo=TRUE, message=FALSE}
-params <- bb_params(
-    gene = "LINC00113", geneBuffer = 100000, assembly = "hg19",
-    x = 0.5, just = c("left", "top"),
-    width = 2, length = 2, default.units = "inches"
-)
-```
-```{r plotting_example04, echo=FALSE, fig.height=6, fig.width=5, message=FALSE}
-## Load example data
-data("IMR90_HiC_10kb")
-data("IMR90_DNAloops_pairs")
-data("IMR90_ChIP_H3K27ac_signal")
-data("hg19_insulin_GWAS")
-
-## Create a BentoBox page
-bb_pageCreate(
-    width = 3, height = 5, default.units = "inches",
-    showGuides = FALSE, xgrid = 0, ygrid = 0
-)
-
-## Plot Hi-C data in region
-bb_plotHicSquare(
-    data = IMR90_HiC_10kb,
-    params = params,
-    y = 0.5, height = 2
-)
-
-## Plot loop annotations
-bb_plotPairsArches(
-    data = IMR90_DNAloops_pairs,
-    params = params,
-    y = 2.5, height = 0.25,
-    fill = "black", linecolor = "black", flip = TRUE
-)
-
-## Plot signal track data
-bb_plotSignal(
-    data = IMR90_ChIP_H3K27ac_signal,
-    params = params,
-    y = 2.75, height = 0.5
-)
-
-## Plot GWAS data
-bb_plotManhattan(
-    data = hg19_insulin_GWAS,
-    params = params,
-    ymax = 1.1, cex = 0.20,
-    y = 3.5, height = 0.5
-)
-
-## Plot gene track
-library(TxDb.Hsapiens.UCSC.hg19.knownGene)
-library(org.Hs.eg.db)
-bb_plotGenes(
-    params = params,
-    y = 4, height = 0.5
-)
-
-## Plot genome label
-bb_plotGenomeLabel(
-    params = params,
-    y = 4.5, scale = "bp", fontsize = 7
-)
-```
-
-## The "below" y-coordinate
-
-Since multi-omic plots often involve vertical stacking, the placement of 
-multi-omic plots can be facilitated with the "below" y-coordinate. Rather than
-providing a `numeric` value or `unit` object to the `y` parameter in plotting 
-functions, we can place a plot below the previously drawn `BentoBox` plot with 
-a `character` value consisting of the distance below the last plot, in page 
-units, and "b". For example, on a page made in inches, `y = "0.1b"` will place 
-a plot 0.1 inches below the last drawn plot.
-
-We can further simplify the placement code of our multi-omic figure above by 
-using the "below" y-coordinate to easily stack our plots:
-
-```{r below_y, echo=TRUE, fig.height=6, fig.width=5, message=FALSE}
-## Load example data
-data("IMR90_HiC_10kb")
-data("IMR90_DNAloops_pairs")
-data("IMR90_ChIP_H3K27ac_signal")
-data("hg19_insulin_GWAS")
-
-## bb_params
-params <- bb_params(
-    chrom = "chr21", chromstart = 28000000, chromend = 30300000,
-    assembly = "hg19",
-    x = 0.5, just = c("left", "top"),
-    width = 2, length = 2, default.units = "inches"
-)
-
-## Create a BentoBox page
-bb_pageCreate(
-    width = 3, height = 5, default.units = "inches",
-    showGuides = FALSE, xgrid = 0, ygrid = 0
-)
-
-## Plot Hi-C data in region
-bb_plotHicSquare(
-    data = IMR90_HiC_10kb,
-    params = params,
-    y = 0.5, height = 2
-)
-
-## Plot loop annotations
-bb_plotPairsArches(
-    data = IMR90_DNAloops_pairs,
-    params = params,
-    y = "0b",
-    height = 0.25,
-    fill = "black", linecolor = "black", flip = TRUE
-)
-
-## Plot signal track data
-bb_plotSignal(
-    data = IMR90_ChIP_H3K27ac_signal,
-    params = params,
-    y = "0b",
-    height = 0.5
-)
-
-## Plot GWAS data
-bb_plotManhattan(
-    data = hg19_insulin_GWAS,
-    params = params,
-    ymax = 1.1, cex = 0.20,
-    y = "0.25b",
-    height = 0.5
-)
-
-## Plot gene track
-library(TxDb.Hsapiens.UCSC.hg19.knownGene)
-library(org.Hs.eg.db)
-bb_plotGenes(
-    params = params,
-    y = "0b",
-    height = 0.5
-)
-
-## Plot genome label
-bb_plotGenomeLabel(
-    params = params,
-    y = "0b",
-    scale = "Mb"
-)
-```
-
-## Plotting and comparing multiple signal tracks
-
-In many multi-omic visualizations, multiple signal tracks are often aligned 
-and stacked to compare different kinds of signal data and/or signals
-from different samples. **`BentoBox` does not normalize signal data** 
-**based on variables like read depth**, but it is possible to 
-**scale** `BentoBox` signal plots to the same y-axis.
-
-To determine the appropriate y-axis range, we first must get the
-maximum signal score from all of our datasets to be compared:
-
-```{r eval=TRUE, echo=TRUE}
-library(BentoBoxData)
-data("IMR90_ChIP_H3K27ac_signal")
-data("GM12878_ChIP_H3K27ac_signal")
-
-maxScore <- max(c(IMR90_ChIP_H3K27ac_signal$score, 
-                    GM12878_ChIP_H3K27ac_signal$score))
-print(maxScore)
-```
-
-In each of our signal plotting calls, we will then use the
-`range` parameter to set the range of both our y-axes to
-`c(0, maxScore)`. Here we can do this with our `bb_params` object:
-
-```{r echo=TRUE, eval=TRUE}
-params <- bb_params(
-    chrom = "chr21",
-    chromstart = 28000000, chromend = 30300000,
-    assembly = "hg19",
-    range = c(0, maxScore)
-)
-```
-
-We are now ready to plot, align, and compare our signal plots along 
-the genomic x-axis and the score y-axis:
-```{r scale_signal, fig.height=2.1, fig.width=7.5, eval=TRUE, echo=TRUE}
-## Create a page
-bb_pageCreate(width = 7.5, height = 2.1, default.units = "inches",
-            showGuides = FALSE, xgrid = 0, ygrid = 0)
-
-## Plot and place signal plots
-signal1 <- bb_plotSignal(
-    data = IMR90_ChIP_H3K27ac_signal, params = params,
-    x = 0.5, y = 0.25, width = 6.5, height = 0.65,
-    just = c("left", "top"), default.units = "inches"
-)
-
-signal2 <- bb_plotSignal(
-    data = GM12878_ChIP_H3K27ac_signal, params = params,
-    linecolor = "#7ecdbb",
-    x = 0.5, y = 1, width = 6.5, height = 0.65,
-    just = c("left", "top"), default.units = "inches"
-)
-
-## Plot genome label
-bb_plotGenomeLabel(
-    chrom = "chr21",
-    chromstart = 28000000, chromend = 30300000,
-    assembly = "hg19",
-    x = 0.5, y = 1.68, length = 6.5,
-    default.units = "inches"
-)
-
-## Add text labels
-bb_plotText(
-    label = "IMR90", fonsize = 10, fontcolor = "#37a7db",
-    x = 0.5, y = 0.25, just = c("left", "top"),
-    default.units = "inches"
-)
-bb_plotText(
-    label = "GM12878", fonsize = 10, fontcolor = "#7ecdbb",
-    x = 0.5, y = 1, just = c("left", "top"),
-    default.units = "inches"
-)
-```
-
-# Bioconductor integration
-
-`BentoBox` is designed to be flexibly compatible with typical Bioconductor 
-classes of genomic data and libraries to easily integrate genomic data 
-analysis and visualization. In addition to handling various genomic file 
-types and `R` objects, many `BentoBox` functions can also handle `GRanges` 
-objects as input data. Furthermore, `BentoBox` does not hard-code any genomic
-assemblies and can utilize `TxDb`, `OrgDb`, and `BSgenome` objects 
-for various genomic annotations, including gene and transcript structures 
-and names, chromosome sizes, and nucleotide sequences. For standard genomic 
-assemblies (i.e. hg19, hg38, mm10), `BentoBox` uses a set of default packages 
-that can be displayed by calling `bb_defaultPackages()`:
-
-```{r echo=TRUE, eval=TRUE}
-bb_defaultPackages("hg38")
-bb_defaultPackages("hg19")
-bb_defaultPackages("mm10")
-```
-
-To see which assemblies have defaults within `BentoBox`, call `bb_genomes()`:
-
-```{r echo=TRUE, eval=TRUE}
-bb_genomes()
-```
-
-`BentoBox` functions default to an "hg38" assembly, but can be customized
-with any of the other genomic assemblies included or a `bb_assembly` object.
-To create custom genomic assemblies and combinations of `TxDb`, `orgDb`, and 
-`BSgenome` packages for use in `BentoBox` functions, we can use the 
-`bb_assembly()` constructor. For example, we can create our own `TxDb` 
-from the current human Ensembl release:
-
-```{r eval=FALSE, echo=TRUE}
-library(GenomicFeatures)
-TxDb.Hsapiens.Ensembl.GrCh38.103 <- makeTxDbFromEnsembl(
-    organism =
-        "Homo sapiens"
-)
-```
-
-We can now create a new `bb_assembly` with this `TxDb` and combinations of 
-other Bioconductor packages. The `Genome` parameter can be any string to name 
-or describe this assembly. Since the `TxDb` is now from ENSEMBL, we will 
-change the `gene.id` field to `"ENSEMBL"` to map gene IDs and symbols between 
-our `TxDb` and `orgDb` objects. Most gene ID types can be found by calling
-`AnnotationDbi::keytypes()` on an `orgDb`.
-
-```{r eval=FALSE, echo=TRUE}
-Ensembl38 <- bb_assembly(
-    Genome = "Ensembl.GRCh38.103",
-    TxDb = TxDb.Hsapiens.Ensembl.GrCh38.103,
-    OrgDb = "org.Hs.eg.db",
-    BSgenome = "BSgenome.Hsapiens.NCBI.GRCh38",
-    gene.id = "ENSEMBL", display.column = "SYMBOL"
-)
-```
-
-This `bb_assembly` object can now be easily passed into `BentoBox` functions 
-through the `assembly` parameter.
-
-# Incorporating `ggplots`
-
-```{r eval=TRUE, echo=FALSE, message=FALSE}
-library(showtext)
-font_add(
-    family = "ProximaNova",
-    regular = system.file("extdata",
-                        "proximanova-regular.otf",
-                        package = "BentoBox"
-    ),
-    bold = system.file("extdata",
-                    "proximanova-semibold.otf",
-                    package = "BentoBox"
-    ),
-    italic = system.file("extdata",
-                        "proximanova-regitalic.otf",
-                        package = "BentoBox")
-)
-showtext_auto()
-```
-
-In addition to its numerous genomic functions, `BentoBox` can size and place 
-`ggplots` within a `BentoBox` layout. Rather than arranging `ggplots` in a 
-relative manner, `BentoBox` can make and place `ggplots` in absolute sizes 
-and locations. This makes it simple and intuitive to make complex `ggplot` 
-arrangements beyond a basic grid-style layout.
-
-For example, let's say we wanted to make a complex multi-panel ggplot about 
-COVID-19 data consisting of the following plots:
-
-1) A United States map depicting COVID-19 cases:
-
-```{r ggplot_01, echo=TRUE, fig.showtext=TRUE, message=FALSE, warning=FALSE}
-library(ggplot2)
-library(scales)
-data("COVID_USA_cases")
-
-US_map <- ggplot(COVID_USA_cases, aes(long, lat, group = group)) +
-    theme_void() +
-    geom_polygon(aes(fill = cases_100K), color = "white", size = 0.3) +
-    scale_fill_distiller(
-        palette = "YlGnBu", direction = 1,
-        labels = label_number(suffix = "", scale = 1e-3, accuracy = 1)
-    ) +
-    theme(
-        legend.position = "left",
-        legend.justification = c(0.5, 0.95),
-        legend.title = element_blank(),
-        legend.text = element_text(size = 7),
-        legend.key.width = unit(0.3, "cm"),
-        legend.key.height = unit(0.4, "cm"),
-        plot.title = element_text(
-            hjust = 0, vjust = -1,
-            family = "ProximaNova", face = "bold",
-            size = 12
-        ),
-        plot.title.position = "plot"
-    ) +
-    labs(title = "Thousands of COVID-19 Cases per 100,000 People") +
-    coord_fixed(1.3)
-
-print(US_map)
-```
-
-2) Line plots showing the accumulation of COVID-19 cases over time:
-
-```{r ggplot_02, echo=TRUE, fig.showtext=TRUE, message=FALSE}
-data("COVID_NY_FL_tracking")
-
-# Format y-labels
-ylabels <- seq(0, 2000000, by = 500000) / 1e6
-ylabels[c(3, 5)] <- round(ylabels[c(3, 5)], digits = 0)
-ylabels[c(2, 4)] <- round(ylabels[c(2, 4)], digits = 1)
-ylabels[5] <- paste0(ylabels[5], "M cases")
-ylabels[1] <- ""
-
-bb_CasesNY <- COVID_NY_FL_tracking[COVID_NY_FL_tracking$state == "new york", ]
-bb_CasesNYpoly <- rbind(
-    bb_CasesNY,
-    data.frame(
-        "date" = as.Date("2021-03-07"),
-        "state" = "new york",
-        "caseIncrease" = -1 * sum(bb_CasesNY$caseIncrease)
-    )
-)
-
-cases_NYline <- ggplot(
-    bb_CasesNY,
-    aes(x = date, y = cumsum(caseIncrease))
-) +
-    geom_polygon(data = bb_CasesNYpoly, fill = "#B8E6E6") +
-    scale_x_date(
-        labels = date_format("%b '%y"),
-        breaks = as.Date(c("2020-05-01", "2020-09-01", "2021-01-01")),
-        limits = as.Date(c("2020-01-29", "2021-03-07")),
-        expand = c(0, 0)
-    ) +
-    scale_y_continuous(labels = ylabels, position = "right", expand = c(0, 0)) +
-    geom_hline(
-        yintercept = c(500000, 1000000, 1500000, 2000000),
-        color = "white", linetype = "dashed", size = 0.3
-    ) +
-    coord_cartesian(ylim = c(0, 2000000)) +
-    theme(
-        panel.background = element_rect(fill = "transparent", color = NA),
-        text = element_text(family = "ProximaNova"),
-        panel.grid = element_blank(),
-        panel.border = element_blank(),
-        plot.background = element_rect(fill = "transparent", color = NA),
-        axis.line.x.bottom = element_blank(),
-        axis.line.y = element_line(size = 0.1, color = "#8F9BB3"),
-        axis.text.x = element_text(
-            size = 7, hjust = 0.5,
-            margin = margin(t = -10), color = "black"
-        ),
-        axis.title.x = element_blank(),
-        axis.ticks.x = element_line(size = 0.2, color = "black"),
-        axis.title.y = element_blank(),
-        axis.text.y = element_text(size = 7, color = "black"),
-        axis.ticks.y = element_blank(),
-        axis.ticks.length.x.bottom = unit(-0.1, "cm"),
-        plot.title = element_text(size = 8, hjust = 1),
-        plot.title.position = "plot"
-    )
-
-print(cases_NYline)
-```
-
-```{r ggplot_03, echo=TRUE, fig.showtext=TRUE, message=FALSE}
-bb_CasesFL <- COVID_NY_FL_tracking[COVID_NY_FL_tracking$state == "florida", ]
-bb_CasesFLpoly <- rbind(
-    bb_CasesFL,
-    data.frame(
-        "date" = as.Date("2021-03-07"),
-        "state" = "florida",
-        "caseIncrease" = -1 * sum(bb_CasesFL$caseIncrease)
-    )
-)
-
-cases_FLline <- ggplot(
-    bb_CasesFL,
-    aes(x = date, y = cumsum(caseIncrease))
-) +
-    geom_polygon(data = bb_CasesFLpoly, fill = "#B8E6E6") +
-    scale_x_date(
-        labels = date_format("%b '%y"),
-        breaks = as.Date(c("2020-05-01", "2020-09-01", "2021-01-01")),
-        limits = as.Date(c("2020-01-29", "2021-03-07")),
-        expand = c(0, 0)
-    ) +
-    scale_y_continuous(labels = ylabels, position = "right", expand = c(0, 0)) +
-    geom_hline(
-        yintercept = c(500000, 1000000, 1500000, 2000000),
-        color = "white", linetype = "dashed", size = 0.3
-    ) +
-    coord_cartesian(ylim = c(0, 2000000)) +
-    theme(
-        panel.background = element_rect(fill = "transparent", color = NA),
-        plot.background = element_rect(fill = "transparent", color = NA),
-        text = element_text(family = "ProximaNova"),
-        panel.grid = element_blank(),
-        panel.border = element_blank(),
-        axis.line.x.bottom = element_blank(),
-        axis.line.y = element_line(size = 0.1, color = "#8F9BB3"),
-        axis.title = element_blank(),
-        axis.text.y = element_text(size = 7, color = "black"),
-        axis.text.x = element_text(
-            size = 7, hjust = 0.5,
-            margin = margin(t = -10), color = "black"
-        ),
-        axis.ticks = element_line(color = "black", size = 0.2),
-        axis.ticks.y = element_blank(),
-        axis.ticks.length.x.bottom = unit(-0.1, "cm"),
-        plot.title = element_text(size = 8, hjust = 1),
-        plot.title.position = "plot"
-    )
-
-print(cases_FLline)
-```
-
-3) Pie charts of COVID-19 vaccination status:
-
-```{r ggplot_04, echo=TRUE, fig.showtext=TRUE, message=FALSE}
-data("COVID_NY_FL_vaccines")
-
-vaccines_NYpie <- ggplot(
-    COVID_NY_FL_vaccines[COVID_NY_FL_vaccines$state == "new york", ],
-    aes(x = "", y = value, fill = vax_group)
-) +
-    geom_bar(width = 1, stat = "identity") +
-    theme_void() +
-    scale_fill_manual(values = c("#FBAA7E", "#F7EEBF", "#FBCB88")) +
-    coord_polar(theta = "y", start = 2.125, clip = "off") +
-    geom_text(aes(
-        x = c(1.9, 2, 1.9),
-        y = c(1.65e7, 1.3e6, 7.8e6),
-        label = paste0(percent, "%")
-    ),
-    size = 2.25, color = "black"
-    ) +
-    theme(
-        legend.position = "none",
-        plot.title = element_text(
-            hjust = 0.5, vjust = -3.5, size = 10,
-            family = "ProximaNova", face = "bold"
-        ),
-        text = element_text(family = "ProximaNova")
-    ) +
-    labs(title = "New York")
-
-print(vaccines_NYpie)
-```
-```{r ggplot_05, echo = TRUE, eval = TRUE}
-vaccines_FLpie <- ggplot(
-    COVID_NY_FL_vaccines[COVID_NY_FL_vaccines$state == "florida", ],
-    aes(x = "", y = value, fill = vax_group)
-) +
-    geom_bar(width = 1, stat = "identity") +
-    scale_fill_manual(values = c("#FBAA7E", "#F7EEBF", "#FBCB88")) +
-    theme_void() +
-    coord_polar(theta = "y", start = pi / 1.78, clip = "off") +
-    geom_text(aes(
-        x = c(1.95, 2, 1.9),
-        y = c(1.9e7, 1.83e6, 9.6e6),
-        label = paste0(percent, "%")
-    ),
-    color = "black",
-    size = 2.25
-    ) +
-    theme(
-        legend.position = "none",
-        plot.title = element_text(
-            hjust = 0.5, vjust = -4, size = 10,
-            family = "ProximaNova", face = "bold"
-        ),
-        text = element_text(family = "ProximaNova")
-    ) +
-    labs(title = "Florida")
-
-print(vaccines_FLpie)
-```
-
-We can now easily overlap and size all these `ggplots` by passing our saved 
-plot objects into `bb_plotGG()`:
-
-```{r gg_plot05, echo=TRUE, fig.height=4.5, fig.showtext=TRUE, fig.width=11.5}
-bb_pageCreate(width = 9.5, height = 3.5, default.units = "inches")
-
-bb_plotGG(
-    plot = US_map,
-    x = 0.1, y = 0,
-    width = 6.5, height = 3.5, just = c("left", "top")
-)
-bb_plotGG(
-    plot = cases_NYline,
-    x = 6.25, y = 1.8,
-    width = 3.025, height = 1.4, just = c("left", "bottom")
-)
-bb_plotGG(
-    plot = cases_FLline,
-    x = 6.25, y = 3.5,
-    width = 3.025, height = 1.4, just = c("left", "bottom")
-)
-```
-
-In particular, `BentoBox` makes it easy to resize and place our pie charts in
-a layout that overlaps our line plots without it affecting the sizing of the 
-other plots on the page:
-
-```{r eval = FALSE, echo = TRUE}
-bb_plotGG(
-    plot = vaccines_NYpie,
-    x = 6.37, y = -0.05,
-    width = 1.45, height = 1.45, just = c("left", "top")
-)
-bb_plotGG(
-    plot = vaccines_FLpie,
-    x = 6.37, y = 1.67,
-    width = 1.45, height = 1.45, just = c("left", "top")
-)
-```
-
-```{r gg_plot06, echo=FALSE, fig.height=4.5, fig.showtext=TRUE, ,fig.width=11.5}
-bb_pageCreate(width = 9.5, height = 3.5, default.units = "inches")
-
-bb_plotGG(
-    plot = US_map,
-    x = 0.1, y = 0,
-    width = 6.5, height = 3.5, just = c("left", "top")
-)
-bb_plotGG(
-    plot = cases_NYline,
-    x = 6.25, y = 1.8,
-    width = 3.025, height = 1.4, just = c("left", "bottom")
-)
-bb_plotGG(
-    plot = cases_FLline,
-    x = 6.25, y = 3.5,
-    width = 3.025, height = 1.4, just = c("left", "bottom")
-)
-bb_plotGG(
-    plot = vaccines_NYpie,
-    x = 6.37, y = -0.05,
-    width = 1.45, height = 1.45, just = c("left", "top")
-)
-bb_plotGG(
-    plot = vaccines_FLpie,
-    x = 6.37, y = 1.67,
-    width = 1.45, height = 1.45, just = c("left", "top")
-)
-```
-
-We can also easily add additional elements to further enhance our 
-complex `ggplot` arrangments, like a precise placement of text labels:
-
-```{r eval = FALSE, echo = TRUE}
-bb_plotText(
-    label = c("not", "partially", "fully vaccinated"),
-    fontfamily = "ProximaNova", fontcolor = "black", fontsize = 7,
-    x = c(6.58, 7.3, 7.435),
-    y = c(0.74, 1.12, 0.51), just = c("left", "bottom")
-)
-bb_plotText(
-    label = c("not", "partially", "fully vaccinated"),
-    fontfamily = "ProximaNova", fontcolor = "black", fontsize = 7,
-    x = c(6.58, 7.39, 7.435),
-    y = c(2.47, 2.75, 2.2), just = c("left", "bottom")
-)
-bb_plotText(label = paste("Sources: The COVID Tracking Project;",
-                        "Johns Hopkins Center for Civic Impact"),
-            fontfamily = "ProximaNova", fontcolor = "black",
-            fontsize = 7, fontface = "italic",
-            x = 0.15, y = 3.45, just = c("left", "bottom"))
-```
-
-We are then left with a complex, precise, and elegant arrangement of 
-`ggplots` as if we had arranged them together with graphic design software:
-
-```{r gg_plot07, echo=FALSE, fig.height=4.5, fig.showtext=TRUE, fig.width=11.5}
-bb_pageCreate(
-    width = 9.5, height = 3.5, default.units = "inches",
-    showGuides = FALSE, xgrid = 0, ygrid = 0
-)
-bb_plotGG(
-    plot = US_map,
-    x = 0.1, y = 0,
-    width = 6.5, height = 3.5, just = c("left", "top")
-)
-bb_plotGG(
-    plot = cases_NYline,
-    x = 6.25, y = 1.8,
-    width = 3.025, height = 1.4, just = c("left", "bottom")
-)
-bb_plotGG(
-    plot = cases_FLline,
-    x = 6.25, y = 3.5,
-    width = 3.025, height = 1.4, just = c("left", "bottom")
-)
-bb_plotGG(
-    plot = vaccines_NYpie,
-    x = 6.37, y = -0.05,
-    width = 1.45, height = 1.45, just = c("left", "top")
-)
-bb_plotGG(
-    plot = vaccines_FLpie,
-    x = 6.37, y = 1.67,
-    width = 1.45, height = 1.45, just = c("left", "top")
-)
-bb_plotText(
-    label = c("not", "partially", "fully vaccinated"),
-    fontfamily = "ProximaNova", fontcolor = "black", fontsize = 7,
-    x = c(6.58, 7.3, 7.435),
-    y = c(0.74, 1.12, 0.51), just = c("left", "bottom")
-)
-bb_plotText(
-    label = c("not", "partially", "fully vaccinated"),
-    fontfamily = "ProximaNova", fontcolor = "black", fontsize = 7,
-    x = c(6.58, 7.39, 7.435),
-    y = c(2.47, 2.75, 2.2), just = c("left", "bottom")
-)
-bb_plotText(label = paste("Sources: The COVID Tracking Project;",
-                        "Johns Hopkins Center for Civic Impact"),
-            fontfamily = "ProximaNova", fontcolor = "black",
-            fontsize = 7, fontface = "italic",
-            x = 0.15, y = 3.45, just = c("left", "bottom"))
-```
+For more detailed usage and examples, please refer to the other available
+vignettes.
 
 # Future Directions
 

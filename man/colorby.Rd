@@ -24,8 +24,8 @@ Returns a "\code{bb_colorby}" object.
 }
 \description{
 \code{colorby} should be used to create a set of parameters
-that specify color scaling for the functions \code{bb_plotPairs},
-\code{bb_plotPairsArches}, and \code{bb_plotRanges}.
+that specify color scaling for the functions \code{bbPlotPairs},
+\code{bbPlotPairsArches}, and \code{bbPlotRanges}.
 }
 \examples{
 ## Load paired ranges data in BEDPE format
@@ -37,7 +37,7 @@ IMR90_DNAloops_pairs$length <-
         (IMR90_DNAloops_pairs$start2 - IMR90_DNAloops_pairs$start1) / 1000
 
 ## Plot pairs with colorby object set for `length` column
-bedpePlot <- bb_plotPairs(
+bedpePlot <- bbPlotPairs(
     data = IMR90_DNAloops_pairs,
     chrom = "chr21",
     chromstart = 27900000, chromend = 30700000,
