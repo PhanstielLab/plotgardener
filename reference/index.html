@@ -79,7 +79,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">BentoBox</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.99.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.99.6</span>
       </span>
     </div>
 
@@ -92,7 +92,7 @@
   </a>
 </li>
 <li>
-  <a href="../articles/guides/our_philosophy.html">Our Philosophy</a>
+  <a href="../articles/our_philosophy.html">Our Philosophy</a>
 </li>
 <li>
   <a href="../articles/introduction_to_bentobox.html">Introduction to BentoBox</a>
@@ -105,16 +105,31 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/guides/bentobox_page.html">The BentoBox Page</a>
+      <a href="../articles/bentobox_page.html">The BentoBox Page</a>
     </li>
     <li>
-      <a href="../articles/guides/plot_elements.html">Additional plot types and elements</a>
+      <a href="../articles/reading_data_for_bentobox.html">Reading Data for BentoBox</a>
     </li>
     <li>
-      <a href="../articles/guides/annotations.html">An in depth look at plot annotations</a>
+      <a href="../articles/plotting_multiomic_data.html">Plotting Multi-omic Data</a>
     </li>
     <li>
-      <a href="../articles/guides/aesthetics.html">A guide to plot aesthetics</a>
+      <a href="../articles/annotations.html">Plot Annotations</a>
+    </li>
+    <li>
+      <a href="../articles/bentobox_meta_functions.html">BentoBox Meta Functions</a>
+    </li>
+    <li>
+      <a href="../articles/bioconductor_integration.html">Bioconductor Integration</a>
+    </li>
+    <li>
+      <a href="../articles/incorporating_ggplots.html">Incorporating ggplots</a>
+    </li>
+    <li>
+      <a href="../articles/ideograms_and_shapes.html">Ideograms and Shapes</a>
+    </li>
+    <li>
+      <a href="../articles/aesthetics.html">Plot Aesthetics</a>
     </li>
   </ul>
 </li>
@@ -145,17 +160,17 @@
       <h1>Reference</h1>
     </div>
 
-    <table class="ref-index ref-index-icons">
+    <table class="ref-index">
 
     <colgroup>
-      <col class="icon" />
+      
       <col class="alias" />
       <col class="title" />
     </colgroup>
 
     <tbody>
       <tr>
-        <th colspan="3">
+        <th colspan="2">
           <h2 id="section-about-bentobox" class="hasAnchor"><a href="#section-about-bentobox" class="anchor"></a>About BentoBox</h2>
           <p class="section-desc"></p>
         </th>
@@ -166,7 +181,7 @@
       
       
       <tr>
-        <td></td>
+        
         <td>
           <p><code><a href="BentoBox.html">BentoBox</a></code> </p>
         </td>
@@ -174,7 +189,7 @@
       </tr>
     </tbody><tbody>
       <tr>
-        <th colspan="3">
+        <th colspan="2">
           <h2 id="section-page-layout-functions" class="hasAnchor"><a href="#section-page-layout-functions" class="anchor"></a>Page layout functions</h2>
           <p class="section-desc"></p>
         </th>
@@ -185,53 +200,53 @@
       
       
       <tr>
-        <td></td>
+        
         <td>
-          <p><code><a href="bb_pageCreate.html">bb_pageCreate()</a></code> </p>
+          <p><code><a href="bbPageCreate.html">bbPageCreate()</a></code> </p>
         </td>
         <td><p>Create a page for a BentoBox layout</p></td>
       </tr><tr>
-        <td></td>
+        
         <td>
-          <p><code><a href="bb_pageGuideHide.html">bb_pageGuideHide()</a></code> </p>
+          <p><code><a href="bbPageGuideHide.html">bbPageGuideHide()</a></code> </p>
         </td>
         <td><p>Remove guides from a BentoBox page</p></td>
       </tr><tr>
-        <td></td>
+        
         <td>
-          <p><code><a href="bb_pageGuideHorizontal.html">bb_pageGuideHorizontal()</a></code> </p>
+          <p><code><a href="bbPageGuideHorizontal.html">bbPageGuideHorizontal()</a></code> </p>
         </td>
         <td><p>Draw a horizontal guideline at a specified y-coordinate
 on a BentoBox page</p></td>
       </tr><tr>
-        <td></td>
+        
         <td>
-          <p><code><a href="bb_pageGuideShow.html">bb_pageGuideShow()</a></code> </p>
+          <p><code><a href="bbPageGuideShow.html">bbPageGuideShow()</a></code> </p>
         </td>
-        <td><p>Reshow guides drawn with <code>bb_pageCreate</code>,
-<code>bb_pageGuideHorizontal</code>, and <code>bb_pageGuideVertical</code></p></td>
+        <td><p>Reshow guides drawn with <code>bbPageCreate</code>,
+<code>bbPageGuideHorizontal</code>, and <code>bbPageGuideVertical</code></p></td>
       </tr><tr>
-        <td></td>
+        
         <td>
-          <p><code><a href="bb_pageGuideVertical.html">bb_pageGuideVertical()</a></code> </p>
+          <p><code><a href="bbPageGuideVertical.html">bbPageGuideVertical()</a></code> </p>
         </td>
         <td><p>Draw a vertical guideline at a specified x-coordinate on a BentoBox page</p></td>
       </tr><tr>
-        <td></td>
+        
         <td>
-          <p><code><a href="bb_pagePlotPlace.html">bb_pagePlotPlace()</a></code> </p>
+          <p><code><a href="bbPagePlotPlace.html">bbPagePlotPlace()</a></code> </p>
         </td>
         <td><p>Place a BentoBox plot that has been previously created but not drawn</p></td>
       </tr><tr>
-        <td></td>
+        
         <td>
-          <p><code><a href="bb_pagePlotRemove.html">bb_pagePlotRemove()</a></code> </p>
+          <p><code><a href="bbPagePlotRemove.html">bbPagePlotRemove()</a></code> </p>
         </td>
         <td><p>Remove BentoBox plots and annotations</p></td>
       </tr>
     </tbody><tbody>
       <tr>
-        <th colspan="3">
+        <th colspan="2">
           <h2 id="section-reading-functions" class="hasAnchor"><a href="#section-reading-functions" class="anchor"></a>Reading functions</h2>
           <p class="section-desc"></p>
         </th>
@@ -242,21 +257,21 @@ on a BentoBox page</p></td>
       
       
       <tr>
-        <td></td>
+        
         <td>
-          <p><code><a href="bb_readBigwig.html">bb_readBigwig()</a></code> </p>
+          <p><code><a href="bbReadBigwig.html">bbReadBigwig()</a></code> </p>
         </td>
         <td><p>Read a bigWig file and return it as a data frame</p></td>
       </tr><tr>
-        <td></td>
+        
         <td>
-          <p><code><a href="bb_readHic.html">bb_readHic()</a></code> </p>
+          <p><code><a href="bbReadHic.html">bbReadHic()</a></code> </p>
         </td>
         <td><p>Read a .hic file and return Hi-C data as a dataframe</p></td>
       </tr>
     </tbody><tbody>
       <tr>
-        <th colspan="3">
+        <th colspan="2">
           <h2 id="section-plotting-functions" class="hasAnchor"><a href="#section-plotting-functions" class="anchor"></a>Plotting functions</h2>
           <p class="section-desc"></p>
         </th>
@@ -266,7 +281,7 @@ on a BentoBox page</p></td>
     </tbody><tbody>
       
       <tr>
-        <th colspan="3">
+        <th colspan="2">
           <h3 id="section-genomics" class="hasAnchor"><a href="#section-genomics" class="anchor"></a>Genomics</h3>
           <p class="section-desc"></p>
         </th>
@@ -276,82 +291,82 @@ on a BentoBox page</p></td>
       
       
       <tr>
-        <td><a href="bb_plotGenes.html"><img src="icons/bb_plotGenes.png" width="30" height="30" alt="" /></a></td>
+        
         <td>
-          <p><code><a href="bb_plotGenes.html">bb_plotGenes()</a></code> </p>
+          <p><code><a href="bbPlotGenes.html">bbPlotGenes()</a></code> </p>
         </td>
         <td><p>Plot a gene track for a specified genomic region</p></td>
       </tr><tr>
-        <td><a href="bb_plotGenomeLabel.html"><img src="icons/bb_plotGenomeLabel.png" width="30" height="30" alt="" /></a></td>
+        
         <td>
-          <p><code><a href="bb_plotGenomeLabel.html">bb_plotGenomeLabel()</a></code> </p>
+          <p><code><a href="bbPlotGenomeLabel.html">bbPlotGenomeLabel()</a></code> </p>
         </td>
         <td><p>Plot genomic coordinates along the x or y-axis of a BentoBox plot</p></td>
       </tr><tr>
-        <td><a href="bb_plotHicRectangle.html"><img src="icons/bb_plotHicRectangle.png" width="30" height="30" alt="" /></a></td>
+        
         <td>
-          <p><code><a href="bb_plotHicRectangle.html">bb_plotHicRectangle()</a></code> </p>
+          <p><code><a href="bbPlotHicRectangle.html">bbPlotHicRectangle()</a></code> </p>
         </td>
         <td><p>Plot a triangular Hi-C interaction matrix in a rectangular format</p></td>
       </tr><tr>
-        <td><a href="bb_plotHicSquare.html"><img src="icons/bb_plotHicSquare.png" width="30" height="30" alt="" /></a></td>
+        
         <td>
-          <p><code><a href="bb_plotHicSquare.html">bb_plotHicSquare()</a></code> </p>
+          <p><code><a href="bbPlotHicSquare.html">bbPlotHicSquare()</a></code> </p>
         </td>
         <td><p>Plot a Hi-C interaction matrix in a square format</p></td>
       </tr><tr>
-        <td><a href="bb_plotHicTriangle.html"><img src="icons/bb_plotHicTriangle.png" width="30" height="30" alt="" /></a></td>
+        
         <td>
-          <p><code><a href="bb_plotHicTriangle.html">bb_plotHicTriangle()</a></code> </p>
+          <p><code><a href="bbPlotHicTriangle.html">bbPlotHicTriangle()</a></code> </p>
         </td>
         <td><p>Plot a Hi-C interaction matrix in a triangular format</p></td>
       </tr><tr>
-        <td><a href="bb_plotIdeogram.html"><img src="icons/bb_plotIdeogram.png" width="30" height="30" alt="" /></a></td>
+        
         <td>
-          <p><code><a href="bb_plotIdeogram.html">bb_plotIdeogram()</a></code> </p>
+          <p><code><a href="bbPlotIdeogram.html">bbPlotIdeogram()</a></code> </p>
         </td>
         <td><p>Plot a chromosome ideogram with or without cytobands</p></td>
       </tr><tr>
-        <td><a href="bb_plotManhattan.html"><img src="icons/bb_plotManhattan.png" width="30" height="30" alt="" /></a></td>
+        
         <td>
-          <p><code><a href="bb_plotManhattan.html">bb_plotManhattan()</a></code> </p>
+          <p><code><a href="bbPlotManhattan.html">bbPlotManhattan()</a></code> </p>
         </td>
         <td><p>Plot a Manhattan plot</p></td>
       </tr><tr>
-        <td><a href="bb_plotPairs.html"><img src="icons/bb_plotPairs.png" width="30" height="30" alt="" /></a></td>
+        
         <td>
-          <p><code><a href="bb_plotPairs.html">bb_plotPairs()</a></code> </p>
+          <p><code><a href="bbPlotPairs.html">bbPlotPairs()</a></code> </p>
         </td>
         <td><p>Plot paired-end genomic range elements</p></td>
       </tr><tr>
-        <td><a href="bb_plotPairsArches.html"><img src="icons/bb_plotPairsArches.png" width="30" height="30" alt="" /></a></td>
+        
         <td>
-          <p><code><a href="bb_plotPairsArches.html">bb_plotPairsArches()</a></code> </p>
+          <p><code><a href="bbPlotPairsArches.html">bbPlotPairsArches()</a></code> </p>
         </td>
         <td><p>Plot paired-end genomic range data in an arch style</p></td>
       </tr><tr>
-        <td><a href="bb_plotRanges.html"><img src="icons/bb_plotRanges.png" width="30" height="30" alt="" /></a></td>
+        
         <td>
-          <p><code><a href="bb_plotRanges.html">bb_plotRanges()</a></code> </p>
+          <p><code><a href="bbPlotRanges.html">bbPlotRanges()</a></code> </p>
         </td>
         <td><p>Plot genomic range elements in a pileup or collapsed format</p></td>
       </tr><tr>
-        <td><a href="bb_plotSignal.html"><img src="icons/bb_plotSignal.png" width="30" height="30" alt="" /></a></td>
+        
         <td>
-          <p><code><a href="bb_plotSignal.html">bb_plotSignal()</a></code> </p>
+          <p><code><a href="bbPlotSignal.html">bbPlotSignal()</a></code> </p>
         </td>
         <td><p>Plot any kind of signal track data for a single chromosome</p></td>
       </tr><tr>
-        <td><a href="bb_plotTranscripts.html"><img src="icons/bb_plotTranscripts.png" width="30" height="30" alt="" /></a></td>
+        
         <td>
-          <p><code><a href="bb_plotTranscripts.html">bb_plotTranscripts()</a></code> </p>
+          <p><code><a href="bbPlotTranscripts.html">bbPlotTranscripts()</a></code> </p>
         </td>
         <td><p>Plot gene transcripts in a pileup style for a single chromosome</p></td>
       </tr>
     </tbody><tbody>
       
       <tr>
-        <th colspan="3">
+        <th colspan="2">
           <h3 id="section-shapes-and-basic-elements" class="hasAnchor"><a href="#section-shapes-and-basic-elements" class="anchor"></a>Shapes and Basic Elements</h3>
           <p class="section-desc"></p>
         </th>
@@ -361,52 +376,52 @@ on a BentoBox page</p></td>
       
       
       <tr>
-        <td><a href="bb_plotCircle.html"><img src="icons/bb_plotCircle.png" width="30" height="30" alt="" /></a></td>
+        
         <td>
-          <p><code><a href="bb_plotCircle.html">bb_plotCircle()</a></code> </p>
+          <p><code><a href="bbPlotCircle.html">bbPlotCircle()</a></code> </p>
         </td>
         <td><p>Plot a circle within a BentoBox layout</p></td>
       </tr><tr>
-        <td><a href="bb_plotLegend.html"><img src="icons/bb_plotLegend.png" width="30" height="30" alt="" /></a></td>
+        
         <td>
-          <p><code><a href="bb_plotLegend.html">bb_plotLegend()</a></code> </p>
+          <p><code><a href="bbPlotLegend.html">bbPlotLegend()</a></code> </p>
         </td>
         <td><p>Plot a legend</p></td>
       </tr><tr>
-        <td><a href="bb_plotPolygon.html"><img src="icons/bb_plotPolygon.png" width="30" height="30" alt="" /></a></td>
+        
         <td>
-          <p><code><a href="bb_plotPolygon.html">bb_plotPolygon()</a></code> </p>
+          <p><code><a href="bbPlotPolygon.html">bbPlotPolygon()</a></code> </p>
         </td>
         <td><p>Plot a polygon within a BentoBox layout</p></td>
       </tr><tr>
-        <td><a href="bb_plotRaster.html"><img src="icons/bb_plotRaster.png" width="30" height="30" alt="" /></a></td>
+        
         <td>
-          <p><code><a href="bb_plotRaster.html">bb_plotRaster()</a></code> </p>
+          <p><code><a href="bbPlotRaster.html">bbPlotRaster()</a></code> </p>
         </td>
         <td><p>Plot a raster object within a BentoBox layout</p></td>
       </tr><tr>
-        <td><a href="bb_plotRect.html"><img src="icons/bb_plotRect.png" width="30" height="30" alt="" /></a></td>
+        
         <td>
-          <p><code><a href="bb_plotRect.html">bb_plotRect()</a></code> </p>
+          <p><code><a href="bbPlotRect.html">bbPlotRect()</a></code> </p>
         </td>
         <td><p>Plot a rectangle within a BentoBox layout</p></td>
       </tr><tr>
-        <td><a href="bb_plotSegments.html"><img src="icons/bb_plotSegments.png" width="30" height="30" alt="" /></a></td>
+        
         <td>
-          <p><code><a href="bb_plotSegments.html">bb_plotSegments()</a></code> </p>
+          <p><code><a href="bbPlotSegments.html">bbPlotSegments()</a></code> </p>
         </td>
         <td><p>Draw a line segment within a BentoBox layout</p></td>
       </tr><tr>
-        <td><a href="bb_plotText.html"><img src="icons/bb_plotText.png" width="30" height="30" alt="" /></a></td>
+        
         <td>
-          <p><code><a href="bb_plotText.html">bb_plotText()</a></code> </p>
+          <p><code><a href="bbPlotText.html">bbPlotText()</a></code> </p>
         </td>
         <td><p>Plot text within a BentoBox layout</p></td>
       </tr>
     </tbody><tbody>
       
       <tr>
-        <th colspan="3">
+        <th colspan="2">
           <h3 id="section-external" class="hasAnchor"><a href="#section-external" class="anchor"></a>External</h3>
           <p class="section-desc"></p>
         </th>
@@ -416,15 +431,15 @@ on a BentoBox page</p></td>
       
       
       <tr>
-        <td></td>
+        
         <td>
-          <p><code><a href="bb_plotGG.html">bb_plotGG()</a></code> </p>
+          <p><code><a href="bbPlotGG.html">bbPlotGG()</a></code> </p>
         </td>
         <td><p>Plot a ggplot2 plot, gtable, or grob object in a BentoBox layout</p></td>
       </tr>
     </tbody><tbody>
       <tr>
-        <th colspan="3">
+        <th colspan="2">
           <h2 id="section-annotation-functions" class="hasAnchor"><a href="#section-annotation-functions" class="anchor"></a>Annotation functions</h2>
           <p class="section-desc"></p>
         </th>
@@ -435,70 +450,70 @@ on a BentoBox page</p></td>
       
       
       <tr>
-        <td></td>
+        
         <td>
-          <p><code><a href="bb_annoDomains.html">bb_annoDomains()</a></code> </p>
+          <p><code><a href="bbAnnoDomains.html">bbAnnoDomains()</a></code> </p>
         </td>
         <td><p>Annotate domains in a Hi-C plot</p></td>
       </tr><tr>
-        <td></td>
+        
         <td>
-          <p><code><a href="bb_annoGenomeLabel.html">bb_annoGenomeLabel()</a></code> </p>
+          <p><code><a href="bbAnnoGenomeLabel.html">bbAnnoGenomeLabel()</a></code> </p>
         </td>
         <td><p>Annotate genomic coordinates along the x or y-axis of a BentoBox plot</p></td>
       </tr><tr>
-        <td></td>
+        
         <td>
-          <p><code><a href="bb_annoHeatmapLegend.html">bb_annoHeatmapLegend()</a></code> </p>
+          <p><code><a href="bbAnnoHeatmapLegend.html">bbAnnoHeatmapLegend()</a></code> </p>
         </td>
         <td><p>Add a color scale legend for heatmap-style plots</p></td>
       </tr><tr>
-        <td></td>
+        
         <td>
-          <p><code><a href="bb_annoHighlight.html">bb_annoHighlight()</a></code> </p>
+          <p><code><a href="bbAnnoHighlight.html">bbAnnoHighlight()</a></code> </p>
         </td>
         <td><p>Annotates a highlight box around a specified genomic region of a
 BentoBox plot</p></td>
       </tr><tr>
-        <td></td>
+        
         <td>
-          <p><code><a href="bb_annoPixels.html">bb_annoPixels()</a></code> </p>
+          <p><code><a href="bbAnnoPixels.html">bbAnnoPixels()</a></code> </p>
         </td>
         <td><p>Annotate pixels in a Hi-C plot</p></td>
       </tr><tr>
-        <td></td>
+        
         <td>
-          <p><code><a href="bb_annoSegments.html">bb_annoSegments()</a></code> </p>
+          <p><code><a href="bbAnnoSegments.html">bbAnnoSegments()</a></code> </p>
         </td>
         <td><p>Annotates a line segment within a BentoBox plot</p></td>
       </tr><tr>
-        <td></td>
+        
         <td>
-          <p><code><a href="bb_annoText.html">bb_annoText()</a></code> </p>
+          <p><code><a href="bbAnnoText.html">bbAnnoText()</a></code> </p>
         </td>
         <td><p>Annotates text within a BentoBox plot</p></td>
       </tr><tr>
-        <td></td>
+        
         <td>
-          <p><code><a href="bb_annoXaxis.html">bb_annoXaxis()</a></code> </p>
+          <p><code><a href="bbAnnoXaxis.html">bbAnnoXaxis()</a></code> </p>
         </td>
         <td><p>Add an x-axis to a plot</p></td>
       </tr><tr>
-        <td></td>
+        
         <td>
-          <p><code><a href="bb_annoYaxis.html">bb_annoYaxis()</a></code> </p>
+          <p><code><a href="bbAnnoYaxis.html">bbAnnoYaxis()</a></code> </p>
         </td>
         <td><p>Add a y-axis to a plot</p></td>
       </tr><tr>
-        <td></td>
+        
         <td>
-          <p><code><a href="bb_annoZoomLines.html">bb_annoZoomLines()</a></code> </p>
+          <p><code><a href="bbAnnoZoomLines.html">bbAnnoZoomLines()</a></code> </p>
         </td>
         <td><p>Annotates zoom lines for a specified genomic region of a BentoBox plot</p></td>
       </tr>
     </tbody><tbody>
       <tr>
-        <th colspan="3">
+        <th colspan="2">
           <h2 id="section-meta-functions" class="hasAnchor"><a href="#section-meta-functions" class="anchor"></a>Meta functions</h2>
           <p class="section-desc"></p>
         </th>
@@ -509,47 +524,47 @@ BentoBox plot</p></td>
       
       
       <tr>
-        <td></td>
+        
         <td>
-          <p><code><a href="bb_assembly.html">bb_assembly()</a></code> </p>
+          <p><code><a href="bbAssembly.html">bbAssembly()</a></code> </p>
         </td>
-        <td><p>Make a <code>bb_assembly</code> object for alternate TxDb, OrgDb,and BSgenome
+        <td><p>Make a <code>bbAssembly</code> object for alternate TxDb, OrgDb,and BSgenome
 genomic annotation packages</p></td>
       </tr><tr>
-        <td></td>
+        
         <td>
-          <p><code><a href="bb_defaultPackages.html">bb_defaultPackages()</a></code> </p>
+          <p><code><a href="bbDefaultPackages.html">bbDefaultPackages()</a></code> </p>
         </td>
         <td><p>Display the default genomic annotation packages associated with a
 genome build</p></td>
       </tr><tr>
-        <td></td>
+        
         <td>
-          <p><code><a href="bb_genomes.html">bb_genomes()</a></code> </p>
+          <p><code><a href="bbGenomes.html">bbGenomes()</a></code> </p>
         </td>
         <td><p>Display the included available default genome assemblies</p></td>
       </tr><tr>
-        <td></td>
+        
         <td>
-          <p><code><a href="bb_params.html">bb_params()</a></code> </p>
+          <p><code><a href="bbParams.html">bbParams()</a></code> </p>
         </td>
-        <td><p>bb_params: BentoBox parameters object</p></td>
+        <td><p>bbParams: BentoBox parameters object</p></td>
       </tr><tr>
-        <td></td>
+        
         <td>
           <p><code><a href="c.html">c()</a></code> </p>
         </td>
-        <td><p>Combine multiple bb_params objects into a vector</p></td>
+        <td><p>Combine multiple bbParams objects into a vector</p></td>
       </tr><tr>
-        <td></td>
+        
         <td>
           <p><code><a href="colorby.html">colorby()</a></code> </p>
         </td>
         <td><p>Handle BentoBox color scaling parameters</p></td>
       </tr><tr>
-        <td></td>
+        
         <td>
-          <p><code><a href="bb_mapColors.html">bb_mapColors()</a></code> </p>
+          <p><code><a href="bbMapColors.html">bbMapColors()</a></code> </p>
         </td>
         <td><p>Maps a numeric or character vector to a color palette and returns
 the vector of colors</p></td>

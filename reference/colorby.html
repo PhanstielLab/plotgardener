@@ -48,8 +48,8 @@
 
 <meta property="og:title" content="Handle BentoBox color scaling parameters — colorby" />
 <meta property="og:description" content="colorby should be used to create a set of parameters
-that specify color scaling for the functions bb_plotPairs,
-bb_plotPairsArches, and bb_plotRanges." />
+that specify color scaling for the functions bbPlotPairs,
+bbPlotPairsArches, and bbPlotRanges." />
 <meta property="og:image" content="https://phanstiellab.github.io/bentobox/logo.png" />
 
 
@@ -82,7 +82,7 @@ bb_plotPairsArches, and bb_plotRanges." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">BentoBox</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.99.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.99.6</span>
       </span>
     </div>
 
@@ -95,7 +95,7 @@ bb_plotPairsArches, and bb_plotRanges." />
   </a>
 </li>
 <li>
-  <a href="../articles/guides/our_philosophy.html">Our Philosophy</a>
+  <a href="../articles/our_philosophy.html">Our Philosophy</a>
 </li>
 <li>
   <a href="../articles/introduction_to_bentobox.html">Introduction to BentoBox</a>
@@ -108,16 +108,31 @@ bb_plotPairsArches, and bb_plotRanges." />
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/guides/bentobox_page.html">The BentoBox Page</a>
+      <a href="../articles/bentobox_page.html">The BentoBox Page</a>
     </li>
     <li>
-      <a href="../articles/guides/plot_elements.html">Additional plot types and elements</a>
+      <a href="../articles/reading_data_for_bentobox.html">Reading Data for BentoBox</a>
     </li>
     <li>
-      <a href="../articles/guides/annotations.html">An in depth look at plot annotations</a>
+      <a href="../articles/plotting_multiomic_data.html">Plotting Multi-omic Data</a>
     </li>
     <li>
-      <a href="../articles/guides/aesthetics.html">A guide to plot aesthetics</a>
+      <a href="../articles/annotations.html">Plot Annotations</a>
+    </li>
+    <li>
+      <a href="../articles/bentobox_meta_functions.html">BentoBox Meta Functions</a>
+    </li>
+    <li>
+      <a href="../articles/bioconductor_integration.html">Bioconductor Integration</a>
+    </li>
+    <li>
+      <a href="../articles/incorporating_ggplots.html">Incorporating ggplots</a>
+    </li>
+    <li>
+      <a href="../articles/ideograms_and_shapes.html">Ideograms and Shapes</a>
+    </li>
+    <li>
+      <a href="../articles/aesthetics.html">Plot Aesthetics</a>
     </li>
   </ul>
 </li>
@@ -152,8 +167,8 @@ bb_plotPairsArches, and bb_plotRanges." />
 
     <div class="ref-description">
     <p><code>colorby</code> should be used to create a set of parameters
-that specify color scaling for the functions <code>bb_plotPairs</code>,
-<code>bb_plotPairsArches</code>, and <code>bb_plotRanges</code>.</p>
+that specify color scaling for the functions <code>bbPlotPairs</code>,
+<code>bbPlotPairsArches</code>, and <code>bbPlotRanges</code>.</p>
     </div>
 
     <pre class="usage"><span class='fu'>colorby</span><span class='op'>(</span><span class='va'>column</span>, palette <span class='op'>=</span> <span class='cn'>NULL</span>, range <span class='op'>=</span> <span class='cn'>NULL</span>, scalePerRegion <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></pre>
@@ -197,7 +212,7 @@ genomic regoin. Default value is <code>scalePerRegion = FALSE</code>.</p></td>
         <span class='op'>(</span><span class='va'>IMR90_DNAloops_pairs</span><span class='op'>$</span><span class='va'>start2</span> <span class='op'>-</span> <span class='va'>IMR90_DNAloops_pairs</span><span class='op'>$</span><span class='va'>start1</span><span class='op'>)</span> <span class='op'>/</span> <span class='fl'>1000</span>
 
 <span class='co'>## Plot pairs with colorby object set for `length` column</span>
-<span class='va'>bedpePlot</span> <span class='op'>&lt;-</span> <span class='fu'><a href='bb_plotPairs.html'>bb_plotPairs</a></span><span class='op'>(</span>
+<span class='va'>bedpePlot</span> <span class='op'>&lt;-</span> <span class='fu'><a href='bbPlotPairs.html'>bbPlotPairs</a></span><span class='op'>(</span>
     data <span class='op'>=</span> <span class='va'>IMR90_DNAloops_pairs</span>,
     chrom <span class='op'>=</span> <span class='st'>"chr21"</span>,
     chromstart <span class='op'>=</span> <span class='fl'>27900000</span>, chromend <span class='op'>=</span> <span class='fl'>30700000</span>,

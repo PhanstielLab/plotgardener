@@ -2,13 +2,18 @@ pandoc: '2.13'
 pkgdown: 1.6.1
 pkgdown_sha: ~
 articles:
-  guides/aesthetics: aesthetics.html
-  guides/annotations: annotations.html
-  guides/bentobox_page: bentobox_page.html
-  guides/our_philosophy: our_philosophy.html
-  guides/plot_elements: plot_elements.html
+  aesthetics: aesthetics.html
+  annotations: annotations.html
+  bentobox_meta_functions: bentobox_meta_functions.html
+  bentobox_page: bentobox_page.html
+  bioconductor_integration: bioconductor_integration.html
+  ideograms_and_shapes: ideograms_and_shapes.html
+  incorporating_ggplots: incorporating_ggplots.html
   introduction_to_bentobox: introduction_to_bentobox.html
-last_built: 2021-07-26T13:18Z
+  our_philosophy: our_philosophy.html
+  plotting_multiomic_data: plotting_multiomic_data.html
+  reading_data_for_bentobox: reading_data_for_bentobox.html
+last_built: 2021-07-29T20:39Z
 urls:
   reference: https://phanstiellab.github.io/bentobox/reference
   article: https://phanstiellab.github.io/bentobox/articles
