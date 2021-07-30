@@ -325,8 +325,7 @@ bbAnnoHighlight <- function(plot, chrom, chromstart = NULL, chromend = NULL,
         height = bb_highlight$height,
         just = bb_highlight$just
     )
-    print(bb_highlight$y)
-    print(top_y)
+
     # =========================================================================
     # HIGHLIGHT GROB
     # =========================================================================
