@@ -29,7 +29,7 @@ within a `BentoBox` page layout:
 In addition to a genomic axis label, it can also be useful to include an 
 ideogram representation of a chromosome to give a broader context of the 
 location of genomic data. UCSC Giemsa stain cytoband information for various 
-genomic assemblies is retrieved from `AnnotationHub` for default assembly, 
+genomic assemblies is retrieved from `AnnotationHub` for default assemblies, 
 but users can also provide their own Giemsa stain information if they desire.
 
 Ideograms can be plotted both vertically and horizontally:
@@ -104,7 +104,7 @@ bbPlotIdeogram(
 ```
 
 To highlight a specific genomic region on an ideogram, see the 
-article [An in depth look at plot annotations](annotations.html#genomic-region-highlights-and-zooms-1). 
+article [Plot Annotations](annotations.html#genomic-region-highlights-and-zooms-1). 
 
 ## Images and basic shapes
 
@@ -166,13 +166,13 @@ reference examples with `?function()` (e.g. `?bbPlotCircle()`).
 ## Other grob objects
 
 We saw how to add `ggplots` to BentoBox layouts in the 
-vignette [Incoporating ggplots](incoporating_ggplots.html) with the
+vignette [Incorporating ggplots](incoporating_ggplots.html) with the
 `bbPlotGG()` function. Beyond customizing the coordinates and dimensions of
 `ggplots`, `bbPlotGG()` can also be used to incorporate other `grob` and
 `gtable` objects. Thus, `BentoBox` allows us to easily mix and arrange most
 kinds of plot objects for ultimate customizability.
 
-# Session Info
+## Session Info
 ```{r}
 sessionInfo()
 ```

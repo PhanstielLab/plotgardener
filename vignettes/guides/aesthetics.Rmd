@@ -192,32 +192,6 @@ genePlot <- bbPlotGenes(
 )
 ```
 
-If we wanted to change the type of label in our plot, we can change 
-the `display.column` parameter in a `bbAssembly()` object. The default 
-`display.column = "SYMBOL"`, but we could change this value to other 
-available `keytypes` in the `orgDb` we are using. For example, if we wanted
-to display the associated Ensembl IDs, we would set 
-`display.column = "ENSEMBL"`:
-
-```{r aes_09, echo=TRUE, fig.height=2.25, fig.width=5, message=FALSE}
-new_hg19 <- bbAssembly(
-    Genome = "id_hg19",
-    TxDb = "TxDb.Hsapiens.UCSC.hg19.knownGene",
-    OrgDb = "org.Hs.eg.db",
-    gene.id.column = "ENTREZID",
-    display.column = "ENSEMBL"
-)
-bbPageCreate(
-    width = 5, height = 1.25,
-    showGuides = FALSE, xgrid = 0, ygrid = 0
-)
-genePlot <- bbPlotGenes(
-    chrom = "chr2", chromstart = 1000000, chromend = 20000000,
-    assembly = new_hg19,
-    x = 0.25, y = 0.25, width = 4.75, height = 1
-)
-```
-
 Label IDs used in transcript plots can be customized through `bbAssembly()` 
 objects, and transcript label formatting can be changed through the `labels` 
 parameter. For example, if we wish to display both transcript names and their 

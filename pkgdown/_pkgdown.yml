@@ -28,23 +28,23 @@ navbar:
     - text: Articles
       menu:
         - text: The BentoBox Page
-          href: articles/bentobox_page.html
+          href: articles/guides/bentobox_page.html
         - text: Reading Data for BentoBox
-          href: articles/reading_data_for_bentobox.html
+          href: articles/guides/reading_data_for_bentobox.html
         - text: Plotting Multi-omic Data  
-          href: articles/plotting_multiomic_data.html
+          href: articles/guides/plotting_multiomic_data.html
         - text: Plot Annotations
-          href: articles/annotations.html  
+          href: articles/guides/annotations.html  
         - text: BentoBox Meta Functions 
-          href: articles/bentobox_meta_functions.html
+          href: articles/guides/bentobox_meta_functions.html
         - text: Bioconductor Integration
-          href: articles/bioconductor_integration.html
+          href: articles/guides/bioconductor_integration.html
         - text: Incorporating ggplots
-          href: articles/incorporating_ggplots.html
+          href: articles/guides/incorporating_ggplots.html
         - text: Ideograms and Shapes
-          href: articles/ideograms_and_shapes.html
+          href: articles/guides/ideograms_and_shapes.html
         - text: Plot Aesthetics
-          href: articles/aesthetics.html
+          href: articles/guides/aesthetics.html
     - text: Reference
       href: reference/index.html
   right:

@@ -19,8 +19,8 @@ genome build
 }
 \examples{
 ## View default genomic annotation packages associated with "hg19"
-bb_defaultPackages(Genome = "hg19")
+bbDefaultPackages(Genome = "hg19")
 
 ## View default genomic annotation packages associated with "mm9"
-bb_defaultPackages(Genome = "mm9")
+bbDefaultPackages(Genome = "mm9")
 }

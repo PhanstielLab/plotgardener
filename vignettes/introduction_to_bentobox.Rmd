@@ -43,42 +43,41 @@ arrangement of plots.
 - **Page layout functions:**
     
 Functions for creating `BentoBox` page layouts, drawing, 
-showing, and hiding guides, as well as placing plots on the page.
+showing, and hiding guides, as well as placing plots on the page. 
+See [The BentoBox Page](bentobox_page.html)
     
 - **Reading functions:**
 
 Functions for quickly reading in large biological datasets.
+See [Reading Data for BentoBox](reading_data_for_bentobox.html)
     
 - **Plotting functions:**
 
 Contains genomic plotting functions, functions for placing `ggplots` 
 and `base` plots, as well as functions for drawing simple shapes.
+See [Plotting Multi-omic Data](plotting_multiomic_data.html)
     
 - **Annotation functions:**
 
 Enables users to add annotations to their plots, such as legends, 
 axes, and scales.
+See [Plot Annotations](annotations.html)
 
 - **Meta functions:**
 
 Functions that display `BentoBox` properties or operate on other 
 `BentoBox` functions, or constructors for `BentoBox` objects.
+See [BentoBox Meta Functions](bentobox_meta_functions.html)
 
-This vignette provides a best-practices guide for utilizing `BentoBox`. 
-It begins with a Quick Start section that outlines usage examples for 
-reading in and plotting the most commonly used genomic data. Then the 
-following sections explore how BentoBox works in more detail, highlighting 
-helpful topics that showcase the capabilities of BentoBox. For in-depth 
-demonstrations of `BentoBox`'s key features, see the additional articles.
+This vignette provides a quick start guide for utilizing `BentoBox`. 
+For in-depth demonstrations of `BentoBox`'s key features, see the additional articles.
 For detailed usage of each function, see the function-specific reference 
 examples with `?function()` (e.g. `?bbPlotPairs()`).
 
 All the data included in this vignette can be found in the supplementary
 package `BentoBoxData`.
 
-# Quick Start
-
-## Quick plotting
+# Quick plotting
 
 `BentoBox` plotting functions contain 4 types of arguments:
 
@@ -102,7 +101,7 @@ data with plot defaults and included data types. To use your own data,
 replace the `data` argument with either a path to the file or an R object 
 as described above.
 
-### Hi-C matrices
+## Hi-C matrices
 
 ```{r hic_quickplot, eval=TRUE, echo=TRUE, message=FALSE}
 ## Load BentoBox
@@ -121,7 +120,7 @@ bbPlotHicSquare(
 ```
 
 
-### Signal tracks
+## Signal tracks
 
 ```{r signal_quickplot, eval=TRUE, echo=TRUE, message=FALSE}
 ## Load BentoBox
@@ -140,7 +139,7 @@ bbPlotSignal(
 ```
 
 
-### Gene tracks
+## Gene tracks
 
 ```{r gene_quickplot, eval=TRUE, echo=TRUE, message=FALSE}
 ## Load BentoBox
@@ -157,7 +156,7 @@ bbPlotGenes(
 )
 ```
 
-### GWAS Manhattan plots
+## GWAS Manhattan plots
 
 ```{r gwas_quickplot, eval=TRUE, echo=TRUE, message=FALSE}
 ## Load BentoBox
@@ -179,7 +178,7 @@ bbPlotManhattan(
 )
 ```
 
-## Plotting and annotating on the `BentoBox` page
+# Plotting and annotating on the `BentoBox` page
 
 To build complex, multi-panel `BentoBox` figures with annotations, we must:
 
@@ -251,7 +250,7 @@ For more information about how to place plots and annotations on
 a `BentoBox` page, check out the section [Working with plot 
 objects](introduction_to_bentobox.html#working-with-plot-objects-1).
 
-## Exporting plots
+# Exporting plots
 
 When a `BentoBox` plot is ready to be saved and exported, we can first 
 remove all page guides that were made with `bbPageCreate()`:

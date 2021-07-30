@@ -29,9 +29,11 @@ types and `R` objects, many `BentoBox` functions can also handle `GRanges` or
 `GInteractions` objects as input data. Furthermore, `BentoBox` does not hard-code 
 any genomic assemblies and can utilize `TxDb`, `OrgDb`, and `BSgenome` objects 
 for various genomic annotations, including gene and transcript structures 
-and names, chromosome sizes, and nucleotide sequences. For standard genomic 
-assemblies (i.e. hg19, hg38, mm10), `BentoBox` uses a set of default packages 
-that can be displayed by calling `bbDefaultPackages()`:
+and names, chromosome sizes, and nucleotide sequences. Furthermore, all cytoband
+data for ideogram plots is retrieved from the UCSC Genome Browser through 
+`AnnotationHub`. For standard genomic assemblies (i.e. hg19, hg38, mm10), 
+`BentoBox` uses a set of default packages that can be displayed by calling 
+`bbDefaultPackages()`:
 
 ```{r echo=TRUE, eval=TRUE}
 bbDefaultPackages("hg38")
@@ -78,9 +80,36 @@ Ensembl38 <- bbAssembly(
 ```
 
 This `bbAssembly` object can now be easily passed into `BentoBox` functions 
-through the `assembly` parameter.
+through the `assembly` parameter to use custom genomic assembly configurations.
 
-# Session Info
+`bbAssembly` objects are especially handy for changing the type of gene or transcript label 
+of our gene and transcript plots. The default `display.column = "SYMBOL"`, but we could 
+change this value to other available `keytypes` in the `orgDb` we are using.
+For example, if we wanted to display the associated Ensembl IDs of an "hg19" 
+`bbAssembly` object, we would set `display.column = "ENSEMBL"`:
+
+```{r bioc_01, echo=TRUE, fig.height=2.25, fig.width=5, message=FALSE}
+library(TxDb.Hsapiens.UCSC.hg19.knownGene)
+library(org.Hs.eg.db)
+new_hg19 <- bbAssembly(
+    Genome = "id_hg19",
+    TxDb = "TxDb.Hsapiens.UCSC.hg19.knownGene",
+    OrgDb = "org.Hs.eg.db",
+    gene.id.column = "ENTREZID",
+    display.column = "ENSEMBL"
+)
+bbPageCreate(
+    width = 5, height = 1.25,
+    showGuides = FALSE, xgrid = 0, ygrid = 0
+)
+genePlot <- bbPlotGenes(
+    chrom = "chr2", chromstart = 1000000, chromend = 20000000,
+    assembly = new_hg19,
+    x = 0.25, y = 0.25, width = 4.75, height = 1
+)
+```
+
+### Session Info
 ```{r}
 sessionInfo()
 ```

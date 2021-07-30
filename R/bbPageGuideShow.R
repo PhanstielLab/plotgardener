@@ -30,7 +30,7 @@
 #' )
 #'
 #' ## Hide page guides
-#' bb_pageGuideHide()
+#' bbPageGuideHide()
 #'
 #' ## Re-show page guides
 #' bbPageGuideShow()

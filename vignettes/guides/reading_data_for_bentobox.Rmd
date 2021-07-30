@@ -104,7 +104,7 @@ library(rtracklayer)
 data <- rtracklayer::import(con = "/path/to/file", format = "fileFormat")
 ```
 
-# Session Info
+### Session Info
 ```{r}
 sessionInfo()
 ```
