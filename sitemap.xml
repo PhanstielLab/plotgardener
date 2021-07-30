@@ -145,36 +145,36 @@
     <loc>https://phanstiellab.github.io/bentobox/reference/colorby.html</loc>
   </url>
   <url>
-    <loc>https://phanstiellab.github.io/bentobox/articles/aesthetics.html</loc>
+    <loc>https://phanstiellab.github.io/bentobox/articles/guides/aesthetics.html</loc>
   </url>
   <url>
-    <loc>https://phanstiellab.github.io/bentobox/articles/annotations.html</loc>
+    <loc>https://phanstiellab.github.io/bentobox/articles/guides/annotations.html</loc>
   </url>
   <url>
-    <loc>https://phanstiellab.github.io/bentobox/articles/bentobox_meta_functions.html</loc>
+    <loc>https://phanstiellab.github.io/bentobox/articles/guides/bentobox_meta_functions.html</loc>
   </url>
   <url>
-    <loc>https://phanstiellab.github.io/bentobox/articles/bentobox_page.html</loc>
+    <loc>https://phanstiellab.github.io/bentobox/articles/guides/bentobox_page.html</loc>
   </url>
   <url>
-    <loc>https://phanstiellab.github.io/bentobox/articles/bioconductor_integration.html</loc>
+    <loc>https://phanstiellab.github.io/bentobox/articles/guides/bioconductor_integration.html</loc>
   </url>
   <url>
-    <loc>https://phanstiellab.github.io/bentobox/articles/ideograms_and_shapes.html</loc>
+    <loc>https://phanstiellab.github.io/bentobox/articles/guides/ideograms_and_shapes.html</loc>
   </url>
   <url>
-    <loc>https://phanstiellab.github.io/bentobox/articles/incorporating_ggplots.html</loc>
+    <loc>https://phanstiellab.github.io/bentobox/articles/guides/incorporating_ggplots.html</loc>
+  </url>
+  <url>
+    <loc>https://phanstiellab.github.io/bentobox/articles/guides/our_philosophy.html</loc>
+  </url>
+  <url>
+    <loc>https://phanstiellab.github.io/bentobox/articles/guides/plotting_multiomic_data.html</loc>
+  </url>
+  <url>
+    <loc>https://phanstiellab.github.io/bentobox/articles/guides/reading_data_for_bentobox.html</loc>
   </url>
   <url>
     <loc>https://phanstiellab.github.io/bentobox/articles/introduction_to_bentobox.html</loc>
-  </url>
-  <url>
-    <loc>https://phanstiellab.github.io/bentobox/articles/our_philosophy.html</loc>
-  </url>
-  <url>
-    <loc>https://phanstiellab.github.io/bentobox/articles/plotting_multiomic_data.html</loc>
-  </url>
-  <url>
-    <loc>https://phanstiellab.github.io/bentobox/articles/reading_data_for_bentobox.html</loc>
   </url>
 </urlset>

@@ -64,31 +64,31 @@
   </a>
   <ul class="dropdown-menu" role="menu">
 <li>
-      <a href="../articles/bentobox_page.html">The BentoBox Page</a>
+      <a href="../articles/guides/bentobox_page.html">The BentoBox Page</a>
     </li>
     <li>
-      <a href="../articles/reading_data_for_bentobox.html">Reading Data for BentoBox</a>
+      <a href="../articles/guides/reading_data_for_bentobox.html">Reading Data for BentoBox</a>
     </li>
     <li>
-      <a href="../articles/plotting_multiomic_data.html">Plotting Multi-omic Data</a>
+      <a href="../articles/guides/plotting_multiomic_data.html">Plotting Multi-omic Data</a>
     </li>
     <li>
-      <a href="../articles/annotations.html">Plot Annotations</a>
+      <a href="../articles/guides/annotations.html">Plot Annotations</a>
     </li>
     <li>
-      <a href="../articles/bentobox_meta_functions.html">BentoBox Meta Functions</a>
+      <a href="../articles/guides/bentobox_meta_functions.html">BentoBox Meta Functions</a>
     </li>
     <li>
-      <a href="../articles/bioconductor_integration.html">Bioconductor Integration</a>
+      <a href="../articles/guides/bioconductor_integration.html">Bioconductor Integration</a>
     </li>
     <li>
-      <a href="../articles/incorporating_ggplots.html">Incorporating ggplots</a>
+      <a href="../articles/guides/incorporating_ggplots.html">Incorporating ggplots</a>
     </li>
     <li>
-      <a href="../articles/ideograms_and_shapes.html">Ideograms and Shapes</a>
+      <a href="../articles/guides/ideograms_and_shapes.html">Ideograms and Shapes</a>
     </li>
     <li>
-      <a href="../articles/aesthetics.html">Plot Aesthetics</a>
+      <a href="../articles/guides/aesthetics.html">Plot Aesthetics</a>
     </li>
   </ul>
 </li>
@@ -119,7 +119,7 @@
       <h1 data-toc-skip>Introduction to BentoBox</h1>
                         <h4 class="author">Nicole Kramer, Eric S. Davis, Craig Wenger, Sarah Parker, Erika Deoudes, Douglas H. Phanstiel</h4>
             
-            <h4 class="date">2021-07-29</h4>
+            <h4 class="date">2021-07-30</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/PhanstielLab/BentoBox/blob/master/vignettes/introduction_to_bentobox.Rmd"><code>vignettes/introduction_to_bentobox.Rmd</code></a></small>
       <div class="hidden name"><code>introduction_to_bentobox.Rmd</code></div>
@@ -137,32 +137,29 @@
 <ul>
 <li><strong>Page layout functions:</strong></li>
 </ul>
-<p>Functions for creating <code>BentoBox</code> page layouts, drawing, showing, and hiding guides, as well as placing plots on the page.</p>
+<p>Functions for creating <code>BentoBox</code> page layouts, drawing, showing, and hiding guides, as well as placing plots on the page. See <a href="bentobox_page.html">The BentoBox Page</a></p>
 <ul>
 <li><strong>Reading functions:</strong></li>
 </ul>
-<p>Functions for quickly reading in large biological datasets.</p>
+<p>Functions for quickly reading in large biological datasets. See <a href="reading_data_for_bentobox.html">Reading Data for BentoBox</a></p>
 <ul>
 <li><strong>Plotting functions:</strong></li>
 </ul>
-<p>Contains genomic plotting functions, functions for placing <code>ggplots</code> and <code>base</code> plots, as well as functions for drawing simple shapes.</p>
+<p>Contains genomic plotting functions, functions for placing <code>ggplots</code> and <code>base</code> plots, as well as functions for drawing simple shapes. See <a href="plotting_multiomic_data.html">Plotting Multi-omic Data</a></p>
 <ul>
 <li><strong>Annotation functions:</strong></li>
 </ul>
-<p>Enables users to add annotations to their plots, such as legends, axes, and scales.</p>
+<p>Enables users to add annotations to their plots, such as legends, axes, and scales. See <a href="annotations.html">Plot Annotations</a></p>
 <ul>
 <li><strong>Meta functions:</strong></li>
 </ul>
-<p>Functions that display <code>BentoBox</code> properties or operate on other <code>BentoBox</code> functions, or constructors for <code>BentoBox</code> objects.</p>
-<p>This vignette provides a best-practices guide for utilizing <code>BentoBox</code>. It begins with a Quick Start section that outlines usage examples for reading in and plotting the most commonly used genomic data. Then the following sections explore how BentoBox works in more detail, highlighting helpful topics that showcase the capabilities of BentoBox. For in-depth demonstrations of <code>BentoBox</code>’s key features, see the additional articles. For detailed usage of each function, see the function-specific reference examples with <code>?function()</code> (e.g. <code>?bbPlotPairs()</code>).</p>
+<p>Functions that display <code>BentoBox</code> properties or operate on other <code>BentoBox</code> functions, or constructors for <code>BentoBox</code> objects. See <a href="bentobox_meta_functions.html">BentoBox Meta Functions</a></p>
+<p>This vignette provides a quick start guide for utilizing <code>BentoBox</code>. For in-depth demonstrations of <code>BentoBox</code>’s key features, see the additional articles. For detailed usage of each function, see the function-specific reference examples with <code>?function()</code> (e.g. <code>?bbPlotPairs()</code>).</p>
 <p>All the data included in this vignette can be found in the supplementary package <code>BentoBoxData</code>.</p>
 </div>
-<div id="quick-start" class="section level1">
+<div id="quick-plotting" class="section level1">
 <h1 class="hasAnchor">
-<a href="#quick-start" class="anchor"></a>Quick Start</h1>
-<div id="quick-plotting" class="section level2">
-<h2 class="hasAnchor">
-<a href="#quick-plotting" class="anchor"></a>Quick plotting</h2>
+<a href="#quick-plotting" class="anchor"></a>Quick plotting</h1>
 <p><code>BentoBox</code> plotting functions contain 4 types of arguments:</p>
 <ol style="list-style-type: decimal">
 <li><p>Data reading argument (<code>data</code>)</p></li>
@@ -171,9 +168,9 @@
 <li><p>Attribute arguments that affect the data being plotted or the style of the plot (<code>norm</code>, <code>fill</code>, <code>fontcolor</code>, …) that vary between functions</p></li>
 </ol>
 <p>The quickest way to plot data is to omit the placement arguments. This will generate a <code>BentoBox</code> plot that fills up the entire graphics window and cannot be annotated. <strong>These plots are only meant to be used for quick</strong> <strong>genomic data inspection and not as final <code>BentoBox</code> plots.</strong> The only arguments that are required are the data arguments and locus arguments. The examples below show how to quickly plot different types of genomic data with plot defaults and included data types. To use your own data, replace the <code>data</code> argument with either a path to the file or an R object as described above.</p>
-<div id="hi-c-matrices" class="section level3">
-<h3 class="hasAnchor">
-<a href="#hi-c-matrices" class="anchor"></a>Hi-C matrices</h3>
+<div id="hi-c-matrices" class="section level2">
+<h2 class="hasAnchor">
+<a href="#hi-c-matrices" class="anchor"></a>Hi-C matrices</h2>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co">## Load BentoBox</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://phanstiellab.github.io/BentoBox">BentoBox</a></span><span class="op">)</span>
@@ -190,9 +187,9 @@
 <span class="op">)</span></code></pre></div>
 <p><img src="introduction_to_bentobox_files/figure-html/hic_quickplot-1.png" width="450" style="display: block; margin: auto;"></p>
 </div>
-<div id="signal-tracks" class="section level3">
-<h3 class="hasAnchor">
-<a href="#signal-tracks" class="anchor"></a>Signal tracks</h3>
+<div id="signal-tracks" class="section level2">
+<h2 class="hasAnchor">
+<a href="#signal-tracks" class="anchor"></a>Signal tracks</h2>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co">## Load BentoBox</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://phanstiellab.github.io/BentoBox">BentoBox</a></span><span class="op">)</span>
@@ -209,9 +206,9 @@
 <span class="op">)</span></code></pre></div>
 <p><img src="introduction_to_bentobox_files/figure-html/signal_quickplot-1.png" width="450" style="display: block; margin: auto;"></p>
 </div>
-<div id="gene-tracks" class="section level3">
-<h3 class="hasAnchor">
-<a href="#gene-tracks" class="anchor"></a>Gene tracks</h3>
+<div id="gene-tracks" class="section level2">
+<h2 class="hasAnchor">
+<a href="#gene-tracks" class="anchor"></a>Gene tracks</h2>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co">## Load BentoBox</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://phanstiellab.github.io/BentoBox">BentoBox</a></span><span class="op">)</span>
@@ -227,9 +224,9 @@
 <span class="op">)</span></code></pre></div>
 <p><img src="introduction_to_bentobox_files/figure-html/gene_quickplot-1.png" width="450" style="display: block; margin: auto;"></p>
 </div>
-<div id="gwas-manhattan-plots" class="section level3">
-<h3 class="hasAnchor">
-<a href="#gwas-manhattan-plots" class="anchor"></a>GWAS Manhattan plots</h3>
+<div id="gwas-manhattan-plots" class="section level2">
+<h2 class="hasAnchor">
+<a href="#gwas-manhattan-plots" class="anchor"></a>GWAS Manhattan plots</h2>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co">## Load BentoBox</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://phanstiellab.github.io/BentoBox">BentoBox</a></span><span class="op">)</span>
@@ -251,9 +248,9 @@
 <p><img src="introduction_to_bentobox_files/figure-html/gwas_quickplot-1.png" width="450" style="display: block; margin: auto;"></p>
 </div>
 </div>
-<div id="plotting-and-annotating-on-the-bentobox-page" class="section level2">
-<h2 class="hasAnchor">
-<a href="#plotting-and-annotating-on-the-bentobox-page" class="anchor"></a>Plotting and annotating on the <code>BentoBox</code> page</h2>
+<div id="plotting-and-annotating-on-the-bentobox-page" class="section level1">
+<h1 class="hasAnchor">
+<a href="#plotting-and-annotating-on-the-bentobox-page" class="anchor"></a>Plotting and annotating on the <code>BentoBox</code> page</h1>
 <p>To build complex, multi-panel <code>BentoBox</code> figures with annotations, we must:</p>
 <ol style="list-style-type: decimal">
 <li>Create a <code>BentoBox</code> coordinate page with <code><a href="../reference/bbPageCreate.html">bbPageCreate()</a></code>.</li>
@@ -289,9 +286,9 @@
 <p><img src="introduction_to_bentobox_files/figure-html/quickpageAnno-1.png" width="600" style="display: block; margin: auto;"></p>
 <p>For more information about how to place plots and annotations on a <code>BentoBox</code> page, check out the section <a href="introduction_to_bentobox.html#working-with-plot-objects-1">Working with plot objects</a>.</p>
 </div>
-<div id="exporting-plots" class="section level2">
-<h2 class="hasAnchor">
-<a href="#exporting-plots" class="anchor"></a>Exporting plots</h2>
+<div id="exporting-plots" class="section level1">
+<h1 class="hasAnchor">
+<a href="#exporting-plots" class="anchor"></a>Exporting plots</h1>
 <p>When a <code>BentoBox</code> plot is ready to be saved and exported, we can first remove all page guides that were made with <code><a href="../reference/bbPageCreate.html">bbPageCreate()</a></code>:</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/bbPageGuideHide.html">bbPageGuideHide</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
@@ -321,7 +318,6 @@
 
 <span class="fu"><a href="https://rdrr.io/r/grDevices/dev.html">dev.off</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <p>For more detailed usage and examples, please refer to the other available vignettes.</p>
-</div>
 </div>
 <div id="future-directions" class="section level1">
 <h1 class="hasAnchor">
@@ -359,7 +355,7 @@
 <span class="co">#&gt;  [8] IRanges_2.26.0                         </span>
 <span class="co">#&gt;  [9] S4Vectors_0.30.0                       </span>
 <span class="co">#&gt; [10] BiocGenerics_0.38.0                    </span>
-<span class="co">#&gt; [11] BentoBoxData_0.99.4                    </span>
+<span class="co">#&gt; [11] BentoBoxData_0.99.0                    </span>
 <span class="co">#&gt; [12] BentoBox_0.99.6                        </span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; loaded via a namespace (and not attached):</span>
@@ -395,7 +391,7 @@
 <span class="co">#&gt; [59] lifecycle_1.0.0             stringi_1.7.3              </span>
 <span class="co">#&gt; [61] yaml_2.2.1                  SummarizedExperiment_1.22.0</span>
 <span class="co">#&gt; [63] zlibbioc_1.38.0             BiocFileCache_2.0.0        </span>
-<span class="co">#&gt; [65] blob_1.2.1                  crayon_1.4.1               </span>
+<span class="co">#&gt; [65] blob_1.2.2                  crayon_1.4.1               </span>
 <span class="co">#&gt; [67] lattice_0.20-44             Biostrings_2.60.1          </span>
 <span class="co">#&gt; [69] hms_1.1.0                   KEGGREST_1.32.0            </span>
 <span class="co">#&gt; [71] knitr_1.33                  pillar_1.6.2               </span>
