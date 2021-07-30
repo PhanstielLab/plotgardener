@@ -51,7 +51,7 @@ function calls. `bbParams` objects can hold any argument from any `BentoBox`
 function. Most often, `bbParams` objects are used to store a common genomic
 region and common x-placement coordinate information. For a detailed example 
 using the `bbParams` object, refer to the vignette 
-[Plotting Multi-omic Data](plotting_multiomic_data.html#Using-the-bbparams-object).
+[Plotting Multi-omic Data](plotting_multiomic_data.html#using-the-bbparams-object-1).
 
 - **`colorby`** and **`bbMapColors`**
 

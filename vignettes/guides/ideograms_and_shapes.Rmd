@@ -166,7 +166,7 @@ reference examples with `?function()` (e.g. `?bbPlotCircle()`).
 ## Other grob objects
 
 We saw how to add `ggplots` to BentoBox layouts in the 
-vignette [Incorporating ggplots](incoporating_ggplots.html) with the
+vignette [Incorporating ggplots](incorporating_ggplots.html) with the
 `bbPlotGG()` function. Beyond customizing the coordinates and dimensions of
 `ggplots`, `bbPlotGG()` can also be used to incorporate other `grob` and
 `gtable` objects. Thus, `BentoBox` allows us to easily mix and arrange most
