@@ -224,7 +224,7 @@ bbAnnoHeatmapLegend(
 )
 ```
 
-If users which to map values to a color palette before passing them into
+If users wish to map values to a color palette before passing them into
 a `BentoBox` function, they can use `bbMapColors`:
 ```{r echo=TRUE, eval=FALSE}
 colors <- bbMapColors(vector = IMR90_DNAloops_pairs$length,
