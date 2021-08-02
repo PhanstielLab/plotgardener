@@ -179,7 +179,7 @@ hic_imr <- bbPlotHicTriangle(data = IMR90_HiC_10kb, params = params_d,
                               zrange = c(0, 70), resolution = 10000,
                               y = 1.75, height = 0.75, just = c("right", "bottom"))
 ## Annotate Hi-C heatmap legend
-bbAnnoHeatmapLegend(plot = hic_imr, fontsize = 7,
+bbAnnoHeatmapLegend(plot = hic_imr, fontsize = 7, digits = 0,
                      x = 6.75, y = 1, width = 0.07, height = 0.5, just = c("right", "top"))
 ## Plot CTCF signal
 ctcf_imr <- bbPlotSignal(data = IMR90_ChIP_CTCF_signal, params = c(params_d, ctcf_range),
@@ -195,7 +195,7 @@ genes_imr <- bbPlotGenes(params = params_d, stroke = 1, fontsize = 6,
                           y = 3.35, height = 0.4, just = c("right", "top"))
 ## Annotate genome label
 bbAnnoGenomeLabel(plot = genes_imr, params = params_d, 
-                   scale = "Kb", fontsize = 7,
+                   scale = "Kb", fontsize = 7, digits = 0,
                    y = 3.85, just = c("right", "top"))
 ## Hide page guides
 bbPageGuideHide()

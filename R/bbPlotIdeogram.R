@@ -62,8 +62,7 @@
 #' ## Load Giemsa stain band information and genomic
 #' ## annotation data for hg19 genome assembly
 #' library(TxDb.Hsapiens.UCSC.hg19.knownGene)
-#' library(BentoBoxData)
-#' data("cytoBand.Hsapiens.UCSC.hg19")
+#' library(AnnotationHub)
 #'
 #' ## Create page
 #' bbPageCreate(width = 4.5, height = 1, default.units = "inches")
@@ -98,10 +97,10 @@
 #' bbPlotIdeogram(chrom)
 #' }
 #' If no data is provided, Giemsa stain band data will first try to 
-#' fetch UCSC with AnnoationHub. The results are cached for faster access, 
+#' fetch UCSC with AnnotationHub. The results are cached for faster access, 
 #' but these cached items can be deleted. If no internet connection is 
-#' available and AnnotationHub has not previously cached the data, Giemsa 
-#' stain band data can be loaded with the package BentoBoxData.
+#' available and AnnotationHub has not previously cached the data, custom 
+#' Giemsa stain band data can be loaded with the `data` parameter.
 #'
 #' @seealso \link[AnnotationHub]{AnnotationHub}
 #' 
@@ -190,22 +189,7 @@ bbPlotIdeogram <- function(chrom, assembly = "hg38", data = NULL,
                         cytoData <- as.data.frame(
                             suppressMessages(cytobands[[AH_id]]))
                     } else {
-                        # Try checking for BentoBoxData cytoband data
-                        currentLoaded <- ls(envir = globalenv())
-                        BB_data <- cytoband_AH_assembly[
-                            cytoband_AH_assembly$assembly == 
-                                assemblyName,]$BentoBoxData
-                        
-                        if (!BB_data %in% currentLoaded) {
-                            
-                            warning("No internet connection, AnnotationHub",
-                            " cache, or `BentoBoxData` cytoBand data ",
-                            "detected. Cannot plot ideogram.", call. = FALSE)
-                            cytoData <- NULL 
-                        } else {
-                            cytoData <- get(BB_data)
-                        }
-                        
+                        cytoData <- NULL
                     }
                     
                 }

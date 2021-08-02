@@ -415,7 +415,7 @@ bbAnnoHighlight(
 ```
 
 ```{r anno_14, echo=FALSE, fig.height=3.25, fig.width=8.25, message=FALSE}
-data("cytoBand.Hsapiens.UCSC.hg19")
+library(AnnotationHub)
 library(TxDb.Hsapiens.UCSC.hg19.knownGene)
 bbPageCreate(
     width = 6.25, height = 2.25, default.units = "inches",
@@ -447,7 +447,7 @@ bbAnnoZoomLines(
 ```
 
 ```{r anno_15, echo=FALSE, fig.height=3.25, fig.width=8.25, message=FALSE}
-data("cytoBand.Hsapiens.UCSC.hg19")
+library(AnnotationHub)
 library(TxDb.Hsapiens.UCSC.hg19.knownGene)
 bbPageCreate(
     width = 6.25, height = 2.25, default.units = "inches",
@@ -475,7 +475,7 @@ bbAnnoZoomLines(
 Finally, we can add our zoomed-in signal track data within the zoom lines:
 
 ```{r anno_16, echo=FALSE, fig.height=3.25, fig.width=8.25, message=FALSE}
-data("cytoBand.Hsapiens.UCSC.hg19")
+library(AnnotationHub)
 data("IMR90_ChIP_H3K27ac_signal")
 library(TxDb.Hsapiens.UCSC.hg19.knownGene)
 bbPageCreate(

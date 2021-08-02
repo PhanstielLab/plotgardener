@@ -93,17 +93,16 @@ by ignoring plot placement parameters:
 bbPlotIdeogram(chrom)
 }
 If no data is provided, Giemsa stain band data will first try to 
-fetch UCSC with AnnoationHub. The results are cached for faster access, 
+fetch UCSC with AnnotationHub. The results are cached for faster access, 
 but these cached items can be deleted. If no internet connection is 
-available and AnnotationHub has not previously cached the data, Giemsa 
-stain band data can be loaded with the package BentoBoxData.
+available and AnnotationHub has not previously cached the data, custom 
+Giemsa stain band data can be loaded with the `data` parameter.
 }
 \examples{
 ## Load Giemsa stain band information and genomic
 ## annotation data for hg19 genome assembly
 library(TxDb.Hsapiens.UCSC.hg19.knownGene)
-library(BentoBoxData)
-data("cytoBand.Hsapiens.UCSC.hg19")
+library(AnnotationHub)
 
 ## Create page
 bbPageCreate(width = 4.5, height = 1, default.units = "inches")
