@@ -42,7 +42,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">BentoBox</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.99.7</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.99.8</span>
       </span>
     </div>
 
@@ -277,7 +277,7 @@
                               zrange <span class="op">=</span> <span class="fu"><a href="reference/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">70</span><span class="op">)</span>, resolution <span class="op">=</span> <span class="fl">10000</span>,
                               y <span class="op">=</span> <span class="fl">1.75</span>, height <span class="op">=</span> <span class="fl">0.75</span>, just <span class="op">=</span> <span class="fu"><a href="reference/c.html">c</a></span><span class="op">(</span><span class="st">"right"</span>, <span class="st">"bottom"</span><span class="op">)</span><span class="op">)</span>
 <span class="co">## Annotate Hi-C heatmap legend</span>
-<span class="fu"><a href="reference/bbAnnoHeatmapLegend.html">bbAnnoHeatmapLegend</a></span><span class="op">(</span>plot <span class="op">=</span> <span class="va">hic_imr</span>, fontsize <span class="op">=</span> <span class="fl">7</span>,
+<span class="fu"><a href="reference/bbAnnoHeatmapLegend.html">bbAnnoHeatmapLegend</a></span><span class="op">(</span>plot <span class="op">=</span> <span class="va">hic_imr</span>, fontsize <span class="op">=</span> <span class="fl">7</span>, digits <span class="op">=</span> <span class="fl">0</span>,
                      x <span class="op">=</span> <span class="fl">6.75</span>, y <span class="op">=</span> <span class="fl">1</span>, width <span class="op">=</span> <span class="fl">0.07</span>, height <span class="op">=</span> <span class="fl">0.5</span>, just <span class="op">=</span> <span class="fu"><a href="reference/c.html">c</a></span><span class="op">(</span><span class="st">"right"</span>, <span class="st">"top"</span><span class="op">)</span><span class="op">)</span>
 <span class="co">## Plot CTCF signal</span>
 <span class="va">ctcf_imr</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/bbPlotSignal.html">bbPlotSignal</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">IMR90_ChIP_CTCF_signal</span>, params <span class="op">=</span> <span class="fu"><a href="reference/c.html">c</a></span><span class="op">(</span><span class="va">params_d</span>, <span class="va">ctcf_range</span><span class="op">)</span>,
@@ -293,7 +293,7 @@
                           y <span class="op">=</span> <span class="fl">3.35</span>, height <span class="op">=</span> <span class="fl">0.4</span>, just <span class="op">=</span> <span class="fu"><a href="reference/c.html">c</a></span><span class="op">(</span><span class="st">"right"</span>, <span class="st">"top"</span><span class="op">)</span><span class="op">)</span>
 <span class="co">## Annotate genome label</span>
 <span class="fu"><a href="reference/bbAnnoGenomeLabel.html">bbAnnoGenomeLabel</a></span><span class="op">(</span>plot <span class="op">=</span> <span class="va">genes_imr</span>, params <span class="op">=</span> <span class="va">params_d</span>, 
-                   scale <span class="op">=</span> <span class="st">"Kb"</span>, fontsize <span class="op">=</span> <span class="fl">7</span>,
+                   scale <span class="op">=</span> <span class="st">"Kb"</span>, fontsize <span class="op">=</span> <span class="fl">7</span>, digits <span class="op">=</span> <span class="fl">0</span>,
                    y <span class="op">=</span> <span class="fl">3.85</span>, just <span class="op">=</span> <span class="fu"><a href="reference/c.html">c</a></span><span class="op">(</span><span class="st">"right"</span>, <span class="st">"top"</span><span class="op">)</span><span class="op">)</span>
 <span class="co">## Hide page guides</span>
 <span class="fu"><a href="reference/bbPageGuideHide.html">bbPageGuideHide</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>

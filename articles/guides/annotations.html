@@ -38,7 +38,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../../index.html">BentoBox</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.99.7</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.99.8</span>
       </span>
     </div>
 
@@ -401,26 +401,20 @@
     y <span class="op">=</span> <span class="fl">0.25</span>, height <span class="op">=</span> <span class="fl">0.5</span>, just <span class="op">=</span> <span class="fu"><a href="../../reference/c.html">c</a></span><span class="op">(</span><span class="st">"left"</span>, <span class="st">"top"</span><span class="op">)</span>, default.units <span class="op">=</span> <span class="st">"inches"</span>
 <span class="op">)</span></code></pre></div>
 <p><img src="annotations_files/figure-html/anno_14-1.png" width="1237.5" style="display: block; margin: auto;"></p>
-<pre><code>#&gt; [1] 0.25inches
-#&gt; [1] 2inches</code></pre>
 <p>To make it clearer that we are zooming in on a genomic region, we can then use <code><a href="../../reference/bbAnnoZoomLines.html">bbAnnoZoomLines()</a></code> to add zoom lines from the genomic region we highlighted:</p>
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../../reference/bbAnnoZoomLines.html">bbAnnoZoomLines</a></span><span class="op">(</span>
     plot <span class="op">=</span> <span class="va">ideogramPlot</span>, params <span class="op">=</span> <span class="va">region</span>,
     y0 <span class="op">=</span> <span class="fl">0.75</span>, x1 <span class="op">=</span> <span class="fu"><a href="../../reference/c.html">c</a></span><span class="op">(</span><span class="fl">0.25</span>, <span class="fl">6</span><span class="op">)</span>, y1 <span class="op">=</span> <span class="fl">1.25</span>, default.units <span class="op">=</span> <span class="st">"inches"</span>
 <span class="op">)</span></code></pre></div>
-<pre><code>#&gt; [1] 0.25inches
-#&gt; [1] 2inches</code></pre>
 <p><img src="annotations_files/figure-html/anno_15-1.png" width="1237.5" style="display: block; margin: auto;"></p>
 <p>Finally, we can add our zoomed-in signal track data within the zoom lines:</p>
-<pre><code>#&gt; [1] 0.25inches
-#&gt; [1] 2inches</code></pre>
 <p><img src="annotations_files/figure-html/anno_16-1.png" width="1237.5" style="display: block; margin: auto;"></p>
 </div>
 <div id="session-info" class="section level1">
 <h1 class="hasAnchor">
 <a href="#session-info" class="anchor"></a>Session Info</h1>
-<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/sessionInfo.html">sessionInfo</a></span><span class="op">(</span><span class="op">)</span>
 <span class="co">#&gt; R version 4.1.0 (2021-05-18)</span>
 <span class="co">#&gt; Platform: x86_64-apple-darwin17.0 (64-bit)</span>
@@ -457,7 +451,7 @@
 <span class="co">#&gt; [17] IRanges_2.26.0                         </span>
 <span class="co">#&gt; [18] S4Vectors_0.30.0                       </span>
 <span class="co">#&gt; [19] BiocGenerics_0.38.0                    </span>
-<span class="co">#&gt; [20] BentoBox_0.99.6                        </span>
+<span class="co">#&gt; [20] BentoBox_0.99.7                        </span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; loaded via a namespace (and not attached):</span>
 <span class="co">#&gt;   [1] colorspace_2.0-2              rjson_0.2.20                 </span>

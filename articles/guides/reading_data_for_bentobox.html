@@ -38,7 +38,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../../index.html">BentoBox</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.99.7</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.99.8</span>
       </span>
     </div>
 
@@ -178,13 +178,13 @@
 <p>These data will be output in 3-column dataframe in sparse upper triangular matrix format:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">hicDataChromRegion</span><span class="op">)</span>
-<span class="co">#&gt;    chr22_A  chr22_B    counts</span>
-<span class="co">#&gt; 1 20000000 20000000 55.390347</span>
-<span class="co">#&gt; 2 20000000 20100000  6.737655</span>
-<span class="co">#&gt; 3 20100000 20100000 31.963037</span>
-<span class="co">#&gt; 4 20000000 20200000  3.204865</span>
-<span class="co">#&gt; 5 20100000 20200000 12.864663</span>
-<span class="co">#&gt; 6 20200000 20200000 37.828201</span></code></pre></div>
+<span class="co">#&gt;    chr22_A  chr22_B   counts</span>
+<span class="co">#&gt; 1 16000000 16000000 63.11200</span>
+<span class="co">#&gt; 2 16000000 16100000 11.56003</span>
+<span class="co">#&gt; 3 16100000 16100000 88.93140</span>
+<span class="co">#&gt; 4 16000000 16200000 10.90947</span>
+<span class="co">#&gt; 5 16200000 16200000 73.54610</span>
+<span class="co">#&gt; 6 16000000 16300000 19.55562</span></code></pre></div>
 <p>It is also possible to use <code>bbReadHic</code> for interchromosomal Hi-C data:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">twoChroms</span> <span class="op">&lt;-</span> <span class="fu"><a href="../../reference/bbReadHic.html">bbReadHic</a></span><span class="op">(</span>file <span class="op">=</span> <span class="st">"/path/to/hic"</span>,
@@ -219,7 +219,7 @@
 <span class="co">#&gt; [8] base     </span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; other attached packages:</span>
-<span class="co">#&gt; [1] BentoBoxData_0.99.4 BentoBox_0.99.6    </span>
+<span class="co">#&gt; [1] BentoBoxData_0.99.4 BentoBox_0.99.7    </span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; loaded via a namespace (and not attached):</span>
 <span class="co">#&gt;  [1] MatrixGenerics_1.4.0        Biobase_2.52.0             </span>
