@@ -263,7 +263,7 @@ bbReadHic <- function(file, chrom, chromstart = NULL, chromend = NULL,
 
             chromstart <- format(chromstart, scientific = FALSE)
             chromend <- format(chromend, scientific = FALSE)
-            regionStraw <- paste(strawChrom, chromstart, chromend, sep = ":")
+            regionStraw <- paste(strawChrom, chromstart, chromend, sep = "-")
         }
 
         return(regionStraw)
@@ -437,15 +437,6 @@ bbReadHic <- function(file, chrom, chromstart = NULL, chromend = NULL,
         bb_rhic$matrix <- "oe"
         log <- TRUE
     }
-    
-    print(bb_rhic$norm)
-    print(bb_rhic$file)
-    print(toString(chromRegion))
-    print(toString(altchromRegion))
-    print(bb_rhic$res_scale)
-    print(bb_rhic$resolution)
-    print(bb_rhic$matrix)
-    
     upper <-
         tryCatch(strawr::straw(
             norm = bb_rhic$norm,
