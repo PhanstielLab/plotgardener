@@ -438,6 +438,14 @@ bbReadHic <- function(file, chrom, chromstart = NULL, chromend = NULL,
         log <- TRUE
     }
     
+    print(bb_rhic$norm)
+    print(bb_rhic$file)
+    print(toString(chromRegion))
+    print(toString(altchromRegion))
+    print(bb_rhic$res_scale)
+    print(bb_rhic$resolution)
+    print(bb_rhic$matrix)
+    
     upper <-
         tryCatch(strawr::straw(
             norm = bb_rhic$norm,
