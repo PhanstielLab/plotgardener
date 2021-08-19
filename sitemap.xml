@@ -1,180 +1,180 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://phanstiellab.github.io/bentobox/index.html</loc>
+    <loc>https://phanstiellab.github.io/plotgardener/index.html</loc>
   </url>
   <url>
-    <loc>https://phanstiellab.github.io/bentobox/reference/BentoBox.html</loc>
+    <loc>https://phanstiellab.github.io/plotgardener/reference/annoDomains.html</loc>
   </url>
   <url>
-    <loc>https://phanstiellab.github.io/bentobox/reference/bbAnnoDomains.html</loc>
+    <loc>https://phanstiellab.github.io/plotgardener/reference/annoGenomeLabel.html</loc>
   </url>
   <url>
-    <loc>https://phanstiellab.github.io/bentobox/reference/bbAnnoGenomeLabel.html</loc>
+    <loc>https://phanstiellab.github.io/plotgardener/reference/annoHeatmapLegend.html</loc>
   </url>
   <url>
-    <loc>https://phanstiellab.github.io/bentobox/reference/bbAnnoHeatmapLegend.html</loc>
+    <loc>https://phanstiellab.github.io/plotgardener/reference/annoHighlight.html</loc>
   </url>
   <url>
-    <loc>https://phanstiellab.github.io/bentobox/reference/bbAnnoHighlight.html</loc>
+    <loc>https://phanstiellab.github.io/plotgardener/reference/annoPixels.html</loc>
   </url>
   <url>
-    <loc>https://phanstiellab.github.io/bentobox/reference/bbAnnoPixels.html</loc>
+    <loc>https://phanstiellab.github.io/plotgardener/reference/annoSegments.html</loc>
   </url>
   <url>
-    <loc>https://phanstiellab.github.io/bentobox/reference/bbAnnoSegments.html</loc>
+    <loc>https://phanstiellab.github.io/plotgardener/reference/annoText.html</loc>
   </url>
   <url>
-    <loc>https://phanstiellab.github.io/bentobox/reference/bbAnnoText.html</loc>
+    <loc>https://phanstiellab.github.io/plotgardener/reference/annoXaxis.html</loc>
   </url>
   <url>
-    <loc>https://phanstiellab.github.io/bentobox/reference/bbAnnoXaxis.html</loc>
+    <loc>https://phanstiellab.github.io/plotgardener/reference/annoYaxis.html</loc>
   </url>
   <url>
-    <loc>https://phanstiellab.github.io/bentobox/reference/bbAnnoYaxis.html</loc>
+    <loc>https://phanstiellab.github.io/plotgardener/reference/annoZoomLines.html</loc>
   </url>
   <url>
-    <loc>https://phanstiellab.github.io/bentobox/reference/bbAnnoZoomLines.html</loc>
+    <loc>https://phanstiellab.github.io/plotgardener/reference/assembly.html</loc>
   </url>
   <url>
-    <loc>https://phanstiellab.github.io/bentobox/reference/bbAssembly.html</loc>
+    <loc>https://phanstiellab.github.io/plotgardener/reference/c.html</loc>
   </url>
   <url>
-    <loc>https://phanstiellab.github.io/bentobox/reference/bbDefaultPackages.html</loc>
+    <loc>https://phanstiellab.github.io/plotgardener/reference/colorby.html</loc>
   </url>
   <url>
-    <loc>https://phanstiellab.github.io/bentobox/reference/bbGenomes.html</loc>
+    <loc>https://phanstiellab.github.io/plotgardener/reference/defaultPackages.html</loc>
   </url>
   <url>
-    <loc>https://phanstiellab.github.io/bentobox/reference/bbMapColors.html</loc>
+    <loc>https://phanstiellab.github.io/plotgardener/reference/genomes.html</loc>
   </url>
   <url>
-    <loc>https://phanstiellab.github.io/bentobox/reference/bbPageCreate.html</loc>
+    <loc>https://phanstiellab.github.io/plotgardener/reference/mapColors.html</loc>
   </url>
   <url>
-    <loc>https://phanstiellab.github.io/bentobox/reference/bbPageGuideHide.html</loc>
+    <loc>https://phanstiellab.github.io/plotgardener/reference/pageCreate.html</loc>
   </url>
   <url>
-    <loc>https://phanstiellab.github.io/bentobox/reference/bbPageGuideHorizontal.html</loc>
+    <loc>https://phanstiellab.github.io/plotgardener/reference/pageGuideHide.html</loc>
   </url>
   <url>
-    <loc>https://phanstiellab.github.io/bentobox/reference/bbPageGuideShow.html</loc>
+    <loc>https://phanstiellab.github.io/plotgardener/reference/pageGuideHorizontal.html</loc>
   </url>
   <url>
-    <loc>https://phanstiellab.github.io/bentobox/reference/bbPageGuideVertical.html</loc>
+    <loc>https://phanstiellab.github.io/plotgardener/reference/pageGuideShow.html</loc>
   </url>
   <url>
-    <loc>https://phanstiellab.github.io/bentobox/reference/bbPagePlotPlace.html</loc>
+    <loc>https://phanstiellab.github.io/plotgardener/reference/pageGuideVertical.html</loc>
   </url>
   <url>
-    <loc>https://phanstiellab.github.io/bentobox/reference/bbPagePlotRemove.html</loc>
+    <loc>https://phanstiellab.github.io/plotgardener/reference/pagePlotPlace.html</loc>
   </url>
   <url>
-    <loc>https://phanstiellab.github.io/bentobox/reference/bbParams.html</loc>
+    <loc>https://phanstiellab.github.io/plotgardener/reference/pagePlotRemove.html</loc>
   </url>
   <url>
-    <loc>https://phanstiellab.github.io/bentobox/reference/bbPlotCircle.html</loc>
+    <loc>https://phanstiellab.github.io/plotgardener/reference/pgParams.html</loc>
   </url>
   <url>
-    <loc>https://phanstiellab.github.io/bentobox/reference/bbPlotGG.html</loc>
+    <loc>https://phanstiellab.github.io/plotgardener/reference/plotCircle.html</loc>
   </url>
   <url>
-    <loc>https://phanstiellab.github.io/bentobox/reference/bbPlotGenes.html</loc>
+    <loc>https://phanstiellab.github.io/plotgardener/reference/plotGG.html</loc>
   </url>
   <url>
-    <loc>https://phanstiellab.github.io/bentobox/reference/bbPlotGenomeLabel.html</loc>
+    <loc>https://phanstiellab.github.io/plotgardener/reference/plotGenes.html</loc>
   </url>
   <url>
-    <loc>https://phanstiellab.github.io/bentobox/reference/bbPlotHicRectangle.html</loc>
+    <loc>https://phanstiellab.github.io/plotgardener/reference/plotGenomeLabel.html</loc>
   </url>
   <url>
-    <loc>https://phanstiellab.github.io/bentobox/reference/bbPlotHicSquare.html</loc>
+    <loc>https://phanstiellab.github.io/plotgardener/reference/plotHicRectangle.html</loc>
   </url>
   <url>
-    <loc>https://phanstiellab.github.io/bentobox/reference/bbPlotHicTriangle.html</loc>
+    <loc>https://phanstiellab.github.io/plotgardener/reference/plotHicSquare.html</loc>
   </url>
   <url>
-    <loc>https://phanstiellab.github.io/bentobox/reference/bbPlotIdeogram.html</loc>
+    <loc>https://phanstiellab.github.io/plotgardener/reference/plotHicTriangle.html</loc>
   </url>
   <url>
-    <loc>https://phanstiellab.github.io/bentobox/reference/bbPlotLegend.html</loc>
+    <loc>https://phanstiellab.github.io/plotgardener/reference/plotIdeogram.html</loc>
   </url>
   <url>
-    <loc>https://phanstiellab.github.io/bentobox/reference/bbPlotManhattan.html</loc>
+    <loc>https://phanstiellab.github.io/plotgardener/reference/plotLegend.html</loc>
   </url>
   <url>
-    <loc>https://phanstiellab.github.io/bentobox/reference/bbPlotPairs.html</loc>
+    <loc>https://phanstiellab.github.io/plotgardener/reference/plotManhattan.html</loc>
   </url>
   <url>
-    <loc>https://phanstiellab.github.io/bentobox/reference/bbPlotPairsArches.html</loc>
+    <loc>https://phanstiellab.github.io/plotgardener/reference/plotPairs.html</loc>
   </url>
   <url>
-    <loc>https://phanstiellab.github.io/bentobox/reference/bbPlotPolygon.html</loc>
+    <loc>https://phanstiellab.github.io/plotgardener/reference/plotPairsArches.html</loc>
   </url>
   <url>
-    <loc>https://phanstiellab.github.io/bentobox/reference/bbPlotRanges.html</loc>
+    <loc>https://phanstiellab.github.io/plotgardener/reference/plotPolygon.html</loc>
   </url>
   <url>
-    <loc>https://phanstiellab.github.io/bentobox/reference/bbPlotRaster.html</loc>
+    <loc>https://phanstiellab.github.io/plotgardener/reference/plotRanges.html</loc>
   </url>
   <url>
-    <loc>https://phanstiellab.github.io/bentobox/reference/bbPlotRect.html</loc>
+    <loc>https://phanstiellab.github.io/plotgardener/reference/plotRaster.html</loc>
   </url>
   <url>
-    <loc>https://phanstiellab.github.io/bentobox/reference/bbPlotSegments.html</loc>
+    <loc>https://phanstiellab.github.io/plotgardener/reference/plotRect.html</loc>
   </url>
   <url>
-    <loc>https://phanstiellab.github.io/bentobox/reference/bbPlotSignal.html</loc>
+    <loc>https://phanstiellab.github.io/plotgardener/reference/plotSegments.html</loc>
   </url>
   <url>
-    <loc>https://phanstiellab.github.io/bentobox/reference/bbPlotText.html</loc>
+    <loc>https://phanstiellab.github.io/plotgardener/reference/plotSignal.html</loc>
   </url>
   <url>
-    <loc>https://phanstiellab.github.io/bentobox/reference/bbPlotTranscripts.html</loc>
+    <loc>https://phanstiellab.github.io/plotgardener/reference/plotText.html</loc>
   </url>
   <url>
-    <loc>https://phanstiellab.github.io/bentobox/reference/bbReadBigwig.html</loc>
+    <loc>https://phanstiellab.github.io/plotgardener/reference/plotTranscripts.html</loc>
   </url>
   <url>
-    <loc>https://phanstiellab.github.io/bentobox/reference/bbReadHic.html</loc>
+    <loc>https://phanstiellab.github.io/plotgardener/reference/plotgardener.html</loc>
   </url>
   <url>
-    <loc>https://phanstiellab.github.io/bentobox/reference/c.html</loc>
+    <loc>https://phanstiellab.github.io/plotgardener/reference/readBigwig.html</loc>
   </url>
   <url>
-    <loc>https://phanstiellab.github.io/bentobox/reference/colorby.html</loc>
+    <loc>https://phanstiellab.github.io/plotgardener/reference/readHic.html</loc>
   </url>
   <url>
-    <loc>https://phanstiellab.github.io/bentobox/articles/guides/aesthetics.html</loc>
+    <loc>https://phanstiellab.github.io/plotgardener/articles/guides/aesthetics.html</loc>
   </url>
   <url>
-    <loc>https://phanstiellab.github.io/bentobox/articles/guides/annotations.html</loc>
+    <loc>https://phanstiellab.github.io/plotgardener/articles/guides/annotations.html</loc>
   </url>
   <url>
-    <loc>https://phanstiellab.github.io/bentobox/articles/guides/bentobox_meta_functions.html</loc>
+    <loc>https://phanstiellab.github.io/plotgardener/articles/guides/bioconductor_integration.html</loc>
   </url>
   <url>
-    <loc>https://phanstiellab.github.io/bentobox/articles/guides/bentobox_page.html</loc>
+    <loc>https://phanstiellab.github.io/plotgardener/articles/guides/ideograms_and_shapes.html</loc>
   </url>
   <url>
-    <loc>https://phanstiellab.github.io/bentobox/articles/guides/bioconductor_integration.html</loc>
+    <loc>https://phanstiellab.github.io/plotgardener/articles/guides/incorporating_ggplots.html</loc>
   </url>
   <url>
-    <loc>https://phanstiellab.github.io/bentobox/articles/guides/ideograms_and_shapes.html</loc>
+    <loc>https://phanstiellab.github.io/plotgardener/articles/guides/our_philosophy.html</loc>
   </url>
   <url>
-    <loc>https://phanstiellab.github.io/bentobox/articles/guides/incorporating_ggplots.html</loc>
+    <loc>https://phanstiellab.github.io/plotgardener/articles/guides/plotgardener_meta_functions.html</loc>
   </url>
   <url>
-    <loc>https://phanstiellab.github.io/bentobox/articles/guides/our_philosophy.html</loc>
+    <loc>https://phanstiellab.github.io/plotgardener/articles/guides/plotgardener_page.html</loc>
   </url>
   <url>
-    <loc>https://phanstiellab.github.io/bentobox/articles/guides/plotting_multiomic_data.html</loc>
+    <loc>https://phanstiellab.github.io/plotgardener/articles/guides/plotting_multiomic_data.html</loc>
   </url>
   <url>
-    <loc>https://phanstiellab.github.io/bentobox/articles/guides/reading_data_for_bentobox.html</loc>
+    <loc>https://phanstiellab.github.io/plotgardener/articles/guides/reading_data_for_plotgardener.html</loc>
   </url>
   <url>
-    <loc>https://phanstiellab.github.io/bentobox/articles/introduction_to_bentobox.html</loc>
+    <loc>https://phanstiellab.github.io/plotgardener/articles/introduction_to_plotgardener.html</loc>
   </url>
 </urlset>

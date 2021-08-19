@@ -5,21 +5,14 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Incorporating `ggplots` • BentoBox</title>
-<!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="../../favicon-16x16.png">
-<link rel="icon" type="image/png" sizes="32x32" href="../../favicon-32x32.png">
-<link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../../apple-touch-icon.png">
-<link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../../apple-touch-icon-120x120.png">
-<link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../../apple-touch-icon-76x76.png">
-<link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../../apple-touch-icon-60x60.png">
+<title>Incorporating `ggplots` • plotgardener</title>
 <!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.4.0/lumen/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script><!-- bootstrap-toc --><link rel="stylesheet" href="../../bootstrap-toc.css">
 <script src="../../bootstrap-toc.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../../pkgdown.css" rel="stylesheet">
 <script src="../../pkgdown.js"></script><meta property="og:title" content="Incorporating `ggplots`">
-<meta property="og:description" content="BentoBox">
-<meta property="og:image" content="https://phanstiellab.github.io/bentobox/logo.png">
+<meta property="og:description" content="plotgardener">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
@@ -37,8 +30,8 @@
         <span class="icon-bar"></span>
       </button>
       <span class="navbar-brand">
-        <a class="navbar-link" href="../../index.html">BentoBox</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.99.8</span>
+        <a class="navbar-link" href="../../index.html">plotgardener</a>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.99.9</span>
       </span>
     </div>
 
@@ -54,7 +47,7 @@
   <a href="../../articles/our_philosophy.html">Our Philosophy</a>
 </li>
 <li>
-  <a href="../../articles/introduction_to_bentobox.html">Introduction to BentoBox</a>
+  <a href="../../articles/introduction_to_plotgardener.html">Introduction to plotgardener</a>
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
@@ -64,10 +57,10 @@
   </a>
   <ul class="dropdown-menu" role="menu">
 <li>
-      <a href="../../articles/guides/bentobox_page.html">The BentoBox Page</a>
+      <a href="../../articles/guides/plotgardener_page.html">The plotgardener Page</a>
     </li>
     <li>
-      <a href="../../articles/guides/reading_data_for_bentobox.html">Reading Data for BentoBox</a>
+      <a href="../../articles/guides/reading_data_for_plotgardener.html">Reading Data for plotgardener</a>
     </li>
     <li>
       <a href="../../articles/guides/plotting_multiomic_data.html">Plotting Multi-omic Data</a>
@@ -76,7 +69,7 @@
       <a href="../../articles/guides/annotations.html">Plot Annotations</a>
     </li>
     <li>
-      <a href="../../articles/guides/bentobox_meta_functions.html">BentoBox Meta Functions</a>
+      <a href="../../articles/guides/plotgardener_meta_functions.html">plotgardener Meta Functions</a>
     </li>
     <li>
       <a href="../../articles/guides/bioconductor_integration.html">Bioconductor Integration</a>
@@ -98,7 +91,7 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/PhanstielLab/BentoBox">
+  <a href="https://github.com/PhanstielLab/plotgardener">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -113,21 +106,21 @@
 
       
 
-      </header><script src="incorporating_ggplots_files/header-attrs-2.9/header-attrs.js"></script><div class="row">
+      </header><script src="incorporating_ggplots_files/header-attrs-2.10/header-attrs.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Incorporating <code>ggplots</code>
 </h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/PhanstielLab/BentoBox/blob/master/vignettes/guides/incorporating_ggplots.Rmd"><code>vignettes/guides/incorporating_ggplots.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/PhanstielLab/plotgardener/blob/master/vignettes/guides/incorporating_ggplots.Rmd"><code>vignettes/guides/incorporating_ggplots.Rmd</code></a></small>
       <div class="hidden name"><code>incorporating_ggplots.Rmd</code></div>
 
     </div>
 
     
     
-<p>In addition to its numerous genomic functions, <code>BentoBox</code> can size and place <code>ggplots</code> within a <code>BentoBox</code> layout. Rather than arranging <code>ggplots</code> in a relative manner, <code>BentoBox</code> can make and place <code>ggplots</code> in absolute sizes and locations. This makes it simple and intuitive to make complex <code>ggplot</code> arrangements beyond a basic grid-style layout.</p>
+<p>In addition to its numerous genomic functions, <code>plotgardener</code> can size and place <code>ggplots</code> within a <code>plotgardener</code> layout. Rather than arranging <code>ggplots</code> in a relative manner, <code>plotgardener</code> can make and place <code>ggplots</code> in absolute sizes and locations. This makes it simple and intuitive to make complex <code>ggplot</code> arrangements beyond a basic grid-style layout.</p>
 <p>For example, let’s say we wanted to make a complex multi-panel ggplot about COVID-19 data consisting of the following plots:</p>
 <ol style="list-style-type: decimal">
 <li>A United States map depicting COVID-19 cases:</li>
@@ -176,21 +169,21 @@
 <span class="va">ylabels</span><span class="op">[</span><span class="fl">5</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="va">ylabels</span><span class="op">[</span><span class="fl">5</span><span class="op">]</span>, <span class="st">"M cases"</span><span class="op">)</span>
 <span class="va">ylabels</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="st">""</span>
 
-<span class="va">bb_CasesNY</span> <span class="op">&lt;-</span> <span class="va">COVID_NY_FL_tracking</span><span class="op">[</span><span class="va">COVID_NY_FL_tracking</span><span class="op">$</span><span class="va">state</span> <span class="op">==</span> <span class="st">"new york"</span>, <span class="op">]</span>
-<span class="va">bb_CasesNYpoly</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html">rbind</a></span><span class="op">(</span>
-    <span class="va">bb_CasesNY</span>,
+<span class="va">casesNY</span> <span class="op">&lt;-</span> <span class="va">COVID_NY_FL_tracking</span><span class="op">[</span><span class="va">COVID_NY_FL_tracking</span><span class="op">$</span><span class="va">state</span> <span class="op">==</span> <span class="st">"new york"</span>, <span class="op">]</span>
+<span class="va">casesNYpoly</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html">rbind</a></span><span class="op">(</span>
+    <span class="va">casesNY</span>,
     <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>
         <span class="st">"date"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html">as.Date</a></span><span class="op">(</span><span class="st">"2021-03-07"</span><span class="op">)</span>,
         <span class="st">"state"</span> <span class="op">=</span> <span class="st">"new york"</span>,
-        <span class="st">"caseIncrease"</span> <span class="op">=</span> <span class="op">-</span><span class="fl">1</span> <span class="op">*</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">bb_CasesNY</span><span class="op">$</span><span class="va">caseIncrease</span><span class="op">)</span>
+        <span class="st">"caseIncrease"</span> <span class="op">=</span> <span class="op">-</span><span class="fl">1</span> <span class="op">*</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">casesNY</span><span class="op">$</span><span class="va">caseIncrease</span><span class="op">)</span>
     <span class="op">)</span>
 <span class="op">)</span>
 
 <span class="va">cases_NYline</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span>
-    <span class="va">bb_CasesNY</span>,
+    <span class="va">casesNY</span>,
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">date</span>, y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/cumsum.html">cumsum</a></span><span class="op">(</span><span class="va">caseIncrease</span><span class="op">)</span><span class="op">)</span>
 <span class="op">)</span> <span class="op">+</span>
-    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_polygon.html">geom_polygon</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">bb_CasesNYpoly</span>, fill <span class="op">=</span> <span class="st">"#B8E6E6"</span><span class="op">)</span> <span class="op">+</span>
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_polygon.html">geom_polygon</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">casesNYpoly</span>, fill <span class="op">=</span> <span class="st">"#B8E6E6"</span><span class="op">)</span> <span class="op">+</span>
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_date.html">scale_x_date</a></span><span class="op">(</span>
         labels <span class="op">=</span> <span class="fu"><a href="https://scales.r-lib.org/reference/label_date.html">date_format</a></span><span class="op">(</span><span class="st">"%b '%y"</span><span class="op">)</span>,
         breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html">as.Date</a></span><span class="op">(</span><span class="fu"><a href="../../reference/c.html">c</a></span><span class="op">(</span><span class="st">"2020-05-01"</span>, <span class="st">"2020-09-01"</span>, <span class="st">"2021-01-01"</span><span class="op">)</span><span class="op">)</span>,
@@ -228,21 +221,21 @@
 <span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">cases_NYline</span><span class="op">)</span></code></pre></div>
 <p><img src="incorporating_ggplots_files/figure-html/ggplot_02-1.png" width="450" style="display: block; margin: auto;"></p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">bb_CasesFL</span> <span class="op">&lt;-</span> <span class="va">COVID_NY_FL_tracking</span><span class="op">[</span><span class="va">COVID_NY_FL_tracking</span><span class="op">$</span><span class="va">state</span> <span class="op">==</span> <span class="st">"florida"</span>, <span class="op">]</span>
-<span class="va">bb_CasesFLpoly</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html">rbind</a></span><span class="op">(</span>
-    <span class="va">bb_CasesFL</span>,
+<code class="sourceCode R"><span class="va">casesFL</span> <span class="op">&lt;-</span> <span class="va">COVID_NY_FL_tracking</span><span class="op">[</span><span class="va">COVID_NY_FL_tracking</span><span class="op">$</span><span class="va">state</span> <span class="op">==</span> <span class="st">"florida"</span>, <span class="op">]</span>
+<span class="va">casesFLpoly</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html">rbind</a></span><span class="op">(</span>
+    <span class="va">casesFL</span>,
     <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>
         <span class="st">"date"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html">as.Date</a></span><span class="op">(</span><span class="st">"2021-03-07"</span><span class="op">)</span>,
         <span class="st">"state"</span> <span class="op">=</span> <span class="st">"florida"</span>,
-        <span class="st">"caseIncrease"</span> <span class="op">=</span> <span class="op">-</span><span class="fl">1</span> <span class="op">*</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">bb_CasesFL</span><span class="op">$</span><span class="va">caseIncrease</span><span class="op">)</span>
+        <span class="st">"caseIncrease"</span> <span class="op">=</span> <span class="op">-</span><span class="fl">1</span> <span class="op">*</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">casesFL</span><span class="op">$</span><span class="va">caseIncrease</span><span class="op">)</span>
     <span class="op">)</span>
 <span class="op">)</span>
 
 <span class="va">cases_FLline</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span>
-    <span class="va">bb_CasesFL</span>,
+    <span class="va">casesFL</span>,
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">date</span>, y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/cumsum.html">cumsum</a></span><span class="op">(</span><span class="va">caseIncrease</span><span class="op">)</span><span class="op">)</span>
 <span class="op">)</span> <span class="op">+</span>
-    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_polygon.html">geom_polygon</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">bb_CasesFLpoly</span>, fill <span class="op">=</span> <span class="st">"#B8E6E6"</span><span class="op">)</span> <span class="op">+</span>
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_polygon.html">geom_polygon</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">casesFLpoly</span>, fill <span class="op">=</span> <span class="st">"#B8E6E6"</span><span class="op">)</span> <span class="op">+</span>
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_date.html">scale_x_date</a></span><span class="op">(</span>
         labels <span class="op">=</span> <span class="fu"><a href="https://scales.r-lib.org/reference/label_date.html">date_format</a></span><span class="op">(</span><span class="st">"%b '%y"</span><span class="op">)</span>,
         breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html">as.Date</a></span><span class="op">(</span><span class="fu"><a href="../../reference/c.html">c</a></span><span class="op">(</span><span class="st">"2020-05-01"</span>, <span class="st">"2020-09-01"</span>, <span class="st">"2021-01-01"</span><span class="op">)</span><span class="op">)</span>,
@@ -340,34 +333,34 @@
 
 <span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">vaccines_FLpie</span><span class="op">)</span></code></pre></div>
 <p><img src="incorporating_ggplots_files/figure-html/ggplot_05-1.png" width="450" style="display: block; margin: auto;"></p>
-<p>We can now easily overlap and size all these <code>ggplots</code> by passing our saved plot objects into <code><a href="../../reference/bbPlotGG.html">bbPlotGG()</a></code>:</p>
+<p>We can now easily overlap and size all these <code>ggplots</code> by passing our saved plot objects into <code><a href="../../reference/plotGG.html">plotGG()</a></code>:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../../reference/bbPageCreate.html">bbPageCreate</a></span><span class="op">(</span>width <span class="op">=</span> <span class="fl">9.5</span>, height <span class="op">=</span> <span class="fl">3.5</span>, default.units <span class="op">=</span> <span class="st">"inches"</span><span class="op">)</span>
+<code class="sourceCode R"><span class="fu"><a href="../../reference/pageCreate.html">pageCreate</a></span><span class="op">(</span>width <span class="op">=</span> <span class="fl">9.5</span>, height <span class="op">=</span> <span class="fl">3.5</span>, default.units <span class="op">=</span> <span class="st">"inches"</span><span class="op">)</span>
 
-<span class="fu"><a href="../../reference/bbPlotGG.html">bbPlotGG</a></span><span class="op">(</span>
+<span class="fu"><a href="../../reference/plotGG.html">plotGG</a></span><span class="op">(</span>
     plot <span class="op">=</span> <span class="va">US_map</span>,
     x <span class="op">=</span> <span class="fl">0.1</span>, y <span class="op">=</span> <span class="fl">0</span>,
     width <span class="op">=</span> <span class="fl">6.5</span>, height <span class="op">=</span> <span class="fl">3.5</span>, just <span class="op">=</span> <span class="fu"><a href="../../reference/c.html">c</a></span><span class="op">(</span><span class="st">"left"</span>, <span class="st">"top"</span><span class="op">)</span>
 <span class="op">)</span>
-<span class="fu"><a href="../../reference/bbPlotGG.html">bbPlotGG</a></span><span class="op">(</span>
+<span class="fu"><a href="../../reference/plotGG.html">plotGG</a></span><span class="op">(</span>
     plot <span class="op">=</span> <span class="va">cases_NYline</span>,
     x <span class="op">=</span> <span class="fl">6.25</span>, y <span class="op">=</span> <span class="fl">1.8</span>,
     width <span class="op">=</span> <span class="fl">3.025</span>, height <span class="op">=</span> <span class="fl">1.4</span>, just <span class="op">=</span> <span class="fu"><a href="../../reference/c.html">c</a></span><span class="op">(</span><span class="st">"left"</span>, <span class="st">"bottom"</span><span class="op">)</span>
 <span class="op">)</span>
-<span class="fu"><a href="../../reference/bbPlotGG.html">bbPlotGG</a></span><span class="op">(</span>
+<span class="fu"><a href="../../reference/plotGG.html">plotGG</a></span><span class="op">(</span>
     plot <span class="op">=</span> <span class="va">cases_FLline</span>,
     x <span class="op">=</span> <span class="fl">6.25</span>, y <span class="op">=</span> <span class="fl">3.5</span>,
     width <span class="op">=</span> <span class="fl">3.025</span>, height <span class="op">=</span> <span class="fl">1.4</span>, just <span class="op">=</span> <span class="fu"><a href="../../reference/c.html">c</a></span><span class="op">(</span><span class="st">"left"</span>, <span class="st">"bottom"</span><span class="op">)</span>
 <span class="op">)</span></code></pre></div>
 <p><img src="incorporating_ggplots_files/figure-html/gg_plot05-1.png" width="1725" style="display: block; margin: auto;"></p>
-<p>In particular, <code>BentoBox</code> makes it easy to resize and place our pie charts in a layout that overlaps our line plots without it affecting the sizing of the other plots on the page:</p>
+<p>In particular, <code>plotgardener</code> makes it easy to resize and place our pie charts in a layout that overlaps our line plots without it affecting the sizing of the other plots on the page:</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../../reference/bbPlotGG.html">bbPlotGG</a></span><span class="op">(</span>
+<code class="sourceCode R"><span class="fu"><a href="../../reference/plotGG.html">plotGG</a></span><span class="op">(</span>
     plot <span class="op">=</span> <span class="va">vaccines_NYpie</span>,
     x <span class="op">=</span> <span class="fl">6.37</span>, y <span class="op">=</span> <span class="op">-</span><span class="fl">0.05</span>,
     width <span class="op">=</span> <span class="fl">1.45</span>, height <span class="op">=</span> <span class="fl">1.45</span>, just <span class="op">=</span> <span class="fu"><a href="../../reference/c.html">c</a></span><span class="op">(</span><span class="st">"left"</span>, <span class="st">"top"</span><span class="op">)</span>
 <span class="op">)</span>
-<span class="fu"><a href="../../reference/bbPlotGG.html">bbPlotGG</a></span><span class="op">(</span>
+<span class="fu"><a href="../../reference/plotGG.html">plotGG</a></span><span class="op">(</span>
     plot <span class="op">=</span> <span class="va">vaccines_FLpie</span>,
     x <span class="op">=</span> <span class="fl">6.37</span>, y <span class="op">=</span> <span class="fl">1.67</span>,
     width <span class="op">=</span> <span class="fl">1.45</span>, height <span class="op">=</span> <span class="fl">1.45</span>, just <span class="op">=</span> <span class="fu"><a href="../../reference/c.html">c</a></span><span class="op">(</span><span class="st">"left"</span>, <span class="st">"top"</span><span class="op">)</span>
@@ -375,19 +368,19 @@
 <p><img src="incorporating_ggplots_files/figure-html/gg_plot06-1.png" width="1725" style="display: block; margin: auto;"></p>
 <p>We can also easily add additional elements to further enhance our complex <code>ggplot</code> arrangments, like a precise placement of text labels:</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../../reference/bbPlotText.html">bbPlotText</a></span><span class="op">(</span>
+<code class="sourceCode R"><span class="fu"><a href="../../reference/plotText.html">plotText</a></span><span class="op">(</span>
     label <span class="op">=</span> <span class="fu"><a href="../../reference/c.html">c</a></span><span class="op">(</span><span class="st">"not"</span>, <span class="st">"partially"</span>, <span class="st">"fully vaccinated"</span><span class="op">)</span>,
     fontfamily <span class="op">=</span> <span class="st">"ProximaNova"</span>, fontcolor <span class="op">=</span> <span class="st">"black"</span>, fontsize <span class="op">=</span> <span class="fl">7</span>,
     x <span class="op">=</span> <span class="fu"><a href="../../reference/c.html">c</a></span><span class="op">(</span><span class="fl">6.58</span>, <span class="fl">7.3</span>, <span class="fl">7.435</span><span class="op">)</span>,
     y <span class="op">=</span> <span class="fu"><a href="../../reference/c.html">c</a></span><span class="op">(</span><span class="fl">0.74</span>, <span class="fl">1.12</span>, <span class="fl">0.51</span><span class="op">)</span>, just <span class="op">=</span> <span class="fu"><a href="../../reference/c.html">c</a></span><span class="op">(</span><span class="st">"left"</span>, <span class="st">"bottom"</span><span class="op">)</span>
 <span class="op">)</span>
-<span class="fu"><a href="../../reference/bbPlotText.html">bbPlotText</a></span><span class="op">(</span>
+<span class="fu"><a href="../../reference/plotText.html">plotText</a></span><span class="op">(</span>
     label <span class="op">=</span> <span class="fu"><a href="../../reference/c.html">c</a></span><span class="op">(</span><span class="st">"not"</span>, <span class="st">"partially"</span>, <span class="st">"fully vaccinated"</span><span class="op">)</span>,
     fontfamily <span class="op">=</span> <span class="st">"ProximaNova"</span>, fontcolor <span class="op">=</span> <span class="st">"black"</span>, fontsize <span class="op">=</span> <span class="fl">7</span>,
     x <span class="op">=</span> <span class="fu"><a href="../../reference/c.html">c</a></span><span class="op">(</span><span class="fl">6.58</span>, <span class="fl">7.39</span>, <span class="fl">7.435</span><span class="op">)</span>,
     y <span class="op">=</span> <span class="fu"><a href="../../reference/c.html">c</a></span><span class="op">(</span><span class="fl">2.47</span>, <span class="fl">2.75</span>, <span class="fl">2.2</span><span class="op">)</span>, just <span class="op">=</span> <span class="fu"><a href="../../reference/c.html">c</a></span><span class="op">(</span><span class="st">"left"</span>, <span class="st">"bottom"</span><span class="op">)</span>
 <span class="op">)</span>
-<span class="fu"><a href="../../reference/bbPlotText.html">bbPlotText</a></span><span class="op">(</span>label <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste</a></span><span class="op">(</span><span class="st">"Sources: The COVID Tracking Project;"</span>,
+<span class="fu"><a href="../../reference/plotText.html">plotText</a></span><span class="op">(</span>label <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste</a></span><span class="op">(</span><span class="st">"Sources: The COVID Tracking Project;"</span>,
                         <span class="st">"Johns Hopkins Center for Civic Impact"</span><span class="op">)</span>,
             fontfamily <span class="op">=</span> <span class="st">"ProximaNova"</span>, fontcolor <span class="op">=</span> <span class="st">"black"</span>,
             fontsize <span class="op">=</span> <span class="fl">7</span>, fontface <span class="op">=</span> <span class="st">"italic"</span>,
@@ -415,55 +408,55 @@
 <span class="co">#&gt; [8] base     </span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; other attached packages:</span>
-<span class="co">#&gt; [1] scales_1.1.1        ggplot2_3.3.5       showtext_0.9-2     </span>
-<span class="co">#&gt; [4] showtextdb_3.0      sysfonts_0.8.3      BentoBoxData_0.99.4</span>
-<span class="co">#&gt; [7] BentoBox_0.99.7    </span>
+<span class="co">#&gt; [1] scales_1.1.1            ggplot2_3.3.5           showtext_0.9-3         </span>
+<span class="co">#&gt; [4] showtextdb_3.0          sysfonts_0.8.4          plotgardenerData_0.99.7</span>
+<span class="co">#&gt; [7] plotgardener_0.99.9    </span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; loaded via a namespace (and not attached):</span>
 <span class="co">#&gt;  [1] bitops_1.0-7                matrixStats_0.60.0         </span>
 <span class="co">#&gt;  [3] fs_1.5.0                    RColorBrewer_1.1-2         </span>
-<span class="co">#&gt;  [5] rprojroot_2.0.2             GenomeInfoDb_1.28.1        </span>
+<span class="co">#&gt;  [5] rprojroot_2.0.2             GenomeInfoDb_1.29.3        </span>
 <span class="co">#&gt;  [7] tools_4.1.0                 bslib_0.2.5.1              </span>
-<span class="co">#&gt;  [9] utf8_1.2.2                  R6_2.5.0                   </span>
-<span class="co">#&gt; [11] DBI_1.1.1                   BiocGenerics_0.38.0        </span>
+<span class="co">#&gt;  [9] utf8_1.2.2                  R6_2.5.1                   </span>
+<span class="co">#&gt; [11] DBI_1.1.1                   BiocGenerics_0.39.1        </span>
 <span class="co">#&gt; [13] colorspace_2.0-2            withr_2.4.2                </span>
 <span class="co">#&gt; [15] tidyselect_1.1.1            curl_4.3.2                 </span>
 <span class="co">#&gt; [17] compiler_4.1.0              textshaping_0.3.5          </span>
-<span class="co">#&gt; [19] Biobase_2.52.0              desc_1.3.0                 </span>
-<span class="co">#&gt; [21] DelayedArray_0.18.0         rtracklayer_1.52.0         </span>
+<span class="co">#&gt; [19] Biobase_2.53.0              desc_1.3.0                 </span>
+<span class="co">#&gt; [21] DelayedArray_0.19.1         rtracklayer_1.53.0         </span>
 <span class="co">#&gt; [23] labeling_0.4.2              sass_0.4.0                 </span>
 <span class="co">#&gt; [25] pkgdown_1.6.1               systemfonts_1.0.2          </span>
 <span class="co">#&gt; [27] stringr_1.4.0               digest_0.6.27              </span>
-<span class="co">#&gt; [29] Rsamtools_2.8.0             rmarkdown_2.9              </span>
-<span class="co">#&gt; [31] XVector_0.32.0              pkgconfig_2.0.3            </span>
-<span class="co">#&gt; [33] htmltools_0.5.1.1           MatrixGenerics_1.4.0       </span>
+<span class="co">#&gt; [29] Rsamtools_2.9.1             rmarkdown_2.10             </span>
+<span class="co">#&gt; [31] XVector_0.33.0              pkgconfig_2.0.3            </span>
+<span class="co">#&gt; [33] htmltools_0.5.1.1           MatrixGenerics_1.5.3       </span>
 <span class="co">#&gt; [35] highr_0.9                   fastmap_1.1.0              </span>
 <span class="co">#&gt; [37] rlang_0.4.11                gridGraphics_0.5-1         </span>
-<span class="co">#&gt; [39] jquerylib_0.1.4             BiocIO_1.2.0               </span>
+<span class="co">#&gt; [39] jquerylib_0.1.4             BiocIO_1.3.0               </span>
 <span class="co">#&gt; [41] generics_0.1.0              farver_2.1.0               </span>
-<span class="co">#&gt; [43] jsonlite_1.7.2              BiocParallel_1.26.1        </span>
-<span class="co">#&gt; [45] dplyr_1.0.7                 RCurl_1.98-1.3             </span>
-<span class="co">#&gt; [47] magrittr_2.0.1              ggplotify_0.0.7            </span>
+<span class="co">#&gt; [43] jsonlite_1.7.2              BiocParallel_1.27.2        </span>
+<span class="co">#&gt; [45] dplyr_1.0.7                 RCurl_1.98-1.4             </span>
+<span class="co">#&gt; [47] magrittr_2.0.1              ggplotify_0.0.8            </span>
 <span class="co">#&gt; [49] GenomeInfoDbData_1.2.6      Matrix_1.3-4               </span>
 <span class="co">#&gt; [51] Rcpp_1.0.7                  munsell_0.5.0              </span>
-<span class="co">#&gt; [53] S4Vectors_0.30.0            fansi_0.5.0                </span>
+<span class="co">#&gt; [53] S4Vectors_0.31.0            fansi_0.5.0                </span>
 <span class="co">#&gt; [55] lifecycle_1.0.0             stringi_1.7.3              </span>
-<span class="co">#&gt; [57] yaml_2.2.1                  SummarizedExperiment_1.22.0</span>
-<span class="co">#&gt; [59] zlibbioc_1.38.0             parallel_4.1.0             </span>
+<span class="co">#&gt; [57] yaml_2.2.1                  SummarizedExperiment_1.23.1</span>
+<span class="co">#&gt; [59] zlibbioc_1.39.0             parallel_4.1.0             </span>
 <span class="co">#&gt; [61] crayon_1.4.1                lattice_0.20-44            </span>
-<span class="co">#&gt; [63] Biostrings_2.60.1           knitr_1.33                 </span>
-<span class="co">#&gt; [65] pillar_1.6.2                GenomicRanges_1.44.0       </span>
+<span class="co">#&gt; [63] Biostrings_2.61.2           knitr_1.33                 </span>
+<span class="co">#&gt; [65] pillar_1.6.2                GenomicRanges_1.45.0       </span>
 <span class="co">#&gt; [67] rjson_0.2.20                stats4_4.1.0               </span>
-<span class="co">#&gt; [69] strawr_0.0.8                XML_3.99-0.6               </span>
+<span class="co">#&gt; [69] strawr_0.0.8                XML_3.99-0.7               </span>
 <span class="co">#&gt; [71] glue_1.4.2                  evaluate_0.14              </span>
 <span class="co">#&gt; [73] data.table_1.14.0           BiocManager_1.30.16        </span>
 <span class="co">#&gt; [75] vctrs_0.3.8                 gtable_0.3.0               </span>
 <span class="co">#&gt; [77] purrr_0.3.4                 assertthat_0.2.1           </span>
-<span class="co">#&gt; [79] cachem_1.0.5                xfun_0.24                  </span>
+<span class="co">#&gt; [79] cachem_1.0.5                xfun_0.25                  </span>
 <span class="co">#&gt; [81] restfulr_0.0.13             ragg_1.1.3                 </span>
 <span class="co">#&gt; [83] tibble_3.1.3                rvcheck_0.1.8              </span>
-<span class="co">#&gt; [85] GenomicAlignments_1.28.0    plyranges_1.12.1           </span>
-<span class="co">#&gt; [87] memoise_2.0.0               IRanges_2.26.0             </span>
+<span class="co">#&gt; [85] GenomicAlignments_1.29.0    plyranges_1.13.1           </span>
+<span class="co">#&gt; [87] memoise_2.0.0               IRanges_2.27.0             </span>
 <span class="co">#&gt; [89] ellipsis_0.3.2</span></code></pre></div>
 </div>
   </div>

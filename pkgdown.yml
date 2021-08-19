@@ -1,20 +1,20 @@
-pandoc: '2.13'
+pandoc: 2.11.4
 pkgdown: 1.6.1
 pkgdown_sha: ~
 articles:
   guides/aesthetics: aesthetics.html
   guides/annotations: annotations.html
-  guides/bentobox_meta_functions: bentobox_meta_functions.html
-  guides/bentobox_page: bentobox_page.html
   guides/bioconductor_integration: bioconductor_integration.html
   guides/ideograms_and_shapes: ideograms_and_shapes.html
   guides/incorporating_ggplots: incorporating_ggplots.html
   guides/our_philosophy: our_philosophy.html
+  guides/plotgardener_meta_functions: plotgardener_meta_functions.html
+  guides/plotgardener_page: plotgardener_page.html
   guides/plotting_multiomic_data: plotting_multiomic_data.html
-  guides/reading_data_for_bentobox: reading_data_for_bentobox.html
-  introduction_to_bentobox: introduction_to_bentobox.html
-last_built: 2021-08-02T17:47Z
+  guides/reading_data_for_plotgardener: reading_data_for_plotgardener.html
+  introduction_to_plotgardener: introduction_to_plotgardener.html
+last_built: 2021-08-19T18:45Z
 urls:
-  reference: https://phanstiellab.github.io/bentobox/reference
-  article: https://phanstiellab.github.io/bentobox/articles
+  reference: https://phanstiellab.github.io/plotgardener/reference
+  article: https://phanstiellab.github.io/plotgardener/articles
 
