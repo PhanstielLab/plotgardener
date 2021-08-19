@@ -1,5 +1,5 @@
-## Define a function for `bbParams` and parameter parsing logic
-# @param params bbParams object to override default arguments of
+## Define a function for `params` and parameter parsing logic
+# @param params params object to override default arguments of
 # parent function
 # @param defaultArgs List of defaults for each argument of parent function
 # @param declaredArgs List of arguments to override all others
@@ -22,9 +22,9 @@ parseParams <- function(params = params,
         declaredArgs[["..."]] <- NULL
     }
 
-    ## If bbParams are supplied override matching defaultArguments
+    ## If params are supplied override matching defaultArguments
     if (!is.null(params)) {
-        if (is(params, "bbParams")) {
+        if (is(params, "params")) {
             ## Replace matching defaultArgs with params
             matchedParams <- params[na.omit(sort(match(
                 names(defaultArgs),
@@ -36,7 +36,7 @@ parseParams <- function(params = params,
             ))] <- matchedParams
         } else {
             warning("Input object ignored. Object must be a",
-                " \'bbParams\' class object.",
+                " \'params\' class object.",
                 call. = FALSE
             )
         }
@@ -56,7 +56,7 @@ parseParams <- function(params = params,
         .Data = defaultArgs,
         class = class
     )
-    object <- lapply(object, eval, rlang::ns_env("BentoBox"))
+    object <- lapply(object, eval, rlang::ns_env("plotgardener"))
 
     return(object)
 }
@@ -83,7 +83,7 @@ setGP <- function(gpList, params, ...) {
 
 ## Define a function that checks chromstart/chromend 
 ## region errors
-bb_regionErrors <- function(chromstart, chromend){
+regionErrors <- function(chromstart, chromend){
     
     ## Can't have only one NULL chromstart or chromend
     if ((is.null(chromstart) &
@@ -112,7 +112,7 @@ bb_regionErrors <- function(chromstart, chromend){
 }
 
 ## Define a function that checks just and gets corresponding numeric value
-bb_justConversion <- function(just){
+justConversion <- function(just){
     
     ## Convert input just to comma-separated string for finding in dataframe
     just <- paste(just, collapse = ", ")
@@ -137,7 +137,7 @@ bb_justConversion <- function(just){
 }
 
 ## Define a function that checks the format of range parameters
-bb_rangeErrors <- function(range){
+rangeErrors <- function(range){
     
     if (!is.null(range)){
         
@@ -171,7 +171,7 @@ bb_rangeErrors <- function(range){
 }
 
 ## Define a function that checks for hic input errors
-bb_hicErrors <- function(hic, norm){
+hicErrors <- function(hic, norm){
     
     ## if it's a dataframe or datatable, it needs to be properly formatted
     if (is(hic, "data.frame") && ncol(hic) != 3) {
@@ -203,9 +203,9 @@ bb_hicErrors <- function(hic, norm){
 }
 
 ## Define a function to get the assembly info based on a string (ie default)
-## or bbAssembly object
+## or assembly object
 # @param assembly assembly input from a plot object
-parse_bbAssembly <- function(assembly) {
+parseAssembly <- function(assembly) {
     
     availDefaults <- default_genomePackages$Genome
 
@@ -213,15 +213,15 @@ parse_bbAssembly <- function(assembly) {
     if (is(assembly, "character")) {
         if (!assembly %in% availDefaults) {
             stop("\'assembly\' not available as a default. Please make a ",
-                "bbAssembly object with `bbAssembly()` or pick an assembly ",
-                "from the defaults listed with `bb_genomes()`.",
+                "assembly object with `assembly()` or pick an assembly ",
+                "from the defaults listed with `genomes()`.",
                 call. = FALSE
             )
         }
 
         assemblyData <- default_genomePackages[
             default_genomePackages$Genome == assembly,]
-        assemblyData <- bbAssembly(
+        assemblyData <- assembly(
             Genome = assemblyData$Genome,
             TxDb = assemblyData$TxDb,
             OrgDb = assemblyData$OrgDb,
@@ -230,13 +230,13 @@ parse_bbAssembly <- function(assembly) {
             BSgenome = assemblyData$BSgenome
         )
 
-        ## If it's a bbAssembly object, use those
-    } else if (is(assembly, "bbAssembly")) {
+        ## If it's a assembly object, use those
+    } else if (is(assembly, "assembly")) {
         assemblyData <- assembly
     } else {
-        stop("Invalid \'assembly\' type. Please make a bbAssembly object ",
-            "with `bbAssembly()` or input an assembly string from the ",
-            "defaults listed with `bb_genomes()`.",
+        stop("Invalid \'assembly\' type. Please make a assembly object ",
+            "with `assembly()` or input an assembly string from the ",
+            "defaults listed with `genomes()`.",
             call. = FALSE
         )
     }
@@ -390,7 +390,7 @@ misc_defaultUnits <- function(value, name, default.units,
 
                     value <- unit(
                         unlist(lapply(value, plot_belowY)),
-                        get("page_units", envir = bbEnv)
+                        get("page_units", envir = pgEnv)
                     )
                 }
             } else {
@@ -435,12 +435,12 @@ misc_defaultUnits <- function(value, name, default.units,
 
 ## Define a function to catch errors for functions that don't handle
 ## colorby and for colorby related errors
-bb_checkColorby <- function(fill, colorby = TRUE, data = NULL){
+checkColorby <- function(fill, colorby = TRUE, data = NULL){
     
     ## colorby not allowed for some functions
     if (colorby == FALSE){
-        if (is(fill, "bb_colorby")){
-            stop("`fill` cannot be a `bb_colorby` object for this function.",
+        if (is(fill, "colorby")){
+            stop("`fill` cannot be a `colorby` object for this function.",
                 call. = FALSE)
         }
     } else {
@@ -448,8 +448,8 @@ bb_checkColorby <- function(fill, colorby = TRUE, data = NULL){
         ## column in data, and number of colorby column in data
         if (!is(fill, "character") & !is(fill, "factor")){
             
-            if (!is(fill, "bb_colorby")){
-                stop("`colorby` not of class \"bb_colorby\". Input colorby ",
+            if (!is(fill, "colorby")){
+                stop("`colorby` not of class \"colorby\". Input colorby ",
                     "information with `colorby()`.", call. = FALSE)
             }
             

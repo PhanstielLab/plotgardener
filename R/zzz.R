@@ -1,8 +1,8 @@
 .onLoad <- function(libname, pkgname) {
 
-    ## Define bbParams object  -----------------------------
+    ## Define params object  -----------------------------
 
-    ## Initialize documented bbParams function names
+    ## Initialize documented params function names
     x <- c("assembly", "gene", "geneBuffer")
 
     ## Set argument inputs for function definition
@@ -14,12 +14,12 @@
     allArgs1 <- paste0(allArgs1, ",...")
 
     ## Pass all arguments into function definition
-    bbParams <- parse(text = c(sprintf("
+    params <- parse(text = c(sprintf("
 
-    bbParams <- function(%s) {
+    params <- function(%s) {
 
     ## Construct object
-    object <- structure(.Data = list(%s), class = 'bbParams')
+    object <- structure(.Data = list(%s), class = 'params')
     object[names(list(...))] <- list(...)
 
     ## Feature: setting region parameters by gene name & assembly -------------
@@ -27,7 +27,7 @@
     if (!is.null(gene)){
 
         ## Parse assembly
-        assembly <- parse_bbAssembly(assembly = assembly)
+        assembly <- parseAssembly(assembly = assembly)
 
         if (is(assembly$TxDb, 'TxDb')){
             txdbChecks <- TRUE
@@ -99,7 +99,7 @@
 
         if (length(geneBuffer) == 1) geneBuffer <- rep(geneBuffer, 2)
 
-        ## Assign values to bbParams object (with buffer)
+        ## Assign values to params object (with buffer)
         object$chrom      <- unique(geneData$TXCHROM)
         object$chromstart <- minGeneStart - geneBuffer[1]
         object$chromend   <- maxGeneEnd  + geneBuffer[2]
@@ -126,13 +126,13 @@
     }
 
     ## Filter out null values for pretty printing
-    object <- structure(Filter(Negate(is.null), object), class = 'bbParams')
+    object <- structure(Filter(Negate(is.null), object), class = 'params')
 
     return(object)
 
     }
                                         ", allArgs1, allArgs2)))
 
-    ## Assign function in BentoBox environment
-    assign("bbParams", eval(bbParams), rlang::ns_env(pkgname))
+    ## Assign function in environment
+    assign("params", eval(params), rlang::ns_env(pkgname))
 }

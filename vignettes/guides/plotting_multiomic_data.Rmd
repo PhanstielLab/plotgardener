@@ -19,15 +19,15 @@ knitr::opts_chunk$set(
     message = FALSE
 )
 library(grid)
-library(BentoBox)
-library(BentoBoxData)
+library(plotgardener)
+library(plotgardenerData)
 ```
 
-`BentoBox` makes it easy to create reproducible, publication-quality figures 
+`plotgardener` makes it easy to create reproducible, publication-quality figures 
 from multi-omic data. Since each plot can be placed in *exactly* the desired 
 location, users can stack multiple types of genomic data so that their axes 
 and data are correctly aligned. In this section we will show some examples of 
-plotting multi-omic data and how the `bbParams` object and "below" 
+plotting multi-omic data and how the `params` object and "below" 
 y-coordinate can facilitate this process. 
 
 In the following example, we plot the same genomic region 
@@ -37,20 +37,20 @@ label axis:
 
 ```{r plotting_example01, echo=TRUE, fig.height=6, fig.width=5, message=FALSE}
 ## Load example data
-library(BentoBoxData)
+library(plotgardenerData)
 data("IMR90_HiC_10kb")
 data("IMR90_DNAloops_pairs")
 data("IMR90_ChIP_H3K27ac_signal")
 data("hg19_insulin_GWAS")
 
-## Create a BentoBox page
-bbPageCreate(
+## Create a plotgardener page
+pageCreate(
     width = 3, height = 5, default.units = "inches",
     showGuides = FALSE, xgrid = 0, ygrid = 0
 )
 
 ## Plot Hi-C data in region
-bbPlotHicSquare(
+plotHicSquare(
     data = IMR90_HiC_10kb,
     chrom = "chr21", chromstart = 28000000, chromend = 30300000,
     assembly = "hg19",
@@ -59,7 +59,7 @@ bbPlotHicSquare(
 )
 
 ## Plot loop annotations
-bbPlotPairsArches(
+plotPairsArches(
     data = IMR90_DNAloops_pairs,
     chrom = "chr21", chromstart = 28000000, chromend = 30300000,
     assembly = "hg19",
@@ -69,7 +69,7 @@ bbPlotPairsArches(
 )
 
 ## Plot signal track data
-bbPlotSignal(
+plotSignal(
     data = IMR90_ChIP_H3K27ac_signal,
     chrom = "chr21", chromstart = 28000000, chromend = 30300000,
     assembly = "hg19",
@@ -78,7 +78,7 @@ bbPlotSignal(
 )
 
 ## Plot GWAS data
-bbPlotManhattan(
+plotManhattan(
     data = hg19_insulin_GWAS,
     chrom = "chr21", chromstart = 28000000, chromend = 30300000,
     assembly = "hg19",
@@ -90,7 +90,7 @@ bbPlotManhattan(
 ## Plot gene track
 library(TxDb.Hsapiens.UCSC.hg19.knownGene)
 library(org.Hs.eg.db)
-bbPlotGenes(
+plotGenes(
     chrom = "chr21", chromstart = 28000000, chromend = 30300000,
     assembly = "hg19",
     x = 0.5, y = 4, width = 2, height = 0.5,
@@ -98,7 +98,7 @@ bbPlotGenes(
 )
 
 ## Plot genome label
-bbPlotGenomeLabel(
+plotGenomeLabel(
     chrom = "chr21", chromstart = 28000000, chromend = 30300000,
     assembly = "hg19",
     x = 0.5, y = 4.5, length = 2, scale = "Mb",
@@ -106,16 +106,16 @@ bbPlotGenomeLabel(
 )
 ```
 
-## Using the `bbParams` object
+## Using the `params` object
 
-The `bbParams()` function creates a `bbParams` object that can contain any 
-argument from `BentoBox` functions.  
+The `params()` function creates a `params` object that can contain any 
+argument from `plotgardener` functions.  
 
 We can recreate and simplify the multi-omic plot above by saving the genomic 
-region, left-based x-coordinate, and width into a `bbParams` object:
+region, left-based x-coordinate, and width into a `params` object:
 
 ```{r eval=TRUE, message=FALSE, echo=TRUE}
-params <- bbParams(
+params <- params(
     chrom = "chr21", chromstart = 28000000, chromend = 30300000,
     assembly = "hg19",
     x = 0.5, just = c("left", "top"),
@@ -124,7 +124,7 @@ params <- bbParams(
 ```
 
 Since these values are the same for each of the functions we are using to 
-build our multi-omic figure, we can now pass the `bbParams` object into 
+build our multi-omic figure, we can now pass the `params` object into 
 our functions so we don't need to write the same parameters over and over 
 again:
 
@@ -135,21 +135,21 @@ data("IMR90_DNAloops_pairs")
 data("IMR90_ChIP_H3K27ac_signal")
 data("hg19_insulin_GWAS")
 
-## Create a BentoBox page
-bbPageCreate(
+## Create a plotgardener page
+pageCreate(
     width = 3, height = 5, default.units = "inches",
     showGuides = FALSE, xgrid = 0, ygrid = 0
 )
 
 ## Plot Hi-C data in region
-bbPlotHicSquare(
+plotHicSquare(
     data = IMR90_HiC_10kb,
     params = params,
     y = 0.5, height = 2
 )
 
 ## Plot loop annotations
-bbPlotPairsArches(
+plotPairsArches(
     data = IMR90_DNAloops_pairs,
     params = params,
     y = 2.5, height = 0.25,
@@ -157,14 +157,14 @@ bbPlotPairsArches(
 )
 
 ## Plot signal track data
-bbPlotSignal(
+plotSignal(
     data = IMR90_ChIP_H3K27ac_signal,
     params = params,
     y = 2.75, height = 0.5
 )
 
 ## Plot GWAS data
-bbPlotManhattan(
+plotManhattan(
     data = hg19_insulin_GWAS,
     params = params,
     ymax = 1.1, cex = 0.20,
@@ -174,25 +174,25 @@ bbPlotManhattan(
 ## Plot gene track
 library(TxDb.Hsapiens.UCSC.hg19.knownGene)
 library(org.Hs.eg.db)
-bbPlotGenes(
+plotGenes(
     params = params,
     y = 4, height = 0.5
 )
 
 ## Plot genome label
-bbPlotGenomeLabel(
+plotGenomeLabel(
     params = params,
     y = 4.5, scale = "Mb"
 )
 ```
 
-The `bbParams` object also simplifies the code for making complex multi-omic 
+The `params` object also simplifies the code for making complex multi-omic 
 figures when we want to change the genomic region of our plots. If we want to 
 change the region for the figure above, we can simply put it into the 
-`bbParams` object and re-run the code to generate the figure:
+`params` object and re-run the code to generate the figure:
 
 ```{r eval=TRUE, echo=TRUE, message=FALSE}
-params <- bbParams(
+params <- params(
     chrom = "chr21", chromstart = 29000000, chromend = 30000000,
     assembly = "hg19",
     x = 0.5, just = c("left", "top"),
@@ -207,21 +207,21 @@ data("IMR90_DNAloops_pairs")
 data("IMR90_ChIP_H3K27ac_signal")
 data("hg19_insulin_GWAS")
 
-## Create a BentoBox page
-bbPageCreate(
+## Create a plotgardener page
+pageCreate(
     width = 3, height = 5, default.units = "inches",
     showGuides = FALSE, xgrid = 0, ygrid = 0
 )
 
 ## Plot Hi-C data in region
-bbPlotHicSquare(
+plotHicSquare(
     data = IMR90_HiC_10kb,
     params = params,
     y = 0.5, height = 2
 )
 
 ## Plot loop annotations
-bbPlotPairsArches(
+plotPairsArches(
     data = IMR90_DNAloops_pairs,
     params = params,
     y = 2.5, height = 0.25,
@@ -229,14 +229,14 @@ bbPlotPairsArches(
 )
 
 ## Plot signal track data
-bbPlotSignal(
+plotSignal(
     data = IMR90_ChIP_H3K27ac_signal,
     params = params,
     y = 2.75, height = 0.5
 )
 
 ## Plot GWAS data
-bbPlotManhattan(
+plotManhattan(
     data = hg19_insulin_GWAS,
     params = params,
     ymax = 1.1, cex = 0.20,
@@ -246,25 +246,25 @@ bbPlotManhattan(
 ## Plot gene track
 library(TxDb.Hsapiens.UCSC.hg19.knownGene)
 library(org.Hs.eg.db)
-bbPlotGenes(
+plotGenes(
     params = params,
     y = 4, height = 0.5
 )
 
 ## Plot genome label
-bbPlotGenomeLabel(
+plotGenomeLabel(
     params = params,
     y = 4.5, scale = "Mb"
 )
 ```
 
 Alternatively, if we want to plot around a particular gene rather than a 
-genomic region we can use `bbParams()` to specify `gene` and `geneBuffer`. 
+genomic region we can use `params()` to specify `gene` and `geneBuffer`. 
 If `geneBuffer` is not included, the default buffer adds `(gene length) / 2` 
 base pairs to the ends of the gene coordinates.
 
 ```{r eval=TRUE, echo=TRUE, message=FALSE}
-params <- bbParams(
+params <- params(
     gene = "LINC00113", geneBuffer = 100000, assembly = "hg19",
     x = 0.5, just = c("left", "top"),
     width = 2, length = 2, default.units = "inches"
@@ -277,21 +277,21 @@ data("IMR90_DNAloops_pairs")
 data("IMR90_ChIP_H3K27ac_signal")
 data("hg19_insulin_GWAS")
 
-## Create a BentoBox page
-bbPageCreate(
+## Create a plotgardener page
+pageCreate(
     width = 3, height = 5, default.units = "inches",
     showGuides = FALSE, xgrid = 0, ygrid = 0
 )
 
 ## Plot Hi-C data in region
-bbPlotHicSquare(
+plotHicSquare(
     data = IMR90_HiC_10kb,
     params = params,
     y = 0.5, height = 2
 )
 
 ## Plot loop annotations
-bbPlotPairsArches(
+plotPairsArches(
     data = IMR90_DNAloops_pairs,
     params = params,
     y = 2.5, height = 0.25,
@@ -299,14 +299,14 @@ bbPlotPairsArches(
 )
 
 ## Plot signal track data
-bbPlotSignal(
+plotSignal(
     data = IMR90_ChIP_H3K27ac_signal,
     params = params,
     y = 2.75, height = 0.5
 )
 
 ## Plot GWAS data
-bbPlotManhattan(
+plotManhattan(
     data = hg19_insulin_GWAS,
     params = params,
     ymax = 1.1, cex = 0.20,
@@ -316,13 +316,13 @@ bbPlotManhattan(
 ## Plot gene track
 library(TxDb.Hsapiens.UCSC.hg19.knownGene)
 library(org.Hs.eg.db)
-bbPlotGenes(
+plotGenes(
     params = params,
     y = 4, height = 0.5
 )
 
 ## Plot genome label
-bbPlotGenomeLabel(
+plotGenomeLabel(
     params = params,
     y = 4.5, scale = "bp", fontsize = 7
 )
@@ -333,7 +333,7 @@ bbPlotGenomeLabel(
 Since multi-omic plots often involve vertical stacking, the placement of 
 multi-omic plots can be facilitated with the "below" y-coordinate. Rather than
 providing a `numeric` value or `unit` object to the `y` parameter in plotting 
-functions, we can place a plot below the previously drawn `BentoBox` plot with 
+functions, we can place a plot below the previously drawn `plotgardener` plot with 
 a `character` value consisting of the distance below the last plot, in page 
 units, and "b". For example, on a page made in inches, `y = "0.1b"` will place 
 a plot 0.1 inches below the last drawn plot.
@@ -348,29 +348,29 @@ data("IMR90_DNAloops_pairs")
 data("IMR90_ChIP_H3K27ac_signal")
 data("hg19_insulin_GWAS")
 
-## bbParams
-params <- bbParams(
+## params
+params <- params(
     chrom = "chr21", chromstart = 28000000, chromend = 30300000,
     assembly = "hg19",
     x = 0.5, just = c("left", "top"),
     width = 2, length = 2, default.units = "inches"
 )
 
-## Create a BentoBox page
-bbPageCreate(
+## Create a plotgardener page
+pageCreate(
     width = 3, height = 5, default.units = "inches",
     showGuides = FALSE, xgrid = 0, ygrid = 0
 )
 
 ## Plot Hi-C data in region
-bbPlotHicSquare(
+plotHicSquare(
     data = IMR90_HiC_10kb,
     params = params,
     y = 0.5, height = 2
 )
 
 ## Plot loop annotations
-bbPlotPairsArches(
+plotPairsArches(
     data = IMR90_DNAloops_pairs,
     params = params,
     y = "0b",
@@ -379,7 +379,7 @@ bbPlotPairsArches(
 )
 
 ## Plot signal track data
-bbPlotSignal(
+plotSignal(
     data = IMR90_ChIP_H3K27ac_signal,
     params = params,
     y = "0b",
@@ -387,7 +387,7 @@ bbPlotSignal(
 )
 
 ## Plot GWAS data
-bbPlotManhattan(
+plotManhattan(
     data = hg19_insulin_GWAS,
     params = params,
     ymax = 1.1, cex = 0.20,
@@ -398,14 +398,14 @@ bbPlotManhattan(
 ## Plot gene track
 library(TxDb.Hsapiens.UCSC.hg19.knownGene)
 library(org.Hs.eg.db)
-bbPlotGenes(
+plotGenes(
     params = params,
     y = "0b",
     height = 0.5
 )
 
 ## Plot genome label
-bbPlotGenomeLabel(
+plotGenomeLabel(
     params = params,
     y = "0b",
     scale = "Mb"
@@ -416,15 +416,15 @@ bbPlotGenomeLabel(
 
 In many multi-omic visualizations, multiple signal tracks are often aligned 
 and stacked to compare different kinds of signal data and/or signals
-from different samples. **`BentoBox` does not normalize signal data** 
+from different samples. **`plotgardener` does not normalize signal data** 
 **based on variables like read depth**, but it is possible to 
-**scale** `BentoBox` signal plots to the same y-axis.
+**scale** `plotgardener` signal plots to the same y-axis.
 
 To determine the appropriate y-axis range, we first must get the
 maximum signal score from all of our datasets to be compared:
 
 ```{r eval=TRUE, echo=TRUE}
-library(BentoBoxData)
+library(plotgardenerData)
 data("IMR90_ChIP_H3K27ac_signal")
 data("GM12878_ChIP_H3K27ac_signal")
 
@@ -435,10 +435,10 @@ print(maxScore)
 
 In each of our signal plotting calls, we will then use the
 `range` parameter to set the range of both our y-axes to
-`c(0, maxScore)`. Here we can do this with our `bbParams` object:
+`c(0, maxScore)`. Here we can do this with our `params` object:
 
 ```{r echo=TRUE, eval=TRUE}
-params <- bbParams(
+params <- params(
     chrom = "chr21",
     chromstart = 28000000, chromend = 30300000,
     assembly = "hg19",
@@ -450,17 +450,17 @@ We are now ready to plot, align, and compare our signal plots along
 the genomic x-axis and the score y-axis:
 ```{r scale_signal, fig.height=2.1, fig.width=7.5, eval=TRUE, echo=TRUE}
 ## Create a page
-bbPageCreate(width = 7.5, height = 2.1, default.units = "inches",
+pageCreate(width = 7.5, height = 2.1, default.units = "inches",
             showGuides = FALSE, xgrid = 0, ygrid = 0)
 
 ## Plot and place signal plots
-signal1 <- bbPlotSignal(
+signal1 <- plotSignal(
     data = IMR90_ChIP_H3K27ac_signal, params = params,
     x = 0.5, y = 0.25, width = 6.5, height = 0.65,
     just = c("left", "top"), default.units = "inches"
 )
 
-signal2 <- bbPlotSignal(
+signal2 <- plotSignal(
     data = GM12878_ChIP_H3K27ac_signal, params = params,
     linecolor = "#7ecdbb",
     x = 0.5, y = 1, width = 6.5, height = 0.65,
@@ -468,7 +468,7 @@ signal2 <- bbPlotSignal(
 )
 
 ## Plot genome label
-bbPlotGenomeLabel(
+plotGenomeLabel(
     chrom = "chr21",
     chromstart = 28000000, chromend = 30300000,
     assembly = "hg19",
@@ -477,12 +477,12 @@ bbPlotGenomeLabel(
 )
 
 ## Add text labels
-bbPlotText(
+plotText(
     label = "IMR90", fonsize = 10, fontcolor = "#37a7db",
     x = 0.5, y = 0.25, just = c("left", "top"),
     default.units = "inches"
 )
-bbPlotText(
+plotText(
     label = "GM12878", fonsize = 10, fontcolor = "#7ecdbb",
     x = 0.5, y = 1, just = c("left", "top"),
     default.units = "inches"

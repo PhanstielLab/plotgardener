@@ -15,27 +15,27 @@ knitr::opts_chunk$set(
     message = FALSE,
     warning = FALSE
 )
-library(BentoBox)
+library(plotgardener)
 library(grid)
 library(GenomicRanges)
-library(BentoBoxData)
+library(plotgardenerData)
 ```
 
-`BentoBox` is modular and separates plotting and annotating into two different
+`plotgardener` is modular and separates plotting and annotating into two different
 categories of functions. To specify which plot to annotate within an 
 annotation function, each annotation function has a `plot` parameter that 
-accepts `BentoBox` plot objects. This will facilitate in inheriting genomic 
+accepts `plotgardener` plot objects. This will facilitate in inheriting genomic 
 region and plot location information. In this article we will go through some 
 of the major types of annotations used to create accurate and informative 
-`BentoBox` plots.
+`plotgardener` plots.
 
 All the data included in this article can be found in the supplementary
-package `BentoBoxData`.
+package `plotgardenerData`.
 
 ## Genome labels
 
 Genome labels are some of the most important annotations for giving context 
-to the genomic region of data. `bbAnnoGenomeLabel()` can add genome labels 
+to the genomic region of data. `annoGenomeLabel()` can add genome labels 
 with various customizations.
 
 Genome labels can be shown at three different basepair scales 
@@ -45,18 +45,18 @@ we can use a Mb scale:
 
 ```{r anno_01, echo=TRUE, eval=TRUE, fig.height=5, fig.width=6}
 data("IMR90_HiC_10kb")
-bbPageCreate(
+pageCreate(
     width = 3, height = 3.25, default.units = "inches",
     showGuides = FALSE, xgrid = 0, ygrid = 0
 )
-hicPlot <- bbPlotHicSquare(
+hicPlot <- plotHicSquare(
     data = IMR90_HiC_10kb,
     chrom = "chr21", chromstart = 28000000, chromend = 30300000,
     assembly = "hg19",
     x = 0.25, y = 0.25, width = 2.5, height = 2.5, default.units = "inches"
 )
 
-bbAnnoGenomeLabel(
+annoGenomeLabel(
     plot = hicPlot, scale = "Mb",
     x = 0.25, y = 2.76
 )
@@ -67,17 +67,17 @@ Mb scale will be rounded and indicated with an approximation sign:
 
 ```{r anno_02, echo=FALSE, eval=TRUE, warning=TRUE, fig.height=5, fig.width=6}
 data("IMR90_HiC_10kb")
-bbPageCreate(
+pageCreate(
     width = 3, height = 3.25, default.units = "inches",
     showGuides = FALSE, xgrid = 0, ygrid = 0
 )
-hicPlot <- bbPlotHicSquare(
+hicPlot <- plotHicSquare(
     data = IMR90_HiC_10kb,
     chrom = "chr21", chromstart = 28255554, chromend = 29354665,
     assembly = "hg19",
     x = 0.25, y = 0.25, width = 2.5, height = 2.5, default.units = "inches"
 )
-bbAnnoGenomeLabel(
+annoGenomeLabel(
     plot = hicPlot, scale = "Mb",
     x = 0.25, y = 2.76
 )
@@ -87,78 +87,78 @@ Thus, it makes more sense to use the bp scale for ultimate accuracy:
 
 ```{r anno_03, echo=TRUE, eval=TRUE, message=FALSE, fig.height=5, fig.width=6}
 data("IMR90_HiC_10kb")
-bbPageCreate(
+pageCreate(
     width = 3, height = 3.25, default.units = "inches",
     showGuides = FALSE, xgrid = 0, ygrid = 0
 )
-hicPlot <- bbPlotHicSquare(
+hicPlot <- plotHicSquare(
     data = IMR90_HiC_10kb,
     chrom = "chr21", chromstart = 28255554, chromend = 29354665,
     assembly = "hg19",
     x = 0.25, y = 0.25, width = 2.5, height = 2.5, default.units = "inches"
 )
-bbAnnoGenomeLabel(
+annoGenomeLabel(
     plot = hicPlot, scale = "bp",
     x = 0.25, y = 2.76
 )
 ```
 
-If our genomic region is small enough, `bbAnnoGenomeLabel()` can also be 
+If our genomic region is small enough, `annoGenomeLabel()` can also be 
 used to display the nucleotide sequence of that region. Similar to IGV, 
-`bbAnnoGenomeLabel()` will first represent nucleotides as colored boxes:
+`annoGenomeLabel()` will first represent nucleotides as colored boxes:
 
 ```{r anno_04, echo=FALSE, fig.height=2.5, fig.width=7, message=FALSE}
 library(TxDb.Hsapiens.UCSC.hg19.knownGene)
 library(org.Hs.eg.db)
 library(BSgenome.Hsapiens.UCSC.hg19)
 
-bbPageCreate(
+pageCreate(
     width = 5, height = 1.5, default.units = "inches",
     showGuides = FALSE, xgrid = 0, ygrid = 0
 )
-geneTrack <- bbPlotGenes(
+geneTrack <- plotGenes(
     chrom = "chr1", chromstart = 110146000, chromend = 110146050,
     assembly = "hg19",
     x = 0.5, y = 0.25, width = 4, height = 0.75, default.units = "inches"
 )
-bbAnnoGenomeLabel(plot = geneTrack, x = 0.5, y = 1.01)
+annoGenomeLabel(plot = geneTrack, x = 0.5, y = 1.01)
 ```  
 
-At even finer scales, `bbAnnoGenomeLabel()` will then represent nucleotides 
+At even finer scales, `annoGenomeLabel()` will then represent nucleotides 
 with colored letters:
 
 ```{r anno_05, echo=FALSE, fig.height=2.5, fig.width=7, message=FALSE}
 library(TxDb.Hsapiens.UCSC.hg19.knownGene)
 library(org.Hs.eg.db)
 
-bbPageCreate(
+pageCreate(
     width = 5, height = 1.5, default.units = "inches",
     showGuides = FALSE, xgrid = 0, ygrid = 0
 )
-geneTrack <- bbPlotGenes(
+geneTrack <- plotGenes(
     chrom = "chr1", chromstart = 110146000, chromend = 110146025,
     assembly = "hg19",
     x = 0.5, y = 0.25, width = 4, height = 0.75, default.units = "inches"
 )
-bbAnnoGenomeLabel(plot = geneTrack, x = 0.5, y = 1.01)
+annoGenomeLabel(plot = geneTrack, x = 0.5, y = 1.01)
 ```  
 
-In the specific case of square Hi-C plots (`bb_hicSquare` objects), 
-`bbAnnoGenomeLabel()` can annotate the genome label along the y-axis:
+In the specific case of square Hi-C plots (`hicSquare` objects), 
+`annoGenomeLabel()` can annotate the genome label along the y-axis:
 
 ```{r anno_06, echo=TRUE, eval=TRUE, message=FALSE, fig.height=5, fig.width=6}
 data("IMR90_HiC_10kb")
-bbPageCreate(
+pageCreate(
     width = 3.25, height = 3, default.units = "inches",
     showGuides = FALSE, xgrid = 0, ygrid = 0
 )
-hicPlot <- bbPlotHicSquare(
+hicPlot <- plotHicSquare(
     data = IMR90_HiC_10kb,
     chrom = "chr21", chromstart = 28000000, chromend = 30300000,
     assembly = "hg19",
     x = 0.5, y = 0.25, width = 2.5, height = 2.5, default.units = "inches"
 )
-bbAnnoGenomeLabel(
+annoGenomeLabel(
     plot = hicPlot, scale = "Mb",
     axis = "y",
     x = 0.5, y = 0.25,
@@ -170,18 +170,18 @@ bbAnnoGenomeLabel(
 
 In addition to genomic axes, it is also common to annotate standard x and 
 y-axes for measures of scale. This functionality is provided by the 
-`bbAnnoXaxis()` and `bbAnnoYaxis()` functions. For example, a Manhattan 
+`annoXaxis()` and `annoYaxis()` functions. For example, a Manhattan 
 plot requires a y-axis to indicate the range of p-values:
 
 ```{r anno_07, echo=TRUE, fig.height=3.75, fig.width=9.5, message=FALSE}
 library("TxDb.Hsapiens.UCSC.hg19.knownGene")
 data("hg19_insulin_GWAS")
 
-bbPageCreate(
+pageCreate(
     width = 7.5, height = 2.75, default.units = "inches",
     showGuides = FALSE, xgrid = 0, ygrid = 0
 )
-manhattanPlot <- bbPlotManhattan(
+manhattanPlot <- plotManhattan(
     data = hg19_insulin_GWAS, assembly = "hg19",
     fill = c("grey", "#37a7db"),
     sigLine = TRUE,
@@ -190,58 +190,58 @@ manhattanPlot <- bbPlotManhattan(
     just = c("left", "top"),
     default.units = "inches"
 )
-bbAnnoGenomeLabel(
+annoGenomeLabel(
     plot = manhattanPlot, x = 0.5, y = 2.25, fontsize = 8,
     just = c("left", "top"), default.units = "inches"
 )
-bbPlotText(
+plotText(
     label = "Chromosome", fontsize = 8,
     x = 3.75, y = 2.45, just = "center", default.units = "inches"
 )
 
 ## Annotate y-axis
-bbAnnoYaxis(
+annoYaxis(
     plot = manhattanPlot, at = c(0, 2, 4, 6, 8, 10, 12, 14),
     axisLine = TRUE, fontsize = 8
 )
 ## Plot y-axis label
-bbPlotText(
+plotText(
     label = "-log10(p-value)", x = 0.15, y = 1.25, rot = 90,
     fontsize = 8, fontface = "bold", just = "center",
     default.units = "inches"
 )
 ```
 
-`bbAnnoXaxis()` and `bbAnnoYaxis()` have similar usages and customizations.
+`annoXaxis()` and `annoYaxis()` have similar usages and customizations.
 
 ## Heatmap legends
 
 Heatmap-style plots with numbers translated to a palette of colors require a 
 specific type of legend. This legend can be plotted with 
-`bbAnnoHeatmapLegend()` in both vertical and horizontal orientations. Genomic 
+`annoHeatmapLegend()` in both vertical and horizontal orientations. Genomic 
 plots that typically require this annotation are Hi-C plots made with 
-`bbPlotHicRectangle()`, `bbPlotHicSquare()`, or `bbPlotHicTriangle()`.
+`plotHicRectangle()`, `plotHicSquare()`, or `plotHicTriangle()`.
 
 ```{r anno_08, echo=TRUE, fig.height=4.25, fig.width=5.25, message=FALSE}
 data("IMR90_HiC_10kb")
 
-bbPageCreate(
+pageCreate(
     width = 3.25, height = 3.25, default.units = "inches",
     showGuides = FALSE, xgrid = 0, ygrid = 0
 )
-params <- bbParams(
+params <- params(
     chrom = "chr21", chromstart = 28000000, chromend = 30300000,
     assembly = "hg19",
     x = 0.25, width = 2.75, just = c("left", "top"), default.units = "inches"
 )
-hicPlot <- bbPlotHicSquare(
+hicPlot <- plotHicSquare(
     data = IMR90_HiC_10kb, params = params,
     zrange = c(0, 70), resolution = 10000,
     y = 0.25, height = 2.75
 )
 
 ## Annotate Hi-C heatmap legend
-bbAnnoHeatmapLegend(
+annoHeatmapLegend(
     plot = hicPlot, fontsize = 7,
     orientation = "v",
     x = 0.125, y = 0.25,
@@ -249,7 +249,7 @@ bbAnnoHeatmapLegend(
     default.units = "inches"
 )
 
-bbAnnoHeatmapLegend(
+annoHeatmapLegend(
     plot = hicPlot, fontsize = 7,
     orientation = "h",
     x = 3, y = 3.055,
@@ -267,11 +267,11 @@ data. Pixels can be annotated with boxes, circles, or squares.
 data("IMR90_HiC_10kb")
 data("IMR90_DNAloops_pairs")
 
-bbPageCreate(
+pageCreate(
     width = 3.25, height = 3.24, default.units = "inches",
     showGuides = FALSE, xgrid = 0, ygrid = 0
 )
-hicPlot <- bbPlotHicSquare(
+hicPlot <- plotHicSquare(
     data = IMR90_HiC_10kb, resolution = 10000, zrange = c(0, 70),
     chrom = "chr21", chromstart = 28000000, chromend = 30300000,
     assembly = "hg19",
@@ -281,14 +281,14 @@ hicPlot <- bbPlotHicSquare(
 )
 
 ## Annotate pixels
-pixels <- bbAnnoPixels(
+pixels <- annoPixels(
     plot = hicPlot, data = IMR90_DNAloops_pairs, type = "box",
     half = "top"
 )
 ```
 
 If we want to annotate one pixel of interest, we can subset our BEDPE data and 
-`bbAnnoPixels()` will only annotate the specified pixels:
+`annoPixels()` will only annotate the specified pixels:
 
 ```{r anno_10, echo=TRUE, fig.height=4.25, fig.width=5.25, message=FALSE}
 data("IMR90_HiC_10kb")
@@ -298,11 +298,11 @@ data("IMR90_DNAloops_pairs")
 IMR90_DNAloops_pairs <- IMR90_DNAloops_pairs[which(IMR90_DNAloops_pairs$start1 == 28220000 &
     IMR90_DNAloops_pairs$start2 == 29070000), ]
 
-bbPageCreate(
+pageCreate(
     width = 3.25, height = 3.24, default.units = "inches",
     showGuides = FALSE, xgrid = 0, ygrid = 0
 )
-hicPlot <- bbPlotHicSquare(
+hicPlot <- plotHicSquare(
     data = IMR90_HiC_10kb, resolution = 10000, zrange = c(0, 70),
     chrom = "chr21", chromstart = 28000000, chromend = 30300000,
     x = 0.25, y = 0.25, width = 2.75, height = 2.75,
@@ -311,14 +311,14 @@ hicPlot <- bbPlotHicSquare(
 )
 
 ## Annotate pixel
-pixels <- bbAnnoPixels(
+pixels <- annoPixels(
     plot = hicPlot, data = IMR90_DNAloops_pairs, type = "arrow",
     half = "bottom", shift = 12
 )
 ```
 
 For genomic ranges of domain data, we can annotate Hi-C domains with
-`bbAnnoDomains()`. For example, if we want to annotate the following domains
+`annoDomains()`. For example, if we want to annotate the following domains
 
 ```{r echo=TRUE, eval=TRUE}
 domains <- GRanges("chr21",
@@ -332,11 +332,11 @@ in this Hi-C plot:
 
 ```{r anno_11, echo=FALSE, message=FALSE, fig.height=4.25, fig.width=5.25}
 data("IMR90_HiC_10kb")
-bbPageCreate(
+pageCreate(
     width = 3.25, height = 3.24, default.units = "inches",
     showGuides = FALSE, xgrid = 0, ygrid = 0
 )
-hicPlot <- bbPlotHicSquare(
+hicPlot <- plotHicSquare(
     data = IMR90_HiC_10kb, resolution = 10000, zrange = c(0, 70),
     chrom = "chr21", chromstart = 28000000, chromend = 30300000,
     x = 0.25, y = 0.25, width = 2.75, height = 2.75,
@@ -348,11 +348,11 @@ hicPlot <- bbPlotHicSquare(
 We would use a similar workflow to how we annotated Hi-C pixels:
 
 ```{r anno_12, echo=TRUE, fig.height=4.25, fig.width=5.25, message=FALSE}
-bbPageCreate(
+pageCreate(
     width = 3.25, height = 3.24, default.units = "inches",
     showGuides = FALSE, xgrid = 0, ygrid = 0
 )
-hicPlot <- bbPlotHicSquare(
+hicPlot <- plotHicSquare(
     data = IMR90_HiC_10kb, resolution = 10000, zrange = c(0, 70),
     chrom = "chr21", chromstart = 28000000, chromend = 30300000,
     x = 0.25, y = 0.25, width = 2.75, height = 2.75,
@@ -361,12 +361,12 @@ hicPlot <- bbPlotHicSquare(
 )
 
 ## Annotate domains
-domainAnno <- bbAnnoDomains(
+domainAnno <- annoDomains(
     plot = hicPlot, data = domains,
     half = "bottom", linecolor = "red"
 )
 
-bbAnnoGenomeLabel(
+annoGenomeLabel(
     plot = hicPlot, 
     x = 0.25, y = 3.01
 )
@@ -391,23 +391,23 @@ First we can plot our ideogram:
 library(AnnotationHub)
 library(TxDb.Hsapiens.UCSC.hg19.knownGene)
 
-bbPageCreate(
+pageCreate(
     width = 6.25, height = 2.25, default.units = "inches",
     showGuides = FALSE, xgrid = 0, ygrid = 0
 )
-ideogramPlot <- bbPlotIdeogram(
+ideogramPlot <- plotIdeogram(
     chrom = "chr21", assembly = "hg19",
     orientation = "h",
     x = 0.25, y = 0.5, width = 5.75, height = 0.3, just = "left"
 )
 ```
 
-We can then use `bbAnnoHighlight()` to highlight our genomic region of 
+We can then use `annoHighlight()` to highlight our genomic region of 
 interest (`chr21:28000000-30300000`) with a box of our desired `height`:
 
 ```{r eval=FALSE, echo=TRUE, message=FALSE}
-region <- bbParams(chrom = "chr21", chromstart = 28000000, chromend = 30300000)
-bbAnnoHighlight(
+region <- params(chrom = "chr21", chromstart = 28000000, chromend = 30300000)
+annoHighlight(
     plot = ideogramPlot, params = region,
     fill = "red",
     y = 0.25, height = 0.5, just = c("left", "top"), default.units = "inches"
@@ -417,19 +417,19 @@ bbAnnoHighlight(
 ```{r anno_14, echo=FALSE, fig.height=3.25, fig.width=8.25, message=FALSE}
 library(AnnotationHub)
 library(TxDb.Hsapiens.UCSC.hg19.knownGene)
-bbPageCreate(
+pageCreate(
     width = 6.25, height = 2.25, default.units = "inches",
     showGuides = FALSE, xgrid = 0, ygrid = 0
 )
 
-ideogramPlot <- bbPlotIdeogram(
+ideogramPlot <- plotIdeogram(
     chrom = "chr21", assembly = "hg19",
     orientation = "h",
     x = 0.25, y = 0.5, width = 5.75, height = 0.3, just = "left"
 )
-region <- bbParams(chrom = "chr21", chromstart = 28000000, chromend = 30300000)
+region <- params(chrom = "chr21", chromstart = 28000000, chromend = 30300000)
 
-bbAnnoHighlight(
+annoHighlight(
     plot = ideogramPlot, params = region,
     fill = "red",
     y = 0.25, height = 0.5, just = c("left", "top"), default.units = "inches"
@@ -437,10 +437,10 @@ bbAnnoHighlight(
 ```
 
 To make it clearer that we are zooming in on a genomic region, we can then use
-`bbAnnoZoomLines()` to add zoom lines from the genomic region we highlighted:
+`annoZoomLines()` to add zoom lines from the genomic region we highlighted:
 
 ```{r eval=FALSE, echo=TRUE, message=FALSE}
-bbAnnoZoomLines(
+annoZoomLines(
     plot = ideogramPlot, params = region,
     y0 = 0.75, x1 = c(0.25, 6), y1 = 1.25, default.units = "inches"
 )
@@ -449,24 +449,24 @@ bbAnnoZoomLines(
 ```{r anno_15, echo=FALSE, fig.height=3.25, fig.width=8.25, message=FALSE}
 library(AnnotationHub)
 library(TxDb.Hsapiens.UCSC.hg19.knownGene)
-bbPageCreate(
+pageCreate(
     width = 6.25, height = 2.25, default.units = "inches",
     showGuides = FALSE, xgrid = 0, ygrid = 0
 )
 
-ideogramPlot <- bbPlotIdeogram(
+ideogramPlot <- plotIdeogram(
     chrom = "chr21", assembly = "hg19",
     orientation = "h",
     x = 0.25, y = 0.5, width = 5.75, height = 0.3, just = "left"
 )
-region <- bbParams(chrom = "chr21", chromstart = 28000000, chromend = 30300000)
+region <- params(chrom = "chr21", chromstart = 28000000, chromend = 30300000)
 
-bbAnnoHighlight(
+annoHighlight(
     plot = ideogramPlot, params = region,
     fill = "red",
     y = 0.25, height = 0.5, just = c("left", "top"), default.units = "inches"
 )
-bbAnnoZoomLines(
+annoZoomLines(
     plot = ideogramPlot, params = region,
     y0 = 0.75, x1 = c(0.25, 6), y1 = 1.25, default.units = "inches"
 )
@@ -478,35 +478,35 @@ Finally, we can add our zoomed-in signal track data within the zoom lines:
 library(AnnotationHub)
 data("IMR90_ChIP_H3K27ac_signal")
 library(TxDb.Hsapiens.UCSC.hg19.knownGene)
-bbPageCreate(
+pageCreate(
     width = 6.25, height = 2.25, default.units = "inches",
     showGuides = FALSE, xgrid = 0, ygrid = 0
 )
 
-ideogramPlot <- bbPlotIdeogram(
+ideogramPlot <- plotIdeogram(
     chrom = "chr21", assembly = "hg19",
     orientation = "h",
     x = 0.25, y = 0.5, width = 5.75, height = 0.3, just = "left"
 )
-region <- bbParams(chrom = "chr21", chromstart = 28000000, chromend = 30300000)
+region <- params(chrom = "chr21", chromstart = 28000000, chromend = 30300000)
 
-bbAnnoHighlight(
+annoHighlight(
     plot = ideogramPlot, params = region,
     fill = "red",
     y = 0.25, height = 0.5, just = c("left", "top"), default.units = "inches"
 )
-bbAnnoZoomLines(
+annoZoomLines(
     plot = ideogramPlot, params = region,
     y0 = 0.75, x1 = c(0.25, 6), y1 = 1.25, default.units = "inches"
 )
 
 
-signalPlot <- bbPlotSignal(
+signalPlot <- plotSignal(
     data = IMR90_ChIP_H3K27ac_signal, params = region,
     x = 0.25, y = 1.25, width = 5.75, height = 0.65
 )
 
-bbAnnoGenomeLabel(
+annoGenomeLabel(
     plot = signalPlot, scale = "Mb",
     x = 0.25, y = 1.95
 )

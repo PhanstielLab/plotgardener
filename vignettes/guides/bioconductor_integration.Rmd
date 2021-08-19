@@ -19,39 +19,39 @@ knitr::opts_chunk$set(
     message = FALSE
 )
 library(grid)
-library(BentoBox)
+library(plotgardener)
 ```
 
-`BentoBox` is designed to be flexibly compatible with typical Bioconductor 
+`plotgardener` is designed to be flexibly compatible with typical Bioconductor 
 classes and libraries of genomic data to easily integrate genomic data 
 analysis and visualization. In addition to handling various genomic file 
-types and `R` objects, many `BentoBox` functions can also handle `GRanges` or
-`GInteractions` objects as input data. Furthermore, `BentoBox` does not hard-code 
+types and `R` objects, many `plotgardener` functions can also handle `GRanges` or
+`GInteractions` objects as input data. Furthermore, `plotgardener` does not hard-code 
 any genomic assemblies and can utilize `TxDb`, `OrgDb`, and `BSgenome` objects 
 for various genomic annotations, including gene and transcript structures 
 and names, chromosome sizes, and nucleotide sequences. Furthermore, all cytoband
 data for ideogram plots is retrieved from the UCSC Genome Browser through 
 `AnnotationHub`. For standard genomic assemblies (i.e. hg19, hg38, mm10), 
-`BentoBox` uses a set of default packages that can be displayed by calling 
-`bbDefaultPackages()`:
+`plotgardener` uses a set of default packages that can be displayed by calling 
+`defaultPackages()`:
 
 ```{r echo=TRUE, eval=TRUE}
-bbDefaultPackages("hg38")
-bbDefaultPackages("hg19")
-bbDefaultPackages("mm10")
+defaultPackages("hg38")
+defaultPackages("hg19")
+defaultPackages("mm10")
 ```
 
-To see which assemblies have defaults within `BentoBox`, call `bbGenomes()`:
+To see which assemblies have defaults within `plotgardener`, call `genomes()`:
 
 ```{r echo=TRUE, eval=TRUE}
-bbGenomes()
+genomes()
 ```
 
-`BentoBox` functions default to an "hg38" assembly, but can be customized
-with any of the other genomic assemblies included or a `bbAssembly` object.
+`plotgardener` functions default to an "hg38" assembly, but can be customized
+with any of the other genomic assemblies included or a `assembly` object.
 To create custom genomic assemblies and combinations of `TxDb`, `orgDb`, and 
-`BSgenome` packages for use in `BentoBox` functions, we can use the 
-`bbAssembly()` constructor. For example, we can create our own `TxDb` 
+`BSgenome` packages for use in `plotgardener` functions, we can use the 
+`assembly()` constructor. For example, we can create our own `TxDb` 
 from the current human Ensembl release:
 
 ```{r eval=FALSE, echo=TRUE}
@@ -62,7 +62,7 @@ TxDb.Hsapiens.Ensembl.GrCh38.103 <- makeTxDbFromEnsembl(
 )
 ```
 
-We can now create a new `bbAssembly` with this `TxDb` and combinations of 
+We can now create a new `assembly` with this `TxDb` and combinations of 
 other Bioconductor packages. The `Genome` parameter can is a string to name 
 or describe this assembly. Since the `TxDb` is now from ENSEMBL, we will 
 change the `gene.id` field to `"ENSEMBL"` to map gene IDs and symbols between 
@@ -70,7 +70,7 @@ our `TxDb` and `orgDb` objects. Most gene ID types can be found by calling
 `AnnotationDbi::keytypes()` on an `orgDb`.
 
 ```{r eval=FALSE, echo=TRUE}
-Ensembl38 <- bbAssembly(
+Ensembl38 <- assembly(
     Genome = "Ensembl.GRCh38.103",
     TxDb = TxDb.Hsapiens.Ensembl.GrCh38.103,
     OrgDb = "org.Hs.eg.db",
@@ -79,30 +79,30 @@ Ensembl38 <- bbAssembly(
 )
 ```
 
-This `bbAssembly` object can now be easily passed into `BentoBox` functions 
+This `assembly` object can now be easily passed into `plotgardener` functions 
 through the `assembly` parameter to use custom genomic assembly configurations.
 
-`bbAssembly` objects are especially handy for changing the type of gene or transcript label 
+`assembly` objects are especially handy for changing the type of gene or transcript label 
 of our gene and transcript plots. The default `display.column = "SYMBOL"`, but we could 
 change this value to other available `keytypes` in the `orgDb` we are using.
 For example, if we wanted to display the associated Ensembl IDs of an "hg19" 
-`bbAssembly` object, we would set `display.column = "ENSEMBL"`:
+`assembly` object, we would set `display.column = "ENSEMBL"`:
 
 ```{r bioc_01, echo=TRUE, fig.height=2.25, fig.width=5, message=FALSE}
 library(TxDb.Hsapiens.UCSC.hg19.knownGene)
 library(org.Hs.eg.db)
-new_hg19 <- bbAssembly(
+new_hg19 <- assembly(
     Genome = "id_hg19",
     TxDb = "TxDb.Hsapiens.UCSC.hg19.knownGene",
     OrgDb = "org.Hs.eg.db",
     gene.id.column = "ENTREZID",
     display.column = "ENSEMBL"
 )
-bbPageCreate(
+pageCreate(
     width = 5, height = 1.25,
     showGuides = FALSE, xgrid = 0, ygrid = 0
 )
-genePlot <- bbPlotGenes(
+genePlot <- plotGenes(
     chrom = "chr2", chromstart = 1000000, chromend = 20000000,
     assembly = new_hg19,
     x = 0.25, y = 0.25, width = 4.75, height = 1

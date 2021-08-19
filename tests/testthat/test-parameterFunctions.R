@@ -7,7 +7,7 @@ test_that("parseParams", {
         ## Access user-declared arguments of parent function like this:
         decArgs <- lapply(match.call()[-1], eval)
         ## Call parseParams like this:
-        x <- BentoBox:::parseParams(params = params, defaultArgs = defArgs, 
+        x <- plotgardener:::parseParams(params = params, defaultArgs = defArgs, 
                                     declaredArgs = decArgs,
                                     class = "object")
         ## Crete internal object like this:
@@ -51,7 +51,7 @@ test_that("parseParams", {
                      class = "object"
                  ))
     ## Overriding bb_params parameter
-    expect_equal(test(params = bbParams(alpha = 100), arch = "not_blah", alpha = 10),
+    expect_equal(test(params = params(alpha = 100), arch = "not_blah", alpha = 10),
                  structure(
                      .Data = list("alpha" = 10,
                                   "hic" = NULL,
@@ -68,20 +68,20 @@ test_that("parseParams", {
 test_that("setGP", {
     
     ## Empty gpar
-    expect_equal(BentoBox:::setGP(
+    expect_equal(plotgardener:::setGP(
         gpList = gpar(),
         params = NULL
     ), gpar())
     
     ## One gpar parameter replaced
-    expect_equal(BentoBox:::setGP(
+    expect_equal(plotgardener:::setGP(
         gpList = gpar(),
         params = NULL,
         lwd = 2
     ), gpar(lwd = 2))
 
     ## Multiple gpar parameters replaced
-    expect_equal(BentoBox:::setGP(
+    expect_equal(plotgardener:::setGP(
         gpList = gpar(),
         params = NULL,
         lwd = 2, lty = 2
@@ -89,65 +89,65 @@ test_that("setGP", {
     
 })
 
-test_that("bb_regionErrors", {
+test_that("regionErrors", {
     
     ## No errors
-    expect_silent(BentoBox:::bb_regionErrors(chromstart = 1000000,
+    expect_silent(plotgardener:::regionErrors(chromstart = 1000000,
                                chromend = 2000000))
     ## 0 bp wide region error
-    expect_error(BentoBox:::bb_regionErrors(chromstart = 1000000,
+    expect_error(plotgardener:::regionErrors(chromstart = 1000000,
                                              chromend = 1000000))
     ## One null chromstart/chromend
-    expect_error(BentoBox:::bb_regionErrors(chromstart = 1000000,
+    expect_error(plotgardener:::regionErrors(chromstart = 1000000,
                                             chromend = NULL))
     
     ## chromstart bigger than chromend
-    expect_error(BentoBox:::bb_regionErrors(chromstart = 2000000,
+    expect_error(plotgardener:::regionErrors(chromstart = 2000000,
                                             chromend = 1000000))
 })
 
-test_that("bb_justConversion", {
+test_that("justConversion", {
     
     ## left, top should be 0, 1
-    expect_equal(BentoBox:::bb_justConversion(just = c("left", "top")),
+    expect_equal(plotgardener:::justConversion(just = c("left", "top")),
                  c(0, 1))
     
     ## top, left should be 0, 1
-    expect_equal(BentoBox:::bb_justConversion(just = c("top", "left")),
+    expect_equal(plotgardener:::justConversion(just = c("top", "left")),
                  c(0, 1))
     
     ## Invalid just option error
-    expect_error(BentoBox:::bb_justConversion(just = "invalid"))
+    expect_error(plotgardener:::justConversion(just = "invalid"))
     
 })
 
-test_that("parse_bbAssembly", {
+test_that("parseAssembly", {
     
     ## Invalid default assembly
-    expect_error(BentoBox:::parse_bbAssembly(assembly = "none"))
+    expect_error(plotgardener:::parseAssembly(assembly = "none"))
     
     ## Default hg19 assembly
-    expect_equal(BentoBox:::parse_bbAssembly(assembly = "hg19"),
+    expect_equal(plotgardener:::parseAssembly(assembly = "hg19"),
                  structure(.Data = list("Genome" = "hg19",
                                         "TxDb" = "TxDb.Hsapiens.UCSC.hg19.knownGene",
                                         "OrgDb" = "org.Hs.eg.db",
                                         "gene.id.column" = "ENTREZID",
                                         "display.column" = "SYMBOL",
                                         "BSgenome" = "BSgenome.Hsapiens.UCSC.hg19"),
-                           class = "bbAssembly"))
+                           class = "assembly"))
     
     ## Input bb_assembly object just returns itself
-    assemblyobject <- bbAssembly(Genome = "testing",
+    assemblyobject <- assembly(Genome = "testing",
                                   TxDb = "TxDb",
                                   OrgDb = "OrgDb")
     
-    expect_equal(BentoBox:::parse_bbAssembly(assembly = assemblyobject),
+    expect_equal(plotgardener:::parseAssembly(assembly = assemblyobject),
                  structure(.Data = list("Genome" = "testing",
                                         "TxDb" = "TxDb",
                                         "OrgDb" = "OrgDb",
                                         "gene.id.column" = "ENTREZID",
                                         "display.column" = "SYMBOL"),
-                           class = "bbAssembly"))
+                           class = "assembly"))
 })
 
 test_that("defaultUnits", {
@@ -157,10 +157,10 @@ test_that("defaultUnits", {
                        "y" = unit(2, "inches"),
                        "width" = unit(3, "npc"),
                        "height" = unit(4, "cm"))
-    expect_equal(BentoBox:::defaultUnits(object = testObject, 
+    expect_equal(plotgardener:::defaultUnits(object = testObject, 
                                          default.units = "inches"),
                  testObject)
-    expect_equal(BentoBox:::misc_defaultUnits(value = unit(1, "inches"),
+    expect_equal(plotgardener:::misc_defaultUnits(value = unit(1, "inches"),
                                               name = "x0",
                                               default.units = "npc"),
                  unit(1, "inches"))
@@ -170,13 +170,13 @@ test_that("defaultUnits", {
                        "y" = unit(2, "inches"),
                        "width" = 3,
                        "height" = unit(4, "cm"))
-    expect_equal(BentoBox:::defaultUnits(object = testObject, 
+    expect_equal(plotgardener:::defaultUnits(object = testObject, 
                                          default.units = "inches"),
                  list("x" = unit(1, "inches"),
                       "y" = unit(2, "inches"),
                       "width" = unit(3, "inches"),
                       "height" = unit(4, "cm")))
-    expect_equal(BentoBox:::misc_defaultUnits(value = 1,
+    expect_equal(plotgardener:::misc_defaultUnits(value = 1,
                                               name = "x0",
                                               default.units = "npc"),
                  unit(1, "npc"))
@@ -186,9 +186,9 @@ test_that("defaultUnits", {
                        "y" = "plb",
                        "width" = 3,
                        "height" = unit(4, "cm"))
-    expect_error(BentoBox:::defaultUnits(object = testObject,
+    expect_error(plotgardener:::defaultUnits(object = testObject,
                                          default.units = "inches"))
-    expect_error(BentoBox:::misc_defaultUnits(value = "plb",
+    expect_error(plotgardener:::misc_defaultUnits(value = "plb",
                                               name = "y0",
                                               default.units = "npc"))
 })

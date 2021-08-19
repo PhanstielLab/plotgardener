@@ -1,4 +1,4 @@
 library(testthat)
-library(BentoBox)
+library(plotgardener)
 
-test_check("BentoBox")
+test_check("plotgardener")

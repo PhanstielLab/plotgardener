@@ -1,8 +1,8 @@
-#' Handle BentoBox color scaling parameters
+#' Handle plotgardener color scaling parameters
 #'
 #' \code{colorby} should be used to create a set of parameters
-#' that specify color scaling for the functions \code{bbPlotPairs},
-#' \code{bbPlotPairsArches}, and \code{bbPlotRanges}.
+#' that specify color scaling for the functions \code{plotPairs},
+#' \code{plotPairsArches}, and \code{plotRanges}.
 #'
 #' @param column String specifying name of data column to scale colors by.
 #' @param palette (optional) A function describing the color palette to use for
@@ -13,11 +13,11 @@
 #' NULL range of numerical `colorby` values to subset of data in a plotted
 #' genomic regoin. Default value is \code{scalePerRegion = FALSE}.
 #'
-#' @return Returns a "\code{bb_colorby}" object.
+#' @return Returns a "\code{colorby}" object.
 #'
 #' @examples
 #' ## Load paired ranges data in BEDPE format
-#' library(BentoBoxData)
+#' library(plotgardenerData)
 #' data("IMR90_DNAloops_pairs")
 #'
 #' ## Add a length column
@@ -25,7 +25,7 @@
 #'         (IMR90_DNAloops_pairs$start2 - IMR90_DNAloops_pairs$start1) / 1000
 #'
 #' ## Plot pairs with colorby object set for `length` column
-#' bedpePlot <- bbPlotPairs(
+#' bedpePlot <- plotPairs(
 #'     data = IMR90_DNAloops_pairs,
 #'     chrom = "chr21",
 #'     chromstart = 27900000, chromend = 30700000,
@@ -40,7 +40,7 @@ colorby <- function(column, palette = NULL, range = NULL,
     colorbyObject <- structure(list(column = column, palette = palette, 
                                     range = range, 
                                     scalePerRegion = scalePerRegion),
-        class = "bb_colorby"
+        class = "colorby"
     )
     return(colorbyObject)
 }

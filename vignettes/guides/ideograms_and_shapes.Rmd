@@ -15,14 +15,14 @@ knitr::opts_chunk$set(
     message = FALSE,
     warning = FALSE
 )
-library(BentoBox)
+library(plotgardener)
 library(grid)
-library(BentoBoxData)
+library(plotgardenerData)
 ```
 
 Beyond providing functions for plotting and arranging various genomic 
-datasets, `BentoBox` also gives users the functionality to plot other elements
-within a `BentoBox` page layout:
+datasets, `plotgardener` also gives users the functionality to plot other elements
+within a `plotgardener` page layout:
 
 ## Ideograms
 
@@ -43,21 +43,21 @@ tx_db <- TxDb.Hsapiens.UCSC.hg19.knownGene
 chromSizes <- GenomeInfoDb::seqlengths(tx_db)
 maxChromSize <- max(chromSizes)
 
-bbPageCreate(
+pageCreate(
     width = 8.35, height = 4.25, default.units = "inches",
     showGuides = FALSE, xgrid = 0, ygrid = 0
 )
 xCoord <- 0.15
 for (chr in c(paste0("chr", seq(1, 22)), "chrX", "chrY")) {
     height <- (4 * chromSizes[[chr]]) / maxChromSize
-    bbPlotIdeogram(
+    plotIdeogram(
         chrom = chr, assembly = "hg19",
         orientation = "v",
         x = xCoord, y = 4,
         width = 0.2, height = height,
         just = "bottom"
     )
-    bbPlotText(
+    plotText(
         label = gsub("chr", "", chr),
         x = xCoord, y = 4.1, fontsize = 10
     )
@@ -66,12 +66,12 @@ for (chr in c(paste0("chr", seq(1, 22)), "chrX", "chrY")) {
 ```
 
 ```{r ideogram_02, echo=TRUE, fig.height=.5, fig.width=8.25, message=FALSE}
-bbPageCreate(
+pageCreate(
     width = 6.25, height = 0.5, default.units = "inches",
     showGuides = FALSE, xgrid = 0, ygrid = 0
 )
 
-bbPlotIdeogram(
+plotIdeogram(
     chrom = "chr1", assembly = "hg19",
     orientation = "h",
     x = 0.25, y = unit(0.25, "npc"), width = 5.75, height = 0.3
@@ -81,7 +81,7 @@ bbPlotIdeogram(
 The cytobands can also be hidden if a more minimal ideogram is preferred:
 
 ```{r eval=FALSE, echo=TRUE, message=FALSE}
-bbPlotIdeogram(
+plotIdeogram(
     showBands = FALSE,
     chrom = "chr1", assembly = "hg19",
     orientation = "h",
@@ -90,12 +90,12 @@ bbPlotIdeogram(
 ```
 
 ```{r ideogram_03, echo=FALSE, fig.height=.5, fig.width=8.25, message=FALSE}
-bbPageCreate(
+pageCreate(
     width = 6.25, height = 0.5, default.units = "inches",
     showGuides = FALSE, xgrid = 0, ygrid = 0
 )
 
-bbPlotIdeogram(
+plotIdeogram(
     showBands = FALSE,
     chrom = "chr1", assembly = "hg19",
     orientation = "h",
@@ -108,13 +108,13 @@ article [Plot Annotations](annotations.html#genomic-region-highlights-and-zooms-
 
 ## Images and basic shapes
 
-`BentoBox` also allows users to plot images and basic shapes and elements to 
-further enhance and customize plot layouts. The functions `bbPlotCircle()`, 
-`bbPlotPolygon()`, `bbPlotRaster()`, `bbPlotRect()`, `bbPlotSegments()`, 
-and `bbPlotText()` provide an intuitive way to plot basic `grid` `grobs` 
+`plotgardener` also allows users to plot images and basic shapes and elements to 
+further enhance and customize plot layouts. The functions `plotCircle()`, 
+`plotPolygon()`, `plotRaster()`, `plotRect()`, `plotSegments()`, 
+and `plotText()` provide an intuitive way to plot basic `grid` `grobs` 
 without requiring any knowledge of `grid` graphics.
 
-For example, we can include the `BentoBox` mascot Edamaman in our figures!
+For example, we can include the R logo in our figures:
 
 ```{r shapes, echo=TRUE, fig.height=7, fig.showtext=TRUE, fig.width=6}
 library(png)
@@ -123,53 +123,46 @@ font_add(
     family = "ProximaNova",
     regular = system.file("extdata",
         "proximanova-regular.otf",
-        package = "BentoBox"
+        package = "plotgardener"
     ),
     bold = system.file("extdata",
         "proximanova-semibold.otf",
-        package = "BentoBox"
+        package = "plotgardener"
     )
 )
 showtext_auto()
 
-edamaman <- readPNG(system.file("images",
-    "bento-edamaman.png",
-    package = "BentoBox"
-))
-logotype <- readPNG(system.file("images",
-    "bento-logotype-singleline-black.png",
-    package = "BentoBox"
+
+rlogo <- readPNG(system.file("images",
+    "rlogo.png",
+    package = "plotgardener"
 ))
 
-bbPageCreate(
+pageCreate(
     width = 5, height = 6, default.units = "inches",
     showGuides = FALSE, xgrid = 0, ygrid = 0
 )
-bbPlotRaster(
-    image = logotype,
+plotRaster(
+    image = rlogo,
     x = 2.5, y = 0.25, width = 3.25, height = 0.5, just = "top"
 )
-bbPlotRaster(
-    image = edamaman,
-    x = 2.5, y = 5.5, width = 2, height = 4, just = "bottom"
-)
-bbPlotText(
-    label = "Edamaman",
+plotText(
+    label = "plotgardener",
     fontsize = 20, fontfamily = "ProximaNova", fontface = "bold",
     x = 2.5, y = 0.9, just = "top"
 )
 ```
 
 For more detailed usage of basic shape functions, see the function-specific 
-reference examples with `?function()` (e.g. `?bbPlotCircle()`).
+reference examples with `?function()` (e.g. `?plotCircle()`).
 
 ## Other grob objects
 
-We saw how to add `ggplots` to BentoBox layouts in the 
+We saw how to add `ggplots` to plotgardener layouts in the 
 vignette [Incorporating ggplots](incorporating_ggplots.html) with the
-`bbPlotGG()` function. Beyond customizing the coordinates and dimensions of
-`ggplots`, `bbPlotGG()` can also be used to incorporate other `grob` and
-`gtable` objects. Thus, `BentoBox` allows us to easily mix and arrange most
+`plotGG()` function. Beyond customizing the coordinates and dimensions of
+`ggplots`, `plotGG()` can also be used to incorporate other `grob` and
+`gtable` objects. Thus, `plotgardener` allows us to easily mix and arrange most
 kinds of plot objects for ultimate customizability.
 
 ## Session Info

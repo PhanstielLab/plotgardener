@@ -147,10 +147,10 @@ read_data <- function(hic, hicPlot, norm, assembly, type, quiet) {
             ## bbPlotHicRectangle specific warning for missing data
             if (hicPlot$chromstart < min(hic[, 1]) |
                 hicPlot$chromend > max(hic[, 1])) {
-                warning("`bbPlotHicRectangle` requires additional data to",
+                warning("`plotHicRectangle` requires additional data to",
                 " plot a rectangular plot. Data is missing from input ",
                 "dataframe for region and plot will be a trapezoid. To avoid ",
-                "this missing data, call `bbPlotHicRectangle` with full .hic",
+                "this missing data, call `plotHicRectangle` with full .hic",
                 " file.", call. = FALSE
                 )
             }
@@ -194,10 +194,10 @@ set_zrange <- function(hic, hicPlot) {
 ## Define a function that parses an inherited half of a Hi-C plot
 # @param hic hic plot object
 inherit_half <- function(hic) {
-    if (is(hic, "bb_hicSquare")) {
+    if (is(hic, "hicSquare")) {
         half <- hic$half
-    } else if (is(hic, "bb_hicTriangle") |
-        is(hic, "bb_hicRectangle")) {
+    } else if (is(hic, "hicTriangle") |
+        is(hic, "hicRectangle")) {
         half <- "top"
     }
 

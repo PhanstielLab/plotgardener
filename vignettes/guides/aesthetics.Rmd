@@ -15,17 +15,17 @@ knitr::opts_chunk$set(
     message = FALSE,
     warning = FALSE
 )
-library(BentoBox)
+library(plotgardener)
 library(grid)
-library(BentoBoxData)
+library(plotgardenerData)
 ```
 
-`BentoBox` plots are extremely customizable in appearance. In this article 
+`plotgardener` plots are extremely customizable in appearance. In this article 
 we will outline some of the major aesthetic customizations, including general 
 features and specific plot type customizations.
 
 All the data included in this article can be found in the supplementary
-package `BentoBoxData`.
+package `plotgardenerData`.
 
 # `gpar` and common plot customizations
 
@@ -69,16 +69,16 @@ General valid parameters include:
 
 Additional fonts for the `fontfamily` argument can be imported with the 
 packages `extrafont` and `showtext`. This makes it possible to incorporate 
-special fonts like Times New Roman, Arial, etc. into `BentoBox` figures.
+special fonts like Times New Roman, Arial, etc. into `plotgardener` figures.
 
 # Backgrounds and baselines
 
-By default, `BentoBox` plots have transparent backgrounds when placed on a 
-`bbPage`. In many functions, this background color can be changed with the 
+By default, `plotgardener` plots have transparent backgrounds when placed on a 
+`page`. In many functions, this background color can be changed with the 
 parameter `bg`.
 
 ```{r eval=FALSE, echo=TRUE}
-bbPlotGenes(
+plotGenes(
     chrom = "chr8", chromstart = 1000000, chromend = 2000000,
     assembly = "hg19",
     bg = "#f6f6f6",
@@ -91,30 +91,30 @@ bbPlotGenes(
 ```{r aes_01, eval=TRUE, echo=FALSE, message=FALSE, fig.width=5, fig.height=3}
 library(TxDb.Hsapiens.UCSC.hg19.knownGene)
 library(org.Hs.eg.db)
-bbPageCreate(
+pageCreate(
     width = 3, height = 2, default.units = "inches",
     showGuides = FALSE, xgrid = 0, ygrid = 0
 )
-genomicRegion <- bbParams(
+genomicRegion <- params(
     chrom = "chr8",
     chromstart = 1000000, chromend = 2000000,
     assembly = "hg19"
 )
-genesPlot <- bbPlotGenes(
+genesPlot <- plotGenes(
     params = genomicRegion, bg = "#f6f6f6",
     x = 0.5, y = 0.5, width = 2, height = 1,
     just = c("left", "top"), default.units = "inches"
 )
 ```
 This makes it easy to clearly see the precise dimensional boundaries of 
-`BentoBox` plots.
+`plotgardener` plots.
 
 Some plots also benefit from baselines to quickly show where y = 0. This can 
 aid in data interpretation and guide plot annotation placement. Baselines can
 be plotted in selective plots with `baseline = TRUE`.
 
 ```{r eval=FALSE, echo=TRUE}
-bbPlotRanges(
+plotRanges(
     data = IMR90_ChIP_CTCF_reads,
     chrom = "chr21", chromstart = 29073000, chromend = 29074000,
     assembly = "hg19",
@@ -127,12 +127,12 @@ bbPlotRanges(
 
 ```{r aes_02, echo=FALSE, fig.height=6, fig.width=9.5}
 data("IMR90_ChIP_CTCF_reads")
-bbPageCreate(
+pageCreate(
     width = 7.5, height = 5, default.units = "inches",
     showGuides = FALSE, xgrid = 0, ygrid = 0
 )
 
-pileupPlot <- bbPlotRanges(
+pileupPlot <- plotRanges(
     data = IMR90_ChIP_CTCF_reads,
     chrom = "chr21", chromstart = 29073000, chromend = 29074000,
     assembly = "hg19",
@@ -145,32 +145,32 @@ pileupPlot <- bbPlotRanges(
 
 # Gene and transcript plot aesthetics
 
-`BentoBox` provides many useful features specific for enhancing gene and 
+`plotgardener` provides many useful features specific for enhancing gene and 
 transcript visualizations:
 
 ## Labels
 
-Since `BentoBox` utilizes `TxDb` objects, `orgDb` objects, and internal 
-citation information, `BentoBox` has access to numerous gene and transcript 
+Since `plotgardener` utilizes `TxDb` objects, `orgDb` objects, and internal 
+citation information, `plotgardener` has access to numerous gene and transcript 
 identifiers and can customize annotation labels in a variety of ways. 
 
-By default, `BentoBox` will rank gene labels according to citation number to 
+By default, `plotgardener` will rank gene labels according to citation number to 
 prevent label overcrowding. However, we can provide our own list of 
 prioritized genes to label in a plot. For example, if we plot the hg19 genes 
 in the region `chr2:1000000-20000000`, our plot will show these labels:
 
 ```{r aes_07, eval=TRUE, echo=TRUE, message=FALSE, fig.width=5, fig.height=1.5}
-bbPageCreate(
+pageCreate(
     width = 5, height = 1.25,
     showGuides = FALSE, xgrid = 0, ygrid = 0
 )
-genePlot <- bbPlotGenes(
+genePlot <- plotGenes(
     chrom = "chr2", chromstart = 1000000, chromend = 20000000,
     assembly = "hg19",
     x = 0.25, y = 0.25, width = 4.75, height = 1
 )
 ```
-Looking in the `bb_genes` object, we can see that there were numerous genes 
+Looking in the `genes` object, we can see that there were numerous genes 
 that were not labeled.
 
 ```{r eval=TRUE, echo=TRUE}
@@ -180,11 +180,11 @@ genePlot$genes
 If we were particularly interested in MIR3125, we could include this in 
 the `geneOrder` parameter to prioritize its labeling:
 ```{r aes_08, echo=TRUE, fig.height=1.5, fig.width=5, message=FALSE}
-bbPageCreate(
+pageCreate(
     width = 5, height = 1.25,
     showGuides = FALSE, xgrid = 0, ygrid = 0
 )
-genePlot <- bbPlotGenes(
+genePlot <- plotGenes(
     chrom = "chr2", chromstart = 1000000, chromend = 20000000,
     assembly = "hg19",
     geneOrder = c("MIR3125"),
@@ -192,17 +192,17 @@ genePlot <- bbPlotGenes(
 )
 ```
 
-Label IDs used in transcript plots can be customized through `bbAssembly()` 
+Label IDs used in transcript plots can be customized through `assembly()` 
 objects, and transcript label formatting can be changed through the `labels` 
 parameter. For example, if we wish to display both transcript names and their 
 associated gene names, we can set `labels = "both"`:
 
 ```{r aes_10, echo=TRUE, fig.height=6, fig.width=7}
-bbPageCreate(
+pageCreate(
     width = 6, height = 5,
     showGuides = FALSE, xgrid = 0, ygrid = 0
 )
-transcriptPlot <- bbPlotTranscripts(
+transcriptPlot <- plotTranscripts(
     chrom = "chr2", chromstart = 1000000, chromend = 20000000,
     assembly = "hg19",
     labels = "both",
@@ -214,7 +214,7 @@ transcriptPlot <- bbPlotTranscripts(
 
 In addition to changing `fill` and `fontcolor` to change the colors of all 
 genes in a plot, specific gene structures and their labels can be highlighted
-in a different color with `geneHighlights`. If we revisit the `bb_genes` plot
+in a different color with `geneHighlights`. If we revisit the `genes` plot
 above, we can highlight RRM2 by creating a `data.frame` with "RRM2" in the 
 first column and its highlight color in the second column:
 
@@ -222,14 +222,14 @@ first column and its highlight color in the second column:
 geneHighlights <- data.frame("geneName" = "RRM2", "color" = "steel blue")
 ```
 
-We can then pass this into our `bbPlotGenes()` call:
+We can then pass this into our `plotGenes()` call:
 
 ```{r aes_11, eval=TRUE, echo=TRUE, message=FALSE, fig.width=5, fig.height=1.5}
-bbPageCreate(
+pageCreate(
     width = 5, height = 1.25,
     showGuides = FALSE, xgrid = 0, ygrid = 0
 )
-genePlot <- bbPlotGenes(
+genePlot <- plotGenes(
     chrom = "chr2", chromstart = 1000000, chromend = 20000000,
     assembly = "hg19",
     geneHighlights = geneHighlights, geneBackground = "grey",
@@ -247,11 +247,11 @@ geneHighlights <- data.frame(
     "color" = c("steel blue", "red")
 )
 
-bbPageCreate(
+pageCreate(
     width = 5, height = 1.25,
     showGuides = FALSE, xgrid = 0, ygrid = 0
 )
-genePlot <- bbPlotGenes(
+genePlot <- plotGenes(
     chrom = "chr2", chromstart = 1000000, chromend = 20000000,
     assembly = "hg19",
     geneHighlights = geneHighlights, geneBackground = "grey",
@@ -261,7 +261,7 @@ genePlot <- bbPlotGenes(
 
 ## Customizing transcripts by strand
 
-To distinguish which strand a transcript belongs to, `bbPlotTranscripts()` 
+To distinguish which strand a transcript belongs to, `plotTranscripts()` 
 colors transcripts by strand with the parameter `colorbyStrand`. The first 
 value in `fill` colors positive strand transcripts and the second `fill`
 value colors negative strand transcripts. To further organize transcripts by 
@@ -269,11 +269,11 @@ strand, we can use `strandSplit` to separate transcript elements into groups
 of positive and negative strands:
 
 ```{r aes_13, echo=TRUE, fig.height=6, fig.width=7}
-bbPageCreate(
+pageCreate(
     width = 6, height = 5,
     showGuides = FALSE, xgrid = 0, ygrid = 0
 )
-transcriptPlot <- bbPlotTranscripts(
+transcriptPlot <- plotTranscripts(
     chrom = "chr2", chromstart = 1000000, chromend = 20000000,
     assembly = "hg19",
     strandSplit = TRUE,
@@ -286,64 +286,64 @@ group of negative strand transcripts.
 
 # Hi-C plot customizations
 
-`BentoBox` includes many types of customizations for Hi-C plots. `BentoBox` 
+`plotgardener` includes many types of customizations for Hi-C plots. `plotgardener` 
 provides 3 different Hi-C plotting functions based on the desired plot shape:
 
-- `bbPlotHicSquare()`: Plots a square, symmetrical Hi-C plot with genomic 
+- `plotHicSquare()`: Plots a square, symmetrical Hi-C plot with genomic 
 coordinates along both the x- and y-axes.
     
-- `bbPlotHicTriangle()`: Plots a triangular Hi-C plot where the genome 
+- `plotHicTriangle()`: Plots a triangular Hi-C plot where the genome 
 region falls along the base of the triangle.
     
-- `bbPlotHicRectangle()`: Plots a triangular Hi-C plot with additional data 
+- `plotHicRectangle()`: Plots a triangular Hi-C plot with additional data 
 filling the surrounding regions to form a rectangle.
 
 ```{r aes_14, echo=FALSE, fig.height=3.9, fig.width=9.75, message=FALSE}
 data("IMR90_HiC_10kb")
 
-bbPageCreate(
+pageCreate(
     width = 7.1, height = 2.25, default.units = "inches",
     showGuides = FALSE, xgrid = 0, ygrid = 0
 )
-params <- bbParams(
+params <- params(
     chrom = "chr21", chromstart = 28950000, chromend = 29800000,
     assembly = "hg19", resolution = 10000
 )
 
-hicPlot_square <- bbPlotHicSquare(
+hicPlot_square <- plotHicSquare(
     data = IMR90_HiC_10kb, params = params,
     zrange = c(0, 70),
     x = 0.25, y = 0.25,
     width = 1.6, height = 1.6
 )
-bbAnnoGenomeLabel(
+annoGenomeLabel(
     plot = hicPlot_square, fontsize = 8,
     x = 0.25, y = 1.9, scale = "Kb"
 )
-bbAnnoGenomeLabel(
+annoGenomeLabel(
     plot = hicPlot_square, axis = "y", fontsize = 8,
     x = 0.20, y = 0.25, scale = "Kb",
     just = c("right", "top")
 )
-hicPlot_triangle <- bbPlotHicTriangle(
+hicPlot_triangle <- plotHicTriangle(
     data = IMR90_HiC_10kb, params = params,
     zrange = c(0, 70),
     x = 2.1, y = 1.85,
     width = 2.25, height = 2,
     just = c("left", "bottom")
 )
-bbAnnoGenomeLabel(
+annoGenomeLabel(
     plot = hicPlot_triangle, fontsize = 8,
     x = 2.1, y = 1.9, scale = "Kb"
 )
-hicPlot_rectangle <- bbPlotHicRectangle(
+hicPlot_rectangle <- plotHicRectangle(
     data = IMR90_HiC_10kb, params = params,
     zrange = c(0, 70),
     x = 4.6, y = 1.85,
     width = 2.25, height = 1.125,
     just = c("left", "bottom")
 )
-bbAnnoGenomeLabel(
+annoGenomeLabel(
     plot = hicPlot_rectangle, fontsize = 8,
     x = 4.6, y = 1.9, scale = "Kb"
 )
@@ -352,7 +352,7 @@ bbAnnoGenomeLabel(
 All Hi-C plot types can use different color palettes, and colors can be 
 linearly or log-scaled with the `colorTrans` parameter.  
 
-`bb_hicSquare` plots can be further customized to include two datasets in 
+`hicSquare` plots can be further customized to include two datasets in 
 one plot. Instead of plotting both symmetrical halves of the plot, we can set 
 one dataset as `half = "top"` and the other dataset as `half = "bottom"`:
 
@@ -360,24 +360,24 @@ one dataset as `half = "top"` and the other dataset as `half = "bottom"`:
 data("GM12878_HiC_10kb")
 data("IMR90_HiC_10kb")
 
-bbPageCreate(
+pageCreate(
     width = 3.25, height = 3.25, default.units = "inches",
     showGuides = FALSE, xgrid = 0, ygrid = 0
 )
-params <- bbParams(
+params <- params(
     chrom = "chr21", chromstart = 28000000, chromend = 30300000,
     assembly = "hg19", resolution = 10000,
     x = 0.25, width = 2.75, just = c("left", "top"), default.units = "inches"
 )
 
 
-hicPlot_top <- bbPlotHicSquare(
+hicPlot_top <- plotHicSquare(
     data = GM12878_HiC_10kb, params = params,
     zrange = c(0, 200),
     half = "top",
     y = 0.25, height = 2.75
 )
-hicPlot_bottom <- bbPlotHicSquare(
+hicPlot_bottom <- plotHicSquare(
     data = IMR90_HiC_10kb, params = params,
     zrange = c(0, 70),
     half = "bottom",

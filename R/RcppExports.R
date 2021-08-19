@@ -2,10 +2,10 @@
 # Generator token: 10BE3573-1514-4C36-9D1C-5A225CD40393
 
 checkRow <- function(x, maxRows, rowCol, wig) {
-    .Call('_BentoBox_checkRow', PACKAGE = 'BentoBox', x, maxRows, rowCol, wig)
+    .Call('_plotgardener_checkRow', PACKAGE = 'plotgardener', x, maxRows, rowCol, wig)
 }
 
 rebinBigwig <- function(bigwig, bins) {
-    .Call('_BentoBox_rebinBigwig', PACKAGE = 'BentoBox', bigwig, bins)
+    .Call('_plotgardener_rebinBigwig', PACKAGE = 'plotgardener', bigwig, bins)
 }
 
