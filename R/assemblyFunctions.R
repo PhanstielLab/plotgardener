@@ -63,7 +63,7 @@ genomicScale <- function(object, objectInternal, plotType) {
             } else {
                 object$chromstart <- 1
                 object$chromend <- assembly_data[[object$chrom]]
-                if (class(object) %in% c("bb_hicTriangle", "bb_hicRectangle")) {
+                if (class(object) %in% c("hicTriangle", "hicRectangle")) {
                     object$altchromstart <- 1
                     object$altchromend <- assembly_data[[object$chrom]]
                 }
@@ -148,7 +148,7 @@ geneData <- function(object, objectInternal) {
                 object$chromend <- genome[[object$chrom]]
             }
 
-            data <- bb_getExons(
+            data <- getExons(
                 assembly = object$assembly,
                 chromosome = object$chrom,
                 start = object$chromstart,
@@ -166,7 +166,7 @@ geneData <- function(object, objectInternal) {
 ## Define a function that will by default prioritize genes by citations
 # (if available) or gene lengths
 # @param data data frame of gene or transcript data
-# @param assembly bbAssembly associated with gene data
+# @param assembly assembly associated with gene data
 # @param transcsript a logical indicating whether or not we're
 # plotting transcripts or not
 defaultGenePriorities <- function(data, assembly, transcript = FALSE) {
@@ -252,7 +252,7 @@ defaultGenePriorities <- function(data, assembly, transcript = FALSE) {
 # @param space the space between each chrom as a fraction of plot width
 spaceChroms <- function(assemblyData, space) {
 
-    ## Determine the offset for each chromomse
+    ## Determine the offset for each chromsome
     cumsums <- cumsum(as.numeric(assemblyData[, "length"]))
     spacer <- cumsums[length(cumsums)] * space
     additionalSpace <- (seq(1, length(cumsums) - 0)) * spacer

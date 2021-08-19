@@ -1,4 +1,4 @@
-url: https://phanstiellab.github.io/bentobox
+url: https://phanstiellab.github.io/plotgardener
 
 template:
   params:
@@ -23,20 +23,20 @@ navbar:
       href: index.html
     - text: Our Philosophy
       href: articles/our_philosophy.html
-    - text: Introduction to BentoBox
-      href: articles/introduction_to_bentobox.html
+    - text: Introduction to plotgardener
+      href: articles/introduction_to_plotgardener.html
     - text: Articles
       menu:
-        - text: The BentoBox Page
-          href: articles/guides/bentobox_page.html
-        - text: Reading Data for BentoBox
-          href: articles/guides/reading_data_for_bentobox.html
+        - text: The plotgardener Page
+          href: articles/guides/plotgardener_page.html
+        - text: Reading Data for plotgardener
+          href: articles/guides/reading_data_for_plotgardener.html
         - text: Plotting Multi-omic Data  
           href: articles/guides/plotting_multiomic_data.html
         - text: Plot Annotations
           href: articles/guides/annotations.html  
-        - text: BentoBox Meta Functions 
-          href: articles/guides/bentobox_meta_functions.html
+        - text: plotgardener Meta Functions 
+          href: articles/guides/plotgardener_meta_functions.html
         - text: Bioconductor Integration
           href: articles/guides/bioconductor_integration.html
         - text: Incorporating ggplots
@@ -49,62 +49,62 @@ navbar:
       href: reference/index.html
   right:
     - icon: fab fa-github fa-lg
-      href: https://github.com/PhanstielLab/BentoBox
+      href: https://github.com/PhanstielLab/plotgardener
 
 reference:
-  - title: "About BentoBox"
+  - title: "About plotgardener"
     contents:
-      - BentoBox
+      - plotgardener
 
   - title: "Page layout functions"
     contents:
-      - starts_with("bbPage")
+      - starts_with("page")
 
   - title: "Reading functions"
     contents:
-      - starts_with("bbRead")
+      - starts_with("read")
 
   - title: "Plotting functions"
   - subtitle: "Genomics"
     contents:
-      - bbPlotGenes
-      - bbPlotGenomeLabel
-      - bbPlotHicRectangle
-      - bbPlotHicSquare
-      - bbPlotHicTriangle
-      - bbPlotIdeogram
-      - bbPlotManhattan
-      - bbPlotPairs
-      - bbPlotPairsArches
-      - bbPlotRanges
-      - bbPlotSignal
-      - bbPlotTranscripts
+      - plotGenes
+      - plotGenomeLabel
+      - plotHicRectangle
+      - plotHicSquare
+      - plotHicTriangle
+      - plotIdeogram
+      - plotManhattan
+      - plotPairs
+      - plotPairsArches
+      - plotRanges
+      - plotSignal
+      - plotTranscripts
   - subtitle: "Shapes and Basic Elements"
   - contents:
-      - bbPlotCircle
-      - bbPlotLegend
-      - bbPlotPolygon
-      - bbPlotRaster
-      - bbPlotRect
-      - bbPlotSegments
-      - bbPlotText
+      - plotCircle
+      - plotLegend
+      - plotPolygon
+      - plotRaster
+      - plotRect
+      - plotSegments
+      - plotText
   - subtitle: "External"
   - contents:
-      - bbPlotGG
+      - plotGG
 
   - title: "Annotation functions"
     contents:
-      - starts_with("bbAnno")
+      - starts_with("anno")
 
   - title: "Meta functions"
     contents:
-      - bbAssembly
-      - bbDefaultPackages
-      - bbGenomes
-      - bbParams
+      - assembly
+      - defaultPackages
+      - genomes
+      - params
       - c
       - colorby
-      - bbMapColors
+      - mapColors
 
 figures:
   fig.height: 7

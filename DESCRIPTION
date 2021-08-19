@@ -1,7 +1,7 @@
-Package: BentoBox
+Package: plotgardener
 Title: Coordinate-Based Genomic Visualization Package for R
-Version: 0.99.8
-Date: 2021-08-02
+Version: 0.99.9
+Date: 2021-08-19
 Authors@R: c(person("Nicole", "Kramer", 
              email = "nekramer@live.unc.edu", 
              role = c("aut", "cre"),
@@ -26,11 +26,11 @@ Authors@R: c(person("Nicole", "Kramer",
 Description: 
     Coordinate-based genomic visualization package for R. It grants users
     the ability to programmatically produce complex, multi-paneled figures. Tailored for
-    genomics, BentoBox allows users to visualize large complex genomic datasets and
+    genomics, plotgardener allows users to visualize large complex genomic datasets and
     provides exquisite control over how plots are placed and arranged on a page. 
 Depends: R (>= 4.1.0)
 License: MIT + file LICENSE
-URL: https://phanstiellab.github.io/BentoBox, https://github.com/PhanstielLab/BentoBox
+URL: https://phanstiellab.github.io/plotgardener, https://github.com/PhanstielLab/plotgardener
 Encoding: UTF-8
 RoxygenNote: 7.1.1
 Imports:
@@ -61,7 +61,6 @@ LinkingTo:
 Suggests:
     AnnotationDbi,
     AnnotationHub,
-    BentoBoxData,
     BSgenome,
     BSgenome.Hsapiens.UCSC.hg19,
     GenomicFeatures,
@@ -73,6 +72,7 @@ Suggests:
     knitr,
     org.Hs.eg.db,
     rtracklayer,
+    plotgardenerData,
     png,
     rmarkdown,
     scales,
@@ -81,4 +81,4 @@ Suggests:
     TxDb.Hsapiens.UCSC.hg19.knownGene
 VignetteBuilder: knitr
 Config/testthat/edition: 3
-BugReports: https://github.com/PhanstielLab/BentoBox/issues
+BugReports: https://github.com/PhanstielLab/plotgardener/issues

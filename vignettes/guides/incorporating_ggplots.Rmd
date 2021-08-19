@@ -19,8 +19,8 @@ knitr::opts_chunk$set(
     message = FALSE
 )
 library(grid)
-library(BentoBox)
-library(BentoBoxData)
+library(plotgardener)
+library(plotgardenerData)
 ```
 
 ```{r eval=TRUE, echo=FALSE, message=FALSE}
@@ -29,22 +29,22 @@ font_add(
     family = "ProximaNova",
     regular = system.file("extdata",
                         "proximanova-regular.otf",
-                        package = "BentoBox"
+                        package = "plotgardener"
     ),
     bold = system.file("extdata",
                     "proximanova-semibold.otf",
-                    package = "BentoBox"
+                    package = "plotgardener"
     ),
     italic = system.file("extdata",
                         "proximanova-regitalic.otf",
-                        package = "BentoBox")
+                        package = "plotgardener")
 )
 showtext_auto()
 ```
 
-In addition to its numerous genomic functions, `BentoBox` can size and place 
-`ggplots` within a `BentoBox` layout. Rather than arranging `ggplots` in a 
-relative manner, `BentoBox` can make and place `ggplots` in absolute sizes 
+In addition to its numerous genomic functions, `plotgardener` can size and place 
+`ggplots` within a `plotgardener` layout. Rather than arranging `ggplots` in a 
+relative manner, `plotgardener` can make and place `ggplots` in absolute sizes 
 and locations. This makes it simple and intuitive to make complex `ggplot` 
 arrangements beyond a basic grid-style layout.
 
@@ -97,21 +97,21 @@ ylabels[c(2, 4)] <- round(ylabels[c(2, 4)], digits = 1)
 ylabels[5] <- paste0(ylabels[5], "M cases")
 ylabels[1] <- ""
 
-bb_CasesNY <- COVID_NY_FL_tracking[COVID_NY_FL_tracking$state == "new york", ]
-bb_CasesNYpoly <- rbind(
-    bb_CasesNY,
+casesNY <- COVID_NY_FL_tracking[COVID_NY_FL_tracking$state == "new york", ]
+casesNYpoly <- rbind(
+    casesNY,
     data.frame(
         "date" = as.Date("2021-03-07"),
         "state" = "new york",
-        "caseIncrease" = -1 * sum(bb_CasesNY$caseIncrease)
+        "caseIncrease" = -1 * sum(casesNY$caseIncrease)
     )
 )
 
 cases_NYline <- ggplot(
-    bb_CasesNY,
+    casesNY,
     aes(x = date, y = cumsum(caseIncrease))
 ) +
-    geom_polygon(data = bb_CasesNYpoly, fill = "#B8E6E6") +
+    geom_polygon(data = casesNYpoly, fill = "#B8E6E6") +
     scale_x_date(
         labels = date_format("%b '%y"),
         breaks = as.Date(c("2020-05-01", "2020-09-01", "2021-01-01")),
@@ -150,21 +150,21 @@ print(cases_NYline)
 ```
 
 ```{r ggplot_03, echo=TRUE, fig.showtext=TRUE, message=FALSE}
-bb_CasesFL <- COVID_NY_FL_tracking[COVID_NY_FL_tracking$state == "florida", ]
-bb_CasesFLpoly <- rbind(
-    bb_CasesFL,
+casesFL <- COVID_NY_FL_tracking[COVID_NY_FL_tracking$state == "florida", ]
+casesFLpoly <- rbind(
+    casesFL,
     data.frame(
         "date" = as.Date("2021-03-07"),
         "state" = "florida",
-        "caseIncrease" = -1 * sum(bb_CasesFL$caseIncrease)
+        "caseIncrease" = -1 * sum(casesFL$caseIncrease)
     )
 )
 
 cases_FLline <- ggplot(
-    bb_CasesFL,
+    casesFL,
     aes(x = date, y = cumsum(caseIncrease))
 ) +
-    geom_polygon(data = bb_CasesFLpoly, fill = "#B8E6E6") +
+    geom_polygon(data = casesFLpoly, fill = "#B8E6E6") +
     scale_x_date(
         labels = date_format("%b '%y"),
         breaks = as.Date(c("2020-05-01", "2020-09-01", "2021-01-01")),
@@ -264,39 +264,39 @@ print(vaccines_FLpie)
 ```
 
 We can now easily overlap and size all these `ggplots` by passing our saved 
-plot objects into `bbPlotGG()`:
+plot objects into `plotGG()`:
 
 ```{r gg_plot05, echo=TRUE, fig.height=4.5, fig.showtext=TRUE, fig.width=11.5}
-bbPageCreate(width = 9.5, height = 3.5, default.units = "inches")
+pageCreate(width = 9.5, height = 3.5, default.units = "inches")
 
-bbPlotGG(
+plotGG(
     plot = US_map,
     x = 0.1, y = 0,
     width = 6.5, height = 3.5, just = c("left", "top")
 )
-bbPlotGG(
+plotGG(
     plot = cases_NYline,
     x = 6.25, y = 1.8,
     width = 3.025, height = 1.4, just = c("left", "bottom")
 )
-bbPlotGG(
+plotGG(
     plot = cases_FLline,
     x = 6.25, y = 3.5,
     width = 3.025, height = 1.4, just = c("left", "bottom")
 )
 ```
 
-In particular, `BentoBox` makes it easy to resize and place our pie charts in
+In particular, `plotgardener` makes it easy to resize and place our pie charts in
 a layout that overlaps our line plots without it affecting the sizing of the 
 other plots on the page:
 
 ```{r eval = FALSE, echo = TRUE}
-bbPlotGG(
+plotGG(
     plot = vaccines_NYpie,
     x = 6.37, y = -0.05,
     width = 1.45, height = 1.45, just = c("left", "top")
 )
-bbPlotGG(
+plotGG(
     plot = vaccines_FLpie,
     x = 6.37, y = 1.67,
     width = 1.45, height = 1.45, just = c("left", "top")
@@ -304,29 +304,29 @@ bbPlotGG(
 ```
 
 ```{r gg_plot06, echo=FALSE, fig.height=4.5, fig.showtext=TRUE, ,fig.width=11.5}
-bbPageCreate(width = 9.5, height = 3.5, default.units = "inches")
+pageCreate(width = 9.5, height = 3.5, default.units = "inches")
 
-bbPlotGG(
+plotGG(
     plot = US_map,
     x = 0.1, y = 0,
     width = 6.5, height = 3.5, just = c("left", "top")
 )
-bbPlotGG(
+plotGG(
     plot = cases_NYline,
     x = 6.25, y = 1.8,
     width = 3.025, height = 1.4, just = c("left", "bottom")
 )
-bbPlotGG(
+plotGG(
     plot = cases_FLline,
     x = 6.25, y = 3.5,
     width = 3.025, height = 1.4, just = c("left", "bottom")
 )
-bbPlotGG(
+plotGG(
     plot = vaccines_NYpie,
     x = 6.37, y = -0.05,
     width = 1.45, height = 1.45, just = c("left", "top")
 )
-bbPlotGG(
+plotGG(
     plot = vaccines_FLpie,
     x = 6.37, y = 1.67,
     width = 1.45, height = 1.45, just = c("left", "top")
@@ -337,19 +337,19 @@ We can also easily add additional elements to further enhance our
 complex `ggplot` arrangments, like a precise placement of text labels:
 
 ```{r eval = FALSE, echo = TRUE}
-bbPlotText(
+plotText(
     label = c("not", "partially", "fully vaccinated"),
     fontfamily = "ProximaNova", fontcolor = "black", fontsize = 7,
     x = c(6.58, 7.3, 7.435),
     y = c(0.74, 1.12, 0.51), just = c("left", "bottom")
 )
-bbPlotText(
+plotText(
     label = c("not", "partially", "fully vaccinated"),
     fontfamily = "ProximaNova", fontcolor = "black", fontsize = 7,
     x = c(6.58, 7.39, 7.435),
     y = c(2.47, 2.75, 2.2), just = c("left", "bottom")
 )
-bbPlotText(label = paste("Sources: The COVID Tracking Project;",
+plotText(label = paste("Sources: The COVID Tracking Project;",
                         "Johns Hopkins Center for Civic Impact"),
             fontfamily = "ProximaNova", fontcolor = "black",
             fontsize = 7, fontface = "italic",
@@ -360,48 +360,48 @@ We are then left with a complex, precise, and elegant arrangement of
 `ggplots` as if we had arranged them together with graphic design software:
 
 ```{r gg_plot07, echo=FALSE, fig.height=4.5, fig.showtext=TRUE, fig.width=11.5}
-bbPageCreate(
+pageCreate(
     width = 9.5, height = 3.5, default.units = "inches",
     showGuides = FALSE, xgrid = 0, ygrid = 0
 )
-bbPlotGG(
+plotGG(
     plot = US_map,
     x = 0.1, y = 0,
     width = 6.5, height = 3.5, just = c("left", "top")
 )
-bbPlotGG(
+plotGG(
     plot = cases_NYline,
     x = 6.25, y = 1.8,
     width = 3.025, height = 1.4, just = c("left", "bottom")
 )
-bbPlotGG(
+plotGG(
     plot = cases_FLline,
     x = 6.25, y = 3.5,
     width = 3.025, height = 1.4, just = c("left", "bottom")
 )
-bbPlotGG(
+plotGG(
     plot = vaccines_NYpie,
     x = 6.37, y = -0.05,
     width = 1.45, height = 1.45, just = c("left", "top")
 )
-bbPlotGG(
+plotGG(
     plot = vaccines_FLpie,
     x = 6.37, y = 1.67,
     width = 1.45, height = 1.45, just = c("left", "top")
 )
-bbPlotText(
+plotText(
     label = c("not", "partially", "fully vaccinated"),
     fontfamily = "ProximaNova", fontcolor = "black", fontsize = 7,
     x = c(6.58, 7.3, 7.435),
     y = c(0.74, 1.12, 0.51), just = c("left", "bottom")
 )
-bbPlotText(
+plotText(
     label = c("not", "partially", "fully vaccinated"),
     fontfamily = "ProximaNova", fontcolor = "black", fontsize = 7,
     x = c(6.58, 7.39, 7.435),
     y = c(2.47, 2.75, 2.2), just = c("left", "bottom")
 )
-bbPlotText(label = paste("Sources: The COVID Tracking Project;",
+plotText(label = paste("Sources: The COVID Tracking Project;",
                         "Johns Hopkins Center for Civic Impact"),
             fontfamily = "ProximaNova", fontcolor = "black",
             fontsize = 7, fontface = "italic",

@@ -13,8 +13,8 @@ convert_gpath <- function(grob) {
 
 ## Define a function to make sure a bb_page viewport exists
 # @param error Error message if bb_page doesn't exist
-check_bbpage <- function(error) {
-    if (!"bb_page" %in% current.vpPath()) {
+check_page <- function(error) {
+    if (!"page" %in% current.vpPath()) {
         stop(error, call. = FALSE)
     }
 }
@@ -59,8 +59,8 @@ check_placement <- function(object) {
 
 
             ## 3. Need a bb_page
-            check_bbpage(error = paste("Must make a BentoBox page with",
-                                    "`bb_pageCreate()` before placing a plot."))
+            check_page(error = paste("Must make a `plotgardener` page with",
+                                    "`pageCreate()` before placing a plot."))
         }
     }
 }
@@ -73,7 +73,7 @@ validUnits <- c(
 )
 
 ## Define a function to assign rows for pileup-style data
-## (bbPlotPairs, bbPlotRanges, bbPlotTranscripts)
+## (plotPairs, plotRanges, plotTranscripts)
 # @param data The data to assign rows to, with start in col1 and 
 # end in col2. This can only be numeric values.
 # @param maxRows Maximum number of rows.
@@ -139,10 +139,10 @@ assignRows <- function(data, maxRows, wiggle, rowCol, limitLabel, side = "top",
                 )
                 assign(gTree,
                         addGrob(
-                            gTree = get(gTree, envir = bbEnv),
+                            gTree = get(gTree, envir = pgEnv),
                             child = limitGrob
                         ),
-                        envir = bbEnv
+                        envir = pgEnv
                 )
                 
             }

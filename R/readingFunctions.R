@@ -24,7 +24,7 @@ read_rangeData <- function(data, assembly, chrom = NULL,
             } else if (file_ext(data) %in% c("bw", "bigWig",
                                             "bigwig", "bedgraph")) {
 
-                data <- bbReadBigwig(
+                data <- readBigwig(
                     file = data,
                     chrom = chrom,
                     chromstart = start,
@@ -145,14 +145,14 @@ read_pairedData <- function(data, assembly, warning = FALSE){
     }
     
 # Define a function that checks matching for GRanges/GInteractions
-# objects and declared BentoBox assembly
+# objects and declared assembly
 checkAssemblyMatch <- function(data, assembly){
     
     genome <- unique(GenomeInfoDb::genome(data))
     if (!is.na(genome)){
         if (genome != assembly$Genome){
             warning("Input data assembly detected as ",
-                    genome, " and BentoBox assembly ",
+                    genome, " and plotgardener assembly ",
                     "detected as ", assembly$Genome, ".",
                     .call = FALSE)
         }

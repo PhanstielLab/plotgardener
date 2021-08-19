@@ -1,3 +1,8 @@
+CHANGES IN VERSION 0.99.9
+-------------------------
+
+This package was previously called `BentoBox`.
+
 CHANGES IN VERSION 0.99.0
 -------------------------
 
@@ -49,7 +54,7 @@ CHANGES IN VERSION 0.0.0.11
 
 SIGNIFICANT USER-VISIBLE CHANGES
 
-    o Data moved to `BentoBoxData` package.
+    o Data moved to `plotgardenerData` package.
     o Default genome assembly updated to "hg38".
     
 BUG FIXES

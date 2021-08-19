@@ -5,15 +5,15 @@ viewport_name <- function(viewport) {
 
 ## Define a function to add a plot viewport to internal list of
 ## valid "last plotted" viewports
-add_bbViewport <- function(vpName) {
-    bb_vpTree <- get("bb_vpTree", envir = bbEnv)
-    bb_vpTree[length(bb_vpTree) + 1] <- vpName
-    assign("bb_vpTree", bb_vpTree, envir = bbEnv)
+addViewport <- function(vpName) {
+    pg_vpTree <- get("pg_vpTree", envir = pgEnv)
+    pg_vpTree[length(pg_vpTree) + 1] <- vpName
+    assign("pg_vpTree", pg_vpTree, envir = pgEnv)
 }
 
 ## Define a function to get a list of current viewports
 current_viewports <- function() {
-    if (!"bb_page" %in% names(lapply(
+    if (!"page" %in% names(lapply(
         current.vpTree()$children,
         viewport_name
     ))) {
@@ -23,7 +23,7 @@ current_viewports <- function() {
         )))
     } else {
         page_children <- names(lapply(
-            current.vpTree()$children$bb_page$children,
+            current.vpTree()$children$page$children,
             viewport_name
         ))
         current <- as.list(page_children)
@@ -247,9 +247,9 @@ vp_topRight <- function(viewport) {
 ## Define a function to convert to page units
 convert_page <- function(object) {
 
-    ## Get page_height and its units from bbEnv through bb_pageCreate
-    page_height <- get("page_height", envir = bbEnv)
-    page_units <- get("page_units", envir = bbEnv)
+    ## Get page_height and its units from pgEnv
+    page_height <- get("page_height", envir = pgEnv)
+    page_units <- get("page_units", envir = pgEnv)
 
     ## Convert x and y coordinates and height and width to same page_units
     old_x <- object$x
@@ -278,7 +278,7 @@ convert_page <- function(object) {
 
 ## Parse y-coordinates for plots relative to bottom of last plot
 plot_belowY <- function(y_coord) {
-    prevPlots <- unlist(get("bb_vpTree", envir = bbEnv))
+    prevPlots <- unlist(get("pg_vpTree", envir = pgEnv))
 
     if (length(prevPlots) == 0) {
         stop("No previous plot detected. Cannot define ",
@@ -308,13 +308,13 @@ plot_belowY <- function(y_coord) {
 
     ## Parse number and convert to page units
     space <- utils::type.convert(gsub("b", "", y_coord), as.is = TRUE)
-    space <- unit(space, get("page_units", envir = bbEnv))
+    space <- unit(space, get("page_units", envir = pgEnv))
 
     new_y <- (unit(
-        get("page_height", envir = bbEnv),
-        get("page_units", envir = bbEnv)
+        get("page_height", envir = pgEnv),
+        get("page_units", envir = pgEnv)
     ) - bottomCoords[[2]]) + space
-    new_y <- convertY(new_y, unitTo = get("page_units", envir = bbEnv))
+    new_y <- convertY(new_y, unitTo = get("page_units", envir = pgEnv))
 
     return(new_y)
 }
@@ -323,10 +323,10 @@ plot_belowY <- function(y_coord) {
 ## multiple viewports for certain annotation functions
 getAnnoViewport <- function(plot){
     
-    if (is(plot, "bb_genes")){
+    if (is(plot, "genes")){
         plotVP <- plot$grobs$children$background$vp
-    } else if (is(plot, "bb_hicTriangle") |
-            is(plot, "bb_hicRectangle")){
+    } else if (is(plot, "hicTriangle") |
+            is(plot, "hicRectangle")){
         plotVP <- plot$outsideVP
     } else {
         plotVP <- plot$grobs$vp
@@ -390,11 +390,11 @@ convertManhattan <- function(object, manhattanPlot) {
 
         ## Convert new chromstart and chromend to page units
         start <- convertX(unit(newStart, "native"),
-            unitTo = get("page_units", envir = bbEnv),
+            unitTo = get("page_units", envir = pgEnv),
             valueOnly = TRUE
         )
         end <- convertX(unit(newEnd, "native"),
-            unitTo = get("page_units", envir = bbEnv),
+            unitTo = get("page_units", envir = pgEnv),
             valueOnly = TRUE
         )
 

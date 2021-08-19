@@ -2,7 +2,7 @@ test_that("convert_gpath", {
     
     testGrob <- rectGrob()
     ## Grob becomes a gpath
-    expect_true(is(BentoBox:::convert_gpath(testGrob), "gPath"))
+    expect_true(is(plotgardener:::convert_gpath(testGrob), "gPath"))
 })
 
 test_that("check_placement", {
@@ -12,14 +12,14 @@ test_that("check_placement", {
     
     attr(testObject, "plotted") <- FALSE
     ## doesn't check if not plotted
-    expect_silent(BentoBox:::check_placement(testObject))
+    expect_silent(plotgardener:::check_placement(testObject))
     
     ## error one null x or y
     testObject <- list("x" = unit(3, "inches"),
                        "y" = NULL)
     
     attr(testObject, "plotted") <- TRUE
-    expect_error(BentoBox:::check_placement(testObject))
+    expect_error(plotgardener:::check_placement(testObject))
     
     ## error for 0 width
     testObject <- list("x" = unit(2, "inches"),
@@ -28,21 +28,21 @@ test_that("check_placement", {
                        "height" = unit(0, "inches"))
     
     attr(testObject, "plotted") <- TRUE
-    expect_error(BentoBox:::check_placement(testObject))
+    expect_error(plotgardener:::check_placement(testObject))
     
     ## No errors with all checks
-    bbPageCreate()
+    pageCreate()
     testObject <- list("x" = unit(2, "inches"),
                        "y" = unit(0.5, "npc"),
                        "width" = unit(3, "inches"),
                        "height" = unit(3, "inches"))
     attr(testObject, "plotted") <- TRUE
-    expect_silent(BentoBox:::check_placement(testObject))
+    expect_silent(plotgardener:::check_placement(testObject))
     
 })
 
 test_that("assignRows", {
-    library(BentoBoxData)
+    library(plotgardenerData)
     data("IMR90_ChIP_CTCF_reads")
     
     ## set seed
@@ -55,7 +55,7 @@ test_that("assignRows", {
                   29073000), ]
     
     ## Message without limitLabel 
-    expect_warning(BentoBox:::assignRows(data = IMR90_ChIP_CTCF_reads[, c(2,3)],
+    expect_warning(plotgardener:::assignRows(data = IMR90_ChIP_CTCF_reads[, c(2,3)],
                           maxRows = 3,
                           wiggle = 10,
                           rowCol = 2, 
@@ -64,8 +64,8 @@ test_that("assignRows", {
                    regexp = "Not enough plotting space for all provided elements.")
     
     ## Message with limitLabel
-    assign("pileup_grobs", gTree(), envir = bbEnv)
-    expect_warning(BentoBox:::assignRows(data = IMR90_ChIP_CTCF_reads[, c(2,3)],
+    assign("pileup_grobs", gTree(), envir = pgEnv)
+    expect_warning(plotgardener:::assignRows(data = IMR90_ChIP_CTCF_reads[, c(2,3)],
                                          maxRows = 3,
                                          wiggle = 10,
                                          rowCol = 2, 

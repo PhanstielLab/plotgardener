@@ -109,7 +109,7 @@ hic_limit <- function(hic, hicPlot){
 # @param quiet message quiet parameter
 read_data <- function(hic, hicPlot, norm, assembly, type, quiet) {
 
-    ## if .hic file, read in with bb_rhic
+    ## if .hic file, read in
     if (!("data.frame" %in% class(hic))) {
         if (!is.null(hicPlot$chromstart) & !is.null(hicPlot$chromend) &
             !is.na(hicPlot$resolution)) {
@@ -117,7 +117,7 @@ read_data <- function(hic, hicPlot, norm, assembly, type, quiet) {
             readchromend <- hicPlot$chromend + hicPlot$resolution
             readaltchromstart <- hicPlot$altchromstart - hicPlot$resolution
             readaltchromend <- hicPlot$altchromend + hicPlot$resolution
-            hic <- suppressWarnings(bbReadHic(
+            hic <- suppressWarnings(readHic(
                 file = hic, chrom = hicPlot$chrom,
                 chromstart = readchromstart,
                 chromend = readchromend,
@@ -147,10 +147,10 @@ read_data <- function(hic, hicPlot, norm, assembly, type, quiet) {
             ## bbPlotHicRectangle specific warning for missing data
             if (hicPlot$chromstart < min(hic[, 1]) |
                 hicPlot$chromend > max(hic[, 1])) {
-                warning("`bbPlotHicRectangle` requires additional data to",
+                warning("`plotHicRectangle` requires additional data to",
                 " plot a rectangular plot. Data is missing from input ",
                 "dataframe for region and plot will be a trapezoid. To avoid ",
-                "this missing data, call `bbPlotHicRectangle` with full .hic",
+                "this missing data, call `plotHicRectangle` with full .hic",
                 " file.", call. = FALSE
                 )
             }
@@ -194,10 +194,10 @@ set_zrange <- function(hic, hicPlot) {
 ## Define a function that parses an inherited half of a Hi-C plot
 # @param hic hic plot object
 inherit_half <- function(hic) {
-    if (is(hic, "bb_hicSquare")) {
+    if (is(hic, "hicSquare")) {
         half <- hic$half
-    } else if (is(hic, "bb_hicTriangle") |
-        is(hic, "bb_hicRectangle")) {
+    } else if (is(hic, "hicTriangle") |
+        is(hic, "hicRectangle")) {
         half <- "top"
     }
 
