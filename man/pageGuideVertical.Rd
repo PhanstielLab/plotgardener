@@ -2,7 +2,8 @@
 % Please edit documentation in R/pageGuideVertical.R
 \name{pageGuideVertical}
 \alias{pageGuideVertical}
-\title{Draw a vertical guideline at a specified x-coordinate on a plotgardener page}
+\title{Draw a vertical guideline at a specified x-coordinate on a 
+plotgardener page}
 \usage{
 pageGuideVertical(
     x,
@@ -31,7 +32,8 @@ containing relevant function parameters.}
 None.
 }
 \description{
-Draw a vertical guideline at a specified x-coordinate on a plotgardener page
+Draw a vertical guideline at a specified x-coordinate on a 
+plotgardener page
 }
 \examples{
 ## Create a page

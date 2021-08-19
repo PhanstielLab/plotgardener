@@ -288,7 +288,8 @@ plotGenomeLabel <- function(chrom, chromstart = NULL, chromend = NULL,
         }
     }
 
-    check_page(error = "Cannot plot a genome label without a `plotgardener` page.")
+    check_page(error = paste("Cannot plot a genome label without",
+                            "a `plotgardener` page."))
     errorcheck_plotGenomeLabel(
         scale = genomeLabelInternal$scale,
         ticks = genomeLabelInternal$at,

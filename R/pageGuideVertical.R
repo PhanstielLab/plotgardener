@@ -1,4 +1,5 @@
-#' Draw a vertical guideline at a specified x-coordinate on a plotgardener page
+#' Draw a vertical guideline at a specified x-coordinate on a 
+#' plotgardener page
 #' 
 #' @usage pageGuideVertical(
 #'     x,

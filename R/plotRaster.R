@@ -46,7 +46,8 @@
 #' library(png)
 #'
 #' ## Load image
-#' rlogo <- readPNG(system.file("images", "Rlogo.png", package = "plotgardener"))
+#' rlogo <- readPNG(system.file("images", "Rlogo.png", 
+#'                 package = "plotgardener"))
 #'
 #' ## Create page
 #' pageCreate(width = 5, height = 6)

@@ -194,7 +194,8 @@ annoZoomLines <- function(plot, chrom, chromstart = NULL, chromend = NULL,
     # CATCH ERRORS
     # =========================================================================
 
-    check_page(error = "Cannot annotate zoom lines without a `plotgardener` page.")
+    check_page(error = paste("Cannot annotate zoom lines without a", 
+                            "`plotgardener` page."))
     if (is.null(zoomInternal$plot)) stop("argument \"plot\" is missing, ",
                                             "with no default.", call. = FALSE)
     if (is.null(zoom$chrom)) {

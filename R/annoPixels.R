@@ -222,14 +222,16 @@ annoPixels <- function(plot, data, type = "box", half = "inherit",
         ## altchrom always in col4
         ## triangle hic plots will not have altchrom parameters
         if (is(hic, "hicTriangle") | is(hic, "hicRectangle")) {
-            loops_subset <- loopData[which(loopData[, "chrom1"] == object$chrom &
+            loops_subset <- loopData[which(
+                loopData[, "chrom1"] == object$chrom &
                 loopData[, "chrom2"] == object$chrom &
                 loopData[, "start1"] >= object$chromstart &
                 loopData[, "end1"] <= object$chromend &
                 loopData[, "start2"] >= object$chromstart &
                 loopData[, "end2"] <= object$chromend), ]
         } else {
-            loops_subset <- loopData[which(loopData[, "chrom1"] == object$chrom &
+            loops_subset <- loopData[which(
+                loopData[, "chrom1"] == object$chrom &
                 loopData[, "chrom2"] == object$altchrom &
                 loopData[, "start1"] >= object$chromstart &
                 loopData[, "end1"] <= object$chromend &

@@ -66,9 +66,9 @@ Functions that display `plotgardener` properties or operate on other
 See [plotgardener Meta Functions](plotgardener_meta_functions.html)
 
 This vignette provides a quick start guide for utilizing `plotgardener`. 
-For in-depth demonstrations of `plotgardener`'s key features, see the additional articles.
-For detailed usage of each function, see the function-specific reference 
-examples with `?function()` (e.g. `?plotPairs()`).
+For in-depth demonstrations of `plotgardener`'s key features, see the 
+additional articles. For detailed usage of each function, see the 
+function-specific reference examples with `?function()` (e.g. `?plotPairs()`).
 
 All the data included in this vignette can be found in the supplementary
 package `plotgardenerData`.
@@ -310,10 +310,11 @@ vignettes.
 
 # Future Directions
 
-We still have many ideas to add for a second version of `plotgardener` including, 
-but not limited to: grammar of graphics style plot arguments and plot building, 
-templates, themes, and multi-plotting functions. If you have suggestions for 
-ways we can improve `plotgardener`, please let us know!  
+We still have many ideas to add for a second version of `plotgardener` 
+including, but not limited to: grammar of graphics style plot arguments 
+and plot building, templates, themes, and multi-plotting functions. If 
+you have suggestions for ways we can improve `plotgardener`, 
+please let us know!
 
 # Session Info
 ```{r}
