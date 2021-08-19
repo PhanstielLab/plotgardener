@@ -192,7 +192,7 @@ annoGenomeLabel <- function(plot, fontsize = 10, fontcolor = "black",
     # CALL PLOTGENOMELABEL
     # =========================================================================
 
-    genomeLabel <- bbPlotGenomeLabel(
+    genomeLabel <- plotGenomeLabel(
         chrom = chrom, chromstart = chromstart,
         chromend = chromend, assembly = assembly,
         fontsize = genomeLabelInternal$fontsize,
