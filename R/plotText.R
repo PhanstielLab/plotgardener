@@ -72,7 +72,7 @@
 #'
 #' ## Plot a vector of text labels
 #' plotText(
-#'     label = c("bb", "Bento", "Box"), x = 3, y = c(0.5, 1, 1.75),
+#'     label = c("pg", "plot", "gardener"), x = 3, y = c(0.5, 1, 1.75),
 #'     just = "center", default.units = "inches"
 #' )
 #'

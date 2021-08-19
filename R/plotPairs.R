@@ -220,7 +220,7 @@ plotPairs <- function(data, chrom, chromstart = NULL, chromend = NULL,
     # =========================================================================
 
     bedpe <- structure(list(
-        bedpe = NULL, chrom = bedpeInternal$chrom,
+        bedpeData = NULL, chrom = bedpeInternal$chrom,
         chromstart = bedpeInternal$chromstart,
         chromend = bedpeInternal$chromend,
         assembly = bedpeInternal$assembly,
@@ -315,14 +315,14 @@ plotPairs <- function(data, chrom, chromstart = NULL, chromend = NULL,
                                 object = bedpe,
                                 subset = "pairs")
     if (length(pairColors[[1]]) > 0){
-        bedpe$color <- pairColors[[1]]
+        bedpeData$color <- pairColors[[1]]
     } else {
-        bedpe$color <- rep("#1f4297", nrow(bedpe))
+        bedpeData$color <- rep("#1f4297", nrow(bedpeData))
     }
     
     bedpe <- pairColors[[2]]
-    bedpe$linecolor <- lineColors(linecolor = bedpeInternal$linecolor,
-                                    fillcolors = bedpe$color,
+    bedpeData$linecolor <- lineColors(linecolor = bedpeInternal$linecolor,
+                                    fillcolors = bedpeData$color,
                                     data = bedpeData,
                                     object = bedpe,
                                     subset = "pairs")
@@ -332,12 +332,12 @@ plotPairs <- function(data, chrom, chromstart = NULL, chromend = NULL,
     # =========================================================================
 
     if (!is.null(bedpe$chromstart) & !is.null(bedpe$chromend)) {
-        bedpeData <- bedpeData[which(bedpeData[, "chrom1"] == bedpeData$chrom &
-                            bedpeData[, "chrom2"] == bedpeData$chrom &
-                            ((bedpeData[, "end1"] >= bedpeData$chromstart &
-                            bedpeData[, "end1"] <= bedpeData$chromend) |
-                            (bedpeData[, "start2"] <= bedpeData$chromstart &
-                            bedpeData[, "start2"] >= bedpeData$chromend))), ]
+        bedpeData <- bedpeData[which(bedpeData[, "chrom1"] == bedpe$chrom &
+                            bedpeData[, "chrom2"] == bedpe$chrom &
+                            ((bedpeData[, "end1"] >= bedpe$chromstart &
+                            bedpeData[, "end1"] <= bedpe$chromend) |
+                            (bedpeData[, "start2"] <= bedpe$chromstart &
+                            bedpeData[, "start2"] >= bedpe$chromend))), ]
     } else {
         bedpeData <- data.frame(matrix(nrow = 0, ncol = 6))
     }
