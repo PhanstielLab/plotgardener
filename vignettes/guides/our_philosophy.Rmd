@@ -286,7 +286,7 @@ pageCreate(
 )
 
 ## Define genomic region with `params`
-params <- params(chrom = "chr21", 
+params <- pgParams(chrom = "chr21", 
                     chromstart = 28000000, chromend = 30300000,
                     assembly = "hg19")
 

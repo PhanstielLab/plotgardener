@@ -75,7 +75,7 @@ pageCreate(width = 7, height = 4.25, default.units = "inches")
 plotText(label = "A", fontsize = 12,
             x = 0.25, y = 0.25, just = "left", default.units = "inches")
 ## Set genomic and dimension parameters in a `params` object
-params_a <- params(chrom = "chr21", chromstart = 28000000, chromend = 30300000, 
+params_a <- pgParams(chrom = "chr21", chromstart = 28000000, chromend = 30300000, 
                       assembly = "hg19",
                       x = 0.25, width = 2.75, just = c("left", "top"), default.units = "inches")
 ## Double-sided Hi-C Plot
@@ -123,13 +123,13 @@ plotText(label = "Chromosome 21", fontsize = 8, fontcolor = "darkgrey",
 plotText(label = "C", fontsize = 12,
             x = 3.5, y = 1, just = c("left", "top"), default.units = "inches")
 ## Set genomic and dimension parameters in a `params` object
-params_c <- params(chrom = "chr21", chromstart = 28150000, chromend = 29150000, 
+params_c <- pgParams(chrom = "chr21", chromstart = 28150000, chromend = 29150000, 
                       assembly = "hg19",
                       x = 3.5, width = 1.5, default.units = "inches")
 ## Set signal track data ranges
-ctcf_range <- params(range = c(0, 77),
+ctcf_range <- pgParams(range = c(0, 77),
                         assembly = "hg19")
-hk_range <- params(range = c(0, 32.6),
+hk_range <- pgParams(range = c(0, 32.6),
                       assembly = "hg19")
 ## Plot Hi-C triangle
 hic_gm <- plotHicTriangle(data = GM12878_HiC_10kb, params = params_c,
@@ -168,7 +168,7 @@ annoGenomeLabel(plot = genes_gm, params = params_c,
 plotText(label = "D", fontsize = 12,
             x = 5.25, y = 1, just = c("left", "top"), default.units = "inches")
 ## Set genomic and dimension parameters in a `params` object
-params_d <- params(chrom = "chr21", chromstart = 28150000, chromend = 29150000, 
+params_d <- pgParams(chrom = "chr21", chromstart = 28150000, chromend = 29150000, 
                       assembly = "hg19",
                       x = 6.75, width = 1.5, default.units = "inches")
 ## Plot Hi-C triangle

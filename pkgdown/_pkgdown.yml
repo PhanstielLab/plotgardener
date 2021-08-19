@@ -22,7 +22,7 @@ navbar:
     - icon: fa-home fa-lg
       href: index.html
     - text: Our Philosophy
-      href: articles/our_philosophy.html
+      href: articles/guides/our_philosophy.html
     - text: Introduction to plotgardener
       href: articles/introduction_to_plotgardener.html
     - text: Articles
@@ -101,7 +101,7 @@ reference:
       - assembly
       - defaultPackages
       - genomes
-      - params
+      - pgParams
       - c
       - colorby
       - mapColors
