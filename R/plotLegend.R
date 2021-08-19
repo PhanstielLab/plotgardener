@@ -60,7 +60,7 @@
 #' as numerics. Default value is \code{default.units = "inches"}.
 #' @param draw A logical value indicating whether graphics output should
 #' be produced. Default value is \code{draw = TRUE}.
-#' @param params An optional \link[plotgardener]{params} object
+#' @param params An optional \link[plotgardener]{pgParams} object
 #' containing relevant function parameters.
 #' @param ... Additional grid graphical parameters. See \link[grid]{gpar}.
 #'
@@ -162,7 +162,7 @@ plotLegend <- function(legend, fill = NULL, pch = NULL, lty = NULL,
 
     check_placement(object = legendPlot)
     
-    bb_checkColorby(fill = legInternal$fill,
+    checkColorby(fill = legInternal$fill,
                     colorby = FALSE)
 
     # =========================================================================
@@ -198,7 +198,7 @@ plotLegend <- function(legend, fill = NULL, pch = NULL, lty = NULL,
     )
 
     ## If placing information is provided but plot == TRUE,
-    ## set up it's own viewport separate from bb_makepage
+    ## set up it's own viewport separate
     ## Not translating into page_coordinates
     if (is.null(legendPlot$x) | is.null(legendPlot$y)) {
         vp <- viewport(

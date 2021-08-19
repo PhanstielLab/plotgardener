@@ -70,7 +70,7 @@ Default value is \code{matrix = "observed"}. Options are:
 \item{\code{"log2oe"}: }{Log2 transformed observed/expected counts.}
 }}
 
-\item{params}{An optional \link[plotgardener]{params} object
+\item{params}{An optional \link[plotgardener]{pgParams} object
 containing relevant function parameters.}
 
 \item{quiet}{A logical indicating whether or not to print messages.}

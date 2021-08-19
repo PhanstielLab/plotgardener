@@ -31,7 +31,7 @@ Default value is \code{strand = "*"}. Options are:
 \item{\code{"*"}: }{Plus and minus strands.}
 }}
 
-\item{params}{An optional \link[plotgardener]{params} object
+\item{params}{An optional \link[plotgardener]{pgParams} object
 containing relevant function parameters.}
 }
 \value{

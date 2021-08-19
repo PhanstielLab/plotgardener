@@ -28,7 +28,7 @@
 #' Default value is \code{scipen = 999}.
 #' @param axisLine A logical value indicating whether to show the axis line.
 #' Default value is \code{axisLine = FALSE}.
-#' @param params An optional \link[plotgardener]{params} object
+#' @param params An optional \link[plotgardener]{pgParams} object
 #' containing relevant function parameters.
 #' @param ... Additional grid graphical parameters. See \link[grid]{gpar}.
 #'

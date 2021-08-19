@@ -95,7 +95,7 @@ pageCreate(
     width = 3, height = 2, default.units = "inches",
     showGuides = FALSE, xgrid = 0, ygrid = 0
 )
-genomicRegion <- params(
+genomicRegion <- pgParams(
     chrom = "chr8",
     chromstart = 1000000, chromend = 2000000,
     assembly = "hg19"
@@ -305,7 +305,7 @@ pageCreate(
     width = 7.1, height = 2.25, default.units = "inches",
     showGuides = FALSE, xgrid = 0, ygrid = 0
 )
-params <- params(
+params <- pgParams(
     chrom = "chr21", chromstart = 28950000, chromend = 29800000,
     assembly = "hg19", resolution = 10000
 )
@@ -364,7 +364,7 @@ pageCreate(
     width = 3.25, height = 3.25, default.units = "inches",
     showGuides = FALSE, xgrid = 0, ygrid = 0
 )
-params <- params(
+params <- pgParams(
     chrom = "chr21", chromstart = 28000000, chromend = 30300000,
     assembly = "hg19", resolution = 10000,
     x = 0.25, width = 2.75, just = c("left", "top"), default.units = "inches"

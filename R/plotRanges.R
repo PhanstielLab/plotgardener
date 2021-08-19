@@ -99,7 +99,7 @@
 #' as numerics. Default value is \code{default.units = "inches"}.
 #' @param draw A logical value indicating whether graphics output should
 #' be produced. Default value \code{draw = TRUE}.
-#' @param params An optional \link[plotgardener]{params} object
+#' @param params An optional \link[plotgardener]{pgParams} object
 #' containing relevant function parameters.
 #' @param ... Additional grid graphical parameters. See \link[grid]{gpar}.
 #'
@@ -185,8 +185,9 @@ plotRanges <- function(data, chrom, chromstart = NULL, chromend = NULL,
                     chromend = pileupPlot$chromend)
         
         ## Fill/colorby checks
-        checkColorby(colorby = TRUE,
-                        data = bed)
+        checkColorby(fill = fill,
+                    colorby = TRUE,
+                    data = bed)
     }
 
     ## Define a function that parses the yscale based on split strands

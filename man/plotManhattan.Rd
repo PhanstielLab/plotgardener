@@ -145,7 +145,7 @@ as numerics. Default value is \code{default.units = "inches"}.}
 \item{draw}{A logical value indicating whether graphics output should
 be produced. Default value is \code{draw = TRUE}.}
 
-\item{params}{An optional \link[plotgardener]{params} object containing
+\item{params}{An optional \link[plotgardener]{pgParams} object containing
 relevant function parameters.}
 
 \item{...}{Additional grid graphical parameters. See \link[grid]{gpar}.}

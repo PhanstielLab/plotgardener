@@ -54,7 +54,7 @@ Default value is \code{just = "center"}.}
 \code{x} or \code{y} are only given as numerics or numeric vectors.
 Default value is \code{default.units = "inches"}.}
 
-\item{params}{An optional \link[plotgardener]{params} object
+\item{params}{An optional \link[plotgardener]{pgParams} object
 containing relevant function parameters.}
 
 \item{...}{Additional grid graphical parameters. See \link[grid]{gpar}.}

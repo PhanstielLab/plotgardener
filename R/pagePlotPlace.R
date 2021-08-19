@@ -33,7 +33,7 @@
 #' given as numerics. Default value is \code{default.units = "inches"}.
 #' @param draw A logical value indicating whether graphics output
 #' should be produced. Default value is \code{draw = TRUE}.
-#' @param params An optional \link[plotgardener]{params} object
+#' @param params An optional \link[plotgardener]{pgParams} object
 #' containing relevant function parameters.
 #'
 #' @return Function will update dimensions of an input plot and

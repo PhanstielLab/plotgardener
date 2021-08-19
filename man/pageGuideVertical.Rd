@@ -22,7 +22,7 @@ Default value is \code{default.units = "inches"}.}
 \item{linecolor}{Character value indicating color of guideline.
 Default value is \code{linecolor = "grey55"}.}
 
-\item{params}{An optional \link[plotgardener]{params} object
+\item{params}{An optional \link[plotgardener]{pgParams} object
 containing relevant function parameters.}
 
 \item{...}{Additional grid graphical parameters. See \link[grid]{gpar}.}

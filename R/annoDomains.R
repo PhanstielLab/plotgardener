@@ -29,7 +29,7 @@
 #' }
 #' @param linecolor A character value specifying the color of the domain
 #' annotations. Default value is \code{linecolor = "black"}.
-#' @param params An optional \link[plotgardener]{params} object
+#' @param params An optional \link[plotgardener]{pgParams} object
 #' containing relevant function parameters.
 #' @param ... Additional grid graphical parameters. See \link[grid]{gpar}.
 #'

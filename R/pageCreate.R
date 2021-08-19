@@ -24,7 +24,7 @@
 #' @param showGuides A logical value indicating whether to draw a
 #' black border around the entire page and guiding rulers along the top and
 #' left side of the page. Default value is \code{showOutline = TRUE}.
-#' @param params An optional \link[plotgardener]{params} object
+#' @param params An optional \link[plotgardener]{pgParams} object
 #' containing relevant function parameters.
 #'
 #' @examples

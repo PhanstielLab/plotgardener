@@ -29,7 +29,7 @@
 #' @param default.units A string indicating the default units to use
 #' if \code{x}, \code{y}, \code{width}, or \code{height} are only given
 #' as numerics. Default value is \code{default.units = "inches"}.
-#' @param params An optional \link[plotgardener]{params} object containing
+#' @param params An optional \link[plotgardener]{pgParams} object containing
 #' relevant function parameters.
 #'
 #' @return Returns a \code{pg_gg} object containing

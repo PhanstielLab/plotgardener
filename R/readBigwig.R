@@ -21,7 +21,7 @@
 #' \item{\code{"-"}: }{Minus strand.}
 #' \item{\code{"*"}: }{Plus and minus strands.}
 #' }
-#' @param params An optional \link[plotgardener]{params} object
+#' @param params An optional \link[plotgardener]{pgParams} object
 #' containing relevant function parameters.
 #'
 #' @return Returns a 6-column dataframe of bigwig information.

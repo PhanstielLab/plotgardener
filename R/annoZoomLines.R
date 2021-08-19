@@ -49,7 +49,7 @@
 #' Default value is \code{linecolor = "grey"}.
 #' @param lty A numeric specifying zoom line type.
 #' Default value is \code{lty = 2}.
-#' @param params An optional \link[plotgardener]{params}
+#' @param params An optional \link[plotgardener]{pgParams}
 #' object containing relevant function parameters.
 #' @param ... Additional grid graphical parameters. See \link[grid]{gpar}.
 #'
@@ -79,7 +79,7 @@
 #' )
 #'
 #' ## Annotate zoom lines for a region on chromsome 21
-#' zoomRegion <- params(
+#' zoomRegion <- pgParams(
 #'     chrom = "chr21",
 #'     chromstart = 28000000, chromend = 30300000,
 #'     assembly = "hg19"

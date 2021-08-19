@@ -87,7 +87,7 @@
 #' as numerics. Default value is \code{default.units = "inches"}.
 #' @param draw A logical value indicating whether graphics
 #' output should be produced.
-#' @param params An optional \link[plotgardener]{params} object
+#' @param params An optional \link[plotgardener]{pgParams} object
 #' containing relevant function parameters.
 #' @param ... Additional grid graphical parameters. See \link[grid]{gpar}.
 #'
@@ -100,7 +100,7 @@
 #' data("IMR90_DNAloops_pairs")
 #'
 #' ## Set the coordinates
-#' params <- params(
+#' params <- pgParams(
 #'     chrom = "chr21",
 #'     chromstart = 27900000, chromend = 30700000,
 #'     assembly = "hg19",
@@ -321,7 +321,7 @@ plotPairs <- function(data, chrom, chromstart = NULL, chromend = NULL,
     }
     
     bedpe <- pairColors[[2]]
-    bedpe$linecolor <- bb_lineColors(linecolor = bedpeInternal$linecolor,
+    bedpe$linecolor <- lineColors(linecolor = bedpeInternal$linecolor,
                                     fillcolors = bedpe$color,
                                     data = bedpeData,
                                     object = bedpe,
@@ -365,15 +365,15 @@ plotPairs <- function(data, chrom, chromstart = NULL, chromend = NULL,
     ## Get viewport name
     currentViewports <- current_viewports()
     vp_name <- paste0(
-        "bb_pairs",
+        "pairs",
         length(grep(
-            pattern = "bb_pairs",
+            pattern = "pairs",
             x = currentViewports
         )) + 1
     )
 
     ## If placing information is provided but plot == TRUE,
-    ## set up it's own viewport separate from bb_makepage
+    ## set up it's own viewport separate
     ## Not translating into page_coordinates
     if (is.null(bedpe$x) | is.null(bedpe$y)) {
         vp <- viewport(
@@ -387,7 +387,7 @@ plotPairs <- function(data, chrom, chromstart = NULL, chromend = NULL,
         )
 
         if (bedpeInternal$draw == TRUE) {
-            vp$name <- "bb_pairs1"
+            vp$name <- "pairs1"
             grid.newpage()
         }
     } else {

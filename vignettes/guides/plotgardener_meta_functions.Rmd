@@ -44,14 +44,14 @@ defaultPackages("hg19")
 A constructor to make custom combinations of genomic annotation packages for 
 use in `plotgardener` functions through the `assembly` parameter.
 
-- **`params`**
+- **`pgParams`**
 
 A constructor to capture sets of parameters to be shared across multiple
-function calls. `params` objects can hold any argument from any `plotgardener`
-function. Most often, `params` objects are used to store a common genomic
+function calls. `pgParams` objects can hold any argument from any `plotgardener`
+function. Most often, `pgParams` objects are used to store a common genomic
 region and common x-placement coordinate information. For a detailed example 
-using the `params` object, refer to the vignette 
-[Plotting Multi-omic Data](plotting_multiomic_data.html#using-the-params-object-1).
+using the `pgParams` object, refer to the vignette 
+[Plotting Multi-omic Data](plotting_multiomic_data.html#using-the-pgParams-object-1).
 
 - **`colorby`** and **`mapColors`**
 

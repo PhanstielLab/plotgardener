@@ -35,7 +35,7 @@ horizontal gridlines. Default value is \code{ygrid = 0.5}.}
 black border around the entire page and guiding rulers along the top and
 left side of the page. Default value is \code{showOutline = TRUE}.}
 
-\item{params}{An optional \link[plotgardener]{params} object
+\item{params}{An optional \link[plotgardener]{pgParams} object
 containing relevant function parameters.}
 }
 \value{

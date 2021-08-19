@@ -41,7 +41,7 @@ Default value is \code{just = c("left", "top")}.}
 if \code{x}, \code{y}, \code{width}, or \code{height} are only given
 as numerics. Default value is \code{default.units = "inches"}.}
 
-\item{params}{An optional \link[plotgardener]{params} object containing
+\item{params}{An optional \link[plotgardener]{pgParams} object containing
 relevant function parameters.}
 }
 \value{

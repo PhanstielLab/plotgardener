@@ -52,7 +52,7 @@
 #' }
 #' @param arrow A list describing arrow heads to place at either
 #' end of the line segments, as produced by the \link[grid]{arrow} function.
-#' @param params An optional \link[plotgardener]{params} object containing
+#' @param params An optional \link[plotgardener]{pgParams} object containing
 #' relevant function parameters.
 #' @param ... Additional grid graphical parameters. See \link[grid]{gpar}.
 #'
@@ -164,7 +164,7 @@ annoSegments <- function(x0, y0, x1, y1, plot, default.units = "native",
     # CATCH ERRORS
     # =========================================================================
 
-    check_bbpage(error = "Cannot annotate segment without a `plotgardener` page.")
+    check_page(error = "Cannot annotate segment without a `plotgardener` page.")
     if (is.null(segmentsInternal$plot)) {
         stop("argument \"plot\" is missing, with no default.",
             call. = FALSE

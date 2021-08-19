@@ -85,7 +85,7 @@
 #' @param default.units A string indicating the default units to
 #' use if \code{x}, \code{y}, or \code{length} are only given as numerics.
 #' Default value is \code{default.units = "inches"}.
-#' @param params An optional \link[plotgardener]{params} object
+#' @param params An optional \link[plotgardener]{pgParams} object
 #' containing relevant function parameters.
 #' @param ... Additional grid graphical parameters or digit specifications.
 #' See \link[grid]{gpar} and \link[base]{formatC}.

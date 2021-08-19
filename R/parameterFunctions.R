@@ -1,5 +1,5 @@
-## Define a function for `params` and parameter parsing logic
-# @param params params object to override default arguments of
+## Define a function for `pgParams` and parameter parsing logic
+# @param params pgParams object to override default arguments of
 # parent function
 # @param defaultArgs List of defaults for each argument of parent function
 # @param declaredArgs List of arguments to override all others
@@ -24,7 +24,7 @@ parseParams <- function(params = params,
 
     ## If params are supplied override matching defaultArguments
     if (!is.null(params)) {
-        if (is(params, "params")) {
+        if (is(params, "pgParams")) {
             ## Replace matching defaultArgs with params
             matchedParams <- params[na.omit(sort(match(
                 names(defaultArgs),
@@ -36,7 +36,7 @@ parseParams <- function(params = params,
             ))] <- matchedParams
         } else {
             warning("Input object ignored. Object must be a",
-                " \'params\' class object.",
+                " \'pgParams\' class object.",
                 call. = FALSE
             )
         }

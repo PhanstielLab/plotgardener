@@ -1,19 +1,19 @@
-test_that("params object created", {
-    object <- params(chrom = "chr1")
-    expect_equal(class(object), "params")
+test_that("pgParams object created", {
+    object <- pgParams(chrom = "chr1")
+    expect_equal(class(object), "pgParams")
 })
 
-test_that("params object concatenates", {
-    object1 <- params(chrom = "chr1")
-    object2 <- params(chromstart = 1000000)
-    object3 <- params(chrom = "chr1", chromstart = 1000000)
+test_that("pgParams object concatenates", {
+    object1 <- pgParams(chrom = "chr1")
+    object2 <- pgParams(chromstart = 1000000)
+    object3 <- pgParams(chrom = "chr1", chromstart = 1000000)
 
-    expect_equal(class(c(object1, object2)), "params")
+    expect_equal(class(c(object1, object2)), "pgParams")
     expect_equal(c(object1, object2), object3)
     expect_warning(c(object1, "gene"))
 })
 
-test_that("params parameter parsing", {
+test_that("pgParams parameter parsing", {
     
     testFun <- function(data, chrom, chromstart = NULL, chromend = NULL,
                         assembly = "hg19", 
@@ -48,8 +48,8 @@ test_that("params parameter parsing", {
         )
     )
     
-    ## bb_params replaces default
-    params <- params(assembly = "hg38")
+    ## pgParams replaces default
+    params <- pgParams(assembly = "hg38")
     expect_mapequal(
         testFun(params = params),
         list(data = NULL,
@@ -60,7 +60,7 @@ test_that("params parameter parsing", {
         )
     )
     
-    ## Input overrides bb_params
+    ## Input overrides pgParams
     expect_mapequal(
         testFun(params = params, assembly = "mm9"),
         list(data = NULL,

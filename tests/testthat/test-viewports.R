@@ -190,7 +190,7 @@ test_that("annotation viewports", {
     library("org.Hs.eg.db")
 
     ## Set genomic coordinates
-    paramssmall <- params(
+    paramssmall <- pgParams(
         chrom = "chr8",
         chromstart = 1, chromend = 3000000,
         assembly = "hg19", width = 7

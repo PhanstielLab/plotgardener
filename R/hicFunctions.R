@@ -109,7 +109,7 @@ hic_limit <- function(hic, hicPlot){
 # @param quiet message quiet parameter
 read_data <- function(hic, hicPlot, norm, assembly, type, quiet) {
 
-    ## if .hic file, read in with bb_rhic
+    ## if .hic file, read in
     if (!("data.frame" %in% class(hic))) {
         if (!is.null(hicPlot$chromstart) & !is.null(hicPlot$chromend) &
             !is.na(hicPlot$resolution)) {
@@ -117,7 +117,7 @@ read_data <- function(hic, hicPlot, norm, assembly, type, quiet) {
             readchromend <- hicPlot$chromend + hicPlot$resolution
             readaltchromstart <- hicPlot$altchromstart - hicPlot$resolution
             readaltchromend <- hicPlot$altchromend + hicPlot$resolution
-            hic <- suppressWarnings(bbReadHic(
+            hic <- suppressWarnings(readHic(
                 file = hic, chrom = hicPlot$chrom,
                 chromstart = readchromstart,
                 chromend = readchromend,

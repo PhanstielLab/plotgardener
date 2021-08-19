@@ -36,7 +36,7 @@
 #' Default value is \code{fill = NA}.
 #' @param alpha Numeric value specifying color transparency.
 #' Default value is \code{alpha = 1}.
-#' @param params An optional \link[plotgardener]{params} object
+#' @param params An optional \link[plotgardener]{pgParams} object
 #' containing relevant function parameters.
 #' @param ... Additional grid graphical parameters. See \link[grid]{gpar}.
 #'

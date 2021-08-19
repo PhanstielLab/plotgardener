@@ -94,7 +94,7 @@
 #' numerics. Default value is \code{default.units = "inches"}.
 #' @param draw A logical value indicating whether graphics output should be
 #' produced. Default value \code{draw = TRUE}.
-#' @param params An optional \link[plotgardener]{params} object containing
+#' @param params An optional \link[plotgardener]{pgParams} object containing
 #' relevant function parameters.
 #' @param ... Additional grid graphical parameters. See \link[grid]{gpar}.
 #'
@@ -111,7 +111,7 @@
 #' pageCreate(width = 7.5, height = 2.1, default.units = "inches")
 #'
 #' ## Define region
-#' region <- params(
+#' region <- pgParams(
 #'     chrom = "chr21",
 #'     chromstart = 28000000, chromend = 30300000,
 #'     assembly = "hg19",

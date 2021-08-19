@@ -14,12 +14,12 @@
     allArgs1 <- paste0(allArgs1, ",...")
 
     ## Pass all arguments into function definition
-    params <- parse(text = c(sprintf("
+    pgParams <- parse(text = c(sprintf("
 
-    params <- function(%s) {
+    pgParams <- function(%s) {
 
     ## Construct object
-    object <- structure(.Data = list(%s), class = 'params')
+    object <- structure(.Data = list(%s), class = 'pgParams')
     object[names(list(...))] <- list(...)
 
     ## Feature: setting region parameters by gene name & assembly -------------
@@ -126,7 +126,7 @@
     }
 
     ## Filter out null values for pretty printing
-    object <- structure(Filter(Negate(is.null), object), class = 'params')
+    object <- structure(Filter(Negate(is.null), object), class = 'pgParams')
 
     return(object)
 
@@ -134,5 +134,5 @@
                                         ", allArgs1, allArgs2)))
 
     ## Assign function in environment
-    assign("params", eval(params), rlang::ns_env(pkgname))
+    assign("pgParams", eval(pgParams), rlang::ns_env(pkgname))
 }

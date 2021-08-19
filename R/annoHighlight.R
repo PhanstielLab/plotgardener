@@ -42,7 +42,7 @@
 #' @param default.units A string indicating the default units to use if
 #' \code{y} or \code{height} are only given as numerics or numeric vectors.
 #' Default value is \code{default.units = "inches"}.
-#' @param params An optional \link[plotgardener]{params} object containing
+#' @param params An optional \link[plotgardener]{pgParams} object containing
 #' relevant function parameters.
 #' @param ... Additional grid graphical parameters. See \link[grid]{gpar}.
 #'
@@ -56,7 +56,7 @@
 #' ## Plot and place a signal plot
 #' library(plotgardenerData)
 #' data("IMR90_ChIP_H3K27ac_signal")
-#' region <- params(
+#' region <- pgParams(
 #'     chrom = "chr21",
 #'     chromstart = 28000000, chromend = 30300000,
 #'     assembly = "hg19",

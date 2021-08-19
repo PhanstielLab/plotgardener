@@ -36,7 +36,7 @@
 #' @param default.units A string indicating the default units to use if
 #' \code{x} or \code{y} are only given as numerics or numeric vectors.
 #' Default value is \code{default.units = "native"}.
-#' @param params An optional \link[plotgardener]{params} object
+#' @param params An optional \link[plotgardener]{pgParams} object
 #' containing relevant function parameters.
 #' @param ... Additional grid graphical parameters. See \link[grid]{gpar}.
 #'

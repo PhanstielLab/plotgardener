@@ -24,7 +24,7 @@ read_rangeData <- function(data, assembly, chrom = NULL,
             } else if (file_ext(data) %in% c("bw", "bigWig",
                                             "bigwig", "bedgraph")) {
 
-                data <- bbReadBigwig(
+                data <- readBigwig(
                     file = data,
                     chrom = chrom,
                     chromstart = start,

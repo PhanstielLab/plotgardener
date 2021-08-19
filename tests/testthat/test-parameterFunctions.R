@@ -50,8 +50,8 @@ test_that("parseParams", {
                                   "arch" = "blah"),
                      class = "object"
                  ))
-    ## Overriding bb_params parameter
-    expect_equal(test(params = params(alpha = 100), arch = "not_blah", alpha = 10),
+    ## Overriding pgParams parameter
+    expect_equal(test(params = pgParams(alpha = 100), arch = "not_blah", alpha = 10),
                  structure(
                      .Data = list("alpha" = 10,
                                   "hic" = NULL,
@@ -61,7 +61,7 @@ test_that("parseParams", {
                      class = "object"
                  ))
     
-    ## Warning without a bb_params object
+    ## Warning without a pgParams object
     expect_warning(test(params = c(hic = "no")))
 })
 

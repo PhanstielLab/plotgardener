@@ -229,7 +229,7 @@ pageCreate(
     width = 3.25, height = 3.25, default.units = "inches",
     showGuides = FALSE, xgrid = 0, ygrid = 0
 )
-params <- params(
+params <- pgParams(
     chrom = "chr21", chromstart = 28000000, chromend = 30300000,
     assembly = "hg19",
     x = 0.25, width = 2.75, just = c("left", "top"), default.units = "inches"
@@ -406,7 +406,7 @@ We can then use `annoHighlight()` to highlight our genomic region of
 interest (`chr21:28000000-30300000`) with a box of our desired `height`:
 
 ```{r eval=FALSE, echo=TRUE, message=FALSE}
-region <- params(chrom = "chr21", chromstart = 28000000, chromend = 30300000)
+region <- pgParams(chrom = "chr21", chromstart = 28000000, chromend = 30300000)
 annoHighlight(
     plot = ideogramPlot, params = region,
     fill = "red",
@@ -427,7 +427,7 @@ ideogramPlot <- plotIdeogram(
     orientation = "h",
     x = 0.25, y = 0.5, width = 5.75, height = 0.3, just = "left"
 )
-region <- params(chrom = "chr21", chromstart = 28000000, chromend = 30300000)
+region <- pgParams(chrom = "chr21", chromstart = 28000000, chromend = 30300000)
 
 annoHighlight(
     plot = ideogramPlot, params = region,
@@ -459,7 +459,7 @@ ideogramPlot <- plotIdeogram(
     orientation = "h",
     x = 0.25, y = 0.5, width = 5.75, height = 0.3, just = "left"
 )
-region <- params(chrom = "chr21", chromstart = 28000000, chromend = 30300000)
+region <- pgParams(chrom = "chr21", chromstart = 28000000, chromend = 30300000)
 
 annoHighlight(
     plot = ideogramPlot, params = region,
@@ -488,7 +488,7 @@ ideogramPlot <- plotIdeogram(
     orientation = "h",
     x = 0.25, y = 0.5, width = 5.75, height = 0.3, just = "left"
 )
-region <- params(chrom = "chr21", chromstart = 28000000, chromend = 30300000)
+region <- pgParams(chrom = "chr21", chromstart = 28000000, chromend = 30300000)
 
 annoHighlight(
     plot = ideogramPlot, params = region,

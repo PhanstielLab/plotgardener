@@ -46,7 +46,7 @@ colors <- mapColors(vector = IMR90_DNAloops_pairs$length,
 heights <- IMR90_DNAloops_pairs$length / max(IMR90_DNAloops_pairs$length)    
 pageCreate(width = 7.5, height = 2.1, default.units = "inches",
             showGuides = FALSE, xgrid = 0, ygrid = 0)       
-params <- params(
+params <- pgParams(
     chrom = "chr21",
     chromstart = 27900000, chromend = 30700000,
     assembly = "hg19",

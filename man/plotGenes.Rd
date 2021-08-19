@@ -99,7 +99,7 @@ as numerics. Default value is \code{default.units = "inches"}.}
 \item{draw}{A logical value indicating whether graphics output
 should be produced. Default value is \code{draw = TRUE}.}
 
-\item{params}{An optional \link[plotgardener]{params} object
+\item{params}{An optional \link[plotgardener]{pgParams} object
 containing relevant function parameters.}
 }
 \value{
@@ -136,12 +136,12 @@ library("TxDb.Hsapiens.UCSC.hg19.knownGene")
 library("org.Hs.eg.db")
 
 ## Set genomic coordinates
-paramssmall <- params(
+paramssmall <- pgParams(
     chrom = "chr8",
     chromstart = 1, chromend = 3000000,
     assembly = "hg19", width = 7
 )
-paramsbig <- params(
+paramsbig <- pgParams(
     chrom = "chr8",
     chromstart = 1, chromend = 146364022,
     assembly = "hg19", width = 7

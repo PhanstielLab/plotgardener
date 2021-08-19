@@ -40,7 +40,7 @@
 #' @param shift Numeric specifying the number of pixels on either end of
 #' main pixel in a box or circle. Numeric specifying number of pixels
 #' for the length of an arrow.
-#' @param params An optional \link[plotgardener]{params} object
+#' @param params An optional \link[plotgardener]{pgParams} object
 #' containing relevant function parameters.
 #' @param ... Additional grid graphical parameters. See \link[grid]{gpar}.
 #' @param quiet A logical indicating whether or not to print messages.
@@ -570,14 +570,14 @@ annoPixels <- function(plot, data, type = "box", half = "inherit",
         height = loopsInternal$plot$height,
         just = loopsInternal$plot$just, grobs = NULL
     ),
-    class = "bb_pixel"
+    class = "pixel"
     )
 
     # =========================================================================
     # CATCH ERRORS
     # =========================================================================
 
-    check_bbpage(error = "Cannot annotate Hi-C pixels without a
+    check_page(error = "Cannot annotate Hi-C pixels without a
                 `plotgardener` page.")
     if (is.null(loopsInternal$plot)) stop("argument \"plot\" is missing, ",
                                             "with no default.", call. = FALSE)
@@ -682,7 +682,7 @@ annoPixels <- function(plot, data, type = "box", half = "inherit",
         xCoord <- convertX(unit(loopsInternal$plot$grobs$vp$x),
             unitTo = get("page_units", pgEnv)
         ) + bottomLeft[[1]]
-        seekViewport(name = "bb_page")
+        seekViewport(name = "page")
 
         vp <- viewport(
             height = side, width = side,
@@ -749,6 +749,6 @@ annoPixels <- function(plot, data, type = "box", half = "inherit",
     # RETURN OBJECT
     # =========================================================================
 
-    message("bb_pixel[", vp_name, "]")
+    message("pixel[", vp_name, "]")
     invisible(loops)
 }

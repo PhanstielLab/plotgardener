@@ -96,7 +96,7 @@ Default value is \code{just = c("left", "top")}.}
 if \code{x} or \code{y} are only given as numerics.
 Default value is \code{default.units = "inches"}.}
 
-\item{params}{An optional \link[plotgardener]{params} object containing
+\item{params}{An optional \link[plotgardener]{pgParams} object containing
 relevant function parameters.}
 
 \item{...}{Additional grid graphical parameters or digit specifications.

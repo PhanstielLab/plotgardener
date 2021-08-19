@@ -57,7 +57,7 @@
 #' }
 #' @param arrow A list describing arrow heads to place at either end of
 #' the line segments, as produced by the \link[grid]{arrow} function.
-#' @param params An optional \link[plotgardener]{params} object containing
+#' @param params An optional \link[plotgardener]{pgParams} object containing
 #' relevant function parameters.
 #' @param ... Additional grid graphical parameters. See \link[grid]{gpar}.
 #'

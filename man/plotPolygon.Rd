@@ -57,7 +57,7 @@ belong to the same polygon.}
 \code{x} and \code{y} into multiple polygons. Specifies consecutive
 blocks of locations which make up separate polygons.}
 
-\item{params}{An optional \link[plotgardener]{params} object containing
+\item{params}{An optional \link[plotgardener]{pgParams} object containing
 relevant function parameters.}
 
 \item{...}{Additional grid graphical parameters. See \link[grid]{gpar}.}

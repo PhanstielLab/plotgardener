@@ -69,7 +69,7 @@ Default value is \code{linejoin = "mitre"}. Options are:
 \item{arrow}{A list describing arrow heads to place at either
 end of the line segments, as produced by the \link[grid]{arrow} function.}
 
-\item{params}{An optional \link[plotgardener]{params} object containing
+\item{params}{An optional \link[plotgardener]{pgParams} object containing
 relevant function parameters.}
 
 \item{...}{Additional grid graphical parameters. See \link[grid]{gpar}.}

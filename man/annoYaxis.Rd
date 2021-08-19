@@ -39,7 +39,7 @@ Default value is \code{scipen = 999}.}
 \item{axisLine}{A logical value indicating whether to show the axis line.
 Default value is \code{axisLine = FALSE}.}
 
-\item{params}{An optional \link[plotgardener]{params} object
+\item{params}{An optional \link[plotgardener]{pgParams} object
 containing relevant function parameters.}
 
 \item{...}{Additional grid graphical parameters. See \link[grid]{gpar}.}

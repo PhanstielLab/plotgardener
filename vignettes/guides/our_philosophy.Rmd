@@ -122,8 +122,8 @@ library(org.Hs.eg.db)
 ## Create plotgardener page
 pageCreate(width = 3, height = 2, default.units = "inches")
 
-## Define genomic region with `params`
-genomicRegion <- params(chrom = "chr8", 
+## Define genomic region with `pgParams`
+genomicRegion <- pgParams(chrom = "chr8", 
                         chromstart = 1000000, chromend = 2000000,
                         assembly = "hg19")
 
@@ -153,7 +153,7 @@ data("IMR90_DNAloops_pairs")
 data("IMR90_ChIP_H3K27ac_signal")
 
 ## Define genomic region and widths of all plots
-params <- params(
+params <- pgParams(
     chrom = "chr21", chromstart = 28000000, chromend = 30300000,
     assembly = "hg19",
     x = unit(0.5, "inches"), width = unit(2, "inches")
@@ -221,7 +221,7 @@ and the same `plotgardener` code:
 pageCreate(width = 7, height = 3.5, default.units = "inches")
 
 ## Define genomic region with `params`
-params <- params(chrom = "chr21", 
+params <- pgParams(chrom = "chr21", 
                     chromstart = 28000000, chromend = 30300000,
                     assembly = "hg19")
 
@@ -367,8 +367,8 @@ pageCreate(
     xgrid = 0, ygrid = 0, showGuides = FALSE
 )
 
-## Define genomic region with `params`
-params <- params(chrom = "chr21", 
+## Define genomic region with `pgParams`
+params <- pgParams(chrom = "chr21", 
                     chromstart = 28000000, chromend = 30300000,
                     assembly = "hg19")
 

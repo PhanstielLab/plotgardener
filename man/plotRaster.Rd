@@ -48,7 +48,7 @@ Default value is \code{default.units = "inches"}.}
 \item{interpolate}{A logical value indicating whether to linearly
 interpolate the image. Default value is \code{interpolate = TRUE}.}
 
-\item{params}{An optional \link[plotgardener]{params} object
+\item{params}{An optional \link[plotgardener]{pgParams} object
 containing relevant function parameters.}
 
 \item{...}{Additional grid graphical parameters. See \link[grid]{gpar}.}

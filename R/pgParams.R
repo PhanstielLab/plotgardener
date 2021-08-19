@@ -1,16 +1,16 @@
-#' params: plotgardener parameters object
+#' pgParams: plotgardener parameters object
 #'
-#' Creates an object of class "params" that can be used by
-#' plotgardener functions. params can be used to set a set of parameters
+#' Creates an object of class "pgParams" that can be used by
+#' plotgardener functions. pgParams can be used to set a set of parameters
 #' to be shared across multiple functions.
 #'
-#' params generates arguments from exported plotgardener functions at
-#' loading time of the package. Arguments defined in a params object
+#' pgParams generates arguments from exported plotgardener functions at
+#' loading time of the package. Arguments defined in a pgParams object
 #' can be passed into the \code{params} argument of plotgardener functions.
 #' params arguments can be overridden from within plotgardener functions.
 #'
-#' params also provides an alternative region definition mechanism.
-#' Given a gene name and genome assembly, params returns the appropriate
+#' pgParams also provides an alternative region definition mechanism.
+#' Given a gene name and genome assembly, pgParams returns the appropriate
 #' "chrom", "chromstart", and "chromend" with a default buffer of
 #' \code{(gene length) / 2} added to the ends of the gene coordinates.
 #' The buffer amount can be set manually with the \code{geneBuffer}
@@ -150,7 +150,7 @@
 #' \item{\code{zrange}}
 #' }
 #'
-#' @return Returns an object of class \code{params}
+#' @return Returns an object of class \code{pgParams}
 #' containing plotgardener function arguments.
 #'
 #' @examples
@@ -159,26 +159,26 @@
 #' library("org.Hs.eg.db")
 #'
 #' ## Define parameters
-#' p1 <- params(gene = "IL1B", assembly = "hg19")
+#' p1 <- pgParams(gene = "IL1B", assembly = "hg19")
 #'
 #' ## Optionally add more parameters
-#' p2 <- params(fontsize = 10, assembly = "hg19")
+#' p2 <- pgParams(fontsize = 10, assembly = "hg19")
 #'
 #' ## Combine parameters and pass them to a plotgardener function
 #' plotGenes(params = c(p1, p2))
-#' @export params
+#' @export pgParams
 #' @export c
 
 ## Define params function skeleton (defined onLoad in zzz.R)
-params <- function() {}
+pgParams <- function() {}
 
-## Define concatenate method for params objects within default concatenate
+## Define concatenate method for pgParams objects within default concatenate
 ## method to use when
-## any params object is found
+## any pgParams object is found
 
-#' Combine multiple params objects into a vector
+#' Combine multiple pgParams objects into a vector
 #'
-#' @param ... \link[plotgardener]{params} objects to be concatenated.
+#' @param ... \link[plotgardener]{pgParams} objects to be concatenated.
 #' @param recursive logical. If \code{recursive = TRUE}, the function
 #' recursively descends through lists
 #' (and pairlists) combining all their elements into a vector.
@@ -188,24 +188,24 @@ params <- function() {}
 #'
 #' @examples
 #' ## Define parameters
-#' p1 <- params(chrom = "chr1", assembly = "hg19")
+#' p1 <- pgParams(chrom = "chr1", assembly = "hg19")
 #'
 #' ## Define another set of parameters
-#' p2 <- params(fontsize = 10, assembly = "hg19")
+#' p2 <- pgParams(fontsize = 10, assembly = "hg19")
 #'
-#' ## Combine parameters into one `params` object
+#' ## Combine parameters into one `pgParams` object
 #' pTotal <- c(p1, p2)
 "c" <- function(..., recursive = FALSE) {
 
     ## Check all classes of inputs to concatenate
     inputClasses <- unlist(lapply(list(...), class))
-    ## If any are found to be `params` objects, they will all be combined
-    ## into one `params` object
-    if (any(inputClasses == "params")) {
-        if (!all(inputClasses == "params")) {
+    ## If any are found to be `pgParams` objects, they will all be combined
+    ## into one `pgParams` object
+    if (any(inputClasses == "pgParams")) {
+        if (!all(inputClasses == "pgParams")) {
             warning("Attempting to concatenate parameters not of ",
-                    "class `params` with `params` objects. ",
-                    "Coercing all parameters into a `params` object.",
+                    "class `pgParams` with `pgParams` objects. ",
+                    "Coercing all parameters into a `pgParams` object.",
                 call. = FALSE
             )
         }
@@ -240,7 +240,7 @@ params <- function() {}
         ## Return combined object
         return(structure(
             .Data = combArgs[!duplicated(names(combArgs))],
-            class = "params"
+            class = "pgParams"
         ))
     } else {
         ## Otherwise we will just call the primitive concatenate function

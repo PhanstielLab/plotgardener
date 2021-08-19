@@ -50,7 +50,7 @@ half of a square Hi-C plot.}
 main pixel in a box or circle. Numeric specifying number of pixels
 for the length of an arrow.}
 
-\item{params}{An optional \link[plotgardener]{params} object
+\item{params}{An optional \link[plotgardener]{pgParams} object
 containing relevant function parameters.}
 
 \item{quiet}{A logical indicating whether or not to print messages.}

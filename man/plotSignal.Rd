@@ -124,7 +124,7 @@ numerics. Default value is \code{default.units = "inches"}.}
 \item{draw}{A logical value indicating whether graphics output should be
 produced. Default value \code{draw = TRUE}.}
 
-\item{params}{An optional \link[plotgardener]{params} object containing
+\item{params}{An optional \link[plotgardener]{pgParams} object containing
 relevant function parameters.}
 
 \item{...}{Additional grid graphical parameters. See \link[grid]{gpar}.}
@@ -162,7 +162,7 @@ data("GM12878_ChIP_H3K27ac_signal")
 pageCreate(width = 7.5, height = 2.1, default.units = "inches")
 
 ## Define region
-region <- params(
+region <- pgParams(
     chrom = "chr21",
     chromstart = 28000000, chromend = 30300000,
     assembly = "hg19",

@@ -42,7 +42,7 @@
 #' @param id.lengths A numeric vector used to separate locations in
 #' \code{x} and \code{y} into multiple polygons. Specifies consecutive
 #' blocks of locations which make up separate polygons.
-#' @param params An optional \link[plotgardener]{params} object containing
+#' @param params An optional \link[plotgardener]{pgParams} object containing
 #' relevant function parameters.
 #' @param ... Additional grid graphical parameters. See \link[grid]{gpar}.
 #'
@@ -138,7 +138,7 @@ plotPolygon <- function(x, y, default.units = "inches",
     # CATCH ERRORS
     # =========================================================================
 
-    check_bbpage(error = "Cannot plot polygon without a plotgardener page.")
+    check_page(error = "Cannot plot polygon without a plotgardener page.")
     if (is.null(polygon$x)) {
         stop("argument \"x\" is missing, with no default.",
             call. = FALSE

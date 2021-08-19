@@ -38,7 +38,7 @@ half of a square Hi-C plot.}
 \item{linecolor}{A character value specifying the color of the domain
 annotations. Default value is \code{linecolor = "black"}.}
 
-\item{params}{An optional \link[plotgardener]{params} object
+\item{params}{An optional \link[plotgardener]{pgParams} object
 containing relevant function parameters.}
 
 \item{...}{Additional grid graphical parameters. See \link[grid]{gpar}.}

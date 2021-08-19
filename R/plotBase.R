@@ -20,7 +20,7 @@
 # as numerics. Default value is \code{default.units = "inches"}.
 # @param bg Character value indicating background color.
 # Default value is \code{bg = NA}.
-# @param params An optional \link[plotgardener]{params} object
+# @param params An optional \link[plotgardener]{pgParams} object
 # containing relevant function parameters.
 #
 # @return Returns a \code{base} object containing
