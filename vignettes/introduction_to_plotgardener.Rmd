@@ -27,6 +27,10 @@ library(plotgardenerData)
 ```
 
 # Overview
+
+<img src="../man/figures/pg-hex-text.png" align="right" width="140px" 
+style="padding-left:20px; background-color:white; border-color: transparent" />
+
 `plotgardener` is a coordinate-based, genomic visualization package for R. 
 Using `grid` graphics, `plotgardener` empowers users to programmatically and 
 flexibly generate multi-panel figures. Tailored for genomics for a variety of

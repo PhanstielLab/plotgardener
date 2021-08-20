@@ -45,17 +45,41 @@
 #' @examples
 #' library(png)
 #'
-#' ## Load image
+#' ## Load images
+#' 
+#' pg_type <- readPNG(system.file("images",
+#'     "pg-wordmark.png",
+#'     package = "plotgardener"
+#' ))
+#' 
+#' gene_gnome <- readPNG(system.file("images",
+#'     "pg-gnome-hole-shadow.png",
+#'     package = "plotgardener"
+#' ))
+#' 
 #' rlogo <- readPNG(system.file("images", "Rlogo.png", 
 #'                 package = "plotgardener"))
 #'
 #' ## Create page
 #' pageCreate(width = 5, height = 6)
 #'
+#' ## Plot images
+#' plotRaster(
+#'     image = pg_type,
+#'     x = 2.5, y = 0.25, width = 4, height = 1.5,
+#'     just = "top"
+#' )
+#' 
+#' plotRaster(
+#'     image = gene_gnome,
+#'     x = 2.5, y = 2.25, width = 3.5, height = 3.5,
+#'     just = "top"
+#' )
+#' 
 #' plotRaster(
 #'     image = rlogo,
-#'     x = 2.5, y = 1, width = 0.5, height = 0.45,
-#'     just = c("right", "top")
+#'     x = 1, y = 1.5, width = 0.5, height = 0.45,
+#'     just = c("left", "top")
 #' )
 #'
 #' ## Hide page guies

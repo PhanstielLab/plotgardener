@@ -114,42 +114,29 @@ further enhance and customize plot layouts. The functions `plotCircle()`,
 and `plotText()` provide an intuitive way to plot basic `grid` `grobs` 
 without requiring any knowledge of `grid` graphics.
 
-For example, we can include the R logo in our figures:
+For example, we can include `plotgardener`'s Gene the Gnome in our figures!:
 
 ```{r shapes, echo=TRUE, fig.height=7, fig.showtext=TRUE, fig.width=6}
 library(png)
-library(showtext)
-font_add(
-    family = "ProximaNova",
-    regular = system.file("extdata",
-        "proximanova-regular.otf",
-        package = "plotgardener"
-    ),
-    bold = system.file("extdata",
-        "proximanova-semibold.otf",
-        package = "plotgardener"
-    )
-)
-showtext_auto()
+pg_type <- readPNG(system.file("images",
+                        "pg-wordmark.png",
+                        package = "plotgardener"))
 
-
-rlogo <- readPNG(system.file("images",
-    "rlogo.png",
-    package = "plotgardener"
-))
+gene_gnome <- readPNG(system.file("images",    
+            "pg-gnome-hole-shadow.png",
+            package = "plotgardener" ))
 
 pageCreate(
     width = 5, height = 6, default.units = "inches",
     showGuides = FALSE, xgrid = 0, ygrid = 0
 )
 plotRaster(
-    image = rlogo,
-    x = 2.5, y = 0.25, width = 3.25, height = 0.5, just = "top"
+    image = pg_type,
+    x = 2.5, y = 0.25, width = 4, height = 1.5, just = "top"
 )
-plotText(
-    label = "plotgardener",
-    fontsize = 20, fontfamily = "ProximaNova", fontface = "bold",
-    x = 2.5, y = 0.9, just = "top"
+plotRaster(
+    image = gene_gnome,
+    x = 2.5, y = 1, width = 3.5, height = 3.5, just = "top"
 )
 ```
 
