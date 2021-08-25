@@ -273,7 +273,7 @@ plotHicRectangle <- function(data, resolution = "auto", zrange = NULL,
         zrange = rhicInternal$zrange,
         outsideVP = NULL, grobs = NULL
     ),
-    class = "bb_hicRectangle"
+    class = "hicRectangle"
     )
     attr(x = hicPlot, which = "plotted") <- rhicInternal$draw
 
