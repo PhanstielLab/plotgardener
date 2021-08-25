@@ -1,8 +1,7 @@
 ---
-title: "Introduction to plotgardener"
+title: Introduction to plotgardener
 author: "Nicole Kramer, Eric S. Davis, Craig Wenger, Sarah Parker, \
     Erika Deoudes, Michael Love, Douglas H. Phanstiel"
-date: "`r Sys.Date()`"
 output: 
     rmarkdown::html_vignette: 
         md_extensions: +grid_tables
@@ -11,6 +10,7 @@ vignette: >
     %\VignetteEngine{knitr::rmarkdown}
     %\VignetteEncoding{UTF-8}
 ---
+
 
 ```{r setup, include = FALSE}
 knitr::opts_chunk$set(
@@ -25,7 +25,6 @@ library(grid)
 library(plotgardener)
 library(plotgardenerData)
 ```
-
 # Overview
 
 <img src="../man/figures/pg-hex-text.png" align="right" width="140px" 

@@ -4,6 +4,9 @@ template:
   params:
     bootswatch: lumen
 
+pkgdown:
+  as_is: true
+  
 authors:
   Nicole Kramer:
     href: https://github.com/nekramer
