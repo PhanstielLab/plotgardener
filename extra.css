@@ -2,6 +2,10 @@ h1 {
     color: #65991F;
 }
 
-.label-default {
+.version {
     background-color: #65991F;
+}
+
+.fa-home {
+    color: #65991F;
 }
