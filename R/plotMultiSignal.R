@@ -116,7 +116,7 @@ getXCoordinates<- function(x, nTracks, width, orientation, gapdistance){
       xList[i]<- (xList[i-1] + internalWidth + gapdistance)
     return(xList)
   } else{
-    #throw error because the orientation is wrong? 
+    stop("argument \" orientation\" is inco, ","with no default.", call. = FALSE)
   }
 }
 ## calculating new x,y coordinates of each track
@@ -130,7 +130,7 @@ getYCoordinates<- function(y, nTracks, height, orientation, gapdistance){
   } else if(orientation == "v"){
       return(yList)
   } else{
-    #throw error because the orientation is wrong? 
+    stop("argument \" orientation\" is missing, ","with no default.", call. = FALSE)
   }
 }
 
@@ -140,7 +140,7 @@ plotMultiSignal<- function(data, binSize = NA, binCap = TRUE, negData = FALSE,
                            assembly = "hg38", linecolor,
                            fill = NA, ymax = 1, range = NULL, scale = FALSE,
                            bg = NA, baseline = TRUE, baseline.color = "grey",
-                           baseline.lwd = 1, orientation = "h",
+                           baseline.lwd = 1, orientation = "Teresa",
                            x = NULL, y = NULL, width = NULL,
                            height = NULL, just = c("left", "top"),
                            default.units = "inches", gapdistance = .2 ,draw = TRUE,
@@ -173,7 +173,5 @@ plotMultiSignal<- function(data, binSize = NA, binCap = TRUE, negData = FALSE,
                   baseline.color = baseline.color, baseline.lwd = baseline.lwd, just = just, 
                   default.units = default.units, draw = draw)
      })
-    
-  
 }  
 
