@@ -579,7 +579,6 @@ plotSignal <- function(data, binSize = NA, binCap = TRUE, negData = FALSE,
     class = "signal"
     )
     attr(x = signal_track, which = "plotted") <- sigInternal$draw
-
     # =========================================================================
     # CATCH ERRORS
     # =========================================================================

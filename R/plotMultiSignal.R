@@ -146,16 +146,62 @@ plotMultiSignal<- function(data, binSize = NA, binCap = TRUE, negData = FALSE,
                            default.units = "inches", gapdistance = .2 ,draw = TRUE,
                            params = NULL, ...) {
   
-  nTracks<- length(data)
-  range<- findSignalRange(data)
+  # =========================================================================
+  # PARSE PARAMETERS
+  # =========================================================================
   
-  xList<- getXCoordinates(x = x, nTracks = length(data), width = width, orientation = orientation, gapdistance = gapdistance)
-  yList <- getYCoordinates(y = y,  nTracks = length(data), height = height, orientation = orientation, gapdistance = gapdistance)
+  multisigInternal <- parseParams(
+    params = params,
+    defaultArgs = formals(eval(match.call()[[1]])),
+    declaredArgs = lapply(match.call()[-1], eval.parent, n = 2),
+    class = "multisigInternal"
+  )
+  
+  ## Set gp
+  multisigInternal$gp <- setGP(
+    gpList = gpar(),
+    params = multisigInternal, ...
+  )
+  
+  ## Justification
+  multisigInternal$just <- justConversion(just = multisigInternal$just)
+  
+  
+  
+  
+  #nTracks<- length(data)
+  nTracks <- length(multisigInternal$data)
+  #range<- findSignalRange(data)
+  range <- findSignalRange(multisigInternal$data)
+  
+  #xList<- getXCoordinates(x = x, nTracks = length(data), width = width, orientation = orientation, gapdistance = gapdistance)
+  xList <- getXCoordinates(x = multisigInternal$x, 
+                           nTracks = length(multisigInternal$data), 
+                           width = multisigInternal$width, 
+                           orientation = multisigInternal$orientation, 
+                           gapdistance = multisigInternal$gapdistance)
+  #yList <- getYCoordinates(y = y,  nTracks = length(data), height = height, orientation = orientation, gapdistance = gapdistance)
  
-  if(orientation == "h"){
-    height<- (height - (gapdistance * (nTracks-1)))/nTracks
-  } else if(orientation == "v"){
-    width<- (width - (gapdistance * (nTracks-1)))/nTracks
+  yList <- getYCoordinates(y = multisigInternal$y,  
+                           nTracks = length(multisigInternal$data), 
+                           height = multisigInternal$height, 
+                           orientation = multisigInternal$orientation, 
+                           gapdistance = multisigInternal$gapdistance)
+  
+  
+  # if(orientation == "h"){
+  #   height<- (height - (gapdistance * (nTracks-1)))/nTracks
+  # } else if(orientation == "v"){
+  #   width<- (width - (gapdistance * (nTracks-1)))/nTracks
+  # }
+  # else{
+  #   #throw error
+  # }
+  
+  if (multisigInternal$orientation == "h"){
+    height <- (multisigInternal$height - (multisigInternal$gapdistance * (nTracks-1)))/nTracks
+  } else if (multisigInternal$orientation == "v"){
+    width <- (multisigInternal$width - (multisigInternal$gapdistance * (nTracks-1)))/nTracks
   }
   else{
     #throw error
@@ -163,15 +209,28 @@ plotMultiSignal<- function(data, binSize = NA, binCap = TRUE, negData = FALSE,
   
   colorList<- setColors(linecolor, nTracks)
   
-  pmap(list(data, xList, yList, colorList), \(d,x,y,c){
-       plotSignal(data = d, x = x, y = y, linecolor = c,
-                  params = params, height = height, width = width, 
-                  range = range, orientation = orientation, scale = scale, 
-                  binSize = binSize, binCap = binCap, negData = negData, 
-                  chrom = chrom, chromstart = chromstart, chromend = chromend, 
-                  assembly = assembly, fill = fill, ymax = ymax, bg = bg, baseline = baseline, 
-                  baseline.color = baseline.color, baseline.lwd = baseline.lwd, just = just, 
-                  default.units = default.units, draw = draw)
+  pmap(list(multisigInternal$data, xList, yList, colorList), \(d,x,y,c){
+       # plotSignal(data = d, x = x, y = y, linecolor = c,
+       #            params = params, height = height, width = width, 
+       #            range = range, orientation = orientation, scale = scale, 
+       #            binSize = binSize, binCap = binCap, negData = negData, 
+       #            chrom = chrom, chromstart = chromstart, chromend = chromend, 
+       #            assembly = assembly, fill = fill, ymax = ymax, bg = bg, baseline = baseline, 
+       #            baseline.color = baseline.color, baseline.lwd = baseline.lwd, just = just, 
+       #            default.units = default.units, draw = draw)
+        plotSignal(data = d, x = x, y = y, linecolor = c,
+                   height = height, width = width,
+                   range = range, orientation = multisigInternal$orientation, 
+                   scale = multisigInternal$scale,
+                   binSize = multisigInternal$binSize, binCap = multisigInternal$binCap, 
+                   negData = multisigInternal$negData,
+                   chrom = multisigInternal$chrom, chromstart = multisigInternal$chromstart, 
+                   chromend = multisigInternal$chromend,
+                   assembly = multisigInternal$assembly, fill = multisigInternal$fill, 
+                   ymax = multisigInternal$ymax, bg = multisigInternal$bg, baseline = multisigInternal$baseline,
+                   baseline.color = multisigInternal$baseline.color, baseline.lwd = multisigInternal$baseline.lwd, 
+                   just = multisigInternal$just,
+                   default.units = multisigInternal$default.units, draw = multisigInternal$draw)
      })
 }  
 
