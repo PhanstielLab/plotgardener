@@ -263,8 +263,7 @@ readHic <- function(file, chrom, chromstart = NULL, chromend = NULL,
 
             chromstart <- format(chromstart, scientific = FALSE)
             chromend <- format(chromend, scientific = FALSE)
-            regionStraw <- paste(strawChrom, chromstart, sep = ":")
-            regionStraw <- paste(regionStraw, chromend, sep = "-")
+            regionStraw <- paste(strawChrom, chromstart, chromend, sep = ":")
         }
 
         return(regionStraw)
