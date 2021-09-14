@@ -108,7 +108,7 @@ readHic <- function(file, chrom, chromstart = NULL, chromend = NULL,
         }
 
         if (!file.exists(hic)) {
-            stop("File", hic, "does not exist.", call. = FALSE)
+            stop("File ", hic, " does not exist.", call. = FALSE)
         }
 
         ## Not supporting chrM
