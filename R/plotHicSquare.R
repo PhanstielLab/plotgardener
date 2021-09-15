@@ -321,15 +321,13 @@ plotHicSquare <- function(data, resolution = "auto", zrange = NULL,
                     hic[, "y"] >= hicPlot$chromstart - hicPlot$resolution &
                     hic[, "y"] <= hicPlot$chromend + hicPlot$resolution), ]
             } else {
-                if (hicPlot$chrom != hicPlot$altchrom) {
-                    hic <- hic[which(hic[, "x"] >= hicPlot$chromstart -
+                hic <- hic[which(hic[, "x"] >= hicPlot$chromstart -
                         hicPlot$resolution &
                         hic[, "x"] <= hicPlot$chromend + hicPlot$resolution &
                         hic[, "y"] >= hicPlot$altchromstart -
                             hicPlot$resolution &
                         hic[, "y"] <= hicPlot$altchromend +
                             hicPlot$resolution), ]
-                }
             }
         }
 
@@ -578,7 +576,7 @@ plotHicSquare <- function(data, resolution = "auto", zrange = NULL,
     # =========================================================================
 
     hic <- subset_data(hic = hic, hicPlot = hicPlot)
-
+    
     # =========================================================================
     # MAKE SYMMETRIC
     # =========================================================================

@@ -134,7 +134,7 @@
 #'                 chromstart = NULL, chromend = NULL)
 #' }
 #'
-#' If \code{height} is \eqn{<} \eqn{0.5 * sqrt(2)}, the top of the triangle
+#' If \code{height} is \eqn{<} \eqn{0.5 * width}, the top of the triangle
 #' will be cropped to the given \code{height}.
 #'
 #' @seealso \link[plotgardener]{readHic}

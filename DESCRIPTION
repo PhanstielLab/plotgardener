@@ -1,7 +1,7 @@
 Package: plotgardener
 Title: Coordinate-Based Genomic Visualization Package for R
-Version: 0.99.9
-Date: 2021-08-19
+Version: 0.99.11
+Date: 2021-09-14
 Authors@R: c(person("Nicole", "Kramer", 
              email = "nekramer@live.unc.edu", 
              role = c("aut", "cre"),
@@ -20,6 +20,9 @@ Authors@R: c(person("Nicole", "Kramer",
              person("Erika", "Deoudes", 
              email = "ed@erikadudes.com", 
              role = c("art")),
+             person("Michael", "Love", 
+             email = "milove@email.unc.edu", 
+             role = c("ctb")),
              person(c("Douglas", "H."), "Phanstiel", 
              email = "douglas_phanstiel@med.unc.edu", 
              role = c("aut", "cph")))

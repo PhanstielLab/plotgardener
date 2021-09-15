@@ -107,10 +107,6 @@ readHic <- function(file, chrom, chromstart = NULL, chromend = NULL,
             )
         }
 
-        if (!file.exists(hic)) {
-            stop("File", hic, "does not exist.", call. = FALSE)
-        }
-
         ## Not supporting chrM
         if (chrom == "chrM") {
             stop("chrM not supported.", call. = FALSE)
@@ -263,8 +259,7 @@ readHic <- function(file, chrom, chromstart = NULL, chromend = NULL,
 
             chromstart <- format(chromstart, scientific = FALSE)
             chromend <- format(chromend, scientific = FALSE)
-            regionStraw <- paste(strawChrom, chromstart, sep = ":")
-            regionStraw <- paste(regionStraw, chromend, sep = "-")
+            regionStraw <- paste(strawChrom, chromstart, chromend, sep = ":")
         }
 
         return(regionStraw)
