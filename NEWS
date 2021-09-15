@@ -1,3 +1,14 @@
+CHANGES IN VERSION 0.99.11
+-------------------------
+BUG FIXES 
+
+    o `:` added back to readHic for `strawr` region parsing.
+    o `plotHicSquare` subsetting fixed for off diagonal regions.
+    
+NEW FEATURES
+
+    o All Hi-C functions now allow input of remote Hi-C files.
+
 CHANGES IN VERSION 0.99.9
 -------------------------
 

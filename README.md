@@ -29,22 +29,23 @@ detailed examples and suggested use cases!
 
 ## Installation
 
-plotgardener can be installed from GitHub as follows:
+plotgardener can be installed from the devel version of Bioconductor 
+(R version 4.1) as follows:
 
 ``` r
 if (!requireNamespace("BiocManager", quietly = TRUE))
     install.packages("BiocManager")
 
-if (!requireNamespace("remotes", quietly = TRUE))
-    BiocManager::install("remotes")
+BiocManager::install(version = "devel")
 
-remotes::install_github("PhanstielLab/plotgardener")
+BiocManager::install("plotgardener")
+
 ```
 
 Example datasets and files are included with the package plotgardenerData:
 
 ``` r
-remotes::install_github("PhanstielLab/plotgardenerData")
+BiocManager::install("plotgardenerData")
 ```
 
 ## Usage
@@ -147,7 +148,7 @@ ctcf_gm <- plotSignal(data = GM12878_ChIP_CTCF_signal, params = c(params_c, ctcf
 plotText(label = "CTCF", fontcolor = "#253494", fontsize = 8,
             x = 3.5, y = 1.95, just = c("left","top"), default.units = "inches")
 ## Plot H3K27ac signal
-hk_gm <- plotSignal(data = GGM12878_ChIP_H3K27ac_signal, params = c(params_c, hk_range),
+hk_gm <- plotSignal(data = GM12878_ChIP_H3K27ac_signal, params = c(params_c, hk_range),
                        fill = "#37a7db", linecolor = "#37a7db",
                        y = 3.25, height = 0.6, just = c("left", "bottom"))
 ## H3K27ac label

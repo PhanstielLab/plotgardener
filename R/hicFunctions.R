@@ -144,16 +144,19 @@ read_data <- function(hic, hicPlot, norm, assembly, type, quiet) {
                     hicPlot$resolution, " BP resolution detected."
                 )
             }
-            ## bbPlotHicRectangle specific warning for missing data
-            if (hicPlot$chromstart < min(hic[, 1]) |
-                hicPlot$chromend > max(hic[, 1])) {
-                warning("`plotHicRectangle` requires additional data to",
-                " plot a rectangular plot. Data is missing from input ",
-                "dataframe for region and plot will be a trapezoid. To avoid ",
-                "this missing data, call `plotHicRectangle` with full .hic",
-                " file.", call. = FALSE
-                )
+            ## plotHicRectangle specific warning for missing data
+            if (is(hicPlot, "hicRectangle")){
+                if (hicPlot$chromstart < min(hic[, 1]) |
+                    hicPlot$chromend > max(hic[, 1])) {
+                    warning("`plotHicRectangle` requires additional data to",
+                            " plot a rectangular plot. Data is missing from input ",
+                            "dataframe for region and plot will be a trapezoid. To avoid ",
+                            "this missing data, call `plotHicRectangle` with full .hic",
+                            " file.", call. = FALSE
+                    )
+                }
             }
+            
         } else {
             hic <- data.frame(matrix(nrow = 0, ncol = 3))
         }
