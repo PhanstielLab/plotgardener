@@ -129,6 +129,117 @@
 #'                fill = "#253494",y = 0.2, height = 4,  x = 0.2, width = 2, gapdistance = 0.1, orientation = "h")
 
 
+#' @export
+plotMultiSignal<- function(data, binSize = NA, binCap = TRUE, negData = FALSE,
+                           chrom, chromstart = NULL, chromend = NULL,
+                           assembly = "hg38", linecolor,
+                           fill = NA, ymax = 1, range = NULL, scale = FALSE,
+                           bg = NA, baseline = TRUE, baseline.color = "grey",
+                           baseline.lwd = 1, orientation = "h",
+                           x = NULL, y = NULL, width = NULL,
+                           height = NULL, just = c("left", "top"),
+                           default.units = "inches", gapdistance = .2,
+                           draw = TRUE,
+                           params = NULL, ...) {
+  
+  # =========================================================================
+  # PARSE PARAMETERS
+  # =========================================================================
+  
+  multisigInternal <- parseParams(
+    params = params,
+    defaultArgs = formals(eval(match.call()[[1]])),
+    declaredArgs = lapply(match.call()[-1], eval.parent, n = 2),
+    class = "multisigInternal"
+  )
+  
+  ## Set gp
+  multisigInternal$gp <- setGP(
+    gpList = gpar(),
+    params = multisigInternal, ...
+  )
+  
+  ## Justification
+  multisigInternal$just <- justConversion(just = multisigInternal$just)
+  
+  # =========================================================================
+  # PARSE ASSEMBLY
+  # =========================================================================
+  
+  multisigInternal$assembly <- parseAssembly(assembly = 
+                                               multisigInternal$assembly)
+  
+  # =========================================================================
+  # READ IN FILES/DATAFRAMES
+  # =========================================================================
+  
+  data <- lapply(multisigInternal$data, read_rangeData,
+                 assembly = multisigInternal$assembly,
+                 chrom = multisigInternal$chrom,
+                 start = multisigInternal$chromstart,
+                 end = multisigInternal$chromend)
+  
+  # =========================================================================
+  # SET RANGE, PLACEMENT COORDINATES, AND COLORS
+  # =========================================================================
+  nTracks <- length(multisigInternal$data)
+  range <- findSignalRange(multisigInternal$data,negData = negData )
+  
+  xList <- getXCoordinates(x = multisigInternal$x, 
+                           nTracks = nTracks, 
+                           width = multisigInternal$width, 
+                           orientation = multisigInternal$orientation, 
+                           gapdistance = multisigInternal$gapdistance)
+  
+  yList <- getYCoordinates(y = multisigInternal$y,  
+                           nTracks = nTracks, 
+                           height = multisigInternal$height, 
+                           orientation = multisigInternal$orientation, 
+                           gapdistance = multisigInternal$gapdistance)
+  
+  if (multisigInternal$orientation == "h"){
+    height <- (multisigInternal$height - 
+                 (multisigInternal$gapdistance * (nTracks-1)))/nTracks
+  } else if (multisigInternal$orientation == "v"){
+    width <- (multisigInternal$width - 
+                (multisigInternal$gapdistance * (nTracks-1)))/nTracks
+  }
+  else{
+    stop("argument \" orientation\" is missing, ","with no default.", call. = FALSE)
+  }
+  
+  linecolorList <- setColors(multisigInternal$linecolor, nTracks)
+  fillList <- setColors(multisigInternal$fill, nTracks)
+  
+  # =========================================================================
+  # CALL PLOTSIGNAL
+  # =========================================================================
+  
+  ## Save to a group object?
+  pmap(list(multisigInternal$data, xList, yList, linecolorList, fillList), 
+       \(d, x, y, l, f){
+         plotSignal(data = d, x = x, y = y, linecolor = l,
+                    height = height, width = width,
+                    range = range, orientation = multisigInternal$orientation, 
+                    scale = multisigInternal$scale,
+                    binSize = multisigInternal$binSize, 
+                    binCap = multisigInternal$binCap, 
+                    negData = multisigInternal$negData,
+                    chrom = multisigInternal$chrom, 
+                    chromstart = multisigInternal$chromstart, 
+                    chromend = multisigInternal$chromend,
+                    assembly = multisigInternal$assembly, fill = f, 
+                    ymax = multisigInternal$ymax, bg = multisigInternal$bg, 
+                    baseline = multisigInternal$baseline,
+                    baseline.color = multisigInternal$baseline.color, 
+                    baseline.lwd = multisigInternal$baseline.lwd, 
+                    just = multisigInternal$just,
+                    default.units = multisigInternal$default.units, 
+                    draw = multisigInternal$draw)
+       })
+}  
+
+
 # =========================================================================
 # Helper functions
 # =========================================================================
@@ -226,114 +337,4 @@ getYCoordinates<- function(y, nTracks, height, orientation, gapdistance){
     stop("argument \" orientation\" is missing, ","with no default.", call. = FALSE)
   }
 }
-
-#' @export
-plotMultiSignal<- function(data, binSize = NA, binCap = TRUE, negData = FALSE,
-                           chrom, chromstart = NULL, chromend = NULL,
-                           assembly = "hg38", linecolor,
-                           fill = NA, ymax = 1, range = NULL, scale = FALSE,
-                           bg = NA, baseline = TRUE, baseline.color = "grey",
-                           baseline.lwd = 1, orientation = "h",
-                           x = NULL, y = NULL, width = NULL,
-                           height = NULL, just = c("left", "top"),
-                           default.units = "inches", gapdistance = .2,
-                           draw = TRUE,
-                           params = NULL, ...) {
-  
-  # =========================================================================
-  # PARSE PARAMETERS
-  # =========================================================================
-  
-  multisigInternal <- parseParams(
-    params = params,
-    defaultArgs = formals(eval(match.call()[[1]])),
-    declaredArgs = lapply(match.call()[-1], eval.parent, n = 2),
-    class = "multisigInternal"
-  )
-  
-  ## Set gp
-  multisigInternal$gp <- setGP(
-    gpList = gpar(),
-    params = multisigInternal, ...
-  )
-  
-  ## Justification
-  multisigInternal$just <- justConversion(just = multisigInternal$just)
-  
-  # =========================================================================
-  # PARSE ASSEMBLY
-  # =========================================================================
-  
-  multisigInternal$assembly <- parseAssembly(assembly = 
-                                               multisigInternal$assembly)
-  
-  # =========================================================================
-  # READ IN FILES/DATAFRAMES
-  # =========================================================================
-  
-  data <- lapply(multisigInternal$data, read_rangeData,
-                 assembly = multisigInternal$assembly,
-                 chrom = multisigInternal$chrom,
-                 start = multisigInternal$chromstart,
-                 end = multisigInternal$chromend)
-  
-  # =========================================================================
-  # SET RANGE, PLACEMENT COORDINATES, AND COLORS
-  # =========================================================================
-  nTracks <- length(multisigInternal$data)
-  range <- findSignalRange(multisigInternal$data,negData = negData )
-  
-  xList <- getXCoordinates(x = multisigInternal$x, 
-                           nTracks = nTracks, 
-                           width = multisigInternal$width, 
-                           orientation = multisigInternal$orientation, 
-                           gapdistance = multisigInternal$gapdistance)
- 
-  yList <- getYCoordinates(y = multisigInternal$y,  
-                           nTracks = nTracks, 
-                           height = multisigInternal$height, 
-                           orientation = multisigInternal$orientation, 
-                           gapdistance = multisigInternal$gapdistance)
-  
-  if (multisigInternal$orientation == "h"){
-    height <- (multisigInternal$height - 
-                 (multisigInternal$gapdistance * (nTracks-1)))/nTracks
-  } else if (multisigInternal$orientation == "v"){
-    width <- (multisigInternal$width - 
-                (multisigInternal$gapdistance * (nTracks-1)))/nTracks
-  }
-  else{
-    stop("argument \" orientation\" is missing, ","with no default.", call. = FALSE)
-  }
-  
-  linecolorList <- setColors(multisigInternal$linecolor, nTracks)
-  fillList <- setColors(multisigInternal$fill, nTracks)
-  
-  # =========================================================================
-  # CALL PLOTSIGNAL
-  # =========================================================================
-  
-  ## Save to a group object?
-  pmap(list(multisigInternal$data, xList, yList, linecolorList, fillList), 
-       \(d, x, y, l, f){
-        plotSignal(data = d, x = x, y = y, linecolor = l,
-                   height = height, width = width,
-                   range = range, orientation = multisigInternal$orientation, 
-                   scale = multisigInternal$scale,
-                   binSize = multisigInternal$binSize, 
-                   binCap = multisigInternal$binCap, 
-                   negData = multisigInternal$negData,
-                   chrom = multisigInternal$chrom, 
-                   chromstart = multisigInternal$chromstart, 
-                   chromend = multisigInternal$chromend,
-                   assembly = multisigInternal$assembly, fill = f, 
-                   ymax = multisigInternal$ymax, bg = multisigInternal$bg, 
-                   baseline = multisigInternal$baseline,
-                   baseline.color = multisigInternal$baseline.color, 
-                   baseline.lwd = multisigInternal$baseline.lwd, 
-                   just = multisigInternal$just,
-                   default.units = multisigInternal$default.units, 
-                   draw = multisigInternal$draw)
-     })
-}  
 
