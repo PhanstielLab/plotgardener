@@ -25,6 +25,9 @@ Default value is \code{height = 11}.}
 \code{width} or \code{height} are only given as numerics.
 Default value is \code{default.units = "inches"}.}
 
+\item{bg}{Character value indicating page background color.
+Default value is \code{bg = NA}.}
+
 \item{xgrid}{A numeric indicating the increment by which to place
 vertical gridlines. Default value is \code{xgrid = 0.5}.}
 

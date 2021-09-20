@@ -35,7 +35,7 @@ Depends: R (>= 4.1.0)
 License: MIT + file LICENSE
 URL: https://phanstiellab.github.io/plotgardener, https://github.com/PhanstielLab/plotgardener
 Encoding: UTF-8
-RoxygenNote: 7.1.1
+RoxygenNote: 7.1.2
 Imports:
     curl,
     data.table,
