@@ -280,9 +280,7 @@ plotMultiSignal<- function(data, binSize = NA, binCap = TRUE, negData = FALSE,
   # =========================================================================
   # SET RANGE, PLACEMENT COORDINATES, AND COLORS
   # =========================================================================
-  print(typeof(data))
   nTracks <- length(multisigInternal$data)
-  print(negData)
   range <- findSignalRange(multisigInternal$data,negData = negData )
   
   xList <- getXCoordinates(x = multisigInternal$x, 
