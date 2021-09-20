@@ -1,21 +1,41 @@
-#' Plot multiple signal tracks inline with eachother
+#' Plot multiple signal tracks inline with each other
 #' 
 #' @usage plotMultiSignal(
-#'     x,
-#'     y,
-#'     default.units = "inches",
-#'     linecolor = "black",
-#'     lwd = 1,
-#'     lty = 1,
-#'     fill = NA,
-#'     alpha = 1,
-#'     id = NULL,
-#'     id.lengths = NULL,
-#'     params = NULL,
-#'     ...
+#'    data, 
+#'    x = NULL, 
+#'    y = NULL,
+#'    orientation = "h", 
+#'    width = NULL,
+#'    height = NULL, 
+#'    gapdistance = .2,
+#'    just = c("left", "top"),
+#'    default.units = "inches", 
+#'    binSize = NA, 
+#'    binCap = TRUE, 
+#'    negData = FALSE,
+#'    chrom, 
+#'    chromstart = NULL, 
+#'    chromend = NULL,
+#'    assembly = "hg38", 
+#'    linecolor,
+#'    fill = NA, 
+#'    ymax = 1, 
+#'    range = NULL, 
+#'    scale = FALSE,
+#'    bg = NA, 
+#'    baseline = TRUE, 
+#'    baseline.color = "grey",
+#'    baseline.lwd = 1, 
+#'    draw = TRUE,
+#'    params = NULL, ...
 #' )
 #'
-#' @param x A numeric vector or unit object specifying polygon
+#' @param data List of data to be plotted as a character value specifying a
+#' bigwig file path, a dataframe in BED format, or a
+#' \link[GenomicRanges]{GRanges} object with metadata column \code{score}.
+#' Either one \code{data} argument or a list of two can be provided, where
+#' the second \code{data} will be plotted below the x-axis.
+#' @param x A numeric vector or unit object specifying the starting
 #' vertex x-locations.
 #' @param y A numeric vector, unit object, or a character vector
 #' of values containing a "b" combined with a numeric value specifying
@@ -23,113 +43,164 @@
 #' The character vector will place polygon vertex y-locations relative
 #' to the bottom of the most recently plotted plot according
 #' to the units of the plotgardener page.
+#' @param orientation A string specifying signal track orientation.
+#' Default value is \code{orientation = "h"}. Options are:
+#' \itemize{
+#' \item{\code{"v"}: }{Vertical signal track orientation.}
+#' \item{\code{"h"}: }{Horizontal signal track orientation.}
+#' }
+#' @param width A numeric or unit object specifying signal plot width.
+#' @param height A numeric or unit object specifying signal plot height.
+#' @param gapdistance A numeric object specifying space between plots
+#' @param just Justification of signal plot relative to its (x, y) location.
+#' If there are two values, the first value specifies horizontal justification
+#' and the second value specifies vertical justification.
+#' Possible string values are: \code{"left"}, \code{"right"},
+#' \code{"centre"}, \code{"center"}, \code{"bottom"}, and \code{"top"}.
+#' Default value is \code{just = c("left", "top")}.
 #' @param default.units A string indicating the default units to use
 #' if \code{x} or \code{y} are only given as numeric vectors.
 #' Default value is \code{default.units = "inches"}.
-#' @param linecolor A character value specifying polygon line color.
-#' Default value is \code{linecolor = "black"}.
-#' @param lwd A numeric specifying polygon line width.
-#'  Default value is \code{lwd = 1}.
-#' @param lty A numeric specifying polygon line type.
-#' Default value is \code{lty = 1}.
-#' @param fill A character value specifying polygon fill color.
-#' Default value is \code{fill = NA}.
-#' @param alpha Numeric value specifying color transparency.
-#' Default value is \code{alpha = 1}.
-#' @param id A numeric vector used to separate locations in \code{x} and
-#' \code{y} into multiple polygons. All locations with the same \code{id}
-#' belong to the same polygon.
-#' @param id.lengths A numeric vector used to separate locations in
-#' \code{x} and \code{y} into multiple polygons. Specifies consecutive
-#' blocks of locations which make up separate polygons.
+#' #' @param binSize A numeric specifying the length of each data
+#' bin in basepairs. Default value is \code{binSize = NA}.
+#' @param binCap A logical value indicating whether the function will
+#' limit the number of data bins to 8,000.
+#' Default value is \code{binCap = TRUE}.
+#' @param negData A logical value indicating whether the data has both
+#' positive and negative scores and the y-axis should be split.
+#' Default value is \code{negData = FALSE}.
+#' @param chrom Chromosome of region to be plotted, as a string.
+#' @param chromstart Integer start position on chromosome to be plotted.
+#' @param chromend Integer end position on chromosome to be plotted.
+#' @param assembly Default genome assembly as a string or a
+#' \link[plotgardener]{assembly} object.
+#' Default value is \code{assembly = "hg38"}.
+#' @param linecolor A character value or vector of character values specifying the
+#' line color(s) outlining the signal track(s).
+#' Default value is \code{linecolor = "#37a7db"}.
+#' @param fill A character value or vector of length 2 specifying
+#' the fill color(s) of the signal track(s). Default value is \code{fill = NA}.
+#' @param ymax A numeric specifying the fraction of the max y-value
+#' to set as the height of the plot. Default value is \code{ymax = 1}.
+#' @param range A numeric vector of length 2 specifying the y-range
+#' of data to plot (c(min, max)).
+#' @param scale A logical value indicating whether to include a data
+#' scale label in the top left corner of the plot.
+#' Default value is \code{scale = FALSE}.
+#' @param bg Character value indicating background color.
+#' Default value is \code{bg = NA}.
+#' @param baseline Logical value indicating whether to include a
+#' baseline along the x-axis. Default value is \code{baseline = TRUE}.
+#' @param baseline.color Baseline color.
+#' Default value is \code{baseline.color = "grey"}.
+#' @param baseline.lwd Baseline line width.
+#' Default value is \code{baseline.lwd = 1}.
+#' @param draw A logical value indicating whether graphics output should be
+#' produced. Default value \code{draw = TRUE}.
 #' @param params An optional \link[plotgardener]{pgParams} object containing
 #' relevant function parameters.
 #' @param ... Additional grid graphical parameters. See \link[grid]{gpar}.
 #'
-#' @return Returns a \code{polygon} object containing relevant
+#' @return Returns several \code{polygon} object containing relevant
 #' placement and \link[grid]{grob} information.
 #'
 #' @examples
-#' ## Create a page
-#' pageCreate(width = 7.5, height = 6, default.units = "inches")
-#'
-#' ## Plot complex polygons one at a time
-#' plotPolygon(
-#'     x = c(2.6, 4.65, 4.75, 6.05, 1.4, 1.3),
-#'     y = c(2.5, 3.1, 3.5, 4, 3.15, 2.8),
-#'     fill = "#4a168e", linecolor = NA
-#' )
-#'
-#' plotPolygon(
-#'     x = c(4.65, 4.75, 6.05, 5.05, 4.4),
-#'     y = c(3.1, 3.5, 4, 1.45, 1.2),
-#'     fill = "#9d28b0", linecolor = NA
-#' )
-#'
-#' ## Plot multiple triangles with different id's and colors
-#' plotPolygon(
-#'     x = c(
-#'         0.45, 6.05, 3, 3, 6.05, 5.25, 4.4, 5.05, 4.95,
-#'         1.3, 2.6, 1, 4.4, 4.95, 5, 4.95, 5, 6.25
-#'     ),
-#'     y = c(
-#'         2.85, 4, 5.55, 5.55, 4, 5.55, 1.2, 1.45, 1.1,
-#'         2.8, 2.5, 2.1, 1.2, 1.1, 0.45, 1.1, 0.45, 1.1
-#'     ),
-#'     id = c(1, 1, 1, 2, 2, 2, 3, 3, 3, 4, 4, 4, 5, 5, 5, 6, 6, 6),
-#'     fill = c(
-#'         "#ce93d9", "#bb6ac9", "#4a168e",
-#'         "#7b1fa0", "#bb6ac9", "#ce93d9"
-#'     ),
-#'     linecolor = NA
-#' )
-#'
+
 #########################################################################################
 #########################################################################################
 #########################################################################################
-findSignalRange <- function(data){
-   
+
+
+# =========================================================================
+# Find the signal range of data processed with read_rangeData()
+# =========================================================================
+
+findSignalRange <- function(data, negData = negData){
+  #calculating the max from the processed data scores
   rangeMax<- lapply(data, select, "score") %>%
-      lapply(max) %>%
+    lapply(max) %>%
+    unlist() %>%
+    max
+  #if no negative data, lower bound of range = 0
+  if(negData == FALSE)
+    rangeMin <- 0 
+  #if there are negative values, lower bound of range is the min value 
+  else{
+    rangeMin<- lapply(data, select, "score") %>%
+      lapply(min) %>%
       unlist() %>%
-      max
-   return(c(0,rangeMax))
+      min
+  }
+  return(c(rangeMin,rangeMax))
 }
 
+# =========================================================================
+# Fill in colors
+# =========================================================================
+
 setColors <- function(colorList, nTracks){
+  #exit recursive with list of colors of the correct length
   if(length(colorList) == nTracks)
     return(colorList)
+  
+  #if there are too few colors for the number of tracks, repeat the colors provided
   else if(length(colorList) < nTracks)
     setColors(append(colorList, colorList), nTracks)
+  
+  #if there are too many colors for the number of tracks, truncate the color list
   else if(length(colorList) > nTracks)
     setColors(colorList[1:nTracks], nTracks)
 }
 
-## calculating new x,y coordinates of each track
+# =========================================================================
+# Calculate x coordinates of each track
+# =========================================================================
+
 getXCoordinates<- function(x, nTracks, width, orientation, gapdistance){
+  #create a list for the x coordinates
   xList<- rep(x, nTracks)
+  #if the orientation is h, the x coordinates stay the same, so return a list of the same x
   if(orientation == "h"){
    return(xList)
-  } else if(orientation == "v"){
+  } 
+  
+  else if(orientation == "v"){
+    #calculating the width of each plot 
     internalWidth<- (width - (gapdistance * (nTracks-1)))/nTracks
+    # first plot won't change x, others are shifting to the right 
     for (i in 2:nTracks)
       xList[i]<- (xList[i-1] + internalWidth + gapdistance)
     return(xList)
-  } else{
-    stop("argument \" orientation\" is inco, ","with no default.", call. = FALSE)
+  } 
+  
+  else{
+    stop("argument \" orientation\" is missing, ","with no default.", call. = FALSE)
   }
 }
-## calculating new x,y coordinates of each track
+
+
+# =========================================================================
+# Calculate y coordinates of each track
+# =========================================================================
+
 getYCoordinates<- function(y, nTracks, height, orientation, gapdistance){
+  #create a list for the x coordinates
   yList<- rep(y, nTracks)
-  if(orientation == "h"){
+  #if the orientation is v, the y coordinates stay the same, so return a list of the same x
+  if(orientation == "v"){
+    return(yList)
+  }
+  
+  else if(orientation == "h"){
+    #calculating the height of each plot
     internalHeight<- (height - (gapdistance * (nTracks-1)))/nTracks
+    # first plot won't change y, others are shifting to the right
     for (i in 2:nTracks)
       yList[i]<- (yList[i-1] + internalHeight + gapdistance)
     return(yList)
-  } else if(orientation == "v"){
-      return(yList)
-  } else{
+  } 
+  
+  else{
     stop("argument \" orientation\" is missing, ","with no default.", call. = FALSE)
   }
 }
@@ -187,9 +258,10 @@ plotMultiSignal<- function(data, binSize = NA, binCap = TRUE, negData = FALSE,
   # =========================================================================
   # SET RANGE, PLACEMENT COORDINATES, AND COLORS
   # =========================================================================
-  
-  nTracks <- length(data)
-  range <- findSignalRange(data)
+  print(typeof(data))
+  nTracks <- length(multisigInternal$data)
+  print(negData)
+  range <- findSignalRange(multisigInternal$data,negData = negData )
   
   xList <- getXCoordinates(x = multisigInternal$x, 
                            nTracks = nTracks, 
@@ -211,7 +283,7 @@ plotMultiSignal<- function(data, binSize = NA, binCap = TRUE, negData = FALSE,
                 (multisigInternal$gapdistance * (nTracks-1)))/nTracks
   }
   else{
-    #throw error
+    stop("argument \" orientation\" is missing, ","with no default.", call. = FALSE)
   }
   
   linecolorList <- setColors(multisigInternal$linecolor, nTracks)
