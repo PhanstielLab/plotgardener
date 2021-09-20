@@ -105,14 +105,36 @@
 #' placement and \link[grid]{grob} information.
 #'
 #' @examples
-
-#########################################################################################
-#########################################################################################
-#########################################################################################
+#' library("plotgardener")
+#'library("org.Hs.eg.db")
+#'library("TxDb.Hsapiens.UCSC.hg19.knownGene")
+#'library("plotgardenerData")
+#'data("GM12878_HiC_10kb")
+#'data("IMR90_HiC_10kb")
+#'data("GM12878_ChIP_CTCF_signal")
+#'data("IMR90_ChIP_CTCF_signal")
+#'data("GM12878_ChIP_H3K27ac_signal")
+#'data("IMR90_ChIP_H3K27ac_signal")
+#'
+#'
+#'## Load libraries and datasets
+#'testList <- list(GM12878_ChIP_CTCF_signal, GM12878_ChIP_H3K27ac_signal, IMR90_ChIP_CTCF_signal, IMR90_ChIP_H3K27ac_signal)
+#'## Set genomic and dimension parameters in a `params` object
+#'params <- pgParams(chrom = "chr21", chromstart = 28150000, chromend = 29150000, 
+#'                     assembly = "hg19", x = 3.5, width = 1.5, default.units = "inches")
+#'
+#'pageCreate(width = 7, height = 6, default.units = "inches")
+#'
+#'plotMultiSignal(testList, chrom = "chr21", assembly = "hg19", params = c(params_c, ctcf_range),
+#'                fill = "#253494",y = 0.2, height = 4,  x = 0.2, width = 2, gapdistance = 0.1, orientation = "h")
 
 
 # =========================================================================
-# Find the signal range of data processed with read_rangeData()
+# Helper functions
+# =========================================================================
+
+# =========================================================================
+# Finding the range of data processed with read_rangeData()
 # =========================================================================
 
 findSignalRange <- function(data, negData = negData){
