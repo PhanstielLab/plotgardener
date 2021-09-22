@@ -71,6 +71,9 @@ representing scale of interaction scores. Default value is
 Options are "linear", "log", "log2", or "log10".
 Default value is \code{colorTrans = "linear"}.}
 
+\item{flip}{A logical indicating whether to flip the orientation of
+the Hi-C matrix over the x-axis. Default value is \code{flip = FALSE}.}
+
 \item{x}{A numeric or unit object specifying triangle Hi-C plot x-location.}
 
 \item{y}{A numeric, unit object, or character containing a "b"
