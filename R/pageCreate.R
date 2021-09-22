@@ -195,11 +195,11 @@ pageCreate <- function(width = 8.5, height = 11, default.units = "inches",
     
     background <- rectGrob(gp = gpar(fill = page$bg, col = NA))
     assign("guide_grobs",
-           addGrob(
-               gTree = get("guide_grobs", envir = pgEnv),
-               child = background
-           ),
-           envir = pgEnv
+            addGrob(
+                gTree = get("guide_grobs", envir = pgEnv),
+                child = background
+            ),
+            envir = pgEnv
     )
     # =========================================================================
     # SHOW OUTLINE/RULER/UNITS
@@ -644,9 +644,9 @@ pageCreate <- function(width = 8.5, height = 11, default.units = "inches",
             envir = pgEnv
         )
         
-        # =========================================================================
+        # =====================================================================
         # X AND Y GRIDLINES
-        # =========================================================================
+        # =====================================================================
         
         ## Draw x and y gridlines
         tryCatch(expr = {
@@ -669,18 +669,18 @@ pageCreate <- function(width = 8.5, height = 11, default.units = "inches",
             )
             
             assign("guide_grobs",
-                   addGrob(
-                       gTree = get("guide_grobs", envir = pgEnv),
-                       child = xGrid
-                   ),
-                   envir = pgEnv
+                    addGrob(
+                        gTree = get("guide_grobs", envir = pgEnv),
+                        child = xGrid
+                    ),
+                    envir = pgEnv
             )
             assign("guide_grobs",
-                   addGrob(
-                       gTree = get("guide_grobs", envir = pgEnv),
-                       child = yGrid
-                   ),
-                   envir = pgEnv
+                    addGrob(
+                        gTree = get("guide_grobs", envir = pgEnv),
+                        child = yGrid
+                    ),
+                    envir = pgEnv
             )
         }, error = function(e) {
             return()

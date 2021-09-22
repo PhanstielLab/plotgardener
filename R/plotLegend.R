@@ -282,8 +282,8 @@ plotLegend <- function(legend, fill = NULL, pch = NULL, lty = NULL,
         }
         
         border <- rectGrob(gp = gpar(fill = legInternal$bg,
-                                     lty = legInternal$gp$border.lty,
-                                     col = legInternal$gp$border.linecolor))
+                                    lty = legInternal$gp$border.lty,
+                                    col = legInternal$gp$border.linecolor))
     } else {
         legInternal$gp$fill <- legInternal$bg
         legInternal$gp$col <- NA
