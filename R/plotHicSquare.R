@@ -16,6 +16,7 @@
 #'     palette = colorRampPalette(brewer.pal(n = 9, "YlGnBu")),
 #'     colorTrans = "linear",
 #'     half = "both",
+#'     bg = NA,
 #'     x = NULL,
 #'     y = NULL,
 #'     width = NULL,
@@ -76,6 +77,8 @@
 #' \item{\code{"top"}: }{Half above the diagonal.}
 #' \item{\code{"bottom"}: }{Half below the diagonal.}
 #' }
+#' @param bg Character value indicating background color.
+#' Default value is \code{bg = NA}.
 #' @param x A numeric or unit object specifying square Hi-C plot x-location.
 #' @param y A numeric, unit object, or character containing a "b" combined
 #' with a numeric value specifying square Hi-C plot y-location.
@@ -120,7 +123,7 @@
 #'     assembly = "hg19",
 #'     x = 0.5, y = 0.5, width = 2, height = 2,
 #'     just = c("left", "top"),
-#'     default.units = "inches"
+#'     default.units = "inches", bg = "black"
 #' )
 #'
 #' ## Annotate heatmap legend
@@ -171,7 +174,8 @@ plotHicSquare <- function(data, resolution = "auto", zrange = NULL,
                                 n = 9, "YlGnBu"
                             )),
                             colorTrans = "linear",
-                            half = "both", x = NULL, y = NULL, width = NULL,
+                            half = "both", bg = NA, 
+                            x = NULL, y = NULL, width = NULL,
                             height = NULL, just = c("left", "top"),
                             default.units = "inches",
                             draw = TRUE, params = NULL, quiet = FALSE) {
@@ -685,11 +689,17 @@ plotHicSquare <- function(data, resolution = "auto", zrange = NULL,
     }
 
     # =========================================================================
-    # INITIALIZE GTREE FOR GROBS
+    # INITIALIZE GTREE FOR GROBS WITH BACKGROUND
     # =========================================================================
-
-    assign("hic_grobs", gTree(vp = vp), envir = pgEnv)
-
+    
+    backgroundGrob <- rectGrob(gp = gpar(
+        fill = hicInternal$bg,
+        col = NA
+    ), name = "background")
+    assign("hic_grobs", gTree(vp = vp, children = gList(backgroundGrob)),
+           envir = pgEnv
+    )
+    
     # =========================================================================
     # MAKE GROBS
     # =========================================================================

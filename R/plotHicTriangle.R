@@ -12,6 +12,8 @@
 #'     assembly = "hg38",
 #'     palette = colorRampPalette(brewer.pal(n = 9, "YlGnBu")),
 #'     colorTrans = "linear",
+#'     flip = FALSE,
+#'     bg = NA,
 #'     x = NULL,
 #'     y = NULL,
 #'     width = NULL,
@@ -57,6 +59,8 @@
 #' Default value is \code{colorTrans = "linear"}.
 #' @param flip A logical indicating whether to flip the orientation of
 #' the Hi-C matrix over the x-axis. Default value is \code{flip = FALSE}.
+#' @param bg Character value indicating background color.
+#' Default value is \code{bg = NA}.
 #' @param x A numeric or unit object specifying triangle Hi-C plot x-location.
 #' @param y A numeric, unit object, or character containing a "b"
 #' combined with a numeric value specifying triangle Hi-C plot y-location.
@@ -100,7 +104,7 @@
 #'     zrange = c(0, 70),
 #'     chrom = "chr21",
 #'     chromstart = 28000000, chromend = 30300000,
-#'     assembly = "hg19",
+#'     assembly = "hg19", bg = "black",
 #'     x = 2, y = 0.5, width = 3, height = 1.5,
 #'     just = "top", default.units = "inches"
 #' )
@@ -150,6 +154,7 @@ plotHicTriangle <- function(data, resolution = "auto", zrange = NULL,
                                 n = 9, "YlGnBu"
                             )),
                             colorTrans = "linear", flip = FALSE, 
+                            bg = NA,
                             x = NULL, y = NULL,
                             width = NULL, height = NULL,
                             just = c("left", "top"),
@@ -693,13 +698,19 @@ plotHicTriangle <- function(data, resolution = "auto", zrange = NULL,
         addViewport(paste0(vp_name, "_outside"))
     }
 
+    
     # =========================================================================
-    # INITIALIZE GTREE FOR GROBS
+    # INITIALIZE GTREE FOR GROBS WITH BACKGROUND
     # =========================================================================
-
     hicPlot$outsideVP <- outside_vp
-    assign("hic_grobs2", gTree(vp = inside_vp), envir = pgEnv)
-
+    backgroundGrob <- rectGrob(gp = gpar(
+        fill = thicInternal$bg,
+        col = NA
+    ), name = "background")
+    assign("hic_grobs2", gTree(vp = inside_vp, children = gList(backgroundGrob)),
+           envir = pgEnv
+    )
+    
     # =========================================================================
     # MAKE GROBS
     # =========================================================================

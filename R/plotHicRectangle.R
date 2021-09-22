@@ -12,6 +12,8 @@
 #'     assembly = "hg38",
 #'     palette = colorRampPalette(brewer.pal(n = 9, "YlGnBu")),
 #'     colorTrans = "linear",
+#'     flip = FALSE,
+#'     bg = NA,
 #'     x = NULL,
 #'     y = NULL,
 #'     width = NULL,
@@ -57,6 +59,8 @@
 #' Default value is \code{colorTrans = "linear"}.
 #' @param flip A logical indicating whether to flip the orientation of
 #' the Hi-C matrix over the x-axis. Default value is \code{flip = FALSE}.
+#' @param bg Character value indicating background color.
+#' Default value is \code{bg = NA}.
 #' @param x A numeric or unit object specifying rectangle
 #' Hi-C plot x-location.
 #' @param y A numeric, unit object, or character containing a "b" combined
@@ -155,6 +159,7 @@ plotHicRectangle <- function(data, resolution = "auto", zrange = NULL,
                                     n = 9, "YlGnBu"
                                 )),
                                 colorTrans = "linear", flip = FALSE, 
+                                bg = NA,
                                 x = NULL, y = NULL,
                                 width = NULL, height = NULL,
                                 just = c("left", "top"),
@@ -542,12 +547,18 @@ plotHicRectangle <- function(data, resolution = "auto", zrange = NULL,
     }
 
     # =========================================================================
-    # INITIALIZE GTREE FOR GROBS
+    # INITIALIZE GTREE FOR GROBS WITH BACKGROUND
     # =========================================================================
-
+    
     hicPlot$outsideVP <- outside_vp
-    assign("hic_grobs3", gTree(vp = inside_vp), envir = pgEnv)
-
+    backgroundGrob <- rectGrob(gp = gpar(
+        fill = rhicInternal$bg,
+        col = NA
+    ), name = "background")
+    assign("hic_grobs3", gTree(vp = inside_vp, children = gList(backgroundGrob)),
+           envir = pgEnv
+    )
+    
     # =========================================================================
     # MAKE GROBS
     # =========================================================================

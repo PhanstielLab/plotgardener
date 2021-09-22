@@ -20,6 +20,7 @@ plotHicSquare(
     palette = colorRampPalette(brewer.pal(n = 9, "YlGnBu")),
     colorTrans = "linear",
     half = "both",
+    bg = NA,
     x = NULL,
     y = NULL,
     width = NULL,
@@ -96,6 +97,9 @@ Default value is \code{half = "both"}.
 \item{\code{"bottom"}: }{Half below the diagonal.}
 }}
 
+\item{bg}{Character value indicating background color.
+Default value is \code{bg = NA}.}
+
 \item{x}{A numeric or unit object specifying square Hi-C plot x-location.}
 
 \item{y}{A numeric, unit object, or character containing a "b" combined
@@ -168,7 +172,7 @@ hicPlot <- plotHicSquare(
     assembly = "hg19",
     x = 0.5, y = 0.5, width = 2, height = 2,
     just = c("left", "top"),
-    default.units = "inches"
+    default.units = "inches", bg = "black"
 )
 
 ## Annotate heatmap legend
