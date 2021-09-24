@@ -17,7 +17,6 @@ plotManhattan(
     leadSNP = NULL,
     sigLine = FALSE,
     sigCol = NULL,
-    ymax = 1,
     range = NULL,
     space = 0.01,
     bg = NA,
@@ -93,9 +92,6 @@ Default value is \code{sigLine = FALSE}.}
 \item{sigCol}{Single character value specifying the color of
 significant data points. If \code{scaleLD} is supplied,
 \code{sigCol} will be ignored.}
-
-\item{ymax}{A numeric specifying the fraction of the max y-value to
-set as the height of the plot. Default value is \code{ymax = 1}.}
 
 \item{range}{A numeric vector of length 2 specifying the y-range
 of p-values to plot (c(min, max)).}
