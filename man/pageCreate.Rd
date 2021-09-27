@@ -8,6 +8,7 @@ pageCreate(
     width = 8.5,
     height = 11,
     default.units = "inches",
+    bg = NA,
     xgrid = 0.5,
     ygrid = 0.5,
     showGuides = TRUE,

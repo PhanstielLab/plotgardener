@@ -188,11 +188,6 @@ hicErrors <- function(hic, norm){
             )
         }
         
-        ## if it's a file path, it needs to exist
-        if (!file.exists(hic)) {
-            stop("File", hic, "does not exist.", call. = FALSE)
-        }
-        
         ## if it's a valid .hic file, it needs to have a valid norm
         if (is.null(norm)) {
             stop("If providing .hic file, please specify \'norm\'.",
