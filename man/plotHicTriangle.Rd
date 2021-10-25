@@ -16,6 +16,8 @@ plotHicTriangle(
     assembly = "hg38",
     palette = colorRampPalette(brewer.pal(n = 9, "YlGnBu")),
     colorTrans = "linear",
+    flip = FALSE,
+    bg = NA,
     x = NULL,
     y = NULL,
     width = NULL,
@@ -70,6 +72,12 @@ representing scale of interaction scores. Default value is
 \item{colorTrans}{A string specifying how to scale Hi-C colors.
 Options are "linear", "log", "log2", or "log10".
 Default value is \code{colorTrans = "linear"}.}
+
+\item{flip}{A logical indicating whether to flip the orientation of
+the Hi-C matrix over the x-axis. Default value is \code{flip = FALSE}.}
+
+\item{bg}{Character value indicating background color.
+Default value is \code{bg = NA}.}
 
 \item{x}{A numeric or unit object specifying triangle Hi-C plot x-location.}
 
@@ -145,7 +153,7 @@ hicPlot <- plotHicTriangle(
     zrange = c(0, 70),
     chrom = "chr21",
     chromstart = 28000000, chromend = 30300000,
-    assembly = "hg19",
+    assembly = "hg19", bg = "black",
     x = 2, y = 0.5, width = 3, height = 1.5,
     just = "top", default.units = "inches"
 )

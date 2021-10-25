@@ -12,6 +12,8 @@
 #'     assembly = "hg38",
 #'     palette = colorRampPalette(brewer.pal(n = 9, "YlGnBu")),
 #'     colorTrans = "linear",
+#'     flip = FALSE,
+#'     bg = NA,
 #'     x = NULL,
 #'     y = NULL,
 #'     width = NULL,
@@ -55,6 +57,10 @@
 #' @param colorTrans A string specifying how to scale Hi-C colors.
 #' Options are "linear", "log", "log2", or "log10".
 #' Default value is \code{colorTrans = "linear"}.
+#' @param flip A logical indicating whether to flip the orientation of
+#' the Hi-C matrix over the x-axis. Default value is \code{flip = FALSE}.
+#' @param bg Character value indicating background color.
+#' Default value is \code{bg = NA}.
 #' @param x A numeric or unit object specifying triangle Hi-C plot x-location.
 #' @param y A numeric, unit object, or character containing a "b"
 #' combined with a numeric value specifying triangle Hi-C plot y-location.
@@ -98,7 +104,7 @@
 #'     zrange = c(0, 70),
 #'     chrom = "chr21",
 #'     chromstart = 28000000, chromend = 30300000,
-#'     assembly = "hg19",
+#'     assembly = "hg19", bg = "black",
 #'     x = 2, y = 0.5, width = 3, height = 1.5,
 #'     just = "top", default.units = "inches"
 #' )
@@ -147,7 +153,9 @@ plotHicTriangle <- function(data, resolution = "auto", zrange = NULL,
                             palette = colorRampPalette(brewer.pal(
                                 n = 9, "YlGnBu"
                             )),
-                            colorTrans = "linear", x = NULL, y = NULL,
+                            colorTrans = "linear", flip = FALSE, 
+                            bg = NA,
+                            x = NULL, y = NULL,
                             width = NULL, height = NULL,
                             just = c("left", "top"),
                             default.units = "inches", draw = TRUE,
@@ -215,97 +223,188 @@ plotHicTriangle <- function(data, resolution = "auto", zrange = NULL,
         return(hic)
     }
 
-    ## Define a function that manually "clips" squares/triangles along edges
-    manual_clip <- function(hic, hicPlot) {
-        clipLeft <- hic[which(hic[, "x"] < hicPlot$chromstart), ]
-        clipTop <- hic[which((hic[, "y"] + hicPlot$resolution) >
-            hicPlot$chromend), ]
+    ## Define a function that manually "clips" pixels along edges
+    manual_clip <- function(hic, hicPlot, flip) {
+        
+        if (flip == FALSE){
+            clipLeft <- hic[which(hic[, "x"] < hicPlot$chromstart), ]
+            clipTop <- hic[which((hic[, "y"] + hicPlot$resolution) >
+                hicPlot$chromend), ]
 
-        topLeft <- suppressMessages(dplyr::inner_join(clipLeft, clipTop))
+            topLeft <- suppressMessages(dplyr::inner_join(clipLeft, clipTop))
 
-        clipLeft <- suppressMessages(dplyr::anti_join(clipLeft, topLeft))
-        clipTop <- suppressMessages(dplyr::anti_join(clipTop, topLeft))
+            clipLeft <- suppressMessages(dplyr::anti_join(clipLeft, topLeft))
+            clipTop <- suppressMessages(dplyr::anti_join(clipTop, topLeft))
 
-        ############# Squares
-        squares <- hic[which(hic[, "y"] > hic[, "x"]), ]
-        clipLeftsquares <- suppressMessages(dplyr::inner_join(
-            squares,
-            clipLeft
-        ))
-        clipTopsquares <- suppressMessages(dplyr::inner_join(
-            squares,
-            clipTop
-        ))
-        clippedSquares <- rbind(
-            clipLeftsquares, clipTopsquares,
-            topLeft
-        )
+            ############# Squares
+            squares <- hic[which(hic[, "y"] > hic[, "x"]), ]
+            clipLeftsquares <- suppressMessages(dplyr::inner_join(
+                squares,
+                clipLeft
+            ))
+            clipTopsquares <- suppressMessages(dplyr::inner_join(
+                squares,
+                clipTop
+            ))
+            clippedSquares <- rbind(
+                clipLeftsquares, clipTopsquares,
+                topLeft
+            )
 
-        squares <- suppressMessages(dplyr::anti_join(squares, clippedSquares))
-
-
-        clipLeftsquares$width <- hicPlot$resolution - (hicPlot$chromstart -
-            clipLeftsquares$x)
-        clipLeftsquares$x <- rep(hicPlot$chromstart, nrow(clipLeftsquares))
-
-        clipTopsquares$height <- hicPlot$chromend - clipTopsquares$y
-
-        topLeft$width <- hicPlot$resolution - (hicPlot$chromstart -
-            topLeft$x)
-        topLeft$x <- rep(hicPlot$chromstart, nrow(topLeft))
-
-        topLeft$height <- hicPlot$chromend - topLeft$y
+            squares <- suppressMessages(dplyr::anti_join(squares, 
+                                                        clippedSquares))
 
 
-        ############# Triangles
-        triangles <- hic[which(hic[, "y"] == hic[, "x"]), ]
-        topRight <- suppressMessages(dplyr::inner_join(triangles, clipTop))
-        bottomLeft <- suppressMessages(dplyr::inner_join(triangles, clipLeft))
-        clippedTriangles <- rbind(topRight, bottomLeft)
+            clipLeftsquares$width <- hicPlot$resolution - (hicPlot$chromstart -
+                clipLeftsquares$x)
+            clipLeftsquares$x <- rep(hicPlot$chromstart, nrow(clipLeftsquares))
 
-        triangles <- suppressMessages(dplyr::anti_join(
-            triangles,
-            clippedTriangles
-        ))
+            clipTopsquares$height <- hicPlot$chromend - clipTopsquares$y
 
-        topRight$height <- hicPlot$chromend - topRight$y
-        topRight$width <- topRight$height
+            topLeft$width <- hicPlot$resolution - (hicPlot$chromstart -
+                topLeft$x)
+            topLeft$x <- rep(hicPlot$chromstart, nrow(topLeft))
 
-        bottomLeft$width <- hicPlot$resolution - (hicPlot$chromstart -
-            bottomLeft$x)
-        bottomLeft$height <- bottomLeft$width
-        bottomLeft$x <- rep(hicPlot$chromstart, nrow(bottomLeft))
-        bottomLeft$y <- rep(hicPlot$chromstart, nrow(bottomLeft))
+            topLeft$height <- hicPlot$chromend - topLeft$y
 
 
-        ## Recombine
-        clippedHic <- rbind(
-            squares, triangles, clipLeftsquares,
-            clipTopsquares, topLeft, topRight, bottomLeft
-        )
+            ############# Triangles
+            triangles <- hic[which(hic[, "y"] == hic[, "x"]), ]
+            topRight <- suppressMessages(dplyr::inner_join(triangles, clipTop))
+            bottomLeft <- suppressMessages(dplyr::inner_join(triangles, 
+                                                                    clipLeft))
+            clippedTriangles <- rbind(topRight, bottomLeft)
+
+            triangles <- suppressMessages(dplyr::anti_join(
+                triangles,
+                clippedTriangles
+            ))
+
+            topRight$height <- hicPlot$chromend - topRight$y
+            topRight$width <- topRight$height
+
+            bottomLeft$width <- hicPlot$resolution - (hicPlot$chromstart -
+                bottomLeft$x)
+            bottomLeft$height <- bottomLeft$width
+            bottomLeft$x <- rep(hicPlot$chromstart, nrow(bottomLeft))
+            bottomLeft$y <- rep(hicPlot$chromstart, nrow(bottomLeft))
+            
+            clippedHic <- rbind(
+                    squares, triangles, clipLeftsquares,
+                    clipTopsquares, topLeft, topRight, bottomLeft
+                )
+            
+        } else {
+            
+            clipBottom <- hic[which(hic[, "y"] < hicPlot$chromstart), ]
+            clipRight <- hic[which((hic[, "x"] + hicPlot$resolution) >
+                                hicPlot$chromend), ]
+            
+            bottomRight <- suppressMessages(dplyr::inner_join(clipBottom, 
+                                                                clipRight))
+            
+            clipBottom <- suppressMessages(dplyr::anti_join(clipBottom, 
+                                                            bottomRight))
+            clipRight <- suppressMessages(dplyr::anti_join(clipRight, 
+                                                            bottomRight))
+            
+            ############# Squares
+            squares <- hic[which(hic[, "x"] > hic[, "y"]), ]
+            clipBottomsquares <- suppressMessages(dplyr::inner_join(
+                squares,
+                clipBottom
+            ))
+            clipRightsquares <- suppressMessages(dplyr::inner_join(
+                squares,
+                clipRight
+            ))
+            clippedSquares <- rbind(
+                clipBottomsquares, clipRightsquares,
+                bottomRight
+            )
+            
+            squares <- suppressMessages(dplyr::anti_join(squares, 
+                                                        clippedSquares))
+            
+            clipRightsquares$width <- hicPlot$chromend - clipRightsquares$x
+            clipBottomsquares$height <- hicPlot$resolution - 
+                (hicPlot$chromstart - clipBottomsquares$y)
+            clipBottomsquares$y <- rep(hicPlot$chromstart, 
+                                        nrow(clipBottomsquares))
+            
+            
+            bottomRight$height <- hicPlot$resolution - (hicPlot$chromstart -
+                                        bottomRight$y)
+            bottomRight$y <- rep(hicPlot$chromstart, nrow(bottomRight))
+            bottomRight$width <- hicPlot$chromend - bottomRight$x
+            
+            
+            ############# Triangles
+            triangles <- hic[which(hic[, "y"] == hic[, "x"]), ]
+            topRight <- suppressMessages(dplyr::inner_join(triangles, 
+                                                            clipRight))
+            bottomLeft <- suppressMessages(dplyr::inner_join(triangles, 
+                                                            clipBottom))
+            
+            
+            clippedTriangles <- rbind(topRight, bottomLeft)
+            
+            triangles <- suppressMessages(dplyr::anti_join(
+                triangles,
+                clippedTriangles
+            ))
+            
+            topRight$width <- hicPlot$chromend - topRight$x
+            topRight$height <- topRight$width
+            
+            bottomLeft$height <- hicPlot$resolution - (hicPlot$chromstart -
+                                        bottomLeft$y)
+            bottomLeft$width <- bottomLeft$height
+            bottomLeft$x <- rep(hicPlot$chromstart, nrow(bottomLeft))
+            bottomLeft$y <- rep(hicPlot$chromstart, nrow(bottomLeft))
+            
+            
+            clippedHic <- rbind(
+                squares, triangles, clipRightsquares,
+                clipBottomsquares, bottomRight, topRight, bottomLeft
+            )
+            
+        }
 
         return(clippedHic)
     }
 
     ## Define a function that makes grobs for the triangle hic diagonal
-    hic_diagonal <- function(hic) {
+    hic_diagonal <- function(hic, flip) {
         col <- hic["color"]
         x <- utils::type.convert(hic["x"], as.is = TRUE)
         y <- utils::type.convert(hic["y"], as.is = TRUE)
         width <- utils::type.convert(hic["width"], as.is = TRUE)
         height <- utils::type.convert(hic["height"], as.is = TRUE)
-
+        
         xleft <- x
         xright <- x + width
         ybottom <- y
         ytop <- y + height
+        
+        if (flip == FALSE){
 
-        hic_triangle <- polygonGrob(
-            x = c(xleft, xleft, xright),
-            y = c(ybottom, ytop, ytop),
-            gp = gpar(col = NA, fill = col),
-            default.units = "native"
-        )
+            hic_triangle <- polygonGrob(
+                x = c(xleft, xleft, xright),
+                y = c(ybottom, ytop, ytop),
+                gp = gpar(col = NA, fill = col),
+                default.units = "native"
+            )
+            
+        } else {
+            
+            hic_triangle <- polygonGrob(
+                x = c(xleft, xright, xright),
+                y = c(ybottom, ybottom, ytop),
+                gp = gpar(col = NA, fill = col),
+                default.units = "native"
+            )
+        }
 
         assign("hic_grobs2",
             addGrob(
@@ -433,6 +532,15 @@ plotHicTriangle <- function(data, resolution = "auto", zrange = NULL,
     # =========================================================================
 
     hic <- subset_data(hic = hic, hicPlot = hicPlot)
+    
+    # =========================================================================
+    # GET LOWER TRIANGULAR FOR FLIP
+    # =========================================================================
+    
+    if (thicInternal$flip == TRUE){
+        hic <- hic[, c("y", "x", "counts")]
+        colnames(hic) <- c("x", "y", "counts")
+    }
 
     # =========================================================================
     # SET ZRANGE AND SCALE DATA
@@ -493,11 +601,20 @@ plotHicTriangle <- function(data, resolution = "auto", zrange = NULL,
             x = currentViewports
         )) + 1
     )
+    
+    ## Inner viewport y-coordinate
+    if (thicInternal$flip == TRUE){
+        y <- unit(1, "npc")
+        
+    } else {
+        y <- unit(0, "npc")
+    }
 
     if (is.null(hicPlot$x) | is.null(hicPlot$y)) {
         inside_vp <- viewport(
             height = unit(1, "npc"), width = unit(0.5, "npc"),
-            x = unit(0, "npc"), y = unit(0, "npc"),
+            x = unit(0, "npc"), 
+            y = y,
             xscale = thicInternal$xscale,
             yscale = thicInternal$xscale,
             just = c("left", "bottom"),
@@ -508,14 +625,13 @@ plotHicTriangle <- function(data, resolution = "auto", zrange = NULL,
         outside_vp <- viewport(
             height = unit(0.75, "snpc"),
             width = unit(1.5, "snpc"),
-            x = unit(0.125, "npc"),
-            y = unit(0.25, "npc"),
+            x = unit(0.25, "npc"),
+            y = unit(0.125, "npc"),
             xscale = thicInternal$xscale,
             clip = "on",
             just = c("left", "bottom"),
             name = paste0(vp_name, "_outside")
         )
-
 
         if (thicInternal$draw == TRUE) {
             vp_name <- "hicTriangle1"
@@ -554,7 +670,7 @@ plotHicTriangle <- function(data, resolution = "auto", zrange = NULL,
                 get("page_units", envir = pgEnv)
             ),
             x = unit(0, "npc"),
-            y = unit(0, "npc"),
+            y = y,
             xscale = thicInternal$xscale,
             yscale = thicInternal$xscale,
             just = c("left", "bottom"),
@@ -582,31 +698,45 @@ plotHicTriangle <- function(data, resolution = "auto", zrange = NULL,
         addViewport(paste0(vp_name, "_outside"))
     }
 
+    
     # =========================================================================
-    # INITIALIZE GTREE FOR GROBS
+    # INITIALIZE GTREE FOR GROBS WITH BACKGROUND
     # =========================================================================
-
     hicPlot$outsideVP <- outside_vp
-    assign("hic_grobs2", gTree(vp = inside_vp), envir = pgEnv)
-
+    backgroundGrob <- rectGrob(gp = gpar(
+        fill = thicInternal$bg,
+        col = NA
+    ), name = "background")
+    assign("hic_grobs2", gTree(vp = inside_vp, children = gList(backgroundGrob)),
+           envir = pgEnv
+    )
+    
     # =========================================================================
     # MAKE GROBS
     # =========================================================================
 
     if (!is.null(hicPlot$chromstart) & !is.null(hicPlot$chromend)) {
         if (nrow(hic) > 0) {
+            
             hic$width <- hicPlot$resolution
             hic$height <- hicPlot$resolution
 
             ## Manually "clip" the grobs that fall out of the desired chmstart
             ## to chromend region
-            hic <- manual_clip(hic = hic, hicPlot = hicPlot)
-            hic <- hic[order(utils::type.convert(rownames(hic), 
+            hic <- manual_clip(hic = hic, hicPlot = hicPlot, 
+                                flip = thicInternal$flip)
+            hic <- hic[order(utils::type.convert(rownames(hic),
                                             as.is = TRUE)), ]
 
             ## Separate into squares for upper region and triangle
             ## shapes for the diagonal
-            squares <- hic[which(hic[, "y"] > hic[, "x"]), ]
+            
+            if (thicInternal$flip == TRUE){
+                squares <- hic[which(hic[, "x"] > hic[, "y"]), ] 
+            } else {
+                squares <- hic[which(hic[, "y"] > hic[, "x"]), ]  
+            }
+            
             triangles <- hic[which(hic[, "y"] == hic[, "x"]), ]
 
             if (nrow(squares) > 0) {
@@ -632,7 +762,8 @@ plotHicTriangle <- function(data, resolution = "auto", zrange = NULL,
 
             if (nrow(triangles) > 0) {
                 ## Make triangle grobs and add to grob gTree
-                invisible(apply(triangles, 1, hic_diagonal))
+                invisible(apply(triangles, 1, hic_diagonal, 
+                                flip = thicInternal$flip))
             }
 
             if (nrow(squares) == 0 & nrow(triangles) == 0) {
@@ -661,6 +792,7 @@ plotHicTriangle <- function(data, resolution = "auto", zrange = NULL,
 
     if (thicInternal$draw == TRUE) {
         pushViewport(outside_vp)
+        
         grid.draw(get("hic_grobs2", envir = pgEnv))
         upViewport()
     }
