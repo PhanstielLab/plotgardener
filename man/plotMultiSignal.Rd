@@ -21,7 +21,7 @@ plotMultiSignal(
    chromstart = NULL, 
    chromend = NULL,
    assembly = "hg38", 
-   linecolor,
+   linecolor= "#37a7db",
    fill = NA, 
    ymax = 1, 
    range = NULL, 
