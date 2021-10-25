@@ -13,7 +13,6 @@
 #'     leadSNP = NULL,
 #'     sigLine = FALSE,
 #'     sigCol = NULL,
-#'     ymax = 1,
 #'     range = NULL,
 #'     space = 0.01,
 #'     bg = NA,
@@ -77,8 +76,6 @@
 #' @param sigCol Single character value specifying the color of
 #' significant data points. If \code{scaleLD} is supplied,
 #' \code{sigCol} will be ignored.
-#' @param ymax A numeric specifying the fraction of the max y-value to
-#' set as the height of the plot. Default value is \code{ymax = 1}.
 #' @param range A numeric vector of length 2 specifying the y-range
 #' of p-values to plot (c(min, max)).
 #' @param space A numeric value indicating the space between each
@@ -267,7 +264,7 @@ plotManhattan <- function(data, sigVal = 5e-08, chrom = NULL,
                             chromstart = NULL, chromend = NULL,
                             assembly = "hg38", fill = "black", pch = 19,
                             cex = 0.25, leadSNP = NULL,
-                            sigLine = FALSE, sigCol = NULL, ymax = 1,
+                            sigLine = FALSE, sigCol = NULL,
                             range = NULL, space = 0.01, bg = NA,
                             baseline = FALSE, baseline.color = "grey",
                             baseline.lwd = 1, x = NULL, y = NULL,
@@ -398,7 +395,7 @@ plotManhattan <- function(data, sigVal = 5e-08, chrom = NULL,
     ## Define a function that adjusts the yrange of the plot
     manhattan_range <- function(bedData, object) {
         if (is.null(object$range)) {
-            object$range <- c(0, object$ymax * max(-log10(bedData[, "p"])))
+            object$range <- c(0, ceiling(max(-log10(bedData[, "p"]))))
         }
 
         return(object)
@@ -861,6 +858,7 @@ plotManhattan <- function(data, sigVal = 5e-08, chrom = NULL,
             gp = manInternal$gp,
             default.units = "native"
         )
+        
         assign("manhattan_grobs",
             addGrob(
                 gTree = get("manhattan_grobs", envir = pgEnv),

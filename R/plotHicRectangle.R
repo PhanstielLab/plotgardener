@@ -12,6 +12,8 @@
 #'     assembly = "hg38",
 #'     palette = colorRampPalette(brewer.pal(n = 9, "YlGnBu")),
 #'     colorTrans = "linear",
+#'     flip = FALSE,
+#'     bg = NA,
 #'     x = NULL,
 #'     y = NULL,
 #'     width = NULL,
@@ -55,6 +57,10 @@
 #' @param colorTrans A string specifying how to scale Hi-C colors.
 #' Options are "linear", "log", "log2", or "log10".
 #' Default value is \code{colorTrans = "linear"}.
+#' @param flip A logical indicating whether to flip the orientation of
+#' the Hi-C matrix over the x-axis. Default value is \code{flip = FALSE}.
+#' @param bg Character value indicating background color.
+#' Default value is \code{bg = NA}.
 #' @param x A numeric or unit object specifying rectangle
 #' Hi-C plot x-location.
 #' @param y A numeric, unit object, or character containing a "b" combined
@@ -152,7 +158,9 @@ plotHicRectangle <- function(data, resolution = "auto", zrange = NULL,
                                 palette = colorRampPalette(brewer.pal(
                                     n = 9, "YlGnBu"
                                 )),
-                                colorTrans = "linear", x = NULL, y = NULL,
+                                colorTrans = "linear", flip = FALSE, 
+                                bg = NA,
+                                x = NULL, y = NULL,
                                 width = NULL, height = NULL,
                                 just = c("left", "top"),
                                 default.units = "inches", draw = TRUE,
@@ -383,7 +391,16 @@ plotHicRectangle <- function(data, resolution = "auto", zrange = NULL,
     # =========================================================================
 
     hic <- subset_data(hic = hic, hicPlot = hicPlot)
-
+    
+    # =========================================================================
+    # GET LOWER TRIANGULAR FOR FLIP
+    # =========================================================================
+    
+    if (rhicInternal$flip == TRUE){
+        hic <- hic[, c("y", "x", "counts")]
+        colnames(hic) <- c("x", "y", "counts")
+    }
+    
     # =========================================================================
     # SET ZRANGE AND SCALE DATA
     # =========================================================================
@@ -450,13 +467,20 @@ plotHicRectangle <- function(data, resolution = "auto", zrange = NULL,
             x = currentViewports
         )) + 1
     )
+    
+    ## Inner viewport y-coordinate
+    if (rhicInternal$flip == TRUE){
+        y <- unit(1, "npc")
+    } else {
+        y <- unit(0, "npc")
+    }
 
     if (is.null(hicPlot$x) | is.null(hicPlot$y)) {
         inside_vp <- viewport(
             height = unit(4 / sqrt(2), "npc"),
             width = unit(2 / sqrt(2), "npc"),
             x = unit(scale[[1]][1], "native"),
-            y = unit(0, "npc"),
+            y = y,
             xscale = scale[[1]],
             yscale = scale[[1]],
             just = c("left", "bottom"),
@@ -490,46 +514,51 @@ plotHicRectangle <- function(data, resolution = "auto", zrange = NULL,
         ## Get length of side of inside viewport
         vp_side <- (as.numeric(page_coords$width) + 2 *
             as.numeric(page_coords$height)) / sqrt(2)
-
+            
         inside_vp <- viewport(
-            height = unit(
-                vp_side,
-                get("page_units", envir = pgEnv)
-            ),
-            width = unit(
-                vp_side,
-                get("page_units", envir = pgEnv)
-            ),
-            x = unit(scale[[1]][1], "native"),
-            y = unit(0, "npc"),
-            xscale = scale[[1]],
-            yscale = scale[[1]],
-            just = c("left", "bottom"),
-            name = paste0(vp_name, "_inside"),
-            angle = -45
-        )
-
+                height = unit(
+                    vp_side,
+                    get("page_units", envir = pgEnv)
+                ),
+                width = unit(
+                    vp_side,
+                    get("page_units", envir = pgEnv)
+                ),
+                x = unit(scale[[1]][1], "native"),
+                y = y,
+                xscale = scale[[1]],
+                yscale = scale[[1]],
+                just = c("left", "bottom"),
+                name = paste0(vp_name, "_inside"),
+                angle = -45
+            )
+            
         outside_vp <- viewport(
-            height = page_coords$height,
-            width = page_coords$width,
-            x = page_coords$x, y = page_coords$y,
-            just = hicPlot$just,
-            xscale = scale[[2]],
-            clip = "on",
-            name = paste0(vp_name, "_outside")
-        )
-
-
+                height = page_coords$height,
+                width = page_coords$width,
+                x = page_coords$x, y = page_coords$y,
+                just = hicPlot$just,
+                xscale = scale[[2]],
+                clip = "on",
+                name = paste0(vp_name, "_outside")
+            ) 
+            
         addViewport(paste0(vp_name, "_outside"))
     }
 
     # =========================================================================
-    # INITIALIZE GTREE FOR GROBS
+    # INITIALIZE GTREE FOR GROBS WITH BACKGROUND
     # =========================================================================
-
+    
     hicPlot$outsideVP <- outside_vp
-    assign("hic_grobs3", gTree(vp = inside_vp), envir = pgEnv)
-
+    backgroundGrob <- rectGrob(gp = gpar(
+        fill = rhicInternal$bg,
+        col = NA
+    ), name = "background")
+    assign("hic_grobs3", gTree(vp = inside_vp, children = gList(backgroundGrob)),
+           envir = pgEnv
+    )
+    
     # =========================================================================
     # MAKE GROBS
     # =========================================================================

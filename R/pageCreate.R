@@ -4,6 +4,7 @@
 #'     width = 8.5,
 #'     height = 11,
 #'     default.units = "inches",
+#'     bg = NA,
 #'     xgrid = 0.5,
 #'     ygrid = 0.5,
 #'     showGuides = TRUE,
@@ -17,6 +18,8 @@
 #' @param default.units A string indicating the default units to use if
 #' \code{width} or \code{height} are only given as numerics.
 #' Default value is \code{default.units = "inches"}.
+#' @param bg Character value indicating page background color.
+#' Default value is \code{bg = NA}.
 #' @param xgrid A numeric indicating the increment by which to place
 #' vertical gridlines. Default value is \code{xgrid = 0.5}.
 #' @param ygrid A numeric indicating the increment by which to place
@@ -39,7 +42,7 @@
 #'
 #' @export
 pageCreate <- function(width = 8.5, height = 11, default.units = "inches",
-                        xgrid = 0.5, ygrid = 0.5, showGuides = TRUE,
+                        bg = NA, xgrid = 0.5, ygrid = 0.5, showGuides = TRUE,
                         params = NULL) {
 
     # =========================================================================
@@ -186,7 +189,19 @@ pageCreate <- function(width = 8.5, height = 11, default.units = "inches",
     assign("guide_grobs", gTree(name = "guide_grobs", vp = page_vp),
         envir = pgEnv
     )
-
+    
+    # =========================================================================
+    # BACKGROUND
+    # =========================================================================
+    
+    background <- rectGrob(gp = gpar(fill = page$bg, col = NA))
+    assign("guide_grobs",
+            addGrob(
+                gTree = get("guide_grobs", envir = pgEnv),
+                child = background
+            ),
+            envir = pgEnv
+    )
     # =========================================================================
     # SHOW OUTLINE/RULER/UNITS
     # =========================================================================
@@ -629,49 +644,50 @@ pageCreate <- function(width = 8.5, height = 11, default.units = "inches",
             ),
             envir = pgEnv
         )
-    }
-
-    # =========================================================================
-    # X AND Y GRIDLINES
-    # =========================================================================
-
-    ## Draw x and y gridlines
-    tryCatch(expr = {
-        xGrid <- segmentsGrob(
-            x0 = seq(0, page_width, page$xgrid),
-            y0 = 0,
-            x1 = seq(0, page_width, page$xgrid),
-            y1 = page$height,
-            default.units = page_units,
-            gp = gpar(col = "grey50", lty = 2, lwd = 0.5)
-        )
-
-        yGrid <- segmentsGrob(
-            x0 = 0,
-            y0 = seq(0, page_height, page$ygrid),
-            x1 = page_width,
-            y1 = seq(0, page_height, page$ygrid),
-            default.units = "native",
-            gp = gpar(col = "grey50", lty = 2, lwd = 0.5)
-        )
-
-        assign("guide_grobs",
-            addGrob(
-                gTree = get("guide_grobs", envir = pgEnv),
-                child = xGrid
-            ),
-            envir = pgEnv
-        )
-        assign("guide_grobs",
-            addGrob(
-                gTree = get("guide_grobs", envir = pgEnv),
-                child = yGrid
-            ),
-            envir = pgEnv
-        )
-    }, error = function(e) {
-        return()
-    })
+        
+        # =====================================================================
+        # X AND Y GRIDLINES
+        # =====================================================================
+        
+        ## Draw x and y gridlines
+        tryCatch(expr = {
+            xGrid <- segmentsGrob(
+                x0 = seq(0, page_width, page$xgrid),
+                y0 = 0,
+                x1 = seq(0, page_width, page$xgrid),
+                y1 = page$height,
+                default.units = page_units,
+                gp = gpar(col = "grey50", lty = 2, lwd = 0.5)
+            )
+            
+            yGrid <- segmentsGrob(
+                x0 = 0,
+                y0 = seq(0, page_height, page$ygrid),
+                x1 = page_width,
+                y1 = seq(0, page_height, page$ygrid),
+                default.units = "native",
+                gp = gpar(col = "grey50", lty = 2, lwd = 0.5)
+            )
+            
+            assign("guide_grobs",
+                    addGrob(
+                        gTree = get("guide_grobs", envir = pgEnv),
+                        child = xGrid
+                    ),
+                    envir = pgEnv
+            )
+            assign("guide_grobs",
+                    addGrob(
+                        gTree = get("guide_grobs", envir = pgEnv),
+                        child = yGrid
+                    ),
+                    envir = pgEnv
+            )
+        }, error = function(e) {
+            return()
+        })
+        
+        }
 
     # =========================================================================
     # DRAW GROBS

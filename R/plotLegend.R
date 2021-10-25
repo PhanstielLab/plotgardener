@@ -131,6 +131,8 @@ plotLegend <- function(legend, fill = NULL, pch = NULL, lty = NULL,
         params = legInternal, ...
     )
 
+    
+    
     ## Reset lty
     if (is.null(legInternal$gp$lty)) {
         legInternal$gp$lty <- NULL
@@ -138,7 +140,7 @@ plotLegend <- function(legend, fill = NULL, pch = NULL, lty = NULL,
 
     ## Justification
     legInternal$just <- justConversion(just = legInternal$just)
-
+    
     # =========================================================================
     # INITIALIZE OBJECT
     # =========================================================================
@@ -271,8 +273,17 @@ plotLegend <- function(legend, fill = NULL, pch = NULL, lty = NULL,
 
     ## Border
     if (legInternal$border == TRUE) {
-        legInternal$gp$fill <- legInternal$bg
-        border <- rectGrob(gp = legInternal$gp)
+        
+        if (is.null(legInternal$gp$border.lty)){
+            legInternal$gp$border.lty <- 1
+        }
+        if (is.null(legInternal$gp$border.linecolor)){
+            legInternal$gp$border.linecolor <- "black"
+        }
+        
+        border <- rectGrob(gp = gpar(fill = legInternal$bg,
+                                    lty = legInternal$gp$border.lty,
+                                    col = legInternal$gp$border.linecolor))
     } else {
         legInternal$gp$fill <- legInternal$bg
         legInternal$gp$col <- NA
@@ -401,9 +412,6 @@ plotLegend <- function(legend, fill = NULL, pch = NULL, lty = NULL,
         fillcolors <- rev(fillcolors)
     }
 
-
-
-
     ## Symbols
     if (!is.null(legInternal$pch)) {
         ## Only take the first number of symbols for the length of legend
@@ -429,8 +437,13 @@ plotLegend <- function(legend, fill = NULL, pch = NULL, lty = NULL,
 
         ## Lines
     } else if (!is.null(lty)) {
-        ## Only take the first number of symbols for the length of legend
-        ltys <- lty[seq(1, length(legend))]
+        ## Only take the number of linetypes for the length of legend
+        if (length(lty) < length(legend)){
+            ltys <- rep(lty, length(legend))
+        } else {
+            ltys <- lty
+        }
+        ltys <- ltys[seq(1, length(legend))]
         lty <- legInternal$gp$lty
         legInternal$gp$lty <- ltys
         legInternal$gp$col <- fillcolors

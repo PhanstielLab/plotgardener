@@ -181,6 +181,9 @@ annoGenomeLabel <- function(plot, fontsize = 10, fontcolor = "black",
     length <- genomeLabelInternal$plot$width
     if (genomeLabelInternal$axis == "y") {
         length <- genomeLabelInternal$plot$height
+        chrom <- genomeLabelInternal$plot$altchrom
+        chromstart <- genomeLabelInternal$plot$altchromstart
+        chromend <- genomeLabelInternal$plot$altchromend
     }
     
     just <- justConversion(just = genomeLabelInternal$just)
