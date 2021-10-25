@@ -138,8 +138,8 @@ plotMultiSignal<- function(data,
                            chromstart = NULL, 
                            chromend = NULL,
                            assembly = "hg38", 
-                           linecolor,
-                           fill = NA, 
+                           linecolor= "#37a7db",
+                           fill = NA,  
                            ymax = 1, 
                            range = NULL, 
                            scale = FALSE,
@@ -270,7 +270,7 @@ plotMultiSignal<- function(data,
 
 findSignalRange <- function(data, negData = negData){
   #calculating the max from the processed data scores
-  rangeMax<- lapply(data, select, "score") %>%
+  rangeMax<- lapply(data, dplyr::select, "score") %>%
     lapply(max) %>%
     unlist() %>%
     max
@@ -279,7 +279,7 @@ findSignalRange <- function(data, negData = negData){
     rangeMin <- 0 
   #if there are negative values, lower bound of range is the min value 
   else{
-    rangeMin<- lapply(data, select, "score") %>%
+    rangeMin<- lapply(data, dplyr::select, "score") %>%
       lapply(min) %>%
       unlist() %>%
       min
@@ -297,12 +297,12 @@ setColors <- function(colorList, nTracks){
     return(colorList)
   
   #if there are too few colors for the number of tracks, repeat the colors provided
-  else if(length(colorList) < nTracks)
+  else if(length(colorList) < nTracks){
     setColors(append(colorList, colorList), nTracks)
-  
+  }
   #if there are too many colors for the number of tracks, truncate the color list
   else if(length(colorList) > nTracks)
-    setColors(colorList[1:nTracks], nTracks)
+    return(colorList[1:nTracks])
 }
 
 # =========================================================================
