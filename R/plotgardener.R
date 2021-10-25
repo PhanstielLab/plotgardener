@@ -54,6 +54,7 @@
 #' @importFrom dplyr left_join
 #' @importFrom dplyr inner_join
 #' @importFrom dplyr bind_rows
+#' @importFrom dplyr select
 #' @importFrom dplyr group_by
 #' @importFrom purrr map
 #' @import grid
