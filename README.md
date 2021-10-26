@@ -29,14 +29,14 @@ detailed examples and suggested use cases!
 
 ## Installation
 
-plotgardener can be installed from the devel version of Bioconductor 
+plotgardener can be installed from Bioconductor version 3.14 
 (R version 4.1) as follows:
 
 ``` r
 if (!requireNamespace("BiocManager", quietly = TRUE))
     install.packages("BiocManager")
 
-BiocManager::install(version = "devel")
+BiocManager::install(version = "3.14")
 
 BiocManager::install("plotgardener")
 
