@@ -232,7 +232,7 @@ plotMultiSignal<- function(data,
   # =========================================================================
   
   ## Save to a group object?
-  pmap(list(multisigInternal$data, xList, yList, linecolorList, fillList), 
+  purrr::pmap(list(multisigInternal$data, xList, yList, linecolorList, fillList), 
        \(d, x, y, l, f){
          plotSignal(data = d, x = x, y = y, 
                     linecolor = l,
