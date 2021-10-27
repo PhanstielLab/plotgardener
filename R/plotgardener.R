@@ -56,10 +56,6 @@
 #' @importFrom dplyr bind_rows
 #' @importFrom dplyr select
 #' @importFrom dplyr group_by
-<<<<<<< HEAD
-=======
-#' @importFrom purrr map
->>>>>>> c8b2c754b531ae6496e8d354aa06bbb5ea27e043
 #' @importFrom purrr pmap
 #' @import grid
 #' @importFrom strawr straw
