@@ -5,15 +5,7 @@
 \title{Plot multiple signal tracks inline with each other}
 \usage{
 plotMultiSignal(
-   data, 
-   x = NULL, 
-   y = NULL,
-   orientation = "h", 
-   width = NULL,
-   height = NULL, 
-   gapdistance = .2,
-   just = c("left", "top"),
-   default.units = "inches", 
+   data,
    binSize = NA, 
    binCap = TRUE, 
    negData = FALSE,
@@ -30,6 +22,14 @@ plotMultiSignal(
    baseline = TRUE, 
    baseline.color = "grey",
    baseline.lwd = 1, 
+   orientation = "h", 
+   x = NULL, 
+   y = NULL,
+   width = NULL,
+   height = NULL,
+   just = c("left", "top"),
+   gapdistance = .2,
+   default.units = "inches", 
    draw = TRUE,
    params = NULL, ...
 )
@@ -40,6 +40,9 @@ bigwig file path, a dataframe in BED format, or a
 \link[GenomicRanges]{GRanges} object with metadata column \code{score}.
 Either one \code{data} argument or a list of two can be provided, where
 the second \code{data} will be plotted below the x-axis.}
+
+\item{binSize}{A numeric specifying the length of each data
+bin in basepairs. Default value is \code{binSize = NA}.}
 
 \item{binCap}{A logical value indicating whether the function will
 limit the number of data bins to 8,000.
@@ -95,13 +98,13 @@ Default value is \code{orientation = "h"}. Options are:
 \item{\code{"h"}: }{Horizontal signal track orientation.}
 }}
 
-\item{x}{A numeric vector or unit object specifying the starting
-vertex x-locations.}
+\item{x}{A numeric vector or unit object specifying the signal 
+x-locations.}
 
 \item{y}{A numeric vector, unit object, or a character vector
 of values containing a "b" combined with a numeric value specifying
-polygon vertex y-locations.
-The character vector will place polygon vertex y-locations relative
+signal y-locations.
+The character vector will place signal y-locations relative
 to the bottom of the most recently plotted plot according
 to the units of the plotgardener page.}
 
@@ -116,13 +119,11 @@ Possible string values are: \code{"left"}, \code{"right"},
 \code{"centre"}, \code{"center"}, \code{"bottom"}, and \code{"top"}.
 Default value is \code{just = c("left", "top")}.}
 
+\item{gapdistance}{A numeric object specifying space between plots.}
+
 \item{default.units}{A string indicating the default units to use
 if \code{x} or \code{y} are only given as numeric vectors.
-Default value is \code{default.units = "inches"}.
-#' @param binSize A numeric specifying the length of each data
-bin in basepairs. Default value is \code{binSize = NA}.}
-
-\item{gapdistance}{A numeric object specifying space between plots}
+Default value is \code{default.units = "inches"}.}
 
 \item{draw}{A logical value indicating whether graphics output should be
 produced. Default value \code{draw = TRUE}.}
@@ -140,7 +141,6 @@ placement and \link[grid]{grob} information.
 Plot multiple signal tracks inline with each other
 }
 \examples{
-library("plotgardener")
 library("org.Hs.eg.db")
 library("TxDb.Hsapiens.UCSC.hg19.knownGene")
 library("plotgardenerData")
@@ -152,14 +152,17 @@ data("GM12878_ChIP_H3K27ac_signal")
 data("IMR90_ChIP_H3K27ac_signal")
 
 
-## Load libraries and datasets
-testList <- list(GM12878_ChIP_CTCF_signal, GM12878_ChIP_H3K27ac_signal, IMR90_ChIP_CTCF_signal, IMR90_ChIP_H3K27ac_signal)
-## Set genomic and dimension parameters in a `params` object
-params <- pgParams(chrom = "chr21", chromstart = 28150000, chromend = 29150000, 
-                    assembly = "hg19", x = 3.5, width = 1.5, default.units = "inches")
+## List of multiple signal datasets
+testList <- list(GM12878_ChIP_CTCF_signal, GM12878_ChIP_H3K27ac_signal, 
+    IMR90_ChIP_CTCF_signal, IMR90_ChIP_H3K27ac_signal)
 
+## Create page
 pageCreate(width = 7, height = 6, default.units = "inches")
 
-plotMultiSignal(testList, chrom = "chr21", assembly = "hg19", params = c(params_c, ctcf_range),
-               fill = "#253494",y = 0.2, height = 4,  x = 0.2, width = 2, gapdistance = 0.1, orientation = "h")
+## Plot multiple signals
+plotMultiSignal(testList, chrom = "chr21", assembly = "hg19", 
+             chromstart = 28150000, chromend = 29150000,
+             fill = "#253494",
+             x = 0.2, y = 0.2, width = 2, height = 4, gapdistance = 0.1)
+             
 }
