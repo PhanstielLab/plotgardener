@@ -771,18 +771,23 @@ plotGenes <- function(chrom, chromstart = NULL, chromend = NULL,
         genes$genes <- geneNames
 
         ## DECLUTTER LABELS
-
+        
         ## Put genes in order of default gene prioritization
         ## based on citation/gene length
-        plusgeneNames <- defaultGenePriorities(
-            data = plusgeneNames,
-            assembly = genes$assembly
-        )
-        minusgeneNames <- defaultGenePriorities(
-            data = minusgeneNames,
-            assembly = genes$assembly
-        )
+        if (nrow(plusgeneNames) > 0){
+            plusgeneNames <- defaultGenePriorities(
+                data = plusgeneNames,
+                assembly = genes$assembly
+            )
+        }
 
+        if (nrow(minusgeneNames) > 0){
+            minusgeneNames <- defaultGenePriorities(
+                data = minusgeneNames,
+                assembly = genes$assembly
+            )
+        }
+       
         if (!is.null(genesInternal$geneOrder)) {
 
             ## Integrate geneOrder and default prioritization

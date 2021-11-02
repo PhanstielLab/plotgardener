@@ -102,11 +102,18 @@ geneData <- function(object, objectInternal) {
         
     }
 
-    ## orgDb
-    if (!requireNamespace(object$assembly$OrgDb, quietly = TRUE)){
-        orgdbChecks <- FALSE
-        warning("`", object$assembly$OrgDb, "` not available. Please load",
-                " to plot genes or transcripts.", call. = FALSE)
+    ## Check for matching `gene.id.column` and `display.column` to determine
+    ## need for orgDb
+    
+    if (object$assembly$gene.id.column != object$assembly$display.column){
+        
+        if (!requireNamespace(object$assembly$OrgDb, quietly = TRUE)){
+            orgdbChecks <- FALSE
+            warning("`", object$assembly$OrgDb, "` not available. Please load",
+                    " to plot genes or transcripts.", call. = FALSE)
+        } else {
+            orgdbChecks <- TRUE
+        }
     } else {
         orgdbChecks <- TRUE
     }
@@ -116,7 +123,7 @@ geneData <- function(object, objectInternal) {
     data <- data.frame(matrix(ncol = 22, nrow = 0))
     xscale <- c(0, 1)
 
-    if (txdbChecks == TRUE & orgdbChecks == TRUE) {
+    if (txdbChecks == TRUE && orgdbChecks == TRUE) {
 
         ## Load txdb
         if (is(object$assembly$TxDb, "TxDb")) {
@@ -160,6 +167,7 @@ geneData <- function(object, objectInternal) {
 
     objectInternal$xscale <- xscale
     objectInternal$data <- data
+    
     return(list(object, objectInternal))
 }
 
