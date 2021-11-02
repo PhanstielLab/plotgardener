@@ -518,15 +518,17 @@ plotGenes <- function(chrom, chromstart = NULL, chromend = NULL,
 
         if ((genes$chromend - genes$chromstart) >= 25000000) {
             if (nrow(plus_genes) > 0) {
+                plus_lines <- unique(plus_genes[,c("TXSTART", "TXEND", 
+                                                   "fontColor", "strandColor")])
                 plus_geneGrobs <- rectGrob(
-                    x = plus_genes$TXSTART,
+                    x = plus_lines$TXSTART,
                     y = unit(0.63, "npc"),
-                    width = plus_genes$TXEND - plus_genes$TXSTART,
+                    width = plus_lines$TXEND - plus_lines$TXSTART,
                     height = unit(0.18, "npc"),
                     just = "left",
                     gp = gpar(
-                        fill = plus_genes$strandColor,
-                        col = plus_genes$strandColor,
+                        fill = plus_lines$strandColor,
+                        col = plus_lines$strandColor,
                         lwd = genesInternal$stroke
                     ),
                     vp = vp_gene, default.units = "native"
@@ -540,15 +542,17 @@ plotGenes <- function(chrom, chromstart = NULL, chromend = NULL,
             }
 
             if (nrow(minus_genes) > 0) {
+                minus_lines <- unique(minus_genes[,c("TXSTART", "TXEND", 
+                                                   "fontColor", "strandColor")])
                 minus_geneGrobs <- rectGrob(
-                    x = minus_genes$TXSTART,
+                    x = minus_lines$TXSTART,
                     y = unit(0.37, "npc"),
-                    width = minus_genes$TXEND - minus_genes$TXSTART,
+                    width = minus_lines$TXEND - minus_lines$TXSTART,
                     height = unit(0.18, "npc"),
                     just = "left",
                     gp = gpar(
-                        fill = minus_genes$strandColor,
-                        col = minus_genes$strandColor,
+                        fill = minus_lines$strandColor,
+                        col = minus_lines$strandColor,
                         lwd = genesInternal$stroke
                     ),
                     vp = vp_gene, default.units = "native"
@@ -565,16 +569,17 @@ plotGenes <- function(chrom, chromstart = NULL, chromend = NULL,
                 ##########################################################
                 ## GENE LINES
                 ##########################################################
-
+                plus_lines <- unique(plus_genes[,c("TXSTART", "TXEND", 
+                                                "fontColor", "strandColor")])
                 plus_geneGrobs <- rectGrob(
-                    x = plus_genes$TXSTART,
+                    x = plus_lines$TXSTART,
                     y = unit(0.63, "npc"),
-                    width = plus_genes$TXEND - plus_genes$TXSTART,
+                    width = plus_lines$TXEND - plus_lines$TXSTART,
                     height = unit(0.05, "npc"),
                     just = "left",
                     gp = gpar(
-                        fill = plus_genes$strandColor,
-                        col = plus_genes$strandColor,
+                        fill = plus_lines$strandColor,
+                        col = plus_lines$strandColor,
                         lwd = genesInternal$stroke
                     ),
                     vp = vp_gene, default.units = "native"
@@ -645,16 +650,17 @@ plotGenes <- function(chrom, chromstart = NULL, chromend = NULL,
                 ##########################################################
                 ## GENE LINES
                 ##########################################################
-
+                minus_lines <- unique(minus_genes[,c("TXSTART", "TXEND", 
+                                                   "fontColor", "strandColor")])
                 minus_geneGrobs <- rectGrob(
-                    x = minus_genes$TXSTART,
+                    x = minus_lines$TXSTART,
                     y = unit(0.37, "npc"),
-                    width = minus_genes$TXEND - minus_genes$TXSTART,
+                    width = minus_lines$TXEND - minus_lines$TXSTART,
                     height = unit(0.05, "npc"),
                     just = "left",
                     gp = gpar(
-                        fill = minus_genes$strandColor,
-                        col = minus_genes$strandColor,
+                        fill = minus_lines$strandColor,
+                        col = minus_lines$strandColor,
                         lwd = genesInternal$stroke
                     ),
                     vp = vp_gene, default.units = "native"
