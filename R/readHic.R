@@ -112,14 +112,14 @@ readHic <- function(file, chrom, chromstart = NULL, chromend = NULL,
             stop("chrM not supported.", call. = FALSE)
         }
 
-        ## Even though straw technically works without "chr" for hg19,
-        ## will not accept for consistency purposes
-        if (assembly == "hg19") {
+        ## Even though straw technically works without "chr" for hg19/hg38,
+        ## will not accept for other data consistency purposes
+        if (assembly == "hg19" | assembly == "hg38") {
             if (grepl("chr", chrom) == FALSE) {
                 stop("'", chrom, "'",
-                    "is an invalid input for an hg19 ",
-                    "chromsome. Please specify chromosome as",
-                    "'chr", chrom, "'.",
+                    " is an invalid input for an hg19/hg38",
+                    " chromosome. Please specify chromosome as",
+                    " 'chr", chrom, "'.",
                     call. = FALSE
                 )
             }
@@ -136,12 +136,12 @@ readHic <- function(file, chrom, chromstart = NULL, chromend = NULL,
 
             ## Even though straw technically works without "chr" for hg19,
             ## will not accept for consistency purposes
-            if (assembly == "hg19") {
+            if (assembly == "hg19" | assembly == "hg38") {
                 if (grepl("chr", altchrom) == FALSE) {
                     stop("'", altchrom, "'",
-                        "is an invalid input for an hg19 chromsome. ",
+                        " is an invalid input for an hg19/hg38 chromosome. ",
                         "Please specify chromosome as",
-                        "'chr", altchrom, "'.",
+                        " 'chr", altchrom, "'.",
                         call. = FALSE
                     )
                 }
@@ -242,9 +242,9 @@ readHic <- function(file, chrom, chromstart = NULL, chromend = NULL,
         return(as.integer(autoRes))
     }
 
-    ## Define a function to parse chromsome/region for Straw
+    ## Define a function to parse chromosome/region for Straw
     parse_region <- function(chrom, chromstart, chromend, assembly) {
-        if (assembly == "hg19") {
+        if (assembly == "hg19" | assembly == "hg38") {
             strawChrom <- gsub("chr", "", chrom)
         } else {
             strawChrom <- chrom
