@@ -90,8 +90,7 @@ significance level indicated with \code{sigVal}.
 Default value is \code{sigLine = FALSE}.}
 
 \item{sigCol}{Single character value specifying the color of
-significant data points. If \code{scaleLD} is supplied,
-\code{sigCol} will be ignored.}
+significant data points.}
 
 \item{range}{A numeric vector of length 2 specifying the y-range
 of p-values to plot (c(min, max)).}
@@ -248,7 +247,6 @@ chr11_manhattanPlot <- plotManhattan(
         fill = "#7ecdbb",
         fontsize = 8
     ),
-    scaleLD = "LD",
     x = 0.5, y = 2.5, width = 6.5,
     height = 1.5,
     just = c("left", "top"),
