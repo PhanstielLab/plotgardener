@@ -143,7 +143,7 @@ jobs:
         if: runner.os == 'Windows'
         run: |
           ## Edit below if you have any Windows system dependencies
-          choco install 7zip --version=19.0
+          choco install 7zip
 
       - name: Install BiocManager
         run: |
