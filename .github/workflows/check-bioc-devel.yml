@@ -143,7 +143,10 @@ jobs:
         if: runner.os == 'Windows'
         run: |
           ## Edit below if you have any Windows system dependencies
-          choco install xdelta3
+          wget https://sourceforge.net/projects/lzmautils/files/xz-5.2.5.tar.gz/download
+          tar -xf xz-5.2.5.tar.gz
+          cd xz-5.2.5
+          ./configure && make && make install
 
       - name: Install BiocManager
         run: |
