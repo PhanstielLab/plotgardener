@@ -143,7 +143,7 @@ jobs:
         if: runner.os == 'Windows'
         run: |
           ## Edit below if you have any Windows system dependencies
-          choco install liblzma-dev
+          choco install xdelta3
 
       - name: Install BiocManager
         run: |
