@@ -145,9 +145,9 @@ jobs:
           ## Edit below if you have any Windows system dependencies
           choco install wget
           wget https://sourceforge.net/projects/lzmautils/files/xz-5.2.5.tar.gz
-          tar -xf xz-5.2.5.tar.gz
+          tar -xzf xz-5.2.5.tar.gz
           cd xz-5.2.5
-          ./configure && make && make install
+          bash windows/build.bash
 
       - name: Install BiocManager
         run: |
