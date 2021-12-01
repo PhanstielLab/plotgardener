@@ -144,7 +144,7 @@ jobs:
         run: |
           ## Edit below if you have any Windows system dependencies
           ## Link to lzma
-          find /usr -name lzma.h -print
+          find -name lzma.h -print
 
       - name: Install BiocManager
         run: |
