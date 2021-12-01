@@ -112,8 +112,8 @@ jobs:
         uses: actions/cache@v2
         with:
           path: /home/runner/work/_temp/Library
-          key: ${{ env.cache-version }}-${{ runner.os }}-biocversion-RELEASE_3_13-r-4.1-${{ hashFiles('.github/depends.Rds') }}
-          restore-keys: ${{ env.cache-version }}-${{ runner.os }}-biocversion-RELEASE_3_13-r-4.1-
+          key: ${{ env.cache-version }}-${{ runner.os }}-biocversion-devel-r-devel-${{ hashFiles('.github/depends.Rds') }}
+          restore-keys: ${{ env.cache-version }}-${{ runner.os }}-biocversion-devel-r-devel-
 
       - name: Install Linux system dependencies
         if: runner.os == 'Linux'
@@ -143,7 +143,7 @@ jobs:
         if: runner.os == 'Windows'
         run: |
           ## Edit below if you have any Windows system dependencies
-        shell: Rscript {0}
+          lzma --version
 
       - name: Install BiocManager
         run: |
@@ -275,7 +275,7 @@ jobs:
         if: failure()
         uses: actions/upload-artifact@master
         with:
-          name: ${{ runner.os }}-biocversion-RELEASE_3_13-r-4.1-results
+          name: ${{ runner.os }}-biocversion-devel-r-devel-results
           path: check
 
       - uses: docker/build-push-action@v1
