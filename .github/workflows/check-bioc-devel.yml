@@ -145,7 +145,8 @@ jobs:
           ## Edit below if you have any Windows system dependencies
           ## Link to lzma
           lzma --version
-          dir C:/rtools40/
+          dir C:/rtools40/usr
+          dir C:/rtools40/opt
       - name: Install BiocManager
         run: |
           message(paste('****', Sys.time(), 'installing BiocManager ****'))
