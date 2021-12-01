@@ -145,7 +145,8 @@ jobs:
           ## Edit below if you have any Windows system dependencies
           ## Link to lzma
           lzma --version
-          dir /usr/bin
+          dir .
+          dir /a/_temp/Library
           
       - name: Install BiocManager
         run: |
