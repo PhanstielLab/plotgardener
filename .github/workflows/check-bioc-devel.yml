@@ -144,8 +144,10 @@ jobs:
         run: |
           ## Edit below if you have any Windows system dependencies
           ## Link to lzma
-          find -name lzma.h -print
-
+          lzma --version
+          where lzma.h
+          #mklink 
+          
       - name: Install BiocManager
         run: |
           message(paste('****', Sys.time(), 'installing BiocManager ****'))
