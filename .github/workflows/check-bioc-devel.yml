@@ -143,7 +143,8 @@ jobs:
         if: runner.os == 'Windows'
         run: |
           ## Edit below if you have any Windows system dependencies
-          lzma --version
+          ## Link to lzma
+          sudo find /urs -name lzma.h -print
 
       - name: Install BiocManager
         run: |
