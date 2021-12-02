@@ -27,6 +27,8 @@
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-article">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -39,7 +41,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">plotgardener</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.0.4</span>
       </span>
     </div>
 
@@ -99,7 +101,7 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/PhanstielLab/plotgardener">
+  <a href="https://github.com/PhanstielLab/plotgardener" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -114,24 +116,24 @@
 
       
 
-      </header><script src="introduction_to_plotgardener_files/header-attrs-2.11/header-attrs.js"></script><div class="row">
+      </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Introduction to plotgardener</h1>
-                        <h4 class="author">Nicole Kramer, Eric S. Davis, Craig Wenger, Sarah Parker, Erika Deoudes, Michael Love, Douglas H. Phanstiel</h4>
+                        <h4 data-toc-skip class="author">Nicole Kramer, Eric S. Davis, Craig Wenger, Sarah Parker, Erika Deoudes, Michael Love, Douglas H. Phanstiel</h4>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/PhanstielLab/plotgardener/blob/master/vignettes/introduction_to_plotgardener.Rmd"><code>vignettes/introduction_to_plotgardener.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/PhanstielLab/plotgardener/blob/HEAD/vignettes/introduction_to_plotgardener.Rmd" class="external-link"><code>vignettes/introduction_to_plotgardener.Rmd</code></a></small>
       <div class="hidden name"><code>introduction_to_plotgardener.Rmd</code></div>
 
     </div>
 
     
     
-<div id="overview" class="section level1">
-<h1 class="hasAnchor">
-<a href="#overview" class="anchor"></a>Overview</h1>
-<p><img src="../man/figures/pg-hex-text.png" align="right" width="140px" style="padding-left:20px; background-color:white; border-color: transparent"></p>
+<div class="section level1">
+<h1 id="overview">Overview<a class="anchor" aria-label="anchor" href="#overview"></a>
+</h1>
+<p><img src="../reference/figures/pg-hex-text.png" align="right" width="140px" style="padding-left:20px; background-color:white; border-color: transparent"></p>
 <p><code>plotgardener</code> is a coordinate-based, genomic visualization package for R. Using <code>grid</code> graphics, <code>plotgardener</code> empowers users to programmatically and flexibly generate multi-panel figures. Tailored for genomics for a variety of genomic assemblies, <code>plotgardener</code> allows users to visualize large, complex genomic datasets while providing exquisite control over the arrangement of plots.</p>
 <p><code>plotgardener</code> functions can be grouped into the following categories:</p>
 <ul>
@@ -157,9 +159,9 @@
 <p>This vignette provides a quick start guide for utilizing <code>plotgardener</code>. For in-depth demonstrations of <code>plotgardener</code>’s key features, see the additional articles. For detailed usage of each function, see the function-specific reference examples with <code>?function()</code> (e.g. <code>?plotPairs()</code>).</p>
 <p>All the data included in this vignette can be found in the supplementary package <code>plotgardenerData</code>.</p>
 </div>
-<div id="quick-plotting" class="section level1">
-<h1 class="hasAnchor">
-<a href="#quick-plotting" class="anchor"></a>Quick plotting</h1>
+<div class="section level1">
+<h1 id="quick-plotting">Quick plotting<a class="anchor" aria-label="anchor" href="#quick-plotting"></a>
+</h1>
 <p><code>plotgardener</code> plotting functions contain 4 types of arguments:</p>
 <ol style="list-style-type: decimal">
 <li><p>Data reading argument (<code>data</code>)</p></li>
@@ -168,16 +170,16 @@
 <li><p>Attribute arguments that affect the data being plotted or the style of the plot (<code>norm</code>, <code>fill</code>, <code>fontcolor</code>, …) that vary between functions</p></li>
 </ol>
 <p>The quickest way to plot data is to omit the placement arguments. This will generate a <code>plotgardener</code> plot that fills up the entire graphics window and cannot be annotated. <strong>These plots are only meant to be used for quick</strong> <strong>genomic data inspection and not as final <code>plotgardener</code> plots.</strong> The only arguments that are required are the data arguments and locus arguments. The examples below show how to quickly plot different types of genomic data with plot defaults and included data types. To use your own data, replace the <code>data</code> argument with either a path to the file or an R object as described above.</p>
-<div id="hi-c-matrices" class="section level2">
-<h2 class="hasAnchor">
-<a href="#hi-c-matrices" class="anchor"></a>Hi-C matrices</h2>
+<div class="section level2">
+<h2 id="hi-c-matrices">Hi-C matrices<a class="anchor" aria-label="anchor" href="#hi-c-matrices"></a>
+</h2>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co">## Load plotgardener</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://phanstiellab.github.io/plotgardener">plotgardener</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://phanstiellab.github.io/plotgardener">plotgardener</a></span><span class="op">)</span>
 
 <span class="co">## Load example Hi-C data</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/PhanstielLab/plotgardenerData">plotgardenerData</a></span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="st">"IMR90_HiC_10kb"</span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/PhanstielLab/plotgardenerData" class="external-link">plotgardenerData</a></span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"IMR90_HiC_10kb"</span><span class="op">)</span>
 
 <span class="co">## Quick plot Hi-C data</span>
 <span class="fu"><a href="../reference/plotHicSquare.html">plotHicSquare</a></span><span class="op">(</span>
@@ -187,16 +189,16 @@
 <span class="op">)</span></code></pre></div>
 <p><img src="introduction_to_plotgardener_files/figure-html/hic_quickplot-1.png" width="450" style="display: block; margin: auto;"></p>
 </div>
-<div id="signal-tracks" class="section level2">
-<h2 class="hasAnchor">
-<a href="#signal-tracks" class="anchor"></a>Signal tracks</h2>
+<div class="section level2">
+<h2 id="signal-tracks">Signal tracks<a class="anchor" aria-label="anchor" href="#signal-tracks"></a>
+</h2>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co">## Load plotgardener</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://phanstiellab.github.io/plotgardener">plotgardener</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://phanstiellab.github.io/plotgardener">plotgardener</a></span><span class="op">)</span>
 
 <span class="co">## Load example signal data</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/PhanstielLab/plotgardenerData">plotgardenerData</a></span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="st">"IMR90_ChIP_H3K27ac_signal"</span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/PhanstielLab/plotgardenerData" class="external-link">plotgardenerData</a></span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"IMR90_ChIP_H3K27ac_signal"</span><span class="op">)</span>
 
 <span class="co">## Quick plot signal data</span>
 <span class="fu"><a href="../reference/plotSignal.html">plotSignal</a></span><span class="op">(</span>
@@ -206,16 +208,16 @@
 <span class="op">)</span></code></pre></div>
 <p><img src="introduction_to_plotgardener_files/figure-html/signal_quickplot-1.png" width="450" style="display: block; margin: auto;"></p>
 </div>
-<div id="gene-tracks" class="section level2">
-<h2 class="hasAnchor">
-<a href="#gene-tracks" class="anchor"></a>Gene tracks</h2>
+<div class="section level2">
+<h2 id="gene-tracks">Gene tracks<a class="anchor" aria-label="anchor" href="#gene-tracks"></a>
+</h2>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co">## Load plotgardener</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://phanstiellab.github.io/plotgardener">plotgardener</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://phanstiellab.github.io/plotgardener">plotgardener</a></span><span class="op">)</span>
 
 <span class="co">## Load hg19 genomic annotation packages</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">TxDb.Hsapiens.UCSC.hg19.knownGene</span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">org.Hs.eg.db</span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">TxDb.Hsapiens.UCSC.hg19.knownGene</span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">org.Hs.eg.db</span><span class="op">)</span>
 
 <span class="co">## Quick plot genes</span>
 <span class="fu"><a href="../reference/plotGenes.html">plotGenes</a></span><span class="op">(</span>
@@ -224,19 +226,19 @@
 <span class="op">)</span></code></pre></div>
 <p><img src="introduction_to_plotgardener_files/figure-html/gene_quickplot-1.png" width="450" style="display: block; margin: auto;"></p>
 </div>
-<div id="gwas-manhattan-plots" class="section level2">
-<h2 class="hasAnchor">
-<a href="#gwas-manhattan-plots" class="anchor"></a>GWAS Manhattan plots</h2>
+<div class="section level2">
+<h2 id="gwas-manhattan-plots">GWAS Manhattan plots<a class="anchor" aria-label="anchor" href="#gwas-manhattan-plots"></a>
+</h2>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co">## Load plotgardener</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://phanstiellab.github.io/plotgardener">plotgardener</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://phanstiellab.github.io/plotgardener">plotgardener</a></span><span class="op">)</span>
 
 <span class="co">## Load hg19 genomic annotation packages</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">TxDb.Hsapiens.UCSC.hg19.knownGene</span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">TxDb.Hsapiens.UCSC.hg19.knownGene</span><span class="op">)</span>
 
 <span class="co">## Load example GWAS data</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/PhanstielLab/plotgardenerData">plotgardenerData</a></span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="st">"hg19_insulin_GWAS"</span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/PhanstielLab/plotgardenerData" class="external-link">plotgardenerData</a></span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"hg19_insulin_GWAS"</span><span class="op">)</span>
 
 <span class="co">## Quick plot GWAS data</span>
 <span class="fu"><a href="../reference/plotManhattan.html">plotManhattan</a></span><span class="op">(</span>
@@ -248,9 +250,9 @@
 <p><img src="introduction_to_plotgardener_files/figure-html/gwas_quickplot-1.png" width="450" style="display: block; margin: auto;"></p>
 </div>
 </div>
-<div id="plotting-and-annotating-on-the-plotgardener-page" class="section level1">
-<h1 class="hasAnchor">
-<a href="#plotting-and-annotating-on-the-plotgardener-page" class="anchor"></a>Plotting and annotating on the <code>plotgardener</code> page</h1>
+<div class="section level1">
+<h1 id="plotting-and-annotating-on-the-plotgardener-page">Plotting and annotating on the <code>plotgardener</code> page<a class="anchor" aria-label="anchor" href="#plotting-and-annotating-on-the-plotgardener-page"></a>
+</h1>
 <p>To build complex, multi-panel <code>plotgardener</code> figures with annotations, we must:</p>
 <ol style="list-style-type: decimal">
 <li>Create a <code>plotgardener</code> coordinate page with <code><a href="../reference/pageCreate.html">pageCreate()</a></code>.</li>
@@ -262,7 +264,7 @@
 <li>Provide values for the placement arguments (<code>x</code>, <code>y</code>, <code>width</code>, <code>height</code>, <code>just</code>, <code>default.units</code>) in plotting functions and save the output of the plotting function.</li>
 </ol>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="st">"IMR90_HiC_10kb"</span><span class="op">)</span>
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"IMR90_HiC_10kb"</span><span class="op">)</span>
 <span class="va">hicPlot</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/plotHicSquare.html">plotHicSquare</a></span><span class="op">(</span>
     data <span class="op">=</span> <span class="va">IMR90_HiC_10kb</span>,
     chrom <span class="op">=</span> <span class="st">"chr21"</span>, chromstart <span class="op">=</span> <span class="fl">28000000</span>, chromend <span class="op">=</span> <span class="fl">30300000</span>,
@@ -286,19 +288,19 @@
 <p><img src="introduction_to_plotgardener_files/figure-html/quickpageAnno-1.png" width="600" style="display: block; margin: auto;"></p>
 <p>For more information about how to place plots and annotations on a <code>plotgardener</code> page, check out the section <a href="introduction_to_plotgardener.html#working-with-plot-objects-1">Working with plot objects</a>.</p>
 </div>
-<div id="exporting-plots" class="section level1">
-<h1 class="hasAnchor">
-<a href="#exporting-plots" class="anchor"></a>Exporting plots</h1>
+<div class="section level1">
+<h1 id="exporting-plots">Exporting plots<a class="anchor" aria-label="anchor" href="#exporting-plots"></a>
+</h1>
 <p>When a <code>plotgardener</code> plot is ready to be saved and exported, we can first remove all page guides that were made with <code><a href="../reference/pageCreate.html">pageCreate()</a></code>:</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/pageGuideHide.html">pageGuideHide</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <p><img src="introduction_to_plotgardener_files/figure-html/quickpageHide-1.png" width="600" style="display: block; margin: auto;"></p>
 <p>We can then either use the <strong>Export</strong> toggle in the RStudio plot panel, or save the plot within our R code as follows:</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/grDevices/pdf.html">pdf</a></span><span class="op">(</span>width <span class="op">=</span> <span class="fl">3.25</span>, height <span class="op">=</span> <span class="fl">3.25</span><span class="op">)</span>
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/grDevices/pdf.html" class="external-link">pdf</a></span><span class="op">(</span>width <span class="op">=</span> <span class="fl">3.25</span>, height <span class="op">=</span> <span class="fl">3.25</span><span class="op">)</span>
 
 <span class="fu"><a href="../reference/pageCreate.html">pageCreate</a></span><span class="op">(</span>width <span class="op">=</span> <span class="fl">3.25</span>, height <span class="op">=</span> <span class="fl">3.25</span>, default.units <span class="op">=</span> <span class="st">"inches"</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="st">"IMR90_HiC_10kb"</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"IMR90_HiC_10kb"</span><span class="op">)</span>
 <span class="va">hicPlot</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/plotHicSquare.html">plotHicSquare</a></span><span class="op">(</span>
     data <span class="op">=</span> <span class="va">IMR90_HiC_10kb</span>,
     chrom <span class="op">=</span> <span class="st">"chr21"</span>, chromstart <span class="op">=</span> <span class="fl">28000000</span>, chromend <span class="op">=</span> <span class="fl">30300000</span>,
@@ -316,25 +318,25 @@
 <span class="op">)</span>
 <span class="fu"><a href="../reference/pageGuideHide.html">pageGuideHide</a></span><span class="op">(</span><span class="op">)</span>
 
-<span class="fu"><a href="https://rdrr.io/r/grDevices/dev.html">dev.off</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<span class="fu"><a href="https://rdrr.io/r/grDevices/dev.html" class="external-link">dev.off</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <p>For more detailed usage and examples, please refer to the other available vignettes.</p>
 </div>
-<div id="future-directions" class="section level1">
-<h1 class="hasAnchor">
-<a href="#future-directions" class="anchor"></a>Future Directions</h1>
+<div class="section level1">
+<h1 id="future-directions">Future Directions<a class="anchor" aria-label="anchor" href="#future-directions"></a>
+</h1>
 <p>We still have many ideas to add for a second version of <code>plotgardener</code> including, but not limited to: grammar of graphics style plot arguments and plot building, templates, themes, and multi-plotting functions. If you have suggestions for ways we can improve <code>plotgardener</code>, please let us know!</p>
 </div>
-<div id="session-info" class="section level1">
-<h1 class="hasAnchor">
-<a href="#session-info" class="anchor"></a>Session Info</h1>
+<div class="section level1">
+<h1 id="session-info">Session Info<a class="anchor" aria-label="anchor" href="#session-info"></a>
+</h1>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/sessionInfo.html">sessionInfo</a></span><span class="op">(</span><span class="op">)</span>
-<span class="co">## R version 4.1.0 (2021-05-18)</span>
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/sessionInfo.html" class="external-link">sessionInfo</a></span><span class="op">(</span><span class="op">)</span>
+<span class="co">## R version 4.1.2 (2021-11-01)</span>
 <span class="co">## Platform: x86_64-apple-darwin17.0 (64-bit)</span>
 <span class="co">## Running under: macOS Big Sur 10.16</span>
 <span class="co">## </span>
 <span class="co">## Matrix products: default</span>
-<span class="co">## BLAS:   /Library/Frameworks/R.framework/Versions/4.1/Resources/lib/libRblas.dylib</span>
+<span class="co">## BLAS:   /Library/Frameworks/R.framework/Versions/4.1/Resources/lib/libRblas.0.dylib</span>
 <span class="co">## LAPACK: /Library/Frameworks/R.framework/Versions/4.1/Resources/lib/libRlapack.dylib</span>
 <span class="co">## </span>
 <span class="co">## locale:</span>
@@ -347,66 +349,66 @@
 <span class="co">## other attached packages:</span>
 <span class="co">##  [1] org.Hs.eg.db_3.14.0                    </span>
 <span class="co">##  [2] TxDb.Hsapiens.UCSC.hg19.knownGene_3.2.2</span>
-<span class="co">##  [3] GenomicFeatures_1.45.2                 </span>
-<span class="co">##  [4] AnnotationDbi_1.55.2                   </span>
-<span class="co">##  [5] Biobase_2.53.0                         </span>
-<span class="co">##  [6] GenomicRanges_1.45.0                   </span>
-<span class="co">##  [7] GenomeInfoDb_1.29.10                   </span>
-<span class="co">##  [8] IRanges_2.27.2                         </span>
-<span class="co">##  [9] S4Vectors_0.31.5                       </span>
-<span class="co">## [10] BiocGenerics_0.39.2                    </span>
-<span class="co">## [11] plotgardenerData_0.99.7                </span>
-<span class="co">## [12] plotgardener_0.99.16                   </span>
+<span class="co">##  [3] GenomicFeatures_1.46.1                 </span>
+<span class="co">##  [4] AnnotationDbi_1.56.2                   </span>
+<span class="co">##  [5] Biobase_2.54.0                         </span>
+<span class="co">##  [6] GenomicRanges_1.46.1                   </span>
+<span class="co">##  [7] GenomeInfoDb_1.30.0                    </span>
+<span class="co">##  [8] IRanges_2.28.0                         </span>
+<span class="co">##  [9] S4Vectors_0.32.3                       </span>
+<span class="co">## [10] BiocGenerics_0.40.0                    </span>
+<span class="co">## [11] plotgardenerData_1.0.0                 </span>
+<span class="co">## [12] plotgardener_1.1.2                     </span>
 <span class="co">## </span>
 <span class="co">## loaded via a namespace (and not attached):</span>
 <span class="co">##  [1] bitops_1.0-7                matrixStats_0.61.0         </span>
-<span class="co">##  [3] fs_1.5.0                    bit64_4.0.5                </span>
+<span class="co">##  [3] fs_1.5.1                    bit64_4.0.5                </span>
 <span class="co">##  [5] filelock_1.0.2              progress_1.2.2             </span>
 <span class="co">##  [7] httr_1.4.2                  RColorBrewer_1.1-2         </span>
-<span class="co">##  [9] rprojroot_2.0.2             tools_4.1.0                </span>
+<span class="co">##  [9] rprojroot_2.0.2             tools_4.1.2                </span>
 <span class="co">## [11] bslib_0.3.1                 utf8_1.2.2                 </span>
 <span class="co">## [13] R6_2.5.1                    DBI_1.1.1                  </span>
 <span class="co">## [15] colorspace_2.0-2            prettyunits_1.1.1          </span>
 <span class="co">## [17] tidyselect_1.1.1            bit_4.0.4                  </span>
-<span class="co">## [19] curl_4.3.2                  compiler_4.1.0             </span>
-<span class="co">## [21] textshaping_0.3.6           xml2_1.3.2                 </span>
-<span class="co">## [23] desc_1.4.0                  DelayedArray_0.19.4        </span>
-<span class="co">## [25] rtracklayer_1.53.1          sass_0.4.0                 </span>
+<span class="co">## [19] curl_4.3.2                  compiler_4.1.2             </span>
+<span class="co">## [21] textshaping_0.3.6           xml2_1.3.3                 </span>
+<span class="co">## [23] desc_1.4.0                  DelayedArray_0.20.0        </span>
+<span class="co">## [25] rtracklayer_1.54.0          sass_0.4.0                 </span>
 <span class="co">## [27] scales_1.1.1                rappdirs_0.3.3             </span>
-<span class="co">## [29] pkgdown_1.6.1               systemfonts_1.0.3          </span>
-<span class="co">## [31] stringr_1.4.0               digest_0.6.28              </span>
-<span class="co">## [33] Rsamtools_2.9.1             yulab.utils_0.0.4          </span>
-<span class="co">## [35] rmarkdown_2.11              XVector_0.33.0             </span>
+<span class="co">## [29] pkgdown_2.0.0               systemfonts_1.0.3          </span>
+<span class="co">## [31] stringr_1.4.0               digest_0.6.29              </span>
+<span class="co">## [33] Rsamtools_2.10.0            yulab.utils_0.0.4          </span>
+<span class="co">## [35] rmarkdown_2.11              XVector_0.34.0             </span>
 <span class="co">## [37] pkgconfig_2.0.3             htmltools_0.5.2            </span>
-<span class="co">## [39] MatrixGenerics_1.5.4        dbplyr_2.1.1               </span>
+<span class="co">## [39] MatrixGenerics_1.6.0        dbplyr_2.1.1               </span>
 <span class="co">## [41] fastmap_1.1.0               highr_0.9                  </span>
 <span class="co">## [43] rlang_0.4.12                RSQLite_2.2.8              </span>
 <span class="co">## [45] gridGraphics_0.5-1          jquerylib_0.1.4            </span>
-<span class="co">## [47] BiocIO_1.3.0                generics_0.1.1             </span>
-<span class="co">## [49] jsonlite_1.7.2              BiocParallel_1.27.17       </span>
+<span class="co">## [47] BiocIO_1.4.0                generics_0.1.1             </span>
+<span class="co">## [49] jsonlite_1.7.2              BiocParallel_1.28.2        </span>
 <span class="co">## [51] dplyr_1.0.7                 RCurl_1.98-1.5             </span>
 <span class="co">## [53] magrittr_2.0.1              ggplotify_0.1.0            </span>
 <span class="co">## [55] GenomeInfoDbData_1.2.7      Matrix_1.3-4               </span>
 <span class="co">## [57] Rcpp_1.0.7                  munsell_0.5.0              </span>
 <span class="co">## [59] fansi_0.5.0                 lifecycle_1.0.1            </span>
-<span class="co">## [61] stringi_1.7.5               yaml_2.2.1                 </span>
-<span class="co">## [63] SummarizedExperiment_1.23.5 zlibbioc_1.39.0            </span>
-<span class="co">## [65] BiocFileCache_2.1.1         blob_1.2.2                 </span>
-<span class="co">## [67] parallel_4.1.0              crayon_1.4.1               </span>
-<span class="co">## [69] lattice_0.20-45             Biostrings_2.61.2          </span>
-<span class="co">## [71] hms_1.1.1                   KEGGREST_1.33.0            </span>
+<span class="co">## [61] stringi_1.7.6               yaml_2.2.1                 </span>
+<span class="co">## [63] SummarizedExperiment_1.24.0 zlibbioc_1.40.0            </span>
+<span class="co">## [65] BiocFileCache_2.2.0         blob_1.2.2                 </span>
+<span class="co">## [67] parallel_4.1.2              crayon_1.4.2               </span>
+<span class="co">## [69] lattice_0.20-45             Biostrings_2.62.0          </span>
+<span class="co">## [71] hms_1.1.1                   KEGGREST_1.34.0            </span>
 <span class="co">## [73] knitr_1.36                  pillar_1.6.4               </span>
-<span class="co">## [75] rjson_0.2.20                biomaRt_2.49.7             </span>
+<span class="co">## [75] rjson_0.2.20                biomaRt_2.50.1             </span>
 <span class="co">## [77] strawr_0.0.9                XML_3.99-0.8               </span>
-<span class="co">## [79] glue_1.4.2                  evaluate_0.14              </span>
+<span class="co">## [79] glue_1.5.1                  evaluate_0.14              </span>
 <span class="co">## [81] data.table_1.14.2           png_0.1-7                  </span>
 <span class="co">## [83] vctrs_0.3.8                 gtable_0.3.0               </span>
 <span class="co">## [85] purrr_0.3.4                 assertthat_0.2.1           </span>
 <span class="co">## [87] cachem_1.0.6                ggplot2_3.3.5              </span>
-<span class="co">## [89] xfun_0.27                   restfulr_0.0.13            </span>
-<span class="co">## [91] ragg_1.1.3                  tibble_3.1.5               </span>
-<span class="co">## [93] GenomicAlignments_1.29.0    plyranges_1.13.1           </span>
-<span class="co">## [95] memoise_2.0.0               ellipsis_0.3.2</span></code></pre></div>
+<span class="co">## [89] xfun_0.28                   restfulr_0.0.13            </span>
+<span class="co">## [91] ragg_1.2.0                  tibble_3.1.6               </span>
+<span class="co">## [93] GenomicAlignments_1.30.0    plyranges_1.14.0           </span>
+<span class="co">## [95] memoise_2.0.1               ellipsis_0.3.2</span></code></pre></div>
 </div>
   </div>
 
@@ -421,11 +423,13 @@
 
 
       <footer><div class="copyright">
-  <p>Developed by <a href="https://github.com/nekramer">Nicole Kramer</a>, <a href="https://github.com/EricSDavis">Eric S. Davis</a>, <a href="https://github.com/cwenger">Craig Wenger</a>, <a href="https://github.com/dphansti">Douglas H. Phanstiel</a>.</p>
+  <p></p>
+<p>Developed by <a href="https://github.com/nekramer" class="external-link">Nicole Kramer</a>, <a href="https://github.com/EricSDavis" class="external-link">Eric S. Davis</a>, <a href="https://github.com/cwenger" class="external-link">Craig Wenger</a>, <a href="https://github.com/dphansti" class="external-link">Douglas H. Phanstiel</a>.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.0.</p>
 </div>
 
       </footer>
@@ -433,6 +437,8 @@
 
   
 
+
+  
 
   </body>
 </html>

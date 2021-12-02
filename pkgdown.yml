@@ -1,19 +1,19 @@
 pandoc: 2.11.4
-pkgdown: 1.6.1
+pkgdown: 2.0.0
 pkgdown_sha: ~
 articles:
-  guides/aesthetics: aesthetics.html
-  guides/annotations: annotations.html
-  guides/bioconductor_integration: bioconductor_integration.html
-  guides/ideograms_and_shapes: ideograms_and_shapes.html
-  guides/incorporating_ggplots: incorporating_ggplots.html
-  guides/our_philosophy: our_philosophy.html
-  guides/plotgardener_meta_functions: plotgardener_meta_functions.html
-  guides/plotgardener_page: plotgardener_page.html
-  guides/plotting_multiomic_data: plotting_multiomic_data.html
-  guides/reading_data_for_plotgardener: reading_data_for_plotgardener.html
+  aesthetics: guides/aesthetics.html
+  annotations: guides/annotations.html
+  bioconductor_integration: guides/bioconductor_integration.html
+  ideograms_and_shapes: guides/ideograms_and_shapes.html
+  incorporating_ggplots: guides/incorporating_ggplots.html
+  our_philosophy: guides/our_philosophy.html
+  plotgardener_meta_functions: guides/plotgardener_meta_functions.html
+  plotgardener_page: guides/plotgardener_page.html
+  plotting_multiomic_data: guides/plotting_multiomic_data.html
+  reading_data_for_plotgardener: guides/reading_data_for_plotgardener.html
   introduction_to_plotgardener: introduction_to_plotgardener.html
-last_built: 2021-10-27T15:05Z
+last_built: 2021-12-02T17:54Z
 urls:
   reference: https://phanstiellab.github.io/plotgardener/reference
   article: https://phanstiellab.github.io/plotgardener/articles

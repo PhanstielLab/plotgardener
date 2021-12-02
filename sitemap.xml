@@ -1,7 +1,58 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>https://phanstiellab.github.io/plotgardener/404.html</loc>
+  </url>
+  <url>
+    <loc>https://phanstiellab.github.io/plotgardener/LICENSE-text.html</loc>
+  </url>
+  <url>
+    <loc>https://phanstiellab.github.io/plotgardener/LICENSE.html</loc>
+  </url>
+  <url>
+    <loc>https://phanstiellab.github.io/plotgardener/articles/guides/aesthetics.html</loc>
+  </url>
+  <url>
+    <loc>https://phanstiellab.github.io/plotgardener/articles/guides/annotations.html</loc>
+  </url>
+  <url>
+    <loc>https://phanstiellab.github.io/plotgardener/articles/guides/bioconductor_integration.html</loc>
+  </url>
+  <url>
+    <loc>https://phanstiellab.github.io/plotgardener/articles/guides/ideograms_and_shapes.html</loc>
+  </url>
+  <url>
+    <loc>https://phanstiellab.github.io/plotgardener/articles/guides/incorporating_ggplots.html</loc>
+  </url>
+  <url>
+    <loc>https://phanstiellab.github.io/plotgardener/articles/guides/our_philosophy.html</loc>
+  </url>
+  <url>
+    <loc>https://phanstiellab.github.io/plotgardener/articles/guides/plotgardener_meta_functions.html</loc>
+  </url>
+  <url>
+    <loc>https://phanstiellab.github.io/plotgardener/articles/guides/plotgardener_page.html</loc>
+  </url>
+  <url>
+    <loc>https://phanstiellab.github.io/plotgardener/articles/guides/plotting_multiomic_data.html</loc>
+  </url>
+  <url>
+    <loc>https://phanstiellab.github.io/plotgardener/articles/guides/reading_data_for_plotgardener.html</loc>
+  </url>
+  <url>
+    <loc>https://phanstiellab.github.io/plotgardener/articles/index.html</loc>
+  </url>
+  <url>
+    <loc>https://phanstiellab.github.io/plotgardener/articles/introduction_to_plotgardener.html</loc>
+  </url>
+  <url>
+    <loc>https://phanstiellab.github.io/plotgardener/authors.html</loc>
+  </url>
+  <url>
     <loc>https://phanstiellab.github.io/plotgardener/index.html</loc>
+  </url>
+  <url>
+    <loc>https://phanstiellab.github.io/plotgardener/news/index.html</loc>
   </url>
   <url>
     <loc>https://phanstiellab.github.io/plotgardener/reference/annoDomains.html</loc>
@@ -47,6 +98,9 @@
   </url>
   <url>
     <loc>https://phanstiellab.github.io/plotgardener/reference/genomes.html</loc>
+  </url>
+  <url>
+    <loc>https://phanstiellab.github.io/plotgardener/reference/index.html</loc>
   </url>
   <url>
     <loc>https://phanstiellab.github.io/plotgardener/reference/mapColors.html</loc>
@@ -143,38 +197,5 @@
   </url>
   <url>
     <loc>https://phanstiellab.github.io/plotgardener/reference/readHic.html</loc>
-  </url>
-  <url>
-    <loc>https://phanstiellab.github.io/plotgardener/articles/guides/aesthetics.html</loc>
-  </url>
-  <url>
-    <loc>https://phanstiellab.github.io/plotgardener/articles/guides/annotations.html</loc>
-  </url>
-  <url>
-    <loc>https://phanstiellab.github.io/plotgardener/articles/guides/bioconductor_integration.html</loc>
-  </url>
-  <url>
-    <loc>https://phanstiellab.github.io/plotgardener/articles/guides/ideograms_and_shapes.html</loc>
-  </url>
-  <url>
-    <loc>https://phanstiellab.github.io/plotgardener/articles/guides/incorporating_ggplots.html</loc>
-  </url>
-  <url>
-    <loc>https://phanstiellab.github.io/plotgardener/articles/guides/our_philosophy.html</loc>
-  </url>
-  <url>
-    <loc>https://phanstiellab.github.io/plotgardener/articles/guides/plotgardener_meta_functions.html</loc>
-  </url>
-  <url>
-    <loc>https://phanstiellab.github.io/plotgardener/articles/guides/plotgardener_page.html</loc>
-  </url>
-  <url>
-    <loc>https://phanstiellab.github.io/plotgardener/articles/guides/plotting_multiomic_data.html</loc>
-  </url>
-  <url>
-    <loc>https://phanstiellab.github.io/plotgardener/articles/guides/reading_data_for_plotgardener.html</loc>
-  </url>
-  <url>
-    <loc>https://phanstiellab.github.io/plotgardener/articles/introduction_to_plotgardener.html</loc>
   </url>
 </urlset>
