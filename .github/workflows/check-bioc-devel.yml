@@ -54,9 +54,9 @@ jobs:
       fail-fast: false
       matrix:
         config:
-          - { os: ubuntu-latest, r: 'devel', bioc: '3.14', cont: "bioconductor/bioconductor_docker:3.14", rspm: "https://packagemanager.rstudio.com/cran/__linux__/focal/latest" }
-          - { os: macOS-latest, r: 'devel', bioc: '3.14'}
-          - { os: windows-latest, r: 'devel', bioc: '3.14'}
+          - { os: ubuntu-latest, r: 'devel', bioc: '3.15', cont: "bioconductor/bioconductor_docker:3.15", rspm: "https://packagemanager.rstudio.com/cran/__linux__/focal/latest" }
+          - { os: macOS-latest, r: 'devel', bioc: '3.15'}
+          - { os: windows-latest, r: 'devel', bioc: '3.15'}
     env:
       R_REMOTES_NO_ERRORS_FROM_WARNINGS: true
       RSPM: ${{ matrix.config.rspm }}
@@ -104,16 +104,16 @@ jobs:
         uses: actions/cache@v2
         with:
           path: ${{ env.R_LIBS_USER }}
-          key: ${{ env.cache-version }}-${{ runner.os }}-biocversion-3.14-r-devel-${{ hashFiles('.github/depends.Rds') }}
-          restore-keys: ${{ env.cache-version }}-${{ runner.os }}-biocversion-3.14-r-devel-
+          key: ${{ env.cache-version }}-${{ runner.os }}-biocversion-3.15-r-devel-${{ hashFiles('.github/depends.Rds') }}
+          restore-keys: ${{ env.cache-version }}-${{ runner.os }}-biocversion-3.15-r-devel-
 
       - name: Cache R packages on Linux
         if: "!contains(github.event.head_commit.message, '/nocache') && runner.os == 'Linux' "
         uses: actions/cache@v2
         with:
           path: /home/runner/work/_temp/Library
-          key: ${{ env.cache-version }}-${{ runner.os }}-biocversion-3.14-r-devel-${{ hashFiles('.github/depends.Rds') }}
-          restore-keys: ${{ env.cache-version }}-${{ runner.os }}-biocversion-3.14-r-devel-
+          key: ${{ env.cache-version }}-${{ runner.os }}-biocversion-3.15-r-devel-${{ hashFiles('.github/depends.Rds') }}
+          restore-keys: ${{ env.cache-version }}-${{ runner.os }}-biocversion-3.15-r-devel-
 
       - name: Install Linux system dependencies
         if: runner.os == 'Linux'
@@ -276,7 +276,7 @@ jobs:
         if: failure()
         uses: actions/upload-artifact@master
         with:
-          name: ${{ runner.os }}-biocversion-3.14-r-devel-results
+          name: ${{ runner.os }}-biocversion-3.15-r-devel-results
           path: check
 
       - uses: docker/build-push-action@v1
