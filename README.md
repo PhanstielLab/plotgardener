@@ -1,7 +1,7 @@
 # <img src="man/figures/pg-wordmark.png" width="400px" style="background-color:white;border=transparent" /> <img src="man/figures/pg-hex-text.png" align="right" width="140px" style="padding-left:20px; background-color:white" />
 
 <!-- badges: start -->
-[![R build status](https://github.com/PhanstielLab/plotgardener/workflows/R-CMD-check-bioc/badge.svg)](https://github.com/PhanstielLab/plotgardener/actions)
+[![R build status](https://github.com/PhanstielLab/plotgardener/actions/workflows/check-bioc-devel.yml/badge.svg)](https://github.com/PhanstielLab/plotgardener/actions)
 <!-- badges: end -->
 
 ## Overview
@@ -30,6 +30,7 @@ detailed examples and suggested use cases!
 ## Installation
 
 plotgardener can be installed from Bioconductor version 3.14 
+
 (R version 4.1) as follows:
 
 ``` r

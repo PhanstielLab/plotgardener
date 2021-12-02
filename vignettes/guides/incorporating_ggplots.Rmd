@@ -1,5 +1,5 @@
 ---
-title: "Incorporating `ggplots`"
+title: "Incorporating `ggplots` and other `grid`-based Bioconductor visualizations"
 output:
     rmarkdown::html_vignette
 vignette: >
@@ -42,13 +42,17 @@ font_add(
 showtext_auto()
 ```
 
-In addition to its numerous genomic functions, `plotgardener` can size and place 
-`ggplots` within a `plotgardener` layout. Rather than arranging `ggplots` in a 
-relative manner, `plotgardener` can make and place `ggplots` in absolute sizes 
-and locations. This makes it simple and intuitive to make complex `ggplot` 
-arrangements beyond a basic grid-style layout.
+In addition to its numerous built-in genomic functions, `plotgardener` can size 
+and place `ggplots` and other `grid`-based visualizations within a 
+`plotgardener` layout. Rather than arranging these plots in a 
+relative manner, `plotgardener` can make and place these plots in absolute sizes 
+and locations. This makes it simple and intuitive to make complex and combined 
+`plotgardener`,`ggplot`, and other `grid` plot arrangements beyond a 
+basic grid-style layout.
 
-For example, let's say we wanted to make a complex multi-panel ggplot about 
+## `ggplots`
+
+Let's say we wanted to make a complex multi-panel `ggplot` about 
 COVID-19 data consisting of the following plots:
 
 1) A United States map depicting COVID-19 cases:
@@ -408,7 +412,59 @@ plotText(label = paste("Sources: The COVID Tracking Project;",
             x = 0.15, y = 3.45, just = c("left", "bottom"))
 ```
 
-# Session Info
+## `ComplexHeatmap`
+
+Heatmaps are an integral visualization to many multi-panel genomic 
+visualizations. Existing Bioconductor packages like `ComplexHeatmap` provide
+excellent methods to produce such heatmaps. Since these plots are also based
+on `grid` graphics, it is possible to incorporate them into `plotgardener` 
+figure arrangements.
+
+For example, let's say we made this heatmap from a random matrix:
+```{r gg_plot08, fig.height=4, fig.width=5}
+library(ComplexHeatmap)
+
+set.seed(123)
+nr1 <- 4; nr2 = 8; nr3 = 6; nr = nr1 + nr2 + nr3
+nc1 <- 6; nc2 = 8; nc3 = 10; nc = nc1 + nc2 + nc3
+mat <- cbind(rbind(matrix(rnorm(nr1*nc1, mean = 1, sd = 0.5), nr = nr1),
+          matrix(rnorm(nr2*nc1, mean = 0, sd = 0.5), nr = nr2),
+          matrix(rnorm(nr3*nc1, mean = 0, sd = 0.5), nr = nr3)),
+    rbind(matrix(rnorm(nr1*nc2, mean = 0, sd = 0.5), nr = nr1),
+          matrix(rnorm(nr2*nc2, mean = 1, sd = 0.5), nr = nr2),
+          matrix(rnorm(nr3*nc2, mean = 0, sd = 0.5), nr = nr3)),
+    rbind(matrix(rnorm(nr1*nc3, mean = 0.5, sd = 0.5), nr = nr1),
+          matrix(rnorm(nr2*nc3, mean = 0.5, sd = 0.5), nr = nr2),
+          matrix(rnorm(nr3*nc3, mean = 1, sd = 0.5), nr = nr3))
+   )
+mat <- mat[sample(nr, nr), sample(nc, nc)]
+rownames(mat) <- paste0("row", seq_len(nr))
+colnames(mat) <- paste0("column", seq_len(nc))
+
+Heatmap(mat)
+```
+
+We can capture this heatmap with the `grid` function `grid.grabExpr()`:
+
+```{r}
+library(grid)
+heatmap <- grid.grabExpr(draw(Heatmap(mat)))
+```
+
+We can now pass this object into the `plotGG` function and incorporate the 
+heatmap into a `plotgardener` layout:
+
+```{r gg_plot09, fig.height=6.5, fig.width=9}
+pageCreate(
+    width = 6.5, height = 5.5, default.units = "inches")
+plotGG(
+    plot = heatmap,
+    x = 0.25, y = 0.25,
+    width = 6, height = 5, just = c("left", "top")
+)
+```
+
+## Session Info
 ```{r}
 sessionInfo()
 ```
