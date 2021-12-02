@@ -145,7 +145,7 @@ jobs:
           ## Edit below if you have any Windows system dependencies
           ## Link to lzma
           lzma --version
-          dir "C:/Program Files"
+          dir "C:/Program Files/7-Zip"
           
       - name: Install BiocManager
         run: |
