@@ -41,7 +41,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../../index.html">plotgardener</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.0.5</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.0.6</span>
       </span>
     </div>
 
@@ -437,32 +437,66 @@
                     cluster_rows <span class="op">=</span> <span class="cn">FALSE</span>, cluster_columns <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <p>We can now pass this object into the <code>plotGG</code> function and incorporate the heatmap into a <code>plotgardener</code> layout with additional figure elements made by <code>plotgardener</code>:</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co">## Create page</span>
-<span class="fu"><a href="../../reference/pageCreate.html">pageCreate</a></span><span class="op">(</span>
-    width <span class="op">=</span> <span class="fl">4.5</span>, height <span class="op">=</span> <span class="fl">5.5</span>, default.units <span class="op">=</span> <span class="st">"inches"</span><span class="op">)</span>
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"GM12878_HiC_10kb"</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"GM12878_ChIP_CTCF_signal"</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"GM12878_ChIP_H3K27ac_signal"</span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st">"org.Hs.eg.db"</span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st">"TxDb.Hsapiens.UCSC.hg19.knownGene"</span><span class="op">)</span>
 
-<span class="co">## Plot ComplexHeatmap and add x-axis tick marks</span>
+<span class="co">## Create page</span>
+<span class="fu"><a href="../../reference/pageCreate.html">pageCreate</a></span><span class="op">(</span>
+    width <span class="op">=</span> <span class="fl">6</span>, height <span class="op">=</span> <span class="fl">4</span>, default.units <span class="op">=</span> <span class="st">"inches"</span><span class="op">)</span>
+
+<span class="va">params</span> <span class="op">&lt;-</span> <span class="fu"><a href="../../reference/pgParams.html">pgParams</a></span><span class="op">(</span>chrom <span class="op">=</span> <span class="st">"chr21"</span>, chromstart <span class="op">=</span> <span class="fl">28150000</span>, chromend <span class="op">=</span> <span class="fl">29150000</span>, 
+                   assembly <span class="op">=</span> <span class="st">"hg19"</span>,
+                   x <span class="op">=</span> <span class="fl">0.5</span>, width <span class="op">=</span> <span class="fl">2</span>, default.units <span class="op">=</span> <span class="st">"inches"</span><span class="op">)</span>
+<span class="va">ctcf_range</span> <span class="op">&lt;-</span> <span class="fu"><a href="../../reference/pgParams.html">pgParams</a></span><span class="op">(</span>range <span class="op">=</span> <span class="fu"><a href="../../reference/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">77</span><span class="op">)</span>,
+                       assembly <span class="op">=</span> <span class="st">"hg19"</span><span class="op">)</span>
+<span class="va">hk_range</span> <span class="op">&lt;-</span> <span class="fu"><a href="../../reference/pgParams.html">pgParams</a></span><span class="op">(</span>range <span class="op">=</span> <span class="fu"><a href="../../reference/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">32.6</span><span class="op">)</span>,
+                     assembly <span class="op">=</span> <span class="st">"hg19"</span><span class="op">)</span>
+<span class="va">hic_gm</span> <span class="op">&lt;-</span> <span class="fu"><a href="../../reference/plotHicTriangle.html">plotHicTriangle</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">GM12878_HiC_10kb</span>, params <span class="op">=</span> <span class="va">params</span>,
+                          zrange <span class="op">=</span> <span class="fu"><a href="../../reference/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">200</span><span class="op">)</span>, resolution <span class="op">=</span> <span class="fl">10000</span>,
+                          y <span class="op">=</span> <span class="fl">1.5</span>, height <span class="op">=</span> <span class="fl">1.25</span>, just <span class="op">=</span> <span class="fu"><a href="../../reference/c.html">c</a></span><span class="op">(</span><span class="st">"left"</span>, <span class="st">"bottom"</span><span class="op">)</span><span class="op">)</span>
+<span class="fu"><a href="../../reference/annoHeatmapLegend.html">annoHeatmapLegend</a></span><span class="op">(</span>plot <span class="op">=</span> <span class="va">hic_gm</span>, fontsize <span class="op">=</span> <span class="fl">7</span>, 
+                  x <span class="op">=</span> <span class="fl">2.5</span>, y <span class="op">=</span> <span class="fl">0.5</span>, width <span class="op">=</span> <span class="fl">0.07</span>, height <span class="op">=</span> <span class="fl">0.5</span>, 
+                  just <span class="op">=</span> <span class="fu"><a href="../../reference/c.html">c</a></span><span class="op">(</span><span class="st">"right"</span>, <span class="st">"top"</span><span class="op">)</span>, default.units <span class="op">=</span> <span class="st">"inches"</span><span class="op">)</span>
+<span class="va">ctcf_gm</span> <span class="op">&lt;-</span> <span class="fu"><a href="../../reference/plotSignal.html">plotSignal</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">GM12878_ChIP_CTCF_signal</span>, params <span class="op">=</span> <span class="fu"><a href="../../reference/c.html">c</a></span><span class="op">(</span><span class="va">params</span>, <span class="va">ctcf_range</span><span class="op">)</span>,
+                      fill <span class="op">=</span> <span class="st">"#253494"</span>, linecolor <span class="op">=</span> <span class="st">"#253494"</span>,
+                      y <span class="op">=</span> <span class="fl">1.6</span>, height <span class="op">=</span> <span class="fl">0.6</span><span class="op">)</span>
+<span class="fu"><a href="../../reference/plotText.html">plotText</a></span><span class="op">(</span>label <span class="op">=</span> <span class="st">"CTCF"</span>, fontcolor <span class="op">=</span> <span class="st">"#253494"</span>, fontsize <span class="op">=</span> <span class="fl">8</span>,
+         x <span class="op">=</span> <span class="fl">0.5</span>, y <span class="op">=</span> <span class="fl">1.6</span>, just <span class="op">=</span> <span class="fu"><a href="../../reference/c.html">c</a></span><span class="op">(</span><span class="st">"left"</span>,<span class="st">"top"</span><span class="op">)</span>, default.units <span class="op">=</span> <span class="st">"inches"</span><span class="op">)</span>
+<span class="va">hk_gm</span> <span class="op">&lt;-</span> <span class="fu"><a href="../../reference/plotSignal.html">plotSignal</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">GM12878_ChIP_H3K27ac_signal</span>, params <span class="op">=</span> <span class="fu"><a href="../../reference/c.html">c</a></span><span class="op">(</span><span class="va">params</span>, <span class="va">hk_range</span><span class="op">)</span>,
+                    fill <span class="op">=</span> <span class="st">"#37a7db"</span>, linecolor <span class="op">=</span> <span class="st">"#37a7db"</span>,
+                    y <span class="op">=</span> <span class="fl">2.3</span>, height <span class="op">=</span> <span class="fl">0.6</span>, just <span class="op">=</span> <span class="fu"><a href="../../reference/c.html">c</a></span><span class="op">(</span><span class="st">"left"</span>, <span class="st">"top"</span><span class="op">)</span><span class="op">)</span>
+<span class="fu"><a href="../../reference/plotText.html">plotText</a></span><span class="op">(</span>label <span class="op">=</span> <span class="st">"H3K27ac"</span>, fontcolor <span class="op">=</span> <span class="st">"#37a7db"</span>, fontsize <span class="op">=</span> <span class="fl">8</span>,
+         x <span class="op">=</span> <span class="fl">0.5</span>, y <span class="op">=</span> <span class="fl">2.4</span>, just <span class="op">=</span> <span class="fu"><a href="../../reference/c.html">c</a></span><span class="op">(</span><span class="st">"left"</span>,<span class="st">"bottom"</span><span class="op">)</span>, default.units <span class="op">=</span> <span class="st">"inches"</span><span class="op">)</span>
+<span class="va">genes_gm</span> <span class="op">&lt;-</span> <span class="fu"><a href="../../reference/plotGenes.html">plotGenes</a></span><span class="op">(</span>params <span class="op">=</span> <span class="va">params</span>, stroke <span class="op">=</span> <span class="fl">1</span>, fontsize <span class="op">=</span> <span class="fl">6</span>,
+                      strandLabels <span class="op">=</span> <span class="cn">FALSE</span>,
+                      y <span class="op">=</span> <span class="fl">3</span>, height <span class="op">=</span> <span class="fl">0.4</span><span class="op">)</span>
+<span class="fu"><a href="../../reference/annoGenomeLabel.html">annoGenomeLabel</a></span><span class="op">(</span>plot <span class="op">=</span> <span class="va">genes_gm</span>, params <span class="op">=</span> <span class="va">params</span>, 
+                scale <span class="op">=</span> <span class="st">"Kb"</span>, fontsize <span class="op">=</span> <span class="fl">7</span>,
+                y <span class="op">=</span> <span class="fl">3.5</span>, digits <span class="op">=</span> <span class="fl">0</span><span class="op">)</span>
+
+<span class="co">## Add ComplexHeatmap</span>
 <span class="va">gg_heatmap</span> <span class="op">&lt;-</span> <span class="fu"><a href="../../reference/plotGG.html">plotGG</a></span><span class="op">(</span>
     plot <span class="op">=</span> <span class="va">heatmap</span>,
-    x <span class="op">=</span> <span class="fl">0.5</span>, y <span class="op">=</span> <span class="fl">0.5</span>,
-    width <span class="op">=</span> <span class="fl">3.5</span>, height <span class="op">=</span> <span class="fl">4.5</span>
+    x <span class="op">=</span> <span class="fl">3</span>, y <span class="op">=</span> <span class="fl">0.5</span>,
+    width <span class="op">=</span> <span class="fl">2.5</span>, height <span class="op">=</span> <span class="fl">3</span>
 <span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/grid/viewports.html" class="external-link">seekViewport</a></span><span class="op">(</span>name <span class="op">=</span> <span class="st">"heatmap_matrix_2"</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/grid/grid.xaxis.html" class="external-link">grid.xaxis</a></span><span class="op">(</span>at <span class="op">=</span> <span class="fu"><a href="../../reference/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0.5</span>, <span class="fl">1</span><span class="op">)</span>, label <span class="op">=</span> <span class="cn">FALSE</span>, gp <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grid/gpar.html" class="external-link">gpar</a></span><span class="op">(</span>lwd <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/grid/viewports.html" class="external-link">seekViewport</a></span><span class="op">(</span>name <span class="op">=</span> <span class="st">"page"</span><span class="op">)</span>
 
-<span class="co">## Add labels with `plotgardener`</span>
-<span class="fu"><a href="../../reference/plotText.html">plotText</a></span><span class="op">(</span>label <span class="op">=</span> <span class="st">"Simulated Data"</span>, 
-        x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grid/unit.html" class="external-link">unit</a></span><span class="op">(</span><span class="fl">0.5</span>, <span class="st">"npc"</span><span class="op">)</span>, y <span class="op">=</span> <span class="fl">0.25</span>, fontsize <span class="op">=</span> <span class="fl">14</span><span class="op">)</span>
-
-<span class="fu"><a href="../../reference/plotText.html">plotText</a></span><span class="op">(</span>label <span class="op">=</span> <span class="fu"><a href="../../reference/c.html">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">2</span>, <span class="fl">0</span>, <span class="fl">2</span><span class="op">)</span>, 
-        x <span class="op">=</span> <span class="fu"><a href="../../reference/c.html">c</a></span><span class="op">(</span><span class="fl">0.56</span>, <span class="fl">2.255</span>, <span class="fl">3.93</span><span class="op">)</span>, y <span class="op">=</span> <span class="fl">5.1</span>, fontsize <span class="op">=</span> <span class="fl">8</span><span class="op">)</span>
-<span class="fu"><a href="../../reference/plotText.html">plotText</a></span><span class="op">(</span>label <span class="op">=</span> <span class="st">"Distance from center"</span>, 
-        x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grid/unit.html" class="external-link">unit</a></span><span class="op">(</span><span class="fl">0.5</span>, <span class="st">"npc"</span><span class="op">)</span>, y <span class="op">=</span> <span class="fl">5.3</span>, fontsize <span class="op">=</span> <span class="fl">10</span><span class="op">)</span>
+<span class="fu"><a href="../../reference/plotText.html">plotText</a></span><span class="op">(</span>label <span class="op">=</span> <span class="st">"Simulated Data"</span>, x <span class="op">=</span> <span class="fl">4.25</span>, y <span class="op">=</span> <span class="fl">0.5</span>,
+         fontsize <span class="op">=</span> <span class="fl">12</span>, just <span class="op">=</span> <span class="st">"bottom"</span><span class="op">)</span>
+<span class="fu"><a href="../../reference/plotText.html">plotText</a></span><span class="op">(</span>label <span class="op">=</span> <span class="fu"><a href="../../reference/c.html">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">2</span>, <span class="fl">0</span>, <span class="fl">2</span><span class="op">)</span>, x <span class="op">=</span> <span class="fu"><a href="../../reference/c.html">c</a></span><span class="op">(</span><span class="fl">3.065</span>, <span class="fl">4.255</span>, <span class="fl">5.425</span><span class="op">)</span>, 
+         y <span class="op">=</span> <span class="fl">3.6</span>, fontsize <span class="op">=</span> <span class="fl">7</span><span class="op">)</span>
+<span class="fu"><a href="../../reference/plotText.html">plotText</a></span><span class="op">(</span>label <span class="op">=</span> <span class="st">"Distance from center"</span>, x <span class="op">=</span> <span class="fl">4.25</span>, 
+         y <span class="op">=</span> <span class="fl">3.75</span>, fontsize <span class="op">=</span> <span class="fl">8</span><span class="op">)</span>
 
 <span class="co">## Hide page guides</span>
 <span class="fu"><a href="../../reference/pageGuideHide.html">pageGuideHide</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
-<p><img src="incorporating_ggplots_files/figure-html/gg_plot09-1.png" width="825" style="display: block; margin: auto;"></p>
+<p><img src="incorporating_ggplots_files/figure-html/gg_plot09-1.png" width="1200" style="display: block; margin: auto;"></p>
 </div>
 <div class="section level2">
 <h2 id="session-info">Session Info<a class="anchor" aria-label="anchor" href="#session-info"></a>
@@ -481,65 +515,85 @@
 <span class="co">#&gt; [1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; attached base packages:</span>
-<span class="co">#&gt; [1] grid      stats     graphics  grDevices utils     datasets  methods  </span>
-<span class="co">#&gt; [8] base     </span>
+<span class="co">#&gt; [1] stats4    grid      stats     graphics  grDevices utils     datasets </span>
+<span class="co">#&gt; [8] methods   base     </span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; other attached packages:</span>
-<span class="co">#&gt;  [1] RColorBrewer_1.1-2     purrr_0.3.4            ComplexHeatmap_2.10.0 </span>
-<span class="co">#&gt;  [4] scales_1.1.1           ggplot2_3.3.5          showtext_0.9-4        </span>
-<span class="co">#&gt;  [7] showtextdb_3.0         sysfonts_0.8.5         plotgardenerData_1.0.0</span>
-<span class="co">#&gt; [10] plotgardener_1.1.2    </span>
+<span class="co">#&gt;  [1] TxDb.Hsapiens.UCSC.hg19.knownGene_3.2.2</span>
+<span class="co">#&gt;  [2] GenomicFeatures_1.46.1                 </span>
+<span class="co">#&gt;  [3] GenomicRanges_1.46.1                   </span>
+<span class="co">#&gt;  [4] GenomeInfoDb_1.30.0                    </span>
+<span class="co">#&gt;  [5] org.Hs.eg.db_3.14.0                    </span>
+<span class="co">#&gt;  [6] AnnotationDbi_1.56.2                   </span>
+<span class="co">#&gt;  [7] IRanges_2.28.0                         </span>
+<span class="co">#&gt;  [8] S4Vectors_0.32.3                       </span>
+<span class="co">#&gt;  [9] Biobase_2.54.0                         </span>
+<span class="co">#&gt; [10] BiocGenerics_0.40.0                    </span>
+<span class="co">#&gt; [11] RColorBrewer_1.1-2                     </span>
+<span class="co">#&gt; [12] purrr_0.3.4                            </span>
+<span class="co">#&gt; [13] ComplexHeatmap_2.10.0                  </span>
+<span class="co">#&gt; [14] scales_1.1.1                           </span>
+<span class="co">#&gt; [15] ggplot2_3.3.5                          </span>
+<span class="co">#&gt; [16] showtext_0.9-4                         </span>
+<span class="co">#&gt; [17] showtextdb_3.0                         </span>
+<span class="co">#&gt; [18] sysfonts_0.8.5                         </span>
+<span class="co">#&gt; [19] plotgardenerData_1.0.0                 </span>
+<span class="co">#&gt; [20] plotgardener_1.1.2                     </span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; loaded via a namespace (and not attached):</span>
-<span class="co">#&gt;  [1] bitops_1.0-7                matrixStats_0.61.0         </span>
-<span class="co">#&gt;  [3] fs_1.5.1                    doParallel_1.0.16          </span>
-<span class="co">#&gt;  [5] rprojroot_2.0.2             GenomeInfoDb_1.30.0        </span>
-<span class="co">#&gt;  [7] tools_4.1.2                 bslib_0.3.1                </span>
-<span class="co">#&gt;  [9] utf8_1.2.2                  R6_2.5.1                   </span>
-<span class="co">#&gt; [11] DBI_1.1.1                   BiocGenerics_0.40.0        </span>
-<span class="co">#&gt; [13] colorspace_2.0-2            GetoptLong_1.0.5           </span>
-<span class="co">#&gt; [15] withr_2.4.3                 tidyselect_1.1.1           </span>
-<span class="co">#&gt; [17] curl_4.3.2                  compiler_4.1.2             </span>
-<span class="co">#&gt; [19] textshaping_0.3.6           Biobase_2.54.0             </span>
-<span class="co">#&gt; [21] desc_1.4.0                  DelayedArray_0.20.0        </span>
-<span class="co">#&gt; [23] rtracklayer_1.54.0          labeling_0.4.2             </span>
-<span class="co">#&gt; [25] sass_0.4.0                  pkgdown_2.0.0              </span>
-<span class="co">#&gt; [27] systemfonts_1.0.3           stringr_1.4.0              </span>
-<span class="co">#&gt; [29] digest_0.6.29               Rsamtools_2.10.0           </span>
-<span class="co">#&gt; [31] yulab.utils_0.0.4           rmarkdown_2.11             </span>
-<span class="co">#&gt; [33] XVector_0.34.0              pkgconfig_2.0.3            </span>
-<span class="co">#&gt; [35] htmltools_0.5.2             MatrixGenerics_1.6.0       </span>
-<span class="co">#&gt; [37] fastmap_1.1.0               highr_0.9                  </span>
-<span class="co">#&gt; [39] GlobalOptions_0.1.2         rlang_0.4.12               </span>
-<span class="co">#&gt; [41] shape_1.4.6                 gridGraphics_0.5-1         </span>
-<span class="co">#&gt; [43] jquerylib_0.1.4             BiocIO_1.4.0               </span>
-<span class="co">#&gt; [45] generics_0.1.1              farver_2.1.0               </span>
-<span class="co">#&gt; [47] jsonlite_1.7.2              BiocParallel_1.28.2        </span>
-<span class="co">#&gt; [49] dplyr_1.0.7                 RCurl_1.98-1.5             </span>
-<span class="co">#&gt; [51] magrittr_2.0.1              ggplotify_0.1.0            </span>
-<span class="co">#&gt; [53] GenomeInfoDbData_1.2.7      Matrix_1.3-4               </span>
-<span class="co">#&gt; [55] Rcpp_1.0.7                  munsell_0.5.0              </span>
-<span class="co">#&gt; [57] S4Vectors_0.32.3            fansi_0.5.0                </span>
-<span class="co">#&gt; [59] lifecycle_1.0.1             stringi_1.7.6              </span>
-<span class="co">#&gt; [61] yaml_2.2.1                  SummarizedExperiment_1.24.0</span>
-<span class="co">#&gt; [63] zlibbioc_1.40.0             parallel_4.1.2             </span>
-<span class="co">#&gt; [65] crayon_1.4.2                lattice_0.20-45            </span>
-<span class="co">#&gt; [67] Biostrings_2.62.0           circlize_0.4.13            </span>
-<span class="co">#&gt; [69] magick_2.7.3                knitr_1.36                 </span>
-<span class="co">#&gt; [71] pillar_1.6.4                GenomicRanges_1.46.1       </span>
-<span class="co">#&gt; [73] rjson_0.2.20                codetools_0.2-18           </span>
-<span class="co">#&gt; [75] stats4_4.1.2                strawr_0.0.9               </span>
-<span class="co">#&gt; [77] XML_3.99-0.8                glue_1.5.1                 </span>
-<span class="co">#&gt; [79] evaluate_0.14               data.table_1.14.2          </span>
-<span class="co">#&gt; [81] png_0.1-7                   foreach_1.5.1              </span>
-<span class="co">#&gt; [83] vctrs_0.3.8                 gtable_0.3.0               </span>
-<span class="co">#&gt; [85] clue_0.3-60                 assertthat_0.2.1           </span>
-<span class="co">#&gt; [87] cachem_1.0.6                xfun_0.28                  </span>
-<span class="co">#&gt; [89] restfulr_0.0.13             ragg_1.2.0                 </span>
-<span class="co">#&gt; [91] tibble_3.1.6                iterators_1.0.13           </span>
-<span class="co">#&gt; [93] GenomicAlignments_1.30.0    plyranges_1.14.0           </span>
-<span class="co">#&gt; [95] memoise_2.0.1               IRanges_2.28.0             </span>
-<span class="co">#&gt; [97] cluster_2.1.2               ellipsis_0.3.2</span></code></pre></div>
+<span class="co">#&gt;   [1] colorspace_2.0-2            rjson_0.2.20               </span>
+<span class="co">#&gt;   [3] ellipsis_0.3.2              rprojroot_2.0.2            </span>
+<span class="co">#&gt;   [5] circlize_0.4.13             XVector_0.34.0             </span>
+<span class="co">#&gt;   [7] GlobalOptions_0.1.2         fs_1.5.1                   </span>
+<span class="co">#&gt;   [9] clue_0.3-60                 farver_2.1.0               </span>
+<span class="co">#&gt;  [11] bit64_4.0.5                 fansi_0.5.0                </span>
+<span class="co">#&gt;  [13] xml2_1.3.3                  codetools_0.2-18           </span>
+<span class="co">#&gt;  [15] doParallel_1.0.16           cachem_1.0.6               </span>
+<span class="co">#&gt;  [17] knitr_1.36                  jsonlite_1.7.2             </span>
+<span class="co">#&gt;  [19] Rsamtools_2.10.0            dbplyr_2.1.1               </span>
+<span class="co">#&gt;  [21] cluster_2.1.2               png_0.1-7                  </span>
+<span class="co">#&gt;  [23] compiler_4.1.2              httr_1.4.2                 </span>
+<span class="co">#&gt;  [25] assertthat_0.2.1            Matrix_1.3-4               </span>
+<span class="co">#&gt;  [27] fastmap_1.1.0               prettyunits_1.1.1          </span>
+<span class="co">#&gt;  [29] htmltools_0.5.2             tools_4.1.2                </span>
+<span class="co">#&gt;  [31] gtable_0.3.0                glue_1.5.1                 </span>
+<span class="co">#&gt;  [33] GenomeInfoDbData_1.2.7      dplyr_1.0.7                </span>
+<span class="co">#&gt;  [35] rappdirs_0.3.3              Rcpp_1.0.7                 </span>
+<span class="co">#&gt;  [37] jquerylib_0.1.4             pkgdown_2.0.0              </span>
+<span class="co">#&gt;  [39] vctrs_0.3.8                 Biostrings_2.62.0          </span>
+<span class="co">#&gt;  [41] strawr_0.0.9                rtracklayer_1.54.0         </span>
+<span class="co">#&gt;  [43] iterators_1.0.13            xfun_0.28                  </span>
+<span class="co">#&gt;  [45] stringr_1.4.0               plyranges_1.14.0           </span>
+<span class="co">#&gt;  [47] lifecycle_1.0.1             restfulr_0.0.13            </span>
+<span class="co">#&gt;  [49] XML_3.99-0.8                zlibbioc_1.40.0            </span>
+<span class="co">#&gt;  [51] hms_1.1.1                   ragg_1.2.0                 </span>
+<span class="co">#&gt;  [53] MatrixGenerics_1.6.0        parallel_4.1.2             </span>
+<span class="co">#&gt;  [55] SummarizedExperiment_1.24.0 yaml_2.2.1                 </span>
+<span class="co">#&gt;  [57] curl_4.3.2                  memoise_2.0.1              </span>
+<span class="co">#&gt;  [59] yulab.utils_0.0.4           sass_0.4.0                 </span>
+<span class="co">#&gt;  [61] biomaRt_2.50.1              stringi_1.7.6              </span>
+<span class="co">#&gt;  [63] RSQLite_2.2.8               highr_0.9                  </span>
+<span class="co">#&gt;  [65] BiocIO_1.4.0                desc_1.4.0                 </span>
+<span class="co">#&gt;  [67] foreach_1.5.1               filelock_1.0.2             </span>
+<span class="co">#&gt;  [69] BiocParallel_1.28.2         shape_1.4.6                </span>
+<span class="co">#&gt;  [71] rlang_0.4.12                pkgconfig_2.0.3            </span>
+<span class="co">#&gt;  [73] systemfonts_1.0.3           matrixStats_0.61.0         </span>
+<span class="co">#&gt;  [75] bitops_1.0-7                evaluate_0.14              </span>
+<span class="co">#&gt;  [77] lattice_0.20-45             GenomicAlignments_1.30.0   </span>
+<span class="co">#&gt;  [79] labeling_0.4.2              bit_4.0.4                  </span>
+<span class="co">#&gt;  [81] tidyselect_1.1.1            magrittr_2.0.1             </span>
+<span class="co">#&gt;  [83] R6_2.5.1                    magick_2.7.3               </span>
+<span class="co">#&gt;  [85] generics_0.1.1              DelayedArray_0.20.0        </span>
+<span class="co">#&gt;  [87] DBI_1.1.1                   pillar_1.6.4               </span>
+<span class="co">#&gt;  [89] withr_2.4.3                 KEGGREST_1.34.0            </span>
+<span class="co">#&gt;  [91] RCurl_1.98-1.5              tibble_3.1.6               </span>
+<span class="co">#&gt;  [93] crayon_1.4.2                utf8_1.2.2                 </span>
+<span class="co">#&gt;  [95] BiocFileCache_2.2.0         rmarkdown_2.11             </span>
+<span class="co">#&gt;  [97] progress_1.2.2              GetoptLong_1.0.5           </span>
+<span class="co">#&gt;  [99] data.table_1.14.2           blob_1.2.2                 </span>
+<span class="co">#&gt; [101] digest_0.6.29               gridGraphics_0.5-1         </span>
+<span class="co">#&gt; [103] textshaping_0.3.6           munsell_0.5.0              </span>
+<span class="co">#&gt; [105] ggplotify_0.1.0             bslib_0.3.1</span></code></pre></div>
 </div>
   </div>
 
