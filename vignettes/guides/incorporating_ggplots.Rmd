@@ -3,7 +3,7 @@ title: "Incorporating `ggplots` and other `grid`-based Bioconductor visualizatio
 output:
     rmarkdown::html_vignette
 vignette: >
-    %\VignetteIndexEntry{Incorporating `ggplots`}
+    %\VignetteIndexEntry{Incorporating `ggplots` and other `grid`-based Bioconductor visualizations}
     %\VignetteEngine{knitr::rmarkdown}
     %\VignetteEncoding{UTF-8}
 ---
@@ -420,48 +420,95 @@ excellent methods to produce such heatmaps. Since these plots are also based
 on `grid` graphics, it is possible to incorporate them into `plotgardener` 
 figure arrangements.
 
-For example, let's say we made this heatmap from a random matrix:
+For example, let's say we made a heatmap representing the density of ChIP-seq
+data at a particular peak:
+
 ```{r gg_plot08, fig.height=4, fig.width=5}
 library(ComplexHeatmap)
+library(purrr)
+library(RColorBrewer)
 
-set.seed(123)
-nr1 <- 4; nr2 = 8; nr3 = 6; nr = nr1 + nr2 + nr3
-nc1 <- 6; nc2 = 8; nc3 = 10; nc = nc1 + nc2 + nc3
-mat <- cbind(rbind(matrix(rnorm(nr1*nc1, mean = 1, sd = 0.5), nr = nr1),
-          matrix(rnorm(nr2*nc1, mean = 0, sd = 0.5), nr = nr2),
-          matrix(rnorm(nr3*nc1, mean = 0, sd = 0.5), nr = nr3)),
-    rbind(matrix(rnorm(nr1*nc2, mean = 0, sd = 0.5), nr = nr1),
-          matrix(rnorm(nr2*nc2, mean = 1, sd = 0.5), nr = nr2),
-          matrix(rnorm(nr3*nc2, mean = 0, sd = 0.5), nr = nr3)),
-    rbind(matrix(rnorm(nr1*nc3, mean = 0.5, sd = 0.5), nr = nr1),
-          matrix(rnorm(nr2*nc3, mean = 0.5, sd = 0.5), nr = nr2),
-          matrix(rnorm(nr3*nc3, mean = 1, sd = 0.5), nr = nr3))
-   )
-mat <- mat[sample(nr, nr), sample(nc, nc)]
-rownames(mat) <- paste0("row", seq_len(nr))
-colnames(mat) <- paste0("column", seq_len(nc))
-
-Heatmap(mat)
+# Simulated data
+genmat <- map(
+    1:2000,
+    function(i) {
+        c(sort(abs(rnorm(50)))[1:25], rev(sort(abs(rnorm(50)))[1:25])) * i/5000
+    }
+) %>% do.call(rbind, .)
+genmat <- genmat[nrow(genmat):1,]
+Heatmap(genmat, col = colorRampPalette(brewer.pal(n = 9, "YlGnBu"))(9),
+        border = "black",
+        border_gp = gpar(lwd = 0.5),
+        show_heatmap_legend = FALSE, 
+        cluster_rows = FALSE, cluster_columns = FALSE)
 ```
 
 We can capture this heatmap with the `grid` function `grid.grabExpr()`:
 
 ```{r}
 library(grid)
-heatmap <- grid.grabExpr(draw(Heatmap(mat)))
+heatmap <- grid.grabExpr(draw(Heatmap(genmat, 
+                    col = colorRampPalette(brewer.pal(n = 9, "YlGnBu"))(9),
+                    border = "black",
+                    border_gp = gpar(lwd = 0.5),
+                    show_heatmap_legend = FALSE, 
+                    cluster_rows = FALSE, cluster_columns = FALSE)))
 ```
 
 We can now pass this object into the `plotGG` function and incorporate the 
-heatmap into a `plotgardener` layout:
+heatmap into a `plotgardener` layout with additional figure elements made
+by `plotgardener`:
 
-```{r gg_plot09, fig.height=6.5, fig.width=9}
+```{r eval=FALSE}
+## Create page
 pageCreate(
-    width = 6.5, height = 5.5, default.units = "inches")
-plotGG(
+    width = 4.5, height = 5.5, default.units = "inches")
+
+## Plot ComplexHeatmap and add x-axis tick marks
+gg_heatmap <- plotGG(
     plot = heatmap,
-    x = 0.25, y = 0.25,
-    width = 6, height = 5, just = c("left", "top")
+    x = 0.5, y = 0.5,
+    width = 3.5, height = 4.5
 )
+seekViewport(name = "heatmap_matrix_2")
+grid.xaxis(at = c(0, 0.5, 1), label = FALSE, gp = gpar(lwd = 0.5))
+seekViewport(name = "page")
+
+## Add labels with `plotgardener`
+plotText(label = "Simulated Data", 
+        x = unit(0.5, "npc"), y = 0.25, fontsize = 14)
+
+plotText(label = c(-2, 0, 2), 
+        x = c(0.56, 2.255, 3.93), y = 5.1, fontsize = 8)
+plotText(label = "Distance from center", 
+        x = unit(0.5, "npc"), y = 5.3, fontsize = 10)
+
+## Hide page guides
+pageGuideHide()
+```
+
+```{r gg_plot09, echo=FALSE, fig.height=7.5, fig.width=5.5}
+
+pageCreate(
+    width = 4.5, height = 5.5, default.units = "inches",
+    showGuides = FALSE)
+gg_heatmap <- plotGG(
+    plot = heatmap,
+    x = 0.5, y = 0.5,
+    width = 3.5, height = 4.5
+)
+
+seekViewport(name = "heatmap_matrix_2")
+grid.xaxis(at = c(0, 0.5, 1), label = FALSE, gp = gpar(lwd = 0.5))
+seekViewport(name = "page")
+
+plotText(label = "Simulated Data", x = unit(0.5, "npc"), y = 0.25,
+          fontsize = 14)
+
+plotText(label = c(-2, 0, 2), x = c(0.56, 2.255, 3.93), 
+            y = 5.1, fontsize = 8)
+plotText(label = "Distance from center", x = unit(0.5, "npc"), 
+            y = 5.3, fontsize = 10)
 ```
 
 ## Session Info
