@@ -41,7 +41,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../../index.html">plotgardener</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.0.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.0.5</span>
       </span>
     </div>
 
@@ -406,43 +406,63 @@
 <code>ComplexHeatmap</code><a class="anchor" aria-label="anchor" href="#complexheatmap"></a>
 </h2>
 <p>Heatmaps are an integral visualization to many multi-panel genomic visualizations. Existing Bioconductor packages like <code>ComplexHeatmap</code> provide excellent methods to produce such heatmaps. Since these plots are also based on <code>grid</code> graphics, it is possible to incorporate them into <code>plotgardener</code> figure arrangements.</p>
-<p>For example, let’s say we made this heatmap from a random matrix:</p>
+<p>For example, let’s say we made a heatmap representing the density of ChIP-seq data at a particular peak:</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/jokergoo/ComplexHeatmap" class="external-link">ComplexHeatmap</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="http://purrr.tidyverse.org" class="external-link">purrr</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">RColorBrewer</span><span class="op">)</span>
 
-<span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">123</span><span class="op">)</span>
-<span class="va">nr1</span> <span class="op">&lt;-</span> <span class="fl">4</span>; <span class="va">nr2</span> <span class="op">=</span> <span class="fl">8</span>; <span class="va">nr3</span> <span class="op">=</span> <span class="fl">6</span>; <span class="va">nr</span> <span class="op">=</span> <span class="va">nr1</span> <span class="op">+</span> <span class="va">nr2</span> <span class="op">+</span> <span class="va">nr3</span>
-<span class="va">nc1</span> <span class="op">&lt;-</span> <span class="fl">6</span>; <span class="va">nc2</span> <span class="op">=</span> <span class="fl">8</span>; <span class="va">nc3</span> <span class="op">=</span> <span class="fl">10</span>; <span class="va">nc</span> <span class="op">=</span> <span class="va">nc1</span> <span class="op">+</span> <span class="va">nc2</span> <span class="op">+</span> <span class="va">nc3</span>
-<span class="va">mat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/BiocGenerics/man/cbind.html" class="external-link">cbind</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/BiocGenerics/man/cbind.html" class="external-link">rbind</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="va">nr1</span><span class="op">*</span><span class="va">nc1</span>, mean <span class="op">=</span> <span class="fl">1</span>, sd <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span>, nr <span class="op">=</span> <span class="va">nr1</span><span class="op">)</span>,
-          <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="va">nr2</span><span class="op">*</span><span class="va">nc1</span>, mean <span class="op">=</span> <span class="fl">0</span>, sd <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span>, nr <span class="op">=</span> <span class="va">nr2</span><span class="op">)</span>,
-          <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="va">nr3</span><span class="op">*</span><span class="va">nc1</span>, mean <span class="op">=</span> <span class="fl">0</span>, sd <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span>, nr <span class="op">=</span> <span class="va">nr3</span><span class="op">)</span><span class="op">)</span>,
-    <span class="fu"><a href="https://rdrr.io/pkg/BiocGenerics/man/cbind.html" class="external-link">rbind</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="va">nr1</span><span class="op">*</span><span class="va">nc2</span>, mean <span class="op">=</span> <span class="fl">0</span>, sd <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span>, nr <span class="op">=</span> <span class="va">nr1</span><span class="op">)</span>,
-          <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="va">nr2</span><span class="op">*</span><span class="va">nc2</span>, mean <span class="op">=</span> <span class="fl">1</span>, sd <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span>, nr <span class="op">=</span> <span class="va">nr2</span><span class="op">)</span>,
-          <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="va">nr3</span><span class="op">*</span><span class="va">nc2</span>, mean <span class="op">=</span> <span class="fl">0</span>, sd <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span>, nr <span class="op">=</span> <span class="va">nr3</span><span class="op">)</span><span class="op">)</span>,
-    <span class="fu"><a href="https://rdrr.io/pkg/BiocGenerics/man/cbind.html" class="external-link">rbind</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="va">nr1</span><span class="op">*</span><span class="va">nc3</span>, mean <span class="op">=</span> <span class="fl">0.5</span>, sd <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span>, nr <span class="op">=</span> <span class="va">nr1</span><span class="op">)</span>,
-          <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="va">nr2</span><span class="op">*</span><span class="va">nc3</span>, mean <span class="op">=</span> <span class="fl">0.5</span>, sd <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span>, nr <span class="op">=</span> <span class="va">nr2</span><span class="op">)</span>,
-          <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="va">nr3</span><span class="op">*</span><span class="va">nc3</span>, mean <span class="op">=</span> <span class="fl">1</span>, sd <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span>, nr <span class="op">=</span> <span class="va">nr3</span><span class="op">)</span><span class="op">)</span>
-   <span class="op">)</span>
-<span class="va">mat</span> <span class="op">&lt;-</span> <span class="va">mat</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/pkg/AnnotationDbi/man/Bimap-envirAPI.html" class="external-link">sample</a></span><span class="op">(</span><span class="va">nr</span>, <span class="va">nr</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/pkg/AnnotationDbi/man/Bimap-envirAPI.html" class="external-link">sample</a></span><span class="op">(</span><span class="va">nc</span>, <span class="va">nc</span><span class="op">)</span><span class="op">]</span>
-<span class="fu"><a href="https://rdrr.io/pkg/BiocGenerics/man/row_colnames.html" class="external-link">rownames</a></span><span class="op">(</span><span class="va">mat</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"row"</span>, <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq_len</a></span><span class="op">(</span><span class="va">nr</span><span class="op">)</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/pkg/BiocGenerics/man/row_colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="va">mat</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"column"</span>, <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq_len</a></span><span class="op">(</span><span class="va">nc</span><span class="op">)</span><span class="op">)</span>
-
-<span class="fu"><a href="https://rdrr.io/pkg/ComplexHeatmap/man/Heatmap.html" class="external-link">Heatmap</a></span><span class="op">(</span><span class="va">mat</span><span class="op">)</span></code></pre></div>
+<span class="co"># Simulated data</span>
+<span class="va">genmat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html" class="external-link">map</a></span><span class="op">(</span>
+    <span class="fl">1</span><span class="op">:</span><span class="fl">2000</span>,
+    <span class="kw">function</span><span class="op">(</span><span class="va">i</span><span class="op">)</span> <span class="op">{</span>
+        <span class="fu"><a href="../../reference/c.html">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/BiocGenerics/man/sort.html" class="external-link">sort</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">abs</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">50</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">25</span><span class="op">]</span>, <span class="fu"><a href="https://rdrr.io/pkg/S4Vectors/man/Vector-class.html" class="external-link">rev</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/BiocGenerics/man/sort.html" class="external-link">sort</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">abs</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">50</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">25</span><span class="op">]</span><span class="op">)</span><span class="op">)</span> <span class="op">*</span> <span class="va">i</span><span class="op">/</span><span class="fl">5000</span>
+    <span class="op">}</span>
+<span class="op">)</span> <span class="op"><a href="https://purrr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/pkg/BiocGenerics/man/do.call.html" class="external-link">do.call</a></span><span class="op">(</span><span class="va">rbind</span>, <span class="va">.</span><span class="op">)</span>
+<span class="va">genmat</span> <span class="op">&lt;-</span> <span class="va">genmat</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/pkg/BiocGenerics/man/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">genmat</span><span class="op">)</span><span class="op">:</span><span class="fl">1</span>,<span class="op">]</span>
+<span class="fu"><a href="https://rdrr.io/pkg/ComplexHeatmap/man/Heatmap.html" class="external-link">Heatmap</a></span><span class="op">(</span><span class="va">genmat</span>, col <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grDevices/colorRamp.html" class="external-link">colorRampPalette</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/RColorBrewer/man/ColorBrewer.html" class="external-link">brewer.pal</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fl">9</span>, <span class="st">"YlGnBu"</span><span class="op">)</span><span class="op">)</span><span class="op">(</span><span class="fl">9</span><span class="op">)</span>,
+        border <span class="op">=</span> <span class="st">"black"</span>,
+        border_gp <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grid/gpar.html" class="external-link">gpar</a></span><span class="op">(</span>lwd <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span>,
+        show_heatmap_legend <span class="op">=</span> <span class="cn">FALSE</span>, 
+        cluster_rows <span class="op">=</span> <span class="cn">FALSE</span>, cluster_columns <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></code></pre></div>
 <p><img src="incorporating_ggplots_files/figure-html/gg_plot08-1.png" width="750" style="display: block; margin: auto;"></p>
 <p>We can capture this heatmap with the <code>grid</code> function <code><a href="https://rdrr.io/r/grid/grid.grab.html" class="external-link">grid.grabExpr()</a></code>:</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">grid</span><span class="op">)</span>
-<span class="va">heatmap</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/grid/grid.grab.html" class="external-link">grid.grabExpr</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/ComplexHeatmap/man/draw-dispatch.html" class="external-link">draw</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/ComplexHeatmap/man/Heatmap.html" class="external-link">Heatmap</a></span><span class="op">(</span><span class="va">mat</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<p>We can now pass this object into the <code>plotGG</code> function and incorporate the heatmap into a <code>plotgardener</code> layout:</p>
+<span class="va">heatmap</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/grid/grid.grab.html" class="external-link">grid.grabExpr</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/ComplexHeatmap/man/draw-dispatch.html" class="external-link">draw</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/ComplexHeatmap/man/Heatmap.html" class="external-link">Heatmap</a></span><span class="op">(</span><span class="va">genmat</span>, 
+                    col <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grDevices/colorRamp.html" class="external-link">colorRampPalette</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/RColorBrewer/man/ColorBrewer.html" class="external-link">brewer.pal</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fl">9</span>, <span class="st">"YlGnBu"</span><span class="op">)</span><span class="op">)</span><span class="op">(</span><span class="fl">9</span><span class="op">)</span>,
+                    border <span class="op">=</span> <span class="st">"black"</span>,
+                    border_gp <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grid/gpar.html" class="external-link">gpar</a></span><span class="op">(</span>lwd <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span>,
+                    show_heatmap_legend <span class="op">=</span> <span class="cn">FALSE</span>, 
+                    cluster_rows <span class="op">=</span> <span class="cn">FALSE</span>, cluster_columns <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<p>We can now pass this object into the <code>plotGG</code> function and incorporate the heatmap into a <code>plotgardener</code> layout with additional figure elements made by <code>plotgardener</code>:</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../../reference/pageCreate.html">pageCreate</a></span><span class="op">(</span>
-    width <span class="op">=</span> <span class="fl">6.5</span>, height <span class="op">=</span> <span class="fl">5.5</span>, default.units <span class="op">=</span> <span class="st">"inches"</span><span class="op">)</span>
-<span class="fu"><a href="../../reference/plotGG.html">plotGG</a></span><span class="op">(</span>
+<code class="sourceCode R"><span class="co">## Create page</span>
+<span class="fu"><a href="../../reference/pageCreate.html">pageCreate</a></span><span class="op">(</span>
+    width <span class="op">=</span> <span class="fl">4.5</span>, height <span class="op">=</span> <span class="fl">5.5</span>, default.units <span class="op">=</span> <span class="st">"inches"</span><span class="op">)</span>
+
+<span class="co">## Plot ComplexHeatmap and add x-axis tick marks</span>
+<span class="va">gg_heatmap</span> <span class="op">&lt;-</span> <span class="fu"><a href="../../reference/plotGG.html">plotGG</a></span><span class="op">(</span>
     plot <span class="op">=</span> <span class="va">heatmap</span>,
-    x <span class="op">=</span> <span class="fl">0.25</span>, y <span class="op">=</span> <span class="fl">0.25</span>,
-    width <span class="op">=</span> <span class="fl">6</span>, height <span class="op">=</span> <span class="fl">5</span>, just <span class="op">=</span> <span class="fu"><a href="../../reference/c.html">c</a></span><span class="op">(</span><span class="st">"left"</span>, <span class="st">"top"</span><span class="op">)</span>
-<span class="op">)</span></code></pre></div>
-<p><img src="incorporating_ggplots_files/figure-html/gg_plot09-1.png" width="1350" style="display: block; margin: auto;"></p>
+    x <span class="op">=</span> <span class="fl">0.5</span>, y <span class="op">=</span> <span class="fl">0.5</span>,
+    width <span class="op">=</span> <span class="fl">3.5</span>, height <span class="op">=</span> <span class="fl">4.5</span>
+<span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/grid/viewports.html" class="external-link">seekViewport</a></span><span class="op">(</span>name <span class="op">=</span> <span class="st">"heatmap_matrix_2"</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/grid/grid.xaxis.html" class="external-link">grid.xaxis</a></span><span class="op">(</span>at <span class="op">=</span> <span class="fu"><a href="../../reference/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0.5</span>, <span class="fl">1</span><span class="op">)</span>, label <span class="op">=</span> <span class="cn">FALSE</span>, gp <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grid/gpar.html" class="external-link">gpar</a></span><span class="op">(</span>lwd <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/grid/viewports.html" class="external-link">seekViewport</a></span><span class="op">(</span>name <span class="op">=</span> <span class="st">"page"</span><span class="op">)</span>
+
+<span class="co">## Add labels with `plotgardener`</span>
+<span class="fu"><a href="../../reference/plotText.html">plotText</a></span><span class="op">(</span>label <span class="op">=</span> <span class="st">"Simulated Data"</span>, 
+        x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grid/unit.html" class="external-link">unit</a></span><span class="op">(</span><span class="fl">0.5</span>, <span class="st">"npc"</span><span class="op">)</span>, y <span class="op">=</span> <span class="fl">0.25</span>, fontsize <span class="op">=</span> <span class="fl">14</span><span class="op">)</span>
+
+<span class="fu"><a href="../../reference/plotText.html">plotText</a></span><span class="op">(</span>label <span class="op">=</span> <span class="fu"><a href="../../reference/c.html">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">2</span>, <span class="fl">0</span>, <span class="fl">2</span><span class="op">)</span>, 
+        x <span class="op">=</span> <span class="fu"><a href="../../reference/c.html">c</a></span><span class="op">(</span><span class="fl">0.56</span>, <span class="fl">2.255</span>, <span class="fl">3.93</span><span class="op">)</span>, y <span class="op">=</span> <span class="fl">5.1</span>, fontsize <span class="op">=</span> <span class="fl">8</span><span class="op">)</span>
+<span class="fu"><a href="../../reference/plotText.html">plotText</a></span><span class="op">(</span>label <span class="op">=</span> <span class="st">"Distance from center"</span>, 
+        x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grid/unit.html" class="external-link">unit</a></span><span class="op">(</span><span class="fl">0.5</span>, <span class="st">"npc"</span><span class="op">)</span>, y <span class="op">=</span> <span class="fl">5.3</span>, fontsize <span class="op">=</span> <span class="fl">10</span><span class="op">)</span>
+
+<span class="co">## Hide page guides</span>
+<span class="fu"><a href="../../reference/pageGuideHide.html">pageGuideHide</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<p><img src="incorporating_ggplots_files/figure-html/gg_plot09-1.png" width="825" style="display: block; margin: auto;"></p>
 </div>
 <div class="section level2">
 <h2 id="session-info">Session Info<a class="anchor" aria-label="anchor" href="#session-info"></a>
@@ -465,61 +485,61 @@
 <span class="co">#&gt; [8] base     </span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; other attached packages:</span>
-<span class="co">#&gt; [1] ComplexHeatmap_2.10.0  scales_1.1.1           ggplot2_3.3.5         </span>
-<span class="co">#&gt; [4] showtext_0.9-4         showtextdb_3.0         sysfonts_0.8.5        </span>
-<span class="co">#&gt; [7] plotgardenerData_1.0.0 plotgardener_1.1.2    </span>
+<span class="co">#&gt;  [1] RColorBrewer_1.1-2     purrr_0.3.4            ComplexHeatmap_2.10.0 </span>
+<span class="co">#&gt;  [4] scales_1.1.1           ggplot2_3.3.5          showtext_0.9-4        </span>
+<span class="co">#&gt;  [7] showtextdb_3.0         sysfonts_0.8.5         plotgardenerData_1.0.0</span>
+<span class="co">#&gt; [10] plotgardener_1.1.2    </span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; loaded via a namespace (and not attached):</span>
-<span class="co">#&gt;   [1] bitops_1.0-7                matrixStats_0.61.0         </span>
-<span class="co">#&gt;   [3] fs_1.5.1                    doParallel_1.0.16          </span>
-<span class="co">#&gt;   [5] RColorBrewer_1.1-2          rprojroot_2.0.2            </span>
-<span class="co">#&gt;   [7] GenomeInfoDb_1.30.0         tools_4.1.2                </span>
-<span class="co">#&gt;   [9] bslib_0.3.1                 utf8_1.2.2                 </span>
-<span class="co">#&gt;  [11] R6_2.5.1                    DBI_1.1.1                  </span>
-<span class="co">#&gt;  [13] BiocGenerics_0.40.0         colorspace_2.0-2           </span>
-<span class="co">#&gt;  [15] GetoptLong_1.0.5            withr_2.4.3                </span>
-<span class="co">#&gt;  [17] tidyselect_1.1.1            curl_4.3.2                 </span>
-<span class="co">#&gt;  [19] compiler_4.1.2              textshaping_0.3.6          </span>
-<span class="co">#&gt;  [21] Biobase_2.54.0              desc_1.4.0                 </span>
-<span class="co">#&gt;  [23] DelayedArray_0.20.0         rtracklayer_1.54.0         </span>
-<span class="co">#&gt;  [25] labeling_0.4.2              sass_0.4.0                 </span>
-<span class="co">#&gt;  [27] pkgdown_2.0.0               systemfonts_1.0.3          </span>
-<span class="co">#&gt;  [29] stringr_1.4.0               digest_0.6.29              </span>
-<span class="co">#&gt;  [31] Rsamtools_2.10.0            yulab.utils_0.0.4          </span>
-<span class="co">#&gt;  [33] rmarkdown_2.11              XVector_0.34.0             </span>
-<span class="co">#&gt;  [35] pkgconfig_2.0.3             htmltools_0.5.2            </span>
-<span class="co">#&gt;  [37] MatrixGenerics_1.6.0        fastmap_1.1.0              </span>
-<span class="co">#&gt;  [39] highr_0.9                   GlobalOptions_0.1.2        </span>
-<span class="co">#&gt;  [41] rlang_0.4.12                shape_1.4.6                </span>
-<span class="co">#&gt;  [43] gridGraphics_0.5-1          jquerylib_0.1.4            </span>
-<span class="co">#&gt;  [45] BiocIO_1.4.0                generics_0.1.1             </span>
-<span class="co">#&gt;  [47] farver_2.1.0                jsonlite_1.7.2             </span>
-<span class="co">#&gt;  [49] BiocParallel_1.28.2         dplyr_1.0.7                </span>
-<span class="co">#&gt;  [51] RCurl_1.98-1.5              magrittr_2.0.1             </span>
-<span class="co">#&gt;  [53] ggplotify_0.1.0             GenomeInfoDbData_1.2.7     </span>
-<span class="co">#&gt;  [55] Matrix_1.3-4                Rcpp_1.0.7                 </span>
-<span class="co">#&gt;  [57] munsell_0.5.0               S4Vectors_0.32.3           </span>
-<span class="co">#&gt;  [59] fansi_0.5.0                 lifecycle_1.0.1            </span>
-<span class="co">#&gt;  [61] stringi_1.7.6               yaml_2.2.1                 </span>
-<span class="co">#&gt;  [63] SummarizedExperiment_1.24.0 zlibbioc_1.40.0            </span>
-<span class="co">#&gt;  [65] parallel_4.1.2              crayon_1.4.2               </span>
-<span class="co">#&gt;  [67] lattice_0.20-45             Biostrings_2.62.0          </span>
-<span class="co">#&gt;  [69] circlize_0.4.13             magick_2.7.3               </span>
-<span class="co">#&gt;  [71] knitr_1.36                  pillar_1.6.4               </span>
-<span class="co">#&gt;  [73] GenomicRanges_1.46.1        rjson_0.2.20               </span>
-<span class="co">#&gt;  [75] codetools_0.2-18            stats4_4.1.2               </span>
-<span class="co">#&gt;  [77] strawr_0.0.9                XML_3.99-0.8               </span>
-<span class="co">#&gt;  [79] glue_1.5.1                  evaluate_0.14              </span>
-<span class="co">#&gt;  [81] data.table_1.14.2           png_0.1-7                  </span>
-<span class="co">#&gt;  [83] foreach_1.5.1               vctrs_0.3.8                </span>
-<span class="co">#&gt;  [85] gtable_0.3.0                purrr_0.3.4                </span>
-<span class="co">#&gt;  [87] clue_0.3-60                 assertthat_0.2.1           </span>
-<span class="co">#&gt;  [89] cachem_1.0.6                xfun_0.28                  </span>
-<span class="co">#&gt;  [91] restfulr_0.0.13             ragg_1.2.0                 </span>
-<span class="co">#&gt;  [93] tibble_3.1.6                iterators_1.0.13           </span>
-<span class="co">#&gt;  [95] GenomicAlignments_1.30.0    plyranges_1.14.0           </span>
-<span class="co">#&gt;  [97] memoise_2.0.1               IRanges_2.28.0             </span>
-<span class="co">#&gt;  [99] cluster_2.1.2               ellipsis_0.3.2</span></code></pre></div>
+<span class="co">#&gt;  [1] bitops_1.0-7                matrixStats_0.61.0         </span>
+<span class="co">#&gt;  [3] fs_1.5.1                    doParallel_1.0.16          </span>
+<span class="co">#&gt;  [5] rprojroot_2.0.2             GenomeInfoDb_1.30.0        </span>
+<span class="co">#&gt;  [7] tools_4.1.2                 bslib_0.3.1                </span>
+<span class="co">#&gt;  [9] utf8_1.2.2                  R6_2.5.1                   </span>
+<span class="co">#&gt; [11] DBI_1.1.1                   BiocGenerics_0.40.0        </span>
+<span class="co">#&gt; [13] colorspace_2.0-2            GetoptLong_1.0.5           </span>
+<span class="co">#&gt; [15] withr_2.4.3                 tidyselect_1.1.1           </span>
+<span class="co">#&gt; [17] curl_4.3.2                  compiler_4.1.2             </span>
+<span class="co">#&gt; [19] textshaping_0.3.6           Biobase_2.54.0             </span>
+<span class="co">#&gt; [21] desc_1.4.0                  DelayedArray_0.20.0        </span>
+<span class="co">#&gt; [23] rtracklayer_1.54.0          labeling_0.4.2             </span>
+<span class="co">#&gt; [25] sass_0.4.0                  pkgdown_2.0.0              </span>
+<span class="co">#&gt; [27] systemfonts_1.0.3           stringr_1.4.0              </span>
+<span class="co">#&gt; [29] digest_0.6.29               Rsamtools_2.10.0           </span>
+<span class="co">#&gt; [31] yulab.utils_0.0.4           rmarkdown_2.11             </span>
+<span class="co">#&gt; [33] XVector_0.34.0              pkgconfig_2.0.3            </span>
+<span class="co">#&gt; [35] htmltools_0.5.2             MatrixGenerics_1.6.0       </span>
+<span class="co">#&gt; [37] fastmap_1.1.0               highr_0.9                  </span>
+<span class="co">#&gt; [39] GlobalOptions_0.1.2         rlang_0.4.12               </span>
+<span class="co">#&gt; [41] shape_1.4.6                 gridGraphics_0.5-1         </span>
+<span class="co">#&gt; [43] jquerylib_0.1.4             BiocIO_1.4.0               </span>
+<span class="co">#&gt; [45] generics_0.1.1              farver_2.1.0               </span>
+<span class="co">#&gt; [47] jsonlite_1.7.2              BiocParallel_1.28.2        </span>
+<span class="co">#&gt; [49] dplyr_1.0.7                 RCurl_1.98-1.5             </span>
+<span class="co">#&gt; [51] magrittr_2.0.1              ggplotify_0.1.0            </span>
+<span class="co">#&gt; [53] GenomeInfoDbData_1.2.7      Matrix_1.3-4               </span>
+<span class="co">#&gt; [55] Rcpp_1.0.7                  munsell_0.5.0              </span>
+<span class="co">#&gt; [57] S4Vectors_0.32.3            fansi_0.5.0                </span>
+<span class="co">#&gt; [59] lifecycle_1.0.1             stringi_1.7.6              </span>
+<span class="co">#&gt; [61] yaml_2.2.1                  SummarizedExperiment_1.24.0</span>
+<span class="co">#&gt; [63] zlibbioc_1.40.0             parallel_4.1.2             </span>
+<span class="co">#&gt; [65] crayon_1.4.2                lattice_0.20-45            </span>
+<span class="co">#&gt; [67] Biostrings_2.62.0           circlize_0.4.13            </span>
+<span class="co">#&gt; [69] magick_2.7.3                knitr_1.36                 </span>
+<span class="co">#&gt; [71] pillar_1.6.4                GenomicRanges_1.46.1       </span>
+<span class="co">#&gt; [73] rjson_0.2.20                codetools_0.2-18           </span>
+<span class="co">#&gt; [75] stats4_4.1.2                strawr_0.0.9               </span>
+<span class="co">#&gt; [77] XML_3.99-0.8                glue_1.5.1                 </span>
+<span class="co">#&gt; [79] evaluate_0.14               data.table_1.14.2          </span>
+<span class="co">#&gt; [81] png_0.1-7                   foreach_1.5.1              </span>
+<span class="co">#&gt; [83] vctrs_0.3.8                 gtable_0.3.0               </span>
+<span class="co">#&gt; [85] clue_0.3-60                 assertthat_0.2.1           </span>
+<span class="co">#&gt; [87] cachem_1.0.6                xfun_0.28                  </span>
+<span class="co">#&gt; [89] restfulr_0.0.13             ragg_1.2.0                 </span>
+<span class="co">#&gt; [91] tibble_3.1.6                iterators_1.0.13           </span>
+<span class="co">#&gt; [93] GenomicAlignments_1.30.0    plyranges_1.14.0           </span>
+<span class="co">#&gt; [95] memoise_2.0.1               IRanges_2.28.0             </span>
+<span class="co">#&gt; [97] cluster_2.1.2               ellipsis_0.3.2</span></code></pre></div>
 </div>
   </div>
 
