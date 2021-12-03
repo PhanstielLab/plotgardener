@@ -42,7 +42,7 @@ navbar:
           href: articles/guides/plotgardener_meta_functions.html
         - text: Bioconductor Integration
           href: articles/guides/bioconductor_integration.html
-        - text: Incorporating ggplots
+        - text: Incorporating ggplots and other grid-based Bioconductor visualizations
           href: articles/guides/incorporating_ggplots.html
         - text: Ideograms and Shapes
           href: articles/guides/ideograms_and_shapes.html

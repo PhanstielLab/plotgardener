@@ -3,7 +3,7 @@ title: "Incorporating `ggplots` and other `grid`-based Bioconductor visualizatio
 output:
     rmarkdown::html_vignette
 vignette: >
-    %\VignetteIndexEntry{Incorporating `ggplots`}
+    %\VignetteIndexEntry{Incorporating `ggplots` and other `grid`-based Bioconductor visualizations}
     %\VignetteEngine{knitr::rmarkdown}
     %\VignetteEncoding{UTF-8}
 ---
@@ -420,48 +420,164 @@ excellent methods to produce such heatmaps. Since these plots are also based
 on `grid` graphics, it is possible to incorporate them into `plotgardener` 
 figure arrangements.
 
-For example, let's say we made this heatmap from a random matrix:
+For example, let's say we made a heatmap representing the density of ChIP-seq
+data at a particular peak:
+
 ```{r gg_plot08, fig.height=4, fig.width=5}
 library(ComplexHeatmap)
+library(purrr)
+library(RColorBrewer)
 
-set.seed(123)
-nr1 <- 4; nr2 = 8; nr3 = 6; nr = nr1 + nr2 + nr3
-nc1 <- 6; nc2 = 8; nc3 = 10; nc = nc1 + nc2 + nc3
-mat <- cbind(rbind(matrix(rnorm(nr1*nc1, mean = 1, sd = 0.5), nr = nr1),
-          matrix(rnorm(nr2*nc1, mean = 0, sd = 0.5), nr = nr2),
-          matrix(rnorm(nr3*nc1, mean = 0, sd = 0.5), nr = nr3)),
-    rbind(matrix(rnorm(nr1*nc2, mean = 0, sd = 0.5), nr = nr1),
-          matrix(rnorm(nr2*nc2, mean = 1, sd = 0.5), nr = nr2),
-          matrix(rnorm(nr3*nc2, mean = 0, sd = 0.5), nr = nr3)),
-    rbind(matrix(rnorm(nr1*nc3, mean = 0.5, sd = 0.5), nr = nr1),
-          matrix(rnorm(nr2*nc3, mean = 0.5, sd = 0.5), nr = nr2),
-          matrix(rnorm(nr3*nc3, mean = 1, sd = 0.5), nr = nr3))
-   )
-mat <- mat[sample(nr, nr), sample(nc, nc)]
-rownames(mat) <- paste0("row", seq_len(nr))
-colnames(mat) <- paste0("column", seq_len(nc))
-
-Heatmap(mat)
+# Simulated data
+genmat <- map(
+    1:2000,
+    function(i) {
+        c(sort(abs(rnorm(50)))[1:25], rev(sort(abs(rnorm(50)))[1:25])) * i/5000
+    }
+) %>% do.call(rbind, .)
+genmat <- genmat[nrow(genmat):1,]
+Heatmap(genmat, col = colorRampPalette(brewer.pal(n = 9, "YlGnBu"))(9),
+        border = "black",
+        border_gp = gpar(lwd = 0.5),
+        show_heatmap_legend = FALSE, 
+        cluster_rows = FALSE, cluster_columns = FALSE)
 ```
 
 We can capture this heatmap with the `grid` function `grid.grabExpr()`:
 
 ```{r}
 library(grid)
-heatmap <- grid.grabExpr(draw(Heatmap(mat)))
+heatmap <- grid.grabExpr(draw(Heatmap(genmat, 
+                    col = colorRampPalette(brewer.pal(n = 9, "YlGnBu"))(9),
+                    border = "black",
+                    border_gp = gpar(lwd = 0.5),
+                    show_heatmap_legend = FALSE, 
+                    cluster_rows = FALSE, cluster_columns = FALSE)))
 ```
 
 We can now pass this object into the `plotGG` function and incorporate the 
-heatmap into a `plotgardener` layout:
+heatmap into a `plotgardener` layout with additional figure elements made
+by `plotgardener`:
 
-```{r gg_plot09, fig.height=6.5, fig.width=9}
+```{r eval=FALSE}
+data("GM12878_HiC_10kb")
+data("GM12878_ChIP_CTCF_signal")
+data("GM12878_ChIP_H3K27ac_signal")
+library("org.Hs.eg.db")
+library("TxDb.Hsapiens.UCSC.hg19.knownGene")
+
+## Create page
 pageCreate(
-    width = 6.5, height = 5.5, default.units = "inches")
-plotGG(
+    width = 6, height = 4, default.units = "inches")
+
+params <- pgParams(chrom = "chr21", chromstart = 28150000, chromend = 29150000, 
+                   assembly = "hg19",
+                   x = 0.5, width = 2, default.units = "inches")
+ctcf_range <- pgParams(range = c(0, 77),
+                       assembly = "hg19")
+hk_range <- pgParams(range = c(0, 32.6),
+                     assembly = "hg19")
+hic_gm <- plotHicTriangle(data = GM12878_HiC_10kb, params = params,
+                          zrange = c(0, 200), resolution = 10000,
+                          y = 1.5, height = 1.25, just = c("left", "bottom"))
+annoHeatmapLegend(plot = hic_gm, fontsize = 7, 
+                  x = 2.5, y = 0.5, width = 0.07, height = 0.5, 
+                  just = c("right", "top"), default.units = "inches")
+ctcf_gm <- plotSignal(data = GM12878_ChIP_CTCF_signal, params = c(params, ctcf_range),
+                      fill = "#253494", linecolor = "#253494",
+                      y = 1.6, height = 0.6)
+plotText(label = "CTCF", fontcolor = "#253494", fontsize = 8,
+         x = 0.5, y = 1.6, just = c("left","top"), default.units = "inches")
+hk_gm <- plotSignal(data = GM12878_ChIP_H3K27ac_signal, params = c(params, hk_range),
+                    fill = "#37a7db", linecolor = "#37a7db",
+                    y = 2.3, height = 0.6, just = c("left", "top"))
+plotText(label = "H3K27ac", fontcolor = "#37a7db", fontsize = 8,
+         x = 0.5, y = 2.4, just = c("left","bottom"), default.units = "inches")
+genes_gm <- plotGenes(params = params, stroke = 1, fontsize = 6,
+                      strandLabels = FALSE,
+                      y = 3, height = 0.4)
+annoGenomeLabel(plot = genes_gm, params = params, 
+                scale = "Kb", fontsize = 7,
+                y = 3.5, digits = 0)
+
+## Add ComplexHeatmap
+gg_heatmap <- plotGG(
     plot = heatmap,
-    x = 0.25, y = 0.25,
-    width = 6, height = 5, just = c("left", "top")
+    x = 3, y = 0.5,
+    width = 2.5, height = 3
 )
+seekViewport(name = "heatmap_matrix_2")
+grid.xaxis(at = c(0, 0.5, 1), label = FALSE, gp = gpar(lwd = 0.5))
+seekViewport(name = "page")
+
+plotText(label = "Simulated Data", x = 4.25, y = 0.5,
+         fontsize = 12, just = "bottom")
+plotText(label = c(-2, 0, 2), x = c(3.065, 4.255, 5.425), 
+         y = 3.6, fontsize = 7)
+plotText(label = "Distance from center", x = 4.25, 
+         y = 3.75, fontsize = 8)
+
+## Hide page guides
+pageGuideHide()
+```
+
+```{r gg_plot09, echo=FALSE, fig.height=6, fig.width=8}
+data("GM12878_HiC_10kb")
+data("GM12878_ChIP_CTCF_signal")
+data("GM12878_ChIP_H3K27ac_signal")
+library("org.Hs.eg.db")
+library("TxDb.Hsapiens.UCSC.hg19.knownGene")
+
+pageCreate(
+    width = 6, height = 4, default.units = "inches",
+    showGuides = FALSE)
+
+params <- pgParams(chrom = "chr21", chromstart = 28150000, chromend = 29150000, 
+                   assembly = "hg19",
+                   x = 0.5, width = 2, default.units = "inches")
+ctcf_range <- pgParams(range = c(0, 77),
+                       assembly = "hg19")
+hk_range <- pgParams(range = c(0, 32.6),
+                     assembly = "hg19")
+hic_gm <- plotHicTriangle(data = GM12878_HiC_10kb, params = params,
+                          zrange = c(0, 200), resolution = 10000,
+                          y = 1.5, height = 1.25, just = c("left", "bottom"))
+annoHeatmapLegend(plot = hic_gm, fontsize = 7, 
+                  x = 2.5, y = 0.5, width = 0.07, height = 0.5, 
+                  just = c("right", "top"), default.units = "inches")
+ctcf_gm <- plotSignal(data = GM12878_ChIP_CTCF_signal, params = c(params, ctcf_range),
+                      fill = "#253494", linecolor = "#253494",
+                      y = 1.6, height = 0.6)
+plotText(label = "CTCF", fontcolor = "#253494", fontsize = 8,
+         x = 0.5, y = 1.6, just = c("left","top"), default.units = "inches")
+hk_gm <- plotSignal(data = GM12878_ChIP_H3K27ac_signal, params = c(params, hk_range),
+                    fill = "#37a7db", linecolor = "#37a7db",
+                    y = 2.3, height = 0.6, just = c("left", "top"))
+plotText(label = "H3K27ac", fontcolor = "#37a7db", fontsize = 8,
+         x = 0.5, y = 2.4, just = c("left","bottom"), default.units = "inches")
+genes_gm <- plotGenes(params = params, stroke = 1, fontsize = 6,
+                      strandLabels = FALSE,
+                      y = 3, height = 0.4)
+annoGenomeLabel(plot = genes_gm, params = params, 
+                scale = "Kb", fontsize = 7,
+                y = 3.5, digits = 0)
+
+## Add ComplexHeatmap
+gg_heatmap <- plotGG(
+    plot = heatmap,
+    x = 3, y = 0.5,
+    width = 2.5, height = 3
+)
+seekViewport(name = "heatmap_matrix_2")
+grid.xaxis(at = c(0, 0.5, 1), label = FALSE, gp = gpar(lwd = 0.5))
+seekViewport(name = "page")
+
+plotText(label = "Simulated Data", x = 4.25, y = 0.5,
+         fontsize = 12, just = "bottom")
+plotText(label = c(-2, 0, 2), x = c(3.065, 4.255, 5.425), 
+         y = 3.6, fontsize = 7)
+plotText(label = "Distance from center", x = 4.25, 
+         y = 3.75, fontsize = 8)
 ```
 
 ## Session Info
