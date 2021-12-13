@@ -299,6 +299,7 @@ plotLegend <- function(legend, fill = NULL, pch = NULL, lty = NULL,
 
     ## Title
     if (!is.null(legInternal$title)) {
+
         if (legInternal$orientation == "h") {
             remainingSpace <- height - textHeight * 2
             spaceNo <- 3
@@ -314,9 +315,13 @@ plotLegend <- function(legend, fill = NULL, pch = NULL, lty = NULL,
         ## Remove cex for text
         cex <- legInternal$gp$cex
         legInternal$gp$cex <- NULL
-
-        legInternal$gp$col <- NA
-
+        
+        ## Reset col for title
+        if (!is.null(legInternal$gp$col)){
+            if (is.na(legInternal$gp$col)){
+                legInternal$gp$col <- "black"
+            } 
+        }
         titleGrob <- textGrob(
             label = legInternal$title,
             x = unit(0.5, "npc"),
