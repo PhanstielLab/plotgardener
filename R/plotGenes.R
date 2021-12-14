@@ -783,14 +783,18 @@ plotGenes <- function(chrom, chromstart = NULL, chromend = NULL,
         if (nrow(plusgeneNames) > 0){
             plusgeneNames <- defaultGenePriorities(
                 data = plusgeneNames,
-                assembly = genes$assembly
+                assembly = genes$assembly,
+                geneHighlights = genesInternal$geneHighlights[[displayCol]],
+                displayCol = displayCol
             )
         }
 
         if (nrow(minusgeneNames) > 0){
             minusgeneNames <- defaultGenePriorities(
                 data = minusgeneNames,
-                assembly = genes$assembly
+                assembly = genes$assembly,
+                geneHighlights = genesInternal$geneHighlights[[displayCol]],
+                displayCol = displayCol
             )
         }
        
