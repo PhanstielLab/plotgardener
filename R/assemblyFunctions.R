@@ -167,9 +167,10 @@ geneData <- function(object, objectInternal) {
 # (if available) or gene lengths
 # @param data data frame of gene or transcript data
 # @param assembly assembly associated with gene data
-# @param transcsript a logical indicating whether or not we're
+# @param transcript a logical indicating whether or not we're
 # plotting transcripts or not
-defaultGenePriorities <- function(data, assembly, transcript = FALSE) {
+defaultGenePriorities <- function(data, assembly, transcript = FALSE, 
+                                geneHighlights = NULL, displayCol = "SYMBOL") {
 
     availCitations <- default_genomePackages[
         !is.na(default_genomePackages$Citations),]$Genome
@@ -242,6 +243,15 @@ defaultGenePriorities <- function(data, assembly, transcript = FALSE) {
         updatedData <- data[order(data$length, decreasing = TRUE), ]
     }
 
+    ## Put any gene highlights at the top of the priority
+    if (transcript == FALSE){
+        if (!is.null(geneHighlights)){
+            updatedData <- updatedData[c(which(updatedData[[displayCol]] 
+                                        %in% geneHighlights), 
+                                        which(!updatedData[[displayCol]] 
+                                              %in% geneHighlights)),]
+        }
+    }
     ## Return data with priorities
     return(updatedData)
 }

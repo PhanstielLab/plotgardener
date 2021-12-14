@@ -782,11 +782,15 @@ plotGenes <- function(chrom, chromstart = NULL, chromend = NULL,
         ## based on citation/gene length
         plusgeneNames <- defaultGenePriorities(
             data = plusgeneNames,
-            assembly = genes$assembly
+            assembly = genes$assembly,
+            geneHighlights = genesInternal$geneHighlights[[displayCol]],
+            displayCol = displayCol
         )
         minusgeneNames <- defaultGenePriorities(
             data = minusgeneNames,
-            assembly = genes$assembly
+            assembly = genes$assembly,
+            geneHighlights = genesInternal$geneHighlights[[displayCol]],
+            displayCol = displayCol
         )
 
         if (!is.null(genesInternal$geneOrder)) {
