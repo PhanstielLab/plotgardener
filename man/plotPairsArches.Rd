@@ -19,6 +19,7 @@ plotPairsArches(
     alpha = 0.4,
     bg = NA,
     clip = FALSE,
+    range = NULL,
     baseline = FALSE,
     baseline.color = "grey",
     baseline.lwd = 1,
@@ -87,6 +88,9 @@ Default value is \code{bg = NA}.}
 \item{clip}{A logical value indicating whether to clip any
 arches that get cutoff in the given genomic region.
 Default value is \code{clip = FALSE}.}
+
+\item{range}{A numeric vector of length 2 specifying the y-range
+of \code{archHeight} to plot (c(min, max)).}
 
 \item{baseline}{Logical value indicating whether to include
 a baseline along the x-axis. Default value is \code{baseline = FALSE}.}
