@@ -428,7 +428,7 @@ annoDomains <- function(plot, data, half = "inherit",
             x = currentViewports
         )) + 1
     )
-    assign("domainsInternal", domainsInternal$plot, envir = globalenv())
+    
     ## Make viewport based on hic input viewport
     if (is(domainsInternal$plot, "hicSquare")) {
         vp <- viewport(
