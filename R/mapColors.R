@@ -208,6 +208,18 @@ parseColors <- function(data, fill, object, subset = NULL){
                                         data[,"end1"] <= object$chromend) |
                                         (data[,"start2"] <= object$chromstart &
                                         data[,"start2"] >= object$chromend))),]
+                    subData <- data[which(data[, "chrom1"] == object$chrom &
+                                            data[, "chrom2"] == object$chrom),]
+                    overlappingRanges <- 
+                        as.data.frame(subsetByOverlaps(ranges = 
+                                IRanges(start = object$chromstart, 
+                                        end = object$chromend),
+                                x = IRanges(start = subData[,"start1"], 
+                                            end = subData[,"end2"])))
+                    subData <- subData[which(subData[,"start1"] %in% 
+                                                 overlappingRanges$start &
+                                             subData[,"end2"] %in% 
+                                                 overlappingRanges$end),]
                 } else if (subset == "pairs_clip"){
                     subData <- data[which(data[,"chrom1"] == object$chrom &
                                 data[,"chrom2"] == object$chrom &

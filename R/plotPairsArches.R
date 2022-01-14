@@ -470,11 +470,14 @@ plotPairsArches <- function(data, chrom, chromstart = NULL, chromend = NULL,
                 bedpe[, "end2"] <= archesPlot$chromend), ]
         } else {
             bedpe <- bedpe[which(bedpe[, "chrom1"] == archesPlot$chrom &
-                bedpe[, "chrom2"] == archesPlot$chrom &
-                ((bedpe[, "end1"] >= archesPlot$chromstart &
-                    bedpe[, "end1"] <= archesPlot$chromend) |
-                    (bedpe[, "start2"] <= archesPlot$chromstart &
-                        bedpe[, "start2"] >= archesPlot$chromend))), ]
+                bedpe[, "chrom2"] == archesPlot$chrom),]
+            overlappingRanges <- as.data.frame(subsetByOverlaps(ranges = 
+                IRanges(start = archesPlot$chromstart, 
+                        end = archesPlot$chromend),
+                x = IRanges(start = bedpe[,"start1"], 
+                            end = bedpe[,"end2"])))
+            bedpe <- bedpe[which(bedpe[,"start1"] %in% overlappingRanges$start &
+                        bedpe[,"end2"] %in% overlappingRanges$end),]
         }
     } else {
         bedpe <- data.frame(matrix(nrow = 0, ncol = 6))
