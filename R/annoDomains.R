@@ -428,6 +428,7 @@ annoDomains <- function(plot, data, half = "inherit",
             x = currentViewports
         )) + 1
     )
+    assign("domainsInternal", domainsInternal$plot, envir = globalenv())
     ## Make viewport based on hic input viewport
     if (is(domainsInternal$plot, "hicSquare")) {
         vp <- viewport(
@@ -475,20 +476,21 @@ annoDomains <- function(plot, data, half = "inherit",
 
         vp <- viewport(
             height = side, width = side,
-            x = unit(0, "npc"), y = unit(0, "npc"),
+            x = unit(domainsInternal$plot$grobs$vp$xscale[1], "native"),
+            y = unit(0, "npc"),
             xscale = domainsInternal$plot$grobs$vp$xscale,
             yscale = domainsInternal$plot$grobs$vp$yscale,
             just = c("left", "bottom"),
             name = paste0(vp_name, "_inside"),
             angle = -45
         )
-
         vpClip <- viewport(
             height = domainsInternal$plot$outsideVP$height,
             width = domainsInternal$plot$outsideVP$width,
             x = domainsInternal$plot$outsideVP$x,
             y = domainsInternal$plot$outsideVP$y,
             just = domainsInternal$plot$outsideVP$justification,
+            xscale = domainsInternal$plot$outsideVP$xscale,
             clip = "on",
             name = paste0(vp_name, "_outside")
         )
