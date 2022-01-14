@@ -15,6 +15,7 @@
 #'     alpha = 0.4,
 #'     bg = NA,
 #'     clip = FALSE,
+#'     range = NULL,
 #'     baseline = FALSE,
 #'     baseline.color = "grey",
 #'     baseline.lwd = 1,
@@ -69,6 +70,8 @@
 #' @param clip A logical value indicating whether to clip any
 #' arches that get cutoff in the given genomic region.
 #' Default value is \code{clip = FALSE}.
+#' @param range A numeric vector of length 2 specifying the y-range
+#' of \code{archHeight} to plot (c(min, max)).
 #' @param baseline Logical value indicating whether to include
 #' a baseline along the x-axis. Default value is \code{baseline = FALSE}.
 #' @param baseline.color Baseline color.
@@ -179,7 +182,7 @@ plotPairsArches <- function(data, chrom, chromstart = NULL, chromend = NULL,
                             curvature = 5, archHeight = NULL,
                             fill = "#1f4297",
                             linecolor = NA, alpha = 0.4, bg = NA,
-                            clip = FALSE, baseline = FALSE,
+                            clip = FALSE, range = NULL, baseline = FALSE,
                             baseline.color = "grey", baseline.lwd = 1,
                             x = NULL, y = NULL, width = NULL, height = NULL,
                             just = c("left", "top"),
@@ -206,23 +209,35 @@ plotPairsArches <- function(data, chrom, chromstart = NULL, chromend = NULL,
         checkColorby(fill = fill,
                         colorby = TRUE,
                         data = bedpe)
+        
+        rangeErrors(range = archesPlot$range)
     }
 
     ## Define a function that will produce a yscale for arches based on height
-    height_yscale <- function(heights, flip) {
-        if (length(heights) == 1) {
-            if (flip == FALSE) {
-                yscale <- c(0, heights)
+    ## and range
+    height_yscale <- function(heights, flip, range) {
+        if (is.null(range)){
+            if (length(heights) == 1) {
+                if (flip == FALSE) {
+                    yscale <- c(0, heights)
+                } else {
+                    yscale <- c(heights, 0)
+                }
             } else {
-                yscale <- c(heights, 0)
+                if (flip == FALSE) { 
+                    yscale <- c(0, max(heights))
+                } else {
+                    yscale <- c(max(heights), 0)
+                }
             }
         } else {
-            if (flip == FALSE) {
-                yscale <- c(0, max(heights))
+            if (flip == FALSE){
+                yscale <- range
             } else {
-                yscale <- c(max(heights), 0)
+                yscale <- rev(range)
             }
         }
+        
         return(yscale)
     }
 
@@ -351,6 +366,7 @@ plotPairsArches <- function(data, chrom, chromstart = NULL, chromend = NULL,
         assembly = archInternal$assembly,
         color_palette = NULL,
         zrange = NULL,
+        range = archInternal$range,
         x = archInternal$x, y = archInternal$y,
         width = archInternal$width,
         height = archInternal$height,
@@ -454,11 +470,14 @@ plotPairsArches <- function(data, chrom, chromstart = NULL, chromend = NULL,
                 bedpe[, "end2"] <= archesPlot$chromend), ]
         } else {
             bedpe <- bedpe[which(bedpe[, "chrom1"] == archesPlot$chrom &
-                bedpe[, "chrom2"] == archesPlot$chrom &
-                ((bedpe[, "end1"] >= archesPlot$chromstart &
-                    bedpe[, "end1"] <= archesPlot$chromend) |
-                    (bedpe[, "start2"] <= archesPlot$chromstart &
-                        bedpe[, "start2"] >= archesPlot$chromend))), ]
+                bedpe[, "chrom2"] == archesPlot$chrom),]
+            overlappingRanges <- as.data.frame(subsetByOverlaps(ranges = 
+                IRanges(start = archesPlot$chromstart, 
+                        end = archesPlot$chromend),
+                x = IRanges(start = bedpe[,"start1"], 
+                            end = bedpe[,"end2"])))
+            bedpe <- bedpe[which(bedpe[,"start1"] %in% overlappingRanges$start &
+                        bedpe[,"end2"] %in% overlappingRanges$end),]
         }
     } else {
         bedpe <- data.frame(matrix(nrow = 0, ncol = 6))
@@ -523,14 +542,16 @@ plotPairsArches <- function(data, chrom, chromstart = NULL, chromend = NULL,
             bedpe$height <- rep(archInternal$archHeight, nrow(bedpe))
             yscale <- height_yscale(
                 heights = archInternal$archHeight,
-                flip = archInternal$flip
+                flip = archInternal$flip,
+                range = archInternal$range
             )
             vp$yscale <- yscale
         } else {
             bedpe$height <- archInternal$archHeight[seq(1, nrow(bedpe))]
             yscale <- height_yscale(
                 heights = archInternal$archHeight,
-                flip = archInternal$flip
+                flip = archInternal$flip,
+                range = archInternal$range
             )
             vp$yscale <- yscale
         }
@@ -538,7 +559,7 @@ plotPairsArches <- function(data, chrom, chromstart = NULL, chromend = NULL,
         if (length(bedpe$height) > 0) {
             bedpe$normHeight <- lapply(bedpe$height, normHeights,
                 min = 0,
-                max = max(bedpe$height)
+                max = max(vp$yscale)
             )
         }
     }

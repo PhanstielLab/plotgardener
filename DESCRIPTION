@@ -1,7 +1,7 @@
 Package: plotgardener
 Title: Coordinate-Based Genomic Visualization Package for R
-Version: 1.1.8
-Date: 2021-12-15
+Version: 1.1.9
+Date: 2022-01-14
 Authors@R: c(person("Nicole", "Kramer", 
              email = "nekramer@live.unc.edu", 
              role = c("aut", "cre"),
@@ -43,6 +43,7 @@ Imports:
     grDevices,
     grid,
     ggplotify,
+    IRanges,
     methods,
     plyranges,
     purrr,
@@ -72,7 +73,6 @@ Suggests:
     GenomicRanges,
     ggplot2,
     InteractionSet,
-    IRanges,
     knitr,
     org.Hs.eg.db,
     rtracklayer,

@@ -59,4 +59,6 @@
 #' @import grid
 #' @importFrom strawr straw
 #' @importFrom strawr readHicBpResolutions
+#' @importFrom IRanges IRanges
+#' @importFrom IRanges subsetByOverlaps
 "_PACKAGE"
