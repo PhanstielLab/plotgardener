@@ -249,7 +249,7 @@ defaultGenePriorities <- function(data, assembly, transcript = FALSE,
             updatedData <- updatedData[c(which(updatedData[[displayCol]] 
                                         %in% geneHighlights), 
                                         which(!updatedData[[displayCol]] 
-                                              %in% geneHighlights)),]
+                                            %in% geneHighlights)),]
         }
     }
     ## Return data with priorities

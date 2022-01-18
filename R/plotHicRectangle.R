@@ -556,7 +556,7 @@ plotHicRectangle <- function(data, resolution = "auto", zrange = NULL,
         col = NA
     ), name = "background")
     assign("hic_grobs3", gTree(vp = inside_vp, children = gList(backgroundGrob)),
-           envir = pgEnv
+        envir = pgEnv
     )
     
     # =========================================================================

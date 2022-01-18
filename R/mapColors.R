@@ -217,9 +217,9 @@ parseColors <- function(data, fill, object, subset = NULL){
                                 x = IRanges(start = subData[,"start1"], 
                                             end = subData[,"end2"])))
                     subData <- subData[which(subData[,"start1"] %in% 
-                                                 overlappingRanges$start &
-                                             subData[,"end2"] %in% 
-                                                 overlappingRanges$end),]
+                                                overlappingRanges$start &
+                                            subData[,"end2"] %in% 
+                                                overlappingRanges$end),]
                 } else if (subset == "pairs_clip"){
                     subData <- data[which(data[,"chrom1"] == object$chrom &
                                 data[,"chrom2"] == object$chrom &

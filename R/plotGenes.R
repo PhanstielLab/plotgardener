@@ -519,7 +519,7 @@ plotGenes <- function(chrom, chromstart = NULL, chromend = NULL,
         if ((genes$chromend - genes$chromstart) >= 25000000) {
             if (nrow(plus_genes) > 0) {
                 plus_lines <- unique(plus_genes[,c("TXSTART", "TXEND", 
-                                                   "fontColor", "strandColor")])
+                                                "fontColor", "strandColor")])
                 plus_geneGrobs <- rectGrob(
                     x = plus_lines$TXSTART,
                     y = unit(0.63, "npc"),
@@ -543,7 +543,7 @@ plotGenes <- function(chrom, chromstart = NULL, chromend = NULL,
 
             if (nrow(minus_genes) > 0) {
                 minus_lines <- unique(minus_genes[,c("TXSTART", "TXEND", 
-                                                   "fontColor", "strandColor")])
+                                                "fontColor", "strandColor")])
                 minus_geneGrobs <- rectGrob(
                     x = minus_lines$TXSTART,
                     y = unit(0.37, "npc"),
@@ -651,7 +651,7 @@ plotGenes <- function(chrom, chromstart = NULL, chromend = NULL,
                 ## GENE LINES
                 ##########################################################
                 minus_lines <- unique(minus_genes[,c("TXSTART", "TXEND", 
-                                                   "fontColor", "strandColor")])
+                                                "fontColor", "strandColor")])
                 minus_geneGrobs <- rectGrob(
                     x = minus_lines$TXSTART,
                     y = unit(0.37, "npc"),
