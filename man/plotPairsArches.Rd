@@ -63,9 +63,9 @@ the x-axis. Default value is \code{flip = FALSE}.}
 \item{curvature}{Numeric indicating the number of points along the
 arch curvature. Default value is \code{curvature = 5}.}
 
-\item{archHeight}{Single numeric value or numeric vector specifying
-the arch heights. When NULL, all arches will be the same height,
-filling up the given plot area}
+\item{archHeight}{Single numeric value, numeric vector, or column name 
+in data specifying the arch heights. When NULL, all arches will be the 
+same height, filling up the given plot area.}
 
 \item{fill}{A single character value, a vector, or a 
 \link[plotgardener]{colorby} object specifying fill colors of arches.
@@ -181,7 +181,8 @@ IMR90_DNAloops_pairs$length <-
         (IMR90_DNAloops_pairs$start2 - IMR90_DNAloops_pairs$start1) / 1000
 
 ## Translate lengths into heights
-heights <- IMR90_DNAloops_pairs$length / max(IMR90_DNAloops_pairs$length)
+IMR90_DNAloops_pairs$h <- 
+        IMR90_DNAloops_pairs$length / max(IMR90_DNAloops_pairs$length)
 
 ## Plot the data
 archPlot <- plotPairsArches(
@@ -189,7 +190,7 @@ archPlot <- plotPairsArches(
     fill = colorby("length", palette = 
                 colorRampPalette(c("dodgerblue2", "firebrick2"))),
     linecolor = "fill",
-    archHeight = heights, alpha = 1,
+    archHeight = "h", alpha = 1,
     x = 0.25, y = 0.25, height = 1.5,
     just = c("left", "top"),
     default.units = "inches"

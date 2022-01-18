@@ -697,7 +697,7 @@ plotHicSquare <- function(data, resolution = "auto", zrange = NULL,
         col = NA
     ), name = "background")
     assign("hic_grobs", gTree(vp = vp, children = gList(backgroundGrob)),
-           envir = pgEnv
+        envir = pgEnv
     )
     
     # =========================================================================

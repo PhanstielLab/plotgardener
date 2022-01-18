@@ -708,7 +708,7 @@ plotHicTriangle <- function(data, resolution = "auto", zrange = NULL,
         col = NA
     ), name = "background")
     assign("hic_grobs2", gTree(vp = inside_vp, children = gList(backgroundGrob)),
-           envir = pgEnv
+        envir = pgEnv
     )
     
     # =========================================================================

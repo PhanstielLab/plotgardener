@@ -50,9 +50,9 @@
 #' the x-axis. Default value is \code{flip = FALSE}.
 #' @param curvature Numeric indicating the number of points along the
 #' arch curvature. Default value is \code{curvature = 5}.
-#' @param archHeight Single numeric value or numeric vector specifying
-#' the arch heights. When NULL, all arches will be the same height,
-#' filling up the given plot area
+#' @param archHeight Single numeric value, numeric vector, or column name 
+#' in data specifying the arch heights. When NULL, all arches will be the 
+#' same height, filling up the given plot area.
 #' @param fill A single character value, a vector, or a 
 #' \link[plotgardener]{colorby} object specifying fill colors of arches.
 #' Default value is \code{fill = #1f4297"}.
@@ -129,7 +129,8 @@
 #'         (IMR90_DNAloops_pairs$start2 - IMR90_DNAloops_pairs$start1) / 1000
 #'
 #' ## Translate lengths into heights
-#' heights <- IMR90_DNAloops_pairs$length / max(IMR90_DNAloops_pairs$length)
+#' IMR90_DNAloops_pairs$h <- 
+#'         IMR90_DNAloops_pairs$length / max(IMR90_DNAloops_pairs$length)
 #'
 #' ## Plot the data
 #' archPlot <- plotPairsArches(
@@ -137,7 +138,7 @@
 #'     fill = colorby("length", palette = 
 #'                 colorRampPalette(c("dodgerblue2", "firebrick2"))),
 #'     linecolor = "fill",
-#'     archHeight = heights, alpha = 1,
+#'     archHeight = "h", alpha = 1,
 #'     x = 0.25, y = 0.25, height = 1.5,
 #'     just = c("left", "top"),
 #'     default.units = "inches"
@@ -440,7 +441,11 @@ plotPairsArches <- function(data, chrom, chromstart = NULL, chromend = NULL,
     if (archInternal$clip == TRUE){
         subset <- "pairs_clip"
     } else {
-        subset <- "pairs"
+        if (archInternal$clip.noAnchor == TRUE){
+            subset <- "pairs_noanchor"
+        } else {
+            subset <- "pairs"
+        }
     }
     
     archColors <- parseColors(data = bedpe,
@@ -554,22 +559,39 @@ plotPairsArches <- function(data, chrom, chromstart = NULL, chromend = NULL,
     if (nrow(bedpe) > 0) {
         if (is.null(archInternal$archHeight)) {
             bedpe$height <- rep(1, nrow(bedpe))
-        } else if (length(archInternal$archHeight) == 1) {
-            bedpe$height <- rep(archInternal$archHeight, nrow(bedpe))
+        } else if (is(archInternal$archHeight, "numeric")){
+            if (length(archInternal$archHeight) == 1){
+                bedpe$height <- rep(archInternal$archHeight, nrow(bedpe))
+            } else {
+                if (length(archInternal$archHeight) < nrow(bedpe)){
+                        stop("`archHeight` vector is shorter than the", 
+                            " number of plotted arches.", call. = FALSE)
+                } else if (length(archInternal$archHeight) > nrow(bedpe)){
+                    warning("`archHeight` vector is longer than the number ",
+                            "of plotted arches. `archHeight` vector will",
+                            " be truncated.", call. = FALSE)
+                }
+                bedpe$height <- archInternal$archHeight[seq(1, nrow(bedpe))]
+            }
             yscale <- height_yscale(
-                heights = archInternal$archHeight,
-                flip = archInternal$flip,
-                range = archInternal$range
-            )
+                        heights = bedpe$height,
+                        flip = archInternal$flip,
+                        range = archInternal$range
+                    )
             vp$yscale <- yscale
         } else {
-            bedpe$height <- archInternal$archHeight[seq(1, nrow(bedpe))]
+            if (!archInternal$archHeight %in% colnames(bedpe)){
+                stop("Column name for `archHeight` not found in data.",
+                    call. = FALSE)
+            }
+            bedpe$height <- bedpe[, archInternal$archHeight]
             yscale <- height_yscale(
-                heights = bedpe$height,
-                flip = archInternal$flip,
-                range = archInternal$range
-            )
+                        heights = bedpe$height,
+                        flip = archInternal$flip,
+                        range = archInternal$range
+                    )
             vp$yscale <- yscale
+            
         }
 
         if (length(bedpe$height) > 0) {

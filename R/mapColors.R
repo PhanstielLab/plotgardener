@@ -202,12 +202,6 @@ parseColors <- function(data, fill, object, subset = NULL){
                                     data[,"end"] >= object$chromstart),]
                     
                 } else if (subset == "pairs"){
-                    subData <- data[which(data[,"chrom1"] == object$chrom &
-                                        data[,"chrom2"] == object$chrom &
-                                        ((data[,"end1"] >= object$chromstart &
-                                        data[,"end1"] <= object$chromend) |
-                                        (data[,"start2"] <= object$chromstart &
-                                        data[,"start2"] >= object$chromend))),]
                     subData <- data[which(data[, "chrom1"] == object$chrom &
                                             data[, "chrom2"] == object$chrom),]
                     overlappingRanges <- 
@@ -217,9 +211,9 @@ parseColors <- function(data, fill, object, subset = NULL){
                                 x = IRanges(start = subData[,"start1"], 
                                             end = subData[,"end2"])))
                     subData <- subData[which(subData[,"start1"] %in% 
-                                                 overlappingRanges$start &
-                                             subData[,"end2"] %in% 
-                                                 overlappingRanges$end),]
+                                                overlappingRanges$start &
+                                            subData[,"end2"] %in% 
+                                                overlappingRanges$end),]
                 } else if (subset == "pairs_clip"){
                     subData <- data[which(data[,"chrom1"] == object$chrom &
                                 data[,"chrom2"] == object$chrom &
@@ -228,6 +222,13 @@ parseColors <- function(data, fill, object, subset = NULL){
                                 data[,"start2"] >= object$chromstart &
                                 data[,"end2"] <= object$chromend),]
                     
+                } else if (subset == "pairs_noachor"){
+                    subData <- data[which(data[,"chrom1"] == object$chrom &
+                                        data[,"chrom2"] == object$chrom &
+                                        ((data[,"start1"] >= object$chromstart &
+                                        data[,"start1"] <= object$chromend) |
+                                        (data[,"end2"] >= object$chromstart &
+                                        data[,"end2"] <= object$chromend))), ]
                 } else if (subset == "manhattan"){
                     subData <- data[which(data[,"chrom"] == object$chrom &
                                             data[,"pos"] >= object$chromstart &

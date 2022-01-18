@@ -1,3 +1,19 @@
+# CHANGES IN VERSION 1.0.12
+
+## BUG FIXES 
+
+* `annoDomains` coordinates fixed for `plotHicRectangle`.
+* Clipping logic for `plotPairsArches` now clips arches both on left and right
+side of plot.
+* Subsetting `plotPairs` logic fixed to match `plotPairsArches`.
+    
+## NEW FEATURES
+
+* `clip.noAnchors` parameter in `plotPairsArches` allows for inclusion or 
+clipping of arches that do not have anchors in the given genomic region.
+* `plotPairsArches` now allows for column name input to designate `archHeights`.
+
+
 # CHANGES IN VERSION 0.99.11
 
 ## BUG FIXES 
