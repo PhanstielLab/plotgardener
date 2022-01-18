@@ -228,6 +228,13 @@ parseColors <- function(data, fill, object, subset = NULL){
                                 data[,"start2"] >= object$chromstart &
                                 data[,"end2"] <= object$chromend),]
                     
+                } else if (subset == "pairs_noachor"){
+                    subData <- data[which(data[,"chrom1"] == object$chrom &
+                                        data[,"chrom2"] == object$chrom &
+                                        ((data[,"start1"] >= object$chromstart &
+                                        data[,"start1"] <= object$chromend) |
+                                        (data[,"end2"] >= object$chromstart &
+                                        data[,"end2"] <= object$chromend))), ]
                 } else if (subset == "manhattan"){
                     subData <- data[which(data[,"chrom"] == object$chrom &
                                             data[,"pos"] >= object$chromstart &
