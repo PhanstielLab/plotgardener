@@ -86,11 +86,13 @@ pageCreate <- function(width = 8.5, height = 11, default.units = "inches",
     }
 
     # =========================================================================
-    # MAKE NEW PAGE
+    # MAKE NEW PAGE AND CLEAR OLD GROBS
     # =========================================================================
 
+    rm(list = ls(envir = pgEnv), envir = pgEnv)
     grid.newpage()
     assign("pg_vpTree", list(), envir = pgEnv)
+    assign("pg_gList", gList(), envir = pgEnv)
 
     # =========================================================================
     # PARSE PARAMETERS

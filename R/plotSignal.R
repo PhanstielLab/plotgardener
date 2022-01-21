@@ -451,7 +451,7 @@ plotSignal <- function(data, binSize = NA, binCap = TRUE, negData = FALSE,
     }
 
     ## Define a function that makes a grob for a signal (pos/neg)
-    sigGrob <- function(signal, fillCol, lineCol, gp) {
+    sigGrob <- function(signal, fillCol, lineCol, gp, gTree) {
         gp$col <- lineCol
         if (!is.null(fillCol) & !is.na(fillCol)) {
             if ("alpha" %in% names(gp)) {
@@ -480,19 +480,21 @@ plotSignal <- function(data, binSize = NA, binCap = TRUE, negData = FALSE,
 
 
         ## Add grob to gtree
-        assign("signal_grobs",
-            addGrob(
-                gTree = get("signal_grobs", envir = pgEnv),
-                child = sigGrob
-            ),
-            envir = pgEnv
-        )
+        pgEnv$pg_gList[[gTree]] <- addGrob(gTree = pgEnv$pg_gList[[gTree]],
+                                                  child = sigGrob)
+        # assign("signal_grobs",
+        #     addGrob(
+        #         gTree = get("signal_grobs", envir = pgEnv),
+        #         child = sigGrob
+        #     ),
+        #     envir = pgEnv
+        # )
     }
 
     ## Define a function that finds data that falls out of the plot's
     ## range and draws a tiny black line to indicate it
-    cutoffGrobs <- function(signal, signaltrack, side) {
-        grobCutoffs <- function(df, side) {
+    cutoffGrobs <- function(signal, signaltrack, side, gTree) {
+        grobCutoffs <- function(df, side, gTree) {
             x0 <- df[1]
             x1 <- df[2]
 
@@ -508,13 +510,15 @@ plotSignal <- function(data, binSize = NA, binCap = TRUE, negData = FALSE,
                 gp = gpar(lwd = 1, col = "grey"),
                 default.units = "native"
             )
-            assign("signal_grobs",
-                addGrob(
-                    gTree = get("signal_grobs", envir = pgEnv),
-                    child = cutoffGrob
-                ),
-                envir = pgEnv
-            )
+            pgEnv$pg_gList[[gTree]] <- addGrob(gTree = pgEnv$pg_gList[[gTree]],
+                                                      child = cutoffGrob)
+            # assign("signal_grobs",
+            #     addGrob(
+            #         gTree = get("signal_grobs", envir = pgEnv),
+            #         child = cutoffGrob
+            #     ),
+            #     envir = pgEnv
+            # )
         }
 
         if (side == "top") {
@@ -536,7 +540,7 @@ plotSignal <- function(data, binSize = NA, binCap = TRUE, negData = FALSE,
         x1s <- Outside[c(FALSE, TRUE)]
         pairs <- data.frame("x0" = x0s, "x1" = x1s)
 
-        invisible(apply(pairs, 1, grobCutoffs, side = side))
+        invisible(apply(pairs, 1, grobCutoffs, side = side, gTree = gTree))
     }
 
     # =========================================================================
@@ -858,9 +862,23 @@ plotSignal <- function(data, binSize = NA, binCap = TRUE, negData = FALSE,
         fill = sigInternal$bg,
         col = NA
     ), name = "background")
-    assign("signal_grobs", gTree(vp = vp, children = gList(backgroundGrob)),
-        envir = pgEnv
+    
+    ## Unique name for gTree
+    signal_gTree <- paste0(
+        "signal",
+        length(grep(
+            pattern = "signal",
+            x = names(get("pg_gList", envir = pgEnv))
+        )) + 1
     )
+    
+    pgEnv$pg_gList[[signal_gTree]] <- gTree(vp = vp, 
+                                            children = gList(backgroundGrob))
+    
+    
+    # assign("signal_grobs", gTree(vp = vp, children = gList(backgroundGrob)),
+    #     envir = pgEnv
+    # )
 
     # =========================================================================
     # MAKE GROBS
@@ -874,12 +892,14 @@ plotSignal <- function(data, binSize = NA, binCap = TRUE, negData = FALSE,
             if (nrow(posSignal) >= 2) {
                 sigGrob(
                     signal = posSignal2, fillCol = fills[[1]],
-                    lineCol = lines[[1]], gp = sigInternal$gp
+                    lineCol = lines[[1]], gp = sigInternal$gp, 
+                    gTree = signal_gTree
                 )
                 ## Find and make cutoff lines
                 cutoffGrobs(
                     signal = posSignal2, signaltrack = signal_track,
-                    side = "top"
+                    side = "top",
+                    gTree = signal_gTree
                 )
             } else {
                 sigInternal$gp$col <- lines[[1]]
@@ -888,13 +908,15 @@ plotSignal <- function(data, binSize = NA, binCap = TRUE, negData = FALSE,
                     x1 = 1, y1 = unit(0, "native"),
                     gp = sigInternal$gp
                 )
-                assign("signal_grobs",
-                    addGrob(
-                        gTree = get("signal_grobs", envir = pgEnv),
-                        child = posGrob
-                    ),
-                    envir = pgEnv
-                )
+                pgEnv$pg_gList[[signal_gTree]] <- addGrob(gTree = pgEnv$pg_gList[[signal_gTree]],
+                                                             child = posGrob)
+                # assign("signal_grobs",
+                #     addGrob(
+                #         gTree = get("signal_grobs", envir = pgEnv),
+                #         child = posGrob
+                #     ),
+                #     envir = pgEnv
+                # )
                 warning("Not enough top signal data to plot.", call. = FALSE)
             }
 
@@ -902,12 +924,14 @@ plotSignal <- function(data, binSize = NA, binCap = TRUE, negData = FALSE,
             if (nrow(negSignal) >= 2) {
                 sigGrob(
                     signal = negSignal2, fillCol = fills[[2]],
-                    lineCol = lines[[2]], gp = sigInternal$gp
+                    lineCol = lines[[2]], gp = sigInternal$gp,
+                    gTree = signal_gTree
                 )
                 ## Find and make cutoff lines
                 cutoffGrobs(
                     signal = negSignal2, signaltrack = signal_track,
-                    side = "bottom"
+                    side = "bottom",
+                    gTree = signal_gTree
                 )
             } else {
                 sigInternal$gp$col <- lines[[2]]
@@ -916,13 +940,15 @@ plotSignal <- function(data, binSize = NA, binCap = TRUE, negData = FALSE,
                     x1 = 1, y1 = unit(0, "native"),
                     gp = sigInternal$gp
                 )
-                assign("signal_grobs",
-                    addGrob(
-                        gTree = get("signal_grobs", envir = pgEnv),
-                        child = negGrob
-                    ),
-                    envir = pgEnv
-                )
+                pgEnv$pg_gList[[signal_gTree]] <- addGrob(gTree = pgEnv$pg_gList[[signal_gTree]],
+                                                          child = negGrob)
+                # assign("signal_grobs",
+                #     addGrob(
+                #         gTree = get("signal_grobs", envir = pgEnv),
+                #         child = negGrob
+                #     ),
+                #     envir = pgEnv
+                # )
                 warning("Not enough bottom signal data to plot.",
                     call. = FALSE
                 )
@@ -938,13 +964,15 @@ plotSignal <- function(data, binSize = NA, binCap = TRUE, negData = FALSE,
                 ),
                 default.units = "native"
             )
-            assign("signal_grobs",
-                addGrob(
-                    gTree = get("signal_grobs", envir = pgEnv),
-                    child = lineGrob
-                ),
-                envir = pgEnv
-            )
+            pgEnv$pg_gList[[signal_gTree]] <- addGrob(gTree = pgEnv$pg_gList[[signal_gTree]],
+                                                      child = lineGrob)
+            # assign("signal_grobs",
+            #     addGrob(
+            #         gTree = get("signal_grobs", envir = pgEnv),
+            #         child = lineGrob
+            #     ),
+            #     envir = pgEnv
+            # )
         } else {
             if (nrow(posSignal) >= 2) {
                 if (sigInternal$baseline == TRUE) {
@@ -958,24 +986,28 @@ plotSignal <- function(data, binSize = NA, binCap = TRUE, negData = FALSE,
                         ),
                         default.units = "native"
                     )
-                    assign("signal_grobs",
-                        addGrob(
-                            gTree = get("signal_grobs", envir = pgEnv),
-                            child = baselineGrob
-                        ),
-                        envir = pgEnv
-                    )
+                    pgEnv$pg_gList[[signal_gTree]] <- addGrob(gTree = pgEnv$pg_gList[[signal_gTree]],
+                                                              child = baselineGrob)
+                    # assign("signal_grobs",
+                    #     addGrob(
+                    #         gTree = get("signal_grobs", envir = pgEnv),
+                    #         child = baselineGrob
+                    #     ),
+                    #     envir = pgEnv
+                    # )
                 }
 
                 sigGrob(
                     signal = posSignal2, fillCol = sigInternal$fill[1],
                     lineCol = sigInternal$linecolor[1],
-                    gp = sigInternal$gp
+                    gp = sigInternal$gp,
+                    gTree = signal_gTree
                 )
                 ## Find and make cutoff lines
                 cutoffGrobs(
                     signal = posSignal2, signaltrack = signal_track,
-                    side = "top"
+                    side = "top",
+                    gTree = signal_gTree
                 )
             } else {
                 sigInternal$gp$col <- sigInternal$linecolor
@@ -984,13 +1016,15 @@ plotSignal <- function(data, binSize = NA, binCap = TRUE, negData = FALSE,
                     x1 = 1, y1 = unit(0, "native"),
                     gp = sigInternal$gp
                 )
-                assign("signal_grobs",
-                    addGrob(
-                        gTree = get("signal_grobs", envir = pgEnv),
-                        child = signalGrob
-                    ),
-                    envir = pgEnv
-                )
+                # assign("signal_grobs",
+                #     addGrob(
+                #         gTree = get("signal_grobs", envir = pgEnv),
+                #         child = signalGrob
+                #     ),
+                #     envir = pgEnv
+                # )
+                pgEnv$pg_gList[[signal_gTree]] <- addGrob(gTree = pgEnv$pg_gList[[signal_gTree]],
+                                                          child = signalGrob)
                 warning("Not enough data within range to plot.", call. = FALSE)
             }
         }
@@ -1009,29 +1043,37 @@ plotSignal <- function(data, binSize = NA, binCap = TRUE, negData = FALSE,
             )
 
             ## Add grob to gtree
-            assign("signal_grobs",
-                addGrob(
-                    gTree = get("signal_grobs", envir = pgEnv),
-                    child = scaleGrob
-                ),
-                envir = pgEnv
-            )
+            pgEnv$pg_gList[[signal_gTree]] <- addGrob(gTree = pgEnv$pg_gList[[signal_gTree]],
+                                                      child = scaleGrob)
+            # assign("signal_grobs",
+            #     addGrob(
+            #         gTree = get("signal_grobs", envir = pgEnv),
+            #         child = scaleGrob
+            #     ),
+            #     envir = pgEnv
+            # )
         }
     }
 
     # =========================================================================
     # IF PLOT == TRUE, DRAW GROBS
     # =========================================================================
-
+    if (sigInternal$orientation == "v"){
+        pgEnv$pg_gList[[signal_gTree]] <- gTree(vp = vpClip, 
+                                                children = gList(pgEnv$pg_gList[[signal_gTree]]))
+    }
+    
+    
     if (sigInternal$draw == TRUE) {
+        grid.draw(get("pg_gList", envir = pgEnv))
 
-        if (sigInternal$orientation == "v"){
-            pushViewport(vpClip)
-            grid.draw(get("signal_grobs", envir = pgEnv))
-            upViewport()
-        } else if (sigInternal$orientation == "h"){
-            grid.draw(get("signal_grobs", envir = pgEnv))
-        }
+        # if (sigInternal$orientation == "v"){
+        #     pushViewport(vpClip)
+        #     grid.draw(get("signal_grobs", envir = pgEnv))
+        #     upViewport()
+        # } else if (sigInternal$orientation == "h"){
+        #     grid.draw(get("signal_grobs", envir = pgEnv))
+        # }
 
     }
 
@@ -1039,7 +1081,8 @@ plotSignal <- function(data, binSize = NA, binCap = TRUE, negData = FALSE,
     # ADD GROBS TO OBJECT
     # =========================================================================
 
-    signal_track$grobs <- get("signal_grobs", envir = pgEnv)
+    #signal_track$grobs <- get("signal_grobs", envir = pgEnv)
+    signal_track$grobs <- pgEnv$pg_gList[[signal_gTree]]
 
     # =========================================================================
     # RETURN OBJECT

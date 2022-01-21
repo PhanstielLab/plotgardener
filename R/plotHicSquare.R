@@ -398,7 +398,7 @@ plotHicSquare <- function(data, resolution = "auto", zrange = NULL,
     }
 
     ## Define a function that makes grobs for the square hic diagonal
-    hic_diagonal <- function(hic, hicPlot, half) {
+    hic_diagonal <- function(hic, hicPlot, half, gTree) {
         col <- hic["color"]
         x <- utils::type.convert(hic["x"], as.is = TRUE)
         y <- utils::type.convert(hic["y"], as.is = TRUE)
@@ -424,13 +424,15 @@ plotHicSquare <- function(data, resolution = "auto", zrange = NULL,
             )
         }
 
-        assign("hic_grobs",
-            addGrob(
-                gTree = get("hic_grobs", envir = pgEnv),
-                child = hic_triangle
-            ),
-            envir = pgEnv
-        )
+        pgEnv$pg_gList[[gTree]] <- addGrob(gTree = pgEnv$pg_gList[[gTree]],
+                                           child =  hic_triangle) 
+        # assign("hic_grobs",
+        #     addGrob(
+        #         gTree = get("hic_grobs", envir = pgEnv),
+        #         child = hic_triangle
+        #     ),
+        #     envir = pgEnv
+        # )
     }
 
     # =========================================================================
@@ -696,10 +698,23 @@ plotHicSquare <- function(data, resolution = "auto", zrange = NULL,
         fill = hicInternal$bg,
         col = NA
     ), name = "background")
-    assign("hic_grobs", gTree(vp = vp, children = gList(backgroundGrob)),
-        envir = pgEnv
-    )
     
+    ## Unique name for gTree
+    hicSquare_gTree <- paste0(
+        "hicSquare",
+        length(grep(
+            pattern = "hicSquare",
+            x = names(get("pg_gList", envir = pgEnv))
+        )) + 1
+    )
+    pgEnv$pg_gList[[hicSquare_gTree]] <- gTree(vp = vp, 
+                                            children = gList(backgroundGrob))
+    
+    # assign(eval(hicSquare_gTree), 
+    #     gTree(vp = vp, children = gList(backgroundGrob)),
+    #     envir = pgEnv
+    # )
+
     # =========================================================================
     # MAKE GROBS
     # =========================================================================
@@ -726,21 +741,25 @@ plotHicSquare <- function(data, resolution = "auto", zrange = NULL,
                     gp = gpar(col = NA, fill = shapes[[1]]$color),
                     default.units = "native"
                 )
+                
+                pgEnv$pg_gList[[hicSquare_gTree]] <- addGrob(gTree = pgEnv$pg_gList[[hicSquare_gTree]],
+                                                             child = hic_squares)
 
-                assign("hic_grobs",
-                    addGrob(
-                        gTree = get("hic_grobs", envir = pgEnv),
-                        child = hic_squares
-                    ),
-                    envir = pgEnv
-                )
+                # assign("hic_grobs",
+                #     addGrob(
+                #         gTree = get("hic_grobs", envir = pgEnv),
+                #         child = hic_squares
+                #     ),
+                #     envir = pgEnv
+                # )
             }
 
             ## Make triangle grobs and add to grob gTree
             if (!is.null(shapes[[2]])) {
                 invisible(apply(shapes[[2]], 1, hic_diagonal,
                     hicPlot = hicPlot,
-                    half = hicInternal$half
+                    half = hicInternal$half,
+                    gTree = hicSquare_gTree
                 ))
             }
         } else {
@@ -760,14 +779,16 @@ plotHicSquare <- function(data, resolution = "auto", zrange = NULL,
     # =========================================================================
 
     if (hicInternal$draw == TRUE) {
-        grid.draw(get("hic_grobs", envir = pgEnv))
+        #grid.draw(get("hic_grobs", envir = pgEnv))
+        grid.draw(get("pg_gList", envir = pgEnv))
     }
 
     # =========================================================================
     # ADD GROBS TO OBJECT
     # =========================================================================
 
-    hicPlot$grobs <- get("hic_grobs", envir = pgEnv)
+    #hicPlot$grobs <- get("hic_grobs", envir = pgEnv)
+    hicPlot$grobs <- pgEnv$pg_gList[[hicSquare_gTree]]
 
     # =========================================================================
     # RETURN OBJECT

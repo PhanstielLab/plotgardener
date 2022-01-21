@@ -170,35 +170,50 @@ plotText <- function(label, fontcolor = "black", fontsize = 12, rot = 0,
     # MAKE GROB
     # =========================================================================
 
-    name <- paste0(
+    # name <- paste0(
+    #     "text",
+    #     length(grep(
+    #         pattern = "text",
+    #         x = grid.ls(
+    #             print = FALSE,
+    #             recursive = FALSE
+    #         )
+    #     )) + 1
+    # )
+    ## Unique name for gTree
+    text_gTree <- paste0(
         "text",
         length(grep(
             pattern = "text",
-            x = grid.ls(
-                print = FALSE,
-                recursive = FALSE
-            )
+            x = names(get("pg_gList", envir = pgEnv))
         )) + 1
     )
     
-    text <- grid.text(
+    
+    text_grob <- textGrob(
         label = text$label, x = unit(new_x, page_units),
         y = unit(new_y, page_units), just = text$just,
         gp = textInternal$gp, rot = textInternal$rot,
-        check.overlap = textInternal$check.overlap,
-        name = name
+        check.overlap = textInternal$check.overlap
+        #name = name
     )
 
+    pgEnv$pg_gList[[text_gTree]] <- gTree(children = gList(text_grob))
+    
     # =========================================================================
     # ADD GROB TO OBJECT
     # =========================================================================
 
-    text$grobs <- text
+    #text$grobs <- text
+    text$grobs <- pgEnv$pg_gList[[text_gTree]]
+    
+    grid.draw(get("pg_gList", envir = pgEnv))
 
     # =========================================================================
     # RETURN OBJECT
     # =========================================================================
 
-    message("text[", text$name, "]")
+    #message("text[", text$name, "]")
+    message("text[", text_gTree, "]")
     invisible(text)
 }
