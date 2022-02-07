@@ -171,24 +171,11 @@ plotHicRectangle <- function(data, resolution = "auto", zrange = NULL,
     # =========================================================================
 
     ## Define a function that catches errors for plotTriangleHic
-    errorcheck_plotHicRectangle <- function(hic, hicPlot, norm, assembly) {
+    errorcheck_plotHicRectangle <- function(hic, hicPlot, norm) {
 
         ###### hic/norm 
         hicErrors(hic = hic, 
                     norm = norm)
-        
-        ## Even though straw technically works without "chr" for hg19,
-        ## will not accept for consistency purposes
-        if (assembly == "hg19") {
-            if (grepl("chr", hicPlot$chrom) == FALSE) {
-                stop("'", hicPlot$chrom, "'",
-                    "is an invalid input for an hg19 chromsome. ",
-                    "Please specify chromosome as",
-                    "'chr", hicPlot$chrom, "'.",
-                    call. = FALSE
-                )
-            }
-        }
 
         ## Genomic region errors
         regionErrors(chromstart = hicPlot$chromstart,
@@ -317,8 +304,7 @@ plotHicRectangle <- function(data, resolution = "auto", zrange = NULL,
     errorcheck_plotHicRectangle(
         hic = rhicInternal$data,
         hicPlot = hicPlot,
-        norm = rhicInternal$norm,
-        assembly = hicPlot$assembly$Genome
+        norm = rhicInternal$norm
     )
 
     # =========================================================================
@@ -584,9 +570,7 @@ plotHicRectangle <- function(data, resolution = "auto", zrange = NULL,
             )
         } else {
             if (!is.na(hicPlot$resolution)){
-                warning("No data found in region. Suggestions: check that ",
-                        "chromosome names match genome assembly; ",
-                        "check region.", call. = FALSE)
+                warning("No data found in region.", call. = FALSE)
             }
         }
     }

@@ -87,12 +87,12 @@ Read a .hic file and return Hi-C data as a dataframe
 hicFile <- system.file("extdata/test_chr22.hic", package="plotgardenerData")
 
 ## Read in data for all chr22 file at 2.5Mb bp resolution
-hicData <- readHic(file = hicFile, chrom = "chr22",
+hicData <- readHic(file = hicFile, chrom = "22",
                     assembly = "hg19",
                     resolution = 2500000) 
                         
 ## Read in region `chr22:20000000-47500000` at 100 Kb resolution
-hicData10Kb <- readHic(file = hicFile, chrom = "chr22",
+hicData10Kb <- readHic(file = hicFile, chrom = "22",
                         chromstart = 20000000, chromend = 47500000,
                         assembly = "hg19",
                         resolution = 100000)                     
