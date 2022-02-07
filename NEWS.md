@@ -1,3 +1,12 @@
+# CHANGES IN VERSION 1.0.13
+
+## BUG FIXES 
+
+* `readHic` and functions related to the reading of .hic files now leaves the
+chromosome input formatted as is (e.g. "chr1" and "1"). Functions will throw an 
+error if the input chromosome is not found in the chromosomes listed in 
+the .hic file.
+
 # CHANGES IN VERSION 1.0.12
 
 ## BUG FIXES 
