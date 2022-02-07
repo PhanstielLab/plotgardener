@@ -62,7 +62,7 @@ test_that("readHic", {
     hicFile <- system.file("extdata/test_chr22.hic", package="plotgardenerData")
     
     ## Check that Hi-C file reads in with correct dimension
-    hicData <- readHic(file = hicFile, chrom = "chr22",
+    hicData <- readHic(file = hicFile, chrom = "22",
                        chromstart = 20000000, chromend = 20300000,
                        assembly = "hg19",
                        resolution = 100000) 
