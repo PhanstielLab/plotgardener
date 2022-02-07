@@ -192,19 +192,6 @@ plotHicSquare <- function(data, resolution = "auto", zrange = NULL,
 
         ###### chrom/chromstart/chromend/
         ###### altchrom/altchromstart/altchromend
-
-        ## Even though straw technically works without "chr" for hg19,
-        ## will not accept for consistency purposes
-        if (hicPlot$assembly$Genome == "hg19") {
-            if (grepl("chr", hicPlot$chrom) == FALSE) {
-                stop("'", hicPlot$chrom, "'",
-                    "is an invalid input for an hg19 chromsome. ",
-                    "Please specify chromosome as",
-                    "'chr", hicPlot$chrom, "'.",
-                    call. = FALSE
-                )
-            }
-        }
         
         regionErrors(chromstart = hicPlot$chromstart,
                     chromend = hicPlot$chromend)
@@ -216,18 +203,6 @@ plotHicSquare <- function(data, resolution = "auto", zrange = NULL,
                 stop("Specified \'altchrom\', but did not give \'chrom\'.",
                     call. = FALSE
                 )
-            }
-            ## Even though straw technically works without "chr" for hg19,
-            ## will not accept for consistency purposes
-            if (hicPlot$assembly$Genome == "hg19") {
-                if (grepl("chr", hicPlot$altchrom) == FALSE) {
-                    stop("'", hicPlot$altchrom, "'",
-                        "is an invalid input for an hg19 chromsome. ",
-                        "Please specify chromosome as",
-                        "'chr", hicPlot$altchrom, "'.",
-                        call. = FALSE
-                    )
-                }
             }
 
             regionErrors(chromstart = hicPlot$altchromstart,
@@ -746,9 +721,7 @@ plotHicSquare <- function(data, resolution = "auto", zrange = NULL,
         } else {
             
             if (!is.na(hicPlot$resolution)){
-                warning("No data found in region. Suggestions: check that ",
-                        "chromosome names match genome assembly; ",
-                        "check region.", call. = FALSE)
+                warning("No data found in region.", call. = FALSE)
             }
             
         }

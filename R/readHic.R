@@ -64,12 +64,12 @@
 #' hicFile <- system.file("extdata/test_chr22.hic", package="plotgardenerData")
 #' 
 #' ## Read in data for all chr22 file at 2.5Mb bp resolution
-#' hicData <- readHic(file = hicFile, chrom = "chr22",
+#' hicData <- readHic(file = hicFile, chrom = "22",
 #'                     assembly = "hg19",
 #'                     resolution = 2500000) 
 #'                         
 #' ## Read in region `chr22:20000000-47500000` at 100 Kb resolution
-#' hicData10Kb <- readHic(file = hicFile, chrom = "chr22",
+#' hicData10Kb <- readHic(file = hicFile, chrom = "22",
 #'                         chromstart = 20000000, chromend = 47500000,
 #'                         assembly = "hg19",
 #'                         resolution = 100000)                     
@@ -106,23 +106,12 @@ readHic <- function(file, chrom, chromstart = NULL, chromend = NULL,
                 call. = FALSE
             )
         }
-
-        ## Not supporting chrM
-        if (chrom == "chrM") {
-            stop("chrM not supported.", call. = FALSE)
-        }
-
-        ## Even though straw technically works without "chr" for hg19/hg38,
-        ## will not accept for other data consistency purposes
-        if (assembly == "hg19" | assembly == "hg38") {
-            if (grepl("chr", chrom) == FALSE) {
-                stop("'", chrom, "'",
-                    " is an invalid input for an hg19/hg38",
-                    " chromosome. Please specify chromosome as",
-                    " 'chr", chrom, "'.",
-                    call. = FALSE
-                )
-            }
+        
+        ## Check that chrom is in file
+        chroms <- strawr::readHicChroms(normalizePath(hic))[, "name"]
+        if (!chrom %in% chroms){
+            stop("`chrom` not found in file. Check file chromosome names",
+                 " with `strawr::readHicChroms`.", call. = FALSE)
         }
 
         ## Genomic region
@@ -130,22 +119,12 @@ readHic <- function(file, chrom, chromstart = NULL, chromend = NULL,
                     chromend = chromend)
         
         if (!is.null(altchrom)) {
-            if (altchrom == "chrM") {
-                stop("chrM not supported.", call. = FALSE)
+            
+            if (!altchrom %in% chroms){
+                stop("`altchrom` not found in file. Check file chromosome names",
+                     " with `strawr::readHicChroms`,", call. = FALSE)
             }
-
-            ## Even though straw technically works without "chr" for hg19,
-            ## will not accept for consistency purposes
-            if (assembly == "hg19" | assembly == "hg38") {
-                if (grepl("chr", altchrom) == FALSE) {
-                    stop("'", altchrom, "'",
-                        " is an invalid input for an hg19/hg38 chromosome. ",
-                        "Please specify chromosome as",
-                        " 'chr", altchrom, "'.",
-                        call. = FALSE
-                    )
-                }
-            }
+            
 
             ## Can't specify altchrom without a chrom
             if (is.null(chrom)) {
@@ -244,11 +223,7 @@ readHic <- function(file, chrom, chromstart = NULL, chromend = NULL,
 
     ## Define a function to parse chromosome/region for Straw
     parse_region <- function(chrom, chromstart, chromend, assembly) {
-        if (assembly == "hg19" | assembly == "hg38") {
-            strawChrom <- gsub("chr", "", chrom)
-        } else {
-            strawChrom <- chrom
-        }
+        strawChrom <- chrom
 
         if (is.null(chromstart) & is.null(chromend)) {
             regionStraw <- strawChrom
@@ -437,7 +412,7 @@ readHic <- function(file, chrom, chromstart = NULL, chromend = NULL,
     upper <-
         tryCatch(strawr::straw(
             norm = rhic$norm,
-            fname = rhic$file,
+            fname = normalizePath(rhic$file),
             chr1loc = toString(chromRegion),
             chr2loc = toString(altchromRegion),
             unit = rhic$res_scale,
