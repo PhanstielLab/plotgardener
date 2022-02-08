@@ -403,7 +403,7 @@ plotSignal <- function(data, binSize = NA, binCap = TRUE, negData = FALSE,
             ## posSignal
             if (pos == TRUE) {
                 if (is.null(signaltrack$range)) {
-                    if (nrow(signal1) >= 2) {
+                    if (nrow(signal1) >= 2 & max(signal2[,"score"]) > 0) {
                         signaltrack$range[2] <- signaltrack$ymax *
                             max(signal2[, "score"])
                     } else {
@@ -415,7 +415,7 @@ plotSignal <- function(data, binSize = NA, binCap = TRUE, negData = FALSE,
             ## negSignal
             if (pos == FALSE) {
                 if (is.na(signaltrack$range[1])) {
-                    if (nrow(signal1) >= 2) {
+                    if (nrow(signal1) >= 2 & min(signal2[,"score2"]) < 0) {
                         signaltrack$range[1] <- signaltrack$ymax *
                             min(signal2[, "score"])
                     } else {
@@ -425,7 +425,8 @@ plotSignal <- function(data, binSize = NA, binCap = TRUE, negData = FALSE,
             }
         } else {
             if (is.null(signaltrack$range)) {
-                if (nrow(signal1) >= 2) {
+                if (nrow(signal1) >= 2 & max(signal2[,"score"]) > 0) {
+                    
                     signaltrack$range <- c(0, signaltrack$ymax *
                         max(signal2[, "score"]))
                 } else {
