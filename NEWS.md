@@ -1,3 +1,10 @@
+# CHANGES IN VERSION 1.0.14
+
+## BUG FIXES 
+
+* `plotSignal` default yrange parsing now catches the invalid 0,0 range and no
+longer throws a viewport related error.
+
 # CHANGES IN VERSION 1.0.13
 
 ## BUG FIXES 
