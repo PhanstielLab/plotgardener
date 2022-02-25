@@ -2,6 +2,13 @@
 
 ## BUG FIXES 
 
+* `plotSignal` yrange parsing for negative scores now has fixed the typo on
+line 418 from "score2" to "score".
+
+# CHANGES IN VERSION 1.0.14
+
+## BUG FIXES 
+
 * `plotSignal` default yrange parsing now catches the invalid 0,0 range and no
 longer throws a viewport related error.
 
