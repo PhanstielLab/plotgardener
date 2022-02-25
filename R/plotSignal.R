@@ -415,7 +415,7 @@ plotSignal <- function(data, binSize = NA, binCap = TRUE, negData = FALSE,
             ## negSignal
             if (pos == FALSE) {
                 if (is.na(signaltrack$range[1])) {
-                    if (nrow(signal1) >= 2 & min(signal2[,"score2"]) < 0) {
+                    if (nrow(signal1) >= 2 & min(signal2[,"score"]) < 0) {
                         signaltrack$range[1] <- signaltrack$ymax *
                             min(signal2[, "score"])
                     } else {
