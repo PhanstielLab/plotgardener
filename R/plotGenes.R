@@ -312,7 +312,6 @@ plotGenes <- function(chrom, chromstart = NULL, chromend = NULL,
         genesInternal$fill <- rep(genesInternal$fill, 2)
     }
 
-
     ## Add strandColor and fontColors
     if (nrow(plus_genes) > 0) {
         plus_genes$strandColor <- genesInternal$fill[1]
@@ -781,40 +780,26 @@ plotGenes <- function(chrom, chromstart = NULL, chromend = NULL,
         ## Put genes in order of default gene prioritization
         ## based on citation/gene length
         if (nrow(plusgeneNames) > 0){
+            
+            ## Put genes in order of default gene prioritization
+            ## based on citation/gene length
             plusgeneNames <- defaultGenePriorities(
                 data = plusgeneNames,
                 assembly = genes$assembly,
                 geneHighlights = genesInternal$geneHighlights[[displayCol]],
                 displayCol = displayCol
             )
-        }
-
-        if (nrow(minusgeneNames) > 0){
-            minusgeneNames <- defaultGenePriorities(
-                data = minusgeneNames,
-                assembly = genes$assembly,
-                geneHighlights = genesInternal$geneHighlights[[displayCol]],
-                displayCol = displayCol
-            )
-        }
-       
-        if (!is.null(genesInternal$geneOrder)) {
-
-            ## Integrate geneOrder and default prioritization
-            plusgeneNames <- gene_priorities(
-                genes = plusgeneNames,
-                geneOrder = genesInternal$geneOrder,
-                displayCol = displayCol
-            )
-            minusgeneNames <- gene_priorities(
-                genes = minusgeneNames,
-                geneOrder = genesInternal$geneOrder,
-                displayCol = displayCol
-            )
-        }
-
-        ## Get which gene names aren't cutoff
-        if (nrow(plusgeneNames) > 0) {
+        
+            if (!is.null(genesInternal$geneOrder)) {
+                ## Integrate geneOrder and default prioritization
+                plusgeneNames <- gene_priorities(
+                    genes = plusgeneNames,
+                    geneOrder = genesInternal$geneOrder,
+                    displayCol = displayCol
+                )
+            }
+            
+            ## Get which gene names aren't cutoff
             checkedplusLabels <- apply(data.frame(
                 "label" = plusgeneNames[[displayCol]],
                 "labelLoc" = plusgeneNames$labelLoc
@@ -854,6 +839,25 @@ plotGenes <- function(chrom, chromstart = NULL, chromend = NULL,
         }
 
         if (nrow(minusgeneNames) > 0) {
+            ## Put genes in order of default gene prioritization
+            ## based on citation/gene length
+            minusgeneNames <- defaultGenePriorities(
+                data = minusgeneNames,
+                assembly = genes$assembly,
+                geneHighlights = genesInternal$geneHighlights[[displayCol]],
+                displayCol = displayCol
+            )
+            
+            if (!is.null(genesInternal$geneOrder)) {
+                ## Integrate geneOrder and default prioritization
+                minusgeneNames <- gene_priorities(
+                    genes = minusgeneNames,
+                    geneOrder = genesInternal$geneOrder,
+                    displayCol = displayCol
+                )
+                
+            }
+            
             checkedminusLabels <- apply(data.frame(
                 "label" = minusgeneNames[[displayCol]],
                 "labelLoc" = minusgeneNames$labelLoc
@@ -935,7 +939,6 @@ plotGenes <- function(chrom, chromstart = NULL, chromend = NULL,
     if (genesInternal$draw == TRUE) {
         grid.draw(get("gene_grobs", envir = pgEnv))
     }
-
 
     # =========================================================================
     # ADD GROBS TO OBJECT

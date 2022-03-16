@@ -1,3 +1,19 @@
+
+# CHANGES IN VERSION 1.1.16
+
+## BUG FIXES 
+
+* ENTREZ IDs obtained from `AnnotationDbi::select()` are subset just for
+`ENTREZID` column when determining default gene priorities, eliminating `dplyr`
+incompatible types error.
+* All plus and minus strand gene name label parsing in `plotGenes` is now 
+carried out only if there is a non-zero number of that strand's 
+genes.
+
+# CHANGES IN VERSION 1.1.15
+
+* Citation linked for `plotgardener` publication in Bioinformatics.
+
 # CHANGES IN VERSION 1.1.14
 
 ## BUG FIXES 

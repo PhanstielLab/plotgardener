@@ -214,8 +214,7 @@ defaultGenePriorities <- function(data, assembly, transcript = FALSE,
                     keytype = convertIDs[[name]]
                 )
             )
-
-            data$ENTREZID <- entrezIDs
+            data$ENTREZID <- entrezIDs$ENTREZID
         } else {
             data$ENTREZID <- data$GENEID
         }
