@@ -1,3 +1,9 @@
+# CHANGES IN VERSION 1.1.17
+## NEW FEATURES
+
+* `plotIdeogram` can now accept custom colors with a `fill` parameter. Colors
+can be specified with a named or unnamed vector. To see which stains are being
+assigned which colors, look inside the `ideogram` object.
 
 # CHANGES IN VERSION 1.1.16
 
