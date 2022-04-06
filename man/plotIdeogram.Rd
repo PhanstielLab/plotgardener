@@ -10,6 +10,7 @@ plotIdeogram(
     data = NULL,
     orientation = "h",
     showBands = TRUE,
+    fill = NULL,
     x = NULL,
     y = NULL,
     width = NULL,
@@ -42,6 +43,11 @@ Options are:
 \item{showBands}{Logical value indicating whether to draw
 colored cytobands within ideogram.
 Default value is \code{showBands = TRUE}.}
+
+\item{fill}{(optional) A vector specifying alternate colors for cytoband
+stains. To change specific gieStain values (i.e. gneg, gpos, etc.) to 
+specific colors, this vector can be named. This vector must have the same
+number of colors as there are gieStain values for each genome assembly.}
 
 \item{x}{A numeric or unit object specifying ideogram x-location.}
 
