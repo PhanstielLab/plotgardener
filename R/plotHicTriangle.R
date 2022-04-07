@@ -436,6 +436,7 @@ plotHicTriangle <- function(data, resolution = "auto", zrange = NULL,
         color_palette = NULL,
         colorTrans = thicInternal$colorTrans,
         zrange = thicInternal$zrange,
+        flip = thicInternal$flip,
         outsideVP = NULL, grobs = NULL
     ),
     class = "hicTriangle"

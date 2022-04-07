@@ -266,6 +266,7 @@ plotHicRectangle <- function(data, resolution = "auto", zrange = NULL,
         color_palette = NULL,
         colorTrans = rhicInternal$colorTrans,
         zrange = rhicInternal$zrange,
+        flip = rhicInternal$flip,
         outsideVP = NULL, grobs = NULL
     ),
     class = "hicRectangle"

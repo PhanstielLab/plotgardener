@@ -208,14 +208,13 @@ annoDomains <- function(plot, data, half = "inherit",
             x0_2 <- utils::type.convert(df["start"], as.is = TRUE)
             x1_2 <- utils::type.convert(df["end"], as.is = TRUE)
             y_2 <- utils::type.convert(df["end"], as.is = TRUE)
-
             seg1 <- segmentsGrob(
                 x0 = x_1, x1 = x_1,
                 y0 = y0_1, y1 = y1_1,
                 default.units = "native",
                 gp = object$gp
             )
-
+                
             seg2 <- segmentsGrob(
                 x0 = x0_2, x1 = x1_2,
                 y0 = y_2, y1 = y_2,
@@ -391,7 +390,12 @@ annoDomains <- function(plot, data, half = "inherit",
 
     if (is(domainsInternal$plot, "hicTriangle")  |
         is(domainsInternal$plot, "hicRectangle")) {
-        half <- "top"
+        if (domainsInternal$plot$flip == TRUE){
+            half <- "bottom"
+        } else {
+            half <- "top"
+        }
+        
     }
 
     # =========================================================================
@@ -469,6 +473,10 @@ annoDomains <- function(plot, data, half = "inherit",
             clip = "on",
             name = paste0(vp_name, "_outside")
         )
+        if (domainsInternal$plot$flip == TRUE){
+            vp$y <- unit(1, "npc")
+        }
+        
     } else if (is(domainsInternal$plot, "hicRectangle")) {
         side <- convertUnit(domainsInternal$plot$grobs$vp$width,
             unitTo = get("page_units", pgEnv)
@@ -494,6 +502,9 @@ annoDomains <- function(plot, data, half = "inherit",
             clip = "on",
             name = paste0(vp_name, "_outside")
         )
+        if (domainsInternal$plot$flip == TRUE){
+            vp$y <- unit(1, "npc")
+        }
     }
 
     # =========================================================================
