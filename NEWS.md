@@ -1,3 +1,10 @@
+# CHANGES IN VERSION 1.1.18
+## NEW FEATURES
+
+* `hicTriangles` and `hicRectangles` can now be annotated with `annoDomains`
+or `annoPixels` if they are flipped.
+
+
 # CHANGES IN VERSION 1.1.17
 ## NEW FEATURES
 
