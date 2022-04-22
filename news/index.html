@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">plotgardener</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.0.9</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.0.17</span>
       </span>
     </div>
 
@@ -35,7 +35,7 @@
   <a href="../articles/introduction_to_plotgardener.html">Introduction to plotgardener</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
      
     <span class="caret"></span>
@@ -90,6 +90,59 @@
       <small>Source: <a href="https://github.com/PhanstielLab/plotgardener/blob/HEAD/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
     </div>
 
+    <div class="section level2">
+<h2 class="page-header" data-toc-text="1.0.17" id="changes-in-version-1017">CHANGES IN VERSION 1.0.17<a class="anchor" aria-label="anchor" href="#changes-in-version-1017"></a></h2>
+<div class="section level3">
+<h3 id="bug-fixes-1-0-17">BUG FIXES<a class="anchor" aria-label="anchor" href="#bug-fixes-1-0-17"></a></h3>
+<ul><li>ENTREZ IDs obtained from <code><a href="https://rdrr.io/pkg/AnnotationDbi/man/AnnotationDb-class.html" class="external-link">AnnotationDbi::select()</a></code> are subset just for <code>ENTREZID</code> column when determining default gene priorities, eliminating <code>dplyr</code> incompatible types error.</li>
+<li>All plus and minus strand gene name label parsing in <code>plotGenes</code> is now carried out only if there is a non-zero number of that strand’s genes.</li>
+</ul></div>
+</div>
+    <div class="section level2">
+<h2 class="page-header" data-toc-text="1.0.16" id="changes-in-version-1016">CHANGES IN VERSION 1.0.16<a class="anchor" aria-label="anchor" href="#changes-in-version-1016"></a></h2>
+<ul><li>Citation linked for <code>plotgardener</code> publication in Bioinformatics.</li>
+</ul></div>
+    <div class="section level2">
+<h2 class="page-header" data-toc-text="1.0.15" id="changes-in-version-1015">CHANGES IN VERSION 1.0.15<a class="anchor" aria-label="anchor" href="#changes-in-version-1015"></a></h2>
+<div class="section level3">
+<h3 id="bug-fixes-1-0-15">BUG FIXES<a class="anchor" aria-label="anchor" href="#bug-fixes-1-0-15"></a></h3>
+<ul><li>
+<code>plotSignal</code> yrange parsing for negative scores now has fixed the typo on line 418 from “score2” to “score”.</li>
+</ul></div>
+</div>
+    <div class="section level2">
+<h2 class="page-header" data-toc-text="1.0.14" id="changes-in-version-1014">CHANGES IN VERSION 1.0.14<a class="anchor" aria-label="anchor" href="#changes-in-version-1014"></a></h2>
+<div class="section level3">
+<h3 id="bug-fixes-1-0-14">BUG FIXES<a class="anchor" aria-label="anchor" href="#bug-fixes-1-0-14"></a></h3>
+<ul><li>
+<code>plotSignal</code> default yrange parsing now catches the invalid 0,0 range and no longer throws a viewport related error.</li>
+</ul></div>
+</div>
+    <div class="section level2">
+<h2 class="page-header" data-toc-text="1.0.13" id="changes-in-version-1013">CHANGES IN VERSION 1.0.13<a class="anchor" aria-label="anchor" href="#changes-in-version-1013"></a></h2>
+<div class="section level3">
+<h3 id="bug-fixes-1-0-13">BUG FIXES<a class="anchor" aria-label="anchor" href="#bug-fixes-1-0-13"></a></h3>
+<ul><li>
+<code>readHic</code> and functions related to the reading of .hic files now leaves the chromosome input formatted as is (e.g. “chr1” and “1”). Functions will throw an error if the input chromosome is not found in the chromosomes listed in the .hic file.</li>
+</ul></div>
+</div>
+    <div class="section level2">
+<h2 class="page-header" data-toc-text="1.0.12" id="changes-in-version-1012">CHANGES IN VERSION 1.0.12<a class="anchor" aria-label="anchor" href="#changes-in-version-1012"></a></h2>
+<div class="section level3">
+<h3 id="bug-fixes-1-0-12">BUG FIXES<a class="anchor" aria-label="anchor" href="#bug-fixes-1-0-12"></a></h3>
+<ul><li>
+<code>annoDomains</code> coordinates fixed for <code>plotHicRectangle</code>.</li>
+<li>Clipping logic for <code>plotPairsArches</code> now clips arches both on left and right side of plot.</li>
+<li>Subsetting <code>plotPairs</code> logic fixed to match <code>plotPairsArches</code>.</li>
+</ul></div>
+<div class="section level3">
+<h3 id="new-features-1-0-12">NEW FEATURES<a class="anchor" aria-label="anchor" href="#new-features-1-0-12"></a></h3>
+<ul><li>
+<code>clip.noAnchors</code> parameter in <code>plotPairsArches</code> allows for inclusion or clipping of arches that do not have anchors in the given genomic region.</li>
+<li>
+<code>plotPairsArches</code> now allows for column name input to designate <code>archHeights</code>.</li>
+</ul></div>
+</div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="0.99.11" id="changes-in-version-09911">CHANGES IN VERSION 0.99.11<a class="anchor" aria-label="anchor" href="#changes-in-version-09911"></a></h2>
 <div class="section level3">
@@ -202,7 +255,7 @@
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.0.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
 </div>
 
       </footer></div>

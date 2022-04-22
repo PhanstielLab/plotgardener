@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">plotgardener</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.0.9</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.0.17</span>
       </span>
     </div>
 
@@ -35,7 +35,7 @@
   <a href="../articles/introduction_to_plotgardener.html">Introduction to plotgardener</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
      
     <span class="caret"></span>
@@ -95,7 +95,8 @@
     <p>Plot a Hi-C interaction matrix in a square format</p>
     </div>
 
-    <div id="ref-usage">Usage,<div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">plotHicSquare</span><span class="op">(</span>
+    <div id="ref-usage">
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">plotHicSquare</span><span class="op">(</span>
     <span class="va">data</span>,
     resolution <span class="op">=</span> <span class="st">"auto"</span>,
     zrange <span class="op">=</span> <span class="cn">NULL</span>,
@@ -108,7 +109,7 @@
     altchromstart <span class="op">=</span> <span class="cn">NULL</span>,
     altchromend <span class="op">=</span> <span class="cn">NULL</span>,
     assembly <span class="op">=</span> <span class="st">"hg38"</span>,
-    palette <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grDevices/colorRamp.html" class="external-link">colorRampPalette</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/RColorBrewer/man/ColorBrewer.html" class="external-link">brewer.pal</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fl">9</span>, <span class="st">"YlGnBu"</span><span class="op">)</span><span class="op">)</span>,
+    palette <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grDevices/colorRamp.html" class="external-link">colorRampPalette</a></span><span class="op">(</span><span class="fu">brewer.pal</span><span class="op">(</span>n <span class="op">=</span> <span class="fl">9</span>, <span class="st">"YlGnBu"</span><span class="op">)</span><span class="op">)</span>,
     colorTrans <span class="op">=</span> <span class="st">"linear"</span>,
     half <span class="op">=</span> <span class="st">"both"</span>,
     bg <span class="op">=</span> <span class="cn">NA</span>,
@@ -121,7 +122,8 @@
     draw <span class="op">=</span> <span class="cn">TRUE</span>,
     params <span class="op">=</span> <span class="cn">NULL</span>,
     quiet <span class="op">=</span> <span class="cn">FALSE</span>
-<span class="op">)</span></code></pre></div></div>
+<span class="op">)</span></code></pre></div>
+    </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
@@ -303,7 +305,7 @@ square Hi-C plot by ignoring plot placement parameters:</p><div class="sourceCod
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.0.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
 </div>
 
       </footer></div>

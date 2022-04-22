@@ -41,7 +41,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../../index.html">plotgardener</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.0.9</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.0.17</span>
       </span>
     </div>
 
@@ -60,7 +60,7 @@
   <a href="../../articles/introduction_to_plotgardener.html">Introduction to plotgardener</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
      
     <span class="caret"></span>
@@ -275,9 +275,9 @@
 </h3>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/sessionInfo.html" class="external-link">sessionInfo</a></span><span class="op">(</span><span class="op">)</span>
-<span class="co">#&gt; R version 4.1.2 (2021-11-01)</span>
+<span class="co">#&gt; R version 4.1.3 (2022-03-10)</span>
 <span class="co">#&gt; Platform: x86_64-apple-darwin17.0 (64-bit)</span>
-<span class="co">#&gt; Running under: macOS Big Sur 10.16</span>
+<span class="co">#&gt; Running under: macOS Big Sur/Monterey 10.16</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Matrix products: default</span>
 <span class="co">#&gt; BLAS:   /Library/Frameworks/R.framework/Versions/4.1/Resources/lib/libRblas.0.dylib</span>
@@ -291,53 +291,54 @@
 <span class="co">#&gt; [8] base     </span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; other attached packages:</span>
-<span class="co">#&gt; [1] plotgardenerData_1.0.0 plotgardener_1.0.8    </span>
+<span class="co">#&gt; [1] plotgardenerData_1.0.0 plotgardener_1.1.17   </span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; loaded via a namespace (and not attached):</span>
 <span class="co">#&gt;  [1] MatrixGenerics_1.6.0        Biobase_2.54.0             </span>
-<span class="co">#&gt;  [3] sass_0.4.0                  jsonlite_1.7.2             </span>
+<span class="co">#&gt;  [3] sass_0.4.1                  jsonlite_1.8.0             </span>
 <span class="co">#&gt;  [5] bslib_0.3.1                 assertthat_0.2.1           </span>
-<span class="co">#&gt;  [7] highr_0.9                   stats4_4.1.2               </span>
+<span class="co">#&gt;  [7] highr_0.9                   stats4_4.1.3               </span>
 <span class="co">#&gt;  [9] yulab.utils_0.0.4           GenomeInfoDbData_1.2.7     </span>
-<span class="co">#&gt; [11] Rsamtools_2.10.0            yaml_2.2.1                 </span>
-<span class="co">#&gt; [13] pillar_1.6.4                lattice_0.20-45            </span>
-<span class="co">#&gt; [15] glue_1.5.1                  digest_0.6.29              </span>
-<span class="co">#&gt; [17] GenomicRanges_1.46.1        RColorBrewer_1.1-2         </span>
-<span class="co">#&gt; [19] XVector_0.34.0              colorspace_2.0-2           </span>
-<span class="co">#&gt; [21] htmltools_0.5.2             Matrix_1.3-4               </span>
-<span class="co">#&gt; [23] strawr_0.0.9                XML_3.99-0.8               </span>
+<span class="co">#&gt; [11] Rsamtools_2.10.0            yaml_2.3.5                 </span>
+<span class="co">#&gt; [13] pillar_1.7.0                lattice_0.20-45            </span>
+<span class="co">#&gt; [15] glue_1.6.2                  digest_0.6.29              </span>
+<span class="co">#&gt; [17] GenomicRanges_1.46.1        RColorBrewer_1.1-3         </span>
+<span class="co">#&gt; [19] XVector_0.34.0              colorspace_2.0-3           </span>
+<span class="co">#&gt; [21] htmltools_0.5.2             Matrix_1.4-1               </span>
+<span class="co">#&gt; [23] strawr_0.0.9                XML_3.99-0.9               </span>
 <span class="co">#&gt; [25] pkgconfig_2.0.3             zlibbioc_1.40.0            </span>
 <span class="co">#&gt; [27] purrr_0.3.4                 scales_1.1.1               </span>
 <span class="co">#&gt; [29] ggplotify_0.1.0             BiocParallel_1.28.3        </span>
-<span class="co">#&gt; [31] tibble_3.1.6                generics_0.1.1             </span>
+<span class="co">#&gt; [31] tibble_3.1.6                generics_0.1.2             </span>
 <span class="co">#&gt; [33] IRanges_2.28.0              ggplot2_3.3.5              </span>
 <span class="co">#&gt; [35] ellipsis_0.3.2              cachem_1.0.6               </span>
 <span class="co">#&gt; [37] SummarizedExperiment_1.24.0 BiocGenerics_0.40.0        </span>
-<span class="co">#&gt; [39] magrittr_2.0.1              crayon_1.4.2               </span>
-<span class="co">#&gt; [41] memoise_2.0.1               evaluate_0.14              </span>
-<span class="co">#&gt; [43] fs_1.5.1                    fansi_0.5.0                </span>
-<span class="co">#&gt; [45] textshaping_0.3.6           tools_4.1.2                </span>
-<span class="co">#&gt; [47] data.table_1.14.2           BiocIO_1.4.0               </span>
-<span class="co">#&gt; [49] lifecycle_1.0.1             matrixStats_0.61.0         </span>
-<span class="co">#&gt; [51] stringr_1.4.0               plyranges_1.14.0           </span>
-<span class="co">#&gt; [53] S4Vectors_0.32.3            munsell_0.5.0              </span>
-<span class="co">#&gt; [55] DelayedArray_0.20.0         Biostrings_2.62.0          </span>
-<span class="co">#&gt; [57] compiler_4.1.2              pkgdown_2.0.0              </span>
-<span class="co">#&gt; [59] jquerylib_0.1.4             GenomeInfoDb_1.30.0        </span>
-<span class="co">#&gt; [61] gridGraphics_0.5-1          systemfonts_1.0.3          </span>
-<span class="co">#&gt; [63] rlang_0.4.12                RCurl_1.98-1.5             </span>
-<span class="co">#&gt; [65] rjson_0.2.20                bitops_1.0-7               </span>
-<span class="co">#&gt; [67] rmarkdown_2.11              restfulr_0.0.13            </span>
-<span class="co">#&gt; [69] gtable_0.3.0                DBI_1.1.1                  </span>
-<span class="co">#&gt; [71] curl_4.3.2                  R6_2.5.1                   </span>
-<span class="co">#&gt; [73] GenomicAlignments_1.30.0    knitr_1.36                 </span>
-<span class="co">#&gt; [75] dplyr_1.0.7                 rtracklayer_1.54.0         </span>
-<span class="co">#&gt; [77] fastmap_1.1.0               utf8_1.2.2                 </span>
-<span class="co">#&gt; [79] rprojroot_2.0.2             ragg_1.2.0                 </span>
-<span class="co">#&gt; [81] desc_1.4.0                  stringi_1.7.6              </span>
-<span class="co">#&gt; [83] parallel_4.1.2              Rcpp_1.0.7                 </span>
-<span class="co">#&gt; [85] vctrs_0.3.8                 tidyselect_1.1.1           </span>
-<span class="co">#&gt; [87] xfun_0.28</span></code></pre></div>
+<span class="co">#&gt; [39] cli_3.2.0                   magrittr_2.0.3             </span>
+<span class="co">#&gt; [41] crayon_1.5.1                memoise_2.0.1              </span>
+<span class="co">#&gt; [43] evaluate_0.15               fs_1.5.2                   </span>
+<span class="co">#&gt; [45] fansi_1.0.3                 textshaping_0.3.6          </span>
+<span class="co">#&gt; [47] tools_4.1.3                 data.table_1.14.2          </span>
+<span class="co">#&gt; [49] BiocIO_1.4.0                lifecycle_1.0.1            </span>
+<span class="co">#&gt; [51] matrixStats_0.61.0          stringr_1.4.0              </span>
+<span class="co">#&gt; [53] plyranges_1.14.0            S4Vectors_0.32.4           </span>
+<span class="co">#&gt; [55] munsell_0.5.0               DelayedArray_0.20.0        </span>
+<span class="co">#&gt; [57] Biostrings_2.62.0           compiler_4.1.3             </span>
+<span class="co">#&gt; [59] pkgdown_2.0.2               jquerylib_0.1.4            </span>
+<span class="co">#&gt; [61] GenomeInfoDb_1.30.1         gridGraphics_0.5-1         </span>
+<span class="co">#&gt; [63] systemfonts_1.0.4           rlang_1.0.2                </span>
+<span class="co">#&gt; [65] RCurl_1.98-1.6              rstudioapi_0.13            </span>
+<span class="co">#&gt; [67] rjson_0.2.21                bitops_1.0-7               </span>
+<span class="co">#&gt; [69] rmarkdown_2.13              restfulr_0.0.13            </span>
+<span class="co">#&gt; [71] gtable_0.3.0                DBI_1.1.2                  </span>
+<span class="co">#&gt; [73] curl_4.3.2                  R6_2.5.1                   </span>
+<span class="co">#&gt; [75] GenomicAlignments_1.30.0    knitr_1.38                 </span>
+<span class="co">#&gt; [77] dplyr_1.0.8                 rtracklayer_1.54.0         </span>
+<span class="co">#&gt; [79] fastmap_1.1.0               utf8_1.2.2                 </span>
+<span class="co">#&gt; [81] rprojroot_2.0.3             ragg_1.2.2                 </span>
+<span class="co">#&gt; [83] desc_1.4.1                  stringi_1.7.6              </span>
+<span class="co">#&gt; [85] parallel_4.1.3              Rcpp_1.0.8.3               </span>
+<span class="co">#&gt; [87] vctrs_0.4.0                 tidyselect_1.1.2           </span>
+<span class="co">#&gt; [89] xfun_0.30</span></code></pre></div>
 </div>
   </div>
 
@@ -356,7 +357,7 @@
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.0.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
 </div>
 
       </footer>

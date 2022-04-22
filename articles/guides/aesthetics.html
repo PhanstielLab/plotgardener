@@ -41,7 +41,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../../index.html">plotgardener</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.0.9</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.0.17</span>
       </span>
     </div>
 
@@ -60,7 +60,7 @@
   <a href="../../articles/introduction_to_plotgardener.html">Introduction to plotgardener</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
      
     <span class="caret"></span>
@@ -131,10 +131,10 @@
     
 <p><code>plotgardener</code> plots are extremely customizable in appearance. In this article we will outline some of the major aesthetic customizations, including general features and specific plot type customizations.</p>
 <p>All the data included in this article can be found in the supplementary package <code>plotgardenerData</code>.</p>
-<div class="section level1">
-<h1 id="gpar-and-common-plot-customizations">
+<div class="section level2">
+<h2 id="gpar-and-common-plot-customizations">
 <code>gpar</code> and common plot customizations<a class="anchor" aria-label="anchor" href="#gpar-and-common-plot-customizations"></a>
-</h1>
+</h2>
 <p>The most common types of customizations are inherited from <code>grid</code> <code>gpar</code> options. If a function accepts <code>...</code>, this usually refers to <code>gpar</code> options that are not explicity listed as parameters in the function documentation. General valid parameters include:</p>
 <table class="table">
 <colgroup>
@@ -202,9 +202,9 @@
 </table>
 <p>Additional fonts for the <code>fontfamily</code> argument can be imported with the packages <code>extrafont</code> and <code>showtext</code>. This makes it possible to incorporate special fonts like Times New Roman, Arial, etc. into <code>plotgardener</code> figures.</p>
 </div>
-<div class="section level1">
-<h1 id="backgrounds-and-baselines">Backgrounds and baselines<a class="anchor" aria-label="anchor" href="#backgrounds-and-baselines"></a>
-</h1>
+<div class="section level2">
+<h2 id="backgrounds-and-baselines">Backgrounds and baselines<a class="anchor" aria-label="anchor" href="#backgrounds-and-baselines"></a>
+</h2>
 <p>By default, <code>plotgardener</code> plots have transparent backgrounds when placed on a <code>page</code>. In many functions, this background color can be changed with the parameter <code>bg</code>.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../../reference/plotGenes.html">plotGenes</a></span><span class="op">(</span>
@@ -228,13 +228,13 @@
 <span class="op">)</span></code></pre></div>
 <p><img src="aesthetics_files/figure-html/aes_02-1.png" width="1425" style="display: block; margin: auto;"></p>
 </div>
-<div class="section level1">
-<h1 id="gene-and-transcript-plot-aesthetics">Gene and transcript plot aesthetics<a class="anchor" aria-label="anchor" href="#gene-and-transcript-plot-aesthetics"></a>
-</h1>
-<p><code>plotgardener</code> provides many useful features specific for enhancing gene and transcript visualizations:</p>
 <div class="section level2">
-<h2 id="labels">Labels<a class="anchor" aria-label="anchor" href="#labels"></a>
+<h2 id="gene-and-transcript-plot-aesthetics">Gene and transcript plot aesthetics<a class="anchor" aria-label="anchor" href="#gene-and-transcript-plot-aesthetics"></a>
 </h2>
+<p><code>plotgardener</code> provides many useful features specific for enhancing gene and transcript visualizations:</p>
+<div class="section level3">
+<h3 id="labels">Labels<a class="anchor" aria-label="anchor" href="#labels"></a>
+</h3>
 <p>Since <code>plotgardener</code> utilizes <code>TxDb</code> objects, <code>orgDb</code> objects, and internal citation information, <code>plotgardener</code> has access to numerous gene and transcript identifiers and can customize annotation labels in a variety of ways.</p>
 <p>By default, <code>plotgardener</code> will rank gene labels according to citation number to prevent label overcrowding. However, we can provide our own list of prioritized genes to label in a plot. For example, if we plot the hg19 genes in the region <code>chr2:1000000-20000000</code>, our plot will show these labels:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
@@ -293,9 +293,9 @@
 <span class="op">)</span></code></pre></div>
 <p><img src="aesthetics_files/figure-html/aes_10-1.png" width="1050" style="display: block; margin: auto;"></p>
 </div>
-<div class="section level2">
-<h2 id="highlighting-genes-by-color">Highlighting genes by color<a class="anchor" aria-label="anchor" href="#highlighting-genes-by-color"></a>
-</h2>
+<div class="section level3">
+<h3 id="highlighting-genes-by-color">Highlighting genes by color<a class="anchor" aria-label="anchor" href="#highlighting-genes-by-color"></a>
+</h3>
 <p>In addition to changing <code>fill</code> and <code>fontcolor</code> to change the colors of all genes in a plot, specific gene structures and their labels can be highlighted in a different color with <code>geneHighlights</code>. If we revisit the <code>genes</code> plot above, we can highlight RRM2 by creating a <code>data.frame</code> with “RRM2” in the first column and its highlight color in the second column:</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">geneHighlights</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span><span class="st">"geneName"</span> <span class="op">=</span> <span class="st">"RRM2"</span>, <span class="st">"color"</span> <span class="op">=</span> <span class="st">"steel blue"</span><span class="op">)</span></code></pre></div>
@@ -331,9 +331,9 @@
 <span class="op">)</span></code></pre></div>
 <p><img src="aesthetics_files/figure-html/aes_12-1.png" width="750" style="display: block; margin: auto;"></p>
 </div>
-<div class="section level2">
-<h2 id="customizing-transcripts-by-strand">Customizing transcripts by strand<a class="anchor" aria-label="anchor" href="#customizing-transcripts-by-strand"></a>
-</h2>
+<div class="section level3">
+<h3 id="customizing-transcripts-by-strand">Customizing transcripts by strand<a class="anchor" aria-label="anchor" href="#customizing-transcripts-by-strand"></a>
+</h3>
 <p>To distinguish which strand a transcript belongs to, <code><a href="../../reference/plotTranscripts.html">plotTranscripts()</a></code> colors transcripts by strand with the parameter <code>colorbyStrand</code>. The first value in <code>fill</code> colors positive strand transcripts and the second <code>fill</code> value colors negative strand transcripts. To further organize transcripts by strand, we can use <code>strandSplit</code> to separate transcript elements into groups of positive and negative strands:</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../../reference/pageCreate.html">pageCreate</a></span><span class="op">(</span>
@@ -350,9 +350,9 @@
 <p>Now all our positive strand transcripts are grouped together above the group of negative strand transcripts.</p>
 </div>
 </div>
-<div class="section level1">
-<h1 id="hi-c-plot-customizations">Hi-C plot customizations<a class="anchor" aria-label="anchor" href="#hi-c-plot-customizations"></a>
-</h1>
+<div class="section level2">
+<h2 id="hi-c-plot-customizations">Hi-C plot customizations<a class="anchor" aria-label="anchor" href="#hi-c-plot-customizations"></a>
+</h2>
 <p><code>plotgardener</code> includes many types of customizations for Hi-C plots. <code>plotgardener</code> provides 3 different Hi-C plotting functions based on the desired plot shape:</p>
 <ul>
 <li><p><code><a href="../../reference/plotHicSquare.html">plotHicSquare()</a></code>: Plots a square, symmetrical Hi-C plot with genomic coordinates along both the x- and y-axes.</p></li>
@@ -391,14 +391,14 @@
 <span class="op">)</span></code></pre></div>
 <p><img src="aesthetics_files/figure-html/aes_15-1.png" width="787.5" style="display: block; margin: auto;"></p>
 </div>
-<div class="section level1">
-<h1 id="session-info">Session Info<a class="anchor" aria-label="anchor" href="#session-info"></a>
-</h1>
+<div class="section level2">
+<h2 id="session-info">Session Info<a class="anchor" aria-label="anchor" href="#session-info"></a>
+</h2>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/sessionInfo.html" class="external-link">sessionInfo</a></span><span class="op">(</span><span class="op">)</span>
-<span class="co">#&gt; R version 4.1.2 (2021-11-01)</span>
+<span class="co">#&gt; R version 4.1.3 (2022-03-10)</span>
 <span class="co">#&gt; Platform: x86_64-apple-darwin17.0 (64-bit)</span>
-<span class="co">#&gt; Running under: macOS Big Sur 10.16</span>
+<span class="co">#&gt; Running under: macOS Big Sur/Monterey 10.16</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Matrix products: default</span>
 <span class="co">#&gt; BLAS:   /Library/Frameworks/R.framework/Versions/4.1/Resources/lib/libRblas.0.dylib</span>
@@ -414,66 +414,67 @@
 <span class="co">#&gt; other attached packages:</span>
 <span class="co">#&gt;  [1] org.Hs.eg.db_3.14.0                    </span>
 <span class="co">#&gt;  [2] TxDb.Hsapiens.UCSC.hg19.knownGene_3.2.2</span>
-<span class="co">#&gt;  [3] GenomicFeatures_1.46.1                 </span>
+<span class="co">#&gt;  [3] GenomicFeatures_1.46.5                 </span>
 <span class="co">#&gt;  [4] AnnotationDbi_1.56.2                   </span>
 <span class="co">#&gt;  [5] Biobase_2.54.0                         </span>
 <span class="co">#&gt;  [6] GenomicRanges_1.46.1                   </span>
-<span class="co">#&gt;  [7] GenomeInfoDb_1.30.0                    </span>
+<span class="co">#&gt;  [7] GenomeInfoDb_1.30.1                    </span>
 <span class="co">#&gt;  [8] IRanges_2.28.0                         </span>
-<span class="co">#&gt;  [9] S4Vectors_0.32.3                       </span>
+<span class="co">#&gt;  [9] S4Vectors_0.32.4                       </span>
 <span class="co">#&gt; [10] BiocGenerics_0.40.0                    </span>
 <span class="co">#&gt; [11] plotgardenerData_1.0.0                 </span>
-<span class="co">#&gt; [12] plotgardener_1.0.8                     </span>
+<span class="co">#&gt; [12] plotgardener_1.1.17                    </span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; loaded via a namespace (and not attached):</span>
 <span class="co">#&gt;  [1] bitops_1.0-7                matrixStats_0.61.0         </span>
-<span class="co">#&gt;  [3] fs_1.5.1                    bit64_4.0.5                </span>
+<span class="co">#&gt;  [3] fs_1.5.2                    bit64_4.0.5                </span>
 <span class="co">#&gt;  [5] filelock_1.0.2              progress_1.2.2             </span>
-<span class="co">#&gt;  [7] RColorBrewer_1.1-2          httr_1.4.2                 </span>
-<span class="co">#&gt;  [9] rprojroot_2.0.2             tools_4.1.2                </span>
+<span class="co">#&gt;  [7] httr_1.4.2                  RColorBrewer_1.1-3         </span>
+<span class="co">#&gt;  [9] rprojroot_2.0.3             tools_4.1.3                </span>
 <span class="co">#&gt; [11] bslib_0.3.1                 utf8_1.2.2                 </span>
-<span class="co">#&gt; [13] R6_2.5.1                    DBI_1.1.1                  </span>
-<span class="co">#&gt; [15] colorspace_2.0-2            prettyunits_1.1.1          </span>
-<span class="co">#&gt; [17] tidyselect_1.1.1            bit_4.0.4                  </span>
-<span class="co">#&gt; [19] curl_4.3.2                  compiler_4.1.2             </span>
-<span class="co">#&gt; [21] textshaping_0.3.6           xml2_1.3.3                 </span>
-<span class="co">#&gt; [23] desc_1.4.0                  DelayedArray_0.20.0        </span>
-<span class="co">#&gt; [25] rtracklayer_1.54.0          sass_0.4.0                 </span>
-<span class="co">#&gt; [27] scales_1.1.1                rappdirs_0.3.3             </span>
-<span class="co">#&gt; [29] pkgdown_2.0.0               systemfonts_1.0.3          </span>
-<span class="co">#&gt; [31] stringr_1.4.0               digest_0.6.29              </span>
-<span class="co">#&gt; [33] Rsamtools_2.10.0            yulab.utils_0.0.4          </span>
-<span class="co">#&gt; [35] rmarkdown_2.11              XVector_0.34.0             </span>
-<span class="co">#&gt; [37] pkgconfig_2.0.3             htmltools_0.5.2            </span>
-<span class="co">#&gt; [39] MatrixGenerics_1.6.0        highr_0.9                  </span>
-<span class="co">#&gt; [41] dbplyr_2.1.1                fastmap_1.1.0              </span>
-<span class="co">#&gt; [43] rlang_0.4.12                RSQLite_2.2.8              </span>
-<span class="co">#&gt; [45] gridGraphics_0.5-1          jquerylib_0.1.4            </span>
-<span class="co">#&gt; [47] BiocIO_1.4.0                generics_0.1.1             </span>
-<span class="co">#&gt; [49] jsonlite_1.7.2              BiocParallel_1.28.3        </span>
-<span class="co">#&gt; [51] dplyr_1.0.7                 RCurl_1.98-1.5             </span>
-<span class="co">#&gt; [53] magrittr_2.0.1              ggplotify_0.1.0            </span>
-<span class="co">#&gt; [55] GenomeInfoDbData_1.2.7      Matrix_1.3-4               </span>
-<span class="co">#&gt; [57] Rcpp_1.0.7                  munsell_0.5.0              </span>
-<span class="co">#&gt; [59] fansi_0.5.0                 lifecycle_1.0.1            </span>
-<span class="co">#&gt; [61] stringi_1.7.6               yaml_2.2.1                 </span>
-<span class="co">#&gt; [63] SummarizedExperiment_1.24.0 zlibbioc_1.40.0            </span>
-<span class="co">#&gt; [65] BiocFileCache_2.2.0         blob_1.2.2                 </span>
-<span class="co">#&gt; [67] parallel_4.1.2              crayon_1.4.2               </span>
-<span class="co">#&gt; [69] lattice_0.20-45             Biostrings_2.62.0          </span>
-<span class="co">#&gt; [71] hms_1.1.1                   KEGGREST_1.34.0            </span>
-<span class="co">#&gt; [73] knitr_1.36                  pillar_1.6.4               </span>
-<span class="co">#&gt; [75] rjson_0.2.20                biomaRt_2.50.1             </span>
-<span class="co">#&gt; [77] strawr_0.0.9                XML_3.99-0.8               </span>
-<span class="co">#&gt; [79] glue_1.5.1                  evaluate_0.14              </span>
-<span class="co">#&gt; [81] data.table_1.14.2           png_0.1-7                  </span>
-<span class="co">#&gt; [83] vctrs_0.3.8                 gtable_0.3.0               </span>
-<span class="co">#&gt; [85] purrr_0.3.4                 assertthat_0.2.1           </span>
-<span class="co">#&gt; [87] cachem_1.0.6                ggplot2_3.3.5              </span>
-<span class="co">#&gt; [89] xfun_0.28                   restfulr_0.0.13            </span>
-<span class="co">#&gt; [91] ragg_1.2.0                  tibble_3.1.6               </span>
-<span class="co">#&gt; [93] GenomicAlignments_1.30.0    plyranges_1.14.0           </span>
-<span class="co">#&gt; [95] memoise_2.0.1               ellipsis_0.3.2</span></code></pre></div>
+<span class="co">#&gt; [13] R6_2.5.1                    DBI_1.1.2                  </span>
+<span class="co">#&gt; [15] colorspace_2.0-3            prettyunits_1.1.1          </span>
+<span class="co">#&gt; [17] tidyselect_1.1.2            bit_4.0.4                  </span>
+<span class="co">#&gt; [19] curl_4.3.2                  compiler_4.1.3             </span>
+<span class="co">#&gt; [21] textshaping_0.3.6           cli_3.2.0                  </span>
+<span class="co">#&gt; [23] xml2_1.3.3                  desc_1.4.1                 </span>
+<span class="co">#&gt; [25] DelayedArray_0.20.0         rtracklayer_1.54.0         </span>
+<span class="co">#&gt; [27] sass_0.4.1                  scales_1.1.1               </span>
+<span class="co">#&gt; [29] rappdirs_0.3.3              pkgdown_2.0.2              </span>
+<span class="co">#&gt; [31] systemfonts_1.0.4           stringr_1.4.0              </span>
+<span class="co">#&gt; [33] digest_0.6.29               Rsamtools_2.10.0           </span>
+<span class="co">#&gt; [35] yulab.utils_0.0.4           rmarkdown_2.13             </span>
+<span class="co">#&gt; [37] XVector_0.34.0              pkgconfig_2.0.3            </span>
+<span class="co">#&gt; [39] htmltools_0.5.2             MatrixGenerics_1.6.0       </span>
+<span class="co">#&gt; [41] highr_0.9                   dbplyr_2.1.1               </span>
+<span class="co">#&gt; [43] fastmap_1.1.0               rlang_1.0.2                </span>
+<span class="co">#&gt; [45] rstudioapi_0.13             RSQLite_2.2.12             </span>
+<span class="co">#&gt; [47] gridGraphics_0.5-1          jquerylib_0.1.4            </span>
+<span class="co">#&gt; [49] BiocIO_1.4.0                generics_0.1.2             </span>
+<span class="co">#&gt; [51] jsonlite_1.8.0              BiocParallel_1.28.3        </span>
+<span class="co">#&gt; [53] dplyr_1.0.8                 RCurl_1.98-1.6             </span>
+<span class="co">#&gt; [55] magrittr_2.0.3              ggplotify_0.1.0            </span>
+<span class="co">#&gt; [57] GenomeInfoDbData_1.2.7      Matrix_1.4-1               </span>
+<span class="co">#&gt; [59] Rcpp_1.0.8.3                munsell_0.5.0              </span>
+<span class="co">#&gt; [61] fansi_1.0.3                 lifecycle_1.0.1            </span>
+<span class="co">#&gt; [63] stringi_1.7.6               yaml_2.3.5                 </span>
+<span class="co">#&gt; [65] SummarizedExperiment_1.24.0 zlibbioc_1.40.0            </span>
+<span class="co">#&gt; [67] BiocFileCache_2.2.1         blob_1.2.2                 </span>
+<span class="co">#&gt; [69] parallel_4.1.3              crayon_1.5.1               </span>
+<span class="co">#&gt; [71] lattice_0.20-45             Biostrings_2.62.0          </span>
+<span class="co">#&gt; [73] hms_1.1.1                   KEGGREST_1.34.0            </span>
+<span class="co">#&gt; [75] knitr_1.38                  pillar_1.7.0               </span>
+<span class="co">#&gt; [77] rjson_0.2.21                biomaRt_2.50.3             </span>
+<span class="co">#&gt; [79] strawr_0.0.9                XML_3.99-0.9               </span>
+<span class="co">#&gt; [81] glue_1.6.2                  evaluate_0.15              </span>
+<span class="co">#&gt; [83] data.table_1.14.2           png_0.1-7                  </span>
+<span class="co">#&gt; [85] vctrs_0.4.0                 gtable_0.3.0               </span>
+<span class="co">#&gt; [87] purrr_0.3.4                 assertthat_0.2.1           </span>
+<span class="co">#&gt; [89] cachem_1.0.6                ggplot2_3.3.5              </span>
+<span class="co">#&gt; [91] xfun_0.30                   restfulr_0.0.13            </span>
+<span class="co">#&gt; [93] ragg_1.2.2                  tibble_3.1.6               </span>
+<span class="co">#&gt; [95] GenomicAlignments_1.30.0    plyranges_1.14.0           </span>
+<span class="co">#&gt; [97] memoise_2.0.1               ellipsis_0.3.2</span></code></pre></div>
 </div>
   </div>
 
@@ -494,7 +495,7 @@
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.0.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
 </div>
 
       </footer>

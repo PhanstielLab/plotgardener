@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">plotgardener</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.0.9</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.0.17</span>
       </span>
     </div>
 
@@ -35,7 +35,7 @@
   <a href="../articles/introduction_to_plotgardener.html">Introduction to plotgardener</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
      
     <span class="caret"></span>
@@ -95,7 +95,8 @@
     <p>Plot paired-end genomic range data in an arch style</p>
     </div>
 
-    <div id="ref-usage">Usage,<div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">plotPairsArches</span><span class="op">(</span>
+    <div id="ref-usage">
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">plotPairsArches</span><span class="op">(</span>
     <span class="va">data</span>,
     <span class="va">chrom</span>,
     chromstart <span class="op">=</span> <span class="cn">NULL</span>,
@@ -110,6 +111,8 @@
     alpha <span class="op">=</span> <span class="fl">0.4</span>,
     bg <span class="op">=</span> <span class="cn">NA</span>,
     clip <span class="op">=</span> <span class="cn">FALSE</span>,
+    clip.noAnchor <span class="op">=</span> <span class="cn">TRUE</span>,
+    range <span class="op">=</span> <span class="cn">NULL</span>,
     baseline <span class="op">=</span> <span class="cn">FALSE</span>,
     baseline.color <span class="op">=</span> <span class="st">"grey"</span>,
     baseline.lwd <span class="op">=</span> <span class="fl">1</span>,
@@ -122,7 +125,8 @@
     draw <span class="op">=</span> <span class="cn">TRUE</span>,
     params <span class="op">=</span> <span class="cn">NULL</span>,
     <span class="va">...</span>
-<span class="op">)</span></code></pre></div></div>
+<span class="op">)</span></code></pre></div>
+    </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
@@ -152,9 +156,9 @@ the x-axis. Default value is <code>flip = FALSE</code>.</p></dd>
 <dd><p>Numeric indicating the number of points along the
 arch curvature. Default value is <code>curvature = 5</code>.</p></dd>
 <dt>archHeight</dt>
-<dd><p>Single numeric value or numeric vector specifying
-the arch heights. When NULL, all arches will be the same height,
-filling up the given plot area</p></dd>
+<dd><p>Single numeric value, numeric vector, or column name 
+in data specifying the arch heights. When NULL, all arches will be the 
+same height, filling up the given plot area.</p></dd>
 <dt>fill</dt>
 <dd><p>A single character value, a vector, or a 
 <a href="colorby.html">colorby</a> object specifying fill colors of arches.
@@ -176,6 +180,13 @@ Default value is <code>bg = NA</code>.</p></dd>
 <dd><p>A logical value indicating whether to clip any
 arches that get cutoff in the given genomic region.
 Default value is <code>clip = FALSE</code>.</p></dd>
+<dt>clip.noAnchor</dt>
+<dd><p>A logical value indicating whether to clip
+any arches that overlap the given genomic region but do not 
+have an anchor in that region. Default value is <code>clip.noAnchor = TRUE</code>.</p></dd>
+<dt>range</dt>
+<dd><p>A numeric vector of length 2 specifying the y-range
+of <code>archHeight</code> to plot (c(min, max)).</p></dd>
 <dt>baseline</dt>
 <dd><p>Logical value indicating whether to include
 a baseline along the x-axis. Default value is <code>baseline = FALSE</code>.</p></dd>
@@ -258,7 +269,8 @@ arches plot by ignoring plot placement parameters:</p><div class="sourceCode"><p
 <span class="r-in">        <span class="op">(</span><span class="va">IMR90_DNAloops_pairs</span><span class="op">$</span><span class="va">start2</span> <span class="op">-</span> <span class="va">IMR90_DNAloops_pairs</span><span class="op">$</span><span class="va">start1</span><span class="op">)</span> <span class="op">/</span> <span class="fl">1000</span></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co">## Translate lengths into heights</span></span>
-<span class="r-in"><span class="va">heights</span> <span class="op">&lt;-</span> <span class="va">IMR90_DNAloops_pairs</span><span class="op">$</span><span class="va">length</span> <span class="op">/</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">max</a></span><span class="op">(</span><span class="va">IMR90_DNAloops_pairs</span><span class="op">$</span><span class="va">length</span><span class="op">)</span></span>
+<span class="r-in"><span class="va">IMR90_DNAloops_pairs</span><span class="op">$</span><span class="va">h</span> <span class="op">&lt;-</span> </span>
+<span class="r-in">        <span class="va">IMR90_DNAloops_pairs</span><span class="op">$</span><span class="va">length</span> <span class="op">/</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">max</a></span><span class="op">(</span><span class="va">IMR90_DNAloops_pairs</span><span class="op">$</span><span class="va">length</span><span class="op">)</span></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co">## Plot the data</span></span>
 <span class="r-in"><span class="va">archPlot</span> <span class="op">&lt;-</span> <span class="fu">plotPairsArches</span><span class="op">(</span></span>
@@ -266,7 +278,7 @@ arches plot by ignoring plot placement parameters:</p><div class="sourceCode"><p
 <span class="r-in">    fill <span class="op">=</span> <span class="fu"><a href="colorby.html">colorby</a></span><span class="op">(</span><span class="st">"length"</span>, palette <span class="op">=</span> </span>
 <span class="r-in">                <span class="fu"><a href="https://rdrr.io/r/grDevices/colorRamp.html" class="external-link">colorRampPalette</a></span><span class="op">(</span><span class="fu"><a href="c.html">c</a></span><span class="op">(</span><span class="st">"dodgerblue2"</span>, <span class="st">"firebrick2"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>,</span>
 <span class="r-in">    linecolor <span class="op">=</span> <span class="st">"fill"</span>,</span>
-<span class="r-in">    archHeight <span class="op">=</span> <span class="va">heights</span>, alpha <span class="op">=</span> <span class="fl">1</span>,</span>
+<span class="r-in">    archHeight <span class="op">=</span> <span class="st">"h"</span>, alpha <span class="op">=</span> <span class="fl">1</span>,</span>
 <span class="r-in">    x <span class="op">=</span> <span class="fl">0.25</span>, y <span class="op">=</span> <span class="fl">0.25</span>, height <span class="op">=</span> <span class="fl">1.5</span>,</span>
 <span class="r-in">    just <span class="op">=</span> <span class="fu"><a href="c.html">c</a></span><span class="op">(</span><span class="st">"left"</span>, <span class="st">"top"</span><span class="op">)</span>,</span>
 <span class="r-in">    default.units <span class="op">=</span> <span class="st">"inches"</span></span>
@@ -313,7 +325,7 @@ arches plot by ignoring plot placement parameters:</p><div class="sourceCode"><p
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.0.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
 </div>
 
       </footer></div>
