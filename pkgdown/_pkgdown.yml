@@ -1,5 +1,10 @@
 url: https://phanstiellab.github.io/plotgardener
 
+home:
+  links:
+  - text: View the publication
+    href: https://doi.org/10.1093/bioinformatics/btac057
+
 template:
   params:
     bootswatch: lumen
