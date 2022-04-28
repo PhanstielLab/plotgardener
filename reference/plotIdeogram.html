@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">plotgardener</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.0.17</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.2.0</span>
       </span>
     </div>
 
@@ -102,6 +102,7 @@
     data <span class="op">=</span> <span class="cn">NULL</span>,
     orientation <span class="op">=</span> <span class="st">"h"</span>,
     showBands <span class="op">=</span> <span class="cn">TRUE</span>,
+    fill <span class="op">=</span> <span class="cn">NULL</span>,
     x <span class="op">=</span> <span class="cn">NULL</span>,
     y <span class="op">=</span> <span class="cn">NULL</span>,
     width <span class="op">=</span> <span class="cn">NULL</span>,
@@ -135,6 +136,11 @@ Options are:</p><ul><li><p><code>"v"</code>: Vertical ideogram orientation.</p><
 <dd><p>Logical value indicating whether to draw
 colored cytobands within ideogram.
 Default value is <code>showBands = TRUE</code>.</p></dd>
+<dt>fill</dt>
+<dd><p>(optional) A vector specifying alternate colors for cytoband
+stains. To change specific gieStain values (i.e. gneg, gpos, etc.) to 
+specific colors, this vector can be named. This vector must have the same
+number of colors as there are gieStain values for each genome assembly.</p></dd>
 <dt>x</dt>
 <dd><p>A numeric or unit object specifying ideogram x-location.</p></dd>
 <dt>y</dt>
@@ -193,6 +199,16 @@ Giemsa stain band data can be loaded with the `data` parameter.</p>
 <span class="r-in"><span class="co">## annotation data for hg19 genome assembly</span></span>
 <span class="r-in"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">TxDb.Hsapiens.UCSC.hg19.knownGene</span><span class="op">)</span></span>
 <span class="r-in"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">AnnotationHub</span><span class="op">)</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Loading required package: BiocFileCache</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Loading required package: dbplyr</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Attaching package: ‘AnnotationHub’</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> The following object is masked from ‘package:rtracklayer’:</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     hubUrl</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> The following object is masked from ‘package:Biobase’:</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     cache</span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co">## Create page</span></span>
 <span class="r-in"><span class="fu"><a href="pageCreate.html">pageCreate</a></span><span class="op">(</span>width <span class="op">=</span> <span class="fl">4.5</span>, height <span class="op">=</span> <span class="fl">1</span>, default.units <span class="op">=</span> <span class="st">"inches"</span><span class="op">)</span></span>
@@ -231,7 +247,7 @@ Giemsa stain band data can be loaded with the `data` parameter.</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
 </div>
 
       </footer></div>
