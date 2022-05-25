@@ -41,7 +41,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../../index.html">plotgardener</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.2.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.2.1</span>
       </span>
     </div>
 
@@ -119,7 +119,8 @@
       </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
-      <h1 data-toc-skip>Incorporating <code>ggplots</code> and other <code>grid</code>-based Bioconductor visualizations</h1>
+      <h1 data-toc-skip>Incorporating <code>ggplots</code> and other
+<code>grid</code>-based Bioconductor visualizations</h1>
             
       
       <small class="dont-index">Source: <a href="https://github.com/PhanstielLab/plotgardener/blob/HEAD/vignettes/guides/incorporating_ggplots.Rmd" class="external-link"><code>vignettes/guides/incorporating_ggplots.Rmd</code></a></small>
@@ -129,12 +130,22 @@
 
     
     
-<p>In addition to its numerous built-in genomic functions, <code>plotgardener</code> can size and place <code>ggplots</code> and other <code>grid</code>-based visualizations within a <code>plotgardener</code> layout. Rather than arranging these plots in a relative manner, <code>plotgardener</code> can make and place these plots in absolute sizes and locations. This makes it simple and intuitive to make complex and combined <code>plotgardener</code>,<code>ggplot</code>, and other <code>grid</code> plot arrangements beyond a basic grid-style layout.</p>
+<p>In addition to its numerous built-in genomic functions,
+<code>plotgardener</code> can size and place <code>ggplots</code> and
+other <code>grid</code>-based visualizations within a
+<code>plotgardener</code> layout. Rather than arranging these plots in a
+relative manner, <code>plotgardener</code> can make and place these
+plots in absolute sizes and locations. This makes it simple and
+intuitive to make complex and combined
+<code>plotgardener</code>,<code>ggplot</code>, and other
+<code>grid</code> plot arrangements beyond a basic grid-style
+layout.</p>
 <div class="section level2">
 <h2 id="ggplots">
 <code>ggplots</code><a class="anchor" aria-label="anchor" href="#ggplots"></a>
 </h2>
-<p>Let’s say we wanted to make a complex multi-panel <code>ggplot</code> about COVID-19 data consisting of the following plots:</p>
+<p>Let’s say we wanted to make a complex multi-panel <code>ggplot</code>
+about COVID-19 data consisting of the following plots:</p>
 <ol style="list-style-type: decimal">
 <li>A United States map depicting COVID-19 cases:</li>
 </ol>
@@ -170,7 +181,8 @@
 <span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">US_map</span><span class="op">)</span></code></pre></div>
 <p><img src="incorporating_ggplots_files/figure-html/ggplot_01-1.png" width="450" style="display: block; margin: auto;"></p>
 <ol start="2" style="list-style-type: decimal">
-<li>Line plots showing the accumulation of COVID-19 cases over time:</li>
+<li>Line plots showing the accumulation of COVID-19 cases over
+time:</li>
 </ol>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"COVID_NY_FL_tracking"</span><span class="op">)</span>
@@ -346,7 +358,8 @@
 
 <span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">vaccines_FLpie</span><span class="op">)</span></code></pre></div>
 <p><img src="incorporating_ggplots_files/figure-html/ggplot_05-1.png" width="450" style="display: block; margin: auto;"></p>
-<p>We can now easily overlap and size all these <code>ggplots</code> by passing our saved plot objects into <code><a href="../../reference/plotGG.html">plotGG()</a></code>:</p>
+<p>We can now easily overlap and size all these <code>ggplots</code> by
+passing our saved plot objects into <code><a href="../../reference/plotGG.html">plotGG()</a></code>:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../../reference/pageCreate.html">pageCreate</a></span><span class="op">(</span>width <span class="op">=</span> <span class="fl">9.5</span>, height <span class="op">=</span> <span class="fl">3.5</span>, default.units <span class="op">=</span> <span class="st">"inches"</span><span class="op">)</span>
 
@@ -366,7 +379,9 @@
     width <span class="op">=</span> <span class="fl">3.025</span>, height <span class="op">=</span> <span class="fl">1.4</span>, just <span class="op">=</span> <span class="fu"><a href="../../reference/c.html">c</a></span><span class="op">(</span><span class="st">"left"</span>, <span class="st">"bottom"</span><span class="op">)</span>
 <span class="op">)</span></code></pre></div>
 <p><img src="incorporating_ggplots_files/figure-html/gg_plot05-1.png" width="1725" style="display: block; margin: auto;"></p>
-<p>In particular, <code>plotgardener</code> makes it easy to resize and place our pie charts in a layout that overlaps our line plots without it affecting the sizing of the other plots on the page:</p>
+<p>In particular, <code>plotgardener</code> makes it easy to resize and
+place our pie charts in a layout that overlaps our line plots without it
+affecting the sizing of the other plots on the page:</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../../reference/plotGG.html">plotGG</a></span><span class="op">(</span>
     plot <span class="op">=</span> <span class="va">vaccines_NYpie</span>,
@@ -379,7 +394,9 @@
     width <span class="op">=</span> <span class="fl">1.45</span>, height <span class="op">=</span> <span class="fl">1.45</span>, just <span class="op">=</span> <span class="fu"><a href="../../reference/c.html">c</a></span><span class="op">(</span><span class="st">"left"</span>, <span class="st">"top"</span><span class="op">)</span>
 <span class="op">)</span></code></pre></div>
 <p><img src="incorporating_ggplots_files/figure-html/gg_plot06-1.png" width="1725" style="display: block; margin: auto;"></p>
-<p>We can also easily add additional elements to further enhance our complex <code>ggplot</code> arrangments, like a precise placement of text labels:</p>
+<p>We can also easily add additional elements to further enhance our
+complex <code>ggplot</code> arrangments, like a precise placement of
+text labels:</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../../reference/plotText.html">plotText</a></span><span class="op">(</span>
     label <span class="op">=</span> <span class="fu"><a href="../../reference/c.html">c</a></span><span class="op">(</span><span class="st">"not"</span>, <span class="st">"partially"</span>, <span class="st">"fully vaccinated"</span><span class="op">)</span>,
@@ -398,15 +415,23 @@
             fontfamily <span class="op">=</span> <span class="st">"ProximaNova"</span>, fontcolor <span class="op">=</span> <span class="st">"black"</span>,
             fontsize <span class="op">=</span> <span class="fl">7</span>, fontface <span class="op">=</span> <span class="st">"italic"</span>,
             x <span class="op">=</span> <span class="fl">0.15</span>, y <span class="op">=</span> <span class="fl">3.45</span>, just <span class="op">=</span> <span class="fu"><a href="../../reference/c.html">c</a></span><span class="op">(</span><span class="st">"left"</span>, <span class="st">"bottom"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<p>We are then left with a complex, precise, and elegant arrangement of <code>ggplots</code> as if we had arranged them together with graphic design software:</p>
+<p>We are then left with a complex, precise, and elegant arrangement of
+<code>ggplots</code> as if we had arranged them together with graphic
+design software:</p>
 <p><img src="incorporating_ggplots_files/figure-html/gg_plot07-1.png" width="1725" style="display: block; margin: auto;"></p>
 </div>
 <div class="section level2">
 <h2 id="complexheatmap">
 <code>ComplexHeatmap</code><a class="anchor" aria-label="anchor" href="#complexheatmap"></a>
 </h2>
-<p>Heatmaps are an integral visualization to many multi-panel genomic visualizations. Existing Bioconductor packages like <code>ComplexHeatmap</code> provide excellent methods to produce such heatmaps. Since these plots are also based on <code>grid</code> graphics, it is possible to incorporate them into <code>plotgardener</code> figure arrangements.</p>
-<p>For example, let’s say we made a heatmap representing the density of ChIP-seq data at a particular peak:</p>
+<p>Heatmaps are an integral visualization to many multi-panel genomic
+visualizations. Existing Bioconductor packages like
+<code>ComplexHeatmap</code> provide excellent methods to produce such
+heatmaps. Since these plots are also based on <code>grid</code>
+graphics, it is possible to incorporate them into
+<code>plotgardener</code> figure arrangements.</p>
+<p>For example, let’s say we made a heatmap representing the density of
+ChIP-seq data at a particular peak:</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/jokergoo/ComplexHeatmap" class="external-link">ComplexHeatmap</a></span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="http://purrr.tidyverse.org" class="external-link">purrr</a></span><span class="op">)</span>
@@ -426,7 +451,8 @@
         show_heatmap_legend <span class="op">=</span> <span class="cn">FALSE</span>, 
         cluster_rows <span class="op">=</span> <span class="cn">FALSE</span>, cluster_columns <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></code></pre></div>
 <p><img src="incorporating_ggplots_files/figure-html/gg_plot08-1.png" width="750" style="display: block; margin: auto;"></p>
-<p>We can capture this heatmap with the <code>grid</code> function <code><a href="https://rdrr.io/r/grid/grid.grab.html" class="external-link">grid.grabExpr()</a></code>:</p>
+<p>We can capture this heatmap with the <code>grid</code> function
+<code><a href="https://rdrr.io/r/grid/grid.grab.html" class="external-link">grid.grabExpr()</a></code>:</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">grid</span><span class="op">)</span>
 <span class="va">heatmap</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/grid/grid.grab.html" class="external-link">grid.grabExpr</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/ComplexHeatmap/man/draw-dispatch.html" class="external-link">draw</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/ComplexHeatmap/man/Heatmap.html" class="external-link">Heatmap</a></span><span class="op">(</span><span class="va">genmat</span>, 
@@ -435,7 +461,9 @@
                     border_gp <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grid/gpar.html" class="external-link">gpar</a></span><span class="op">(</span>lwd <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span>,
                     show_heatmap_legend <span class="op">=</span> <span class="cn">FALSE</span>, 
                     cluster_rows <span class="op">=</span> <span class="cn">FALSE</span>, cluster_columns <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<p>We can now pass this object into the <code>plotGG</code> function and incorporate the heatmap into a <code>plotgardener</code> layout with additional figure elements made by <code>plotgardener</code>:</p>
+<p>We can now pass this object into the <code>plotGG</code> function and
+incorporate the heatmap into a <code>plotgardener</code> layout with
+additional figure elements made by <code>plotgardener</code>:</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"GM12878_HiC_10kb"</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"GM12878_ChIP_CTCF_signal"</span><span class="op">)</span>
@@ -520,9 +548,9 @@
 <span class="co">#&gt; </span>
 <span class="co">#&gt; other attached packages:</span>
 <span class="co">#&gt;  [1] TxDb.Hsapiens.UCSC.hg19.knownGene_3.2.2</span>
-<span class="co">#&gt;  [2] GenomicFeatures_1.48.0                 </span>
+<span class="co">#&gt;  [2] GenomicFeatures_1.48.1                 </span>
 <span class="co">#&gt;  [3] GenomicRanges_1.48.0                   </span>
-<span class="co">#&gt;  [4] GenomeInfoDb_1.32.0                    </span>
+<span class="co">#&gt;  [4] GenomeInfoDb_1.32.2                    </span>
 <span class="co">#&gt;  [5] org.Hs.eg.db_3.15.0                    </span>
 <span class="co">#&gt;  [6] AnnotationDbi_1.58.0                   </span>
 <span class="co">#&gt;  [7] IRanges_2.30.0                         </span>
@@ -533,17 +561,17 @@
 <span class="co">#&gt; [12] purrr_0.3.4                            </span>
 <span class="co">#&gt; [13] ComplexHeatmap_2.12.0                  </span>
 <span class="co">#&gt; [14] scales_1.2.0                           </span>
-<span class="co">#&gt; [15] ggplot2_3.3.5                          </span>
+<span class="co">#&gt; [15] ggplot2_3.3.6                          </span>
 <span class="co">#&gt; [16] showtext_0.9-5                         </span>
 <span class="co">#&gt; [17] showtextdb_3.0                         </span>
 <span class="co">#&gt; [18] sysfonts_0.8.8                         </span>
-<span class="co">#&gt; [19] plotgardenerData_1.1.0                 </span>
+<span class="co">#&gt; [19] plotgardenerData_1.2.0                 </span>
 <span class="co">#&gt; [20] plotgardener_1.2.0                     </span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; loaded via a namespace (and not attached):</span>
 <span class="co">#&gt;   [1] colorspace_2.0-3            rjson_0.2.21               </span>
 <span class="co">#&gt;   [3] ellipsis_0.3.2              rprojroot_2.0.3            </span>
-<span class="co">#&gt;   [5] circlize_0.4.14             XVector_0.36.0             </span>
+<span class="co">#&gt;   [5] circlize_0.4.15             XVector_0.36.0             </span>
 <span class="co">#&gt;   [7] GlobalOptions_0.1.2         fs_1.5.2                   </span>
 <span class="co">#&gt;   [9] clue_0.3-60                 rstudioapi_0.13            </span>
 <span class="co">#&gt;  [11] farver_2.1.0                bit64_4.0.5                </span>
@@ -553,7 +581,7 @@
 <span class="co">#&gt;  [19] jsonlite_1.8.0              Rsamtools_2.12.0           </span>
 <span class="co">#&gt;  [21] dbplyr_2.1.1                cluster_2.1.3              </span>
 <span class="co">#&gt;  [23] png_0.1-7                   compiler_4.2.0             </span>
-<span class="co">#&gt;  [25] httr_1.4.2                  assertthat_0.2.1           </span>
+<span class="co">#&gt;  [25] httr_1.4.3                  assertthat_0.2.1           </span>
 <span class="co">#&gt;  [27] Matrix_1.4-1                fastmap_1.1.0              </span>
 <span class="co">#&gt;  [29] cli_3.3.0                   prettyunits_1.1.1          </span>
 <span class="co">#&gt;  [31] htmltools_0.5.2             tools_4.2.0                </span>
@@ -563,20 +591,20 @@
 <span class="co">#&gt;  [39] jquerylib_0.1.4             pkgdown_2.0.3              </span>
 <span class="co">#&gt;  [41] vctrs_0.4.1                 Biostrings_2.64.0          </span>
 <span class="co">#&gt;  [43] strawr_0.0.9                rtracklayer_1.56.0         </span>
-<span class="co">#&gt;  [45] iterators_1.0.14            xfun_0.30                  </span>
+<span class="co">#&gt;  [45] iterators_1.0.14            xfun_0.31                  </span>
 <span class="co">#&gt;  [47] stringr_1.4.0               plyranges_1.16.0           </span>
 <span class="co">#&gt;  [49] lifecycle_1.0.1             restfulr_0.0.13            </span>
 <span class="co">#&gt;  [51] XML_3.99-0.9                zlibbioc_1.42.0            </span>
 <span class="co">#&gt;  [53] hms_1.1.1                   ragg_1.2.2                 </span>
 <span class="co">#&gt;  [55] MatrixGenerics_1.8.0        parallel_4.2.0             </span>
-<span class="co">#&gt;  [57] SummarizedExperiment_1.26.0 yaml_2.3.5                 </span>
+<span class="co">#&gt;  [57] SummarizedExperiment_1.26.1 yaml_2.3.5                 </span>
 <span class="co">#&gt;  [59] curl_4.3.2                  memoise_2.0.1              </span>
 <span class="co">#&gt;  [61] yulab.utils_0.0.4           sass_0.4.1                 </span>
 <span class="co">#&gt;  [63] biomaRt_2.52.0              stringi_1.7.6              </span>
-<span class="co">#&gt;  [65] RSQLite_2.2.12              highr_0.9                  </span>
+<span class="co">#&gt;  [65] RSQLite_2.2.14              highr_0.9                  </span>
 <span class="co">#&gt;  [67] BiocIO_1.6.0                desc_1.4.1                 </span>
 <span class="co">#&gt;  [69] foreach_1.5.2               filelock_1.0.2             </span>
-<span class="co">#&gt;  [71] BiocParallel_1.30.0         shape_1.4.6                </span>
+<span class="co">#&gt;  [71] BiocParallel_1.30.2         shape_1.4.6                </span>
 <span class="co">#&gt;  [73] rlang_1.0.2                 pkgconfig_2.0.3            </span>
 <span class="co">#&gt;  [75] systemfonts_1.0.4           matrixStats_0.62.0         </span>
 <span class="co">#&gt;  [77] bitops_1.0-7                evaluate_0.15              </span>
@@ -587,7 +615,7 @@
 <span class="co">#&gt;  [87] DelayedArray_0.22.0         DBI_1.1.2                  </span>
 <span class="co">#&gt;  [89] pillar_1.7.0                withr_2.5.0                </span>
 <span class="co">#&gt;  [91] KEGGREST_1.36.0             RCurl_1.98-1.6             </span>
-<span class="co">#&gt;  [93] tibble_3.1.6                crayon_1.5.1               </span>
+<span class="co">#&gt;  [93] tibble_3.1.7                crayon_1.5.1               </span>
 <span class="co">#&gt;  [95] utf8_1.2.2                  BiocFileCache_2.4.0        </span>
 <span class="co">#&gt;  [97] rmarkdown_2.14              progress_1.2.2             </span>
 <span class="co">#&gt;  [99] GetoptLong_1.0.5            data.table_1.14.2          </span>

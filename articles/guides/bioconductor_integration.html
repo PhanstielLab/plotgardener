@@ -41,7 +41,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../../index.html">plotgardener</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.2.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.2.1</span>
       </span>
     </div>
 
@@ -129,7 +129,21 @@
 
     
     
-<p><code>plotgardener</code> is designed to be flexibly compatible with typical Bioconductor classes and libraries of genomic data to easily integrate genomic data analysis and visualization. In addition to handling various genomic file types and <code>R</code> objects, many <code>plotgardener</code> functions can also handle <code>GRanges</code> or <code>GInteractions</code> objects as input data. Furthermore, <code>plotgardener</code> does not hard-code any genomic assemblies and can utilize <code>TxDb</code>, <code>OrgDb</code>, and <code>BSgenome</code> objects for various genomic annotations, including gene and transcript structures and names, chromosome sizes, and nucleotide sequences. Furthermore, all cytoband data for ideogram plots is retrieved from the UCSC Genome Browser through <code>AnnotationHub</code>. For standard genomic assemblies (i.e. hg19, hg38, mm10), <code>plotgardener</code> uses a set of default packages that can be displayed by calling <code><a href="../../reference/defaultPackages.html">defaultPackages()</a></code>:</p>
+<p><code>plotgardener</code> is designed to be flexibly compatible with
+typical Bioconductor classes and libraries of genomic data to easily
+integrate genomic data analysis and visualization. In addition to
+handling various genomic file types and <code>R</code> objects, many
+<code>plotgardener</code> functions can also handle <code>GRanges</code>
+or <code>GInteractions</code> objects as input data. Furthermore,
+<code>plotgardener</code> does not hard-code any genomic assemblies and
+can utilize <code>TxDb</code>, <code>OrgDb</code>, and
+<code>BSgenome</code> objects for various genomic annotations, including
+gene and transcript structures and names, chromosome sizes, and
+nucleotide sequences. Furthermore, all cytoband data for ideogram plots
+is retrieved from the UCSC Genome Browser through
+<code>AnnotationHub</code>. For standard genomic assemblies (i.e. hg19,
+hg38, mm10), <code>plotgardener</code> uses a set of default packages
+that can be displayed by calling <code><a href="../../reference/defaultPackages.html">defaultPackages()</a></code>:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../../reference/defaultPackages.html">defaultPackages</a></span><span class="op">(</span><span class="st">"hg38"</span><span class="op">)</span>
 <span class="co">#&gt; 'data.frame':    1 obs. of  6 variables:</span>
@@ -155,7 +169,8 @@
 <span class="co">#&gt;  $ gene.id.column: chr "ENTREZID"</span>
 <span class="co">#&gt;  $ display.column: chr "SYMBOL"</span>
 <span class="co">#&gt;  $ BSgenome      : chr "BSgenome.Mmusculus.UCSC.mm10"</span></code></pre></div>
-<p>To see which assemblies have defaults within <code>plotgardener</code>, call <code><a href="../../reference/genomes.html">genomes()</a></code>:</p>
+<p>To see which assemblies have defaults within
+<code>plotgardener</code>, call <code><a href="../../reference/genomes.html">genomes()</a></code>:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../../reference/genomes.html">genomes</a></span><span class="op">(</span><span class="op">)</span>
 <span class="co">#&gt; bosTau8</span>
@@ -187,14 +202,28 @@
 <span class="co">#&gt; sacCer3</span>
 <span class="co">#&gt; susScr3</span>
 <span class="co">#&gt; susScr11</span></code></pre></div>
-<p><code>plotgardener</code> functions default to an “hg38” assembly, but can be customized with any of the other genomic assemblies included or a <code>assembly</code> object. To create custom genomic assemblies and combinations of <code>TxDb</code>, <code>orgDb</code>, and <code>BSgenome</code> packages for use in <code>plotgardener</code> functions, we can use the <code><a href="../../reference/assembly.html">assembly()</a></code> constructor. For example, we can create our own <code>TxDb</code> from the current human Ensembl release:</p>
+<p><code>plotgardener</code> functions default to an “hg38” assembly,
+but can be customized with any of the other genomic assemblies included
+or a <code>assembly</code> object. To create custom genomic assemblies
+and combinations of <code>TxDb</code>, <code>orgDb</code>, and
+<code>BSgenome</code> packages for use in <code>plotgardener</code>
+functions, we can use the <code><a href="../../reference/assembly.html">assembly()</a></code> constructor. For
+example, we can create our own <code>TxDb</code> from the current human
+Ensembl release:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://bioconductor.org/packages/GenomicFeatures" class="external-link">GenomicFeatures</a></span><span class="op">)</span>
 <span class="va">TxDb.Hsapiens.Ensembl.GrCh38.103</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/GenomicFeatures/man/makeTxDbFromEnsembl.html" class="external-link">makeTxDbFromEnsembl</a></span><span class="op">(</span>
     organism <span class="op">=</span>
         <span class="st">"Homo sapiens"</span>
 <span class="op">)</span></code></pre></div>
-<p>We can now create a new <code>assembly</code> with this <code>TxDb</code> and combinations of other Bioconductor packages. The <code>Genome</code> parameter can is a string to name or describe this assembly. Since the <code>TxDb</code> is now from ENSEMBL, we will change the <code>gene.id</code> field to <code>"ENSEMBL"</code> to map gene IDs and symbols between our <code>TxDb</code> and <code>orgDb</code> objects. Most gene ID types can be found by calling <code><a href="https://rdrr.io/pkg/AnnotationDbi/man/AnnotationDb-class.html" class="external-link">AnnotationDbi::keytypes()</a></code> on an <code>orgDb</code>.</p>
+<p>We can now create a new <code>assembly</code> with this
+<code>TxDb</code> and combinations of other Bioconductor packages. The
+<code>Genome</code> parameter can is a string to name or describe this
+assembly. Since the <code>TxDb</code> is now from ENSEMBL, we will
+change the <code>gene.id</code> field to <code>"ENSEMBL"</code> to map
+gene IDs and symbols between our <code>TxDb</code> and
+<code>orgDb</code> objects. Most gene ID types can be found by calling
+<code><a href="https://rdrr.io/pkg/AnnotationDbi/man/AnnotationDb-class.html" class="external-link">AnnotationDbi::keytypes()</a></code> on an <code>orgDb</code>.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">Ensembl38</span> <span class="op">&lt;-</span> <span class="fu"><a href="../../reference/assembly.html">assembly</a></span><span class="op">(</span>
     Genome <span class="op">=</span> <span class="st">"Ensembl.GRCh38.103"</span>,
@@ -203,8 +232,16 @@
     BSgenome <span class="op">=</span> <span class="st">"BSgenome.Hsapiens.NCBI.GRCh38"</span>,
     gene.id <span class="op">=</span> <span class="st">"ENSEMBL"</span>, display.column <span class="op">=</span> <span class="st">"SYMBOL"</span>
 <span class="op">)</span></code></pre></div>
-<p>This <code>assembly</code> object can now be easily passed into <code>plotgardener</code> functions through the <code>assembly</code> parameter to use custom genomic assembly configurations.</p>
-<p><code>assembly</code> objects are especially handy for changing the type of gene or transcript label of our gene and transcript plots. The default <code>display.column = "SYMBOL"</code>, but we could change this value to other available <code>keytypes</code> in the <code>orgDb</code> we are using. For example, if we wanted to display the associated Ensembl IDs of an “hg19” <code>assembly</code> object, we would set <code>display.column = "ENSEMBL"</code>:</p>
+<p>This <code>assembly</code> object can now be easily passed into
+<code>plotgardener</code> functions through the <code>assembly</code>
+parameter to use custom genomic assembly configurations.</p>
+<p><code>assembly</code> objects are especially handy for changing the
+type of gene or transcript label of our gene and transcript plots. The
+default <code>display.column = "SYMBOL"</code>, but we could change this
+value to other available <code>keytypes</code> in the <code>orgDb</code>
+we are using. For example, if we wanted to display the associated
+Ensembl IDs of an “hg19” <code>assembly</code> object, we would set
+<code>display.column = "ENSEMBL"</code>:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">TxDb.Hsapiens.UCSC.hg19.knownGene</span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">org.Hs.eg.db</span><span class="op">)</span>
@@ -248,11 +285,11 @@
 <span class="co">#&gt; other attached packages:</span>
 <span class="co">#&gt;  [1] org.Hs.eg.db_3.15.0                    </span>
 <span class="co">#&gt;  [2] TxDb.Hsapiens.UCSC.hg19.knownGene_3.2.2</span>
-<span class="co">#&gt;  [3] GenomicFeatures_1.48.0                 </span>
+<span class="co">#&gt;  [3] GenomicFeatures_1.48.1                 </span>
 <span class="co">#&gt;  [4] AnnotationDbi_1.58.0                   </span>
 <span class="co">#&gt;  [5] Biobase_2.56.0                         </span>
 <span class="co">#&gt;  [6] GenomicRanges_1.48.0                   </span>
-<span class="co">#&gt;  [7] GenomeInfoDb_1.32.0                    </span>
+<span class="co">#&gt;  [7] GenomeInfoDb_1.32.2                    </span>
 <span class="co">#&gt;  [8] IRanges_2.30.0                         </span>
 <span class="co">#&gt;  [9] S4Vectors_0.34.0                       </span>
 <span class="co">#&gt; [10] BiocGenerics_0.42.0                    </span>
@@ -262,7 +299,7 @@
 <span class="co">#&gt;  [1] bitops_1.0-7                matrixStats_0.62.0         </span>
 <span class="co">#&gt;  [3] fs_1.5.2                    bit64_4.0.5                </span>
 <span class="co">#&gt;  [5] filelock_1.0.2              progress_1.2.2             </span>
-<span class="co">#&gt;  [7] httr_1.4.2                  RColorBrewer_1.1-3         </span>
+<span class="co">#&gt;  [7] httr_1.4.3                  RColorBrewer_1.1-3         </span>
 <span class="co">#&gt;  [9] rprojroot_2.0.3             tools_4.2.0                </span>
 <span class="co">#&gt; [11] bslib_0.3.1                 utf8_1.2.2                 </span>
 <span class="co">#&gt; [13] R6_2.5.1                    DBI_1.1.2                  </span>
@@ -281,17 +318,17 @@
 <span class="co">#&gt; [39] htmltools_0.5.2             MatrixGenerics_1.8.0       </span>
 <span class="co">#&gt; [41] highr_0.9                   dbplyr_2.1.1               </span>
 <span class="co">#&gt; [43] fastmap_1.1.0               rlang_1.0.2                </span>
-<span class="co">#&gt; [45] rstudioapi_0.13             RSQLite_2.2.12             </span>
+<span class="co">#&gt; [45] rstudioapi_0.13             RSQLite_2.2.14             </span>
 <span class="co">#&gt; [47] gridGraphics_0.5-1          jquerylib_0.1.4            </span>
 <span class="co">#&gt; [49] BiocIO_1.6.0                generics_0.1.2             </span>
-<span class="co">#&gt; [51] jsonlite_1.8.0              BiocParallel_1.30.0        </span>
+<span class="co">#&gt; [51] jsonlite_1.8.0              BiocParallel_1.30.2        </span>
 <span class="co">#&gt; [53] dplyr_1.0.9                 RCurl_1.98-1.6             </span>
 <span class="co">#&gt; [55] magrittr_2.0.3              ggplotify_0.1.0            </span>
 <span class="co">#&gt; [57] GenomeInfoDbData_1.2.8      Matrix_1.4-1               </span>
 <span class="co">#&gt; [59] Rcpp_1.0.8.3                munsell_0.5.0              </span>
 <span class="co">#&gt; [61] fansi_1.0.3                 lifecycle_1.0.1            </span>
 <span class="co">#&gt; [63] stringi_1.7.6               yaml_2.3.5                 </span>
-<span class="co">#&gt; [65] SummarizedExperiment_1.26.0 zlibbioc_1.42.0            </span>
+<span class="co">#&gt; [65] SummarizedExperiment_1.26.1 zlibbioc_1.42.0            </span>
 <span class="co">#&gt; [67] BiocFileCache_2.4.0         blob_1.2.3                 </span>
 <span class="co">#&gt; [69] parallel_4.2.0              crayon_1.5.1               </span>
 <span class="co">#&gt; [71] lattice_0.20-45             Biostrings_2.64.0          </span>
@@ -303,9 +340,9 @@
 <span class="co">#&gt; [83] data.table_1.14.2           png_0.1-7                  </span>
 <span class="co">#&gt; [85] vctrs_0.4.1                 gtable_0.3.0               </span>
 <span class="co">#&gt; [87] purrr_0.3.4                 assertthat_0.2.1           </span>
-<span class="co">#&gt; [89] cachem_1.0.6                ggplot2_3.3.5              </span>
-<span class="co">#&gt; [91] xfun_0.30                   restfulr_0.0.13            </span>
-<span class="co">#&gt; [93] ragg_1.2.2                  tibble_3.1.6               </span>
+<span class="co">#&gt; [89] cachem_1.0.6                ggplot2_3.3.6              </span>
+<span class="co">#&gt; [91] xfun_0.31                   restfulr_0.0.13            </span>
+<span class="co">#&gt; [93] ragg_1.2.2                  tibble_3.1.7               </span>
 <span class="co">#&gt; [95] GenomicAlignments_1.32.0    plyranges_1.16.0           </span>
 <span class="co">#&gt; [97] memoise_2.0.1               ellipsis_0.3.2</span></code></pre></div>
 </div>

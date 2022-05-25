@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">plotgardener</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.2.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.2.1</span>
       </span>
     </div>
 
@@ -91,18 +91,29 @@
     </div>
 
     <div class="section level2">
+<h2 class="page-header" data-toc-text="1.2.1" id="changes-in-version-121">CHANGES IN VERSION 1.2.1<a class="anchor" aria-label="anchor" href="#changes-in-version-121"></a></h2>
+<ul><li><p><code>plotSignal</code> bug fixes related to function not finding posSignal2 and negSignal2 variables with insufficient data.</p></li>
+<li><p>Documentation to introduction vignette has been added to explain double page rendering when using any removal function, particularly <code><a href="../reference/pageGuideHide.html">pageGuideHide()</a></code>.</p></li>
+</ul></div>
+    <div class="section level2">
+<h2 class="page-header" data-toc-text="1.2.0" id="version-120">VERSION 1.2.0<a class="anchor" aria-label="anchor" href="#version-120"></a></h2>
+<p>Version bump for Bioconductor 3.15 release.</p>
+</div>
+    <div class="section level2">
 <h2 class="page-header" data-toc-text="1.1.18" id="changes-in-version-1118">CHANGES IN VERSION 1.1.18<a class="anchor" aria-label="anchor" href="#changes-in-version-1118"></a></h2>
 <div class="section level3">
 <h3 id="new-features-1-1-18">NEW FEATURES<a class="anchor" aria-label="anchor" href="#new-features-1-1-18"></a></h3>
 <ul><li>
-<code>hicTriangles</code> and <code>hicRectangles</code> can now be annotated with <code>annoDomains</code> or <code>annoPixels</code> if they are flipped.</li></ul></div>
+<code>hicTriangles</code> and <code>hicRectangles</code> can now be annotated with <code>annoDomains</code> or <code>annoPixels</code> if they are flipped.</li>
+</ul></div>
 </div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="1.1.17" id="changes-in-version-1117">CHANGES IN VERSION 1.1.17<a class="anchor" aria-label="anchor" href="#changes-in-version-1117"></a></h2>
 <div class="section level3">
 <h3 id="new-features-1-1-17">NEW FEATURES<a class="anchor" aria-label="anchor" href="#new-features-1-1-17"></a></h3>
 <ul><li>
-<code>plotIdeogram</code> can now accept custom colors with a <code>fill</code> parameter. Colors can be specified with a named or unnamed vector. To see which stains are being assigned which colors, look inside the <code>ideogram</code> object.</li></ul></div>
+<code>plotIdeogram</code> can now accept custom colors with a <code>fill</code> parameter. Colors can be specified with a named or unnamed vector. To see which stains are being assigned which colors, look inside the <code>ideogram</code> object.</li>
+</ul></div>
 </div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="1.1.16" id="changes-in-version-1116">CHANGES IN VERSION 1.1.16<a class="anchor" aria-label="anchor" href="#changes-in-version-1116"></a></h2>
@@ -114,27 +125,31 @@
 </div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="1.1.15" id="changes-in-version-1115">CHANGES IN VERSION 1.1.15<a class="anchor" aria-label="anchor" href="#changes-in-version-1115"></a></h2>
-<ul><li>Citation linked for <code>plotgardener</code> publication in Bioinformatics.</li></ul></div>
+<ul><li>Citation linked for <code>plotgardener</code> publication in Bioinformatics.</li>
+</ul></div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="1.1.14" id="changes-in-version-1114">CHANGES IN VERSION 1.1.14<a class="anchor" aria-label="anchor" href="#changes-in-version-1114"></a></h2>
 <div class="section level3">
 <h3 id="bug-fixes-1-1-14">BUG FIXES<a class="anchor" aria-label="anchor" href="#bug-fixes-1-1-14"></a></h3>
 <ul><li>
-<code>plotSignal</code> yrange parsing for negative scores now has fixed the typo on line 418 from “score2” to “score”.</li></ul></div>
+<code>plotSignal</code> yrange parsing for negative scores now has fixed the typo on line 418 from “score2” to “score”.</li>
+</ul></div>
 </div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="1.1.13" id="changes-in-version-1113">CHANGES IN VERSION 1.1.13<a class="anchor" aria-label="anchor" href="#changes-in-version-1113"></a></h2>
 <div class="section level3">
 <h3 id="bug-fixes-1-1-13">BUG FIXES<a class="anchor" aria-label="anchor" href="#bug-fixes-1-1-13"></a></h3>
 <ul><li>
-<code>plotSignal</code> default yrange parsing now catches the invalid 0,0 range and no longer throws a viewport related error.</li></ul></div>
+<code>plotSignal</code> default yrange parsing now catches the invalid 0,0 range and no longer throws a viewport related error.</li>
+</ul></div>
 </div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="1.1.12" id="changes-in-version-1112">CHANGES IN VERSION 1.1.12<a class="anchor" aria-label="anchor" href="#changes-in-version-1112"></a></h2>
 <div class="section level3">
 <h3 id="bug-fixes-1-1-12">BUG FIXES<a class="anchor" aria-label="anchor" href="#bug-fixes-1-1-12"></a></h3>
 <ul><li>
-<code>readHic</code> and functions related to the reading of .hic files now leaves the chromosome input formatted as is (e.g. “chr1” and “1”). Functions will throw an error if the input chromosome is not found in the chromosomes listed in the .hic file.</li></ul></div>
+<code>readHic</code> and functions related to the reading of .hic files now leaves the chromosome input formatted as is (e.g. “chr1” and “1”). Functions will throw an error if the input chromosome is not found in the chromosomes listed in the .hic file.</li>
+</ul></div>
 </div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="1.1.11" id="changes-in-version-1111">CHANGES IN VERSION 1.1.11<a class="anchor" aria-label="anchor" href="#changes-in-version-1111"></a></h2>
@@ -164,7 +179,8 @@
 </ul></div>
 <div class="section level3">
 <h3 id="new-features-0-99-11">NEW FEATURES<a class="anchor" aria-label="anchor" href="#new-features-0-99-11"></a></h3>
-<ul><li>All Hi-C functions now allow input of remote Hi-C files.</li></ul></div>
+<ul><li>All Hi-C functions now allow input of remote Hi-C files.</li>
+</ul></div>
 </div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="0.99.9" id="changes-in-version-0999">CHANGES IN VERSION 0.99.9<a class="anchor" aria-label="anchor" href="#changes-in-version-0999"></a></h2>
@@ -185,18 +201,21 @@
 <h2 class="page-header" data-toc-text="0.0.0.14" id="changes-in-version-00014">CHANGES IN VERSION 0.0.0.14<a class="anchor" aria-label="anchor" href="#changes-in-version-00014"></a></h2>
 <div class="section level3">
 <h3 id="bug-fixes-0-0-0-14">BUG FIXES<a class="anchor" aria-label="anchor" href="#bug-fixes-0-0-0-14"></a></h3>
-<ul><li>R version requirement changed to (R &gt;= 4.1.0) for proper plot placement.</li></ul></div>
+<ul><li>R version requirement changed to (R &gt;= 4.1.0) for proper plot placement.</li>
+</ul></div>
 <div class="section level3">
 <h3 id="new-features-0-0-0-14">NEW FEATURES<a class="anchor" aria-label="anchor" href="#new-features-0-0-0-14"></a></h3>
 <ul><li>
-<code>colorby</code> object now has a <code>scalePerRegion</code> parameter to scale numerical <code>colorby</code> data to the range of data in a plotted genomic region.</li></ul></div>
+<code>colorby</code> object now has a <code>scalePerRegion</code> parameter to scale numerical <code>colorby</code> data to the range of data in a plotted genomic region.</li>
+</ul></div>
 </div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="0.0.0.13" id="changes-in-version-00013">CHANGES IN VERSION 0.0.0.13<a class="anchor" aria-label="anchor" href="#changes-in-version-00013"></a></h2>
 <div class="section level3">
 <h3 id="significant-user-visible-changes-0-0-0-13">SIGNIFICANT USER-VISIBLE CHANGES<a class="anchor" aria-label="anchor" href="#significant-user-visible-changes-0-0-0-13"></a></h3>
 <ul><li>
-<code>bb_plotManhattan</code> <code>fill</code> paramete now accepts a single value, a vector of colors, or a <code>colorby</code> object.</li></ul></div>
+<code>bb_plotManhattan</code> <code>fill</code> paramete now accepts a single value, a vector of colors, or a <code>colorby</code> object.</li>
+</ul></div>
 </div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="0.0.0.12" id="changes-in-version-00012">CHANGES IN VERSION 0.0.0.12<a class="anchor" aria-label="anchor" href="#changes-in-version-00012"></a></h2>
@@ -210,7 +229,8 @@
 <div class="section level3">
 <h3 id="bug-fixes-0-0-0-12">BUG FIXES<a class="anchor" aria-label="anchor" href="#bug-fixes-0-0-0-12"></a></h3>
 <ul><li>
-<code>GInteractions</code> assembly match checking moved before dataframe conversion.</li></ul></div>
+<code>GInteractions</code> assembly match checking moved before dataframe conversion.</li>
+</ul></div>
 </div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="0.0.0.11" id="changes-in-version-00011">CHANGES IN VERSION 0.0.0.11<a class="anchor" aria-label="anchor" href="#changes-in-version-00011"></a></h2>
@@ -221,7 +241,8 @@
 </ul></div>
 <div class="section level3">
 <h3 id="bug-fixes-0-0-0-11">BUG FIXES<a class="anchor" aria-label="anchor" href="#bug-fixes-0-0-0-11"></a></h3>
-<ul><li>Streamlined parameter parsing and data reading logic.</li></ul></div>
+<ul><li>Streamlined parameter parsing and data reading logic.</li>
+</ul></div>
 </div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="0.0.0.10" id="changes-in-version-00010">CHANGES IN VERSION 0.0.0.10<a class="anchor" aria-label="anchor" href="#changes-in-version-00010"></a></h2>
@@ -238,10 +259,12 @@
 <h2 class="page-header" data-toc-text="0.0.0.9" id="changes-in-version-0009">CHANGES IN VERSION 0.0.0.9<a class="anchor" aria-label="anchor" href="#changes-in-version-0009"></a></h2>
 <div class="section level3">
 <h3 id="new-features-0-0-0-9">NEW FEATURES<a class="anchor" aria-label="anchor" href="#new-features-0-0-0-9"></a></h3>
-<ul><li>Added a <code>NEWS</code> file to track changes to the package.</li></ul></div>
+<ul><li>Added a <code>NEWS</code> file to track changes to the package.</li>
+</ul></div>
 <div class="section level3">
 <h3 id="bug-fixes-0-0-0-9">BUG FIXES<a class="anchor" aria-label="anchor" href="#bug-fixes-0-0-0-9"></a></h3>
-<ul><li>Updated viewport parsing for package <code>grid</code> version 4.1.0.</li></ul></div>
+<ul><li>Updated viewport parsing for package <code>grid</code> version 4.1.0.</li>
+</ul></div>
 </div>
   </div>
 

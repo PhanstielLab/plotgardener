@@ -41,7 +41,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../../index.html">plotgardener</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.2.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.2.1</span>
       </span>
     </div>
 
@@ -129,13 +129,20 @@
 
     
     
-<p><code>plotgardener</code> meta functions enhance the <code>plotgardener</code> user experience by providing simple methods to display various genomic assembly data, simplify <code>plotgardener</code> code, and construct <code>plotgardener</code> objects. Functions in this category include:</p>
+<p><code>plotgardener</code> meta functions enhance the
+<code>plotgardener</code> user experience by providing simple methods to
+display various genomic assembly data, simplify
+<code>plotgardener</code> code, and construct <code>plotgardener</code>
+objects. Functions in this category include:</p>
 <ul>
 <li>
-<strong><code>genomes</code></strong> and <strong><code>defaultPackages</code></strong>
+<strong><code>genomes</code></strong> and
+<strong><code>defaultPackages</code></strong>
 </li>
 </ul>
-<p>Simple functions to display the strings of available default genomic builds and the genomic annotation packages associated with these builds in <code>plotgardener</code> functions.</p>
+<p>Simple functions to display the strings of available default genomic
+builds and the genomic annotation packages associated with these builds
+in <code>plotgardener</code> functions.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../../reference/genomes.html">genomes</a></span><span class="op">(</span><span class="op">)</span>
 <span class="co">#&gt; bosTau8</span>
@@ -179,18 +186,38 @@
 <ul>
 <li><strong><code>assembly</code></strong></li>
 </ul>
-<p>A constructor to make custom combinations of genomic annotation packages for use in <code>plotgardener</code> functions through the <code>assembly</code> parameter.</p>
+<p>A constructor to make custom combinations of genomic annotation
+packages for use in <code>plotgardener</code> functions through the
+<code>assembly</code> parameter.</p>
 <ul>
 <li><strong><code>pgParams</code></strong></li>
 </ul>
-<p>A constructor to capture sets of parameters to be shared across multiple function calls. <code>pgParams</code> objects can hold any argument from any <code>plotgardener</code> function. Most often, <code>pgParams</code> objects are used to store a common genomic region and common x-placement coordinate information. For a detailed example using the <code>pgParams</code> object, refer to the vignette <a href="plotting_multiomic_data.html#using-the-pgParams-object-1">Plotting Multi-omic Data</a>.</p>
+<p>A constructor to capture sets of parameters to be shared across
+multiple function calls. <code>pgParams</code> objects can hold any
+argument from any <code>plotgardener</code> function. Most often,
+<code>pgParams</code> objects are used to store a common genomic region
+and common x-placement coordinate information. For a detailed example
+using the <code>pgParams</code> object, refer to the vignette <a href="plotting_multiomic_data.html#using-the-pgParams-object-1">Plotting
+Multi-omic Data</a>.</p>
 <ul>
 <li>
-<strong><code>colorby</code></strong> and <strong><code>mapColors</code></strong>
+<strong><code>colorby</code></strong> and
+<strong><code>mapColors</code></strong>
 </li>
 </ul>
-<p>The <code>colorby</code> constructor allows us to color the data elements in <code>plotgardener</code> plots by various data features. These features can be a numerical range, like some kind of score value, or categorical values, like positive or negative strand. The <code>colorby</code> object is constructed by specifying the name of the data column to color by, an optional color palette function, and an optional range for numerical values. If not specified, <code>plotgardener</code> will use the <code>RColorBrewer</code> “YlGnBl” palette for mapping numerical data and the “Pairs” palette for qualitative data.</p>
-<p>For example, if we revist the BED plot above, <code>IMR90_ChIP_CTCF_reads</code> has an additional <code>strand</code> column for each BED element:</p>
+<p>The <code>colorby</code> constructor allows us to color the data
+elements in <code>plotgardener</code> plots by various data features.
+These features can be a numerical range, like some kind of score value,
+or categorical values, like positive or negative strand. The
+<code>colorby</code> object is constructed by specifying the name of the
+data column to color by, an optional color palette function, and an
+optional range for numerical values. If not specified,
+<code>plotgardener</code> will use the <code>RColorBrewer</code>
+“YlGnBl” palette for mapping numerical data and the “Pairs” palette for
+qualitative data.</p>
+<p>For example, if we revist the BED plot above,
+<code>IMR90_ChIP_CTCF_reads</code> has an additional <code>strand</code>
+column for each BED element:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"IMR90_ChIP_CTCF_reads"</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/pkg/S4Vectors/man/Vector-class.html" class="external-link">head</a></span><span class="op">(</span><span class="va">IMR90_ChIP_CTCF_reads</span><span class="op">)</span>
@@ -201,7 +228,11 @@
 <span class="co">#&gt; 15554865 chr21 28000251 28000287      +</span>
 <span class="co">#&gt; 15554866 chr21 28000335 28000371      -</span>
 <span class="co">#&gt; 15554867 chr21 28000500 28000536      +</span></code></pre></div>
-<p>Thus, we can use the <code>colorby</code> constructor to color BED elements by positive or negative strand. The <code>strand</code> column will be converted to a factor with a <code>-</code> level and <code>+</code> level. These values will be mapped to our input <code>palette</code>:</p>
+<p>Thus, we can use the <code>colorby</code> constructor to color BED
+elements by positive or negative strand. The <code>strand</code> column
+will be converted to a factor with a <code>-</code> level and
+<code>+</code> level. These values will be mapped to our input
+<code>palette</code>:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/AnnotationDbi/man/Bimap-toTable.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">IMR90_ChIP_CTCF_reads</span><span class="op">)</span><span class="op">)</span>
 <span class="fu"><a href="../../reference/plotRanges.html">plotRanges</a></span><span class="op">(</span>
@@ -214,22 +245,28 @@
     just <span class="op">=</span> <span class="fu"><a href="../../reference/c.html">c</a></span><span class="op">(</span><span class="st">"left"</span>, <span class="st">"top"</span><span class="op">)</span>, default.units <span class="op">=</span> <span class="st">"inches"</span>
 <span class="op">)</span></code></pre></div>
 <p><img src="plotgardener_meta_functions_files/figure-html/aes_03-1.png" width="1425" style="display: block; margin: auto;"></p>
-<p>To further control the order of color mapping, we can set our categorical <code>colorby</code> column as a factor with our own order of levels before plotting:</p>
+<p>To further control the order of color mapping, we can set our
+categorical <code>colorby</code> column as a factor with our own order
+of levels before plotting:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"IMR90_ChIP_CTCF_reads"</span><span class="op">)</span>
 <span class="va">IMR90_ChIP_CTCF_reads</span><span class="op">$</span><span class="va">strand</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="va">IMR90_ChIP_CTCF_reads</span><span class="op">$</span><span class="va">strand</span>, levels <span class="op">=</span> <span class="fu"><a href="../../reference/c.html">c</a></span><span class="op">(</span><span class="st">"+"</span>, <span class="st">"-"</span><span class="op">)</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/pkg/S4Vectors/man/Vector-class.html" class="external-link">head</a></span><span class="op">(</span><span class="va">IMR90_ChIP_CTCF_reads</span><span class="op">$</span><span class="va">strand</span><span class="op">)</span>
 <span class="co">#&gt; [1] - - - + - +</span>
 <span class="co">#&gt; Levels: + -</span></code></pre></div>
-<p>Now we’ve set the <code>+</code> level as our first level, so our <code>palette</code> will map colors in the opposite order from before:</p>
+<p>Now we’ve set the <code>+</code> level as our first level, so our
+<code>palette</code> will map colors in the opposite order from
+before:</p>
 <p><img src="plotgardener_meta_functions_files/figure-html/aes_04-1.png" width="1425" style="display: block; margin: auto;"></p>
-<p>In this example, we will color BEDPE arches by a range of numerical values we will add as a <code>length</code> column:</p>
+<p>In this example, we will color BEDPE arches by a range of numerical
+values we will add as a <code>length</code> column:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"IMR90_DNAloops_pairs"</span><span class="op">)</span>
 <span class="va">IMR90_DNAloops_pairs</span><span class="op">$</span><span class="va">length</span> <span class="op">&lt;-</span> <span class="op">(</span><span class="va">IMR90_DNAloops_pairs</span><span class="op">$</span><span class="va">start2</span> <span class="op">-</span> <span class="va">IMR90_DNAloops_pairs</span><span class="op">$</span><span class="va">start1</span><span class="op">)</span> <span class="op">/</span> <span class="fl">1000</span>
 <span class="fu"><a href="https://rdrr.io/pkg/S4Vectors/man/Vector-class.html" class="external-link">head</a></span><span class="op">(</span><span class="va">IMR90_DNAloops_pairs</span><span class="op">$</span><span class="va">length</span><span class="op">)</span>
 <span class="co">#&gt; [1]   65 1960 2100  850 1200 1485</span></code></pre></div>
-<p>Now we can set <code>fill</code> as a <code>colorby</code> object to color the BEDPE <code>length</code> column by:</p>
+<p>Now we can set <code>fill</code> as a <code>colorby</code> object to
+color the BEDPE <code>length</code> column by:</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">bedpePlot</span> <span class="op">&lt;-</span> <span class="fu"><a href="../../reference/plotPairsArches.html">plotPairsArches</a></span><span class="op">(</span>
     data <span class="op">=</span> <span class="va">IMR90_DNAloops_pairs</span>,
@@ -245,7 +282,9 @@
     default.units <span class="op">=</span> <span class="st">"inches"</span>
 <span class="op">)</span></code></pre></div>
 <p><img src="plotgardener_meta_functions_files/figure-html/aes_05-1.png" width="1425" style="display: block; margin: auto;"></p>
-<p>And now since we have numbers mapped to colors, we can use <code><a href="../../reference/annoHeatmapLegend.html">annoHeatmapLegend()</a></code> with our <code>arches</code> object to add a legend for the <code>colorby</code> we performed:</p>
+<p>And now since we have numbers mapped to colors, we can use
+<code><a href="../../reference/annoHeatmapLegend.html">annoHeatmapLegend()</a></code> with our <code>arches</code> object to
+add a legend for the <code>colorby</code> we performed:</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../../reference/annoHeatmapLegend.html">annoHeatmapLegend</a></span><span class="op">(</span>
     plot <span class="op">=</span> <span class="va">bedpePlot</span>, fontcolor <span class="op">=</span> <span class="st">"black"</span>,
@@ -253,7 +292,9 @@
     width <span class="op">=</span> <span class="fl">0.10</span>, height <span class="op">=</span> <span class="fl">1</span>, fontsize <span class="op">=</span> <span class="fl">10</span>
 <span class="op">)</span></code></pre></div>
 <p><img src="plotgardener_meta_functions_files/figure-html/aes_06-1.png" width="1425" style="display: block; margin: auto;"></p>
-<p>If users wish to map values to a color palette before passing them into a <code>plotgardener</code> function, they can use <code>mapColors</code>:</p>
+<p>If users wish to map values to a color palette before passing them
+into a <code>plotgardener</code> function, they can use
+<code>mapColors</code>:</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">colors</span> <span class="op">&lt;-</span> <span class="fu"><a href="../../reference/mapColors.html">mapColors</a></span><span class="op">(</span>vector <span class="op">=</span> <span class="va">IMR90_DNAloops_pairs</span><span class="op">$</span><span class="va">length</span>,
              palette <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grDevices/colorRamp.html" class="external-link">colorRampPalette</a></span><span class="op">(</span><span class="fu"><a href="../../reference/c.html">c</a></span><span class="op">(</span><span class="st">"dodgerblue2"</span>, <span class="st">"firebrick2"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
@@ -291,7 +332,7 @@
 <span class="co">#&gt; [8] base     </span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; other attached packages:</span>
-<span class="co">#&gt; [1] plotgardenerData_1.1.0 plotgardener_1.2.0    </span>
+<span class="co">#&gt; [1] plotgardenerData_1.2.0 plotgardener_1.2.0    </span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; loaded via a namespace (and not attached):</span>
 <span class="co">#&gt;  [1] MatrixGenerics_1.8.0        Biobase_2.56.0             </span>
@@ -308,11 +349,11 @@
 <span class="co">#&gt; [23] strawr_0.0.9                XML_3.99-0.9               </span>
 <span class="co">#&gt; [25] pkgconfig_2.0.3             zlibbioc_1.42.0            </span>
 <span class="co">#&gt; [27] purrr_0.3.4                 scales_1.2.0               </span>
-<span class="co">#&gt; [29] ggplotify_0.1.0             BiocParallel_1.30.0        </span>
-<span class="co">#&gt; [31] tibble_3.1.6                generics_0.1.2             </span>
-<span class="co">#&gt; [33] IRanges_2.30.0              ggplot2_3.3.5              </span>
+<span class="co">#&gt; [29] ggplotify_0.1.0             BiocParallel_1.30.2        </span>
+<span class="co">#&gt; [31] tibble_3.1.7                generics_0.1.2             </span>
+<span class="co">#&gt; [33] IRanges_2.30.0              ggplot2_3.3.6              </span>
 <span class="co">#&gt; [35] ellipsis_0.3.2              cachem_1.0.6               </span>
-<span class="co">#&gt; [37] SummarizedExperiment_1.26.0 BiocGenerics_0.42.0        </span>
+<span class="co">#&gt; [37] SummarizedExperiment_1.26.1 BiocGenerics_0.42.0        </span>
 <span class="co">#&gt; [39] cli_3.3.0                   magrittr_2.0.3             </span>
 <span class="co">#&gt; [41] crayon_1.5.1                memoise_2.0.1              </span>
 <span class="co">#&gt; [43] evaluate_0.15               fs_1.5.2                   </span>
@@ -324,7 +365,7 @@
 <span class="co">#&gt; [55] munsell_0.5.0               DelayedArray_0.22.0        </span>
 <span class="co">#&gt; [57] Biostrings_2.64.0           compiler_4.2.0             </span>
 <span class="co">#&gt; [59] pkgdown_2.0.3               jquerylib_0.1.4            </span>
-<span class="co">#&gt; [61] GenomeInfoDb_1.32.0         gridGraphics_0.5-1         </span>
+<span class="co">#&gt; [61] GenomeInfoDb_1.32.2         gridGraphics_0.5-1         </span>
 <span class="co">#&gt; [63] systemfonts_1.0.4           rlang_1.0.2                </span>
 <span class="co">#&gt; [65] RCurl_1.98-1.6              rstudioapi_0.13            </span>
 <span class="co">#&gt; [67] rjson_0.2.21                bitops_1.0-7               </span>
@@ -338,7 +379,7 @@
 <span class="co">#&gt; [83] desc_1.4.1                  stringi_1.7.6              </span>
 <span class="co">#&gt; [85] parallel_4.2.0              Rcpp_1.0.8.3               </span>
 <span class="co">#&gt; [87] vctrs_0.4.1                 tidyselect_1.1.2           </span>
-<span class="co">#&gt; [89] xfun_0.30</span></code></pre></div>
+<span class="co">#&gt; [89] xfun_0.31</span></code></pre></div>
 </div>
   </div>
 

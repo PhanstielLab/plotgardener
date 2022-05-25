@@ -41,7 +41,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">plotgardener</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.2.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.2.1</span>
       </span>
     </div>
 
@@ -120,7 +120,9 @@
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Introduction to plotgardener</h1>
-                        <h4 data-toc-skip class="author">Nicole Kramer, Eric S. Davis, Craig Wenger, Sarah Parker, Erika Deoudes, Michael Love, Douglas H. Phanstiel</h4>
+                        <h4 data-toc-skip class="author">Nicole Kramer,
+Eric S. Davis, Craig Wenger, Sarah Parker, Erika Deoudes, Michael Love,
+Douglas H. Phanstiel</h4>
             
       
       <small class="dont-index">Source: <a href="https://github.com/PhanstielLab/plotgardener/blob/HEAD/vignettes/introduction_to_plotgardener.Rmd" class="external-link"><code>vignettes/introduction_to_plotgardener.Rmd</code></a></small>
@@ -134,42 +136,82 @@
 <h2 id="overview">Overview<a class="anchor" aria-label="anchor" href="#overview"></a>
 </h2>
 <p><img src="../reference/figures/pg-hex-text.png" align="right" width="140px" style="padding-left:20px; background-color:white; border-color: transparent"></p>
-<p><code>plotgardener</code> is a coordinate-based, genomic visualization package for R. Using <code>grid</code> graphics, <code>plotgardener</code> empowers users to programmatically and flexibly generate multi-panel figures. Tailored for genomics for a variety of genomic assemblies, <code>plotgardener</code> allows users to visualize large, complex genomic datasets while providing exquisite control over the arrangement of plots.</p>
-<p><code>plotgardener</code> functions can be grouped into the following categories:</p>
+<p><code>plotgardener</code> is a coordinate-based, genomic
+visualization package for R. Using <code>grid</code> graphics,
+<code>plotgardener</code> empowers users to programmatically and
+flexibly generate multi-panel figures. Tailored for genomics for a
+variety of genomic assemblies, <code>plotgardener</code> allows users to
+visualize large, complex genomic datasets while providing exquisite
+control over the arrangement of plots.</p>
+<p><code>plotgardener</code> functions can be grouped into the following
+categories:</p>
 <ul>
 <li><strong>Page layout functions:</strong></li>
 </ul>
-<p>Functions for creating <code>plotgardener</code> page layouts, drawing, showing, and hiding guides, as well as placing plots on the page. See <a href="plotgardener_page.html">The plotgardener Page</a></p>
+<p>Functions for creating <code>plotgardener</code> page layouts,
+drawing, showing, and hiding guides, as well as placing plots on the
+page. See <a href="plotgardener_page.html">The plotgardener Page</a></p>
 <ul>
 <li><strong>Reading functions:</strong></li>
 </ul>
-<p>Functions for quickly reading in large biological datasets. See <a href="reading_data_for_plotgardener.html">Reading Data for plotgardener</a></p>
+<p>Functions for quickly reading in large biological datasets. See <a href="reading_data_for_plotgardener.html">Reading Data for
+plotgardener</a></p>
 <ul>
 <li><strong>Plotting functions:</strong></li>
 </ul>
-<p>Contains genomic plotting functions, functions for placing <code>ggplots</code> and <code>base</code> plots, as well as functions for drawing simple shapes. See <a href="plotting_multiomic_data.html">Plotting Multi-omic Data</a></p>
+<p>Contains genomic plotting functions, functions for placing
+<code>ggplots</code> and <code>base</code> plots, as well as functions
+for drawing simple shapes. See <a href="plotting_multiomic_data.html">Plotting Multi-omic Data</a></p>
 <ul>
 <li><strong>Annotation functions:</strong></li>
 </ul>
-<p>Enables users to add annotations to their plots, such as legends, axes, and scales. See <a href="annotations.html">Plot Annotations</a></p>
+<p>Enables users to add annotations to their plots, such as legends,
+axes, and scales. See <a href="annotations.html">Plot
+Annotations</a></p>
 <ul>
 <li><strong>Meta functions:</strong></li>
 </ul>
-<p>Functions that display <code>plotgardener</code> properties or operate on other <code>plotgardener</code> functions, or constructors for <code>plotgardener</code> objects. See <a href="plotgardener_meta_functions.html">plotgardener Meta Functions</a></p>
-<p>This vignette provides a quick start guide for utilizing <code>plotgardener</code>. For in-depth demonstrations of <code>plotgardener</code>’s key features, see the additional articles. For detailed usage of each function, see the function-specific reference examples with <code>?function()</code> (e.g. <code>?plotPairs()</code>).</p>
-<p>All the data included in this vignette can be found in the supplementary package <code>plotgardenerData</code>.</p>
+<p>Functions that display <code>plotgardener</code> properties or
+operate on other <code>plotgardener</code> functions, or constructors
+for <code>plotgardener</code> objects. See <a href="plotgardener_meta_functions.html">plotgardener Meta
+Functions</a></p>
+<p>This vignette provides a quick start guide for utilizing
+<code>plotgardener</code>. For in-depth demonstrations of
+<code>plotgardener</code>’s key features, see the additional articles.
+For detailed usage of each function, see the function-specific reference
+examples with <code>?function()</code>
+(e.g. <code>?plotPairs()</code>).</p>
+<p>All the data included in this vignette can be found in the
+supplementary package <code>plotgardenerData</code>.</p>
 </div>
 <div class="section level2">
 <h2 id="quick-plotting">Quick plotting<a class="anchor" aria-label="anchor" href="#quick-plotting"></a>
 </h2>
-<p><code>plotgardener</code> plotting functions contain 4 types of arguments:</p>
+<p><code>plotgardener</code> plotting functions contain 4 types of
+arguments:</p>
 <ol style="list-style-type: decimal">
 <li><p>Data reading argument (<code>data</code>)</p></li>
-<li><p>Genomic locus arguments (<code>chrom</code>, <code>chromstart</code>, <code>chromend</code>, <code>assembly</code>)</p></li>
-<li><p>Placement arguments (<code>x</code>, <code>y</code>, <code>width</code>, <code>height</code>, <code>just</code>, <code>default.units</code>, …) that define where each plot resides on a <code>page</code></p></li>
-<li><p>Attribute arguments that affect the data being plotted or the style of the plot (<code>norm</code>, <code>fill</code>, <code>fontcolor</code>, …) that vary between functions</p></li>
+<li><p>Genomic locus arguments (<code>chrom</code>,
+<code>chromstart</code>, <code>chromend</code>,
+<code>assembly</code>)</p></li>
+<li><p>Placement arguments (<code>x</code>, <code>y</code>,
+<code>width</code>, <code>height</code>, <code>just</code>,
+<code>default.units</code>, …) that define where each plot resides on a
+<code>page</code></p></li>
+<li><p>Attribute arguments that affect the data being plotted or the
+style of the plot (<code>norm</code>, <code>fill</code>,
+<code>fontcolor</code>, …) that vary between functions</p></li>
 </ol>
-<p>The quickest way to plot data is to omit the placement arguments. This will generate a <code>plotgardener</code> plot that fills up the entire graphics window and cannot be annotated. <strong>These plots are only meant to be used for quick</strong> <strong>genomic data inspection and not as final <code>plotgardener</code> plots.</strong> The only arguments that are required are the data arguments and locus arguments. The examples below show how to quickly plot different types of genomic data with plot defaults and included data types. To use your own data, replace the <code>data</code> argument with either a path to the file or an R object as described above.</p>
+<p>The quickest way to plot data is to omit the placement arguments.
+This will generate a <code>plotgardener</code> plot that fills up the
+entire graphics window and cannot be annotated. <strong>These plots are
+only meant to be used for quick</strong> <strong>genomic data inspection
+and not as final <code>plotgardener</code> plots.</strong> The only
+arguments that are required are the data arguments and locus arguments.
+The examples below show how to quickly plot different types of genomic
+data with plot defaults and included data types. To use your own data,
+replace the <code>data</code> argument with either a path to the file or
+an R object as described above.</p>
 <div class="section level3">
 <h3 id="hi-c-matrices">Hi-C matrices<a class="anchor" aria-label="anchor" href="#hi-c-matrices"></a>
 </h3>
@@ -253,15 +295,20 @@
 <div class="section level2">
 <h2 id="plotting-and-annotating-on-the-plotgardener-page">Plotting and annotating on the <code>plotgardener</code> page<a class="anchor" aria-label="anchor" href="#plotting-and-annotating-on-the-plotgardener-page"></a>
 </h2>
-<p>To build complex, multi-panel <code>plotgardener</code> figures with annotations, we must:</p>
+<p>To build complex, multi-panel <code>plotgardener</code> figures with
+annotations, we must:</p>
 <ol style="list-style-type: decimal">
-<li>Create a <code>plotgardener</code> coordinate page with <code><a href="../reference/pageCreate.html">pageCreate()</a></code>.</li>
+<li>Create a <code>plotgardener</code> coordinate page with
+<code><a href="../reference/pageCreate.html">pageCreate()</a></code>.</li>
 </ol>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/pageCreate.html">pageCreate</a></span><span class="op">(</span>width <span class="op">=</span> <span class="fl">3.25</span>, height <span class="op">=</span> <span class="fl">3.25</span>, default.units <span class="op">=</span> <span class="st">"inches"</span><span class="op">)</span></code></pre></div>
 <p><img src="introduction_to_plotgardener_files/figure-html/quickpage-1.png" width="600" style="display: block; margin: auto;"></p>
 <ol start="2" style="list-style-type: decimal">
-<li>Provide values for the placement arguments (<code>x</code>, <code>y</code>, <code>width</code>, <code>height</code>, <code>just</code>, <code>default.units</code>) in plotting functions and save the output of the plotting function.</li>
+<li>Provide values for the placement arguments (<code>x</code>,
+<code>y</code>, <code>width</code>, <code>height</code>,
+<code>just</code>, <code>default.units</code>) in plotting functions and
+save the output of the plotting function.</li>
 </ol>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"IMR90_HiC_10kb"</span><span class="op">)</span>
@@ -273,7 +320,8 @@
 <span class="op">)</span></code></pre></div>
 <p><img src="introduction_to_plotgardener_files/figure-html/quickpageHic-1.png" width="600" style="display: block; margin: auto;"></p>
 <ol start="3" style="list-style-type: decimal">
-<li>Annotate <code>plotgardener</code> plot objects by passing them into the <code>plot</code> argument of annotation functions.</li>
+<li>Annotate <code>plotgardener</code> plot objects by passing them into
+the <code>plot</code> argument of annotation functions.</li>
 </ol>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/annoHeatmapLegend.html">annoHeatmapLegend</a></span><span class="op">(</span>
@@ -286,16 +334,21 @@
     x <span class="op">=</span> <span class="fl">0.25</span>, y <span class="op">=</span> <span class="fl">2.75</span>, width <span class="op">=</span> <span class="fl">2.5</span>, height <span class="op">=</span> <span class="fl">0.25</span>, default.units <span class="op">=</span> <span class="st">"inches"</span>
 <span class="op">)</span></code></pre></div>
 <p><img src="introduction_to_plotgardener_files/figure-html/quickpageAnno-1.png" width="600" style="display: block; margin: auto;"></p>
-<p>For more information about how to place plots and annotations on a <code>plotgardener</code> page, check out the section <a href="introduction_to_plotgardener.html#working-with-plot-objects-1">Working with plot objects</a>.</p>
+<p>For more information about how to place plots and annotations on a
+<code>plotgardener</code> page, check out the section <a href="introduction_to_plotgardener.html#working-with-plot-objects-1">Working
+with plot objects</a>.</p>
 </div>
 <div class="section level2">
 <h2 id="exporting-plots">Exporting plots<a class="anchor" aria-label="anchor" href="#exporting-plots"></a>
 </h2>
-<p>When a <code>plotgardener</code> plot is ready to be saved and exported, we can first remove all page guides that were made with <code><a href="../reference/pageCreate.html">pageCreate()</a></code>:</p>
+<p>When a <code>plotgardener</code> plot is ready to be saved and
+exported, we can first remove all page guides that were made with
+<code><a href="../reference/pageCreate.html">pageCreate()</a></code>:</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/pageGuideHide.html">pageGuideHide</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <p><img src="introduction_to_plotgardener_files/figure-html/quickpageHide-1.png" width="600" style="display: block; margin: auto;"></p>
-<p>We can then either use the <strong>Export</strong> toggle in the RStudio plot panel, or save the plot within our R code as follows:</p>
+<p>We can then either use the <strong>Export</strong> toggle in the
+RStudio plot panel, or save the plot within our R code as follows:</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/grDevices/pdf.html" class="external-link">pdf</a></span><span class="op">(</span>width <span class="op">=</span> <span class="fl">3.25</span>, height <span class="op">=</span> <span class="fl">3.25</span><span class="op">)</span>
 
@@ -319,12 +372,24 @@
 <span class="fu"><a href="../reference/pageGuideHide.html">pageGuideHide</a></span><span class="op">(</span><span class="op">)</span>
 
 <span class="fu"><a href="https://rdrr.io/r/grDevices/dev.html" class="external-link">dev.off</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
-<p>For more detailed usage and examples, please refer to the other available vignettes.</p>
+<p><strong>Please note that due to the implementation of
+<code>grid</code> removal functions,</strong> <strong>using
+<code>pageGuideHide</code> within a <code>pdf</code> call will result in
+the rendering of a</strong> <strong>separate, new page with the plot
+guides removed. To avoid this artifact,</strong> <strong>hide guides in
+the <code>pageCreate</code> function call with
+<code>showGuides = FALSE</code>.</strong></p>
+<p>For more detailed usage and examples, please refer to the other
+available vignettes.</p>
 </div>
 <div class="section level2">
 <h2 id="future-directions">Future Directions<a class="anchor" aria-label="anchor" href="#future-directions"></a>
 </h2>
-<p>We still have many ideas to add for a second version of <code>plotgardener</code> including, but not limited to: grammar of graphics style plot arguments and plot building, templates, themes, and multi-plotting functions. If you have suggestions for ways we can improve <code>plotgardener</code>, please let us know!</p>
+<p>We still have many ideas to add for a second version of
+<code>plotgardener</code> including, but not limited to: grammar of
+graphics style plot arguments and plot building, templates, themes, and
+multi-plotting functions. If you have suggestions for ways we can
+improve <code>plotgardener</code>, please let us know!</p>
 </div>
 <div class="section level2">
 <h2 id="session-info">Session Info<a class="anchor" aria-label="anchor" href="#session-info"></a>
@@ -349,22 +414,22 @@
 <span class="co">## other attached packages:</span>
 <span class="co">##  [1] org.Hs.eg.db_3.15.0                    </span>
 <span class="co">##  [2] TxDb.Hsapiens.UCSC.hg19.knownGene_3.2.2</span>
-<span class="co">##  [3] GenomicFeatures_1.48.0                 </span>
+<span class="co">##  [3] GenomicFeatures_1.48.1                 </span>
 <span class="co">##  [4] AnnotationDbi_1.58.0                   </span>
 <span class="co">##  [5] Biobase_2.56.0                         </span>
 <span class="co">##  [6] GenomicRanges_1.48.0                   </span>
-<span class="co">##  [7] GenomeInfoDb_1.32.0                    </span>
+<span class="co">##  [7] GenomeInfoDb_1.32.2                    </span>
 <span class="co">##  [8] IRanges_2.30.0                         </span>
 <span class="co">##  [9] S4Vectors_0.34.0                       </span>
 <span class="co">## [10] BiocGenerics_0.42.0                    </span>
-<span class="co">## [11] plotgardenerData_1.1.0                 </span>
+<span class="co">## [11] plotgardenerData_1.2.0                 </span>
 <span class="co">## [12] plotgardener_1.2.0                     </span>
 <span class="co">## </span>
 <span class="co">## loaded via a namespace (and not attached):</span>
 <span class="co">##  [1] bitops_1.0-7                matrixStats_0.62.0         </span>
 <span class="co">##  [3] fs_1.5.2                    bit64_4.0.5                </span>
 <span class="co">##  [5] filelock_1.0.2              progress_1.2.2             </span>
-<span class="co">##  [7] httr_1.4.2                  RColorBrewer_1.1-3         </span>
+<span class="co">##  [7] httr_1.4.3                  RColorBrewer_1.1-3         </span>
 <span class="co">##  [9] rprojroot_2.0.3             tools_4.2.0                </span>
 <span class="co">## [11] bslib_0.3.1                 utf8_1.2.2                 </span>
 <span class="co">## [13] R6_2.5.1                    DBI_1.1.2                  </span>
@@ -383,17 +448,17 @@
 <span class="co">## [39] htmltools_0.5.2             MatrixGenerics_1.8.0       </span>
 <span class="co">## [41] dbplyr_2.1.1                fastmap_1.1.0              </span>
 <span class="co">## [43] highr_0.9                   rlang_1.0.2                </span>
-<span class="co">## [45] rstudioapi_0.13             RSQLite_2.2.12             </span>
+<span class="co">## [45] rstudioapi_0.13             RSQLite_2.2.14             </span>
 <span class="co">## [47] gridGraphics_0.5-1          jquerylib_0.1.4            </span>
 <span class="co">## [49] BiocIO_1.6.0                generics_0.1.2             </span>
-<span class="co">## [51] jsonlite_1.8.0              BiocParallel_1.30.0        </span>
+<span class="co">## [51] jsonlite_1.8.0              BiocParallel_1.30.2        </span>
 <span class="co">## [53] dplyr_1.0.9                 RCurl_1.98-1.6             </span>
 <span class="co">## [55] magrittr_2.0.3              ggplotify_0.1.0            </span>
 <span class="co">## [57] GenomeInfoDbData_1.2.8      Matrix_1.4-1               </span>
 <span class="co">## [59] Rcpp_1.0.8.3                munsell_0.5.0              </span>
 <span class="co">## [61] fansi_1.0.3                 lifecycle_1.0.1            </span>
 <span class="co">## [63] stringi_1.7.6               yaml_2.3.5                 </span>
-<span class="co">## [65] SummarizedExperiment_1.26.0 zlibbioc_1.42.0            </span>
+<span class="co">## [65] SummarizedExperiment_1.26.1 zlibbioc_1.42.0            </span>
 <span class="co">## [67] BiocFileCache_2.4.0         blob_1.2.3                 </span>
 <span class="co">## [69] parallel_4.2.0              crayon_1.5.1               </span>
 <span class="co">## [71] lattice_0.20-45             Biostrings_2.64.0          </span>
@@ -405,9 +470,9 @@
 <span class="co">## [83] data.table_1.14.2           png_0.1-7                  </span>
 <span class="co">## [85] vctrs_0.4.1                 gtable_0.3.0               </span>
 <span class="co">## [87] purrr_0.3.4                 assertthat_0.2.1           </span>
-<span class="co">## [89] cachem_1.0.6                ggplot2_3.3.5              </span>
-<span class="co">## [91] xfun_0.30                   restfulr_0.0.13            </span>
-<span class="co">## [93] ragg_1.2.2                  tibble_3.1.6               </span>
+<span class="co">## [89] cachem_1.0.6                ggplot2_3.3.6              </span>
+<span class="co">## [91] xfun_0.31                   restfulr_0.0.13            </span>
+<span class="co">## [93] ragg_1.2.2                  tibble_3.1.7               </span>
 <span class="co">## [95] GenomicAlignments_1.32.0    plyranges_1.16.0           </span>
 <span class="co">## [97] memoise_2.0.1               ellipsis_0.3.2</span></code></pre></div>
 </div>

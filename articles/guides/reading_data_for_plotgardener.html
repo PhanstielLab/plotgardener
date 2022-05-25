@@ -41,7 +41,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../../index.html">plotgardener</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.2.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.2.1</span>
       </span>
     </div>
 
@@ -129,10 +129,20 @@
 
     
     
-<p><code>plotgardener</code> handles a wide array of genomic data types in various formats and file types. Not only does it work with <code>data.frames</code>, <code>data.tables</code>, <code>tibbles</code>, and Bioconductor <code>GRanges</code> and <code>GInteractions</code> objects, but it can also read in common genomic file types like BED, BEDPE, bigWig, and .hic files. While files can be read directly into <code>plotgardener</code> plotting functions, <code>plotgardener</code> also provides functions for reading in these large genomic data sets to work with them within the R environment:</p>
+<p><code>plotgardener</code> handles a wide array of genomic data types
+in various formats and file types. Not only does it work with
+<code>data.frames</code>, <code>data.tables</code>,
+<code>tibbles</code>, and Bioconductor <code>GRanges</code> and
+<code>GInteractions</code> objects, but it can also read in common
+genomic file types like BED, BEDPE, bigWig, and .hic files. While files
+can be read directly into <code>plotgardener</code> plotting functions,
+<code>plotgardener</code> also provides functions for reading in these
+large genomic data sets to work with them within the R environment:</p>
 <ul>
 <li>
-<code><a href="../../reference/readBigwig.html">readBigwig()</a></code>: Read in entire bigWig files, or read in specific genomic regions or strands of bigWig data. Please note that this function does not work on Windows.</li>
+<code><a href="../../reference/readBigwig.html">readBigwig()</a></code>: Read in entire bigWig files, or read in
+specific genomic regions or strands of bigWig data. Please note that
+this function does not work on Windows.</li>
 </ul>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">bwFile</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata/test.bw"</span>, package<span class="op">=</span><span class="st">"plotgardenerData"</span><span class="op">)</span>
@@ -152,7 +162,9 @@
                             chromstart <span class="op">=</span> <span class="fl">1</span>, 
                             chromend <span class="op">=</span> <span class="fl">1500</span>,
                             strand <span class="op">=</span> <span class="st">"+"</span><span class="op">)</span></code></pre></div>
-<p>The resulting file will contain <code>seqnames</code>, <code>start</code>, <code>end</code>, <code>width</code>, <code>strand</code>, and <code>score</code> columns:</p>
+<p>The resulting file will contain <code>seqnames</code>,
+<code>start</code>, <code>end</code>, <code>width</code>,
+<code>strand</code>, and <code>score</code> columns:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/pkg/S4Vectors/man/Vector-class.html" class="external-link">head</a></span><span class="op">(</span><span class="va">bwRegion</span><span class="op">)</span>
 <span class="co">#&gt;   seqnames start  end width strand score</span>
@@ -163,7 +175,8 @@
 <span class="co">#&gt; 5     chr2  1201 1500   300      *  0.00</span></code></pre></div>
 <ul>
 <li>
-<code><a href="../../reference/readHic.html">readHic()</a></code>: Read in genomic regions of .hic files with various data resolutions and normalizations.</li>
+<code><a href="../../reference/readHic.html">readHic()</a></code>: Read in genomic regions of .hic files with
+various data resolutions and normalizations.</li>
 </ul>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">hicFile</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata/test_chr22.hic"</span>, package<span class="op">=</span><span class="st">"plotgardenerData"</span><span class="op">)</span>
@@ -178,7 +191,8 @@
     chromstart <span class="op">=</span> <span class="fl">20000000</span>, chromend <span class="op">=</span> <span class="fl">47500000</span>,
     resolution <span class="op">=</span> <span class="fl">100000</span>, res_scale <span class="op">=</span> <span class="st">"BP"</span>, norm <span class="op">=</span> <span class="st">"KR"</span>
 <span class="op">)</span></code></pre></div>
-<p>These data will be output in 3-column dataframe in sparse upper triangular matrix format:</p>
+<p>These data will be output in 3-column dataframe in sparse upper
+triangular matrix format:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/pkg/S4Vectors/man/Vector-class.html" class="external-link">head</a></span><span class="op">(</span><span class="va">hicDataChromRegion</span><span class="op">)</span>
 <span class="co">#&gt;       22_A     22_B    counts</span>
@@ -188,13 +202,15 @@
 <span class="co">#&gt; 4 20000000 20200000  3.204865</span>
 <span class="co">#&gt; 5 20100000 20200000 12.864663</span>
 <span class="co">#&gt; 6 20200000 20200000 37.828201</span></code></pre></div>
-<p>It is also possible to use <code>readHic</code> for interchromosomal Hi-C data:</p>
+<p>It is also possible to use <code>readHic</code> for interchromosomal
+Hi-C data:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">twoChroms</span> <span class="op">&lt;-</span> <span class="fu"><a href="../../reference/readHic.html">readHic</a></span><span class="op">(</span>file <span class="op">=</span> <span class="st">"/path/to/hic"</span>,
     chrom <span class="op">=</span> <span class="st">"chr1"</span>, altchrom <span class="op">=</span> <span class="st">"chr2"</span>,
     resolution <span class="op">=</span> <span class="fl">250000</span>, res_scale <span class="op">=</span> <span class="st">"BP"</span>
 <span class="op">)</span></code></pre></div>
-<p>For other filetypes, we recommend reading in files with <code>data.table</code> or <code>rtracklayer</code>.</p>
+<p>For other filetypes, we recommend reading in files with
+<code>data.table</code> or <code>rtracklayer</code>.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://r-datatable.com" class="external-link">data.table</a></span><span class="op">)</span>
 <span class="va">data</span> <span class="op">&lt;-</span> <span class="fu">data.table</span><span class="fu">::</span><span class="fu"><a href="https://Rdatatable.gitlab.io/data.table/reference/fread.html" class="external-link">fread</a></span><span class="op">(</span><span class="st">"/path/to/file"</span><span class="op">)</span>
@@ -222,7 +238,7 @@
 <span class="co">#&gt; [8] base     </span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; other attached packages:</span>
-<span class="co">#&gt; [1] plotgardenerData_1.1.0 plotgardener_1.2.0    </span>
+<span class="co">#&gt; [1] plotgardenerData_1.2.0 plotgardener_1.2.0    </span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; loaded via a namespace (and not attached):</span>
 <span class="co">#&gt;  [1] MatrixGenerics_1.8.0        Biobase_2.56.0             </span>
@@ -239,10 +255,10 @@
 <span class="co">#&gt; [23] XML_3.99-0.9                pkgconfig_2.0.3            </span>
 <span class="co">#&gt; [25] zlibbioc_1.42.0             purrr_0.3.4                </span>
 <span class="co">#&gt; [27] scales_1.2.0                ggplotify_0.1.0            </span>
-<span class="co">#&gt; [29] BiocParallel_1.30.0         tibble_3.1.6               </span>
+<span class="co">#&gt; [29] BiocParallel_1.30.2         tibble_3.1.7               </span>
 <span class="co">#&gt; [31] generics_0.1.2              IRanges_2.30.0             </span>
-<span class="co">#&gt; [33] ggplot2_3.3.5               ellipsis_0.3.2             </span>
-<span class="co">#&gt; [35] cachem_1.0.6                SummarizedExperiment_1.26.0</span>
+<span class="co">#&gt; [33] ggplot2_3.3.6               ellipsis_0.3.2             </span>
+<span class="co">#&gt; [35] cachem_1.0.6                SummarizedExperiment_1.26.1</span>
 <span class="co">#&gt; [37] BiocGenerics_0.42.0         cli_3.3.0                  </span>
 <span class="co">#&gt; [39] magrittr_2.0.3              crayon_1.5.1               </span>
 <span class="co">#&gt; [41] memoise_2.0.1               evaluate_0.15              </span>
@@ -254,7 +270,7 @@
 <span class="co">#&gt; [53] S4Vectors_0.34.0            munsell_0.5.0              </span>
 <span class="co">#&gt; [55] DelayedArray_0.22.0         Biostrings_2.64.0          </span>
 <span class="co">#&gt; [57] compiler_4.2.0              pkgdown_2.0.3              </span>
-<span class="co">#&gt; [59] jquerylib_0.1.4             GenomeInfoDb_1.32.0        </span>
+<span class="co">#&gt; [59] jquerylib_0.1.4             GenomeInfoDb_1.32.2        </span>
 <span class="co">#&gt; [61] gridGraphics_0.5-1          systemfonts_1.0.4          </span>
 <span class="co">#&gt; [63] rlang_1.0.2                 RCurl_1.98-1.6             </span>
 <span class="co">#&gt; [65] rstudioapi_0.13             rjson_0.2.21               </span>
@@ -268,7 +284,7 @@
 <span class="co">#&gt; [81] ragg_1.2.2                  desc_1.4.1                 </span>
 <span class="co">#&gt; [83] stringi_1.7.6               parallel_4.2.0             </span>
 <span class="co">#&gt; [85] Rcpp_1.0.8.3                vctrs_0.4.1                </span>
-<span class="co">#&gt; [87] tidyselect_1.1.2            xfun_0.30</span></code></pre></div>
+<span class="co">#&gt; [87] tidyselect_1.1.2            xfun_0.31</span></code></pre></div>
 </div>
   </div>
 

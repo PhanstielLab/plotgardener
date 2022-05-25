@@ -41,7 +41,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../../index.html">plotgardener</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.2.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.2.1</span>
       </span>
     </div>
 
@@ -129,11 +129,19 @@
 
     
     
-<p>Beyond providing functions for plotting and arranging various genomic datasets, <code>plotgardener</code> also gives users the functionality to plot other elements within a <code>plotgardener</code> page layout:</p>
+<p>Beyond providing functions for plotting and arranging various genomic
+datasets, <code>plotgardener</code> also gives users the functionality
+to plot other elements within a <code>plotgardener</code> page
+layout:</p>
 <div class="section level2">
 <h2 id="ideograms">Ideograms<a class="anchor" aria-label="anchor" href="#ideograms"></a>
 </h2>
-<p>In addition to a genomic axis label, it can also be useful to include an ideogram representation of a chromosome to give a broader context of the location of genomic data. UCSC Giemsa stain cytoband information for various genomic assemblies is retrieved from <code>AnnotationHub</code> for default assemblies, but users can also provide their own Giemsa stain information if they desire.</p>
+<p>In addition to a genomic axis label, it can also be useful to include
+an ideogram representation of a chromosome to give a broader context of
+the location of genomic data. UCSC Giemsa stain cytoband information for
+various genomic assemblies is retrieved from <code>AnnotationHub</code>
+for default assemblies, but users can also provide their own Giemsa
+stain information if they desire.</p>
 <p>Ideograms can be plotted both vertically and horizontally:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">AnnotationHub</span><span class="op">)</span>
@@ -178,7 +186,8 @@
     x <span class="op">=</span> <span class="fl">0.25</span>, y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grid/unit.html" class="external-link">unit</a></span><span class="op">(</span><span class="fl">0.25</span>, <span class="st">"npc"</span><span class="op">)</span>, width <span class="op">=</span> <span class="fl">5.75</span>, height <span class="op">=</span> <span class="fl">0.3</span>
 <span class="op">)</span></code></pre></div>
 <p><img src="ideograms_and_shapes_files/figure-html/ideogram_02-1.png" width="1237.5" style="display: block; margin: auto;"></p>
-<p>The cytobands can also be hidden if a more minimal ideogram is preferred:</p>
+<p>The cytobands can also be hidden if a more minimal ideogram is
+preferred:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../../reference/plotIdeogram.html">plotIdeogram</a></span><span class="op">(</span>
     showBands <span class="op">=</span> <span class="cn">FALSE</span>,
@@ -187,13 +196,22 @@
     x <span class="op">=</span> <span class="fl">0.25</span>, y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grid/unit.html" class="external-link">unit</a></span><span class="op">(</span><span class="fl">0.25</span>, <span class="st">"npc"</span><span class="op">)</span>, width <span class="op">=</span> <span class="fl">5.75</span>, height <span class="op">=</span> <span class="fl">0.3</span>
 <span class="op">)</span></code></pre></div>
 <p><img src="ideograms_and_shapes_files/figure-html/ideogram_03-1.png" width="1237.5" style="display: block; margin: auto;"></p>
-<p>To highlight a specific genomic region on an ideogram, see the article <a href="annotations.html#genomic-region-highlights-and-zooms-1">Plot Annotations</a>.</p>
+<p>To highlight a specific genomic region on an ideogram, see the
+article <a href="annotations.html#genomic-region-highlights-and-zooms-1">Plot
+Annotations</a>.</p>
 </div>
 <div class="section level2">
 <h2 id="images-and-basic-shapes">Images and basic shapes<a class="anchor" aria-label="anchor" href="#images-and-basic-shapes"></a>
 </h2>
-<p><code>plotgardener</code> also allows users to plot images and basic shapes and elements to further enhance and customize plot layouts. The functions <code><a href="../../reference/plotCircle.html">plotCircle()</a></code>, <code><a href="../../reference/plotPolygon.html">plotPolygon()</a></code>, <code><a href="../../reference/plotRaster.html">plotRaster()</a></code>, <code><a href="../../reference/plotRect.html">plotRect()</a></code>, <code><a href="../../reference/plotSegments.html">plotSegments()</a></code>, and <code><a href="../../reference/plotText.html">plotText()</a></code> provide an intuitive way to plot basic <code>grid</code> <code>grobs</code> without requiring any knowledge of <code>grid</code> graphics.</p>
-<p>For example, we can include <code>plotgardener</code>’s Gene the Gnome in our figures!:</p>
+<p><code>plotgardener</code> also allows users to plot images and basic
+shapes and elements to further enhance and customize plot layouts. The
+functions <code><a href="../../reference/plotCircle.html">plotCircle()</a></code>, <code><a href="../../reference/plotPolygon.html">plotPolygon()</a></code>,
+<code><a href="../../reference/plotRaster.html">plotRaster()</a></code>, <code><a href="../../reference/plotRect.html">plotRect()</a></code>,
+<code><a href="../../reference/plotSegments.html">plotSegments()</a></code>, and <code><a href="../../reference/plotText.html">plotText()</a></code> provide an
+intuitive way to plot basic <code>grid</code> <code>grobs</code> without
+requiring any knowledge of <code>grid</code> graphics.</p>
+<p>For example, we can include <code>plotgardener</code>’s Gene the
+Gnome in our figures!:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="http://www.rforge.net/png/" class="external-link">png</a></span><span class="op">)</span>
 <span class="va">pg_type</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/png/man/readPNG.html" class="external-link">readPNG</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"images"</span>,
@@ -217,12 +235,23 @@
     x <span class="op">=</span> <span class="fl">2.5</span>, y <span class="op">=</span> <span class="fl">1</span>, width <span class="op">=</span> <span class="fl">3.5</span>, height <span class="op">=</span> <span class="fl">3.5</span>, just <span class="op">=</span> <span class="st">"top"</span>
 <span class="op">)</span></code></pre></div>
 <p><img src="ideograms_and_shapes_files/figure-html/shapes-1.png" width="900" style="display: block; margin: auto;"></p>
-<p>For more detailed usage of basic shape functions, see the function-specific reference examples with <code>?function()</code> (e.g. <code>?plotCircle()</code>).</p>
+<p>For more detailed usage of basic shape functions, see the
+function-specific reference examples with <code>?function()</code>
+(e.g. <code>?plotCircle()</code>).</p>
 </div>
 <div class="section level2">
 <h2 id="other-grob-objects">Other grob objects<a class="anchor" aria-label="anchor" href="#other-grob-objects"></a>
 </h2>
-<p>We saw how to add <code>ggplots</code> and <code>ComplexHeatmaps</code> to <code>plotgardener</code> layouts in the vignette <a href="incorporating_ggplots.html">Incorporating ggplots and other <code>grid</code>-based Bioconductor visualizations"</a> with the <code><a href="../../reference/plotGG.html">plotGG()</a></code> function. Beyond customizing the coordinates and dimensions of <code>ggplots</code> and <code>grid</code>-based Bioconductor visualizations, <code><a href="../../reference/plotGG.html">plotGG()</a></code> can also be used to incorporate other <code>grob</code> and <code>gtable</code> objects. Thus, <code>plotgardener</code> allows us to easily mix and arrange most kinds of plot objects for ultimate customization.</p>
+<p>We saw how to add <code>ggplots</code> and
+<code>ComplexHeatmaps</code> to <code>plotgardener</code> layouts in the
+vignette <a href="incorporating_ggplots.html">Incorporating ggplots and
+other <code>grid</code>-based Bioconductor visualizations”</a> with the
+<code><a href="../../reference/plotGG.html">plotGG()</a></code> function. Beyond customizing the coordinates and
+dimensions of <code>ggplots</code> and <code>grid</code>-based
+Bioconductor visualizations, <code><a href="../../reference/plotGG.html">plotGG()</a></code> can also be used to
+incorporate other <code>grob</code> and <code>gtable</code> objects.
+Thus, <code>plotgardener</code> allows us to easily mix and arrange most
+kinds of plot objects for ultimate customization.</p>
 </div>
 <div class="section level2">
 <h2 id="session-info">Session Info<a class="anchor" aria-label="anchor" href="#session-info"></a>
@@ -247,18 +276,18 @@
 <span class="co">#&gt; other attached packages:</span>
 <span class="co">#&gt;  [1] png_0.1-7                              </span>
 <span class="co">#&gt;  [2] TxDb.Hsapiens.UCSC.hg19.knownGene_3.2.2</span>
-<span class="co">#&gt;  [3] GenomicFeatures_1.48.0                 </span>
+<span class="co">#&gt;  [3] GenomicFeatures_1.48.1                 </span>
 <span class="co">#&gt;  [4] AnnotationDbi_1.58.0                   </span>
 <span class="co">#&gt;  [5] Biobase_2.56.0                         </span>
 <span class="co">#&gt;  [6] GenomicRanges_1.48.0                   </span>
-<span class="co">#&gt;  [7] GenomeInfoDb_1.32.0                    </span>
+<span class="co">#&gt;  [7] GenomeInfoDb_1.32.2                    </span>
 <span class="co">#&gt;  [8] IRanges_2.30.0                         </span>
 <span class="co">#&gt;  [9] S4Vectors_0.34.0                       </span>
 <span class="co">#&gt; [10] AnnotationHub_3.4.0                    </span>
 <span class="co">#&gt; [11] BiocFileCache_2.4.0                    </span>
 <span class="co">#&gt; [12] dbplyr_2.1.1                           </span>
 <span class="co">#&gt; [13] BiocGenerics_0.42.0                    </span>
-<span class="co">#&gt; [14] plotgardenerData_1.1.0                 </span>
+<span class="co">#&gt; [14] plotgardenerData_1.2.0                 </span>
 <span class="co">#&gt; [15] plotgardener_1.2.0                     </span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; loaded via a namespace (and not attached):</span>
@@ -271,8 +300,8 @@
 <span class="co">#&gt;  [13] xml2_1.3.3                    cachem_1.0.6                 </span>
 <span class="co">#&gt;  [15] knitr_1.39                    jsonlite_1.8.0               </span>
 <span class="co">#&gt;  [17] Rsamtools_2.12.0              shiny_1.7.1                  </span>
-<span class="co">#&gt;  [19] BiocManager_1.30.17           compiler_4.2.0               </span>
-<span class="co">#&gt;  [21] httr_1.4.2                    assertthat_0.2.1             </span>
+<span class="co">#&gt;  [19] BiocManager_1.30.18           compiler_4.2.0               </span>
+<span class="co">#&gt;  [21] httr_1.4.3                    assertthat_0.2.1             </span>
 <span class="co">#&gt;  [23] Matrix_1.4-1                  fastmap_1.1.0                </span>
 <span class="co">#&gt;  [25] cli_3.3.0                     later_1.3.0                  </span>
 <span class="co">#&gt;  [27] htmltools_0.5.2               prettyunits_1.1.1            </span>
@@ -282,22 +311,22 @@
 <span class="co">#&gt;  [35] Rcpp_1.0.8.3                  jquerylib_0.1.4              </span>
 <span class="co">#&gt;  [37] pkgdown_2.0.3                 vctrs_0.4.1                  </span>
 <span class="co">#&gt;  [39] Biostrings_2.64.0             strawr_0.0.9                 </span>
-<span class="co">#&gt;  [41] rtracklayer_1.56.0            xfun_0.30                    </span>
+<span class="co">#&gt;  [41] rtracklayer_1.56.0            xfun_0.31                    </span>
 <span class="co">#&gt;  [43] stringr_1.4.0                 plyranges_1.16.0             </span>
 <span class="co">#&gt;  [45] mime_0.12                     lifecycle_1.0.1              </span>
 <span class="co">#&gt;  [47] restfulr_0.0.13               XML_3.99-0.9                 </span>
 <span class="co">#&gt;  [49] zlibbioc_1.42.0               scales_1.2.0                 </span>
 <span class="co">#&gt;  [51] ragg_1.2.2                    hms_1.1.1                    </span>
 <span class="co">#&gt;  [53] promises_1.2.0.1              MatrixGenerics_1.8.0         </span>
-<span class="co">#&gt;  [55] parallel_4.2.0                SummarizedExperiment_1.26.0  </span>
+<span class="co">#&gt;  [55] parallel_4.2.0                SummarizedExperiment_1.26.1  </span>
 <span class="co">#&gt;  [57] RColorBrewer_1.1-3            yaml_2.3.5                   </span>
 <span class="co">#&gt;  [59] curl_4.3.2                    memoise_2.0.1                </span>
-<span class="co">#&gt;  [61] ggplot2_3.3.5                 yulab.utils_0.0.4            </span>
+<span class="co">#&gt;  [61] ggplot2_3.3.6                 yulab.utils_0.0.4            </span>
 <span class="co">#&gt;  [63] sass_0.4.1                    biomaRt_2.52.0               </span>
-<span class="co">#&gt;  [65] stringi_1.7.6                 RSQLite_2.2.12               </span>
+<span class="co">#&gt;  [65] stringi_1.7.6                 RSQLite_2.2.14               </span>
 <span class="co">#&gt;  [67] highr_0.9                     BiocVersion_3.15.2           </span>
 <span class="co">#&gt;  [69] BiocIO_1.6.0                  desc_1.4.1                   </span>
-<span class="co">#&gt;  [71] filelock_1.0.2                BiocParallel_1.30.0          </span>
+<span class="co">#&gt;  [71] filelock_1.0.2                BiocParallel_1.30.2          </span>
 <span class="co">#&gt;  [73] rlang_1.0.2                   pkgconfig_2.0.3              </span>
 <span class="co">#&gt;  [75] systemfonts_1.0.4             matrixStats_0.62.0           </span>
 <span class="co">#&gt;  [77] bitops_1.0-7                  evaluate_0.15                </span>
@@ -308,7 +337,7 @@
 <span class="co">#&gt;  [87] DelayedArray_0.22.0           DBI_1.1.2                    </span>
 <span class="co">#&gt;  [89] withr_2.5.0                   pillar_1.7.0                 </span>
 <span class="co">#&gt;  [91] KEGGREST_1.36.0               RCurl_1.98-1.6               </span>
-<span class="co">#&gt;  [93] tibble_3.1.6                  crayon_1.5.1                 </span>
+<span class="co">#&gt;  [93] tibble_3.1.7                  crayon_1.5.1                 </span>
 <span class="co">#&gt;  [95] utf8_1.2.2                    rmarkdown_2.14               </span>
 <span class="co">#&gt;  [97] sysfonts_0.8.8                progress_1.2.2               </span>
 <span class="co">#&gt;  [99] data.table_1.14.2             blob_1.2.3                   </span>

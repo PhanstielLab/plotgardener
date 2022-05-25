@@ -41,7 +41,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../../index.html">plotgardener</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.2.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.2.1</span>
       </span>
     </div>
 
@@ -129,8 +129,17 @@
 
     
     
-<p><code>plotgardener</code> makes it easy to create reproducible, publication-quality figures from multi-omic data. Since each plot can be placed in <em>exactly</em> the desired location, users can stack multiple types of genomic data so that their axes and data are correctly aligned. In this section we will show some examples of plotting multi-omic data and how the <code>pgParams</code> object and “below” y-coordinate can facilitate this process.</p>
-<p>In the following example, we plot the same genomic region (i.e. <code>chr21:28000000-30300000</code>) represented in Hi-C data, loop annotations, signal track data, GWAS data, all along a common gene track and genome label axis:</p>
+<p><code>plotgardener</code> makes it easy to create reproducible,
+publication-quality figures from multi-omic data. Since each plot can be
+placed in <em>exactly</em> the desired location, users can stack
+multiple types of genomic data so that their axes and data are correctly
+aligned. In this section we will show some examples of plotting
+multi-omic data and how the <code>pgParams</code> object and “below”
+y-coordinate can facilitate this process.</p>
+<p>In the following example, we plot the same genomic region
+(i.e. <code>chr21:28000000-30300000</code>) represented in Hi-C data,
+loop annotations, signal track data, GWAS data, all along a common gene
+track and genome label axis:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co">## Load example data</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/PhanstielLab/plotgardenerData" class="external-link">plotgardenerData</a></span><span class="op">)</span>
@@ -204,8 +213,12 @@
 <div class="section level3">
 <h3 id="using-the-pgparams-object">Using the <code>pgParams</code> object<a class="anchor" aria-label="anchor" href="#using-the-pgparams-object"></a>
 </h3>
-<p>The <code><a href="../../reference/pgParams.html">pgParams()</a></code> function creates a <code>pgParams</code> object that can contain any argument from <code>plotgardener</code> functions.</p>
-<p>We can recreate and simplify the multi-omic plot above by saving the genomic region, left-based x-coordinate, and width into a <code>pgParams</code> object:</p>
+<p>The <code><a href="../../reference/pgParams.html">pgParams()</a></code> function creates a <code>pgParams</code>
+object that can contain any argument from <code>plotgardener</code>
+functions.</p>
+<p>We can recreate and simplify the multi-omic plot above by saving the
+genomic region, left-based x-coordinate, and width into a
+<code>pgParams</code> object:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">params</span> <span class="op">&lt;-</span> <span class="fu"><a href="../../reference/pgParams.html">pgParams</a></span><span class="op">(</span>
     chrom <span class="op">=</span> <span class="st">"chr21"</span>, chromstart <span class="op">=</span> <span class="fl">28000000</span>, chromend <span class="op">=</span> <span class="fl">30300000</span>,
@@ -213,7 +226,10 @@
     x <span class="op">=</span> <span class="fl">0.5</span>, just <span class="op">=</span> <span class="fu"><a href="../../reference/c.html">c</a></span><span class="op">(</span><span class="st">"left"</span>, <span class="st">"top"</span><span class="op">)</span>,
     width <span class="op">=</span> <span class="fl">2</span>, length <span class="op">=</span> <span class="fl">2</span>, default.units <span class="op">=</span> <span class="st">"inches"</span>
 <span class="op">)</span></code></pre></div>
-<p>Since these values are the same for each of the functions we are using to build our multi-omic figure, we can now pass the <code>pgParams</code> object into our functions so we don’t need to write the same parameters over and over again:</p>
+<p>Since these values are the same for each of the functions we are
+using to build our multi-omic figure, we can now pass the
+<code>pgParams</code> object into our functions so we don’t need to
+write the same parameters over and over again:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co">## Load example data</span>
 <span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"IMR90_HiC_10kb"</span><span class="op">)</span>
@@ -271,7 +287,11 @@
     y <span class="op">=</span> <span class="fl">4.5</span>, scale <span class="op">=</span> <span class="st">"Mb"</span>
 <span class="op">)</span></code></pre></div>
 <p><img src="plotting_multiomic_data_files/figure-html/plotting_example02-1.png" width="750" style="display: block; margin: auto;"></p>
-<p>The <code>pgParams</code> object also simplifies the code for making complex multi-omic figures when we want to change the genomic region of our plots. If we want to change the region for the figure above, we can simply put it into the <code>pgParams</code> object and re-run the code to generate the figure:</p>
+<p>The <code>pgParams</code> object also simplifies the code for making
+complex multi-omic figures when we want to change the genomic region of
+our plots. If we want to change the region for the figure above, we can
+simply put it into the <code>pgParams</code> object and re-run the code
+to generate the figure:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">params</span> <span class="op">&lt;-</span> <span class="fu"><a href="../../reference/pgParams.html">pgParams</a></span><span class="op">(</span>
     chrom <span class="op">=</span> <span class="st">"chr21"</span>, chromstart <span class="op">=</span> <span class="fl">29000000</span>, chromend <span class="op">=</span> <span class="fl">30000000</span>,
@@ -280,7 +300,12 @@
     width <span class="op">=</span> <span class="fl">2</span>, length <span class="op">=</span> <span class="fl">2</span>, default.units <span class="op">=</span> <span class="st">"inches"</span>
 <span class="op">)</span></code></pre></div>
 <p><img src="plotting_multiomic_data_files/figure-html/plotting_example03-1.png" width="750" style="display: block; margin: auto;"></p>
-<p>Alternatively, if we want to plot around a particular gene rather than a genomic region we can use <code><a href="../../reference/pgParams.html">pgParams()</a></code> to specify <code>gene</code> and <code>geneBuffer</code>. If <code>geneBuffer</code> is not included, the default buffer adds <code>(gene length) / 2</code> base pairs to the ends of the gene coordinates.</p>
+<p>Alternatively, if we want to plot around a particular gene rather
+than a genomic region we can use <code><a href="../../reference/pgParams.html">pgParams()</a></code> to specify
+<code>gene</code> and <code>geneBuffer</code>. If
+<code>geneBuffer</code> is not included, the default buffer adds
+<code>(gene length) / 2</code> base pairs to the ends of the gene
+coordinates.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">params</span> <span class="op">&lt;-</span> <span class="fu"><a href="../../reference/pgParams.html">pgParams</a></span><span class="op">(</span>
     gene <span class="op">=</span> <span class="st">"LINC00113"</span>, geneBuffer <span class="op">=</span> <span class="fl">100000</span>, assembly <span class="op">=</span> <span class="st">"hg19"</span>,
@@ -292,8 +317,17 @@
 <div class="section level3">
 <h3 id="the-below-y-coordinate">The “below” y-coordinate<a class="anchor" aria-label="anchor" href="#the-below-y-coordinate"></a>
 </h3>
-<p>Since multi-omic plots often involve vertical stacking, the placement of multi-omic plots can be facilitated with the “below” y-coordinate. Rather than providing a <code>numeric</code> value or <code>unit</code> object to the <code>y</code> parameter in plotting functions, we can place a plot below the previously drawn <code>plotgardener</code> plot with a <code>character</code> value consisting of the distance below the last plot, in page units, and “b”. For example, on a page made in inches, <code>y = "0.1b"</code> will place a plot 0.1 inches below the last drawn plot.</p>
-<p>We can further simplify the placement code of our multi-omic figure above by using the “below” y-coordinate to easily stack our plots:</p>
+<p>Since multi-omic plots often involve vertical stacking, the placement
+of multi-omic plots can be facilitated with the “below” y-coordinate.
+Rather than providing a <code>numeric</code> value or <code>unit</code>
+object to the <code>y</code> parameter in plotting functions, we can
+place a plot below the previously drawn <code>plotgardener</code> plot
+with a <code>character</code> value consisting of the distance below the
+last plot, in page units, and “b”. For example, on a page made in
+inches, <code>y = "0.1b"</code> will place a plot 0.1 inches below the
+last drawn plot.</p>
+<p>We can further simplify the placement code of our multi-omic figure
+above by using the “below” y-coordinate to easily stack our plots:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co">## Load example data</span>
 <span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"IMR90_HiC_10kb"</span><span class="op">)</span>
@@ -368,8 +402,14 @@
 <div class="section level3">
 <h3 id="plotting-and-comparing-multiple-signal-tracks">Plotting and comparing multiple signal tracks<a class="anchor" aria-label="anchor" href="#plotting-and-comparing-multiple-signal-tracks"></a>
 </h3>
-<p>In many multi-omic visualizations, multiple signal tracks are often aligned and stacked to compare different kinds of signal data and/or signals from different samples. <strong><code>plotgardener</code> does not normalize signal data</strong> <strong>based on variables like read depth</strong>, but it is possible to <strong>scale</strong> <code>plotgardener</code> signal plots to the same y-axis.</p>
-<p>To determine the appropriate y-axis range, we first must get the maximum signal score from all of our datasets to be compared:</p>
+<p>In many multi-omic visualizations, multiple signal tracks are often
+aligned and stacked to compare different kinds of signal data and/or
+signals from different samples. <strong><code>plotgardener</code> does
+not normalize signal data</strong> <strong>based on variables like read
+depth</strong>, but it is possible to <strong>scale</strong>
+<code>plotgardener</code> signal plots to the same y-axis.</p>
+<p>To determine the appropriate y-axis range, we first must get the
+maximum signal score from all of our datasets to be compared:</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/PhanstielLab/plotgardenerData" class="external-link">plotgardenerData</a></span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"IMR90_ChIP_H3K27ac_signal"</span><span class="op">)</span>
@@ -379,7 +419,10 @@
                     <span class="va">GM12878_ChIP_H3K27ac_signal</span><span class="op">$</span><span class="va">score</span><span class="op">)</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">maxScore</span><span class="op">)</span>
 <span class="co">#&gt; [1] 40.91454</span></code></pre></div>
-<p>In each of our signal plotting calls, we will then use the <code>range</code> parameter to set the range of both our y-axes to <code>c(0, maxScore)</code>. Here we can do this with our <code>pgParams</code> object:</p>
+<p>In each of our signal plotting calls, we will then use the
+<code>range</code> parameter to set the range of both our y-axes to
+<code>c(0, maxScore)</code>. Here we can do this with our
+<code>pgParams</code> object:</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">params</span> <span class="op">&lt;-</span> <span class="fu"><a href="../../reference/pgParams.html">pgParams</a></span><span class="op">(</span>
     chrom <span class="op">=</span> <span class="st">"chr21"</span>,
@@ -387,7 +430,8 @@
     assembly <span class="op">=</span> <span class="st">"hg19"</span>,
     range <span class="op">=</span> <span class="fu"><a href="../../reference/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="va">maxScore</span><span class="op">)</span>
 <span class="op">)</span></code></pre></div>
-<p>We are now ready to plot, align, and compare our signal plots along the genomic x-axis and the score y-axis:</p>
+<p>We are now ready to plot, align, and compare our signal plots along
+the genomic x-axis and the score y-axis:</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co">## Create a page</span>
 <span class="fu"><a href="../../reference/pageCreate.html">pageCreate</a></span><span class="op">(</span>width <span class="op">=</span> <span class="fl">7.5</span>, height <span class="op">=</span> <span class="fl">2.1</span>, default.units <span class="op">=</span> <span class="st">"inches"</span>,
@@ -452,22 +496,22 @@
 <span class="co">#&gt; other attached packages:</span>
 <span class="co">#&gt;  [1] org.Hs.eg.db_3.15.0                    </span>
 <span class="co">#&gt;  [2] TxDb.Hsapiens.UCSC.hg19.knownGene_3.2.2</span>
-<span class="co">#&gt;  [3] GenomicFeatures_1.48.0                 </span>
+<span class="co">#&gt;  [3] GenomicFeatures_1.48.1                 </span>
 <span class="co">#&gt;  [4] AnnotationDbi_1.58.0                   </span>
 <span class="co">#&gt;  [5] Biobase_2.56.0                         </span>
 <span class="co">#&gt;  [6] GenomicRanges_1.48.0                   </span>
-<span class="co">#&gt;  [7] GenomeInfoDb_1.32.0                    </span>
+<span class="co">#&gt;  [7] GenomeInfoDb_1.32.2                    </span>
 <span class="co">#&gt;  [8] IRanges_2.30.0                         </span>
 <span class="co">#&gt;  [9] S4Vectors_0.34.0                       </span>
 <span class="co">#&gt; [10] BiocGenerics_0.42.0                    </span>
-<span class="co">#&gt; [11] plotgardenerData_1.1.0                 </span>
+<span class="co">#&gt; [11] plotgardenerData_1.2.0                 </span>
 <span class="co">#&gt; [12] plotgardener_1.2.0                     </span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; loaded via a namespace (and not attached):</span>
 <span class="co">#&gt;  [1] bitops_1.0-7                matrixStats_0.62.0         </span>
 <span class="co">#&gt;  [3] fs_1.5.2                    bit64_4.0.5                </span>
 <span class="co">#&gt;  [5] filelock_1.0.2              progress_1.2.2             </span>
-<span class="co">#&gt;  [7] httr_1.4.2                  RColorBrewer_1.1-3         </span>
+<span class="co">#&gt;  [7] httr_1.4.3                  RColorBrewer_1.1-3         </span>
 <span class="co">#&gt;  [9] rprojroot_2.0.3             tools_4.2.0                </span>
 <span class="co">#&gt; [11] bslib_0.3.1                 utf8_1.2.2                 </span>
 <span class="co">#&gt; [13] R6_2.5.1                    DBI_1.1.2                  </span>
@@ -486,17 +530,17 @@
 <span class="co">#&gt; [39] htmltools_0.5.2             MatrixGenerics_1.8.0       </span>
 <span class="co">#&gt; [41] highr_0.9                   dbplyr_2.1.1               </span>
 <span class="co">#&gt; [43] fastmap_1.1.0               rlang_1.0.2                </span>
-<span class="co">#&gt; [45] rstudioapi_0.13             RSQLite_2.2.12             </span>
+<span class="co">#&gt; [45] rstudioapi_0.13             RSQLite_2.2.14             </span>
 <span class="co">#&gt; [47] gridGraphics_0.5-1          jquerylib_0.1.4            </span>
 <span class="co">#&gt; [49] BiocIO_1.6.0                generics_0.1.2             </span>
-<span class="co">#&gt; [51] jsonlite_1.8.0              BiocParallel_1.30.0        </span>
+<span class="co">#&gt; [51] jsonlite_1.8.0              BiocParallel_1.30.2        </span>
 <span class="co">#&gt; [53] dplyr_1.0.9                 RCurl_1.98-1.6             </span>
 <span class="co">#&gt; [55] magrittr_2.0.3              ggplotify_0.1.0            </span>
 <span class="co">#&gt; [57] GenomeInfoDbData_1.2.8      Matrix_1.4-1               </span>
 <span class="co">#&gt; [59] Rcpp_1.0.8.3                munsell_0.5.0              </span>
 <span class="co">#&gt; [61] fansi_1.0.3                 lifecycle_1.0.1            </span>
 <span class="co">#&gt; [63] stringi_1.7.6               yaml_2.3.5                 </span>
-<span class="co">#&gt; [65] SummarizedExperiment_1.26.0 zlibbioc_1.42.0            </span>
+<span class="co">#&gt; [65] SummarizedExperiment_1.26.1 zlibbioc_1.42.0            </span>
 <span class="co">#&gt; [67] BiocFileCache_2.4.0         blob_1.2.3                 </span>
 <span class="co">#&gt; [69] parallel_4.2.0              crayon_1.5.1               </span>
 <span class="co">#&gt; [71] lattice_0.20-45             Biostrings_2.64.0          </span>
@@ -508,9 +552,9 @@
 <span class="co">#&gt; [83] data.table_1.14.2           png_0.1-7                  </span>
 <span class="co">#&gt; [85] vctrs_0.4.1                 gtable_0.3.0               </span>
 <span class="co">#&gt; [87] purrr_0.3.4                 assertthat_0.2.1           </span>
-<span class="co">#&gt; [89] cachem_1.0.6                ggplot2_3.3.5              </span>
-<span class="co">#&gt; [91] xfun_0.30                   restfulr_0.0.13            </span>
-<span class="co">#&gt; [93] ragg_1.2.2                  tibble_3.1.6               </span>
+<span class="co">#&gt; [89] cachem_1.0.6                ggplot2_3.3.6              </span>
+<span class="co">#&gt; [91] xfun_0.31                   restfulr_0.0.13            </span>
+<span class="co">#&gt; [93] ragg_1.2.2                  tibble_3.1.7               </span>
 <span class="co">#&gt; [95] GenomicAlignments_1.32.0    plyranges_1.16.0           </span>
 <span class="co">#&gt; [97] memoise_2.0.1               ellipsis_0.3.2</span></code></pre></div>
 </div>

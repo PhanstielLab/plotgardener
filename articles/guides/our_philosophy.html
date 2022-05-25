@@ -41,7 +41,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../../index.html">plotgardener</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.2.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.2.1</span>
       </span>
     </div>
 
@@ -130,19 +130,32 @@
     
     
 <p><img src="../../reference/figures/logo.png" align="left" width="20px" style="vertical-align: middle; background-color:white; border-color: transparent; margin: 9px"></p>
-<p><strong><code>plotgardener</code> was developed to give users unparalleled control in plotting and</strong> <strong>arranging multiple figures entirely within the R plotting environment.</strong> <strong>This functionality is motivated by the following design principles:</strong></p>
+<p><strong><code>plotgardener</code> was developed to give users
+unparalleled control in plotting and</strong> <strong>arranging multiple
+figures entirely within the R plotting environment.</strong>
+<strong>This functionality is motivated by the following design
+principles:</strong></p>
 <div class="section level2">
 <h2 id="coordinate-based-plot-placement">Coordinate-based plot placement<a class="anchor" aria-label="anchor" href="#coordinate-based-plot-placement"></a>
 </h2>
-<p>A coordinate-based plotting system provides users with exquisite control over plot sizes and arrangements through a user-defined page and common units of measurement. This system makes the <code>plotgardener</code> plotting process intuitive and absolute, meaning that plots cannot be squished and stretched based on their <em>relative</em> sizes and placements. Users can create a page in their preferred size and unit of measurement:</p>
+<p>A coordinate-based plotting system provides users with exquisite
+control over plot sizes and arrangements through a user-defined page and
+common units of measurement. This system makes the
+<code>plotgardener</code> plotting process intuitive and absolute,
+meaning that plots cannot be squished and stretched based on their
+<em>relative</em> sizes and placements. Users can create a page in their
+preferred size and unit of measurement:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../../reference/pageCreate.html">pageCreate</a></span><span class="op">(</span>width <span class="op">=</span> <span class="fl">3</span>, height <span class="op">=</span> <span class="fl">3</span>, default.units <span class="op">=</span> <span class="st">"inches"</span><span class="op">)</span></code></pre></div>
 <p><img src="our_philosophy_files/figure-html/philosophy_1-1.png" width="900" style="display: block; margin: auto;"></p>
-<p>and then make and precisely arrange plots within this defined landscape. If users want the top, left corner of their plot to be 0.5 inches down from the top of this page and 0.5 inches from the left:</p>
+<p>and then make and precisely arrange plots within this defined
+landscape. If users want the top, left corner of their plot to be 0.5
+inches down from the top of this page and 0.5 inches from the left:</p>
 <p><img src="our_philosophy_files/figure-html/philosphy_2-1.png" width="900" style="display: block; margin: auto;"></p>
 <p>and users want their plot be 2 inches wide and 1 inch tall:</p>
 <p><img src="our_philosophy_files/figure-html/philosphy_3-1.png" width="900" style="display: block; margin: auto;"></p>
-<p><code>plotgardener</code> can make the plot with these exact parameters:</p>
+<p><code>plotgardener</code> can make the plot with these exact
+parameters:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co">## Create plotgardener page</span>
 <span class="fu"><a href="../../reference/pageCreate.html">pageCreate</a></span><span class="op">(</span>width <span class="op">=</span> <span class="fl">3</span>, height <span class="op">=</span> <span class="fl">3</span>, default.units <span class="op">=</span> <span class="st">"inches"</span><span class="op">)</span>
@@ -158,12 +171,21 @@
     just <span class="op">=</span> <span class="fu"><a href="../../reference/c.html">c</a></span><span class="op">(</span><span class="st">"left"</span>, <span class="st">"top"</span><span class="op">)</span>, default.units <span class="op">=</span> <span class="st">"inches"</span>
 <span class="op">)</span></code></pre></div>
 <p><img src="our_philosophy_files/figure-html/philosophy_4-1.png" width="900" style="display: block; margin: auto;"></p>
-<p>This exact plot sizing and placement is particularly important and useful for standardized and accurate data comparisons along the x and y-axes.</p>
+<p>This exact plot sizing and placement is particularly important and
+useful for standardized and accurate data comparisons along the x and
+y-axes.</p>
 </div>
 <div class="section level2">
 <h2 id="containerized-edge-to-edge-visualizations">Containerized, edge-to-edge visualizations<a class="anchor" aria-label="anchor" href="#containerized-edge-to-edge-visualizations"></a>
 </h2>
-<p>With the stacked nature of genomic plots, it is critical that aligned plots correspond to the same genomic regions to ensure figure accuracy. By separating data plotting from plot annotations, data fills defined plot coordinates and dimensions from edge to edge and precisely preserves the mapping between the data and its user-defined container. For example, if a user creates a 2 inch-wide gene track and wants that plot to represent the genomic region chr8:1000000-2000000, this genomic region will exactly span the 2 inch width:</p>
+<p>With the stacked nature of genomic plots, it is critical that aligned
+plots correspond to the same genomic regions to ensure figure accuracy.
+By separating data plotting from plot annotations, data fills defined
+plot coordinates and dimensions from edge to edge and precisely
+preserves the mapping between the data and its user-defined container.
+For example, if a user creates a 2 inch-wide gene track and wants that
+plot to represent the genomic region chr8:1000000-2000000, this genomic
+region will exactly span the 2 inch width:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">TxDb.Hsapiens.UCSC.hg19.knownGene</span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">org.Hs.eg.db</span><span class="op">)</span>
@@ -190,7 +212,9 @@
     just <span class="op">=</span> <span class="fu"><a href="../../reference/c.html">c</a></span><span class="op">(</span><span class="st">"left"</span>, <span class="st">"top"</span><span class="op">)</span>, default.units <span class="op">=</span> <span class="st">"inches"</span>
 <span class="op">)</span></code></pre></div>
 <p><img src="our_philosophy_files/figure-html/philosphy_5-1.png" width="900" style="display: block; margin: auto;"></p>
-<p>When it’s time to stack various data types along the same genomic region, users can be confident in accurately aligning containers of the same width:</p>
+<p>When it’s time to stack various data types along the same genomic
+region, users can be confident in accurately aligning containers of the
+same width:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co">## Load data</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/PhanstielLab/plotgardenerData" class="external-link">plotgardenerData</a></span><span class="op">)</span>
@@ -244,7 +268,13 @@
 <div class="section level2">
 <h2 id="programmatic-and-reproducible-multi-panel-figures">Programmatic and reproducible multi-panel figures<a class="anchor" aria-label="anchor" href="#programmatic-and-reproducible-multi-panel-figures"></a>
 </h2>
-<p>Data visualization is most rigorous and accurate when it is reproducible. Although many visualizations are initially designed with code, final customizations and arrangements of figures are typically made with third party graphic design software and cannot be easily replicated. <code>plotgardener</code> makes this entire process programmatic, from raw data input to finalized, complex visualization. This means that if users define the same data:</p>
+<p>Data visualization is most rigorous and accurate when it is
+reproducible. Although many visualizations are initially designed with
+code, final customizations and arrangements of figures are typically
+made with third party graphic design software and cannot be easily
+replicated. <code>plotgardener</code> makes this entire process
+programmatic, from raw data input to finalized, complex visualization.
+This means that if users define the same data:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">TxDb.Hsapiens.UCSC.hg19.knownGene</span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">org.Hs.eg.db</span><span class="op">)</span>
@@ -319,9 +349,12 @@
 
 <span class="co">## Hide page guides</span>
 <span class="fu"><a href="../../reference/pageGuideHide.html">pageGuideHide</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
-<p>they will generate the <strong>exact same</strong> multi-panel visualization:</p>
+<p>they will generate the <strong>exact same</strong> multi-panel
+visualization:</p>
 <p><img src="our_philosophy_files/figure-html/philosophy_7-1.png" width="1200" style="display: block; margin: auto;"></p>
-<p>Not only does this make visualizations entirely reproducible with code, but it also makes it easy to change data ranges and aesthetics with simple pieces of code:</p>
+<p>Not only does this make visualizations entirely reproducible with
+code, but it also makes it easy to change data ranges and aesthetics
+with simple pieces of code:</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co">## Change colors while maintaining plot layout</span>
 <span class="va">hicPlot</span> <span class="op">&lt;-</span> <span class="fu"><a href="../../reference/plotHicTriangle.html">plotHicTriangle</a></span><span class="op">(</span>
@@ -343,7 +376,14 @@
 <div class="section level2">
 <h2 id="utilizing-grid-graphics-viewports">Utilizing <code>grid</code> graphics <code>viewports</code><a class="anchor" aria-label="anchor" href="#utilizing-grid-graphics-viewports"></a>
 </h2>
-<p><code>plotgardener</code> achieves its functionality through <code>grid</code> graphics <code>viewports</code>, or defined graphical regions. A <code>plotgardener</code> page is defined by one large <code>viewport</code> with specified dimensions and units. Subsequent plots each have their own <code>viewport</code> that are placed on the larger page <code>viewport</code>. These <code>viewports</code> give users the power to specify the size and placement of each plot’s container and clip data to precise axis measurements.</p>
+<p><code>plotgardener</code> achieves its functionality through
+<code>grid</code> graphics <code>viewports</code>, or defined graphical
+regions. A <code>plotgardener</code> page is defined by one large
+<code>viewport</code> with specified dimensions and units. Subsequent
+plots each have their own <code>viewport</code> that are placed on the
+larger page <code>viewport</code>. These <code>viewports</code> give
+users the power to specify the size and placement of each plot’s
+container and clip data to precise axis measurements.</p>
 </div>
   </div>
 

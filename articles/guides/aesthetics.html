@@ -41,7 +41,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../../index.html">plotgardener</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.2.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.2.1</span>
       </span>
     </div>
 
@@ -129,13 +129,21 @@
 
     
     
-<p><code>plotgardener</code> plots are extremely customizable in appearance. In this article we will outline some of the major aesthetic customizations, including general features and specific plot type customizations.</p>
-<p>All the data included in this article can be found in the supplementary package <code>plotgardenerData</code>.</p>
+<p><code>plotgardener</code> plots are extremely customizable in
+appearance. In this article we will outline some of the major aesthetic
+customizations, including general features and specific plot type
+customizations.</p>
+<p>All the data included in this article can be found in the
+supplementary package <code>plotgardenerData</code>.</p>
 <div class="section level2">
 <h2 id="gpar-and-common-plot-customizations">
 <code>gpar</code> and common plot customizations<a class="anchor" aria-label="anchor" href="#gpar-and-common-plot-customizations"></a>
 </h2>
-<p>The most common types of customizations are inherited from <code>grid</code> <code>gpar</code> options. If a function accepts <code>...</code>, this usually refers to <code>gpar</code> options that are not explicity listed as parameters in the function documentation. General valid parameters include:</p>
+<p>The most common types of customizations are inherited from
+<code>grid</code> <code>gpar</code> options. If a function accepts
+<code>...</code>, this usually refers to <code>gpar</code> options that
+are not explicity listed as parameters in the function documentation.
+General valid parameters include:</p>
 <table class="table">
 <colgroup>
 <col width="25%">
@@ -144,7 +152,8 @@
 <tbody>
 <tr class="odd">
 <td align="right"><strong>alpha</strong></td>
-<td align="left">Alpha channel for transparency (number between 0 and 1).</td>
+<td align="left">Alpha channel for transparency (number between 0 and
+1).</td>
 </tr>
 <tr class="even">
 <td align="right"><strong>fill</strong></td>
@@ -156,7 +165,8 @@
 </tr>
 <tr class="even">
 <td align="right"><strong>lty</strong></td>
-<td align="left">Line type. (0=blank, 1=solid, 2=dashed, 3=dotted, 4=dotdash, 5=longdash, 6=twodash).</td>
+<td align="left">Line type. (0=blank, 1=solid, 2=dashed, 3=dotted,
+4=dotdash, 5=longdash, 6=twodash).</td>
 </tr>
 <tr class="odd">
 <td align="right"><strong>lwd</strong></td>
@@ -184,7 +194,8 @@
 </tr>
 <tr class="odd">
 <td align="right"><strong>fontface</strong></td>
-<td align="left">The font face (plain, bold, italic, bold.italic, oblique).</td>
+<td align="left">The font face (plain, bold, italic, bold.italic,
+oblique).</td>
 </tr>
 <tr class="even">
 <td align="right"><strong>fontfamily</strong></td>
@@ -196,16 +207,23 @@
 </tr>
 <tr class="even">
 <td align="right"><strong>pch</strong></td>
-<td align="left">Plotting character, or symbol (integer codes range from 0 to 25).</td>
+<td align="left">Plotting character, or symbol (integer codes range from
+0 to 25).</td>
 </tr>
 </tbody>
 </table>
-<p>Additional fonts for the <code>fontfamily</code> argument can be imported with the packages <code>extrafont</code> and <code>showtext</code>. This makes it possible to incorporate special fonts like Times New Roman, Arial, etc. into <code>plotgardener</code> figures.</p>
+<p>Additional fonts for the <code>fontfamily</code> argument can be
+imported with the packages <code>extrafont</code> and
+<code>showtext</code>. This makes it possible to incorporate special
+fonts like Times New Roman, Arial, etc. into <code>plotgardener</code>
+figures.</p>
 </div>
 <div class="section level2">
 <h2 id="backgrounds-and-baselines">Backgrounds and baselines<a class="anchor" aria-label="anchor" href="#backgrounds-and-baselines"></a>
 </h2>
-<p>By default, <code>plotgardener</code> plots have transparent backgrounds when placed on a <code>page</code>. In many functions, this background color can be changed with the parameter <code>bg</code>.</p>
+<p>By default, <code>plotgardener</code> plots have transparent
+backgrounds when placed on a <code>page</code>. In many functions, this
+background color can be changed with the parameter <code>bg</code>.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../../reference/plotGenes.html">plotGenes</a></span><span class="op">(</span>
     chrom <span class="op">=</span> <span class="st">"chr8"</span>, chromstart <span class="op">=</span> <span class="fl">1000000</span>, chromend <span class="op">=</span> <span class="fl">2000000</span>,
@@ -214,8 +232,13 @@
     x <span class="op">=</span> <span class="fl">0.5</span>, y <span class="op">=</span> <span class="fl">0.5</span>, width <span class="op">=</span> <span class="fl">2</span>, height <span class="op">=</span> <span class="fl">1</span>, just <span class="op">=</span> <span class="fu"><a href="../../reference/c.html">c</a></span><span class="op">(</span><span class="st">"left"</span>, <span class="st">"top"</span><span class="op">)</span>,
     default.units <span class="op">=</span> <span class="st">"inches"</span>
 <span class="op">)</span></code></pre></div>
-<p><img src="aesthetics_files/figure-html/aes_01-1.png" width="750" style="display: block; margin: auto;"> This makes it easy to clearly see the precise dimensional boundaries of <code>plotgardener</code> plots.</p>
-<p>Some plots also benefit from baselines to quickly show where y = 0. This can aid in data interpretation and guide plot annotation placement. Baselines can be plotted in selective plots with <code>baseline = TRUE</code>.</p>
+<p><img src="aesthetics_files/figure-html/aes_01-1.png" width="750" style="display: block; margin: auto;">
+This makes it easy to clearly see the precise dimensional boundaries of
+<code>plotgardener</code> plots.</p>
+<p>Some plots also benefit from baselines to quickly show where y = 0.
+This can aid in data interpretation and guide plot annotation placement.
+Baselines can be plotted in selective plots with
+<code>baseline = TRUE</code>.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../../reference/plotRanges.html">plotRanges</a></span><span class="op">(</span>
     data <span class="op">=</span> <span class="va">IMR90_ChIP_CTCF_reads</span>,
@@ -231,12 +254,21 @@
 <div class="section level2">
 <h2 id="gene-and-transcript-plot-aesthetics">Gene and transcript plot aesthetics<a class="anchor" aria-label="anchor" href="#gene-and-transcript-plot-aesthetics"></a>
 </h2>
-<p><code>plotgardener</code> provides many useful features specific for enhancing gene and transcript visualizations:</p>
+<p><code>plotgardener</code> provides many useful features specific for
+enhancing gene and transcript visualizations:</p>
 <div class="section level3">
 <h3 id="labels">Labels<a class="anchor" aria-label="anchor" href="#labels"></a>
 </h3>
-<p>Since <code>plotgardener</code> utilizes <code>TxDb</code> objects, <code>orgDb</code> objects, and internal citation information, <code>plotgardener</code> has access to numerous gene and transcript identifiers and can customize annotation labels in a variety of ways.</p>
-<p>By default, <code>plotgardener</code> will rank gene labels according to citation number to prevent label overcrowding. However, we can provide our own list of prioritized genes to label in a plot. For example, if we plot the hg19 genes in the region <code>chr2:1000000-20000000</code>, our plot will show these labels:</p>
+<p>Since <code>plotgardener</code> utilizes <code>TxDb</code> objects,
+<code>orgDb</code> objects, and internal citation information,
+<code>plotgardener</code> has access to numerous gene and transcript
+identifiers and can customize annotation labels in a variety of
+ways.</p>
+<p>By default, <code>plotgardener</code> will rank gene labels according
+to citation number to prevent label overcrowding. However, we can
+provide our own list of prioritized genes to label in a plot. For
+example, if we plot the hg19 genes in the region
+<code>chr2:1000000-20000000</code>, our plot will show these labels:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../../reference/pageCreate.html">pageCreate</a></span><span class="op">(</span>
     width <span class="op">=</span> <span class="fl">5</span>, height <span class="op">=</span> <span class="fl">1.25</span>,
@@ -247,7 +279,9 @@
     assembly <span class="op">=</span> <span class="st">"hg19"</span>,
     x <span class="op">=</span> <span class="fl">0.25</span>, y <span class="op">=</span> <span class="fl">0.25</span>, width <span class="op">=</span> <span class="fl">4.75</span>, height <span class="op">=</span> <span class="fl">1</span>
 <span class="op">)</span></code></pre></div>
-<p><img src="aesthetics_files/figure-html/aes_07-1.png" width="750" style="display: block; margin: auto;"> Looking in the <code>genes</code> object, we can see that there were numerous genes that were not labeled.</p>
+<p><img src="aesthetics_files/figure-html/aes_07-1.png" width="750" style="display: block; margin: auto;">
+Looking in the <code>genes</code> object, we can see that there were
+numerous genes that were not labeled.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">genePlot</span><span class="op">$</span><span class="va">genes</span>
 <span class="co">#&gt;  [1] "MIR3125"      "RNASEH1-DT"   "LOC100506274" "MIR4757"      "LINC00570"   </span>
@@ -266,7 +300,8 @@
 <span class="co">#&gt; [66] "NBAS"         "ADI1"         "KIDINS220"    "RDH14"        "ADAM17"      </span>
 <span class="co">#&gt; [71] "EIPR1"        "LINC01249"    "RAD51AP2"     "PXDN"         "SMC6"        </span>
 <span class="co">#&gt; [76] "NOL10"        "CYRIA"        "ITGB1BP1"     "NT5C1B"       "ROCK2"</span></code></pre></div>
-<p>If we were particularly interested in MIR3125, we could include this in the <code>geneOrder</code> parameter to prioritize its labeling:</p>
+<p>If we were particularly interested in MIR3125, we could include this
+in the <code>geneOrder</code> parameter to prioritize its labeling:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../../reference/pageCreate.html">pageCreate</a></span><span class="op">(</span>
     width <span class="op">=</span> <span class="fl">5</span>, height <span class="op">=</span> <span class="fl">1.25</span>,
@@ -279,7 +314,11 @@
     x <span class="op">=</span> <span class="fl">0.25</span>, y <span class="op">=</span> <span class="fl">0.25</span>, width <span class="op">=</span> <span class="fl">4.75</span>, height <span class="op">=</span> <span class="fl">1</span>
 <span class="op">)</span></code></pre></div>
 <p><img src="aesthetics_files/figure-html/aes_08-1.png" width="750" style="display: block; margin: auto;"></p>
-<p>Label IDs used in transcript plots can be customized through <code><a href="../../reference/assembly.html">assembly()</a></code> objects, and transcript label formatting can be changed through the <code>labels</code> parameter. For example, if we wish to display both transcript names and their associated gene names, we can set <code>labels = "both"</code>:</p>
+<p>Label IDs used in transcript plots can be customized through
+<code><a href="../../reference/assembly.html">assembly()</a></code> objects, and transcript label formatting can be
+changed through the <code>labels</code> parameter. For example, if we
+wish to display both transcript names and their associated gene names,
+we can set <code>labels = "both"</code>:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../../reference/pageCreate.html">pageCreate</a></span><span class="op">(</span>
     width <span class="op">=</span> <span class="fl">6</span>, height <span class="op">=</span> <span class="fl">5</span>,
@@ -296,7 +335,13 @@
 <div class="section level3">
 <h3 id="highlighting-genes-by-color">Highlighting genes by color<a class="anchor" aria-label="anchor" href="#highlighting-genes-by-color"></a>
 </h3>
-<p>In addition to changing <code>fill</code> and <code>fontcolor</code> to change the colors of all genes in a plot, specific gene structures and their labels can be highlighted in a different color with <code>geneHighlights</code>. If we revisit the <code>genes</code> plot above, we can highlight RRM2 by creating a <code>data.frame</code> with “RRM2” in the first column and its highlight color in the second column:</p>
+<p>In addition to changing <code>fill</code> and <code>fontcolor</code>
+to change the colors of all genes in a plot, specific gene structures
+and their labels can be highlighted in a different color with
+<code>geneHighlights</code>. If we revisit the <code>genes</code> plot
+above, we can highlight RRM2 by creating a <code>data.frame</code> with
+“RRM2” in the first column and its highlight color in the second
+column:</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">geneHighlights</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span><span class="st">"geneName"</span> <span class="op">=</span> <span class="st">"RRM2"</span>, <span class="st">"color"</span> <span class="op">=</span> <span class="st">"steel blue"</span><span class="op">)</span></code></pre></div>
 <p>We can then pass this into our <code><a href="../../reference/plotGenes.html">plotGenes()</a></code> call:</p>
@@ -312,7 +357,9 @@
     x <span class="op">=</span> <span class="fl">0.25</span>, y <span class="op">=</span> <span class="fl">0.25</span>, width <span class="op">=</span> <span class="fl">4.75</span>, height <span class="op">=</span> <span class="fl">1</span>
 <span class="op">)</span></code></pre></div>
 <p><img src="aesthetics_files/figure-html/aes_11-1.png" width="750" style="display: block; margin: auto;"></p>
-<p>Since <code>geneHighlights</code> is a <code>data.frame</code>, we can highlight multiple genes in different colors at once. For example, let’s now highlight RRM2 in “steel blue” and PXDN in “red”:</p>
+<p>Since <code>geneHighlights</code> is a <code>data.frame</code>, we
+can highlight multiple genes in different colors at once. For example,
+let’s now highlight RRM2 in “steel blue” and PXDN in “red”:</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">geneHighlights</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>
     <span class="st">"geneName"</span> <span class="op">=</span> <span class="fu"><a href="../../reference/c.html">c</a></span><span class="op">(</span><span class="st">"RRM2"</span>, <span class="st">"PXDN"</span><span class="op">)</span>,
@@ -334,7 +381,14 @@
 <div class="section level3">
 <h3 id="customizing-transcripts-by-strand">Customizing transcripts by strand<a class="anchor" aria-label="anchor" href="#customizing-transcripts-by-strand"></a>
 </h3>
-<p>To distinguish which strand a transcript belongs to, <code><a href="../../reference/plotTranscripts.html">plotTranscripts()</a></code> colors transcripts by strand with the parameter <code>colorbyStrand</code>. The first value in <code>fill</code> colors positive strand transcripts and the second <code>fill</code> value colors negative strand transcripts. To further organize transcripts by strand, we can use <code>strandSplit</code> to separate transcript elements into groups of positive and negative strands:</p>
+<p>To distinguish which strand a transcript belongs to,
+<code><a href="../../reference/plotTranscripts.html">plotTranscripts()</a></code> colors transcripts by strand with the
+parameter <code>colorbyStrand</code>. The first value in
+<code>fill</code> colors positive strand transcripts and the second
+<code>fill</code> value colors negative strand transcripts. To further
+organize transcripts by strand, we can use <code>strandSplit</code> to
+separate transcript elements into groups of positive and negative
+strands:</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../../reference/pageCreate.html">pageCreate</a></span><span class="op">(</span>
     width <span class="op">=</span> <span class="fl">6</span>, height <span class="op">=</span> <span class="fl">5</span>,
@@ -347,21 +401,33 @@
     x <span class="op">=</span> <span class="fl">0.25</span>, y <span class="op">=</span> <span class="fl">0.25</span>, width <span class="op">=</span> <span class="fl">5.5</span>, height <span class="op">=</span> <span class="fl">4.5</span>
 <span class="op">)</span></code></pre></div>
 <p><img src="aesthetics_files/figure-html/aes_13-1.png" width="1050" style="display: block; margin: auto;"></p>
-<p>Now all our positive strand transcripts are grouped together above the group of negative strand transcripts.</p>
+<p>Now all our positive strand transcripts are grouped together above
+the group of negative strand transcripts.</p>
 </div>
 </div>
 <div class="section level2">
 <h2 id="hi-c-plot-customizations">Hi-C plot customizations<a class="anchor" aria-label="anchor" href="#hi-c-plot-customizations"></a>
 </h2>
-<p><code>plotgardener</code> includes many types of customizations for Hi-C plots. <code>plotgardener</code> provides 3 different Hi-C plotting functions based on the desired plot shape:</p>
+<p><code>plotgardener</code> includes many types of customizations for
+Hi-C plots. <code>plotgardener</code> provides 3 different Hi-C plotting
+functions based on the desired plot shape:</p>
 <ul>
-<li><p><code><a href="../../reference/plotHicSquare.html">plotHicSquare()</a></code>: Plots a square, symmetrical Hi-C plot with genomic coordinates along both the x- and y-axes.</p></li>
-<li><p><code><a href="../../reference/plotHicTriangle.html">plotHicTriangle()</a></code>: Plots a triangular Hi-C plot where the genome region falls along the base of the triangle.</p></li>
-<li><p><code><a href="../../reference/plotHicRectangle.html">plotHicRectangle()</a></code>: Plots a triangular Hi-C plot with additional data filling the surrounding regions to form a rectangle.</p></li>
+<li><p><code><a href="../../reference/plotHicSquare.html">plotHicSquare()</a></code>: Plots a square, symmetrical Hi-C
+plot with genomic coordinates along both the x- and y-axes.</p></li>
+<li><p><code><a href="../../reference/plotHicTriangle.html">plotHicTriangle()</a></code>: Plots a triangular Hi-C plot
+where the genome region falls along the base of the triangle.</p></li>
+<li><p><code><a href="../../reference/plotHicRectangle.html">plotHicRectangle()</a></code>: Plots a triangular Hi-C plot
+with additional data filling the surrounding regions to form a
+rectangle.</p></li>
 </ul>
 <p><img src="aesthetics_files/figure-html/aes_14-1.png" width="1462.5" style="display: block; margin: auto;"></p>
-<p>All Hi-C plot types can use different color palettes, and colors can be linearly or log-scaled with the <code>colorTrans</code> parameter.</p>
-<p><code>hicSquare</code> plots can be further customized to include two datasets in one plot. Instead of plotting both symmetrical halves of the plot, we can set one dataset as <code>half = "top"</code> and the other dataset as <code>half = "bottom"</code>:</p>
+<p>All Hi-C plot types can use different color palettes, and colors can
+be linearly or log-scaled with the <code>colorTrans</code>
+parameter.</p>
+<p><code>hicSquare</code> plots can be further customized to include two
+datasets in one plot. Instead of plotting both symmetrical halves of the
+plot, we can set one dataset as <code>half = "top"</code> and the other
+dataset as <code>half = "bottom"</code>:</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"GM12878_HiC_10kb"</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"IMR90_HiC_10kb"</span><span class="op">)</span>
@@ -414,22 +480,22 @@
 <span class="co">#&gt; other attached packages:</span>
 <span class="co">#&gt;  [1] org.Hs.eg.db_3.15.0                    </span>
 <span class="co">#&gt;  [2] TxDb.Hsapiens.UCSC.hg19.knownGene_3.2.2</span>
-<span class="co">#&gt;  [3] GenomicFeatures_1.48.0                 </span>
+<span class="co">#&gt;  [3] GenomicFeatures_1.48.1                 </span>
 <span class="co">#&gt;  [4] AnnotationDbi_1.58.0                   </span>
 <span class="co">#&gt;  [5] Biobase_2.56.0                         </span>
 <span class="co">#&gt;  [6] GenomicRanges_1.48.0                   </span>
-<span class="co">#&gt;  [7] GenomeInfoDb_1.32.0                    </span>
+<span class="co">#&gt;  [7] GenomeInfoDb_1.32.2                    </span>
 <span class="co">#&gt;  [8] IRanges_2.30.0                         </span>
 <span class="co">#&gt;  [9] S4Vectors_0.34.0                       </span>
 <span class="co">#&gt; [10] BiocGenerics_0.42.0                    </span>
-<span class="co">#&gt; [11] plotgardenerData_1.1.0                 </span>
+<span class="co">#&gt; [11] plotgardenerData_1.2.0                 </span>
 <span class="co">#&gt; [12] plotgardener_1.2.0                     </span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; loaded via a namespace (and not attached):</span>
 <span class="co">#&gt;  [1] bitops_1.0-7                matrixStats_0.62.0         </span>
 <span class="co">#&gt;  [3] fs_1.5.2                    bit64_4.0.5                </span>
 <span class="co">#&gt;  [5] filelock_1.0.2              progress_1.2.2             </span>
-<span class="co">#&gt;  [7] httr_1.4.2                  RColorBrewer_1.1-3         </span>
+<span class="co">#&gt;  [7] httr_1.4.3                  RColorBrewer_1.1-3         </span>
 <span class="co">#&gt;  [9] rprojroot_2.0.3             tools_4.2.0                </span>
 <span class="co">#&gt; [11] bslib_0.3.1                 utf8_1.2.2                 </span>
 <span class="co">#&gt; [13] R6_2.5.1                    DBI_1.1.2                  </span>
@@ -448,17 +514,17 @@
 <span class="co">#&gt; [39] htmltools_0.5.2             MatrixGenerics_1.8.0       </span>
 <span class="co">#&gt; [41] highr_0.9                   dbplyr_2.1.1               </span>
 <span class="co">#&gt; [43] fastmap_1.1.0               rlang_1.0.2                </span>
-<span class="co">#&gt; [45] rstudioapi_0.13             RSQLite_2.2.12             </span>
+<span class="co">#&gt; [45] rstudioapi_0.13             RSQLite_2.2.14             </span>
 <span class="co">#&gt; [47] gridGraphics_0.5-1          jquerylib_0.1.4            </span>
 <span class="co">#&gt; [49] BiocIO_1.6.0                generics_0.1.2             </span>
-<span class="co">#&gt; [51] jsonlite_1.8.0              BiocParallel_1.30.0        </span>
+<span class="co">#&gt; [51] jsonlite_1.8.0              BiocParallel_1.30.2        </span>
 <span class="co">#&gt; [53] dplyr_1.0.9                 RCurl_1.98-1.6             </span>
 <span class="co">#&gt; [55] magrittr_2.0.3              ggplotify_0.1.0            </span>
 <span class="co">#&gt; [57] GenomeInfoDbData_1.2.8      Matrix_1.4-1               </span>
 <span class="co">#&gt; [59] Rcpp_1.0.8.3                munsell_0.5.0              </span>
 <span class="co">#&gt; [61] fansi_1.0.3                 lifecycle_1.0.1            </span>
 <span class="co">#&gt; [63] stringi_1.7.6               yaml_2.3.5                 </span>
-<span class="co">#&gt; [65] SummarizedExperiment_1.26.0 zlibbioc_1.42.0            </span>
+<span class="co">#&gt; [65] SummarizedExperiment_1.26.1 zlibbioc_1.42.0            </span>
 <span class="co">#&gt; [67] BiocFileCache_2.4.0         blob_1.2.3                 </span>
 <span class="co">#&gt; [69] parallel_4.2.0              crayon_1.5.1               </span>
 <span class="co">#&gt; [71] lattice_0.20-45             Biostrings_2.64.0          </span>
@@ -470,9 +536,9 @@
 <span class="co">#&gt; [83] data.table_1.14.2           png_0.1-7                  </span>
 <span class="co">#&gt; [85] vctrs_0.4.1                 gtable_0.3.0               </span>
 <span class="co">#&gt; [87] purrr_0.3.4                 assertthat_0.2.1           </span>
-<span class="co">#&gt; [89] cachem_1.0.6                ggplot2_3.3.5              </span>
-<span class="co">#&gt; [91] xfun_0.30                   restfulr_0.0.13            </span>
-<span class="co">#&gt; [93] ragg_1.2.2                  tibble_3.1.6               </span>
+<span class="co">#&gt; [89] cachem_1.0.6                ggplot2_3.3.6              </span>
+<span class="co">#&gt; [91] xfun_0.31                   restfulr_0.0.13            </span>
+<span class="co">#&gt; [93] ragg_1.2.2                  tibble_3.1.7               </span>
 <span class="co">#&gt; [95] GenomicAlignments_1.32.0    plyranges_1.16.0           </span>
 <span class="co">#&gt; [97] memoise_2.0.1               ellipsis_0.3.2</span></code></pre></div>
 </div>

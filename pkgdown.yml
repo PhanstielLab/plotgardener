@@ -1,4 +1,4 @@
-pandoc: 2.11.4
+pandoc: 2.17.1.1
 pkgdown: 2.0.3
 pkgdown_sha: ~
 articles:
@@ -13,7 +13,7 @@ articles:
   plotting_multiomic_data: guides/plotting_multiomic_data.html
   reading_data_for_plotgardener: guides/reading_data_for_plotgardener.html
   introduction_to_plotgardener: introduction_to_plotgardener.html
-last_built: 2022-04-28T19:08Z
+last_built: 2022-05-25T19:13Z
 urls:
   reference: https://phanstiellab.github.io/plotgardener/reference
   article: https://phanstiellab.github.io/plotgardener/articles
