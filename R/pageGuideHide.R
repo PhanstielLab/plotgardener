@@ -8,6 +8,13 @@
 #'
 #' ## Hide page guides
 #' pageGuideHide()
+#' 
+#' #' @note 
+#' Please note that due to the implementation of `grid` removal functions,
+#' using `pageGuideHide` within a `pdf` call will result in the rendering of a 
+#' separate, new page with the plot guides removed. To avoid this artifact,
+#' hide guides in the `pageCreate` function call with `showGuides = FALSE`.
+#' 
 #' @export
 pageGuideHide <- function() {
     if (length(get("guide_grobs", envir = pgEnv)$children) == 0) {

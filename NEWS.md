@@ -1,3 +1,9 @@
+# CHANGES IN VERSION 1.2.2
+
+* Note about double page rendering has been added to `pageGuideHide()`
+documentation.
+
+
 # CHANGES IN VERSION 1.2.1
 
 * `plotSignal` bug fixes related to function not finding posSignal2 and 
