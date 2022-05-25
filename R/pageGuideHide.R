@@ -9,7 +9,7 @@
 #' ## Hide page guides
 #' pageGuideHide()
 #' 
-#' #' @note 
+#' @note 
 #' Please note that due to the implementation of `grid` removal functions,
 #' using `pageGuideHide` within a `pdf` call will result in the rendering of a 
 #' separate, new page with the plot guides removed. To avoid this artifact,
