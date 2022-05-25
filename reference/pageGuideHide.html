@@ -103,10 +103,25 @@
     <h2>Value</h2>
     <p>None.</p>
     </div>
+    <div id="note">
+    <h2>Note</h2>
+    <p>Please note that due to the implementation of `grid` removal functions,
+using `pageGuideHide` within a `pdf` call will result in the rendering of a 
+separate, new page with the plot guides removed. To avoid this artifact,
+hide guides in the `pageCreate` function call with `showGuides = FALSE`.</p>
+    </div>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co">## Make a page</span></span>
+<span class="r-in"><span class="fu"><a href="pageCreate.html">pageCreate</a></span><span class="op">(</span>width <span class="op">=</span> <span class="fl">7</span>, height <span class="op">=</span> <span class="fl">4</span>, default.units <span class="op">=</span> <span class="st">"inches"</span><span class="op">)</span></span>
+<span class="r-plt img"><img src="pageGuideHide-1.png" alt="" width="1230" height="1050"></span>
+<span class="r-in"></span>
+<span class="r-in"><span class="co">## Hide page guides</span></span>
+<span class="r-in"><span class="fu">pageGuideHide</span><span class="op">(</span><span class="op">)</span></span>
+<span class="r-plt img"><img src="pageGuideHide-2.png" alt="" width="1230" height="1050"></span>
+<span class="r-in"></span>
+</code></pre></div>
     </div>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
