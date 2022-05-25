@@ -1,3 +1,16 @@
+# CHANGES IN VERSION 1.2.1
+
+* `plotSignal` bug fixes related to function not finding posSignal2 and 
+negSignal2 variables with insufficient data.
+
+* Documentation to introduction vignette has been added to explain double 
+page rendering when using any removal function, particularly `pageGuideHide()`.
+
+
+# VERSION 1.2.0
+
+Version bump for Bioconductor 3.15 release.
+
 # CHANGES IN VERSION 1.1.18
 ## NEW FEATURES
 
