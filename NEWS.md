@@ -1,3 +1,11 @@
+# CHANGES IN VERSION 1.3.3
+## NEW FEATURES
+
+* `plotSignal` can now plot negative signal data alone or listed as a second 
+file.
+* A `label` parameter has been added for `plotSignal` for convenient labeling. 
+
+
 # CHANGES IN VERSION 1.3.2
 
 * Note about double page rendering has been added to `pageGuideHide()`
