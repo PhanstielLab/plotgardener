@@ -1,3 +1,8 @@
+# CHANGES IN VERSION 1.2.4
+## BUG FIXES 
+
+* `plotSignal` range parsing bug fixes were resolved.
+
 # CHANGES IN VERSION 1.2.2
 
 * Note about double page rendering has been added to `pageGuideHide()`
