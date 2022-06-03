@@ -406,15 +406,15 @@ plotSignal <- function(data, binSize = NA, binCap = TRUE, negData = FALSE,
                         if (max(signal2[,"score"]) > 0){
                             signaltrack$range[2] <- signaltrack$ymax *
                                 max(signal2[, "score"])
+                        } else {
+                            signaltrack$range[2] <- 1
                         }
-                    } else {
-                        signaltrack$range[2] <- 1
-                    }
                         
                     } else {
                         signaltrack$range[2] <- 1
                     }
                 }
+            }
         
             ## negSignal
             if (pos == FALSE) {
@@ -423,15 +423,15 @@ plotSignal <- function(data, binSize = NA, binCap = TRUE, negData = FALSE,
                         if (min(signal2[,"score"]) < 0){
                             signaltrack$range[1] <- signaltrack$ymax *
                                 min(signal2[, "score"])
+                        } else {
+                            signaltrack$range[1] <- -1
                         }
-                    } else {
-                        signaltrack$range[1] <- -1
-                    }
                         
                     } else {
                         signaltrack$range[1] <- -1
                     }
                 }
+            }
         
         } else {
             if (is.null(signaltrack$range)) {
@@ -439,16 +439,16 @@ plotSignal <- function(data, binSize = NA, binCap = TRUE, negData = FALSE,
                     if (max(signal2[,"score"]) > 0){
                         signaltrack$range <- c(0, signaltrack$ymax *
                                                    max(signal2[, "score"]))
+                    } else {
+                        signaltrack$range <- c(0, 1)
                     }
-                } else {
-                    signaltrack$range <- c(0, 1)
-                }
                     
                 } else {
                     signaltrack$range <- c(0, 1)
                 }
             }
-
+        }
+        
         return(signaltrack)
     }
 
