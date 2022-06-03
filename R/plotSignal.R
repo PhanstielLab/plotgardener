@@ -14,6 +14,7 @@
 #'     ymax = 1,
 #'     range = NULL,
 #'     scale = FALSE,
+#'     label = NULL,
 #'     bg = NA,
 #'     baseline = TRUE,
 #'     baseline.color = "grey",
@@ -61,6 +62,11 @@
 #' @param scale A logical value indicating whether to include a data
 #' scale label in the top left corner of the plot.
 #' Default value is \code{scale = FALSE}.
+#' @param label An optional character value to conveniently add a text label
+#' to the plot. If \code{scale = TRUE}, the label will be draw in the top right
+#' of the plot. Otherwise, the label will be drawn in the top left of the plot.
+#' For more customizable labels, use \link[plotgardener]{plotText}.
+#' Default value is \code{label = NULL}. 
 #' @param bg Character value indicating background color.
 #' Default value is \code{bg = NA}.
 #' @param baseline Logical value indicating whether to include a
@@ -176,9 +182,9 @@ plotSignal <- function(data, binSize = NA, binCap = TRUE, negData = FALSE,
                         chrom, chromstart = NULL, chromend = NULL,
                         assembly = "hg38", linecolor = "#37a7db",
                         fill = NA, ymax = 1, range = NULL, scale = FALSE,
-                        bg = NA, baseline = TRUE, baseline.color = "grey",
-                        baseline.lwd = 1, orientation = "h",
-                        x = NULL, y = NULL, width = NULL,
+                        label = NULL, bg = NA, baseline = TRUE, 
+                        baseline.color = "grey", baseline.lwd = 1, 
+                        orientation = "h", x = NULL, y = NULL, width = NULL,
                         height = NULL, just = c("left", "top"),
                         default.units = "inches", draw = TRUE,
                         params = NULL, ...) {
@@ -1107,6 +1113,37 @@ plotSignal <- function(data, binSize = NA, binCap = TRUE, negData = FALSE,
                 envir = pgEnv
             )
         }
+        
+        # =====================================================================
+        # LABEL
+        # =====================================================================
+        
+        if (!is.null(sigInternal$label)){
+            if (sigInternal$scale == TRUE){
+                labelGrob <- textGrob(
+                    label = sigInternal$label,
+                    just = c("right", "top"), x = 1, y = 1,
+                    gp = sigInternal$gp
+                )
+            } else {
+                labelGrob <- textGrob(
+                    label = sigInternal$label,
+                    just = c("left", "top"), x = 0, y = 1,
+                    gp = sigInternal$gp
+                )
+            }
+            
+            ## Add grob to gtree
+            assign("signal_grobs",
+                   addGrob(
+                       gTree = get("signal_grobs", envir = pgEnv),
+                       child = labelGrob
+                   ),
+                   envir = pgEnv
+            )
+    
+        }
+        
     }
 
     # =========================================================================

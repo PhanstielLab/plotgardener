@@ -18,6 +18,7 @@ plotSignal(
     ymax = 1,
     range = NULL,
     scale = FALSE,
+    label = NULL,
     bg = NA,
     baseline = TRUE,
     baseline.color = "grey",
@@ -78,6 +79,12 @@ of data to plot (c(min, max)).}
 \item{scale}{A logical value indicating whether to include a data
 scale label in the top left corner of the plot.
 Default value is \code{scale = FALSE}.}
+
+\item{label}{An optional character value to conveniently add a text label
+to the plot. If \code{scale = TRUE}, the label will be draw in the top right
+of the plot. Otherwise, the label will be drawn in the top left of the plot.
+For more customizable labels, use \link[plotgardener]{plotText}.
+Default value is \code{label = NULL}.}
 
 \item{bg}{Character value indicating background color.
 Default value is \code{bg = NA}.}
