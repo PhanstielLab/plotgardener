@@ -1,3 +1,9 @@
+# CHANGES IN VERSION 1.3.4
+## BUG FIXES
+
+* `plotPairsArches` Bezier curve height calculations were fixed for pairs
+with different sized anchors.
+
 # CHANGES IN VERSION 1.3.3
 ## NEW FEATURES
 
