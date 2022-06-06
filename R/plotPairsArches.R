@@ -261,25 +261,38 @@ plotPairsArches <- function(data, chrom, chromstart = NULL, chromend = NULL,
 
     ## Define a function that creates ribbon arch grobs
     drawRibbons <- function(df, style, arch, flip, transp, gp) {
-        x1 <- df$start1
-        x2 <- df$end1
-        y1 <- df$start2
-        y2 <- df$end2
+
+        x1 <- min(df$start1, df$start2)
+        x2 <- min(df$end1, df$end2)
+        y1 <- max(df$start1, df$start2)
+        y2 <- max(df$end1, df$end2)
+        
+        
         fillCol <- df$color
         lineCol <- df$linecolor
         outerHeight <- df$normHeight
-        innerHeight <- outerHeight - 0.01
         gp$fill <- fillCol
         gp$col <- lineCol
         gp$alpha <- transp
+
+        ## Calculate innerHeight
+        anchor1 <- x2 - x1
+        anchor2 <- y2 - y1
+        if (anchor1 == anchor2){
+            innerHeight <- outerHeight - 0.01
+        } else {
+            
+            diff1 <- abs(y1-x2)
+            diff2 <- abs(y2-x1)
+            innerHeight <- outerHeight*((y1-x2)/(y2-x1))
+        }
 
         if (style == "3D") {
             x1 <- df$end1
             x2 <- df$start1
         }
-
+        
         ## Designate bezier control points
-
         innerX <- unit(
             seq(x2, y1, length.out = arch)[c(1, 2, seq((arch - 1), arch))],
             "native"
@@ -306,7 +319,7 @@ plotPairsArches <- function(data, chrom, chromstart = NULL, chromend = NULL,
         ## Extract points from bezier curves
         innerBP <- bezierPoints(innerLoop)
         outerBP <- bezierPoints(outerLoop)
-
+        
         ## Connect points, convert to proper units and draw polygons
         archGrob <- polygonGrob(
             x = unit(
