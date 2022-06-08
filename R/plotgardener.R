@@ -56,8 +56,11 @@
 #' @importFrom dplyr bind_rows
 #' @importFrom dplyr select
 #' @importFrom dplyr group_by
+#' @importFrom purrr map
 #' @importFrom purrr pmap
 #' @import grid
 #' @importFrom strawr straw
 #' @importFrom strawr readHicBpResolutions
+#' @importFrom IRanges IRanges
+#' @importFrom IRanges subsetByOverlaps
 "_PACKAGE"

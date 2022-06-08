@@ -6,7 +6,7 @@
 #'     fontsize = 8,
 #'     fontcolor = "dark grey",
 #'     scientific = FALSE,
-#'     digits = 0,
+#'     digits = 1,
 #'     ticks = FALSE,
 #'     breaks = NULL,
 #'     border = FALSE,
@@ -34,8 +34,8 @@
 #' @param scientific Logical value specifying if numeric color value labels
 #' should be encoded in scientific format.
 #' Default value is \code{scientific = FALSE}.
-#' @param digits Numeric specifying how many digits to include after decimal
-#' points of numeric color value labels. Default value is \code{digits = 0}.
+#' @param digits Numeric specifying how many significant digits to include
+#' of numeric color value labels. Default value is \code{digits = 1}.
 #' @param ticks Logical value specifying if tick marks on the heatmap
 #' colorbar should be visible. Default value is \code{ticks = FALSE}.
 #' @param breaks A numeric vector specifying tick breaks.
@@ -104,7 +104,7 @@
 #' @export
 annoHeatmapLegend <- function(plot, orientation = "v", fontsize = 8,
                                 fontcolor = "dark grey", scientific = FALSE,
-                                digits = 0, ticks = FALSE, breaks = NULL,
+                                digits = 1, ticks = FALSE, breaks = NULL,
                                 border = FALSE, x, y, width, height,
                                 just = c("left", "top"),
                                 default.units = "inches", params = NULL, ...) {

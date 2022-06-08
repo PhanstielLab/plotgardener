@@ -166,24 +166,12 @@ plotHicTriangle <- function(data, resolution = "auto", zrange = NULL,
     # =========================================================================
 
     ## Define a function that catches errors for plotTriangleHic
-    errorcheck_plotTriangleHic <- function(hic, hicPlot, norm, assembly) {
+    errorcheck_plotTriangleHic <- function(hic, hicPlot, norm) {
 
         ###### hic/norm #####
         hicErrors(hic = hic,
                     norm = norm)
 
-        ## Even though straw technically works without "chr" for hg19,
-        ## will not accept for consistency purposes
-        if (assembly == "hg19") {
-            if (grepl("chr", hicPlot$chrom) == FALSE) {
-                stop("'", hicPlot$chrom, "'",
-                    "is an invalid input for an hg19 chromsome. ",
-                    "Please specify chromosome as",
-                    "'chr", hicPlot$chrom, "'.",
-                    call. = FALSE
-                )
-            }
-        }
         
         regionErrors(chromstart = hicPlot$chromstart,
                     chromend = hicPlot$chromend)
@@ -448,6 +436,7 @@ plotHicTriangle <- function(data, resolution = "auto", zrange = NULL,
         color_palette = NULL,
         colorTrans = thicInternal$colorTrans,
         zrange = thicInternal$zrange,
+        flip = thicInternal$flip,
         outsideVP = NULL, grobs = NULL
     ),
     class = "hicTriangle"
@@ -486,8 +475,7 @@ plotHicTriangle <- function(data, resolution = "auto", zrange = NULL,
     errorcheck_plotTriangleHic(
         hic = thicInternal$data,
         hicPlot = hicPlot,
-        norm = thicInternal$norm,
-        assembly = hicPlot$assembly$Genome
+        norm = thicInternal$norm
     )
 
     # =========================================================================
@@ -708,7 +696,7 @@ plotHicTriangle <- function(data, resolution = "auto", zrange = NULL,
         col = NA
     ), name = "background")
     assign("hic_grobs2", gTree(vp = inside_vp, children = gList(backgroundGrob)),
-           envir = pgEnv
+        envir = pgEnv
     )
     
     # =========================================================================
@@ -769,18 +757,13 @@ plotHicTriangle <- function(data, resolution = "auto", zrange = NULL,
             if (nrow(squares) == 0 & nrow(triangles) == 0) {
                 if (thicInternal$txdbChecks == TRUE) {
                     if (!is.na(hicPlot$resolution)){
-                        warning("No data found in region. Suggestions: ",
-                                "check that ",
-                                "chromosome names match genome assembly; ",
-                                "check region.", call. = FALSE)
+                        warning("No data found in region.", call. = FALSE)
                     }
                 }
             }
         } else {
             if (!is.na(hicPlot$resolution)){
-                warning("No data found in region. Suggestions: check that ",
-                        "chromosome names match genome assembly; ",
-                        "check region.", call. = FALSE)
+                warning("No data found in region.", call. = FALSE)
             }
         }
     }

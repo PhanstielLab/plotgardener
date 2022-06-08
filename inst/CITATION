@@ -1,0 +1,21 @@
+citHeader("To cite plotgardener in publications use:")
+
+citEntry(
+  entry    = "Article",
+  title    = "Plotgardener: cultivating precise multi-panel figures in R",
+  author   = personList(as.person("Nicole E. Kramer"),
+                        as.person("Eric S. Davis"),
+                        as.person("Craig D. Wenger"),
+                        as.person("Erika M. Deoudes"),
+                        as.person("Sarah M. Parker"),
+                        as.person("Michael I. Love"),
+                        as.person("Douglas H. Phanstiel")),
+  journal  = "Bioinformatics",
+  year     = 2022,
+  url      = "https://doi.org/10.1093/bioinformatics/btac057",
+  doi = "10.1093/bioinformatics/btac057",
+  textVersion = paste("Nicole E Kramer, Eric S Davis, Craig D Wenger, 
+  Erika M Deoudes, Sarah M Parker, Michael I Love, Douglas H Phanstiel, 
+  Plotgardener: cultivating precise multi-panel figures in R, Bioinformatics, 
+  2022")
+)

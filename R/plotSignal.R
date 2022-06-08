@@ -14,6 +14,7 @@
 #'     ymax = 1,
 #'     range = NULL,
 #'     scale = FALSE,
+#'     label = NULL,
 #'     bg = NA,
 #'     baseline = TRUE,
 #'     baseline.color = "grey",
@@ -34,15 +35,15 @@
 #' bigwig file path, a dataframe in BED format, or a
 #' \link[GenomicRanges]{GRanges} object with metadata column \code{score}.
 #' Either one \code{data} argument or a list of two can be provided, where
-#' the second \code{data} will be plotted below the x-axis.
+#' the second \code{data} will be plotted below the x-axis if positive.
+#' The second \code{data} can also be negative data.
 #' @param binSize A numeric specifying the length of each data
 #' bin in basepairs. Default value is \code{binSize = NA}.
 #' @param binCap A logical value indicating whether the function will
 #' limit the number of data bins to 8,000.
 #' Default value is \code{binCap = TRUE}.
-#' @param negData A logical value indicating whether the data has both
-#' positive and negative scores and the y-axis should be split.
-#' Default value is \code{negData = FALSE}.
+#' @param negData A logical value indicating whether the provided data has 
+#' negative scores. Default value is \code{negData = FALSE}.
 #' @param chrom Chromosome of region to be plotted, as a string.
 #' @param chromstart Integer start position on chromosome to be plotted.
 #' @param chromend Integer end position on chromosome to be plotted.
@@ -61,6 +62,11 @@
 #' @param scale A logical value indicating whether to include a data
 #' scale label in the top left corner of the plot.
 #' Default value is \code{scale = FALSE}.
+#' @param label An optional character value to conveniently add a text label
+#' to the plot. If \code{scale = TRUE}, the label will be draw in the top right
+#' of the plot. Otherwise, the label will be drawn in the top left of the plot.
+#' For more customizable labels, use \link[plotgardener]{plotText}.
+#' Default value is \code{label = NULL}. 
 #' @param bg Character value indicating background color.
 #' Default value is \code{bg = NA}.
 #' @param baseline Logical value indicating whether to include a
@@ -176,9 +182,9 @@ plotSignal <- function(data, binSize = NA, binCap = TRUE, negData = FALSE,
                         chrom, chromstart = NULL, chromend = NULL,
                         assembly = "hg38", linecolor = "#37a7db",
                         fill = NA, ymax = 1, range = NULL, scale = FALSE,
-                        bg = NA, baseline = TRUE, baseline.color = "grey",
-                        baseline.lwd = 1, orientation = "h",
-                        x = NULL, y = NULL, width = NULL,
+                        label = NULL, bg = NA, baseline = TRUE, 
+                        baseline.color = "grey", baseline.lwd = 1, 
+                        orientation = "h", x = NULL, y = NULL, width = NULL,
                         height = NULL, just = c("left", "top"),
                         default.units = "inches", draw = TRUE,
                         params = NULL, ...) {
@@ -275,7 +281,6 @@ plotSignal <- function(data, binSize = NA, binCap = TRUE, negData = FALSE,
 
         ## Remove any NaN score values
         signal <- na.omit(signal)
-
         return(signal)
     }
 
@@ -403,34 +408,70 @@ plotSignal <- function(data, binSize = NA, binCap = TRUE, negData = FALSE,
             ## posSignal
             if (pos == TRUE) {
                 if (is.null(signaltrack$range)) {
-                    if (nrow(signal1) >= 2) {
-                        signaltrack$range[2] <- signaltrack$ymax *
-                            max(signal2[, "score"])
+                    if (nrow(signal1) >= 2){
+                        if (max(signal2[,"score"]) > 0){
+                            signaltrack$range[2] <- signaltrack$ymax *
+                                max(signal2[, "score"])
+                        } else {
+                        signaltrack$range[2] <- 1
+                        }
+                        
                     } else {
                         signaltrack$range[2] <- 1
                     }
                 }
             }
-
+        
             ## negSignal
             if (pos == FALSE) {
                 if (is.na(signaltrack$range[1])) {
-                    if (nrow(signal1) >= 2) {
-                        signaltrack$range[1] <- signaltrack$ymax *
-                            min(signal2[, "score"])
+                    if (nrow(signal1) >= 2 ){
+                        if (min(signal2[,"score"]) < 0){
+                            signaltrack$range[1] <- signaltrack$ymax *
+                                min(signal2[, "score"])
+                        } else {
+                        signaltrack$range[1] <- -1
+                        }
+                        
                     } else {
                         signaltrack$range[1] <- -1
                     }
                 }
             }
+        
         } else {
-            if (is.null(signaltrack$range)) {
-                if (nrow(signal1) >= 2) {
-                    signaltrack$range <- c(0, signaltrack$ymax *
-                        max(signal2[, "score"]))
+            ## top = TRUE
+            if (pos == TRUE){
+                if (is.null(signaltrack$range)) {
+                    if (nrow(signal1) >= 2){
+                        if (max(signal2[,"score"]) > 0){
+                            signaltrack$range <- c(0, signaltrack$ymax *
+                                                       max(signal2[, "score"]))
+                        } else {
+                        signaltrack$range <- c(0, 1)
+                        }
+                    
                 } else {
                     signaltrack$range <- c(0, 1)
                 }
+            }
+        }
+            ## top = FALSE
+            if (pos == FALSE){
+                if (is.null(signaltrack$range)) {
+                    if (nrow(signal1) >= 2){
+                        if (min(signal2[,"score"]) < 0){
+                            signaltrack$range <- c(signaltrack$ymax *
+                                                    min(signal2[, "score"]), 0)
+                        } else {
+                        signaltrack$range <- c(-1, 0)
+                        }
+                    
+                } else {
+                    signaltrack$range <- c(-1, 0)
+                }
+            }
+
             }
         }
 
@@ -651,6 +692,21 @@ plotSignal <- function(data, binSize = NA, binCap = TRUE, negData = FALSE,
         signal <- lapply(signal, format_data, signaltrack = signal_track)
         posSignal <- signal[[1]]
         negSignal <- signal[[2]]
+        
+        if (any(posSignal[, "score"] < 0)){
+            stop("Two signal files detected and negative scores detected ",
+                "in signal data. To plot negative values while specifying two ",
+                "files, negative scores must be supplied in the second file in",
+                " the list.", call. = FALSE)
+        }
+
+        if (!all(negSignal[, "score"] >= 0) & !all(negSignal[, "score"] <= 0)){
+            stop("Second signal file has mixed positive and negative values. ",
+            "Please make signal scores in second file entirely positive ",
+            "or entirely negative.",
+            .call = FALSE)
+        }
+        
         split <- TRUE
     } else {
         signal <- read_signal(
@@ -665,12 +721,22 @@ plotSignal <- function(data, binSize = NA, binCap = TRUE, negData = FALSE,
                 "an entirely positive signal track, ",
                 "please remove negative scores from data.", call. = FALSE)
             }
+            
+            if (all(signal[, "score"] <= 0)) {
+                top <- FALSE
+                negSignal <- signal[which(signal[, "score"] <= 0), ]
+                negSignal[, "score"] <- negSignal[, "score"] * -1
+                posSignal <- negSignal
+                split <- FALSE
+            } else {
+                posSignal <- signal[which(signal[, "score"] >= 0), ]
+                negSignal <- signal[which(signal[, "score"] < 0), ]
+                negSignal[, "score"] <- negSignal[, "score"] * -1
+                split <- TRUE 
+            }
 
-            posSignal <- signal[which(signal[, "score"] >= 0), ]
-            negSignal <- signal[which(signal[, "score"] < 0), ]
-            negSignal[, "score"] <- negSignal[, "score"] * -1
-            split <- TRUE
         } else {
+            top <- TRUE
             posSignal <- signal
             split <- FALSE
             if (sigInternal$negData == TRUE) {
@@ -691,19 +757,30 @@ plotSignal <- function(data, binSize = NA, binCap = TRUE, negData = FALSE,
                 signal = posSignal,
                 signaltrack = signal_track
             )
+        } else {
+            posSignal2 <- data.frame()
         }
 
         signal_track <- set_range(
             signal1 = posSignal, signal2 = posSignal2,
             signaltrack = signal_track, split = TRUE
         )
-
+ 
         if (nrow(negSignal) >= 2) {
+            
+            ## Check if the negative signal is already negative
+            if (any(negSignal[,"score"] < 0)){
+                negSignal[,"score"] <- negSignal[,"score"] * -1
+            }
+            
+            
             negSignal2 <- parseData(
                 signal = negSignal,
                 signaltrack = signal_track
             )
             negSignal2[, "score"] <- negSignal2[, "score"] * -1
+        } else {
+            negSignal2 <- data.frame()
         }
 
 
@@ -723,12 +800,21 @@ plotSignal <- function(data, binSize = NA, binCap = TRUE, negData = FALSE,
                 signal = posSignal,
                 signaltrack = signal_track
             )
+            
+            if (top == FALSE){
+                posSignal2[, "score"] <- posSignal2[,"score"] * -1
+            }
+            
+        } else {
+            posSignal2 <- data.frame()
         }
-
+        
         signal_track <- set_range(
             signal1 = posSignal, signal2 = posSignal2,
-            signaltrack = signal_track, split = FALSE
+            signaltrack = signal_track, split = FALSE,
+            pos = top
         )
+
     }
 
     # =========================================================================
@@ -971,13 +1057,23 @@ plotSignal <- function(data, binSize = NA, binCap = TRUE, negData = FALSE,
                     lineCol = sigInternal$linecolor[1],
                     gp = sigInternal$gp
                 )
+                
                 ## Find and make cutoff lines
-                cutoffGrobs(
-                    signal = posSignal2, signaltrack = signal_track,
-                    side = "top"
-                )
+                if (top == TRUE){
+                    cutoffGrobs(
+                        signal = posSignal2, signaltrack = signal_track,
+                        side = "top"
+                    )
+                } else {
+                    cutoffGrobs(
+                        signal = posSignal2, signaltrack = signal_track,
+                        side = "bottom"
+                    )
+                }
+                
             } else {
                 sigInternal$gp$col <- sigInternal$linecolor
+                
                 signalGrob <- segmentsGrob(
                     x0 = 0, y0 = unit(0, "native"),
                     x1 = 1, y1 = unit(0, "native"),
@@ -1016,6 +1112,37 @@ plotSignal <- function(data, binSize = NA, binCap = TRUE, negData = FALSE,
                 envir = pgEnv
             )
         }
+        
+        # =====================================================================
+        # LABEL
+        # =====================================================================
+        
+        if (!is.null(sigInternal$label)){
+            if (sigInternal$scale == TRUE){
+                labelGrob <- textGrob(
+                    label = sigInternal$label,
+                    just = c("right", "top"), x = 1, y = 1,
+                    gp = sigInternal$gp
+                )
+            } else {
+                labelGrob <- textGrob(
+                    label = sigInternal$label,
+                    just = c("left", "top"), x = 0, y = 1,
+                    gp = sigInternal$gp
+                )
+            }
+            
+            ## Add grob to gtree
+            assign("signal_grobs",
+                   addGrob(
+                       gTree = get("signal_grobs", envir = pgEnv),
+                       child = labelGrob
+                   ),
+                   envir = pgEnv
+            )
+    
+        }
+        
     }
 
     # =========================================================================

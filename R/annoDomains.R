@@ -208,14 +208,13 @@ annoDomains <- function(plot, data, half = "inherit",
             x0_2 <- utils::type.convert(df["start"], as.is = TRUE)
             x1_2 <- utils::type.convert(df["end"], as.is = TRUE)
             y_2 <- utils::type.convert(df["end"], as.is = TRUE)
-
             seg1 <- segmentsGrob(
                 x0 = x_1, x1 = x_1,
                 y0 = y0_1, y1 = y1_1,
                 default.units = "native",
                 gp = object$gp
             )
-
+                
             seg2 <- segmentsGrob(
                 x0 = x0_2, x1 = x1_2,
                 y0 = y_2, y1 = y_2,
@@ -391,7 +390,12 @@ annoDomains <- function(plot, data, half = "inherit",
 
     if (is(domainsInternal$plot, "hicTriangle")  |
         is(domainsInternal$plot, "hicRectangle")) {
-        half <- "top"
+        if (domainsInternal$plot$flip == TRUE){
+            half <- "bottom"
+        } else {
+            half <- "top"
+        }
+        
     }
 
     # =========================================================================
@@ -428,6 +432,7 @@ annoDomains <- function(plot, data, half = "inherit",
             x = currentViewports
         )) + 1
     )
+    
     ## Make viewport based on hic input viewport
     if (is(domainsInternal$plot, "hicSquare")) {
         vp <- viewport(
@@ -468,6 +473,10 @@ annoDomains <- function(plot, data, half = "inherit",
             clip = "on",
             name = paste0(vp_name, "_outside")
         )
+        if (domainsInternal$plot$flip == TRUE){
+            vp$y <- unit(1, "npc")
+        }
+        
     } else if (is(domainsInternal$plot, "hicRectangle")) {
         side <- convertUnit(domainsInternal$plot$grobs$vp$width,
             unitTo = get("page_units", pgEnv)
@@ -475,23 +484,27 @@ annoDomains <- function(plot, data, half = "inherit",
 
         vp <- viewport(
             height = side, width = side,
-            x = unit(0, "npc"), y = unit(0, "npc"),
+            x = unit(domainsInternal$plot$grobs$vp$xscale[1], "native"),
+            y = unit(0, "npc"),
             xscale = domainsInternal$plot$grobs$vp$xscale,
             yscale = domainsInternal$plot$grobs$vp$yscale,
             just = c("left", "bottom"),
             name = paste0(vp_name, "_inside"),
             angle = -45
         )
-
         vpClip <- viewport(
             height = domainsInternal$plot$outsideVP$height,
             width = domainsInternal$plot$outsideVP$width,
             x = domainsInternal$plot$outsideVP$x,
             y = domainsInternal$plot$outsideVP$y,
             just = domainsInternal$plot$outsideVP$justification,
+            xscale = domainsInternal$plot$outsideVP$xscale,
             clip = "on",
             name = paste0(vp_name, "_outside")
         )
+        if (domainsInternal$plot$flip == TRUE){
+            vp$y <- unit(1, "npc")
+        }
     }
 
     # =========================================================================

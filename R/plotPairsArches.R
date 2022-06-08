@@ -15,6 +15,8 @@
 #'     alpha = 0.4,
 #'     bg = NA,
 #'     clip = FALSE,
+#'     clip.noAnchor = TRUE,
+#'     range = NULL,
 #'     baseline = FALSE,
 #'     baseline.color = "grey",
 #'     baseline.lwd = 1,
@@ -48,9 +50,9 @@
 #' the x-axis. Default value is \code{flip = FALSE}.
 #' @param curvature Numeric indicating the number of points along the
 #' arch curvature. Default value is \code{curvature = 5}.
-#' @param archHeight Single numeric value or numeric vector specifying
-#' the arch heights. When NULL, all arches will be the same height,
-#' filling up the given plot area
+#' @param archHeight Single numeric value, numeric vector, or column name 
+#' in data specifying the arch heights. When NULL, all arches will be the 
+#' same height, filling up the given plot area.
 #' @param fill A single character value, a vector, or a 
 #' \link[plotgardener]{colorby} object specifying fill colors of arches.
 #' Default value is \code{fill = #1f4297"}.
@@ -69,6 +71,11 @@
 #' @param clip A logical value indicating whether to clip any
 #' arches that get cutoff in the given genomic region.
 #' Default value is \code{clip = FALSE}.
+#' @param clip.noAnchor A logical value indicating whether to clip
+#' any arches that overlap the given genomic region but do not 
+#' have an anchor in that region. Default value is \code{clip.noAnchor = TRUE}.
+#' @param range A numeric vector of length 2 specifying the y-range
+#' of \code{archHeight} to plot (c(min, max)).
 #' @param baseline Logical value indicating whether to include
 #' a baseline along the x-axis. Default value is \code{baseline = FALSE}.
 #' @param baseline.color Baseline color.
@@ -122,7 +129,8 @@
 #'         (IMR90_DNAloops_pairs$start2 - IMR90_DNAloops_pairs$start1) / 1000
 #'
 #' ## Translate lengths into heights
-#' heights <- IMR90_DNAloops_pairs$length / max(IMR90_DNAloops_pairs$length)
+#' IMR90_DNAloops_pairs$h <- 
+#'         IMR90_DNAloops_pairs$length / max(IMR90_DNAloops_pairs$length)
 #'
 #' ## Plot the data
 #' archPlot <- plotPairsArches(
@@ -130,7 +138,7 @@
 #'     fill = colorby("length", palette = 
 #'                 colorRampPalette(c("dodgerblue2", "firebrick2"))),
 #'     linecolor = "fill",
-#'     archHeight = heights, alpha = 1,
+#'     archHeight = "h", alpha = 1,
 #'     x = 0.25, y = 0.25, height = 1.5,
 #'     just = c("left", "top"),
 #'     default.units = "inches"
@@ -179,7 +187,8 @@ plotPairsArches <- function(data, chrom, chromstart = NULL, chromend = NULL,
                             curvature = 5, archHeight = NULL,
                             fill = "#1f4297",
                             linecolor = NA, alpha = 0.4, bg = NA,
-                            clip = FALSE, baseline = FALSE,
+                            clip = FALSE, clip.noAnchor = TRUE, 
+                            range = NULL, baseline = FALSE,
                             baseline.color = "grey", baseline.lwd = 1,
                             x = NULL, y = NULL, width = NULL, height = NULL,
                             just = c("left", "top"),
@@ -206,23 +215,35 @@ plotPairsArches <- function(data, chrom, chromstart = NULL, chromend = NULL,
         checkColorby(fill = fill,
                         colorby = TRUE,
                         data = bedpe)
+        
+        rangeErrors(range = archesPlot$range)
     }
 
     ## Define a function that will produce a yscale for arches based on height
-    height_yscale <- function(heights, flip) {
-        if (length(heights) == 1) {
-            if (flip == FALSE) {
-                yscale <- c(0, heights)
+    ## and range
+    height_yscale <- function(heights, flip, range) {
+        if (is.null(range)){
+            if (length(heights) == 1) {
+                if (flip == FALSE) {
+                    yscale <- c(0, heights)
+                } else {
+                    yscale <- c(heights, 0)
+                }
             } else {
-                yscale <- c(heights, 0)
+                if (flip == FALSE) { 
+                    yscale <- c(0, max(heights))
+                } else {
+                    yscale <- c(max(heights), 0)
+                }
             }
         } else {
-            if (flip == FALSE) {
-                yscale <- c(0, max(heights))
+            if (flip == FALSE){
+                yscale <- range
             } else {
-                yscale <- c(max(heights), 0)
+                yscale <- rev(range)
             }
         }
+        
         return(yscale)
     }
 
@@ -240,25 +261,38 @@ plotPairsArches <- function(data, chrom, chromstart = NULL, chromend = NULL,
 
     ## Define a function that creates ribbon arch grobs
     drawRibbons <- function(df, style, arch, flip, transp, gp) {
-        x1 <- df$start1
-        x2 <- df$end1
-        y1 <- df$start2
-        y2 <- df$end2
+
+        x1 <- min(df$start1, df$start2)
+        x2 <- min(df$end1, df$end2)
+        y1 <- max(df$start1, df$start2)
+        y2 <- max(df$end1, df$end2)
+        
+        
         fillCol <- df$color
         lineCol <- df$linecolor
         outerHeight <- df$normHeight
-        innerHeight <- outerHeight - 0.01
         gp$fill <- fillCol
         gp$col <- lineCol
         gp$alpha <- transp
+
+        ## Calculate innerHeight
+        anchor1 <- x2 - x1
+        anchor2 <- y2 - y1
+        if (anchor1 == anchor2){
+            innerHeight <- outerHeight - 0.01
+        } else {
+            
+            diff1 <- abs(y1-x2)
+            diff2 <- abs(y2-x1)
+            innerHeight <- outerHeight*((y1-x2)/(y2-x1))
+        }
 
         if (style == "3D") {
             x1 <- df$end1
             x2 <- df$start1
         }
-
+        
         ## Designate bezier control points
-
         innerX <- unit(
             seq(x2, y1, length.out = arch)[c(1, 2, seq((arch - 1), arch))],
             "native"
@@ -285,7 +319,7 @@ plotPairsArches <- function(data, chrom, chromstart = NULL, chromend = NULL,
         ## Extract points from bezier curves
         innerBP <- bezierPoints(innerLoop)
         outerBP <- bezierPoints(outerLoop)
-
+        
         ## Connect points, convert to proper units and draw polygons
         archGrob <- polygonGrob(
             x = unit(
@@ -351,6 +385,7 @@ plotPairsArches <- function(data, chrom, chromstart = NULL, chromend = NULL,
         assembly = archInternal$assembly,
         color_palette = NULL,
         zrange = NULL,
+        range = archInternal$range,
         x = archInternal$x, y = archInternal$y,
         width = archInternal$width,
         height = archInternal$height,
@@ -419,7 +454,11 @@ plotPairsArches <- function(data, chrom, chromstart = NULL, chromend = NULL,
     if (archInternal$clip == TRUE){
         subset <- "pairs_clip"
     } else {
-        subset <- "pairs"
+        if (archInternal$clip.noAnchor == TRUE){
+            subset <- "pairs_noanchor"
+        } else {
+            subset <- "pairs"
+        }
     }
     
     archColors <- parseColors(data = bedpe,
@@ -453,12 +492,26 @@ plotPairsArches <- function(data, chrom, chromstart = NULL, chromend = NULL,
                 bedpe[, "start2"] >= archesPlot$chromstart &
                 bedpe[, "end2"] <= archesPlot$chromend), ]
         } else {
-            bedpe <- bedpe[which(bedpe[, "chrom1"] == archesPlot$chrom &
-                bedpe[, "chrom2"] == archesPlot$chrom &
-                ((bedpe[, "end1"] >= archesPlot$chromstart &
-                    bedpe[, "end1"] <= archesPlot$chromend) |
-                    (bedpe[, "start2"] <= archesPlot$chromstart &
-                        bedpe[, "start2"] >= archesPlot$chromend))), ]
+            if (archInternal$clip.noAnchor == TRUE){
+                bedpe <- bedpe[which(bedpe[, "chrom1"] == archesPlot$chrom &
+                                    bedpe[, "chrom2"] == archesPlot$chrom &
+                                ((bedpe[, "start1"] >= archesPlot$chromstart &
+                                bedpe[, "start1"] <= archesPlot$chromend) |
+                                (bedpe[, "end2"] >= archesPlot$chromstart &
+                                bedpe[, "end2"] <= archesPlot$chromend))), ]
+            } else {
+                bedpe <- bedpe[which(bedpe[, "chrom1"] == archesPlot$chrom &
+                                        bedpe[, "chrom2"] == archesPlot$chrom),]
+                overlappingRanges <- as.data.frame(subsetByOverlaps(ranges = 
+                                        IRanges(start = archesPlot$chromstart, 
+                                                end = archesPlot$chromend),
+                                        x = IRanges(start = bedpe[,"start1"], 
+                                                    end = bedpe[,"end2"])))
+                bedpe <- bedpe[which(bedpe[,"start1"] %in% 
+                                        overlappingRanges$start &
+                                        bedpe[,"end2"] %in% 
+                                        overlappingRanges$end),]
+            }
         }
     } else {
         bedpe <- data.frame(matrix(nrow = 0, ncol = 6))
@@ -519,26 +572,45 @@ plotPairsArches <- function(data, chrom, chromstart = NULL, chromend = NULL,
     if (nrow(bedpe) > 0) {
         if (is.null(archInternal$archHeight)) {
             bedpe$height <- rep(1, nrow(bedpe))
-        } else if (length(archInternal$archHeight) == 1) {
-            bedpe$height <- rep(archInternal$archHeight, nrow(bedpe))
+        } else if (is(archInternal$archHeight, "numeric")){
+            if (length(archInternal$archHeight) == 1){
+                bedpe$height <- rep(archInternal$archHeight, nrow(bedpe))
+            } else {
+                if (length(archInternal$archHeight) < nrow(bedpe)){
+                        stop("`archHeight` vector is shorter than the", 
+                            " number of plotted arches.", call. = FALSE)
+                } else if (length(archInternal$archHeight) > nrow(bedpe)){
+                    warning("`archHeight` vector is longer than the number ",
+                            "of plotted arches. `archHeight` vector will",
+                            " be truncated.", call. = FALSE)
+                }
+                bedpe$height <- archInternal$archHeight[seq(1, nrow(bedpe))]
+            }
             yscale <- height_yscale(
-                heights = archInternal$archHeight,
-                flip = archInternal$flip
-            )
+                        heights = bedpe$height,
+                        flip = archInternal$flip,
+                        range = archInternal$range
+                    )
             vp$yscale <- yscale
         } else {
-            bedpe$height <- archInternal$archHeight[seq(1, nrow(bedpe))]
+            if (!archInternal$archHeight %in% colnames(bedpe)){
+                stop("Column name for `archHeight` not found in data.",
+                    call. = FALSE)
+            }
+            bedpe$height <- bedpe[, archInternal$archHeight]
             yscale <- height_yscale(
-                heights = archInternal$archHeight,
-                flip = archInternal$flip
-            )
+                        heights = bedpe$height,
+                        flip = archInternal$flip,
+                        range = archInternal$range
+                    )
             vp$yscale <- yscale
+            
         }
 
         if (length(bedpe$height) > 0) {
             bedpe$normHeight <- lapply(bedpe$height, normHeights,
-                min = 0,
-                max = max(bedpe$height)
+                min = min(vp$yscale),
+                max = max(vp$yscale)
             )
         }
     }

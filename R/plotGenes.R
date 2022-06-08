@@ -312,7 +312,6 @@ plotGenes <- function(chrom, chromstart = NULL, chromend = NULL,
         genesInternal$fill <- rep(genesInternal$fill, 2)
     }
 
-
     ## Add strandColor and fontColors
     if (nrow(plus_genes) > 0) {
         plus_genes$strandColor <- genesInternal$fill[1]
@@ -518,15 +517,17 @@ plotGenes <- function(chrom, chromstart = NULL, chromend = NULL,
 
         if ((genes$chromend - genes$chromstart) >= 25000000) {
             if (nrow(plus_genes) > 0) {
+                plus_lines <- unique(plus_genes[,c("TXSTART", "TXEND", 
+                                                "fontColor", "strandColor")])
                 plus_geneGrobs <- rectGrob(
-                    x = plus_genes$TXSTART,
+                    x = plus_lines$TXSTART,
                     y = unit(0.63, "npc"),
-                    width = plus_genes$TXEND - plus_genes$TXSTART,
+                    width = plus_lines$TXEND - plus_lines$TXSTART,
                     height = unit(0.18, "npc"),
                     just = "left",
                     gp = gpar(
-                        fill = plus_genes$strandColor,
-                        col = plus_genes$strandColor,
+                        fill = plus_lines$strandColor,
+                        col = plus_lines$strandColor,
                         lwd = genesInternal$stroke
                     ),
                     vp = vp_gene, default.units = "native"
@@ -540,15 +541,17 @@ plotGenes <- function(chrom, chromstart = NULL, chromend = NULL,
             }
 
             if (nrow(minus_genes) > 0) {
+                minus_lines <- unique(minus_genes[,c("TXSTART", "TXEND", 
+                                                "fontColor", "strandColor")])
                 minus_geneGrobs <- rectGrob(
-                    x = minus_genes$TXSTART,
+                    x = minus_lines$TXSTART,
                     y = unit(0.37, "npc"),
-                    width = minus_genes$TXEND - minus_genes$TXSTART,
+                    width = minus_lines$TXEND - minus_lines$TXSTART,
                     height = unit(0.18, "npc"),
                     just = "left",
                     gp = gpar(
-                        fill = minus_genes$strandColor,
-                        col = minus_genes$strandColor,
+                        fill = minus_lines$strandColor,
+                        col = minus_lines$strandColor,
                         lwd = genesInternal$stroke
                     ),
                     vp = vp_gene, default.units = "native"
@@ -565,16 +568,17 @@ plotGenes <- function(chrom, chromstart = NULL, chromend = NULL,
                 ##########################################################
                 ## GENE LINES
                 ##########################################################
-
+                plus_lines <- unique(plus_genes[,c("TXSTART", "TXEND", 
+                                                "fontColor", "strandColor")])
                 plus_geneGrobs <- rectGrob(
-                    x = plus_genes$TXSTART,
+                    x = plus_lines$TXSTART,
                     y = unit(0.63, "npc"),
-                    width = plus_genes$TXEND - plus_genes$TXSTART,
+                    width = plus_lines$TXEND - plus_lines$TXSTART,
                     height = unit(0.05, "npc"),
                     just = "left",
                     gp = gpar(
-                        fill = plus_genes$strandColor,
-                        col = plus_genes$strandColor,
+                        fill = plus_lines$strandColor,
+                        col = plus_lines$strandColor,
                         lwd = genesInternal$stroke
                     ),
                     vp = vp_gene, default.units = "native"
@@ -645,16 +649,17 @@ plotGenes <- function(chrom, chromstart = NULL, chromend = NULL,
                 ##########################################################
                 ## GENE LINES
                 ##########################################################
-
+                minus_lines <- unique(minus_genes[,c("TXSTART", "TXEND", 
+                                                "fontColor", "strandColor")])
                 minus_geneGrobs <- rectGrob(
-                    x = minus_genes$TXSTART,
+                    x = minus_lines$TXSTART,
                     y = unit(0.37, "npc"),
-                    width = minus_genes$TXEND - minus_genes$TXSTART,
+                    width = minus_lines$TXEND - minus_lines$TXSTART,
                     height = unit(0.05, "npc"),
                     just = "left",
                     gp = gpar(
-                        fill = minus_genes$strandColor,
-                        col = minus_genes$strandColor,
+                        fill = minus_lines$strandColor,
+                        col = minus_lines$strandColor,
                         lwd = genesInternal$stroke
                     ),
                     vp = vp_gene, default.units = "native"
@@ -771,35 +776,30 @@ plotGenes <- function(chrom, chromstart = NULL, chromend = NULL,
         genes$genes <- geneNames
 
         ## DECLUTTER LABELS
-
+        
         ## Put genes in order of default gene prioritization
         ## based on citation/gene length
-        plusgeneNames <- defaultGenePriorities(
-            data = plusgeneNames,
-            assembly = genes$assembly
-        )
-        minusgeneNames <- defaultGenePriorities(
-            data = minusgeneNames,
-            assembly = genes$assembly
-        )
-
-        if (!is.null(genesInternal$geneOrder)) {
-
-            ## Integrate geneOrder and default prioritization
-            plusgeneNames <- gene_priorities(
-                genes = plusgeneNames,
-                geneOrder = genesInternal$geneOrder,
+        if (nrow(plusgeneNames) > 0){
+            
+            ## Put genes in order of default gene prioritization
+            ## based on citation/gene length
+            plusgeneNames <- defaultGenePriorities(
+                data = plusgeneNames,
+                assembly = genes$assembly,
+                geneHighlights = genesInternal$geneHighlights[[displayCol]],
                 displayCol = displayCol
             )
-            minusgeneNames <- gene_priorities(
-                genes = minusgeneNames,
-                geneOrder = genesInternal$geneOrder,
-                displayCol = displayCol
-            )
-        }
-
-        ## Get which gene names aren't cutoff
-        if (nrow(plusgeneNames) > 0) {
+        
+            if (!is.null(genesInternal$geneOrder)) {
+                ## Integrate geneOrder and default prioritization
+                plusgeneNames <- gene_priorities(
+                    genes = plusgeneNames,
+                    geneOrder = genesInternal$geneOrder,
+                    displayCol = displayCol
+                )
+            }
+            
+            ## Get which gene names aren't cutoff
             checkedplusLabels <- apply(data.frame(
                 "label" = plusgeneNames[[displayCol]],
                 "labelLoc" = plusgeneNames$labelLoc
@@ -839,6 +839,25 @@ plotGenes <- function(chrom, chromstart = NULL, chromend = NULL,
         }
 
         if (nrow(minusgeneNames) > 0) {
+            ## Put genes in order of default gene prioritization
+            ## based on citation/gene length
+            minusgeneNames <- defaultGenePriorities(
+                data = minusgeneNames,
+                assembly = genes$assembly,
+                geneHighlights = genesInternal$geneHighlights[[displayCol]],
+                displayCol = displayCol
+            )
+            
+            if (!is.null(genesInternal$geneOrder)) {
+                ## Integrate geneOrder and default prioritization
+                minusgeneNames <- gene_priorities(
+                    genes = minusgeneNames,
+                    geneOrder = genesInternal$geneOrder,
+                    displayCol = displayCol
+                )
+                
+            }
+            
             checkedminusLabels <- apply(data.frame(
                 "label" = minusgeneNames[[displayCol]],
                 "labelLoc" = minusgeneNames$labelLoc
@@ -920,7 +939,6 @@ plotGenes <- function(chrom, chromstart = NULL, chromend = NULL,
     if (genesInternal$draw == TRUE) {
         grid.draw(get("gene_grobs", envir = pgEnv))
     }
-
 
     # =========================================================================
     # ADD GROBS TO OBJECT

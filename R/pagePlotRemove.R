@@ -28,33 +28,39 @@
 #'
 #' @export
 pagePlotRemove <- function(plot) {
-    grid.remove(gPath(plot$grobs$name))
-
-    pg_vpTree <- get("pg_vpTree", envir = pgEnv)
-    pg_vpTree[grep(plot$grobs$name, pg_vpTree)] <- NULL
-    assign("pg_vpTree", pg_vpTree, envir = pgEnv)
-
-    ## Need to remove outer viewport of bb_hicTriangle/bb_hicRectangle plot
-    ## and domain Clips
-    if (is(plot, "hicTriangle") |
-        is(plot, "hicRectangle")) {
-        vp_name <- plot$grobs$vp$name
-        vp_name <- gsub("inside", "outside", vp_name)
-        suppressMessages(seekViewport(vp_name))
-        suppressMessages(popViewport())
-    } else if (is(plot, "domain")) {
-        if (plot$hicClass != "hicSquare") {
+    
+    if (is(plot, "yaxis") | is(plot, "xaxis")){
+        grid.remove(gPath(plot$grobs$childrenOrder))
+    } else {
+        grid.remove(gPath(plot$grobs$name))
+        
+        pg_vpTree <- get("pg_vpTree", envir = pgEnv)
+        pg_vpTree[grep(plot$grobs$name, pg_vpTree)] <- NULL
+        assign("pg_vpTree", pg_vpTree, envir = pgEnv)
+        
+        ## Need to remove outer viewport of bb_hicTriangle/bb_hicRectangle plot
+        ## and domain Clips
+        if (is(plot, "hicTriangle") |
+            is(plot, "hicRectangle")) {
             vp_name <- plot$grobs$vp$name
             vp_name <- gsub("inside", "outside", vp_name)
             suppressMessages(seekViewport(vp_name))
             suppressMessages(popViewport())
-        }
-    } else if (is(plot, "signal")){
-        if (grepl("_v", plot$grobs$vp$name)){
-            vp_name <- plot$grobs$vp$name
-            vp_name <- gsub("_v", "_vClip", vp_name)
-            suppressMessages(seekViewport(vp_name))
-            suppressMessages(popViewport())
-        }
+        } else if (is(plot, "domain")) {
+            if (plot$hicClass != "hicSquare") {
+                vp_name <- plot$grobs$vp$name
+                vp_name <- gsub("inside", "outside", vp_name)
+                suppressMessages(seekViewport(vp_name))
+                suppressMessages(popViewport())
+            }
+        } else if (is(plot, "signal")){
+            if (grepl("_v", plot$grobs$vp$name)){
+                vp_name <- plot$grobs$vp$name
+                vp_name <- gsub("_v", "_vClip", vp_name)
+                suppressMessages(seekViewport(vp_name))
+                suppressMessages(popViewport())
+            }
+        } 
     }
+
 }

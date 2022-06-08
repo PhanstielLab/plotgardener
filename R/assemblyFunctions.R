@@ -102,11 +102,18 @@ geneData <- function(object, objectInternal) {
         
     }
 
-    ## orgDb
-    if (!requireNamespace(object$assembly$OrgDb, quietly = TRUE)){
-        orgdbChecks <- FALSE
-        warning("`", object$assembly$OrgDb, "` not available. Please load",
-                " to plot genes or transcripts.", call. = FALSE)
+    ## Check for matching `gene.id.column` and `display.column` to determine
+    ## need for orgDb
+    
+    if (object$assembly$gene.id.column != object$assembly$display.column){
+        
+        if (!requireNamespace(object$assembly$OrgDb, quietly = TRUE)){
+            orgdbChecks <- FALSE
+            warning("`", object$assembly$OrgDb, "` not available. Please load",
+                    " to plot genes or transcripts.", call. = FALSE)
+        } else {
+            orgdbChecks <- TRUE
+        }
     } else {
         orgdbChecks <- TRUE
     }
@@ -116,7 +123,7 @@ geneData <- function(object, objectInternal) {
     data <- data.frame(matrix(ncol = 22, nrow = 0))
     xscale <- c(0, 1)
 
-    if (txdbChecks == TRUE & orgdbChecks == TRUE) {
+    if (txdbChecks == TRUE && orgdbChecks == TRUE) {
 
         ## Load txdb
         if (is(object$assembly$TxDb, "TxDb")) {
@@ -160,6 +167,7 @@ geneData <- function(object, objectInternal) {
 
     objectInternal$xscale <- xscale
     objectInternal$data <- data
+    
     return(list(object, objectInternal))
 }
 
@@ -167,9 +175,10 @@ geneData <- function(object, objectInternal) {
 # (if available) or gene lengths
 # @param data data frame of gene or transcript data
 # @param assembly assembly associated with gene data
-# @param transcsript a logical indicating whether or not we're
+# @param transcript a logical indicating whether or not we're
 # plotting transcripts or not
-defaultGenePriorities <- function(data, assembly, transcript = FALSE) {
+defaultGenePriorities <- function(data, assembly, transcript = FALSE, 
+                                geneHighlights = NULL, displayCol = "SYMBOL") {
 
     availCitations <- default_genomePackages[
         !is.na(default_genomePackages$Citations),]$Genome
@@ -205,8 +214,7 @@ defaultGenePriorities <- function(data, assembly, transcript = FALSE) {
                     keytype = convertIDs[[name]]
                 )
             )
-
-            data$ENTREZID <- entrezIDs
+            data$ENTREZID <- entrezIDs$ENTREZID
         } else {
             data$ENTREZID <- data$GENEID
         }
@@ -242,6 +250,15 @@ defaultGenePriorities <- function(data, assembly, transcript = FALSE) {
         updatedData <- data[order(data$length, decreasing = TRUE), ]
     }
 
+    ## Put any gene highlights at the top of the priority
+    if (transcript == FALSE){
+        if (!is.null(geneHighlights)){
+            updatedData <- updatedData[c(which(updatedData[[displayCol]] 
+                                        %in% geneHighlights), 
+                                        which(!updatedData[[displayCol]] 
+                                            %in% geneHighlights)),]
+        }
+    }
     ## Return data with priorities
     return(updatedData)
 }

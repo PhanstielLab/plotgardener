@@ -6,6 +6,7 @@
 #'     data = NULL,
 #'     orientation = "h",
 #'     showBands = TRUE,
+#'     fill = NULL,
 #'     x = NULL,
 #'     y = NULL,
 #'     width = NULL,
@@ -33,6 +34,10 @@
 #' @param showBands Logical value indicating whether to draw
 #' colored cytobands within ideogram.
 #' Default value is \code{showBands = TRUE}.
+#' @param fill (optional) A vector specifying alternate colors for cytoband
+#' stains. To change specific gieStain values (i.e. gneg, gpos, etc.) to 
+#' specific colors, this vector can be named. This vector must have the same
+#' number of colors as there are gieStain values for each genome assembly.
 #' @param x A numeric or unit object specifying ideogram x-location.
 #' @param y A numeric, unit object, or character containing a "b"
 #' combined with a numeric value specifying ideogram y-location.
@@ -106,7 +111,7 @@
 #' 
 #' @export
 plotIdeogram <- function(chrom, assembly = "hg38", data = NULL,
-                            orientation = "h", showBands = TRUE, 
+                            orientation = "h", showBands = TRUE, fill = NULL,
                             x = NULL, y = NULL,
                             width = NULL, height = NULL,
                             just = c("left", "top"), default.units = "inches",
@@ -303,6 +308,7 @@ plotIdeogram <- function(chrom, assembly = "hg38", data = NULL,
         chrom = ideoInternal$chrom,
         chromstart = 1, chromend = NULL,
         assembly = ideoInternal$assembly,
+        colors = NULL,
         x = ideoInternal$x, y = ideoInternal$y,
         width = ideoInternal$width,
         height = ideoInternal$height,
@@ -378,8 +384,45 @@ plotIdeogram <- function(chrom, assembly = "hg38", data = NULL,
             # ADD COLORS
             # =================================================================
             
-            data <- dplyr::left_join(data, cytobandColors, by = "gieStain")
-
+            if (!is.null(ideoInternal$fill)){
+                
+                ## Check that length of fill vector is the same length as the
+                ## of gieStain values in the data
+                if (length(unique(data$gieStain)) != length(ideoInternal$fill)){
+                    warning("`fill` color vector is not the same length as",
+                            " number of gieStain values. Using default colors.")
+                    colors <- cytobandColors
+                } else {
+                    
+                    if (is.null(names(ideoInternal$fill))){
+                        
+                        ## No names, assign in order of levels  
+                        data$gieStain <- as.factor(data$gieStain)
+                        
+                        colors <- data.frame("gieStain" = levels(data$gieStain),
+                                             "color" = ideoInternal$fill)
+                        
+                    } else {
+                        
+                        ## Assign colors based on names
+                        colors$gieStain <- 
+                            data.frame("gieStain" = names(ideoInternal$fill),
+                                       "color" = ideoInternal$fill)
+                    }
+                    
+                } 
+                
+            } else {
+                colors <- cytobandColors
+            }
+            
+            data <- dplyr::left_join(data, colors, by = "gieStain")
+            
+            ## Add stains/colors to object
+            objectCols <- unique(data[,c("gieStain", "color")])
+            row.names(objectCols) <- NULL
+            ideogramPlot$colors <- objectCols
+            
             # =================================================================
             # SUBSET FOR CHROMOSOME
             # =================================================================

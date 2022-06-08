@@ -333,11 +333,16 @@ plotPairs <- function(data, chrom, chromstart = NULL, chromend = NULL,
 
     if (!is.null(bedpe$chromstart) & !is.null(bedpe$chromend)) {
         bedpeData <- bedpeData[which(bedpeData[, "chrom1"] == bedpe$chrom &
-                            bedpeData[, "chrom2"] == bedpe$chrom &
-                            ((bedpeData[, "end1"] >= bedpe$chromstart &
-                            bedpeData[, "end1"] <= bedpe$chromend) |
-                            (bedpeData[, "start2"] <= bedpe$chromstart &
-                            bedpeData[, "start2"] >= bedpe$chromend))), ]
+                                 bedpeData[, "chrom2"] == bedpe$chrom),]
+        overlappingRanges <- as.data.frame(subsetByOverlaps(ranges = 
+                                IRanges(start = bedpe$chromstart, 
+                                        end = bedpe$chromend),
+                                x = IRanges(start = bedpeData[,"start1"], 
+                                            end = bedpeData[,"end2"])))
+        bedpeData <- bedpeData[which(bedpeData[,"start1"] %in% 
+                                 overlappingRanges$start &
+                                 bedpeData[,"end2"] %in% 
+                                 overlappingRanges$end),]
     } else {
         bedpeData <- data.frame(matrix(nrow = 0, ncol = 6))
     }

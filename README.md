@@ -1,7 +1,7 @@
 # <img src="man/figures/pg-wordmark.png" width="400px" style="background-color:white;border=transparent" /> <img src="man/figures/pg-hex-text.png" align="right" width="140px" style="padding-left:20px; background-color:white" />
 
 <!-- badges: start -->
-[![R build status](https://github.com/PhanstielLab/plotgardener/workflows/R-CMD-check-bioc/badge.svg)](https://github.com/PhanstielLab/plotgardener/actions)
+[![R build status](https://github.com/PhanstielLab/plotgardener/actions/workflows/check-bioc-devel.yml/badge.svg)](https://github.com/PhanstielLab/plotgardener/actions)
 <!-- badges: end -->
 
 ## Overview
@@ -27,16 +27,25 @@ data, arrangment into multi-omic layouts, and survey plotting for
 quickly viewing data across the genome. Check out our `vignettes` for
 detailed examples and suggested use cases!
 
+## Citation
+
+To cite `plotgardener` in publications use:
+
+Nicole E Kramer, Eric S Davis, Craig D Wenger, Erika M Deoudes, Sarah M
+Parker, Michael I Love, Douglas H Phanstiel, Plotgardener: cultivating 
+precise multi-panel figures in R, *Bioinformatics*, 2022.
+
 ## Installation
 
-plotgardener can be installed from Bioconductor version 3.14 
-(R version 4.1) as follows:
+plotgardener can be installed from Bioconductor version 3.15 
+
+(R version 4.2) as follows:
 
 ``` r
 if (!requireNamespace("BiocManager", quietly = TRUE))
     install.packages("BiocManager")
 
-BiocManager::install(version = "3.14")
+BiocManager::install(version = "3.15")
 
 BiocManager::install("plotgardener")
 

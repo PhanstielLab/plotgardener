@@ -7,10 +7,12 @@ getExons <- function(assembly, chromosome, start, stop) {
                                         as.name(assembly$TxDb))))
     }
 
-    org_db <- eval(parse(text = paste0(as.name(assembly$OrgDb),
-                                    "::",
-                                    as.name(assembly$OrgDb))))
-
+    if (!is.na(assembly$OrgDb)){
+        org_db <- eval(parse(text = paste0(as.name(assembly$OrgDb),
+                                           "::",
+                                           as.name(assembly$OrgDb))))
+    }
+    
     genes_on_chrom <- suppressMessages(GenomicFeatures::genes(tx_db,
         filter = list(tx_chrom = chromosome)
     )) ## Still GRanges

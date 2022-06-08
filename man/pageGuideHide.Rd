@@ -12,10 +12,17 @@ None.
 \description{
 Remove guides from a plotgardener page
 }
+\note{
+Please note that due to the implementation of `grid` removal functions,
+using `pageGuideHide` within a `pdf` call will result in the rendering of a 
+separate, new page with the plot guides removed. To avoid this artifact,
+hide guides in the `pageCreate` function call with `showGuides = FALSE`.
+}
 \examples{
 ## Make a page
 pageCreate(width = 7, height = 4, default.units = "inches")
 
 ## Hide page guides
 pageGuideHide()
+
 }

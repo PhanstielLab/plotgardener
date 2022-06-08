@@ -145,12 +145,14 @@ reference examples with `?function()` (e.g. `?plotCircle()`).
 
 ## Other grob objects
 
-We saw how to add `ggplots` to plotgardener layouts in the 
-vignette [Incorporating ggplots](incorporating_ggplots.html) with the
-`plotGG()` function. Beyond customizing the coordinates and dimensions of
-`ggplots`, `plotGG()` can also be used to incorporate other `grob` and
-`gtable` objects. Thus, `plotgardener` allows us to easily mix and arrange most
-kinds of plot objects for ultimate customizability.
+We saw how to add `ggplots` and `ComplexHeatmaps` to `plotgardener` layouts 
+in the vignette 
+[Incorporating ggplots and other `grid`-based Bioconductor visualizations"](incorporating_ggplots.html) 
+with the `plotGG()` function. Beyond customizing the coordinates and dimensions 
+of `ggplots` and `grid`-based Bioconductor visualizations, `plotGG()` can also 
+be used to incorporate other `grob` and `gtable` objects. Thus, `plotgardener` 
+allows us to easily mix and arrange most kinds of plot objects for ultimate 
+customization.
 
 ## Session Info
 ```{r}

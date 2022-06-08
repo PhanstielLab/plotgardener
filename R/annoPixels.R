@@ -605,7 +605,12 @@ annoPixels <- function(plot, data, type = "box", half = "inherit",
 
     if (is(loopsInternal$plot, "hicTriangle")  |
         is(loopsInternal$plot, "hicRectangle")) {
-        half <- "top"
+        if (loopsInternal$plot$flip == TRUE){
+            half <- "bottom"
+        } else {
+            half <- "top"
+        }
+        
     }
 
     # =========================================================================
@@ -670,6 +675,13 @@ annoPixels <- function(plot, data, type = "box", half = "inherit",
             name = vp_name,
             angle = -45
         )
+        
+        if (loopsInternal$plot$flip == TRUE){
+            vp$y <- loopsInternal$plot$outsideVP$y + 
+                    loopsInternal$plot$outsideVP$height
+
+        }
+        
     } else if (is(loopsInternal$plot, "hicRectangle")) {
         side <- convertUnit(loopsInternal$plot$grobs$vp$width,
             unitTo = get("page_units", pgEnv)
@@ -695,6 +707,10 @@ annoPixels <- function(plot, data, type = "box", half = "inherit",
             name = vp_name,
             angle = -45
         )
+        if (loopsInternal$plot$flip == TRUE){
+            vp$y <- bottomLeft[[2]] + loopsInternal$plot$outsideVP$height
+            
+        }
     }
 
     # =========================================================================

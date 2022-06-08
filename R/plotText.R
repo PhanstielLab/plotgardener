@@ -102,11 +102,12 @@ plotText <- function(label, fontcolor = "black", fontsize = 12, rot = 0,
         col = textInternal$fontcolor,
         fontsize = textInternal$fontsize
     )
+    
     textInternal$gp <- setGP(
         gpList = textInternal$gp,
         params = textInternal, ...
     )
-
+    
     ## Justification
     textInternal$just <- justConversion(just = textInternal$just)
     # =========================================================================
@@ -179,6 +180,7 @@ plotText <- function(label, fontcolor = "black", fontsize = 12, rot = 0,
             )
         )) + 1
     )
+    
     text <- grid.text(
         label = text$label, x = unit(new_x, page_units),
         y = unit(new_y, page_units), just = text$just,

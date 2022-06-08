@@ -18,6 +18,7 @@ plotSignal(
     ymax = 1,
     range = NULL,
     scale = FALSE,
+    label = NULL,
     bg = NA,
     baseline = TRUE,
     baseline.color = "grey",
@@ -39,7 +40,8 @@ plotSignal(
 bigwig file path, a dataframe in BED format, or a
 \link[GenomicRanges]{GRanges} object with metadata column \code{score}.
 Either one \code{data} argument or a list of two can be provided, where
-the second \code{data} will be plotted below the x-axis.}
+the second \code{data} will be plotted below the x-axis if positive.
+The second \code{data} can also be negative data.}
 
 \item{binSize}{A numeric specifying the length of each data
 bin in basepairs. Default value is \code{binSize = NA}.}
@@ -48,9 +50,8 @@ bin in basepairs. Default value is \code{binSize = NA}.}
 limit the number of data bins to 8,000.
 Default value is \code{binCap = TRUE}.}
 
-\item{negData}{A logical value indicating whether the data has both
-positive and negative scores and the y-axis should be split.
-Default value is \code{negData = FALSE}.}
+\item{negData}{A logical value indicating whether the provided data has 
+negative scores. Default value is \code{negData = FALSE}.}
 
 \item{chrom}{Chromosome of region to be plotted, as a string.}
 
@@ -78,6 +79,12 @@ of data to plot (c(min, max)).}
 \item{scale}{A logical value indicating whether to include a data
 scale label in the top left corner of the plot.
 Default value is \code{scale = FALSE}.}
+
+\item{label}{An optional character value to conveniently add a text label
+to the plot. If \code{scale = TRUE}, the label will be draw in the top right
+of the plot. Otherwise, the label will be drawn in the top left of the plot.
+For more customizable labels, use \link[plotgardener]{plotText}.
+Default value is \code{label = NULL}.}
 
 \item{bg}{Character value indicating background color.
 Default value is \code{bg = NA}.}

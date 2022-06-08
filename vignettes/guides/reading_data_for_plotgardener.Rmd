@@ -66,12 +66,12 @@ data resolutions and normalizations.
 hicFile <- system.file("extdata/test_chr22.hic", package="plotgardenerData")
 
 hicDataChrom <- readHic(file = hicFile,
-    chrom = "chr22", assembly = "hg19",
+    chrom = "22", assembly = "hg19",
     resolution = 250000, res_scale = "BP", norm = "NONE"
 )
 
 hicDataChromRegion <- readHic(file = hicFile,
-    chrom = "chr22", assembly = "hg19",
+    chrom = "22", assembly = "hg19",
     chromstart = 20000000, chromend = 47500000,
     resolution = 100000, res_scale = "BP", norm = "KR"
 )
