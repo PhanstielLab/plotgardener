@@ -113,6 +113,7 @@ reference:
       - c
       - colorby
       - mapColors
+      - calcSignalRange
 
 figures:
   fig.height: 7
