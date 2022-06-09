@@ -2,7 +2,7 @@
 % Please edit documentation in R/plotMultiSignal.R
 \name{plotMultiSignal}
 \alias{plotMultiSignal}
-\title{Plot multiple signal tracks inline with each other}
+\title{Plot multiple signal tracks in line with each other}
 \usage{
 plotMultiSignal(
    data,
@@ -18,6 +18,7 @@ plotMultiSignal(
    ymax = 1, 
    range = NULL, 
    scale = FALSE,
+   label = NULL,
    bg = NA, 
    baseline = TRUE, 
    baseline.color = "grey",
@@ -35,11 +36,9 @@ plotMultiSignal(
 )
 }
 \arguments{
-\item{data}{List of data to be plotted as a character value specifying a
-bigwig file path, a dataframe in BED format, or a
-\link[GenomicRanges]{GRanges} object with metadata column \code{score}.
-Either one \code{data} argument or a list of two can be provided, where
-the second \code{data} will be plotted below the x-axis.}
+\item{data}{List of data to be plotted as character values specifying 
+multiple bigwig file paths, dataframes in BED format, or
+\link[GenomicRanges]{GRanges} objects with metadata column \code{score}.}
 
 \item{binSize}{A numeric specifying the length of each data
 bin in basepairs. Default value is \code{binSize = NA}.}
@@ -48,9 +47,9 @@ bin in basepairs. Default value is \code{binSize = NA}.}
 limit the number of data bins to 8,000.
 Default value is \code{binCap = TRUE}.}
 
-\item{negData}{A logical value indicating whether the data has both
-positive and negative scores and the y-axis should be split.
-Default value is \code{negData = FALSE}.}
+\item{negData}{A logical value indicating whether any of the data has both
+positive and negative scores and the y-axis of each signal track
+should be split. Default value is \code{negData = FALSE}.}
 
 \item{chrom}{Chromosome of region to be plotted, as a string.}
 
@@ -62,22 +61,29 @@ Default value is \code{negData = FALSE}.}
 \link[plotgardener]{assembly} object.
 Default value is \code{assembly = "hg38"}.}
 
-\item{linecolor}{A character value or vector of character values specifying the
-line color(s) outlining the signal track(s).
+\item{linecolor}{A character value or vector of character values specifying 
+the line color(s) outlining the signal tracks.
 Default value is \code{linecolor = "#37a7db"}.}
 
-\item{fill}{A character value or vector of length 2 specifying
-the fill color(s) of the signal track(s). Default value is \code{fill = NA}.}
+\item{fill}{A character value or vector specifying
+the fill color(s) of the signal tracks. Default value is \code{fill = NA}.}
 
 \item{ymax}{A numeric specifying the fraction of the max y-value
-to set as the height of the plot. Default value is \code{ymax = 1}.}
+to set as the height of each plot. Default value is \code{ymax = 1}.}
 
 \item{range}{A numeric vector of length 2 specifying the y-range
-of data to plot (c(min, max)).}
+of data to plot (c(min, max)) in each signal track. If \code{range = NULL},
+an optimal range for all signal tracks will be calculated.}
 
 \item{scale}{A logical value indicating whether to include a data
-scale label in the top left corner of the plot.
+scale label in the top left corner of each plot.
 Default value is \code{scale = FALSE}.}
+
+\item{label}{An optional character vector to conveniently add text labels
+to signal tracks. If \code{scale = TRUE}, the labels will be drawn in the 
+top right of the signal tracks. Otherwise, the label will be drawn in the 
+top left of the plot. For more customizable labels, 
+use \link[plotgardener]{plotText}.}
 
 \item{bg}{Character value indicating background color.
 Default value is \code{bg = NA}.}
@@ -91,35 +97,39 @@ Default value is \code{baseline.color = "grey"}.}
 \item{baseline.lwd}{Baseline line width.
 Default value is \code{baseline.lwd = 1}.}
 
-\item{orientation}{A string specifying signal track orientation.
+\item{orientation}{A string specifying signal track orientations.
 Default value is \code{orientation = "h"}. Options are:
 \itemize{
-\item{\code{"v"}: }{Vertical signal track orientation.}
-\item{\code{"h"}: }{Horizontal signal track orientation.}
+\item{\code{"v"}: }{Vertical signal track orientations, where signal tracks
+will be stacked from left to right.}
+\item{\code{"h"}: }{Horizontal signal track orientations, where signal tracks
+will be stacked from top to bottom.}
 }}
 
-\item{x}{A numeric vector or unit object specifying the signal 
-x-locations.}
+\item{x}{A numeric vector or unit object specifying the overall multisignal 
+x-location.}
 
-\item{y}{A numeric vector, unit object, or a character vector
-of values containing a "b" combined with a numeric value specifying
-signal y-locations.
-The character vector will place signal y-locations relative
-to the bottom of the most recently plotted plot according
-to the units of the plotgardener page.}
+\item{y}{A numeric, unit object, or character containing a "b"
+combined with a numeric value specifying overall multisignal plot y-location.
+The character value will
+place the multisignal plot y relative to the bottom of the most recently
+plotted plot according to the units of the plotgardener page.}
 
-\item{width}{A numeric or unit object specifying signal plot width.}
+\item{width}{A numeric or unit object specifying overall multisignal plot 
+width.}
 
-\item{height}{A numeric or unit object specifying signal plot height.}
+\item{height}{A numeric or unit object specifying overall multisignal plot 
+height.}
 
-\item{just}{Justification of signal plot relative to its (x, y) location.
-If there are two values, the first value specifies horizontal justification
-and the second value specifies vertical justification.
-Possible string values are: \code{"left"}, \code{"right"},
+\item{just}{Justification of overall multisignal plot relative to 
+its (x, y) location. If there are two values, the first value specifies 
+horizontal justification and the second value specifies vertical 
+justification. Possible string values are: \code{"left"}, \code{"right"},
 \code{"centre"}, \code{"center"}, \code{"bottom"}, and \code{"top"}.
 Default value is \code{just = c("left", "top")}.}
 
-\item{gapdistance}{A numeric object specifying space between plots.}
+\item{gapdistance}{A numeric or unit object 
+specifying space between plots. Default value is \code{gapdistance = 0.2}.}
 
 \item{default.units}{A string indicating the default units to use
 if \code{x} or \code{y} are only given as numeric vectors.
@@ -134,35 +144,52 @@ relevant function parameters.}
 \item{...}{Additional grid graphical parameters. See \link[grid]{gpar}.}
 }
 \value{
-Returns several \code{polygon} object containing relevant
-placement and \link[grid]{grob} information.
+Returns a list of \code{signal} objects containing relevant
+genomic region, placement, and \link[grid]{grob} information for each signal
+track.
 }
 \description{
-Plot multiple signal tracks inline with each other
+Plot multiple signal tracks in line with each other
 }
 \examples{
-library("org.Hs.eg.db")
-library("TxDb.Hsapiens.UCSC.hg19.knownGene")
 library("plotgardenerData")
-data("GM12878_HiC_10kb")
-data("IMR90_HiC_10kb")
 data("GM12878_ChIP_CTCF_signal")
 data("IMR90_ChIP_CTCF_signal")
 data("GM12878_ChIP_H3K27ac_signal")
 data("IMR90_ChIP_H3K27ac_signal")
 
-
 ## List of multiple signal datasets
-testList <- list(GM12878_ChIP_CTCF_signal, GM12878_ChIP_H3K27ac_signal, 
+signalList <- list(GM12878_ChIP_CTCF_signal, GM12878_ChIP_H3K27ac_signal, 
     IMR90_ChIP_CTCF_signal, IMR90_ChIP_H3K27ac_signal)
 
 ## Create page
-pageCreate(width = 7, height = 6, default.units = "inches")
+pageCreate(width = 6.9, height = 3.5, default.units = "inches")
 
 ## Plot multiple signals
-plotMultiSignal(testList, chrom = "chr21", assembly = "hg19", 
-             chromstart = 28150000, chromend = 29150000,
-             fill = "#253494",
-             x = 0.2, y = 0.2, width = 2, height = 4, gapdistance = 0.1)
-             
+multisignal <- plotMultiSignal(signalList, chrom = "chr21",
+                               chromstart = 28150000, chromend = 29150000,
+                               linecolor = c(brewer.pal(n = 9,"YlGnBu")[4],
+                                             brewer.pal(n = 9,"YlGnBu")[5],
+                                             brewer.pal(n = 9,"YlGnBu")[6],
+                                             brewer.pal(n = 9,"YlGnBu")[7]),
+                               label = c("GM12878 CTCF", "GM12878 H3K27ac",
+                                         "IMR90 CTCF", "IMR90 H3K27ac"),
+                               assembly = "hg19",
+                               x = 0.2, y = 0.2,
+                               width = 6.5, height = 3,
+                               default.units = "inches",
+                               gapdistance = 0.1)
+                               
+## Plot genome label
+plotGenomeLabel(
+    chrom = "chr21",
+    chromstart = 28150000, chromend = 29150000,
+    assembly = "hg19",
+    scale = "Kb",
+    x = 0.2, y = 3.25, length = 6.5,
+    default.units = "inches"
+)                                
+
+## Hide page guides
+pageGuideHide()              
 }
