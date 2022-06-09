@@ -102,7 +102,7 @@
 #' @param gapdistance A numeric or unit object 
 #' specifying space between plots. Default value is \code{gapdistance = 0.2}.
 #' @param default.units A string indicating the default units to use
-#' if \code{x} or \code{y} are only given as numeric vectors.
+#' if \code{x} or \code{y} are only given as numerics.
 #' Default value is \code{default.units = "inches"}.
 #' @param draw A logical value indicating whether graphics output should be
 #' produced. Default value \code{draw = TRUE}.

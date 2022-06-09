@@ -132,7 +132,7 @@ Default value is \code{just = c("left", "top")}.}
 specifying space between plots. Default value is \code{gapdistance = 0.2}.}
 
 \item{default.units}{A string indicating the default units to use
-if \code{x} or \code{y} are only given as numeric vectors.
+if \code{x} or \code{y} are only given as numerics.
 Default value is \code{default.units = "inches"}.}
 
 \item{draw}{A logical value indicating whether graphics output should be
