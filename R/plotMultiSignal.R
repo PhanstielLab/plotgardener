@@ -120,6 +120,7 @@
 #' data("IMR90_ChIP_CTCF_signal")
 #' data("GM12878_ChIP_H3K27ac_signal")
 #' data("IMR90_ChIP_H3K27ac_signal")
+#' library("RColorBrewer")
 #'
 #' ## List of multiple signal datasets
 #' signalList <- list(GM12878_ChIP_CTCF_signal, GM12878_ChIP_H3K27ac_signal, 
