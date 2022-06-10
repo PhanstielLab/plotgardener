@@ -1,3 +1,15 @@
+# CHANGES IN VERSION 1.3.5
+## NEW FEATURES
+
+* `plotMultiSignal` function can plot multiple signal track data sets in line
+with each other.
+* `calcSignalRange` helper function will calculate an appropriate range for
+multiple signal data sets.
+* `pageLayoutRow` and `pageLayoutCol` functions for generating row and column
+positions for a number of plot elements.
+* Gene transcripts can be highlighted by gene name or transcript name with the
+parameter `transcriptHighlights` in `plotTranscripts`.
+
 # CHANGES IN VERSION 1.3.4
 ## BUG FIXES
 
