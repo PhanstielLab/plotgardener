@@ -259,6 +259,48 @@ genePlot <- plotGenes(
 )
 ```
 
+## Highlighting transcripts by color
+
+Similar to highlighting specific genes by colors, specific transcripts can
+also be highlighted with `transcriptHighlights`. We can do this by either 
+specifying transcripts by name or transcripts by their genes. Let's plot the 
+transcripts of the gene track above and label the transcripts of LPIN1 and 
+CMPK2:
+
+```{r aes_13, eval=TRUE, echo=TRUE, message=FALSE, fig.width=7, fig.height=8}
+transcriptHighlights <- data.frame(
+    "gene" = c("LPIN1", "CMPK2"),
+    "color" = c("steel blue", "red")
+)
+
+pageCreate(
+    width = 6, height = 7,
+    showGuides = FALSE
+)
+transcriptPlot <- plotTranscripts(
+    chrom = "chr2", chromstart = 1000000, chromend = 20000000,
+    assembly = "hg19",
+    transcriptHighlights = transcriptHighlights,
+    colorbyStrand = FALSE, fill = "grey",
+    x = 0.25, y = 0.25, width = 5.5, height = 4.5
+)
+```
+
+We can now see all transcripts of CMPK2 are colored in red and 
+all transcripts of LPIN1 are colored in steel blue. If we knew the precise names
+of these transcripts, we could also specify them for transcript highlighting
+with the following `data.frame`:
+
+```r
+transcriptHighlights <- data.frame(
+    "transcript" = c("uc010yjo.2", "uc002rbt.4", "uc010yjn.3", "uc002rbs.4",
+                    "uc010yjm.3","uc010exi.1", "uc031rno.1", "uc010ewv.4",
+                    "uc002qyo.4", "uc010yis.2", "uc002qyn.2"),
+    "color" = c("steel blue", "steel blue", "steel blue", "steel blue",
+                "steel blue", "steel blue", "red", "red", "red", "red", "red")
+)
+```
+
 ## Customizing transcripts by strand
 
 To distinguish which strand a transcript belongs to, `plotTranscripts()` 
@@ -268,7 +310,7 @@ value colors negative strand transcripts. To further organize transcripts by
 strand, we can use `strandSplit` to separate transcript elements into groups 
 of positive and negative strands:
 
-```{r aes_13, echo=TRUE, fig.height=6, fig.width=7}
+```{r aes_14, echo=TRUE, fig.height=6, fig.width=7}
 pageCreate(
     width = 6, height = 5,
     showGuides = FALSE, xgrid = 0, ygrid = 0
@@ -298,7 +340,7 @@ region falls along the base of the triangle.
 - `plotHicRectangle()`: Plots a triangular Hi-C plot with additional data 
 filling the surrounding regions to form a rectangle.
 
-```{r aes_14, echo=FALSE, fig.height=3.9, fig.width=9.75, message=FALSE}
+```{r aes_15, echo=FALSE, fig.height=3.9, fig.width=9.75, message=FALSE}
 data("IMR90_HiC_10kb")
 
 pageCreate(
@@ -356,7 +398,7 @@ linearly or log-scaled with the `colorTrans` parameter.
 one plot. Instead of plotting both symmetrical halves of the plot, we can set 
 one dataset as `half = "top"` and the other dataset as `half = "bottom"`:
 
-```{r aes_15, echo=TRUE, fig.height=4.25, fig.width=5.25, message=FALSE}
+```{r aes_16, echo=TRUE, fig.height=4.25, fig.width=5.25, message=FALSE}
 data("GM12878_HiC_10kb")
 data("IMR90_HiC_10kb")
 

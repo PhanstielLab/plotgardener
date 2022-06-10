@@ -12,6 +12,7 @@
 #'     spaceWidth = 0.02,
 #'     spaceHeight = 0.3,
 #'     limitLabel = TRUE,
+#'     transcriptHighlights = NULL,
 #'     fontsize = 8,
 #'     labels = "transcript",
 #'     stroke = 0.1,
@@ -56,6 +57,10 @@
 #' @param limitLabel A logical value indicating whether to draw a "+"
 #' when not all elements can be plotted in the plotting space. Default 
 #' value is \code{limitLabel = TRUE}.
+#' @param transcriptHighlights A two-column dataframe with a column named
+#' "transcript" or "gene" containing transcript names or their associated gene 
+#' names as strings to highlight and a column named "color" containing 
+#' corresponding highlight colors.
 #' @param fontsize A numeric specifying text fontsize in points.
 #' Default value is \code{fontsize = 8}.
 #' @param labels A character value describing the format of
@@ -158,7 +163,8 @@ plotTranscripts <- function(chrom, chromstart = NULL, chromend = NULL,
                             fill = c("#669fd9", "#abcc8e"),
                             colorbyStrand = TRUE, strandSplit = FALSE,
                             boxHeight = unit(2, "mm"), spaceWidth = 0.02,
-                            spaceHeight = 0.3, limitLabel = TRUE, 
+                            spaceHeight = 0.3, limitLabel = TRUE,
+                            transcriptHighlights = NULL,
                             fontsize = 8,
                             labels = "transcript", stroke = 0.1, bg = NA,
                             x = NULL, y = NULL, width = NULL,
@@ -282,7 +288,7 @@ plotTranscripts <- function(chrom, chromstart = NULL, chromend = NULL,
     data$length <- data$TXEND - data$TXSTART
     
     # =========================================================================
-    # COLORS
+    # COLORS AND HIGHLIGHTS
     # =========================================================================
 
     if (transcriptsInternal$colorbyStrand == TRUE) {
@@ -302,7 +308,44 @@ plotTranscripts <- function(chrom, chromstart = NULL, chromend = NULL,
     } else {
         data$color <- rep(transcriptsInternal$fill[1], nrow(data))
     }
-
+    
+    ## Find transcripts to be highlighted
+    if (!is.null(transcriptsInternal$transcriptHighlights)){
+        
+        # check column name of transcriptHighlights
+        if (colnames(transcriptsInternal$transcriptHighlights)[1] == "transcript"){
+            transcriptHighlights <- data[which(data[,"TXNAME"] %in% 
+                transcriptsInternal$transcriptHighlights[,"transcript"]),]
+            transcriptHighlights$color <- NULL
+            transcriptBackground <- data[which(!data[,"TXNAME"] %in% 
+                transcriptsInternal$transcriptHighlights[,"transcript"]),]
+            # Change highlight transcripts to highlight color
+            transcriptHighlights <- 
+                merge(transcriptHighlights, 
+                    transcriptsInternal$transcriptHighlights,
+                    by.x = "TXNAME", by.y = "transcript")
+            
+        } else if 
+        (colnames(transcriptsInternal$transcriptHighlights)[1] == "gene"){
+            transcriptHighlights <- 
+                data[which(data[[transcripts$assembly$display.column]] %in% 
+                    transcriptsInternal$transcriptHighlights[,"gene"]),]
+            transcriptHighlights$color <- NULL
+            transcriptBackground <- 
+                data[which(!data[[transcripts$assembly$display.column]] %in% 
+                    transcriptsInternal$transcriptHighlights[,"gene"]),]
+            # Change highlight transcripts to highlight color
+            transcriptHighlights <- 
+                merge(transcriptHighlights, 
+                    transcriptsInternal$transcriptHighlights,
+                    by.x = transcripts$assembly$display.column, by.y = "gene")
+            
+        }
+        
+        ## Put highlight and other transcripts back together
+        data <- rbind(transcriptHighlights, transcriptBackground)
+    }
+    
 
     # =========================================================================
     # SEPARATE DATA INTO STRANDS
@@ -476,11 +519,15 @@ plotTranscripts <- function(chrom, chromstart = NULL, chromend = NULL,
         repPos <- defaultGenePriorities(
             data = repPos,
             assembly = transcripts$assembly,
+            geneHighlights = 
+                transcriptsInternal$transcriptHighlights[,"transcript"],
             transcript = TRUE
         )
         repMin <- defaultGenePriorities(
             data = repMin,
             assembly = transcripts$assembly,
+            geneHighlights = 
+                transcriptsInternal$transcriptHighlights[,"transcript"],
             transcript = TRUE
         )
         
@@ -521,7 +568,7 @@ plotTranscripts <- function(chrom, chromstart = NULL, chromend = NULL,
         rowData <- rbind(posData, minData)
         
     }
-
+    
     # =========================================================================
     # MAKE GROBS
     # =========================================================================

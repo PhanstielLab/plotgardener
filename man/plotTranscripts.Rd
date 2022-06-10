@@ -16,6 +16,7 @@ plotTranscripts(
     spaceWidth = 0.02,
     spaceHeight = 0.3,
     limitLabel = TRUE,
+    transcriptHighlights = NULL,
     fontsize = 8,
     labels = "transcript",
     stroke = 0.1,
@@ -71,6 +72,11 @@ Default value is \code{spaceHeight = 0.3}.}
 \item{limitLabel}{A logical value indicating whether to draw a "+"
 when not all elements can be plotted in the plotting space. Default 
 value is \code{limitLabel = TRUE}.}
+
+\item{transcriptHighlights}{A two-column dataframe with a column named
+"transcript" or "gene" containing transcript names or their associated gene 
+names as strings to highlight and a column named "color" containing 
+corresponding highlight colors.}
 
 \item{fontsize}{A numeric specifying text fontsize in points.
 Default value is \code{fontsize = 8}.}

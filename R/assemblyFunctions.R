@@ -250,15 +250,23 @@ defaultGenePriorities <- function(data, assembly, transcript = FALSE,
         updatedData <- data[order(data$length, decreasing = TRUE), ]
     }
 
-    ## Put any gene highlights at the top of the priority
-    if (transcript == FALSE){
-        if (!is.null(geneHighlights)){
+    ## Put any gene/transcript highlights at the top of the priority
+    
+    if (!is.null(geneHighlights)){
+        if (transcript == FALSE){
             updatedData <- updatedData[c(which(updatedData[[displayCol]] 
-                                        %in% geneHighlights), 
-                                        which(!updatedData[[displayCol]] 
-                                            %in% geneHighlights)),]
+                                               %in% geneHighlights), 
+                                         which(!updatedData[[displayCol]] 
+                                               %in% geneHighlights)),]
+        } else {
+            updatedData <- updatedData[c(which(updatedData[, "TXNAME"] 
+                                               %in% geneHighlights), 
+                                         which(!updatedData[, "TXNAME"] 
+                                               %in% geneHighlights)),]
         }
+            
     }
+    
     ## Return data with priorities
     return(updatedData)
 }
