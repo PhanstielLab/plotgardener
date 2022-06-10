@@ -30,7 +30,7 @@ and space between them
 }
 \examples{
 # Starting at 0.5 units, return a vector of positions for 3 objects that
-are 2 units in height with 0.1 units of space between them
+# are 2 units in height with 0.1 units of space between them
 
 pageLayoutRow(y = 0.5, height = 2, space = 0.1, n = 3, 
             default.units = "inches")

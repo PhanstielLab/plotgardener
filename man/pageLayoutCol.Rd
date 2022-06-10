@@ -30,7 +30,7 @@ width and space between them
 }
 \examples{
 # Starting at 0.5 units, return a vector of positions for 3 objects that
-are 2 units in width with 0.1 units of space between them
+# are 2 units in width with 0.1 units of space between them
 
 pageLayoutCol(x = 0.5, width = 2, space = 0.1, n = 3, 
             default.units = "inches")

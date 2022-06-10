@@ -12,7 +12,7 @@
 #' 
 #' @examples 
 #' # Starting at 0.5 units, return a vector of positions for 3 objects that
-#' are 2 units in height with 0.1 units of space between them
+#' # are 2 units in height with 0.1 units of space between them
 #' 
 #' pageLayoutRow(y = 0.5, height = 2, space = 0.1, n = 3, 
 #'             default.units = "inches")
@@ -32,7 +32,7 @@ pageLayoutRow <- function(y, height, space, n, default.units = "inches"){
                            default.units = default.units)
     
     ## Calculate positions
-    y + ((height+s) * seq(0,(n-1)))
+    y + ((height+space) * seq(0,(n-1)))
     
 }
 
@@ -50,7 +50,7 @@ pageLayoutRow <- function(y, height, space, n, default.units = "inches"){
 #' 
 #' @examples 
 #' # Starting at 0.5 units, return a vector of positions for 3 objects that
-#' are 2 units in width with 0.1 units of space between them
+#' # are 2 units in width with 0.1 units of space between them
 #' 
 #' pageLayoutCol(x = 0.5, width = 2, space = 0.1, n = 3, 
 #'             default.units = "inches")
