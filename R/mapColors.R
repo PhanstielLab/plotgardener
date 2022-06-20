@@ -77,12 +77,16 @@ mapColors <- function(vector, palette, range = NULL){
         ## range errors
         rangeErrors(range = range)
         
-        ## Numerical vector for breaks
+        # Numerical vector for breaks if no range is provided
         if (is(vector, "numeric") | is(vector, "integer")){
             if (length(unique(vector)) == 1){
-                warning("Not enough numerical values to map ",
-                "to colors.", call. = FALSE)
-                vector <- NULL
+                
+                if (is.null(range)){
+                    warning("Not enough numerical values to map ",
+                            "to colors without a range.", call. = FALSE)
+                    vector <- NULL
+                }
+                
             }
         }
         
@@ -106,7 +110,7 @@ mapColors <- function(vector, palette, range = NULL){
             vector[which(vector > range[2])] <- range[2]
             breaks <- seq(range[1], range[2], length.out = 100)
         }
-        
+
         ## Map numbers to colors    
         colors <- palette(length(breaks) + 1)    
         colorVector <- as.character(cut(vector, c(-Inf, breaks, Inf), 
