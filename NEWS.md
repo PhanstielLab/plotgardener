@@ -1,3 +1,9 @@
+# CHANGES IN VERSION 1.2.6
+## BUG FIXES 
+
+* `mapColors` can appropriately map colors to a numeric vector with the same 
+values, so long as a range is provided. 
+
 # CHANGES IN VERSION 1.2.5
 ## BUG FIXES 
 
