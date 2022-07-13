@@ -263,6 +263,7 @@ plotManhattan <- function(data, sigVal = 5e-08, chrom = NULL,
                             assembly = "hg38", fill = "black", pch = 19,
                             cex = 0.25, leadSNP = NULL,
                             sigLine = FALSE, sigCol = NULL,
+                            trans = "-log10",
                             range = NULL, space = 0.01, bg = NA,
                             baseline = FALSE, baseline.color = "grey",
                             baseline.lwd = 1, x = NULL, y = NULL,
@@ -391,9 +392,13 @@ plotManhattan <- function(data, sigVal = 5e-08, chrom = NULL,
     }
 
     ## Define a function that adjusts the yrange of the plot
-    manhattan_range <- function(bedData, object) {
+    manhattan_range <- function(bedData, object, trans) {
         if (is.null(object$range)) {
-            object$range <- c(0, ceiling(max(-log10(bedData[, "p"]))))
+            
+            object$range <- c(0, 
+                ceiling(max(unlist(lapply(parse(text = paste0(trans, "(", 
+                                                              bedData[, "p"], 
+                                                              ")")), eval)))))
         }
 
         return(object)
@@ -731,7 +736,8 @@ plotManhattan <- function(data, sigVal = 5e-08, chrom = NULL,
             # Y-LIMITS
             # =================================================================
 
-            man_plot <- manhattan_range(bedData = bed_data, object = man_plot)
+            man_plot <- manhattan_range(bedData = bed_data, object = man_plot,
+                                        trans = manInternal$trans)
             
         } else {
             manInternal$xscale <- c(0, 1)
@@ -849,9 +855,12 @@ plotManhattan <- function(data, sigVal = 5e-08, chrom = NULL,
         ## Remove any additional lty information for point plotting
         manInternal$gp$linetype <- manInternal$gp$lty
         manInternal$gp$lty <- NULL
-        
+
         points <- pointsGrob(
-            x = bed_data$pos, y = -log10(bed_data$p),
+            x = bed_data$pos, 
+            y = unlist(lapply(parse(text = paste0(manInternal$trans, 
+                                     "(", bed_data$p, 
+                                     ")")), eval)),
             pch = bed_data$pch,
             gp = manInternal$gp,
             default.units = "native"
@@ -880,14 +889,19 @@ plotManhattan <- function(data, sigVal = 5e-08, chrom = NULL,
             }
 
             point <- pointsGrob(
-                x = leadSNP_row$pos, y = -log10(leadSNP_row$p),
+                x = leadSNP_row$pos, 
+                y = eval(parse(text = paste0(manInternal$trans, 
+                                             "(", leadSNP_row$p, ")"))),
                 pch = manInternal$leadSNP$pch,
                 gp = manInternal$gp,
                 default.units = "native"
             )
             snp <- textGrob(
                 label = leadSNP_row$snp, x = leadSNP_row$pos,
-                y = unit(-log10(leadSNP_row$p), "native") + unit(1.5, "mm"),
+                y = unit(eval(parse(text = paste0(manInternal$trans, 
+                                                  "(", leadSNP_row$p, 
+                                                  ")"))), 
+                         "native") + unit(1.5, "mm"),
                 just = "bottom",
                 gp = gpar(
                     fontsize = manInternal$leadSNP$fontsize,
@@ -918,15 +932,18 @@ plotManhattan <- function(data, sigVal = 5e-08, chrom = NULL,
         if (manInternal$sigLine == TRUE) {
             manInternal$gp$col <- manInternal$gp$linecolor
             manInternal$gp$lty <- manInternal$gp$linetype
+            
             sigGrob <- segmentsGrob(
                 x0 = unit(0, "npc"),
-                y0 = unit(
-                    -log10(manInternal$sigVal),
-                    "native"
-                ),
+                y0 = unit(eval(parse(text = paste0(manInternal$trans, 
+                                                   "(", manInternal$sigVal, 
+                                                   ")"))), 
+                          "native"),
                 x1 = unit(1, "npc"),
                 y1 = unit(
-                    -log10(manInternal$sigVal),
+                    eval(parse(text = paste0(manInternal$trans, 
+                                             "(", manInternal$sigVal, 
+                                             ")"))),
                     "native"
                 ),
                 gp = manInternal$gp
