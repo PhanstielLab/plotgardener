@@ -106,14 +106,21 @@ geneData <- function(object, objectInternal) {
     ## need for orgDb
     
     if (object$assembly$gene.id.column != object$assembly$display.column){
-        
-        if (!requireNamespace(object$assembly$OrgDb, quietly = TRUE)){
-            orgdbChecks <- FALSE
-            warning("`", object$assembly$OrgDb, "` not available. Please load",
-                    " to plot genes or transcripts.", call. = FALSE)
-        } else {
+
+        ## Custom OrgDb
+        if (is(object$assembly$OrgDb, "OrgDb")){
             orgdbChecks <- TRUE
+        } else {
+            if (!requireNamespace(object$assembly$OrgDb, quietly = TRUE)){
+                orgdbChecks <- FALSE
+                warning("`", object$assembly$OrgDb, "` not available. Please load",
+                        " to plot genes or transcripts.", call. = FALSE)
+            } else {
+                orgdbChecks <- TRUE
+            }
+            
         }
+        
     } else {
         orgdbChecks <- TRUE
     }

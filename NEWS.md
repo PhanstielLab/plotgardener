@@ -1,5 +1,11 @@
+# CHANGES IN VERSION 1.3.7
+## BUG FIXES 
+
+* `plotGenes` and related functions will appropriately check for and handle
+custom `OrgDb`s.
+
 # CHANGES IN VERSION 1.3.6
-## BUG FIXES
+## BUG FIXES 
 
 * `mapColors` can appropriately map colors to a numeric vector with the same 
 values, so long as a range is provided.
@@ -29,16 +35,10 @@ with different sized anchors.
 file.
 * A `label` parameter has been added for `plotSignal` for convenient labeling. 
 
-
 # CHANGES IN VERSION 1.3.2
-=======
-# CHANGES IN VERSION 1.2.4
 ## BUG FIXES 
 
 * `plotSignal` range parsing bug fixes were resolved.
-
-# CHANGES IN VERSION 1.2.2
->>>>>>> RELEASE_3_15
 
 * Note about double page rendering has been added to `pageGuideHide()`
 documentation.
