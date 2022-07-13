@@ -7,10 +7,16 @@ getExons <- function(assembly, chromosome, start, stop) {
                                         as.name(assembly$TxDb))))
     }
 
-    if (!is.na(assembly$OrgDb)){
-        org_db <- eval(parse(text = paste0(as.name(assembly$OrgDb),
-                                           "::",
-                                           as.name(assembly$OrgDb))))
+    if (length(assembly$OrgDb) == 1){
+        
+        ## Custom orgDb
+        if (is(assembly$OrgDb, "OrgDb")){
+            org_db <- assembly$OrgDb
+        } else {
+            org_db <- eval(parse(text = paste0(as.name(assembly$OrgDb),
+                                               "::",
+                                               as.name(assembly$OrgDb))))
+        }
     }
     
     genes_on_chrom <- suppressMessages(GenomicFeatures::genes(tx_db,

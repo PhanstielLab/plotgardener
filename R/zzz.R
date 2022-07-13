@@ -42,27 +42,38 @@
             
         }
         
-        if (!requireNamespace(assembly$OrgDb, quietly = TRUE)){
-            orgdbChecks <- FALSE
-            warning('`', assembly$OrgDb, '` not available. Please install',
-            ' to define genomic region based ona  gene.', call. = FALSE)
-        } else {
+        ## Custom orgDb
+        if (is(assembly$OrgDb, 'OrgDb')){
             orgdbChecks <- TRUE
+        } else {
+            if (!requireNamespace(assembly$OrgDb, quietly = TRUE)){
+                orgdbChecks <- FALSE
+                warning('`', assembly$OrgDb, '` not available. Please install',
+                ' to define genomic region based ona  gene.', call. = FALSE)
+            } else {
+                orgdbChecks <- TRUE
+            }
         }
         
         if (txdbChecks == TRUE & orgdbChecks == TRUE){
 
             if (is(assembly$TxDb, 'TxDb')){
                 tx_db <- assembly$TxDb
-        } else {
-            tx_db <- eval(parse(text = paste0(as.name(assembly$TxDb),
+            } else {
+                tx_db <- eval(parse(text = paste0(as.name(assembly$TxDb),
                                             '::',
                                             as.name(assembly$TxDb))))
-        }
-
-        org_db <- eval(parse(text = paste0(as.name(assembly$OrgDb),
+            }
+            
+            if (is(assembly$OrgDb, 'OrgDb')){
+                org_db <- assembly$OrgDb
+            } else {
+                org_db <- eval(parse(text = paste0(as.name(assembly$OrgDb),
                                         '::',
                                         as.name(assembly$OrgDb))))
+            }
+
+        
         chromSizes <- GenomeInfoDb::seqlengths(tx_db)
         idCol <- assembly$gene.id.column
         displayCol <- assembly$display.column
