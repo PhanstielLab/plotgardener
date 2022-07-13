@@ -1,3 +1,9 @@
+# CHANGES IN VERSION 1.2.7
+## BUG FIXES 
+
+* `plotGenes` and related functions will appropriately check for and handle
+custom `OrgDb`s.
+
 # CHANGES IN VERSION 1.2.6
 ## BUG FIXES 
 
