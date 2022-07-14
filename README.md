@@ -1,6 +1,7 @@
 # <img src="man/figures/pg-wordmark.png" width="400px" style="background-color:white;border=transparent" /> <img src="man/figures/pg-hex-text.png" align="right" width="140px" style="padding-left:20px; background-color:white" />
 
 <!-- badges: start -->
+![GitHub R package version](https://img.shields.io/github/r-package/v/PhanstielLab/plotgardener?style=plastic)
 [![R build status](https://github.com/PhanstielLab/plotgardener/actions/workflows/check-bioc.yml/badge.svg)](https://github.com/PhanstielLab/plotgardener/actions)
 <!-- badges: end -->
 
