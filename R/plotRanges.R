@@ -8,6 +8,7 @@
 #'     assembly = "hg38",
 #'     fill = "#7ecdbb",
 #'     linecolor = NA,
+#'     order = "width",
 #'     collapse = FALSE,
 #'     boxHeight = unit(2, "mm"),
 #'     spaceWidth = 0.02,
@@ -49,6 +50,13 @@
 #' \itemize{
 #' \item{\code{NA}: }{No line color.}
 #' \item{\code{"fill"}: }{Same color as \code{fill}.}
+#' } .
+#' @param order A character value specifying how to order pileup data
+#' before assigning rows. Default value is \code{order = "width"}. Options 
+#' include:
+#' \itemize{
+#' \item{\code{"width"}: }{Ordered by decreasing width of elements.}
+#' \item{\code{"random"}: }{Ordered randomly in each function call.}
 #' } .
 #' @param collapse A logical value indicating whether to collapse
 #' range elements into a single row, or into
@@ -119,6 +127,7 @@
 #'     data = IMR90_ChIP_CTCF_reads, chrom = "chr21",
 #'     chromstart = 29073000, chromend = 29074000,
 #'     assembly = "hg19",
+#'     order = "random",
 #'     fill = colorby("strand", palette = 
 #'                 colorRampPalette(c("#7ecdbb", "#37a7db"))),
 #'     strandSplit = TRUE, 
@@ -163,7 +172,7 @@
 #' @export
 plotRanges <- function(data, chrom, chromstart = NULL, chromend = NULL,
                         assembly = "hg38", fill = "#7ecdbb",
-                        linecolor = NA, collapse = FALSE, 
+                        linecolor = NA, order = "width", collapse = FALSE, 
                         boxHeight = unit(2, "mm"), spaceWidth = 0.02,
                         spaceHeight = 0.3, limitLabel = TRUE,
                         strandSplit = FALSE, bg = NA,
@@ -178,7 +187,7 @@ plotRanges <- function(data, chrom, chromstart = NULL, chromend = NULL,
     # =========================================================================
 
     ## Define a function that catches errors
-    errorcheck_plotPileup <- function(pileupPlot, fill, bed) {
+    errorcheck_plotPileup <- function(pileupPlot, fill, bed, order) {
 
         ## Genomic region
         regionErrors(chromstart = pileupPlot$chromstart,
@@ -188,6 +197,11 @@ plotRanges <- function(data, chrom, chromstart = NULL, chromend = NULL,
         checkColorby(fill = fill,
                     colorby = TRUE,
                     data = bed)
+        
+        ## Check order parameter options
+        if (!order %in% c("width", "random")){
+            stop("Invalid `order` parameter.", call. = FALSE)
+        }
     }
 
     ## Define a function that parses the yscale based on split strands
@@ -199,6 +213,20 @@ plotRanges <- function(data, chrom, chromstart = NULL, chromend = NULL,
         }
 
         return(yscale)
+    }
+    
+    ## Define a function that orders input data based on "order" parameter
+    orderData <- function(data, order){
+        if (order == "width"){
+            # Order data by decreasing width of elements
+            orderedData <- data[order(data[, "width"], decreasing = TRUE), ]
+            
+        } else if (order == "random"){
+            # Order data randomly
+            orderedData <- data[sample(nrow(data)), ]
+        }
+        
+        return(orderedData)
     }
 
     # =========================================================================
@@ -294,7 +322,8 @@ plotRanges <- function(data, chrom, chromstart = NULL, chromend = NULL,
     errorcheck_plotPileup(
         pileupPlot = pileupPlot,
         fill = pileInternal$fill,
-        bed = bed
+        bed = bed,
+        order = pileInternal$order
     )
 
     ## chrom format and data chrom format
@@ -345,6 +374,8 @@ plotRanges <- function(data, chrom, chromstart = NULL, chromend = NULL,
         bed <- data.frame(matrix(nrow = 0, ncol = 3))
     }
 
+    ## Add width column
+    bed$width <- bed[, "end"] - bed[, "start"]
     # =========================================================================
     # SEPARATE DATA INTO STRANDS
     # =========================================================================
@@ -476,9 +507,9 @@ plotRanges <- function(data, chrom, chromstart = NULL, chromend = NULL,
             pileInternal$spaceWidth
 
         if (pileInternal$strandSplit == FALSE) {
-            
-            ## Randomize order of data
-            bed <- bed[sample(nrow(bed)), ]
+
+            ## Order data
+            bed <- orderData(data = bed, order = pileInternal$order)
             
             ## Assign rows
             rowData <- assignRows(data = bed[,c("start", "end")], 
@@ -494,9 +525,9 @@ plotRanges <- function(data, chrom, chromstart = NULL, chromend = NULL,
 
         } else {
             
-            ## Randomize order of data
-            posStrand <- posStrand[sample(nrow(posStrand)), ]
-            minStrand <- minStrand[sample(nrow(minStrand)), ]
+            ## Order data
+            posStrand <- orderData(data = posStrand, order = pileInternal$order)
+            minStrand <- orderData(data = minStrand, order = pileInternal$order)
             
             ## Assign rows
             posData <- assignRows(data = posStrand[,c("start", "end")],

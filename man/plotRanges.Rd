@@ -12,6 +12,7 @@ plotRanges(
     assembly = "hg38",
     fill = "#7ecdbb",
     linecolor = NA,
+    order = "width",
     collapse = FALSE,
     boxHeight = unit(2, "mm"),
     spaceWidth = 0.02,
@@ -60,6 +61,14 @@ Special options include:
 \itemize{
 \item{\code{NA}: }{No line color.}
 \item{\code{"fill"}: }{Same color as \code{fill}.}
+} .}
+
+\item{order}{A character value specifying how to order pileup data
+before assigning rows. Default value is \code{order = "width"}. Options 
+include:
+\itemize{
+\item{\code{"width"}: }{Ordered by decreasing width of elements.}
+\item{\code{"random"}: }{Ordered randomly in each function call.}
 } .}
 
 \item{collapse}{A logical value indicating whether to collapse
