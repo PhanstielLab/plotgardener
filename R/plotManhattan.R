@@ -13,6 +13,7 @@
 #'     leadSNP = NULL,
 #'     sigLine = FALSE,
 #'     sigCol = NULL,
+#'     trans = "-log10",
 #'     range = NULL,
 #'     space = 0.01,
 #'     bg = NA,
@@ -38,13 +39,14 @@
 #' \item{\code{"chrom"}: }{Chromosome names. This column must be a character.}
 #' \item{\code{"pos"}: }{Chromosomal position. This column must be
 #' an integer or numeric.}
-#' \item{\code{"p"}: }{p-value. This column must be numeric.
-#' p-values will be converted to -log(10) space.}
+#' \item{\code{"p"}: }{p-value or similar measure. This column must be numeric.
+#' Values will be converted according to the \code{trans} parameter.}
 #' \item{\code{"snp"}(optional): }{SNP name or rsid.
 #' This column should be a character.}
 #' }
 #' @param sigVal A numeric specifying the significance level of p-values.
-#' Along with data p-values, this value will be converted to -log(10) space.
+#' Along with data p-values, this value will be converted according to the
+#' \code{trans} parameter.
 #' Default value is \code{sigVal = 5e-08}.
 #' @param chrom Chromosome of region to be plotted, as a string.
 #' If left \code{NULL}, all chromosomes found in data will be plotted.
@@ -75,6 +77,9 @@
 #' Default value is \code{sigLine = FALSE}.
 #' @param sigCol Single character value specifying the color of
 #' significant data points.
+#' @param trans Character value specifying the transformation to apply to the
+#' "p" column plotted along the y-axis. For no transformation, set value to the 
+#' empty character "". Default value is \code{trans = "-log10"}.
 #' @param range A numeric vector of length 2 specifying the y-range
 #' of p-values to plot (c(min, max)).
 #' @param space A numeric value indicating the space between each
@@ -131,6 +136,7 @@
 #'     data = hg19_insulin_GWAS, assembly = "hg19",
 #'     fill = c("grey", "#37a7db"),
 #'     sigLine = TRUE,
+#'     trans = "-log10",
 #'     col = "grey", lty = 2, range = c(0, 14),
 #'     x = 0.5, y = 0, width = 6.5, height = 2,
 #'     just = c("left", "top"),
@@ -184,6 +190,7 @@
 #'         "#37a7db", "green",
 #'         "orange", "red", "grey"
 #'     ))),
+#'     trans = "-log10",
 #'     sigLine = TRUE, col = "grey",
 #'     lty = 2, range = c(0, 16),
 #'     leadSNP = list(
