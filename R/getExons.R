@@ -30,6 +30,8 @@ getExons <- function(assembly, chromosome, start, stop) {
         columns = AnnotationDbi::columns(tx_db),
         keytype = "GENEID"
     ))
+    ## Double check filtering of chromosome
+    txs_wo_symbols <- txs_wo_symbols[which(txs_wo_symbols$TXCHROM==chromosome),]
 
     if (assembly$gene.id.column == assembly$display.column) {
         txs_w_symbols <- txs_wo_symbols
