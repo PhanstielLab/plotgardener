@@ -1,3 +1,9 @@
+# CHANGES IN VERSION 1.2.8
+## BUG FIXES 
+
+* `getExon` will double-check for appropriate chromosome data to avoid incorrect 
+plotting based on related chromosome contigs.
+
 # CHANGES IN VERSION 1.2.7
 ## BUG FIXES 
 
