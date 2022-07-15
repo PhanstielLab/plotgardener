@@ -3,6 +3,15 @@
 
 * `plotGenes` and related functions will appropriately check for and handle
 custom `OrgDb`s.
+* `getExons` will double-check for appropriate chromosome data to avoid
+incorrect plotting based on related chromosome contigs.
+
+## NEW FEATURES
+
+* `plotManhattan` p-value data can be scaled according to a custom 
+transformation, rather than being limited to -log10.
+* `plotRanges` elements can be ordered randomly or by decreasing width before
+plotted row assignment.
 
 # CHANGES IN VERSION 1.3.6
 ## BUG FIXES 
