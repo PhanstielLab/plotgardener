@@ -25,6 +25,8 @@ on:
     branches:
       - RELEASE_3_15
   pull_request:
+    branches:
+      - RELEASE_3_15
 
 name: R-CMD-check-bioc
 
@@ -38,7 +40,6 @@ name: R-CMD-check-bioc
 env:
   has_testthat: 'false'
   run_covr: 'false'
-  run_pkgdown: 'false'
   has_RUnit: 'false'
   cache-version: 'cache-v1'
   run_docker: 'false'
@@ -203,7 +204,7 @@ jobs:
         shell: Rscript {0}
 
       - name: Install pkgdown
-        if: github.ref == 'refs/heads/master' && env.run_pkgdown == 'true' && runner.os == 'Linux'
+        if: github.ref == 'refs/heads/master' && runner.os == 'Linux'
         run: |
           remotes::install_cran("pkgdown")
         shell: Rscript {0}
@@ -256,15 +257,26 @@ jobs:
         shell: Rscript {0}
 
       - name: Install package
-        if: github.ref == 'refs/heads/master' && env.run_pkgdown == 'true' && runner.os == 'Linux'
+        if: github.ref == 'refs/heads/master' && runner.os == 'Linux'
         run: R CMD INSTALL .
-
+        
+      - name: Build pkgdown site
+        run: pkgdown::build_site_github_pages(new_process = FALSE, install = FALSE)
+        shell: Rscript {0}
+    
+      - name: Deploy to GitHub pages 
+        if: github.event_name != 'pull_request' && runner.os == 'Linux'
+        uses: JamesIves/github-pages-deploy-action@4.1.4
+        with:
+            clean: false
+            branch: gh-pages
+            folder: docs
+        
       - name: Deploy package
-        if: github.ref == 'refs/heads/master' && env.run_pkgdown == 'true' && runner.os == 'Linux'
+        if: github.ref == 'refs/heads/master' && runner.os == 'Linux'
         run: |
           git config --local user.email "actions@github.com"
           git config --local user.name "GitHub Actions"
-          Rscript -e "pkgdown::deploy_to_branch(new_process = FALSE)"
         shell: bash {0}
         ## Note that you need to run pkgdown::deploy_to_branch(new_process = FALSE)
         ## at least one locally before this will work. This creates the gh-pages
