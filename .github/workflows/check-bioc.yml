@@ -261,6 +261,7 @@ jobs:
         run: R CMD INSTALL .
         
       - name: Build pkgdown site
+        if: runner.os == 'Linux'
         run: pkgdown::build_site_github_pages(new_process = FALSE, install = FALSE)
         shell: Rscript {0}
     
@@ -268,10 +269,10 @@ jobs:
         if: github.event_name != 'pull_request' && runner.os == 'Linux'
         uses: JamesIves/github-pages-deploy-action@4.1.4
         with:
-            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
             clean: false
             branch: gh-pages
             folder: docs
+            ssh-key: ${{ secrets.SSH_DEPLOY_KEY}}
         
       - name: Deploy package
         if: github.ref == 'refs/heads/master' && runner.os == 'Linux'
@@ -279,10 +280,6 @@ jobs:
           git config --local user.email "actions@github.com"
           git config --local user.name "GitHub Actions"
         shell: bash {0}
-        ## Note that you need to run pkgdown::deploy_to_branch(new_process = FALSE)
-        ## at least one locally before this will work. This creates the gh-pages
-        ## branch (erasing anything you haven't version controlled!) and
-        ## makes the git history recognizable by pkgdown.
 
       - name: Upload check results
         if: failure()
