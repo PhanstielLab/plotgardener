@@ -264,6 +264,12 @@ jobs:
         if: runner.os == 'Linux'
         run: pkgdown::build_site_github_pages(new_process = FALSE, install = FALSE)
         shell: Rscript {0}
+        
+      - name: Install deploy dependencies
+        if: runner.os == 'Linux'
+        run: |
+            apt-get update
+            apt-get -y install rsync
     
       - name: Deploy to GitHub pages 
         if: github.event_name != 'pull_request' && runner.os == 'Linux'
