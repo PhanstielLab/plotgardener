@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">plotgardener</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.2.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.2.8</span>
       </span>
     </div>
 
@@ -96,36 +96,36 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">plotManhattan</span><span class="op">(</span>
-    <span class="va">data</span>,
-    sigVal <span class="op">=</span> <span class="fl">5e-08</span>,
-    chrom <span class="op">=</span> <span class="cn">NULL</span>,
-    chromstart <span class="op">=</span> <span class="cn">NULL</span>,
-    chromend <span class="op">=</span> <span class="cn">NULL</span>,
-    assembly <span class="op">=</span> <span class="st">"hg38"</span>,
-    fill <span class="op">=</span> <span class="st">"black"</span>,
-    pch <span class="op">=</span> <span class="fl">19</span>,
-    cex <span class="op">=</span> <span class="fl">0.25</span>,
-    leadSNP <span class="op">=</span> <span class="cn">NULL</span>,
-    sigLine <span class="op">=</span> <span class="cn">FALSE</span>,
-    sigCol <span class="op">=</span> <span class="cn">NULL</span>,
-    range <span class="op">=</span> <span class="cn">NULL</span>,
-    space <span class="op">=</span> <span class="fl">0.01</span>,
-    bg <span class="op">=</span> <span class="cn">NA</span>,
-    baseline <span class="op">=</span> <span class="cn">FALSE</span>,
-    baseline.color <span class="op">=</span> <span class="st">"grey"</span>,
-    baseline.lwd <span class="op">=</span> <span class="fl">1</span>,
-    x <span class="op">=</span> <span class="cn">NULL</span>,
-    y <span class="op">=</span> <span class="cn">NULL</span>,
-    width <span class="op">=</span> <span class="cn">NULL</span>,
-    height <span class="op">=</span> <span class="cn">NULL</span>,
-    just <span class="op">=</span> <span class="fu"><a href="c.html">c</a></span><span class="op">(</span><span class="st">"left"</span>, <span class="st">"top"</span><span class="op">)</span>,
-    flip <span class="op">=</span> <span class="cn">FALSE</span>,
-    default.units <span class="op">=</span> <span class="st">"inches"</span>,
-    draw <span class="op">=</span> <span class="cn">TRUE</span>,
-    params <span class="op">=</span> <span class="cn">NULL</span>,
-    <span class="va">...</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">plotManhattan</span><span class="op">(</span></span>
+<span>    <span class="va">data</span>,</span>
+<span>    sigVal <span class="op">=</span> <span class="fl">5e-08</span>,</span>
+<span>    chrom <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>    chromstart <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>    chromend <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>    assembly <span class="op">=</span> <span class="st">"hg38"</span>,</span>
+<span>    fill <span class="op">=</span> <span class="st">"black"</span>,</span>
+<span>    pch <span class="op">=</span> <span class="fl">19</span>,</span>
+<span>    cex <span class="op">=</span> <span class="fl">0.25</span>,</span>
+<span>    leadSNP <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>    sigLine <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>    sigCol <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>    range <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>    space <span class="op">=</span> <span class="fl">0.01</span>,</span>
+<span>    bg <span class="op">=</span> <span class="cn">NA</span>,</span>
+<span>    baseline <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>    baseline.color <span class="op">=</span> <span class="st">"grey"</span>,</span>
+<span>    baseline.lwd <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>    x <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>    y <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>    width <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>    height <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>    just <span class="op">=</span> <span class="fu"><a href="c.html">c</a></span><span class="op">(</span><span class="st">"left"</span>, <span class="st">"top"</span><span class="op">)</span>,</span>
+<span>    flip <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>    default.units <span class="op">=</span> <span class="st">"inches"</span>,</span>
+<span>    draw <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>    params <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>    <span class="va">...</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -141,35 +141,53 @@ p-values will be converted to -log(10) space.</p></li>
 <li><p><code>"snp"</code>(optional): SNP name or rsid.
 This column should be a character.</p></li>
 </ul></dd>
+
+
 <dt>sigVal</dt>
 <dd><p>A numeric specifying the significance level of p-values.
 Along with data p-values, this value will be converted to -log(10) space.
 Default value is <code>sigVal = 5e-08</code>.</p></dd>
+
+
 <dt>chrom</dt>
 <dd><p>Chromosome of region to be plotted, as a string.
 If left <code>NULL</code>, all chromosomes found in data will be plotted.</p></dd>
+
+
 <dt>chromstart</dt>
 <dd><p>Integer start position on chromosome to be plotted.</p></dd>
+
+
 <dt>chromend</dt>
 <dd><p>Integer end position on chromosome to be plotted.</p></dd>
+
+
 <dt>assembly</dt>
 <dd><p>Default genome assembly as a string or a
 <a href="assembly.html">assembly</a> object.
 Default value is <code>assembly = "hg38"</code>.</p></dd>
+
+
 <dt>fill</dt>
 <dd><p>A single character value, a vector, or a 
 <a href="colorby.html">colorby</a> object specifying fill colors of data points.
 For a Manhattan plot with multiple chromosomes, a vector of colors 
 will be used to color points of different chromosomes.
 Default value is <code>fill = "black"</code>.</p></dd>
+
+
 <dt>pch</dt>
 <dd><p>A numeric value or numeric vector specifying point symbols.
 If <a href="colorby.html">colorby</a> object is supplied for <code>fill</code>,
 point symbols will be mapped to
 <code>colorby</code> values. Default value is <code>pch = 19</code>.</p></dd>
+
+
 <dt>cex</dt>
 <dd><p>A numeric indicating the amount by which points should be
 scaled relative to the default. Default value is <code>cex = 0.25</code>.</p></dd>
+
+
 <dt>leadSNP</dt>
 <dd><p>A list specifying the lead SNP in the desired region and
 any associated aesthetic features of the lead SNP data point and text label.
@@ -177,44 +195,70 @@ The lead SNP should be specified as a character with the name slot
 <code>"snp"</code> in the list. Accepted lead SNP aesthetic
 features in the list include
 <code>fill</code>, <code>pch</code>, <code>cex</code>, <code>fontcolor</code>, and <code>fontsize</code>.</p></dd>
+
+
 <dt>sigLine</dt>
 <dd><p>Logical value indicating whether to draw a line at the
 significance level indicated with <code>sigVal</code>.
 Default value is <code>sigLine = FALSE</code>.</p></dd>
+
+
 <dt>sigCol</dt>
 <dd><p>Single character value specifying the color of
 significant data points.</p></dd>
+
+
 <dt>range</dt>
 <dd><p>A numeric vector of length 2 specifying the y-range
 of p-values to plot (c(min, max)).</p></dd>
+
+
 <dt>space</dt>
 <dd><p>A numeric value indicating the space between each
 chromosome as a fraction of the width of the plot, if plotting multiple
 chromosomes. Default value is <code>space = 0.01</code>.</p></dd>
+
+
 <dt>bg</dt>
 <dd><p>Character value indicating background color.
 Default value is <code>bg = NA</code>.</p></dd>
+
+
 <dt>baseline</dt>
 <dd><p>Logical value indicating whether to include a
 baseline along the x-axis. Default value is <code>baseline = FALSE</code>.</p></dd>
+
+
 <dt>baseline.color</dt>
 <dd><p>Baseline color. Default value
 is <code>baseline.color = "grey"</code>.</p></dd>
+
+
 <dt>baseline.lwd</dt>
 <dd><p>Baseline line width. Default value
 is <code>baseline.lwd = 1</code>.</p></dd>
+
+
 <dt>x</dt>
 <dd><p>A numeric or unit object specifying Manhattan plot x-location.</p></dd>
+
+
 <dt>y</dt>
 <dd><p>A numeric, unit object, or character containing a "b"
 combined with a numeric value specifying Manhattan plot y-location.
 The character value will
 place the Manhattan plot y relative to the bottom of the most
 recently plotted plot according to the units of the plotgardener page.</p></dd>
+
+
 <dt>width</dt>
 <dd><p>A numeric or unit object specifying Manhattan plot width.</p></dd>
+
+
 <dt>height</dt>
 <dd><p>A numeric or unit object specifying Manhattan plot height.</p></dd>
+
+
 <dt>just</dt>
 <dd><p>Justification of Manhattan plot relative to its (x, y)
 location. If there are two values, the first value specifies horizontal
@@ -222,176 +266,191 @@ justification and the second value specifies vertical justification.
 Possible string values are: <code>"left"</code>, <code>"right"</code>,
 <code>"centre"</code>, <code>"center"</code>, <code>"bottom"</code>, and <code>"top"</code>.
 Default value is <code>just = c("left", "top")</code>.</p></dd>
+
+
 <dt>flip</dt>
 <dd><p>Logical value indicating whether to reflect Manhattan plot
 over the x-axis. Default value is <code>flip = FALSE</code>.</p></dd>
+
+
 <dt>default.units</dt>
 <dd><p>A string indicating the default units to use
 if <code>x</code>, <code>y</code>, <code>width</code>, or <code>height</code> are only given
 as numerics. Default value is <code>default.units = "inches"</code>.</p></dd>
+
+
 <dt>draw</dt>
 <dd><p>A logical value indicating whether graphics output should
 be produced. Default value is <code>draw = TRUE</code>.</p></dd>
+
+
 <dt>params</dt>
 <dd><p>An optional <a href="pgParams.html">pgParams</a> object containing
 relevant function parameters.</p></dd>
+
+
 <dt>...</dt>
 <dd><p>Additional grid graphical parameters. See <a href="https://rdrr.io/r/grid/gpar.html" class="external-link">gpar</a>.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>Returns a <code>manhattan</code> object containing
+    
+
+<p>Returns a <code>manhattan</code> object containing
 relevant genomic region, placement, and <a href="https://rdrr.io/r/grid/grid.grob.html" class="external-link">grob</a> information.</p>
     </div>
     <div id="details">
     <h2>Details</h2>
     <p>A Manhattan plot can be placed on a plotgardener coordinate page by
-providing plot placement parameters:</p><div class="sourceCode"><pre><code><span class="fu"><a href="../reference/plotManhattan.html">plotManhattan</a></span><span class="op">(</span><span class="va">data</span>,
-                chrom <span class="op">=</span> <span class="cn">NULL</span>,
-                chromstart <span class="op">=</span> <span class="cn">NULL</span>, chromend <span class="op">=</span> <span class="cn">NULL</span>,
-                <span class="va">x</span>, <span class="va">y</span>, <span class="va">width</span>, <span class="va">height</span>, just <span class="op">=</span> <span class="fu"><a href="../reference/c.html">c</a></span><span class="op">(</span><span class="st">"left"</span>, <span class="st">"top"</span><span class="op">)</span>,
-                default.units <span class="op">=</span> <span class="st">"inches"</span><span class="op">)</span></code></pre></div><p>This function can also be used to quickly plot an unannotated
-Manhattan plot by ignoring plot placement parameters:</p><div class="sourceCode"><pre><code><span class="fu"><a href="../reference/plotManhattan.html">plotManhattan</a></span><span class="op">(</span><span class="va">data</span>,
-                chrom <span class="op">=</span> <span class="cn">NULL</span>,
-                chromstart <span class="op">=</span> <span class="cn">NULL</span>, chromend <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></code></pre></div>
+providing plot placement parameters:</p><div class="sourceCode"><pre><code><span></span>
+<span><span class="fu"><a href="../reference/plotManhattan.html">plotManhattan</a></span><span class="op">(</span><span class="va">data</span>,</span>
+<span>                chrom <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>                chromstart <span class="op">=</span> <span class="cn">NULL</span>, chromend <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>                <span class="va">x</span>, <span class="va">y</span>, <span class="va">width</span>, <span class="va">height</span>, just <span class="op">=</span> <span class="fu"><a href="../reference/c.html">c</a></span><span class="op">(</span><span class="st">"left"</span>, <span class="st">"top"</span><span class="op">)</span>,</span>
+<span>                default.units <span class="op">=</span> <span class="st">"inches"</span><span class="op">)</span></span></code></pre></div><p>This function can also be used to quickly plot an unannotated
+Manhattan plot by ignoring plot placement parameters:</p><div class="sourceCode"><pre><code><span></span>
+<span><span class="fu"><a href="../reference/plotManhattan.html">plotManhattan</a></span><span class="op">(</span><span class="va">data</span>,</span>
+<span>                chrom <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>                chromstart <span class="op">=</span> <span class="cn">NULL</span>, chromend <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div>
 
     </div>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co">## Load genomic assembly information</span></span>
-<span class="r-in"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st">"TxDb.Hsapiens.UCSC.hg19.knownGene"</span><span class="op">)</span></span>
-<span class="r-in"><span class="co">## Load GWAS data</span></span>
-<span class="r-in"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/PhanstielLab/plotgardenerData" class="external-link">plotgardenerData</a></span><span class="op">)</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"hg19_insulin_GWAS"</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">## Create a page</span></span>
-<span class="r-in"><span class="fu"><a href="pageCreate.html">pageCreate</a></span><span class="op">(</span>width <span class="op">=</span> <span class="fl">7.5</span>, height <span class="op">=</span> <span class="fl">4.5</span>, default.units <span class="op">=</span> <span class="st">"inches"</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">## Plot all GWAS data</span></span>
-<span class="r-in"><span class="va">manhattanPlot</span> <span class="op">&lt;-</span> <span class="fu">plotManhattan</span><span class="op">(</span></span>
-<span class="r-in">    data <span class="op">=</span> <span class="va">hg19_insulin_GWAS</span>, assembly <span class="op">=</span> <span class="st">"hg19"</span>,</span>
-<span class="r-in">    fill <span class="op">=</span> <span class="fu"><a href="c.html">c</a></span><span class="op">(</span><span class="st">"grey"</span>, <span class="st">"#37a7db"</span><span class="op">)</span>,</span>
-<span class="r-in">    sigLine <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span class="r-in">    col <span class="op">=</span> <span class="st">"grey"</span>, lty <span class="op">=</span> <span class="fl">2</span>, range <span class="op">=</span> <span class="fu"><a href="c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">14</span><span class="op">)</span>,</span>
-<span class="r-in">    x <span class="op">=</span> <span class="fl">0.5</span>, y <span class="op">=</span> <span class="fl">0</span>, width <span class="op">=</span> <span class="fl">6.5</span>, height <span class="op">=</span> <span class="fl">2</span>,</span>
-<span class="r-in">    just <span class="op">=</span> <span class="fu"><a href="c.html">c</a></span><span class="op">(</span><span class="st">"left"</span>, <span class="st">"top"</span><span class="op">)</span>,</span>
-<span class="r-in">    default.units <span class="op">=</span> <span class="st">"inches"</span></span>
-<span class="r-in"><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co">## Load genomic assembly information</span></span></span>
+<span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st">"TxDb.Hsapiens.UCSC.hg19.knownGene"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="co">## Load GWAS data</span></span></span>
+<span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/PhanstielLab/plotgardenerData" class="external-link">plotgardenerData</a></span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"hg19_insulin_GWAS"</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## Create a page</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="pageCreate.html">pageCreate</a></span><span class="op">(</span>width <span class="op">=</span> <span class="fl">7.5</span>, height <span class="op">=</span> <span class="fl">4.5</span>, default.units <span class="op">=</span> <span class="st">"inches"</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## Plot all GWAS data</span></span></span>
+<span class="r-in"><span><span class="va">manhattanPlot</span> <span class="op">&lt;-</span> <span class="fu">plotManhattan</span><span class="op">(</span></span></span>
+<span class="r-in"><span>    data <span class="op">=</span> <span class="va">hg19_insulin_GWAS</span>, assembly <span class="op">=</span> <span class="st">"hg19"</span>,</span></span>
+<span class="r-in"><span>    fill <span class="op">=</span> <span class="fu"><a href="c.html">c</a></span><span class="op">(</span><span class="st">"grey"</span>, <span class="st">"#37a7db"</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>    sigLine <span class="op">=</span> <span class="cn">TRUE</span>,</span></span>
+<span class="r-in"><span>    col <span class="op">=</span> <span class="st">"grey"</span>, lty <span class="op">=</span> <span class="fl">2</span>, range <span class="op">=</span> <span class="fu"><a href="c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">14</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>    x <span class="op">=</span> <span class="fl">0.5</span>, y <span class="op">=</span> <span class="fl">0</span>, width <span class="op">=</span> <span class="fl">6.5</span>, height <span class="op">=</span> <span class="fl">2</span>,</span></span>
+<span class="r-in"><span>    just <span class="op">=</span> <span class="fu"><a href="c.html">c</a></span><span class="op">(</span><span class="st">"left"</span>, <span class="st">"top"</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>    default.units <span class="op">=</span> <span class="st">"inches"</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> manhattan[manhattan1]</span>
-<span class="r-in"><span class="co">## Annotate genome label</span></span>
-<span class="r-in"><span class="fu"><a href="annoGenomeLabel.html">annoGenomeLabel</a></span><span class="op">(</span></span>
-<span class="r-in">    plot <span class="op">=</span> <span class="va">manhattanPlot</span>, x <span class="op">=</span> <span class="fl">0.5</span>, y <span class="op">=</span> <span class="fl">2</span>, fontsize <span class="op">=</span> <span class="fl">8</span>,</span>
-<span class="r-in">    just <span class="op">=</span> <span class="fu"><a href="c.html">c</a></span><span class="op">(</span><span class="st">"left"</span>, <span class="st">"top"</span><span class="op">)</span>,</span>
-<span class="r-in">    default.units <span class="op">=</span> <span class="st">"inches"</span></span>
-<span class="r-in"><span class="op">)</span></span>
+<span class="r-in"><span><span class="co">## Annotate genome label</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="annoGenomeLabel.html">annoGenomeLabel</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>    plot <span class="op">=</span> <span class="va">manhattanPlot</span>, x <span class="op">=</span> <span class="fl">0.5</span>, y <span class="op">=</span> <span class="fl">2</span>, fontsize <span class="op">=</span> <span class="fl">8</span>,</span></span>
+<span class="r-in"><span>    just <span class="op">=</span> <span class="fu"><a href="c.html">c</a></span><span class="op">(</span><span class="st">"left"</span>, <span class="st">"top"</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>    default.units <span class="op">=</span> <span class="st">"inches"</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> genomeLabel[genomeLabel1]</span>
-<span class="r-in"><span class="fu"><a href="plotText.html">plotText</a></span><span class="op">(</span></span>
-<span class="r-in">    label <span class="op">=</span> <span class="st">"Chromosome"</span>, fontsize <span class="op">=</span> <span class="fl">8</span>,</span>
-<span class="r-in">    x <span class="op">=</span> <span class="fl">3.75</span>, y <span class="op">=</span> <span class="fl">2.20</span>, just <span class="op">=</span> <span class="st">"center"</span>, default.units <span class="op">=</span> <span class="st">"inches"</span></span>
-<span class="r-in"><span class="op">)</span></span>
+<span class="r-in"><span><span class="fu"><a href="plotText.html">plotText</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>    label <span class="op">=</span> <span class="st">"Chromosome"</span>, fontsize <span class="op">=</span> <span class="fl">8</span>,</span></span>
+<span class="r-in"><span>    x <span class="op">=</span> <span class="fl">3.75</span>, y <span class="op">=</span> <span class="fl">2.20</span>, just <span class="op">=</span> <span class="st">"center"</span>, default.units <span class="op">=</span> <span class="st">"inches"</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> text[text1]</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">## Annotate y-axis</span></span>
-<span class="r-in"><span class="fu"><a href="annoYaxis.html">annoYaxis</a></span><span class="op">(</span></span>
-<span class="r-in">    plot <span class="op">=</span> <span class="va">manhattanPlot</span>, at <span class="op">=</span> <span class="fu"><a href="c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">2</span>, <span class="fl">4</span>, <span class="fl">6</span>, <span class="fl">8</span>, <span class="fl">10</span>, <span class="fl">12</span>, <span class="fl">14</span><span class="op">)</span>,</span>
-<span class="r-in">    axisLine <span class="op">=</span> <span class="cn">TRUE</span>, fontsize <span class="op">=</span> <span class="fl">8</span></span>
-<span class="r-in"><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## Annotate y-axis</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="annoYaxis.html">annoYaxis</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>    plot <span class="op">=</span> <span class="va">manhattanPlot</span>, at <span class="op">=</span> <span class="fu"><a href="c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">2</span>, <span class="fl">4</span>, <span class="fl">6</span>, <span class="fl">8</span>, <span class="fl">10</span>, <span class="fl">12</span>, <span class="fl">14</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>    axisLine <span class="op">=</span> <span class="cn">TRUE</span>, fontsize <span class="op">=</span> <span class="fl">8</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> yaxis[yaxis1]</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">## Plot y-axis label</span></span>
-<span class="r-in"><span class="fu"><a href="plotText.html">plotText</a></span><span class="op">(</span></span>
-<span class="r-in">    label <span class="op">=</span> <span class="st">"-log10(p-value)"</span>, x <span class="op">=</span> <span class="fl">0.15</span>, y <span class="op">=</span> <span class="fl">1</span>, rot <span class="op">=</span> <span class="fl">90</span>,</span>
-<span class="r-in">    fontsize <span class="op">=</span> <span class="fl">8</span>, fontface <span class="op">=</span> <span class="st">"bold"</span>, just <span class="op">=</span> <span class="st">"center"</span>,</span>
-<span class="r-in">    default.units <span class="op">=</span> <span class="st">"inches"</span></span>
-<span class="r-in"><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## Plot y-axis label</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="plotText.html">plotText</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>    label <span class="op">=</span> <span class="st">"-log10(p-value)"</span>, x <span class="op">=</span> <span class="fl">0.15</span>, y <span class="op">=</span> <span class="fl">1</span>, rot <span class="op">=</span> <span class="fl">90</span>,</span></span>
+<span class="r-in"><span>    fontsize <span class="op">=</span> <span class="fl">8</span>, fontface <span class="op">=</span> <span class="st">"bold"</span>, just <span class="op">=</span> <span class="st">"center"</span>,</span></span>
+<span class="r-in"><span>    default.units <span class="op">=</span> <span class="st">"inches"</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> text[text2]</span>
-<span class="r-in"></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">## Plot GWAS data zooming in on chromosome 11</span></span>
-<span class="r-in"><span class="co">## highlighting a lead SNP, and coloring by LD score</span></span>
-<span class="r-in"><span class="va">hg19_insulin_GWAS</span><span class="op">$</span><span class="va">LD</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="va">hg19_insulin_GWAS</span><span class="op">$</span><span class="va">LD</span><span class="op">)</span></span>
-<span class="r-in"><span class="co">## Group LD column into LD ranges</span></span>
-<span class="r-in"><span class="va">hg19_insulin_GWAS</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/BiocGenerics/man/as.data.frame.html" class="external-link">as.data.frame</a></span><span class="op">(</span><span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">hg19_insulin_GWAS</span>,</span>
-<span class="r-in">                                        LDgrp <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/cut.html" class="external-link">cut</a></span><span class="op">(</span></span>
-<span class="r-in">                                        <span class="va">hg19_insulin_GWAS</span><span class="op">$</span><span class="va">LD</span>,</span>
-<span class="r-in">                                        <span class="fu"><a href="c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0.2</span>, <span class="fl">0.4</span>, <span class="fl">0.6</span>, <span class="fl">0.8</span>, <span class="fl">1</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">hg19_insulin_GWAS</span><span class="op">$</span><span class="va">LDgrp</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">addNA</a></span><span class="op">(</span><span class="va">hg19_insulin_GWAS</span><span class="op">$</span><span class="va">LDgrp</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">leadSNP_p</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">min</a></span><span class="op">(</span><span class="va">hg19_insulin_GWAS</span><span class="op">[</span></span>
-<span class="r-in">    <span class="fu"><a href="https://rdrr.io/pkg/BiocGenerics/man/which.html" class="external-link">which</a></span><span class="op">(</span><span class="va">hg19_insulin_GWAS</span><span class="op">$</span><span class="va">chrom</span> <span class="op">==</span> <span class="st">"chr11"</span><span class="op">)</span>, <span class="op">]</span><span class="op">$</span><span class="va">p</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">leadSNP</span> <span class="op">&lt;-</span> <span class="va">hg19_insulin_GWAS</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/pkg/BiocGenerics/man/which.html" class="external-link">which</a></span><span class="op">(</span><span class="va">hg19_insulin_GWAS</span><span class="op">$</span><span class="va">p</span> <span class="op">==</span> <span class="va">leadSNP_p</span><span class="op">)</span>, <span class="op">]</span><span class="op">$</span><span class="va">snp</span></span>
-<span class="r-in"><span class="va">chr11_manhattanPlot</span> <span class="op">&lt;-</span> <span class="fu">plotManhattan</span><span class="op">(</span></span>
-<span class="r-in">    data <span class="op">=</span> <span class="va">hg19_insulin_GWAS</span>, chrom <span class="op">=</span> <span class="st">"chr11"</span>,</span>
-<span class="r-in">    chromstart <span class="op">=</span> <span class="fl">60000000</span>,</span>
-<span class="r-in">    chromend <span class="op">=</span> <span class="fl">130000000</span>,</span>
-<span class="r-in">    assembly <span class="op">=</span> <span class="st">"hg19"</span>,</span>
-<span class="r-in">    fill <span class="op">=</span> <span class="fu"><a href="colorby.html">colorby</a></span><span class="op">(</span><span class="st">"LDgrp"</span>,</span>
-<span class="r-in">    palette <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grDevices/colorRamp.html" class="external-link">colorRampPalette</a></span><span class="op">(</span><span class="fu"><a href="c.html">c</a></span><span class="op">(</span></span>
-<span class="r-in">        <span class="st">"#1f4297"</span>,</span>
-<span class="r-in">        <span class="st">"#37a7db"</span>, <span class="st">"green"</span>,</span>
-<span class="r-in">        <span class="st">"orange"</span>, <span class="st">"red"</span>, <span class="st">"grey"</span></span>
-<span class="r-in">    <span class="op">)</span><span class="op">)</span><span class="op">)</span>,</span>
-<span class="r-in">    sigLine <span class="op">=</span> <span class="cn">TRUE</span>, col <span class="op">=</span> <span class="st">"grey"</span>,</span>
-<span class="r-in">    lty <span class="op">=</span> <span class="fl">2</span>, range <span class="op">=</span> <span class="fu"><a href="c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">16</span><span class="op">)</span>,</span>
-<span class="r-in">    leadSNP <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
-<span class="r-in">        snp <span class="op">=</span> <span class="va">leadSNP</span>,</span>
-<span class="r-in">        pch <span class="op">=</span> <span class="fl">18</span>,</span>
-<span class="r-in">        cex <span class="op">=</span> <span class="fl">0.75</span>,</span>
-<span class="r-in">        fill <span class="op">=</span> <span class="st">"#7ecdbb"</span>,</span>
-<span class="r-in">        fontsize <span class="op">=</span> <span class="fl">8</span></span>
-<span class="r-in">    <span class="op">)</span>,</span>
-<span class="r-in">    x <span class="op">=</span> <span class="fl">0.5</span>, y <span class="op">=</span> <span class="fl">2.5</span>, width <span class="op">=</span> <span class="fl">6.5</span>,</span>
-<span class="r-in">    height <span class="op">=</span> <span class="fl">1.5</span>,</span>
-<span class="r-in">    just <span class="op">=</span> <span class="fu"><a href="c.html">c</a></span><span class="op">(</span><span class="st">"left"</span>, <span class="st">"top"</span><span class="op">)</span>,</span>
-<span class="r-in">    default.units <span class="op">=</span> <span class="st">"inches"</span></span>
-<span class="r-in"><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## Plot GWAS data zooming in on chromosome 11</span></span></span>
+<span class="r-in"><span><span class="co">## highlighting a lead SNP, and coloring by LD score</span></span></span>
+<span class="r-in"><span><span class="va">hg19_insulin_GWAS</span><span class="op">$</span><span class="va">LD</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="va">hg19_insulin_GWAS</span><span class="op">$</span><span class="va">LD</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="co">## Group LD column into LD ranges</span></span></span>
+<span class="r-in"><span><span class="va">hg19_insulin_GWAS</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/BiocGenerics/man/as.data.frame.html" class="external-link">as.data.frame</a></span><span class="op">(</span><span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">hg19_insulin_GWAS</span>,</span></span>
+<span class="r-in"><span>                                        LDgrp <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/cut.html" class="external-link">cut</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>                                        <span class="va">hg19_insulin_GWAS</span><span class="op">$</span><span class="va">LD</span>,</span></span>
+<span class="r-in"><span>                                        <span class="fu"><a href="c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0.2</span>, <span class="fl">0.4</span>, <span class="fl">0.6</span>, <span class="fl">0.8</span>, <span class="fl">1</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">hg19_insulin_GWAS</span><span class="op">$</span><span class="va">LDgrp</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">addNA</a></span><span class="op">(</span><span class="va">hg19_insulin_GWAS</span><span class="op">$</span><span class="va">LDgrp</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">leadSNP_p</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">min</a></span><span class="op">(</span><span class="va">hg19_insulin_GWAS</span><span class="op">[</span></span></span>
+<span class="r-in"><span>    <span class="fu"><a href="https://rdrr.io/pkg/BiocGenerics/man/which.html" class="external-link">which</a></span><span class="op">(</span><span class="va">hg19_insulin_GWAS</span><span class="op">$</span><span class="va">chrom</span> <span class="op">==</span> <span class="st">"chr11"</span><span class="op">)</span>, <span class="op">]</span><span class="op">$</span><span class="va">p</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">leadSNP</span> <span class="op">&lt;-</span> <span class="va">hg19_insulin_GWAS</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/pkg/BiocGenerics/man/which.html" class="external-link">which</a></span><span class="op">(</span><span class="va">hg19_insulin_GWAS</span><span class="op">$</span><span class="va">p</span> <span class="op">==</span> <span class="va">leadSNP_p</span><span class="op">)</span>, <span class="op">]</span><span class="op">$</span><span class="va">snp</span></span></span>
+<span class="r-in"><span><span class="va">chr11_manhattanPlot</span> <span class="op">&lt;-</span> <span class="fu">plotManhattan</span><span class="op">(</span></span></span>
+<span class="r-in"><span>    data <span class="op">=</span> <span class="va">hg19_insulin_GWAS</span>, chrom <span class="op">=</span> <span class="st">"chr11"</span>,</span></span>
+<span class="r-in"><span>    chromstart <span class="op">=</span> <span class="fl">60000000</span>,</span></span>
+<span class="r-in"><span>    chromend <span class="op">=</span> <span class="fl">130000000</span>,</span></span>
+<span class="r-in"><span>    assembly <span class="op">=</span> <span class="st">"hg19"</span>,</span></span>
+<span class="r-in"><span>    fill <span class="op">=</span> <span class="fu"><a href="colorby.html">colorby</a></span><span class="op">(</span><span class="st">"LDgrp"</span>,</span></span>
+<span class="r-in"><span>    palette <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grDevices/colorRamp.html" class="external-link">colorRampPalette</a></span><span class="op">(</span><span class="fu"><a href="c.html">c</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>        <span class="st">"#1f4297"</span>,</span></span>
+<span class="r-in"><span>        <span class="st">"#37a7db"</span>, <span class="st">"green"</span>,</span></span>
+<span class="r-in"><span>        <span class="st">"orange"</span>, <span class="st">"red"</span>, <span class="st">"grey"</span></span></span>
+<span class="r-in"><span>    <span class="op">)</span><span class="op">)</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>    sigLine <span class="op">=</span> <span class="cn">TRUE</span>, col <span class="op">=</span> <span class="st">"grey"</span>,</span></span>
+<span class="r-in"><span>    lty <span class="op">=</span> <span class="fl">2</span>, range <span class="op">=</span> <span class="fu"><a href="c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">16</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>    leadSNP <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>        snp <span class="op">=</span> <span class="va">leadSNP</span>,</span></span>
+<span class="r-in"><span>        pch <span class="op">=</span> <span class="fl">18</span>,</span></span>
+<span class="r-in"><span>        cex <span class="op">=</span> <span class="fl">0.75</span>,</span></span>
+<span class="r-in"><span>        fill <span class="op">=</span> <span class="st">"#7ecdbb"</span>,</span></span>
+<span class="r-in"><span>        fontsize <span class="op">=</span> <span class="fl">8</span></span></span>
+<span class="r-in"><span>    <span class="op">)</span>,</span></span>
+<span class="r-in"><span>    x <span class="op">=</span> <span class="fl">0.5</span>, y <span class="op">=</span> <span class="fl">2.5</span>, width <span class="op">=</span> <span class="fl">6.5</span>,</span></span>
+<span class="r-in"><span>    height <span class="op">=</span> <span class="fl">1.5</span>,</span></span>
+<span class="r-in"><span>    just <span class="op">=</span> <span class="fu"><a href="c.html">c</a></span><span class="op">(</span><span class="st">"left"</span>, <span class="st">"top"</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>    default.units <span class="op">=</span> <span class="st">"inches"</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> manhattan[manhattan2]</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">## Plot legend for LD scores</span></span>
-<span class="r-in"><span class="fu"><a href="plotLegend.html">plotLegend</a></span><span class="op">(</span></span>
-<span class="r-in">    legend <span class="op">=</span> <span class="fu"><a href="c.html">c</a></span><span class="op">(</span></span>
-<span class="r-in">        <span class="st">"LD Ref Var"</span>,</span>
-<span class="r-in">        <span class="fu"><a href="https://rdrr.io/pkg/BiocGenerics/man/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="st">"0.4"</span>, <span class="st">"&gt;"</span>, <span class="st">"r^2"</span>, </span>
-<span class="r-in">        <span class="st">""</span>, <span class="st">"&gt;="</span>, <span class="st">"0.2"</span><span class="op">)</span>,</span>
-<span class="r-in">        <span class="fu"><a href="https://rdrr.io/pkg/BiocGenerics/man/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="st">"0.2"</span>, <span class="st">"&gt;"</span>, <span class="st">"r^2"</span>, </span>
-<span class="r-in">        <span class="st">""</span>, <span class="st">"&gt;="</span>, <span class="st">"0"</span><span class="op">)</span>,</span>
-<span class="r-in">        <span class="st">"no LD data"</span></span>
-<span class="r-in">    <span class="op">)</span>,</span>
-<span class="r-in">    fill <span class="op">=</span> <span class="fu"><a href="c.html">c</a></span><span class="op">(</span><span class="st">"#7ecdbb"</span>, <span class="st">"#37a7db"</span>, <span class="st">"#1f4297"</span>, <span class="st">"grey"</span><span class="op">)</span>, cex <span class="op">=</span> <span class="fl">0.75</span>,</span>
-<span class="r-in">    pch <span class="op">=</span> <span class="fu"><a href="c.html">c</a></span><span class="op">(</span><span class="fl">18</span>, <span class="fl">19</span>, <span class="fl">19</span>, <span class="fl">19</span><span class="op">)</span>, border <span class="op">=</span> <span class="cn">FALSE</span>, x <span class="op">=</span> <span class="fl">7</span>, y <span class="op">=</span> <span class="fl">2.5</span>,</span>
-<span class="r-in">    width <span class="op">=</span> <span class="fl">1.5</span>, height <span class="op">=</span> <span class="fl">0.6</span>, just <span class="op">=</span> <span class="fu"><a href="c.html">c</a></span><span class="op">(</span><span class="st">"right"</span>, <span class="st">"top"</span><span class="op">)</span>,</span>
-<span class="r-in">    default.units <span class="op">=</span> <span class="st">"inches"</span></span>
-<span class="r-in"><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## Plot legend for LD scores</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="plotLegend.html">plotLegend</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>    legend <span class="op">=</span> <span class="fu"><a href="c.html">c</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>        <span class="st">"LD Ref Var"</span>,</span></span>
+<span class="r-in"><span>        <span class="fu"><a href="https://rdrr.io/pkg/BiocGenerics/man/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="st">"0.4"</span>, <span class="st">"&gt;"</span>, <span class="st">"r^2"</span>, </span></span>
+<span class="r-in"><span>        <span class="st">""</span>, <span class="st">"&gt;="</span>, <span class="st">"0.2"</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>        <span class="fu"><a href="https://rdrr.io/pkg/BiocGenerics/man/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="st">"0.2"</span>, <span class="st">"&gt;"</span>, <span class="st">"r^2"</span>, </span></span>
+<span class="r-in"><span>        <span class="st">""</span>, <span class="st">"&gt;="</span>, <span class="st">"0"</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>        <span class="st">"no LD data"</span></span></span>
+<span class="r-in"><span>    <span class="op">)</span>,</span></span>
+<span class="r-in"><span>    fill <span class="op">=</span> <span class="fu"><a href="c.html">c</a></span><span class="op">(</span><span class="st">"#7ecdbb"</span>, <span class="st">"#37a7db"</span>, <span class="st">"#1f4297"</span>, <span class="st">"grey"</span><span class="op">)</span>, cex <span class="op">=</span> <span class="fl">0.75</span>,</span></span>
+<span class="r-in"><span>    pch <span class="op">=</span> <span class="fu"><a href="c.html">c</a></span><span class="op">(</span><span class="fl">18</span>, <span class="fl">19</span>, <span class="fl">19</span>, <span class="fl">19</span><span class="op">)</span>, border <span class="op">=</span> <span class="cn">FALSE</span>, x <span class="op">=</span> <span class="fl">7</span>, y <span class="op">=</span> <span class="fl">2.5</span>,</span></span>
+<span class="r-in"><span>    width <span class="op">=</span> <span class="fl">1.5</span>, height <span class="op">=</span> <span class="fl">0.6</span>, just <span class="op">=</span> <span class="fu"><a href="c.html">c</a></span><span class="op">(</span><span class="st">"right"</span>, <span class="st">"top"</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>    default.units <span class="op">=</span> <span class="st">"inches"</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> legend[legend1]</span>
-<span class="r-in"></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">## Annotate genome label</span></span>
-<span class="r-in"><span class="fu"><a href="annoGenomeLabel.html">annoGenomeLabel</a></span><span class="op">(</span></span>
-<span class="r-in">    plot <span class="op">=</span> <span class="va">chr11_manhattanPlot</span>, x <span class="op">=</span> <span class="fl">0.5</span>, y <span class="op">=</span> <span class="fl">4.01</span>,</span>
-<span class="r-in">    fontsize <span class="op">=</span> <span class="fl">8</span>, scale <span class="op">=</span> <span class="st">"Mb"</span>,</span>
-<span class="r-in">    just <span class="op">=</span> <span class="fu"><a href="c.html">c</a></span><span class="op">(</span><span class="st">"left"</span>, <span class="st">"top"</span><span class="op">)</span>, default.units <span class="op">=</span> <span class="st">"inches"</span></span>
-<span class="r-in"><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## Annotate genome label</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="annoGenomeLabel.html">annoGenomeLabel</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>    plot <span class="op">=</span> <span class="va">chr11_manhattanPlot</span>, x <span class="op">=</span> <span class="fl">0.5</span>, y <span class="op">=</span> <span class="fl">4.01</span>,</span></span>
+<span class="r-in"><span>    fontsize <span class="op">=</span> <span class="fl">8</span>, scale <span class="op">=</span> <span class="st">"Mb"</span>,</span></span>
+<span class="r-in"><span>    just <span class="op">=</span> <span class="fu"><a href="c.html">c</a></span><span class="op">(</span><span class="st">"left"</span>, <span class="st">"top"</span><span class="op">)</span>, default.units <span class="op">=</span> <span class="st">"inches"</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> genomeLabel[genomeLabel2]</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">## Annotate y-axis</span></span>
-<span class="r-in"><span class="fu"><a href="annoYaxis.html">annoYaxis</a></span><span class="op">(</span></span>
-<span class="r-in">    plot <span class="op">=</span> <span class="va">chr11_manhattanPlot</span>,</span>
-<span class="r-in">    at <span class="op">=</span> <span class="fu"><a href="c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">2</span>, <span class="fl">4</span>, <span class="fl">6</span>, <span class="fl">8</span>, <span class="fl">10</span>, <span class="fl">12</span>, <span class="fl">14</span>, <span class="fl">16</span><span class="op">)</span>,</span>
-<span class="r-in">    axisLine <span class="op">=</span> <span class="cn">TRUE</span>, fontsize <span class="op">=</span> <span class="fl">8</span></span>
-<span class="r-in"><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## Annotate y-axis</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="annoYaxis.html">annoYaxis</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>    plot <span class="op">=</span> <span class="va">chr11_manhattanPlot</span>,</span></span>
+<span class="r-in"><span>    at <span class="op">=</span> <span class="fu"><a href="c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">2</span>, <span class="fl">4</span>, <span class="fl">6</span>, <span class="fl">8</span>, <span class="fl">10</span>, <span class="fl">12</span>, <span class="fl">14</span>, <span class="fl">16</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>    axisLine <span class="op">=</span> <span class="cn">TRUE</span>, fontsize <span class="op">=</span> <span class="fl">8</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> yaxis[yaxis2]</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">## Plot y-axis label</span></span>
-<span class="r-in"><span class="fu"><a href="plotText.html">plotText</a></span><span class="op">(</span></span>
-<span class="r-in">    label <span class="op">=</span> <span class="st">"-log10(p-value)"</span>, x <span class="op">=</span> <span class="fl">0.15</span>, y <span class="op">=</span> <span class="fl">3.25</span>, rot <span class="op">=</span> <span class="fl">90</span>,</span>
-<span class="r-in">    fontsize <span class="op">=</span> <span class="fl">8</span>, fontface <span class="op">=</span> <span class="st">"bold"</span>, just <span class="op">=</span> <span class="st">"center"</span>,</span>
-<span class="r-in">    default.units <span class="op">=</span> <span class="st">"inches"</span></span>
-<span class="r-in"><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## Plot y-axis label</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="plotText.html">plotText</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>    label <span class="op">=</span> <span class="st">"-log10(p-value)"</span>, x <span class="op">=</span> <span class="fl">0.15</span>, y <span class="op">=</span> <span class="fl">3.25</span>, rot <span class="op">=</span> <span class="fl">90</span>,</span></span>
+<span class="r-in"><span>    fontsize <span class="op">=</span> <span class="fl">8</span>, fontface <span class="op">=</span> <span class="st">"bold"</span>, just <span class="op">=</span> <span class="st">"center"</span>,</span></span>
+<span class="r-in"><span>    default.units <span class="op">=</span> <span class="st">"inches"</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> text[text2]</span>
 <span class="r-plt img"><img src="plotManhattan-1.png" alt="" width="1230" height="1050"></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">## Hide page guides</span></span>
-<span class="r-in"><span class="fu"><a href="pageGuideHide.html">pageGuideHide</a></span><span class="op">(</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## Hide page guides</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="pageGuideHide.html">pageGuideHide</a></span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="plotManhattan-2.png" alt="" width="1230" height="1050"></span>
 </code></pre></div>
     </div>
@@ -407,7 +466,7 @@ Manhattan plot by ignoring plot placement parameters:</p><div class="sourceCode"
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
 </div>
 
       </footer></div>

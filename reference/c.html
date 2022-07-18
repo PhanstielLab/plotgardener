@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">plotgardener</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.2.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.2.8</span>
       </span>
     </div>
 
@@ -96,34 +96,39 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">c</span><span class="op">(</span><span class="va">...</span>, recursive <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">c</span><span class="op">(</span><span class="va">...</span>, recursive <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>...</dt>
 <dd><p><a href="pgParams.html">pgParams</a> objects to be concatenated.</p></dd>
+
+
 <dt>recursive</dt>
 <dd><p>logical. If <code>recursive = TRUE</code>, the function
 recursively descends through lists
 (and pairlists) combining all their elements into a vector.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p><code>NULL</code> or an expression or a vector of an appropriate mode.
+    
+
+<p><code>NULL</code> or an expression or a vector of an appropriate mode.
 (With no arguments the value is <code>NULL</code>.)</p>
     </div>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co">## Define parameters</span></span>
-<span class="r-in"><span class="va">p1</span> <span class="op">&lt;-</span> <span class="fu"><a href="pgParams.html">pgParams</a></span><span class="op">(</span>chrom <span class="op">=</span> <span class="st">"chr1"</span>, assembly <span class="op">=</span> <span class="st">"hg19"</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">## Define another set of parameters</span></span>
-<span class="r-in"><span class="va">p2</span> <span class="op">&lt;-</span> <span class="fu"><a href="pgParams.html">pgParams</a></span><span class="op">(</span>fontsize <span class="op">=</span> <span class="fl">10</span>, assembly <span class="op">=</span> <span class="st">"hg19"</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">## Combine parameters into one `pgParams` object</span></span>
-<span class="r-in"><span class="va">pTotal</span> <span class="op">&lt;-</span> <span class="fu">c</span><span class="op">(</span><span class="va">p1</span>, <span class="va">p2</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co">## Define parameters</span></span></span>
+<span class="r-in"><span><span class="va">p1</span> <span class="op">&lt;-</span> <span class="fu"><a href="pgParams.html">pgParams</a></span><span class="op">(</span>chrom <span class="op">=</span> <span class="st">"chr1"</span>, assembly <span class="op">=</span> <span class="st">"hg19"</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## Define another set of parameters</span></span></span>
+<span class="r-in"><span><span class="va">p2</span> <span class="op">&lt;-</span> <span class="fu"><a href="pgParams.html">pgParams</a></span><span class="op">(</span>fontsize <span class="op">=</span> <span class="fl">10</span>, assembly <span class="op">=</span> <span class="st">"hg19"</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## Combine parameters into one `pgParams` object</span></span></span>
+<span class="r-in"><span><span class="va">pTotal</span> <span class="op">&lt;-</span> <span class="fu">c</span><span class="op">(</span><span class="va">p1</span>, <span class="va">p2</span><span class="op">)</span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -138,7 +143,7 @@ recursively descends through lists
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
 </div>
 
       </footer></div>

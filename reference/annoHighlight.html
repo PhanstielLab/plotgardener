@@ -20,7 +20,7 @@ plot"><meta property="og:image" content="https://phanstiellab.github.io/plotgard
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">plotgardener</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.2.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.2.8</span>
       </span>
     </div>
 
@@ -101,50 +101,68 @@ plot</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">annoHighlight</span><span class="op">(</span>
-    <span class="va">plot</span>,
-    <span class="va">chrom</span>,
-    chromstart <span class="op">=</span> <span class="cn">NULL</span>,
-    chromend <span class="op">=</span> <span class="cn">NULL</span>,
-    fill <span class="op">=</span> <span class="st">"grey"</span>,
-    linecolor <span class="op">=</span> <span class="cn">NA</span>,
-    alpha <span class="op">=</span> <span class="fl">0.4</span>,
-    <span class="va">y</span>,
-    <span class="va">height</span>,
-    just <span class="op">=</span> <span class="fu"><a href="c.html">c</a></span><span class="op">(</span><span class="st">"left"</span>, <span class="st">"top"</span><span class="op">)</span>,
-    default.units <span class="op">=</span> <span class="st">"inches"</span>,
-    params <span class="op">=</span> <span class="cn">NULL</span>,
-    <span class="va">...</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">annoHighlight</span><span class="op">(</span></span>
+<span>    <span class="va">plot</span>,</span>
+<span>    <span class="va">chrom</span>,</span>
+<span>    chromstart <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>    chromend <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>    fill <span class="op">=</span> <span class="st">"grey"</span>,</span>
+<span>    linecolor <span class="op">=</span> <span class="cn">NA</span>,</span>
+<span>    alpha <span class="op">=</span> <span class="fl">0.4</span>,</span>
+<span>    <span class="va">y</span>,</span>
+<span>    <span class="va">height</span>,</span>
+<span>    just <span class="op">=</span> <span class="fu"><a href="c.html">c</a></span><span class="op">(</span><span class="st">"left"</span>, <span class="st">"top"</span><span class="op">)</span>,</span>
+<span>    default.units <span class="op">=</span> <span class="st">"inches"</span>,</span>
+<span>    params <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>    <span class="va">...</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>plot</dt>
 <dd><p>Input plot on which to annotate genomic region.</p></dd>
+
+
 <dt>chrom</dt>
 <dd><p>Chromosome of region to be highlighted, as a string.</p></dd>
+
+
 <dt>chromstart</dt>
 <dd><p>Integer start position on chromosome to be highlighted.</p></dd>
+
+
 <dt>chromend</dt>
 <dd><p>Integer end position on chromosome to be highlighted.</p></dd>
+
+
 <dt>fill</dt>
 <dd><p>A character value specifying highlight box fill color.
 Default value is <code>fill = "grey"</code>.</p></dd>
+
+
 <dt>linecolor</dt>
 <dd><p>A character value specifying highlight box line color.
 Default value is <code>linecolor = NA</code>.</p></dd>
+
+
 <dt>alpha</dt>
 <dd><p>Numeric value specifying color transparency.
 Default value is <code>alpha = 0.4</code>.</p></dd>
+
+
 <dt>y</dt>
 <dd><p>A numeric, unit object, or character containing a "b" combined
 with a numeric value specifying square highlight box y-location.
 The character value will place the highlight box y relative to the
 bottom of the most recently plotted plot according to the
 units of the <code>plotgardener</code> page.</p></dd>
+
+
 <dt>height</dt>
 <dd><p>A numeric or unit object specifying highlight box height.</p></dd>
+
+
 <dt>just</dt>
 <dd><p>Justification of highlight box relative to its (x, y)
 location. If there are two values, the first value specifies horizontal
@@ -152,73 +170,82 @@ justification and the second value specifies vertical justification.
 Possible string values are: <code>"left"</code>, <code>"right"</code>,
 <code>"centre"</code>, <code>"center"</code>, <code>"bottom"</code>, and <code>"top"</code>.
 Default value is <code>just = c("left", "top")</code>.</p></dd>
+
+
 <dt>default.units</dt>
 <dd><p>A string indicating the default units to use if
 <code>y</code> or <code>height</code> are only given as numerics or numeric vectors.
 Default value is <code>default.units = "inches"</code>.</p></dd>
+
+
 <dt>params</dt>
 <dd><p>An optional <a href="pgParams.html">pgParams</a> object containing
 relevant function parameters.</p></dd>
+
+
 <dt>...</dt>
 <dd><p>Additional grid graphical parameters. See <a href="https://rdrr.io/r/grid/gpar.html" class="external-link">gpar</a>.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>Returns a <code>highlight</code> object containing relevant
+    
+
+<p>Returns a <code>highlight</code> object containing relevant
 genomic region, placement, and <a href="https://rdrr.io/r/grid/grid.grob.html" class="external-link">grob</a> information.</p>
     </div>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co">## Create a page</span></span>
-<span class="r-in"><span class="fu"><a href="pageCreate.html">pageCreate</a></span><span class="op">(</span>width <span class="op">=</span> <span class="fl">7.5</span>, height <span class="op">=</span> <span class="fl">1.5</span>, default.units <span class="op">=</span> <span class="st">"inches"</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">## Plot and place a signal plot</span></span>
-<span class="r-in"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/PhanstielLab/plotgardenerData" class="external-link">plotgardenerData</a></span><span class="op">)</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"IMR90_ChIP_H3K27ac_signal"</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">region</span> <span class="op">&lt;-</span> <span class="fu"><a href="pgParams.html">pgParams</a></span><span class="op">(</span></span>
-<span class="r-in">    chrom <span class="op">=</span> <span class="st">"chr21"</span>,</span>
-<span class="r-in">    chromstart <span class="op">=</span> <span class="fl">28000000</span>, chromend <span class="op">=</span> <span class="fl">30300000</span>,</span>
-<span class="r-in">    assembly <span class="op">=</span> <span class="st">"hg19"</span>,</span>
-<span class="r-in">    range <span class="op">=</span> <span class="fu"><a href="c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">45</span><span class="op">)</span></span>
-<span class="r-in"><span class="op">)</span></span>
-<span class="r-in"><span class="va">signalPlot</span> <span class="op">&lt;-</span> <span class="fu"><a href="plotSignal.html">plotSignal</a></span><span class="op">(</span></span>
-<span class="r-in">    data <span class="op">=</span> <span class="va">IMR90_ChIP_H3K27ac_signal</span>, params <span class="op">=</span> <span class="va">region</span>,</span>
-<span class="r-in">    x <span class="op">=</span> <span class="fl">0.5</span>, y <span class="op">=</span> <span class="fl">0.25</span>, width <span class="op">=</span> <span class="fl">6.5</span>, height <span class="op">=</span> <span class="fl">0.65</span>,</span>
-<span class="r-in">    just <span class="op">=</span> <span class="fu"><a href="c.html">c</a></span><span class="op">(</span><span class="st">"left"</span>, <span class="st">"top"</span><span class="op">)</span>,</span>
-<span class="r-in">    default.units <span class="op">=</span> <span class="st">"inches"</span></span>
-<span class="r-in"><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co">## Create a page</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="pageCreate.html">pageCreate</a></span><span class="op">(</span>width <span class="op">=</span> <span class="fl">7.5</span>, height <span class="op">=</span> <span class="fl">1.5</span>, default.units <span class="op">=</span> <span class="st">"inches"</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## Plot and place a signal plot</span></span></span>
+<span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/PhanstielLab/plotgardenerData" class="external-link">plotgardenerData</a></span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"IMR90_ChIP_H3K27ac_signal"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">region</span> <span class="op">&lt;-</span> <span class="fu"><a href="pgParams.html">pgParams</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>    chrom <span class="op">=</span> <span class="st">"chr21"</span>,</span></span>
+<span class="r-in"><span>    chromstart <span class="op">=</span> <span class="fl">28000000</span>, chromend <span class="op">=</span> <span class="fl">30300000</span>,</span></span>
+<span class="r-in"><span>    assembly <span class="op">=</span> <span class="st">"hg19"</span>,</span></span>
+<span class="r-in"><span>    range <span class="op">=</span> <span class="fu"><a href="c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">45</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">signalPlot</span> <span class="op">&lt;-</span> <span class="fu"><a href="plotSignal.html">plotSignal</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>    data <span class="op">=</span> <span class="va">IMR90_ChIP_H3K27ac_signal</span>, params <span class="op">=</span> <span class="va">region</span>,</span></span>
+<span class="r-in"><span>    x <span class="op">=</span> <span class="fl">0.5</span>, y <span class="op">=</span> <span class="fl">0.25</span>, width <span class="op">=</span> <span class="fl">6.5</span>, height <span class="op">=</span> <span class="fl">0.65</span>,</span></span>
+<span class="r-in"><span>    just <span class="op">=</span> <span class="fu"><a href="c.html">c</a></span><span class="op">(</span><span class="st">"left"</span>, <span class="st">"top"</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>    default.units <span class="op">=</span> <span class="st">"inches"</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> signal[signal1]</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">## Highlight genomic region on signal plot</span></span>
-<span class="r-in"><span class="fu">annoHighlight</span><span class="op">(</span></span>
-<span class="r-in">    plot <span class="op">=</span> <span class="va">signalPlot</span>,</span>
-<span class="r-in">    chrom <span class="op">=</span> <span class="st">"chr21"</span>,</span>
-<span class="r-in">    chromstart <span class="op">=</span> <span class="fl">29000000</span>, chromend <span class="op">=</span> <span class="fl">29125000</span>,</span>
-<span class="r-in">    y <span class="op">=</span> <span class="fl">0.25</span>, height <span class="op">=</span> <span class="fl">1</span>, just <span class="op">=</span> <span class="fu"><a href="c.html">c</a></span><span class="op">(</span><span class="st">"left"</span>, <span class="st">"top"</span><span class="op">)</span>,</span>
-<span class="r-in">    default.units <span class="op">=</span> <span class="st">"inches"</span></span>
-<span class="r-in"><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## Highlight genomic region on signal plot</span></span></span>
+<span class="r-in"><span><span class="fu">annoHighlight</span><span class="op">(</span></span></span>
+<span class="r-in"><span>    plot <span class="op">=</span> <span class="va">signalPlot</span>,</span></span>
+<span class="r-in"><span>    chrom <span class="op">=</span> <span class="st">"chr21"</span>,</span></span>
+<span class="r-in"><span>    chromstart <span class="op">=</span> <span class="fl">29000000</span>, chromend <span class="op">=</span> <span class="fl">29125000</span>,</span></span>
+<span class="r-in"><span>    y <span class="op">=</span> <span class="fl">0.25</span>, height <span class="op">=</span> <span class="fl">1</span>, just <span class="op">=</span> <span class="fu"><a href="c.html">c</a></span><span class="op">(</span><span class="st">"left"</span>, <span class="st">"top"</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>    default.units <span class="op">=</span> <span class="st">"inches"</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> highlight[highlight1]</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">## Plot text label</span></span>
-<span class="r-in"><span class="fu"><a href="plotText.html">plotText</a></span><span class="op">(</span></span>
-<span class="r-in">    label <span class="op">=</span> <span class="st">"region of interest"</span>, fontsize <span class="op">=</span> <span class="fl">8</span>, fontcolor <span class="op">=</span> <span class="st">"black"</span>,</span>
-<span class="r-in">    x <span class="op">=</span> <span class="fl">3.5</span>, y <span class="op">=</span> <span class="fl">0.2</span>, just <span class="op">=</span> <span class="st">"bottom"</span>, default.units <span class="op">=</span> <span class="st">"inches"</span></span>
-<span class="r-in"><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## Plot text label</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="plotText.html">plotText</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>    label <span class="op">=</span> <span class="st">"region of interest"</span>, fontsize <span class="op">=</span> <span class="fl">8</span>, fontcolor <span class="op">=</span> <span class="st">"black"</span>,</span></span>
+<span class="r-in"><span>    x <span class="op">=</span> <span class="fl">3.5</span>, y <span class="op">=</span> <span class="fl">0.2</span>, just <span class="op">=</span> <span class="st">"bottom"</span>, default.units <span class="op">=</span> <span class="st">"inches"</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> text[text1]</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">## Plot genome label</span></span>
-<span class="r-in"><span class="fu"><a href="plotGenomeLabel.html">plotGenomeLabel</a></span><span class="op">(</span></span>
-<span class="r-in">    chrom <span class="op">=</span> <span class="st">"chr21"</span>,</span>
-<span class="r-in">    chromstart <span class="op">=</span> <span class="fl">28000000</span>, chromend <span class="op">=</span> <span class="fl">30300000</span>,</span>
-<span class="r-in">    assembly <span class="op">=</span> <span class="st">"hg19"</span>,</span>
-<span class="r-in">    x <span class="op">=</span> <span class="fl">0.5</span>, y <span class="op">=</span> <span class="fl">1.3</span>, length <span class="op">=</span> <span class="fl">6.5</span>, default.units <span class="op">=</span> <span class="st">"inches"</span></span>
-<span class="r-in"><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## Plot genome label</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="plotGenomeLabel.html">plotGenomeLabel</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>    chrom <span class="op">=</span> <span class="st">"chr21"</span>,</span></span>
+<span class="r-in"><span>    chromstart <span class="op">=</span> <span class="fl">28000000</span>, chromend <span class="op">=</span> <span class="fl">30300000</span>,</span></span>
+<span class="r-in"><span>    assembly <span class="op">=</span> <span class="st">"hg19"</span>,</span></span>
+<span class="r-in"><span>    x <span class="op">=</span> <span class="fl">0.5</span>, y <span class="op">=</span> <span class="fl">1.3</span>, length <span class="op">=</span> <span class="fl">6.5</span>, default.units <span class="op">=</span> <span class="st">"inches"</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> genomeLabel[genomeLabel1]</span>
 <span class="r-plt img"><img src="annoHighlight-1.png" alt="" width="1230" height="1050"></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">## Hide page guides</span></span>
-<span class="r-in"><span class="fu"><a href="pageGuideHide.html">pageGuideHide</a></span><span class="op">(</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## Hide page guides</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="pageGuideHide.html">pageGuideHide</a></span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="annoHighlight-2.png" alt="" width="1230" height="1050"></span>
 </code></pre></div>
     </div>
@@ -234,7 +261,7 @@ genomic region, placement, and <a href="https://rdrr.io/r/grid/grid.grob.html" c
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
 </div>
 
       </footer></div>

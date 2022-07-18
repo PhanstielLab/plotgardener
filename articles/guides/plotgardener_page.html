@@ -41,7 +41,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../../index.html">plotgardener</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.2.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.2.8</span>
       </span>
     </div>
 
@@ -144,40 +144,40 @@ with <code>xgrid</code> and <code>ygrid</code>, respectively. By default
 these values are set to 0.5 of the unit. In the following example we
 demonstrate creating a standard 8.5 x 11 inch page:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../../reference/pageCreate.html">pageCreate</a></span><span class="op">(</span>width <span class="op">=</span> <span class="fl">8.5</span>, height <span class="op">=</span> <span class="fl">11</span>, default.units <span class="op">=</span> <span class="st">"inches"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="../../reference/pageCreate.html">pageCreate</a></span><span class="op">(</span>width <span class="op">=</span> <span class="fl">8.5</span>, height <span class="op">=</span> <span class="fl">11</span>, default.units <span class="op">=</span> <span class="st">"inches"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="plotgardener_page_files/figure-html/page_demo01-1.png" width="1650" style="display: block; margin: auto;"></p>
 <p>Or we could create a smaller sized page in a different set of units
 with different gridlines:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../../reference/pageCreate.html">pageCreate</a></span><span class="op">(</span>width <span class="op">=</span> <span class="fl">8</span>, height <span class="op">=</span> <span class="fl">8</span>, xgrid <span class="op">=</span> <span class="fl">1</span>, ygrid <span class="op">=</span> <span class="fl">1</span>, default.units <span class="op">=</span> <span class="st">"cm"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="../../reference/pageCreate.html">pageCreate</a></span><span class="op">(</span>width <span class="op">=</span> <span class="fl">8</span>, height <span class="op">=</span> <span class="fl">8</span>, xgrid <span class="op">=</span> <span class="fl">1</span>, ygrid <span class="op">=</span> <span class="fl">1</span>, default.units <span class="op">=</span> <span class="st">"cm"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="plotgardener_page_files/figure-html/page_demo02-1.png" width="750" style="display: block; margin: auto;"></p>
 <p>We could turn off gridlines entirely by setting <code>xgrid</code>
 and <code>ygrid</code> to 0:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../../reference/pageCreate.html">pageCreate</a></span><span class="op">(</span>
-    width <span class="op">=</span> <span class="fl">3</span>, height <span class="op">=</span> <span class="fl">3</span>, xgrid <span class="op">=</span> <span class="fl">0</span>, ygrid <span class="op">=</span> <span class="fl">0</span>,
-    default.units <span class="op">=</span> <span class="st">"inches"</span>
-<span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="../../reference/pageCreate.html">pageCreate</a></span><span class="op">(</span></span>
+<span>    width <span class="op">=</span> <span class="fl">3</span>, height <span class="op">=</span> <span class="fl">3</span>, xgrid <span class="op">=</span> <span class="fl">0</span>, ygrid <span class="op">=</span> <span class="fl">0</span>,</span>
+<span>    default.units <span class="op">=</span> <span class="st">"inches"</span></span>
+<span><span class="op">)</span></span></code></pre></div>
 <p><img src="plotgardener_page_files/figure-html/page_demo03-1.png" width="750" style="display: block; margin: auto;"></p>
 <p>If we want more specific gridlines on our page, we can use the
 <code><a href="../../reference/pageGuideHorizontal.html">pageGuideHorizontal()</a></code> and <code><a href="../../reference/pageGuideVertical.html">pageGuideVertical()</a></code>
 functions:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../../reference/pageCreate.html">pageCreate</a></span><span class="op">(</span>width <span class="op">=</span> <span class="fl">3</span>, height <span class="op">=</span> <span class="fl">3</span>, default.units <span class="op">=</span> <span class="st">"inches"</span><span class="op">)</span>
-<span class="co">## Add a horizontal guide at y = 2.25 inches</span>
-<span class="fu"><a href="../../reference/pageGuideHorizontal.html">pageGuideHorizontal</a></span><span class="op">(</span>y <span class="op">=</span> <span class="fl">2.25</span>, default.units <span class="op">=</span> <span class="st">"inches"</span><span class="op">)</span>
-<span class="co">## Add a vertical guide at x = 0.75 inches</span>
-<span class="fu"><a href="../../reference/pageGuideVertical.html">pageGuideVertical</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fl">0.75</span>, default.units <span class="op">=</span> <span class="st">"inches"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="../../reference/pageCreate.html">pageCreate</a></span><span class="op">(</span>width <span class="op">=</span> <span class="fl">3</span>, height <span class="op">=</span> <span class="fl">3</span>, default.units <span class="op">=</span> <span class="st">"inches"</span><span class="op">)</span></span>
+<span><span class="co">## Add a horizontal guide at y = 2.25 inches</span></span>
+<span><span class="fu"><a href="../../reference/pageGuideHorizontal.html">pageGuideHorizontal</a></span><span class="op">(</span>y <span class="op">=</span> <span class="fl">2.25</span>, default.units <span class="op">=</span> <span class="st">"inches"</span><span class="op">)</span></span>
+<span><span class="co">## Add a vertical guide at x = 0.75 inches</span></span>
+<span><span class="fu"><a href="../../reference/pageGuideVertical.html">pageGuideVertical</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fl">0.75</span>, default.units <span class="op">=</span> <span class="st">"inches"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="plotgardener_page_files/figure-html/page_demo04-1.png" width="750" style="display: block; margin: auto;"></p>
 <p>We can also remove all guidelines from the plot once we are finished
 using guides by using the <code><a href="../../reference/pageGuideHide.html">pageGuideHide()</a></code> function:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co">## Create page</span>
-<span class="fu"><a href="../../reference/pageCreate.html">pageCreate</a></span><span class="op">(</span>width <span class="op">=</span> <span class="fl">3</span>, height <span class="op">=</span> <span class="fl">3</span>, default.units <span class="op">=</span> <span class="st">"inches"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co">## Create page</span></span>
+<span><span class="fu"><a href="../../reference/pageCreate.html">pageCreate</a></span><span class="op">(</span>width <span class="op">=</span> <span class="fl">3</span>, height <span class="op">=</span> <span class="fl">3</span>, default.units <span class="op">=</span> <span class="st">"inches"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="plotgardener_page_files/figure-html/page_demo05-1.png" width="750" style="display: block; margin: auto;"></p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co">## Remove guides</span>
-<span class="fu"><a href="../../reference/pageGuideHide.html">pageGuideHide</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co">## Remove guides</span></span>
+<span><span class="fu"><a href="../../reference/pageGuideHide.html">pageGuideHide</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p><img src="plotgardener_page_files/figure-html/page_demo05-2.png" width="750" style="display: block; margin: auto;"></p>
 <div class="section level3">
 <h3 id="coordinate-systems-and-units">Coordinate systems and units<a class="anchor" aria-label="anchor" href="#coordinate-systems-and-units"></a>
@@ -239,7 +239,7 @@ There are 72.27 points per inch.</td>
 place and arrange our plots using other coordinate systems. For example,
 we can set our page as 3 x 3 <strong>inches</strong>:</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../../reference/pageCreate.html">pageCreate</a></span><span class="op">(</span>width <span class="op">=</span> <span class="fl">3</span>, height <span class="op">=</span> <span class="fl">3</span>, default.units <span class="op">=</span> <span class="st">"inches"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="../../reference/pageCreate.html">pageCreate</a></span><span class="op">(</span>width <span class="op">=</span> <span class="fl">3</span>, height <span class="op">=</span> <span class="fl">3</span>, default.units <span class="op">=</span> <span class="st">"inches"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="plotgardener_page_files/figure-html/coord_01-1.png" width="750" style="display: block; margin: auto;"></p>
 <p>But we can then switch to <strong>npc</strong> coordinates to plot
 something in the center of the page at (0.5, 0.5) npc. The
@@ -247,41 +247,41 @@ something in the center of the page at (0.5, 0.5) npc. The
 <code>y</code>, <code>width</code>, and <code>height</code> in
 combinations of different units in one plotting function call.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../../reference/plotRect.html">plotRect</a></span><span class="op">(</span>
-    x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grid/unit.html" class="external-link">unit</a></span><span class="op">(</span><span class="fl">0.5</span>, <span class="st">"npc"</span><span class="op">)</span>, y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grid/unit.html" class="external-link">unit</a></span><span class="op">(</span><span class="fl">0.5</span>, <span class="st">"npc"</span><span class="op">)</span>, width <span class="op">=</span> <span class="fl">1</span>, height <span class="op">=</span> <span class="fl">1</span>,
-    default.units <span class="op">=</span> <span class="st">"inches"</span>
-<span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="../../reference/plotRect.html">plotRect</a></span><span class="op">(</span></span>
+<span>    x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grid/unit.html" class="external-link">unit</a></span><span class="op">(</span><span class="fl">0.5</span>, <span class="st">"npc"</span><span class="op">)</span>, y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grid/unit.html" class="external-link">unit</a></span><span class="op">(</span><span class="fl">0.5</span>, <span class="st">"npc"</span><span class="op">)</span>, width <span class="op">=</span> <span class="fl">1</span>, height <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>    default.units <span class="op">=</span> <span class="st">"inches"</span></span>
+<span><span class="op">)</span></span></code></pre></div>
 <p><img src="plotgardener_page_files/figure-html/coord_02-1.png" width="750" style="display: block; margin: auto;"></p>
 <p>The <strong>native</strong> coordinate system is particularly useful
 for annotation functions that can plot relative to the genomic scales of
 a plot. For example, we can use <code><a href="../../reference/annoText.html">annoText()</a></code> to annotate some
 text at a specific genomic location in a plot:</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../../reference/pageCreate.html">pageCreate</a></span><span class="op">(</span>
-    width <span class="op">=</span> <span class="fl">5</span>, height <span class="op">=</span> <span class="fl">1.5</span>, default.units <span class="op">=</span> <span class="st">"inches"</span>,
-    showGuides <span class="op">=</span> <span class="cn">FALSE</span>, xgrid <span class="op">=</span> <span class="fl">0</span>, ygrid <span class="op">=</span> <span class="fl">0</span>
-<span class="op">)</span>
-
-<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/PhanstielLab/plotgardenerData" class="external-link">plotgardenerData</a></span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"IMR90_ChIP_H3K27ac_signal"</span><span class="op">)</span>
-<span class="va">signalPlot</span> <span class="op">&lt;-</span> <span class="fu"><a href="../../reference/plotSignal.html">plotSignal</a></span><span class="op">(</span>
-    data <span class="op">=</span> <span class="va">IMR90_ChIP_H3K27ac_signal</span>,
-    chrom <span class="op">=</span> <span class="st">"chr21"</span>, chromstart <span class="op">=</span> <span class="fl">28000000</span>, chromend <span class="op">=</span> <span class="fl">30300000</span>,
-    assembly <span class="op">=</span> <span class="st">"hg19"</span>,
-    x <span class="op">=</span> <span class="fl">0.5</span>, y <span class="op">=</span> <span class="fl">0.25</span>, width <span class="op">=</span> <span class="fl">4</span>, height <span class="op">=</span> <span class="fl">0.75</span>, default.units <span class="op">=</span> <span class="st">"inches"</span>
-<span class="op">)</span>
-<span class="fu"><a href="../../reference/annoGenomeLabel.html">annoGenomeLabel</a></span><span class="op">(</span>plot <span class="op">=</span> <span class="va">signalPlot</span>, x <span class="op">=</span> <span class="fl">0.5</span>, y <span class="op">=</span> <span class="fl">1.01</span><span class="op">)</span>
-
-<span class="co">## Annotate text at average x-coordinate of data peak</span>
-<span class="va">peakScore</span> <span class="op">&lt;-</span> <span class="va">IMR90_ChIP_H3K27ac_signal</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/pkg/BiocGenerics/man/which.html" class="external-link">which</a></span><span class="op">(</span>
-    <span class="va">IMR90_ChIP_H3K27ac_signal</span><span class="op">$</span><span class="va">score</span> <span class="op">==</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">max</a></span><span class="op">(</span><span class="va">IMR90_ChIP_H3K27ac_signal</span><span class="op">$</span><span class="va">score</span><span class="op">)</span>
-<span class="op">)</span>, <span class="op">]</span>
-<span class="va">peakPos</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">round</a></span><span class="op">(</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">min</a></span><span class="op">(</span><span class="va">peakScore</span><span class="op">$</span><span class="va">start</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">max</a></span><span class="op">(</span><span class="va">peakScore</span><span class="op">$</span><span class="va">end</span><span class="op">)</span><span class="op">)</span> <span class="op">*</span> <span class="fl">0.5</span><span class="op">)</span>
-<span class="fu"><a href="../../reference/annoText.html">annoText</a></span><span class="op">(</span>
-    plot <span class="op">=</span> <span class="va">signalPlot</span>, label <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/format.html" class="external-link">format</a></span><span class="op">(</span><span class="va">peakPos</span>, big.mark <span class="op">=</span> <span class="st">","</span><span class="op">)</span>, fontsize <span class="op">=</span> <span class="fl">8</span>,
-    x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grid/unit.html" class="external-link">unit</a></span><span class="op">(</span><span class="va">peakPos</span>, <span class="st">"native"</span><span class="op">)</span>, y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grid/unit.html" class="external-link">unit</a></span><span class="op">(</span><span class="fl">1</span>, <span class="st">"npc"</span><span class="op">)</span>,
-    just <span class="op">=</span> <span class="st">"bottom"</span>
-<span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="../../reference/pageCreate.html">pageCreate</a></span><span class="op">(</span></span>
+<span>    width <span class="op">=</span> <span class="fl">5</span>, height <span class="op">=</span> <span class="fl">1.5</span>, default.units <span class="op">=</span> <span class="st">"inches"</span>,</span>
+<span>    showGuides <span class="op">=</span> <span class="cn">FALSE</span>, xgrid <span class="op">=</span> <span class="fl">0</span>, ygrid <span class="op">=</span> <span class="fl">0</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/PhanstielLab/plotgardenerData" class="external-link">plotgardenerData</a></span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"IMR90_ChIP_H3K27ac_signal"</span><span class="op">)</span></span>
+<span><span class="va">signalPlot</span> <span class="op">&lt;-</span> <span class="fu"><a href="../../reference/plotSignal.html">plotSignal</a></span><span class="op">(</span></span>
+<span>    data <span class="op">=</span> <span class="va">IMR90_ChIP_H3K27ac_signal</span>,</span>
+<span>    chrom <span class="op">=</span> <span class="st">"chr21"</span>, chromstart <span class="op">=</span> <span class="fl">28000000</span>, chromend <span class="op">=</span> <span class="fl">30300000</span>,</span>
+<span>    assembly <span class="op">=</span> <span class="st">"hg19"</span>,</span>
+<span>    x <span class="op">=</span> <span class="fl">0.5</span>, y <span class="op">=</span> <span class="fl">0.25</span>, width <span class="op">=</span> <span class="fl">4</span>, height <span class="op">=</span> <span class="fl">0.75</span>, default.units <span class="op">=</span> <span class="st">"inches"</span></span>
+<span><span class="op">)</span></span>
+<span><span class="fu"><a href="../../reference/annoGenomeLabel.html">annoGenomeLabel</a></span><span class="op">(</span>plot <span class="op">=</span> <span class="va">signalPlot</span>, x <span class="op">=</span> <span class="fl">0.5</span>, y <span class="op">=</span> <span class="fl">1.01</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co">## Annotate text at average x-coordinate of data peak</span></span>
+<span><span class="va">peakScore</span> <span class="op">&lt;-</span> <span class="va">IMR90_ChIP_H3K27ac_signal</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/pkg/BiocGenerics/man/which.html" class="external-link">which</a></span><span class="op">(</span></span>
+<span>    <span class="va">IMR90_ChIP_H3K27ac_signal</span><span class="op">$</span><span class="va">score</span> <span class="op">==</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">max</a></span><span class="op">(</span><span class="va">IMR90_ChIP_H3K27ac_signal</span><span class="op">$</span><span class="va">score</span><span class="op">)</span></span>
+<span><span class="op">)</span>, <span class="op">]</span></span>
+<span><span class="va">peakPos</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">round</a></span><span class="op">(</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">min</a></span><span class="op">(</span><span class="va">peakScore</span><span class="op">$</span><span class="va">start</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">max</a></span><span class="op">(</span><span class="va">peakScore</span><span class="op">$</span><span class="va">end</span><span class="op">)</span><span class="op">)</span> <span class="op">*</span> <span class="fl">0.5</span><span class="op">)</span></span>
+<span><span class="fu"><a href="../../reference/annoText.html">annoText</a></span><span class="op">(</span></span>
+<span>    plot <span class="op">=</span> <span class="va">signalPlot</span>, label <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/format.html" class="external-link">format</a></span><span class="op">(</span><span class="va">peakPos</span>, big.mark <span class="op">=</span> <span class="st">","</span><span class="op">)</span>, fontsize <span class="op">=</span> <span class="fl">8</span>,</span>
+<span>    x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grid/unit.html" class="external-link">unit</a></span><span class="op">(</span><span class="va">peakPos</span>, <span class="st">"native"</span><span class="op">)</span>, y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grid/unit.html" class="external-link">unit</a></span><span class="op">(</span><span class="fl">1</span>, <span class="st">"npc"</span><span class="op">)</span>,</span>
+<span>    just <span class="op">=</span> <span class="st">"bottom"</span></span>
+<span><span class="op">)</span></span></code></pre></div>
 <p><img src="plotgardener_page_files/figure-html/coord_03-1.png" width="1050" style="display: block; margin: auto;"></p>
 </div>
 <div class="section level3">
@@ -306,62 +306,62 @@ left…</p>
 <p><code>plotgardener</code> can make the plot with these exact
 dimensions:</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co">## Create page</span>
-<span class="fu"><a href="../../reference/pageCreate.html">pageCreate</a></span><span class="op">(</span>width <span class="op">=</span> <span class="fl">3</span>, height <span class="op">=</span> <span class="fl">3</span>, default.units <span class="op">=</span> <span class="st">"inches"</span><span class="op">)</span>
-
-<span class="co">## Plot rectangle</span>
-<span class="fu"><a href="../../reference/plotRect.html">plotRect</a></span><span class="op">(</span>
-    x <span class="op">=</span> <span class="fl">0.5</span>, y <span class="op">=</span> <span class="fl">0.5</span>, width <span class="op">=</span> <span class="fl">2</span>, height <span class="op">=</span> <span class="fl">1</span>,
-    just <span class="op">=</span> <span class="fu"><a href="../../reference/c.html">c</a></span><span class="op">(</span><span class="st">"left"</span>, <span class="st">"top"</span><span class="op">)</span>, default.units <span class="op">=</span> <span class="st">"inches"</span>
-<span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co">## Create page</span></span>
+<span><span class="fu"><a href="../../reference/pageCreate.html">pageCreate</a></span><span class="op">(</span>width <span class="op">=</span> <span class="fl">3</span>, height <span class="op">=</span> <span class="fl">3</span>, default.units <span class="op">=</span> <span class="st">"inches"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co">## Plot rectangle</span></span>
+<span><span class="fu"><a href="../../reference/plotRect.html">plotRect</a></span><span class="op">(</span></span>
+<span>    x <span class="op">=</span> <span class="fl">0.5</span>, y <span class="op">=</span> <span class="fl">0.5</span>, width <span class="op">=</span> <span class="fl">2</span>, height <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>    just <span class="op">=</span> <span class="fu"><a href="../../reference/c.html">c</a></span><span class="op">(</span><span class="st">"left"</span>, <span class="st">"top"</span><span class="op">)</span>, default.units <span class="op">=</span> <span class="st">"inches"</span></span>
+<span><span class="op">)</span></span></code></pre></div>
 <p><img src="plotgardener_page_files/figure-html/arrange_example03-1.png" width="750" style="display: block; margin: auto;"></p>
 <p><code>plotgardener</code> also provides the helper function
 <code><a href="../../reference/pagePlotPlace.html">pagePlotPlace()</a></code> for placing plot objects that have been
 previously defined:</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co">## Load data</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/PhanstielLab/plotgardenerData" class="external-link">plotgardenerData</a></span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"IMR90_ChIP_H3K27ac_signal"</span><span class="op">)</span>
-
-<span class="co">## Create page</span>
-<span class="fu"><a href="../../reference/pageCreate.html">pageCreate</a></span><span class="op">(</span>width <span class="op">=</span> <span class="fl">3</span>, height <span class="op">=</span> <span class="fl">3</span>, default.units <span class="op">=</span> <span class="st">"inches"</span><span class="op">)</span>
-
-<span class="co">## Define signal plot</span>
-<span class="va">signalPlot</span> <span class="op">&lt;-</span> <span class="fu"><a href="../../reference/plotSignal.html">plotSignal</a></span><span class="op">(</span>
-    data <span class="op">=</span> <span class="va">IMR90_ChIP_H3K27ac_signal</span>,
-    chrom <span class="op">=</span> <span class="st">"chr21"</span>, chromstart <span class="op">=</span> <span class="fl">28000000</span>, chromend <span class="op">=</span> <span class="fl">30300000</span>,
-    assembly <span class="op">=</span> <span class="st">"hg19"</span>,
-    draw <span class="op">=</span> <span class="cn">FALSE</span>
-<span class="op">)</span>
-
-<span class="co">## Place plot on page</span>
-<span class="fu"><a href="../../reference/pagePlotPlace.html">pagePlotPlace</a></span><span class="op">(</span>
-    plot <span class="op">=</span> <span class="va">signalPlot</span>,
-    x <span class="op">=</span> <span class="fl">0.5</span>, y <span class="op">=</span> <span class="fl">0.5</span>, width <span class="op">=</span> <span class="fl">2</span>, height <span class="op">=</span> <span class="fl">1</span>,
-    just <span class="op">=</span> <span class="fu"><a href="../../reference/c.html">c</a></span><span class="op">(</span><span class="st">"left"</span>, <span class="st">"top"</span><span class="op">)</span>, default.units <span class="op">=</span> <span class="st">"inches"</span>
-<span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co">## Load data</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/PhanstielLab/plotgardenerData" class="external-link">plotgardenerData</a></span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"IMR90_ChIP_H3K27ac_signal"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co">## Create page</span></span>
+<span><span class="fu"><a href="../../reference/pageCreate.html">pageCreate</a></span><span class="op">(</span>width <span class="op">=</span> <span class="fl">3</span>, height <span class="op">=</span> <span class="fl">3</span>, default.units <span class="op">=</span> <span class="st">"inches"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co">## Define signal plot</span></span>
+<span><span class="va">signalPlot</span> <span class="op">&lt;-</span> <span class="fu"><a href="../../reference/plotSignal.html">plotSignal</a></span><span class="op">(</span></span>
+<span>    data <span class="op">=</span> <span class="va">IMR90_ChIP_H3K27ac_signal</span>,</span>
+<span>    chrom <span class="op">=</span> <span class="st">"chr21"</span>, chromstart <span class="op">=</span> <span class="fl">28000000</span>, chromend <span class="op">=</span> <span class="fl">30300000</span>,</span>
+<span>    assembly <span class="op">=</span> <span class="st">"hg19"</span>,</span>
+<span>    draw <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="co">## Place plot on page</span></span>
+<span><span class="fu"><a href="../../reference/pagePlotPlace.html">pagePlotPlace</a></span><span class="op">(</span></span>
+<span>    plot <span class="op">=</span> <span class="va">signalPlot</span>,</span>
+<span>    x <span class="op">=</span> <span class="fl">0.5</span>, y <span class="op">=</span> <span class="fl">0.5</span>, width <span class="op">=</span> <span class="fl">2</span>, height <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>    just <span class="op">=</span> <span class="fu"><a href="../../reference/c.html">c</a></span><span class="op">(</span><span class="st">"left"</span>, <span class="st">"top"</span><span class="op">)</span>, default.units <span class="op">=</span> <span class="st">"inches"</span></span>
+<span><span class="op">)</span></span></code></pre></div>
 <p><img src="plotgardener_page_files/figure-html/arrange_example04-1.png" width="750" style="display: block; margin: auto;"></p>
 <p>and <code><a href="../../reference/pagePlotRemove.html">pagePlotRemove()</a></code> for removing plots from a page:</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># Load data</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/PhanstielLab/plotgardenerData" class="external-link">plotgardenerData</a></span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"IMR90_ChIP_H3K27ac_signal"</span><span class="op">)</span>
-
-<span class="co">## Create page</span>
-<span class="fu"><a href="../../reference/pageCreate.html">pageCreate</a></span><span class="op">(</span>width <span class="op">=</span> <span class="fl">3</span>, height <span class="op">=</span> <span class="fl">3</span>, default.units <span class="op">=</span> <span class="st">"inches"</span><span class="op">)</span>
-
-<span class="co">## Plot and place signal plot</span>
-<span class="va">signalPlot</span> <span class="op">&lt;-</span> <span class="fu"><a href="../../reference/plotSignal.html">plotSignal</a></span><span class="op">(</span>
-    data <span class="op">=</span> <span class="va">IMR90_ChIP_H3K27ac_signal</span>,
-    chrom <span class="op">=</span> <span class="st">"chr21"</span>, chromstart <span class="op">=</span> <span class="fl">28000000</span>, chromend <span class="op">=</span> <span class="fl">30300000</span>,
-    assembly <span class="op">=</span> <span class="st">"hg19"</span>,
-    x <span class="op">=</span> <span class="fl">0.5</span>, y <span class="op">=</span> <span class="fl">0.5</span>, width <span class="op">=</span> <span class="fl">2</span>, height <span class="op">=</span> <span class="fl">1</span>,
-    just <span class="op">=</span> <span class="fu"><a href="../../reference/c.html">c</a></span><span class="op">(</span><span class="st">"left"</span>, <span class="st">"top"</span><span class="op">)</span>, default.units <span class="op">=</span> <span class="st">"inches"</span>
-<span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># Load data</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/PhanstielLab/plotgardenerData" class="external-link">plotgardenerData</a></span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"IMR90_ChIP_H3K27ac_signal"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co">## Create page</span></span>
+<span><span class="fu"><a href="../../reference/pageCreate.html">pageCreate</a></span><span class="op">(</span>width <span class="op">=</span> <span class="fl">3</span>, height <span class="op">=</span> <span class="fl">3</span>, default.units <span class="op">=</span> <span class="st">"inches"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co">## Plot and place signal plot</span></span>
+<span><span class="va">signalPlot</span> <span class="op">&lt;-</span> <span class="fu"><a href="../../reference/plotSignal.html">plotSignal</a></span><span class="op">(</span></span>
+<span>    data <span class="op">=</span> <span class="va">IMR90_ChIP_H3K27ac_signal</span>,</span>
+<span>    chrom <span class="op">=</span> <span class="st">"chr21"</span>, chromstart <span class="op">=</span> <span class="fl">28000000</span>, chromend <span class="op">=</span> <span class="fl">30300000</span>,</span>
+<span>    assembly <span class="op">=</span> <span class="st">"hg19"</span>,</span>
+<span>    x <span class="op">=</span> <span class="fl">0.5</span>, y <span class="op">=</span> <span class="fl">0.5</span>, width <span class="op">=</span> <span class="fl">2</span>, height <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>    just <span class="op">=</span> <span class="fu"><a href="../../reference/c.html">c</a></span><span class="op">(</span><span class="st">"left"</span>, <span class="st">"top"</span><span class="op">)</span>, default.units <span class="op">=</span> <span class="st">"inches"</span></span>
+<span><span class="op">)</span></span></code></pre></div>
 <p><img src="plotgardener_page_files/figure-html/arrange_example05-1.png" width="750" style="display: block; margin: auto;"></p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co">## Remove signal plot</span>
-<span class="fu"><a href="../../reference/pagePlotRemove.html">pagePlotRemove</a></span><span class="op">(</span>plot <span class="op">=</span> <span class="va">signalPlot</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co">## Remove signal plot</span></span>
+<span><span class="fu"><a href="../../reference/pagePlotRemove.html">pagePlotRemove</a></span><span class="op">(</span>plot <span class="op">=</span> <span class="va">signalPlot</span><span class="op">)</span></span></code></pre></div>
 <p><img src="plotgardener_page_files/figure-html/arrange_example05-2.png" width="750" style="display: block; margin: auto;"></p>
 <p>These functions give the users additional flexibility in how they
 create their R scripts and <code>plotgardener</code> layouts.</p>
@@ -391,98 +391,103 @@ top-left position (i.e. <code>3 inches - (legend width)</code>) to
 determine where to place the heatmap legend. Instead we can change the
 <code>just</code> parameter to <code>just=c('right', 'top')</code>:</p>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co">## Load example Hi-C data</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/PhanstielLab/plotgardenerData" class="external-link">plotgardenerData</a></span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"IMR90_HiC_10kb"</span><span class="op">)</span>
-
-<span class="co">## Create a plotgardener page</span>
-<span class="fu"><a href="../../reference/pageCreate.html">pageCreate</a></span><span class="op">(</span>width <span class="op">=</span> <span class="fl">3.25</span>, height <span class="op">=</span> <span class="fl">3.25</span>, default.units <span class="op">=</span> <span class="st">"inches"</span><span class="op">)</span>
-
-<span class="co">## Plot Hi-C data with placing information</span>
-<span class="va">hicPlot</span> <span class="op">&lt;-</span> <span class="fu"><a href="../../reference/plotHicSquare.html">plotHicSquare</a></span><span class="op">(</span>
-    data <span class="op">=</span> <span class="va">IMR90_HiC_10kb</span>,
-    chrom <span class="op">=</span> <span class="st">"chr21"</span>, chromstart <span class="op">=</span> <span class="fl">28000000</span>, chromend <span class="op">=</span> <span class="fl">30300000</span>,
-    assembly <span class="op">=</span> <span class="st">"hg19"</span>,
-    x <span class="op">=</span> <span class="fl">0.25</span>, y <span class="op">=</span> <span class="fl">0.25</span>, width <span class="op">=</span> <span class="fl">2.5</span>, height <span class="op">=</span> <span class="fl">2.5</span>, default.units <span class="op">=</span> <span class="st">"inches"</span>
-<span class="op">)</span>
-
-<span class="co">## Add color scale annotation with just = c("right", "top")</span>
-<span class="fu"><a href="../../reference/annoHeatmapLegend.html">annoHeatmapLegend</a></span><span class="op">(</span>
-    plot <span class="op">=</span> <span class="va">hicPlot</span>,
-    x <span class="op">=</span> <span class="fl">3</span>, y <span class="op">=</span> <span class="fl">0.25</span>, width <span class="op">=</span> <span class="fl">0.1</span>, height <span class="op">=</span> <span class="fl">1.25</span>,
-    just <span class="op">=</span> <span class="fu"><a href="../../reference/c.html">c</a></span><span class="op">(</span><span class="st">"right"</span>, <span class="st">"top"</span><span class="op">)</span>, default.units <span class="op">=</span> <span class="st">"inches"</span>
-<span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co">## Load example Hi-C data</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/PhanstielLab/plotgardenerData" class="external-link">plotgardenerData</a></span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"IMR90_HiC_10kb"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co">## Create a plotgardener page</span></span>
+<span><span class="fu"><a href="../../reference/pageCreate.html">pageCreate</a></span><span class="op">(</span>width <span class="op">=</span> <span class="fl">3.25</span>, height <span class="op">=</span> <span class="fl">3.25</span>, default.units <span class="op">=</span> <span class="st">"inches"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co">## Plot Hi-C data with placing information</span></span>
+<span><span class="va">hicPlot</span> <span class="op">&lt;-</span> <span class="fu"><a href="../../reference/plotHicSquare.html">plotHicSquare</a></span><span class="op">(</span></span>
+<span>    data <span class="op">=</span> <span class="va">IMR90_HiC_10kb</span>,</span>
+<span>    chrom <span class="op">=</span> <span class="st">"chr21"</span>, chromstart <span class="op">=</span> <span class="fl">28000000</span>, chromend <span class="op">=</span> <span class="fl">30300000</span>,</span>
+<span>    assembly <span class="op">=</span> <span class="st">"hg19"</span>,</span>
+<span>    x <span class="op">=</span> <span class="fl">0.25</span>, y <span class="op">=</span> <span class="fl">0.25</span>, width <span class="op">=</span> <span class="fl">2.5</span>, height <span class="op">=</span> <span class="fl">2.5</span>, default.units <span class="op">=</span> <span class="st">"inches"</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="co">## Add color scale annotation with just = c("right", "top")</span></span>
+<span><span class="fu"><a href="../../reference/annoHeatmapLegend.html">annoHeatmapLegend</a></span><span class="op">(</span></span>
+<span>    plot <span class="op">=</span> <span class="va">hicPlot</span>,</span>
+<span>    x <span class="op">=</span> <span class="fl">3</span>, y <span class="op">=</span> <span class="fl">0.25</span>, width <span class="op">=</span> <span class="fl">0.1</span>, height <span class="op">=</span> <span class="fl">1.25</span>,</span>
+<span>    just <span class="op">=</span> <span class="fu"><a href="../../reference/c.html">c</a></span><span class="op">(</span><span class="st">"right"</span>, <span class="st">"top"</span><span class="op">)</span>, default.units <span class="op">=</span> <span class="st">"inches"</span></span>
+<span><span class="op">)</span></span></code></pre></div>
 <p><img src="plotgardener_page_files/figure-html/arrange_example08-1.png" width="900" style="display: block; margin: auto;"></p>
 </div>
 <div class="section level2">
 <h2 id="session-info">Session Info<a class="anchor" aria-label="anchor" href="#session-info"></a>
 </h2>
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/sessionInfo.html" class="external-link">sessionInfo</a></span><span class="op">(</span><span class="op">)</span>
-<span class="co">#&gt; R version 4.2.0 (2022-04-22)</span>
-<span class="co">#&gt; Platform: x86_64-apple-darwin17.0 (64-bit)</span>
-<span class="co">#&gt; Running under: macOS Big Sur/Monterey 10.16</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Matrix products: default</span>
-<span class="co">#&gt; BLAS:   /Library/Frameworks/R.framework/Versions/4.2/Resources/lib/libRblas.0.dylib</span>
-<span class="co">#&gt; LAPACK: /Library/Frameworks/R.framework/Versions/4.2/Resources/lib/libRlapack.dylib</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; locale:</span>
-<span class="co">#&gt; [1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; attached base packages:</span>
-<span class="co">#&gt; [1] grid      stats     graphics  grDevices utils     datasets  methods  </span>
-<span class="co">#&gt; [8] base     </span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; other attached packages:</span>
-<span class="co">#&gt; [1] plotgardenerData_1.2.0 plotgardener_1.2.3    </span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; loaded via a namespace (and not attached):</span>
-<span class="co">#&gt;  [1] MatrixGenerics_1.8.0        Biobase_2.56.0             </span>
-<span class="co">#&gt;  [3] sass_0.4.1                  jsonlite_1.8.0             </span>
-<span class="co">#&gt;  [5] bslib_0.3.1                 assertthat_0.2.1           </span>
-<span class="co">#&gt;  [7] highr_0.9                   stats4_4.2.0               </span>
-<span class="co">#&gt;  [9] yulab.utils_0.0.4           GenomeInfoDbData_1.2.8     </span>
-<span class="co">#&gt; [11] Rsamtools_2.12.0            yaml_2.3.5                 </span>
-<span class="co">#&gt; [13] pillar_1.7.0                lattice_0.20-45            </span>
-<span class="co">#&gt; [15] glue_1.6.2                  digest_0.6.29              </span>
-<span class="co">#&gt; [17] GenomicRanges_1.48.0        RColorBrewer_1.1-3         </span>
-<span class="co">#&gt; [19] XVector_0.36.0              colorspace_2.0-3           </span>
-<span class="co">#&gt; [21] htmltools_0.5.2             Matrix_1.4-1               </span>
-<span class="co">#&gt; [23] strawr_0.0.9                XML_3.99-0.9               </span>
-<span class="co">#&gt; [25] pkgconfig_2.0.3             zlibbioc_1.42.0            </span>
-<span class="co">#&gt; [27] purrr_0.3.4                 scales_1.2.0               </span>
-<span class="co">#&gt; [29] ggplotify_0.1.0             BiocParallel_1.30.2        </span>
-<span class="co">#&gt; [31] tibble_3.1.7                generics_0.1.2             </span>
-<span class="co">#&gt; [33] IRanges_2.30.0              ggplot2_3.3.6              </span>
-<span class="co">#&gt; [35] ellipsis_0.3.2              cachem_1.0.6               </span>
-<span class="co">#&gt; [37] SummarizedExperiment_1.26.1 BiocGenerics_0.42.0        </span>
-<span class="co">#&gt; [39] cli_3.3.0                   magrittr_2.0.3             </span>
-<span class="co">#&gt; [41] crayon_1.5.1                memoise_2.0.1              </span>
-<span class="co">#&gt; [43] evaluate_0.15               fs_1.5.2                   </span>
-<span class="co">#&gt; [45] fansi_1.0.3                 textshaping_0.3.6          </span>
-<span class="co">#&gt; [47] tools_4.2.0                 data.table_1.14.2          </span>
-<span class="co">#&gt; [49] BiocIO_1.6.0                lifecycle_1.0.1            </span>
-<span class="co">#&gt; [51] matrixStats_0.62.0          stringr_1.4.0              </span>
-<span class="co">#&gt; [53] plyranges_1.16.0            S4Vectors_0.34.0           </span>
-<span class="co">#&gt; [55] munsell_0.5.0               DelayedArray_0.22.0        </span>
-<span class="co">#&gt; [57] Biostrings_2.64.0           compiler_4.2.0             </span>
-<span class="co">#&gt; [59] pkgdown_2.0.3               jquerylib_0.1.4            </span>
-<span class="co">#&gt; [61] GenomeInfoDb_1.32.2         gridGraphics_0.5-1         </span>
-<span class="co">#&gt; [63] systemfonts_1.0.4           rlang_1.0.2                </span>
-<span class="co">#&gt; [65] RCurl_1.98-1.6              rstudioapi_0.13            </span>
-<span class="co">#&gt; [67] rjson_0.2.21                bitops_1.0-7               </span>
-<span class="co">#&gt; [69] rmarkdown_2.14              restfulr_0.0.13            </span>
-<span class="co">#&gt; [71] gtable_0.3.0                DBI_1.1.2                  </span>
-<span class="co">#&gt; [73] curl_4.3.2                  R6_2.5.1                   </span>
-<span class="co">#&gt; [75] GenomicAlignments_1.32.0    knitr_1.39                 </span>
-<span class="co">#&gt; [77] dplyr_1.0.9                 rtracklayer_1.56.0         </span>
-<span class="co">#&gt; [79] fastmap_1.1.0               utf8_1.2.2                 </span>
-<span class="co">#&gt; [81] rprojroot_2.0.3             ragg_1.2.2                 </span>
-<span class="co">#&gt; [83] desc_1.4.1                  stringi_1.7.6              </span>
-<span class="co">#&gt; [85] parallel_4.2.0              Rcpp_1.0.8.3               </span>
-<span class="co">#&gt; [87] vctrs_0.4.1                 tidyselect_1.1.2           </span>
-<span class="co">#&gt; [89] xfun_0.31</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/sessionInfo.html" class="external-link">sessionInfo</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="co">#&gt; R version 4.2.0 (2022-04-22)</span></span>
+<span><span class="co">#&gt; Platform: x86_64-pc-linux-gnu (64-bit)</span></span>
+<span><span class="co">#&gt; Running under: Ubuntu 20.04.4 LTS</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Matrix products: default</span></span>
+<span><span class="co">#&gt; BLAS:   /usr/lib/x86_64-linux-gnu/openblas-pthread/libblas.so.3</span></span>
+<span><span class="co">#&gt; LAPACK: /usr/lib/x86_64-linux-gnu/openblas-pthread/liblapack.so.3</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; locale:</span></span>
+<span><span class="co">#&gt;  [1] LC_CTYPE=en_US.UTF-8       LC_NUMERIC=C              </span></span>
+<span><span class="co">#&gt;  [3] LC_TIME=en_US.UTF-8        LC_COLLATE=en_US.UTF-8    </span></span>
+<span><span class="co">#&gt;  [5] LC_MONETARY=en_US.UTF-8    LC_MESSAGES=en_US.UTF-8   </span></span>
+<span><span class="co">#&gt;  [7] LC_PAPER=en_US.UTF-8       LC_NAME=C                 </span></span>
+<span><span class="co">#&gt;  [9] LC_ADDRESS=C               LC_TELEPHONE=C            </span></span>
+<span><span class="co">#&gt; [11] LC_MEASUREMENT=en_US.UTF-8 LC_IDENTIFICATION=C       </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; attached base packages:</span></span>
+<span><span class="co">#&gt; [1] grid      stats     graphics  grDevices utils     datasets  methods  </span></span>
+<span><span class="co">#&gt; [8] base     </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; other attached packages:</span></span>
+<span><span class="co">#&gt; [1] plotgardenerData_1.2.0 plotgardener_1.2.8    </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; loaded via a namespace (and not attached):</span></span>
+<span><span class="co">#&gt;  [1] MatrixGenerics_1.8.1        Biobase_2.56.0             </span></span>
+<span><span class="co">#&gt;  [3] sass_0.4.1                  jsonlite_1.8.0             </span></span>
+<span><span class="co">#&gt;  [5] bslib_0.3.1                 assertthat_0.2.1           </span></span>
+<span><span class="co">#&gt;  [7] highr_0.9                   stats4_4.2.0               </span></span>
+<span><span class="co">#&gt;  [9] yulab.utils_0.0.5           GenomeInfoDbData_1.2.8     </span></span>
+<span><span class="co">#&gt; [11] Rsamtools_2.12.0            yaml_2.3.5                 </span></span>
+<span><span class="co">#&gt; [13] pillar_1.7.0                lattice_0.20-45            </span></span>
+<span><span class="co">#&gt; [15] glue_1.6.2                  digest_0.6.29              </span></span>
+<span><span class="co">#&gt; [17] GenomicRanges_1.48.0        RColorBrewer_1.1-3         </span></span>
+<span><span class="co">#&gt; [19] XVector_0.36.0              colorspace_2.0-3           </span></span>
+<span><span class="co">#&gt; [21] htmltools_0.5.2             Matrix_1.4-1               </span></span>
+<span><span class="co">#&gt; [23] strawr_0.0.9                XML_3.99-0.10              </span></span>
+<span><span class="co">#&gt; [25] pkgconfig_2.0.3             zlibbioc_1.42.0            </span></span>
+<span><span class="co">#&gt; [27] purrr_0.3.4                 scales_1.2.0               </span></span>
+<span><span class="co">#&gt; [29] ggplotify_0.1.0             BiocParallel_1.30.3        </span></span>
+<span><span class="co">#&gt; [31] tibble_3.1.7                generics_0.1.3             </span></span>
+<span><span class="co">#&gt; [33] IRanges_2.30.0              ggplot2_3.3.6              </span></span>
+<span><span class="co">#&gt; [35] ellipsis_0.3.2              cachem_1.0.6               </span></span>
+<span><span class="co">#&gt; [37] SummarizedExperiment_1.26.1 BiocGenerics_0.42.0        </span></span>
+<span><span class="co">#&gt; [39] cli_3.3.0                   magrittr_2.0.3             </span></span>
+<span><span class="co">#&gt; [41] crayon_1.5.1                memoise_2.0.1              </span></span>
+<span><span class="co">#&gt; [43] evaluate_0.15               fs_1.5.2                   </span></span>
+<span><span class="co">#&gt; [45] fansi_1.0.3                 textshaping_0.3.6          </span></span>
+<span><span class="co">#&gt; [47] tools_4.2.0                 data.table_1.14.2          </span></span>
+<span><span class="co">#&gt; [49] BiocIO_1.6.0                lifecycle_1.0.1            </span></span>
+<span><span class="co">#&gt; [51] matrixStats_0.62.0          stringr_1.4.0              </span></span>
+<span><span class="co">#&gt; [53] plyranges_1.16.0            S4Vectors_0.34.0           </span></span>
+<span><span class="co">#&gt; [55] munsell_0.5.0               DelayedArray_0.22.0        </span></span>
+<span><span class="co">#&gt; [57] Biostrings_2.64.0           compiler_4.2.0             </span></span>
+<span><span class="co">#&gt; [59] pkgdown_2.0.5               jquerylib_0.1.4            </span></span>
+<span><span class="co">#&gt; [61] GenomeInfoDb_1.32.2         gridGraphics_0.5-1         </span></span>
+<span><span class="co">#&gt; [63] systemfonts_1.0.4           rlang_1.0.4                </span></span>
+<span><span class="co">#&gt; [65] RCurl_1.98-1.7              rjson_0.2.21               </span></span>
+<span><span class="co">#&gt; [67] bitops_1.0-7                rmarkdown_2.14             </span></span>
+<span><span class="co">#&gt; [69] restfulr_0.0.15             gtable_0.3.0               </span></span>
+<span><span class="co">#&gt; [71] codetools_0.2-18            DBI_1.1.3                  </span></span>
+<span><span class="co">#&gt; [73] curl_4.3.2                  R6_2.5.1                   </span></span>
+<span><span class="co">#&gt; [75] GenomicAlignments_1.32.0    knitr_1.39                 </span></span>
+<span><span class="co">#&gt; [77] dplyr_1.0.9                 rtracklayer_1.56.1         </span></span>
+<span><span class="co">#&gt; [79] fastmap_1.1.0               utf8_1.2.2                 </span></span>
+<span><span class="co">#&gt; [81] rprojroot_2.0.3             ragg_1.2.2                 </span></span>
+<span><span class="co">#&gt; [83] desc_1.4.1                  stringi_1.7.8              </span></span>
+<span><span class="co">#&gt; [85] parallel_4.2.0              Rcpp_1.0.9                 </span></span>
+<span><span class="co">#&gt; [87] vctrs_0.4.1                 tidyselect_1.1.2           </span></span>
+<span><span class="co">#&gt; [89] xfun_0.31</span></span></code></pre></div>
 </div>
   </div>
 
@@ -503,7 +508,7 @@ determine where to place the heatmap legend. Instead we can change the
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
 </div>
 
       </footer>

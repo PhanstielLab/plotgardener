@@ -45,7 +45,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">plotgardener</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.2.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.2.8</span>
       </span>
     </div>
 
@@ -146,165 +146,165 @@
 <p>plotgardener can be installed from Bioconductor version 3.15</p>
 <p>(R version 4.2) as follows:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/ns-load.html" class="external-link">requireNamespace</a></span><span class="op">(</span><span class="st">"BiocManager"</span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span>
-    <span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"BiocManager"</span><span class="op">)</span>
-
-<span class="fu">BiocManager</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/BiocManager/man/install.html" class="external-link">install</a></span><span class="op">(</span>version <span class="op">=</span> <span class="st">"3.15"</span><span class="op">)</span>
-
-<span class="fu">BiocManager</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/BiocManager/man/install.html" class="external-link">install</a></span><span class="op">(</span><span class="st">"plotgardener"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/ns-load.html" class="external-link">requireNamespace</a></span><span class="op">(</span><span class="st">"BiocManager"</span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span>
+<span>    <span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"BiocManager"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">BiocManager</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/BiocManager/man/install.html" class="external-link">install</a></span><span class="op">(</span>version <span class="op">=</span> <span class="st">"3.15"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">BiocManager</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/BiocManager/man/install.html" class="external-link">install</a></span><span class="op">(</span><span class="st">"plotgardener"</span><span class="op">)</span></span></code></pre></div>
 <p>Example datasets and files are included with the package plotgardenerData:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">BiocManager</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/BiocManager/man/install.html" class="external-link">install</a></span><span class="op">(</span><span class="st">"plotgardenerData"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu">BiocManager</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/BiocManager/man/install.html" class="external-link">install</a></span><span class="op">(</span><span class="st">"plotgardenerData"</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="usage">Usage<a class="anchor" aria-label="anchor" href="#usage"></a>
 </h2>
 <p><img src="reference/figures/homePage-1.png" width="672" style="display: block; margin: auto;"></p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co">## Load libraries and datasets</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://phanstiellab.github.io/plotgardener">"plotgardener"</a></span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st">"org.Hs.eg.db"</span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st">"TxDb.Hsapiens.UCSC.hg19.knownGene"</span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://github.com/PhanstielLab/plotgardenerData" class="external-link">"plotgardenerData"</a></span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st">"AnnotationHub"</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"GM12878_HiC_10kb"</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"IMR90_HiC_10kb"</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"GM12878_ChIP_CTCF_signal"</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"IMR90_ChIP_CTCF_signal"</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"GM12878_ChIP_H3K27ac_signal"</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"IMR90_ChIP_H3K27ac_signal"</span><span class="op">)</span>
-
-<span class="co">## Create a plotgardener page</span>
-<span class="fu"><a href="reference/pageCreate.html">pageCreate</a></span><span class="op">(</span>width <span class="op">=</span> <span class="fl">7</span>, height <span class="op">=</span> <span class="fl">4.25</span>, default.units <span class="op">=</span> <span class="st">"inches"</span><span class="op">)</span>
-
-<span class="co">##########################</span>
-<span class="co">######## Panel A #########</span>
-<span class="co">##########################</span>
-<span class="co">## Text section label</span>
-<span class="fu"><a href="reference/plotText.html">plotText</a></span><span class="op">(</span>label <span class="op">=</span> <span class="st">"A"</span>, fontsize <span class="op">=</span> <span class="fl">12</span>,
-            x <span class="op">=</span> <span class="fl">0.25</span>, y <span class="op">=</span> <span class="fl">0.25</span>, just <span class="op">=</span> <span class="st">"left"</span>, default.units <span class="op">=</span> <span class="st">"inches"</span><span class="op">)</span>
-<span class="co">## Set genomic and dimension parameters in a `params` object</span>
-<span class="va">params_a</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/pgParams.html">pgParams</a></span><span class="op">(</span>chrom <span class="op">=</span> <span class="st">"chr21"</span>, chromstart <span class="op">=</span> <span class="fl">28000000</span>, chromend <span class="op">=</span> <span class="fl">30300000</span>, 
-                      assembly <span class="op">=</span> <span class="st">"hg19"</span>,
-                      x <span class="op">=</span> <span class="fl">0.25</span>, width <span class="op">=</span> <span class="fl">2.75</span>, just <span class="op">=</span> <span class="fu"><a href="reference/c.html">c</a></span><span class="op">(</span><span class="st">"left"</span>, <span class="st">"top"</span><span class="op">)</span>, default.units <span class="op">=</span> <span class="st">"inches"</span><span class="op">)</span>
-<span class="co">## Double-sided Hi-C Plot</span>
-<span class="va">hicPlot_top</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/plotHicSquare.html">plotHicSquare</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">GM12878_HiC_10kb</span>, params <span class="op">=</span> <span class="va">params_a</span>,
-                                zrange <span class="op">=</span> <span class="fu"><a href="reference/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">200</span><span class="op">)</span>, resolution <span class="op">=</span> <span class="fl">10000</span>,
-                                half <span class="op">=</span> <span class="st">"top"</span>,
-                                y <span class="op">=</span> <span class="fl">0.5</span>, height <span class="op">=</span> <span class="fl">2.75</span><span class="op">)</span>
-<span class="va">hicPlot_bottom</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/plotHicSquare.html">plotHicSquare</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">IMR90_HiC_10kb</span>, params <span class="op">=</span> <span class="va">params_a</span>,
-                                   zrange <span class="op">=</span> <span class="fu"><a href="reference/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">70</span><span class="op">)</span>, resolution <span class="op">=</span> <span class="fl">10000</span>,
-                                   half <span class="op">=</span> <span class="st">"bottom"</span>,
-                                   y <span class="op">=</span> <span class="fl">0.5</span>, height <span class="op">=</span> <span class="fl">2.75</span><span class="op">)</span>
-<span class="co">## Annotate Hi-C heatmap legends</span>
-<span class="fu"><a href="reference/annoHeatmapLegend.html">annoHeatmapLegend</a></span><span class="op">(</span>plot <span class="op">=</span> <span class="va">hicPlot_bottom</span>, fontsize <span class="op">=</span> <span class="fl">7</span>, 
-                     x <span class="op">=</span> <span class="fl">3.05</span>, y <span class="op">=</span> <span class="fl">0.5</span>,
-                     width <span class="op">=</span> <span class="fl">0.07</span>, height <span class="op">=</span> <span class="fl">0.5</span>, just <span class="op">=</span> <span class="fu"><a href="reference/c.html">c</a></span><span class="op">(</span><span class="st">"left"</span>, <span class="st">"top"</span><span class="op">)</span>,
-                     default.units <span class="op">=</span> <span class="st">"inches"</span><span class="op">)</span>
-<span class="fu"><a href="reference/annoHeatmapLegend.html">annoHeatmapLegend</a></span><span class="op">(</span>plot <span class="op">=</span> <span class="va">hicPlot_top</span>, fontsize <span class="op">=</span> <span class="fl">7</span>, 
-                     x <span class="op">=</span> <span class="fl">.125</span>, y <span class="op">=</span> <span class="fl">0.5</span>,
-                     width <span class="op">=</span> <span class="fl">0.07</span>, height <span class="op">=</span> <span class="fl">0.5</span>, just <span class="op">=</span> <span class="fu"><a href="reference/c.html">c</a></span><span class="op">(</span><span class="st">"left"</span>, <span class="st">"top"</span><span class="op">)</span>,
-                     default.units <span class="op">=</span> <span class="st">"inches"</span><span class="op">)</span>
-<span class="co">## Plot gene track</span>
-<span class="va">genes_a</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/plotGenes.html">plotGenes</a></span><span class="op">(</span>params <span class="op">=</span> <span class="va">params_a</span>, stroke <span class="op">=</span> <span class="fl">1</span>, fontsize <span class="op">=</span> <span class="fl">6</span>,
-                        y <span class="op">=</span> <span class="fl">3.35</span>, height <span class="op">=</span> <span class="fl">0.4</span><span class="op">)</span>
-<span class="co">## Annotate genome label</span>
-<span class="fu"><a href="reference/annoGenomeLabel.html">annoGenomeLabel</a></span><span class="op">(</span>plot <span class="op">=</span> <span class="va">genes_a</span>, params <span class="op">=</span> <span class="va">params_a</span>, 
-                   scale <span class="op">=</span> <span class="st">"Mb"</span>, fontsize <span class="op">=</span> <span class="fl">7</span>,
-                   y <span class="op">=</span> <span class="fl">3.85</span><span class="op">)</span>
-<span class="co">##########################</span>
-<span class="co">######## Panel B #########</span>
-<span class="co">##########################</span>
-<span class="co">## Text section label</span>
-<span class="fu"><a href="reference/plotText.html">plotText</a></span><span class="op">(</span>label <span class="op">=</span> <span class="st">"B"</span>, fontsize <span class="op">=</span> <span class="fl">12</span>,
-            x <span class="op">=</span> <span class="fl">3.5</span>, y <span class="op">=</span> <span class="fl">0.25</span>, just <span class="op">=</span> <span class="st">"left"</span>, default.units <span class="op">=</span> <span class="st">"inches"</span><span class="op">)</span>
-<span class="co">## Plot ideogram</span>
-<span class="fu"><a href="reference/plotIdeogram.html">plotIdeogram</a></span><span class="op">(</span>chrom <span class="op">=</span> <span class="st">"chr21"</span>, assembly <span class="op">=</span> <span class="st">"hg19"</span>,
-                x <span class="op">=</span> <span class="fl">3.5</span>, y <span class="op">=</span> <span class="fl">0.5</span>,
-                width <span class="op">=</span> <span class="fl">3.25</span>, height <span class="op">=</span> <span class="fl">0.15</span>, just <span class="op">=</span> <span class="fu"><a href="reference/c.html">c</a></span><span class="op">(</span><span class="st">"left"</span>, <span class="st">"top"</span><span class="op">)</span>, default.units <span class="op">=</span> <span class="st">"inches"</span><span class="op">)</span>
-<span class="co">## Add text to ideogram</span>
-<span class="fu"><a href="reference/plotText.html">plotText</a></span><span class="op">(</span>label <span class="op">=</span> <span class="st">"Chromosome 21"</span>, fontsize <span class="op">=</span> <span class="fl">8</span>, fontcolor <span class="op">=</span> <span class="st">"darkgrey"</span>,
-            x <span class="op">=</span> <span class="fl">6.75</span>, y <span class="op">=</span> <span class="fl">0.4</span>, just <span class="op">=</span> <span class="st">"right"</span>, default.units <span class="op">=</span> <span class="st">"inches"</span><span class="op">)</span>
-<span class="co">##########################</span>
-<span class="co">######## Panel C #########</span>
-<span class="co">##########################</span>
-<span class="co">## Text section label</span>
-<span class="fu"><a href="reference/plotText.html">plotText</a></span><span class="op">(</span>label <span class="op">=</span> <span class="st">"C"</span>, fontsize <span class="op">=</span> <span class="fl">12</span>,
-            x <span class="op">=</span> <span class="fl">3.5</span>, y <span class="op">=</span> <span class="fl">1</span>, just <span class="op">=</span> <span class="fu"><a href="reference/c.html">c</a></span><span class="op">(</span><span class="st">"left"</span>, <span class="st">"top"</span><span class="op">)</span>, default.units <span class="op">=</span> <span class="st">"inches"</span><span class="op">)</span>
-<span class="co">## Set genomic and dimension parameters in a `params` object</span>
-<span class="va">params_c</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/pgParams.html">pgParams</a></span><span class="op">(</span>chrom <span class="op">=</span> <span class="st">"chr21"</span>, chromstart <span class="op">=</span> <span class="fl">28150000</span>, chromend <span class="op">=</span> <span class="fl">29150000</span>, 
-                      assembly <span class="op">=</span> <span class="st">"hg19"</span>,
-                      x <span class="op">=</span> <span class="fl">3.5</span>, width <span class="op">=</span> <span class="fl">1.5</span>, default.units <span class="op">=</span> <span class="st">"inches"</span><span class="op">)</span>
-<span class="co">## Set signal track data ranges</span>
-<span class="va">ctcf_range</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/pgParams.html">pgParams</a></span><span class="op">(</span>range <span class="op">=</span> <span class="fu"><a href="reference/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">77</span><span class="op">)</span>,
-                        assembly <span class="op">=</span> <span class="st">"hg19"</span><span class="op">)</span>
-<span class="va">hk_range</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/pgParams.html">pgParams</a></span><span class="op">(</span>range <span class="op">=</span> <span class="fu"><a href="reference/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">32.6</span><span class="op">)</span>,
-                      assembly <span class="op">=</span> <span class="st">"hg19"</span><span class="op">)</span>
-<span class="co">## Plot Hi-C triangle</span>
-<span class="va">hic_gm</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/plotHicTriangle.html">plotHicTriangle</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">GM12878_HiC_10kb</span>, params <span class="op">=</span> <span class="va">params_c</span>,
-                             zrange <span class="op">=</span> <span class="fu"><a href="reference/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">200</span><span class="op">)</span>, resolution <span class="op">=</span> <span class="fl">10000</span>,
-                             y <span class="op">=</span> <span class="fl">1.75</span>, height <span class="op">=</span> <span class="fl">0.75</span>, just <span class="op">=</span> <span class="fu"><a href="reference/c.html">c</a></span><span class="op">(</span><span class="st">"left"</span>, <span class="st">"bottom"</span><span class="op">)</span><span class="op">)</span>
-<span class="co">## Annotate Hi-C heatmap legend</span>
-<span class="fu"><a href="reference/annoHeatmapLegend.html">annoHeatmapLegend</a></span><span class="op">(</span>plot <span class="op">=</span> <span class="va">hic_gm</span>, fontsize <span class="op">=</span> <span class="fl">7</span>, 
-                     x <span class="op">=</span> <span class="fl">5</span>, y <span class="op">=</span> <span class="fl">1</span>, width <span class="op">=</span> <span class="fl">0.07</span>, height <span class="op">=</span> <span class="fl">0.5</span>, 
-                     just <span class="op">=</span> <span class="fu"><a href="reference/c.html">c</a></span><span class="op">(</span><span class="st">"right"</span>, <span class="st">"top"</span><span class="op">)</span>, default.units <span class="op">=</span> <span class="st">"inches"</span><span class="op">)</span>
-<span class="co">## Plot CTCF signal</span>
-<span class="va">ctcf_gm</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/plotSignal.html">plotSignal</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">GM12878_ChIP_CTCF_signal</span>, params <span class="op">=</span> <span class="fu"><a href="reference/c.html">c</a></span><span class="op">(</span><span class="va">params_c</span>, <span class="va">ctcf_range</span><span class="op">)</span>,
-                         fill <span class="op">=</span> <span class="st">"#253494"</span>, linecolor <span class="op">=</span> <span class="st">"#253494"</span>,
-                         y <span class="op">=</span> <span class="fl">1.95</span>, height <span class="op">=</span> <span class="fl">0.6</span><span class="op">)</span>
-<span class="co">## CTCF label</span>
-<span class="fu"><a href="reference/plotText.html">plotText</a></span><span class="op">(</span>label <span class="op">=</span> <span class="st">"CTCF"</span>, fontcolor <span class="op">=</span> <span class="st">"#253494"</span>, fontsize <span class="op">=</span> <span class="fl">8</span>,
-            x <span class="op">=</span> <span class="fl">3.5</span>, y <span class="op">=</span> <span class="fl">1.95</span>, just <span class="op">=</span> <span class="fu"><a href="reference/c.html">c</a></span><span class="op">(</span><span class="st">"left"</span>,<span class="st">"top"</span><span class="op">)</span>, default.units <span class="op">=</span> <span class="st">"inches"</span><span class="op">)</span>
-<span class="co">## Plot H3K27ac signal</span>
-<span class="va">hk_gm</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/plotSignal.html">plotSignal</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">GM12878_ChIP_H3K27ac_signal</span>, params <span class="op">=</span> <span class="fu"><a href="reference/c.html">c</a></span><span class="op">(</span><span class="va">params_c</span>, <span class="va">hk_range</span><span class="op">)</span>,
-                       fill <span class="op">=</span> <span class="st">"#37a7db"</span>, linecolor <span class="op">=</span> <span class="st">"#37a7db"</span>,
-                       y <span class="op">=</span> <span class="fl">3.25</span>, height <span class="op">=</span> <span class="fl">0.6</span>, just <span class="op">=</span> <span class="fu"><a href="reference/c.html">c</a></span><span class="op">(</span><span class="st">"left"</span>, <span class="st">"bottom"</span><span class="op">)</span><span class="op">)</span>
-<span class="co">## H3K27ac label</span>
-<span class="fu"><a href="reference/plotText.html">plotText</a></span><span class="op">(</span>label <span class="op">=</span> <span class="st">"H3K27ac"</span>, fontcolor <span class="op">=</span> <span class="st">"#37a7db"</span>, fontsize <span class="op">=</span> <span class="fl">8</span>,
-            x <span class="op">=</span> <span class="fl">3.5</span>, y <span class="op">=</span> <span class="fl">2.65</span>, just <span class="op">=</span> <span class="fu"><a href="reference/c.html">c</a></span><span class="op">(</span><span class="st">"left"</span>,<span class="st">"top"</span><span class="op">)</span>, default.units <span class="op">=</span> <span class="st">"inches"</span><span class="op">)</span>
-<span class="co">## Plot genes</span>
-<span class="va">genes_gm</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/plotGenes.html">plotGenes</a></span><span class="op">(</span>params <span class="op">=</span> <span class="va">params_c</span>, stroke <span class="op">=</span> <span class="fl">1</span>, fontsize <span class="op">=</span> <span class="fl">6</span>,
-                         strandLabels <span class="op">=</span> <span class="cn">FALSE</span>,
-                         y <span class="op">=</span> <span class="fl">3.35</span>, height <span class="op">=</span> <span class="fl">0.4</span><span class="op">)</span>
-<span class="co">## Annotate genome label</span>
-<span class="fu"><a href="reference/annoGenomeLabel.html">annoGenomeLabel</a></span><span class="op">(</span>plot <span class="op">=</span> <span class="va">genes_gm</span>, params <span class="op">=</span> <span class="va">params_c</span>, 
-                   scale <span class="op">=</span> <span class="st">"Kb"</span>, fontsize <span class="op">=</span> <span class="fl">7</span>,
-                   y <span class="op">=</span> <span class="fl">3.85</span><span class="op">)</span>
-<span class="co">##########################</span>
-<span class="co">######## Panel D #########</span>
-<span class="co">##########################</span>
-<span class="co">## Text section label</span>
-<span class="fu"><a href="reference/plotText.html">plotText</a></span><span class="op">(</span>label <span class="op">=</span> <span class="st">"D"</span>, fontsize <span class="op">=</span> <span class="fl">12</span>,
-            x <span class="op">=</span> <span class="fl">5.25</span>, y <span class="op">=</span> <span class="fl">1</span>, just <span class="op">=</span> <span class="fu"><a href="reference/c.html">c</a></span><span class="op">(</span><span class="st">"left"</span>, <span class="st">"top"</span><span class="op">)</span>, default.units <span class="op">=</span> <span class="st">"inches"</span><span class="op">)</span>
-<span class="co">## Set genomic and dimension parameters in a `params` object</span>
-<span class="va">params_d</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/pgParams.html">pgParams</a></span><span class="op">(</span>chrom <span class="op">=</span> <span class="st">"chr21"</span>, chromstart <span class="op">=</span> <span class="fl">28150000</span>, chromend <span class="op">=</span> <span class="fl">29150000</span>, 
-                      assembly <span class="op">=</span> <span class="st">"hg19"</span>,
-                      x <span class="op">=</span> <span class="fl">6.75</span>, width <span class="op">=</span> <span class="fl">1.5</span>, default.units <span class="op">=</span> <span class="st">"inches"</span><span class="op">)</span>
-<span class="co">## Plot Hi-C triangle</span>
-<span class="va">hic_imr</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/plotHicTriangle.html">plotHicTriangle</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">IMR90_HiC_10kb</span>, params <span class="op">=</span> <span class="va">params_d</span>,
-                              zrange <span class="op">=</span> <span class="fu"><a href="reference/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">70</span><span class="op">)</span>, resolution <span class="op">=</span> <span class="fl">10000</span>,
-                              y <span class="op">=</span> <span class="fl">1.75</span>, height <span class="op">=</span> <span class="fl">0.75</span>, just <span class="op">=</span> <span class="fu"><a href="reference/c.html">c</a></span><span class="op">(</span><span class="st">"right"</span>, <span class="st">"bottom"</span><span class="op">)</span><span class="op">)</span>
-<span class="co">## Annotate Hi-C heatmap legend</span>
-<span class="fu"><a href="reference/annoHeatmapLegend.html">annoHeatmapLegend</a></span><span class="op">(</span>plot <span class="op">=</span> <span class="va">hic_imr</span>, fontsize <span class="op">=</span> <span class="fl">7</span>, digits <span class="op">=</span> <span class="fl">0</span>,
-                     x <span class="op">=</span> <span class="fl">6.75</span>, y <span class="op">=</span> <span class="fl">1</span>, width <span class="op">=</span> <span class="fl">0.07</span>, height <span class="op">=</span> <span class="fl">0.5</span>, just <span class="op">=</span> <span class="fu"><a href="reference/c.html">c</a></span><span class="op">(</span><span class="st">"right"</span>, <span class="st">"top"</span><span class="op">)</span><span class="op">)</span>
-<span class="co">## Plot CTCF signal</span>
-<span class="va">ctcf_imr</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/plotSignal.html">plotSignal</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">IMR90_ChIP_CTCF_signal</span>, params <span class="op">=</span> <span class="fu"><a href="reference/c.html">c</a></span><span class="op">(</span><span class="va">params_d</span>, <span class="va">ctcf_range</span><span class="op">)</span>,
-                          fill <span class="op">=</span> <span class="st">"#253494"</span>, linecolor <span class="op">=</span> <span class="st">"#253494"</span>,
-                          y <span class="op">=</span> <span class="fl">1.95</span>, height <span class="op">=</span> <span class="fl">0.6</span>, just <span class="op">=</span> <span class="fu"><a href="reference/c.html">c</a></span><span class="op">(</span><span class="st">"right"</span>, <span class="st">"top"</span><span class="op">)</span><span class="op">)</span>
-<span class="co">## Plot H3K27ac signal</span>
-<span class="va">hk_imr</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/plotSignal.html">plotSignal</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">IMR90_ChIP_H3K27ac_signal</span>, params <span class="op">=</span> <span class="fu"><a href="reference/c.html">c</a></span><span class="op">(</span><span class="va">params_d</span>, <span class="va">hk_range</span><span class="op">)</span>,
-                        fill <span class="op">=</span> <span class="st">"#37a7db"</span>, linecolor <span class="op">=</span> <span class="st">"#37a7db"</span>,
-                        y <span class="op">=</span> <span class="fl">3.25</span>, height <span class="op">=</span> <span class="fl">0.6</span>, just <span class="op">=</span> <span class="fu"><a href="reference/c.html">c</a></span><span class="op">(</span><span class="st">"right"</span>, <span class="st">"bottom"</span><span class="op">)</span><span class="op">)</span>
-<span class="co">## Plot gene track</span>
-<span class="va">genes_imr</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/plotGenes.html">plotGenes</a></span><span class="op">(</span>params <span class="op">=</span> <span class="va">params_d</span>, stroke <span class="op">=</span> <span class="fl">1</span>, fontsize <span class="op">=</span> <span class="fl">6</span>,
-                          strandLabels <span class="op">=</span> <span class="cn">FALSE</span>,
-                          y <span class="op">=</span> <span class="fl">3.35</span>, height <span class="op">=</span> <span class="fl">0.4</span>, just <span class="op">=</span> <span class="fu"><a href="reference/c.html">c</a></span><span class="op">(</span><span class="st">"right"</span>, <span class="st">"top"</span><span class="op">)</span><span class="op">)</span>
-<span class="co">## Annotate genome label</span>
-<span class="fu"><a href="reference/annoGenomeLabel.html">annoGenomeLabel</a></span><span class="op">(</span>plot <span class="op">=</span> <span class="va">genes_imr</span>, params <span class="op">=</span> <span class="va">params_d</span>, 
-                   scale <span class="op">=</span> <span class="st">"Kb"</span>, fontsize <span class="op">=</span> <span class="fl">7</span>, digits <span class="op">=</span> <span class="fl">0</span>,
-                   y <span class="op">=</span> <span class="fl">3.85</span>, just <span class="op">=</span> <span class="fu"><a href="reference/c.html">c</a></span><span class="op">(</span><span class="st">"right"</span>, <span class="st">"top"</span><span class="op">)</span><span class="op">)</span>
-<span class="co">## Hide page guides</span>
-<span class="fu"><a href="reference/pageGuideHide.html">pageGuideHide</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co">## Load libraries and datasets</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://phanstiellab.github.io/plotgardener">"plotgardener"</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st">"org.Hs.eg.db"</span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st">"TxDb.Hsapiens.UCSC.hg19.knownGene"</span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://github.com/PhanstielLab/plotgardenerData" class="external-link">"plotgardenerData"</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st">"AnnotationHub"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"GM12878_HiC_10kb"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"IMR90_HiC_10kb"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"GM12878_ChIP_CTCF_signal"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"IMR90_ChIP_CTCF_signal"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"GM12878_ChIP_H3K27ac_signal"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"IMR90_ChIP_H3K27ac_signal"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co">## Create a plotgardener page</span></span>
+<span><span class="fu"><a href="reference/pageCreate.html">pageCreate</a></span><span class="op">(</span>width <span class="op">=</span> <span class="fl">7</span>, height <span class="op">=</span> <span class="fl">4.25</span>, default.units <span class="op">=</span> <span class="st">"inches"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co">##########################</span></span>
+<span><span class="co">######## Panel A #########</span></span>
+<span><span class="co">##########################</span></span>
+<span><span class="co">## Text section label</span></span>
+<span><span class="fu"><a href="reference/plotText.html">plotText</a></span><span class="op">(</span>label <span class="op">=</span> <span class="st">"A"</span>, fontsize <span class="op">=</span> <span class="fl">12</span>,</span>
+<span>            x <span class="op">=</span> <span class="fl">0.25</span>, y <span class="op">=</span> <span class="fl">0.25</span>, just <span class="op">=</span> <span class="st">"left"</span>, default.units <span class="op">=</span> <span class="st">"inches"</span><span class="op">)</span></span>
+<span><span class="co">## Set genomic and dimension parameters in a `params` object</span></span>
+<span><span class="va">params_a</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/pgParams.html">pgParams</a></span><span class="op">(</span>chrom <span class="op">=</span> <span class="st">"chr21"</span>, chromstart <span class="op">=</span> <span class="fl">28000000</span>, chromend <span class="op">=</span> <span class="fl">30300000</span>, </span>
+<span>                      assembly <span class="op">=</span> <span class="st">"hg19"</span>,</span>
+<span>                      x <span class="op">=</span> <span class="fl">0.25</span>, width <span class="op">=</span> <span class="fl">2.75</span>, just <span class="op">=</span> <span class="fu"><a href="reference/c.html">c</a></span><span class="op">(</span><span class="st">"left"</span>, <span class="st">"top"</span><span class="op">)</span>, default.units <span class="op">=</span> <span class="st">"inches"</span><span class="op">)</span></span>
+<span><span class="co">## Double-sided Hi-C Plot</span></span>
+<span><span class="va">hicPlot_top</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/plotHicSquare.html">plotHicSquare</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">GM12878_HiC_10kb</span>, params <span class="op">=</span> <span class="va">params_a</span>,</span>
+<span>                                zrange <span class="op">=</span> <span class="fu"><a href="reference/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">200</span><span class="op">)</span>, resolution <span class="op">=</span> <span class="fl">10000</span>,</span>
+<span>                                half <span class="op">=</span> <span class="st">"top"</span>,</span>
+<span>                                y <span class="op">=</span> <span class="fl">0.5</span>, height <span class="op">=</span> <span class="fl">2.75</span><span class="op">)</span></span>
+<span><span class="va">hicPlot_bottom</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/plotHicSquare.html">plotHicSquare</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">IMR90_HiC_10kb</span>, params <span class="op">=</span> <span class="va">params_a</span>,</span>
+<span>                                   zrange <span class="op">=</span> <span class="fu"><a href="reference/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">70</span><span class="op">)</span>, resolution <span class="op">=</span> <span class="fl">10000</span>,</span>
+<span>                                   half <span class="op">=</span> <span class="st">"bottom"</span>,</span>
+<span>                                   y <span class="op">=</span> <span class="fl">0.5</span>, height <span class="op">=</span> <span class="fl">2.75</span><span class="op">)</span></span>
+<span><span class="co">## Annotate Hi-C heatmap legends</span></span>
+<span><span class="fu"><a href="reference/annoHeatmapLegend.html">annoHeatmapLegend</a></span><span class="op">(</span>plot <span class="op">=</span> <span class="va">hicPlot_bottom</span>, fontsize <span class="op">=</span> <span class="fl">7</span>, </span>
+<span>                     x <span class="op">=</span> <span class="fl">3.05</span>, y <span class="op">=</span> <span class="fl">0.5</span>,</span>
+<span>                     width <span class="op">=</span> <span class="fl">0.07</span>, height <span class="op">=</span> <span class="fl">0.5</span>, just <span class="op">=</span> <span class="fu"><a href="reference/c.html">c</a></span><span class="op">(</span><span class="st">"left"</span>, <span class="st">"top"</span><span class="op">)</span>,</span>
+<span>                     default.units <span class="op">=</span> <span class="st">"inches"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="reference/annoHeatmapLegend.html">annoHeatmapLegend</a></span><span class="op">(</span>plot <span class="op">=</span> <span class="va">hicPlot_top</span>, fontsize <span class="op">=</span> <span class="fl">7</span>, </span>
+<span>                     x <span class="op">=</span> <span class="fl">.125</span>, y <span class="op">=</span> <span class="fl">0.5</span>,</span>
+<span>                     width <span class="op">=</span> <span class="fl">0.07</span>, height <span class="op">=</span> <span class="fl">0.5</span>, just <span class="op">=</span> <span class="fu"><a href="reference/c.html">c</a></span><span class="op">(</span><span class="st">"left"</span>, <span class="st">"top"</span><span class="op">)</span>,</span>
+<span>                     default.units <span class="op">=</span> <span class="st">"inches"</span><span class="op">)</span></span>
+<span><span class="co">## Plot gene track</span></span>
+<span><span class="va">genes_a</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/plotGenes.html">plotGenes</a></span><span class="op">(</span>params <span class="op">=</span> <span class="va">params_a</span>, stroke <span class="op">=</span> <span class="fl">1</span>, fontsize <span class="op">=</span> <span class="fl">6</span>,</span>
+<span>                        y <span class="op">=</span> <span class="fl">3.35</span>, height <span class="op">=</span> <span class="fl">0.4</span><span class="op">)</span></span>
+<span><span class="co">## Annotate genome label</span></span>
+<span><span class="fu"><a href="reference/annoGenomeLabel.html">annoGenomeLabel</a></span><span class="op">(</span>plot <span class="op">=</span> <span class="va">genes_a</span>, params <span class="op">=</span> <span class="va">params_a</span>, </span>
+<span>                   scale <span class="op">=</span> <span class="st">"Mb"</span>, fontsize <span class="op">=</span> <span class="fl">7</span>,</span>
+<span>                   y <span class="op">=</span> <span class="fl">3.85</span><span class="op">)</span></span>
+<span><span class="co">##########################</span></span>
+<span><span class="co">######## Panel B #########</span></span>
+<span><span class="co">##########################</span></span>
+<span><span class="co">## Text section label</span></span>
+<span><span class="fu"><a href="reference/plotText.html">plotText</a></span><span class="op">(</span>label <span class="op">=</span> <span class="st">"B"</span>, fontsize <span class="op">=</span> <span class="fl">12</span>,</span>
+<span>            x <span class="op">=</span> <span class="fl">3.5</span>, y <span class="op">=</span> <span class="fl">0.25</span>, just <span class="op">=</span> <span class="st">"left"</span>, default.units <span class="op">=</span> <span class="st">"inches"</span><span class="op">)</span></span>
+<span><span class="co">## Plot ideogram</span></span>
+<span><span class="fu"><a href="reference/plotIdeogram.html">plotIdeogram</a></span><span class="op">(</span>chrom <span class="op">=</span> <span class="st">"chr21"</span>, assembly <span class="op">=</span> <span class="st">"hg19"</span>,</span>
+<span>                x <span class="op">=</span> <span class="fl">3.5</span>, y <span class="op">=</span> <span class="fl">0.5</span>,</span>
+<span>                width <span class="op">=</span> <span class="fl">3.25</span>, height <span class="op">=</span> <span class="fl">0.15</span>, just <span class="op">=</span> <span class="fu"><a href="reference/c.html">c</a></span><span class="op">(</span><span class="st">"left"</span>, <span class="st">"top"</span><span class="op">)</span>, default.units <span class="op">=</span> <span class="st">"inches"</span><span class="op">)</span></span>
+<span><span class="co">## Add text to ideogram</span></span>
+<span><span class="fu"><a href="reference/plotText.html">plotText</a></span><span class="op">(</span>label <span class="op">=</span> <span class="st">"Chromosome 21"</span>, fontsize <span class="op">=</span> <span class="fl">8</span>, fontcolor <span class="op">=</span> <span class="st">"darkgrey"</span>,</span>
+<span>            x <span class="op">=</span> <span class="fl">6.75</span>, y <span class="op">=</span> <span class="fl">0.4</span>, just <span class="op">=</span> <span class="st">"right"</span>, default.units <span class="op">=</span> <span class="st">"inches"</span><span class="op">)</span></span>
+<span><span class="co">##########################</span></span>
+<span><span class="co">######## Panel C #########</span></span>
+<span><span class="co">##########################</span></span>
+<span><span class="co">## Text section label</span></span>
+<span><span class="fu"><a href="reference/plotText.html">plotText</a></span><span class="op">(</span>label <span class="op">=</span> <span class="st">"C"</span>, fontsize <span class="op">=</span> <span class="fl">12</span>,</span>
+<span>            x <span class="op">=</span> <span class="fl">3.5</span>, y <span class="op">=</span> <span class="fl">1</span>, just <span class="op">=</span> <span class="fu"><a href="reference/c.html">c</a></span><span class="op">(</span><span class="st">"left"</span>, <span class="st">"top"</span><span class="op">)</span>, default.units <span class="op">=</span> <span class="st">"inches"</span><span class="op">)</span></span>
+<span><span class="co">## Set genomic and dimension parameters in a `params` object</span></span>
+<span><span class="va">params_c</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/pgParams.html">pgParams</a></span><span class="op">(</span>chrom <span class="op">=</span> <span class="st">"chr21"</span>, chromstart <span class="op">=</span> <span class="fl">28150000</span>, chromend <span class="op">=</span> <span class="fl">29150000</span>, </span>
+<span>                      assembly <span class="op">=</span> <span class="st">"hg19"</span>,</span>
+<span>                      x <span class="op">=</span> <span class="fl">3.5</span>, width <span class="op">=</span> <span class="fl">1.5</span>, default.units <span class="op">=</span> <span class="st">"inches"</span><span class="op">)</span></span>
+<span><span class="co">## Set signal track data ranges</span></span>
+<span><span class="va">ctcf_range</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/pgParams.html">pgParams</a></span><span class="op">(</span>range <span class="op">=</span> <span class="fu"><a href="reference/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">77</span><span class="op">)</span>,</span>
+<span>                        assembly <span class="op">=</span> <span class="st">"hg19"</span><span class="op">)</span></span>
+<span><span class="va">hk_range</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/pgParams.html">pgParams</a></span><span class="op">(</span>range <span class="op">=</span> <span class="fu"><a href="reference/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">32.6</span><span class="op">)</span>,</span>
+<span>                      assembly <span class="op">=</span> <span class="st">"hg19"</span><span class="op">)</span></span>
+<span><span class="co">## Plot Hi-C triangle</span></span>
+<span><span class="va">hic_gm</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/plotHicTriangle.html">plotHicTriangle</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">GM12878_HiC_10kb</span>, params <span class="op">=</span> <span class="va">params_c</span>,</span>
+<span>                             zrange <span class="op">=</span> <span class="fu"><a href="reference/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">200</span><span class="op">)</span>, resolution <span class="op">=</span> <span class="fl">10000</span>,</span>
+<span>                             y <span class="op">=</span> <span class="fl">1.75</span>, height <span class="op">=</span> <span class="fl">0.75</span>, just <span class="op">=</span> <span class="fu"><a href="reference/c.html">c</a></span><span class="op">(</span><span class="st">"left"</span>, <span class="st">"bottom"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">## Annotate Hi-C heatmap legend</span></span>
+<span><span class="fu"><a href="reference/annoHeatmapLegend.html">annoHeatmapLegend</a></span><span class="op">(</span>plot <span class="op">=</span> <span class="va">hic_gm</span>, fontsize <span class="op">=</span> <span class="fl">7</span>, </span>
+<span>                     x <span class="op">=</span> <span class="fl">5</span>, y <span class="op">=</span> <span class="fl">1</span>, width <span class="op">=</span> <span class="fl">0.07</span>, height <span class="op">=</span> <span class="fl">0.5</span>, </span>
+<span>                     just <span class="op">=</span> <span class="fu"><a href="reference/c.html">c</a></span><span class="op">(</span><span class="st">"right"</span>, <span class="st">"top"</span><span class="op">)</span>, default.units <span class="op">=</span> <span class="st">"inches"</span><span class="op">)</span></span>
+<span><span class="co">## Plot CTCF signal</span></span>
+<span><span class="va">ctcf_gm</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/plotSignal.html">plotSignal</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">GM12878_ChIP_CTCF_signal</span>, params <span class="op">=</span> <span class="fu"><a href="reference/c.html">c</a></span><span class="op">(</span><span class="va">params_c</span>, <span class="va">ctcf_range</span><span class="op">)</span>,</span>
+<span>                         fill <span class="op">=</span> <span class="st">"#253494"</span>, linecolor <span class="op">=</span> <span class="st">"#253494"</span>,</span>
+<span>                         y <span class="op">=</span> <span class="fl">1.95</span>, height <span class="op">=</span> <span class="fl">0.6</span><span class="op">)</span></span>
+<span><span class="co">## CTCF label</span></span>
+<span><span class="fu"><a href="reference/plotText.html">plotText</a></span><span class="op">(</span>label <span class="op">=</span> <span class="st">"CTCF"</span>, fontcolor <span class="op">=</span> <span class="st">"#253494"</span>, fontsize <span class="op">=</span> <span class="fl">8</span>,</span>
+<span>            x <span class="op">=</span> <span class="fl">3.5</span>, y <span class="op">=</span> <span class="fl">1.95</span>, just <span class="op">=</span> <span class="fu"><a href="reference/c.html">c</a></span><span class="op">(</span><span class="st">"left"</span>,<span class="st">"top"</span><span class="op">)</span>, default.units <span class="op">=</span> <span class="st">"inches"</span><span class="op">)</span></span>
+<span><span class="co">## Plot H3K27ac signal</span></span>
+<span><span class="va">hk_gm</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/plotSignal.html">plotSignal</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">GM12878_ChIP_H3K27ac_signal</span>, params <span class="op">=</span> <span class="fu"><a href="reference/c.html">c</a></span><span class="op">(</span><span class="va">params_c</span>, <span class="va">hk_range</span><span class="op">)</span>,</span>
+<span>                       fill <span class="op">=</span> <span class="st">"#37a7db"</span>, linecolor <span class="op">=</span> <span class="st">"#37a7db"</span>,</span>
+<span>                       y <span class="op">=</span> <span class="fl">3.25</span>, height <span class="op">=</span> <span class="fl">0.6</span>, just <span class="op">=</span> <span class="fu"><a href="reference/c.html">c</a></span><span class="op">(</span><span class="st">"left"</span>, <span class="st">"bottom"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">## H3K27ac label</span></span>
+<span><span class="fu"><a href="reference/plotText.html">plotText</a></span><span class="op">(</span>label <span class="op">=</span> <span class="st">"H3K27ac"</span>, fontcolor <span class="op">=</span> <span class="st">"#37a7db"</span>, fontsize <span class="op">=</span> <span class="fl">8</span>,</span>
+<span>            x <span class="op">=</span> <span class="fl">3.5</span>, y <span class="op">=</span> <span class="fl">2.65</span>, just <span class="op">=</span> <span class="fu"><a href="reference/c.html">c</a></span><span class="op">(</span><span class="st">"left"</span>,<span class="st">"top"</span><span class="op">)</span>, default.units <span class="op">=</span> <span class="st">"inches"</span><span class="op">)</span></span>
+<span><span class="co">## Plot genes</span></span>
+<span><span class="va">genes_gm</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/plotGenes.html">plotGenes</a></span><span class="op">(</span>params <span class="op">=</span> <span class="va">params_c</span>, stroke <span class="op">=</span> <span class="fl">1</span>, fontsize <span class="op">=</span> <span class="fl">6</span>,</span>
+<span>                         strandLabels <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>                         y <span class="op">=</span> <span class="fl">3.35</span>, height <span class="op">=</span> <span class="fl">0.4</span><span class="op">)</span></span>
+<span><span class="co">## Annotate genome label</span></span>
+<span><span class="fu"><a href="reference/annoGenomeLabel.html">annoGenomeLabel</a></span><span class="op">(</span>plot <span class="op">=</span> <span class="va">genes_gm</span>, params <span class="op">=</span> <span class="va">params_c</span>, </span>
+<span>                   scale <span class="op">=</span> <span class="st">"Kb"</span>, fontsize <span class="op">=</span> <span class="fl">7</span>,</span>
+<span>                   y <span class="op">=</span> <span class="fl">3.85</span><span class="op">)</span></span>
+<span><span class="co">##########################</span></span>
+<span><span class="co">######## Panel D #########</span></span>
+<span><span class="co">##########################</span></span>
+<span><span class="co">## Text section label</span></span>
+<span><span class="fu"><a href="reference/plotText.html">plotText</a></span><span class="op">(</span>label <span class="op">=</span> <span class="st">"D"</span>, fontsize <span class="op">=</span> <span class="fl">12</span>,</span>
+<span>            x <span class="op">=</span> <span class="fl">5.25</span>, y <span class="op">=</span> <span class="fl">1</span>, just <span class="op">=</span> <span class="fu"><a href="reference/c.html">c</a></span><span class="op">(</span><span class="st">"left"</span>, <span class="st">"top"</span><span class="op">)</span>, default.units <span class="op">=</span> <span class="st">"inches"</span><span class="op">)</span></span>
+<span><span class="co">## Set genomic and dimension parameters in a `params` object</span></span>
+<span><span class="va">params_d</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/pgParams.html">pgParams</a></span><span class="op">(</span>chrom <span class="op">=</span> <span class="st">"chr21"</span>, chromstart <span class="op">=</span> <span class="fl">28150000</span>, chromend <span class="op">=</span> <span class="fl">29150000</span>, </span>
+<span>                      assembly <span class="op">=</span> <span class="st">"hg19"</span>,</span>
+<span>                      x <span class="op">=</span> <span class="fl">6.75</span>, width <span class="op">=</span> <span class="fl">1.5</span>, default.units <span class="op">=</span> <span class="st">"inches"</span><span class="op">)</span></span>
+<span><span class="co">## Plot Hi-C triangle</span></span>
+<span><span class="va">hic_imr</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/plotHicTriangle.html">plotHicTriangle</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">IMR90_HiC_10kb</span>, params <span class="op">=</span> <span class="va">params_d</span>,</span>
+<span>                              zrange <span class="op">=</span> <span class="fu"><a href="reference/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">70</span><span class="op">)</span>, resolution <span class="op">=</span> <span class="fl">10000</span>,</span>
+<span>                              y <span class="op">=</span> <span class="fl">1.75</span>, height <span class="op">=</span> <span class="fl">0.75</span>, just <span class="op">=</span> <span class="fu"><a href="reference/c.html">c</a></span><span class="op">(</span><span class="st">"right"</span>, <span class="st">"bottom"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">## Annotate Hi-C heatmap legend</span></span>
+<span><span class="fu"><a href="reference/annoHeatmapLegend.html">annoHeatmapLegend</a></span><span class="op">(</span>plot <span class="op">=</span> <span class="va">hic_imr</span>, fontsize <span class="op">=</span> <span class="fl">7</span>, digits <span class="op">=</span> <span class="fl">0</span>,</span>
+<span>                     x <span class="op">=</span> <span class="fl">6.75</span>, y <span class="op">=</span> <span class="fl">1</span>, width <span class="op">=</span> <span class="fl">0.07</span>, height <span class="op">=</span> <span class="fl">0.5</span>, just <span class="op">=</span> <span class="fu"><a href="reference/c.html">c</a></span><span class="op">(</span><span class="st">"right"</span>, <span class="st">"top"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">## Plot CTCF signal</span></span>
+<span><span class="va">ctcf_imr</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/plotSignal.html">plotSignal</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">IMR90_ChIP_CTCF_signal</span>, params <span class="op">=</span> <span class="fu"><a href="reference/c.html">c</a></span><span class="op">(</span><span class="va">params_d</span>, <span class="va">ctcf_range</span><span class="op">)</span>,</span>
+<span>                          fill <span class="op">=</span> <span class="st">"#253494"</span>, linecolor <span class="op">=</span> <span class="st">"#253494"</span>,</span>
+<span>                          y <span class="op">=</span> <span class="fl">1.95</span>, height <span class="op">=</span> <span class="fl">0.6</span>, just <span class="op">=</span> <span class="fu"><a href="reference/c.html">c</a></span><span class="op">(</span><span class="st">"right"</span>, <span class="st">"top"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">## Plot H3K27ac signal</span></span>
+<span><span class="va">hk_imr</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/plotSignal.html">plotSignal</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">IMR90_ChIP_H3K27ac_signal</span>, params <span class="op">=</span> <span class="fu"><a href="reference/c.html">c</a></span><span class="op">(</span><span class="va">params_d</span>, <span class="va">hk_range</span><span class="op">)</span>,</span>
+<span>                        fill <span class="op">=</span> <span class="st">"#37a7db"</span>, linecolor <span class="op">=</span> <span class="st">"#37a7db"</span>,</span>
+<span>                        y <span class="op">=</span> <span class="fl">3.25</span>, height <span class="op">=</span> <span class="fl">0.6</span>, just <span class="op">=</span> <span class="fu"><a href="reference/c.html">c</a></span><span class="op">(</span><span class="st">"right"</span>, <span class="st">"bottom"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">## Plot gene track</span></span>
+<span><span class="va">genes_imr</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/plotGenes.html">plotGenes</a></span><span class="op">(</span>params <span class="op">=</span> <span class="va">params_d</span>, stroke <span class="op">=</span> <span class="fl">1</span>, fontsize <span class="op">=</span> <span class="fl">6</span>,</span>
+<span>                          strandLabels <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>                          y <span class="op">=</span> <span class="fl">3.35</span>, height <span class="op">=</span> <span class="fl">0.4</span>, just <span class="op">=</span> <span class="fu"><a href="reference/c.html">c</a></span><span class="op">(</span><span class="st">"right"</span>, <span class="st">"top"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">## Annotate genome label</span></span>
+<span><span class="fu"><a href="reference/annoGenomeLabel.html">annoGenomeLabel</a></span><span class="op">(</span>plot <span class="op">=</span> <span class="va">genes_imr</span>, params <span class="op">=</span> <span class="va">params_d</span>, </span>
+<span>                   scale <span class="op">=</span> <span class="st">"Kb"</span>, fontsize <span class="op">=</span> <span class="fl">7</span>, digits <span class="op">=</span> <span class="fl">0</span>,</span>
+<span>                   y <span class="op">=</span> <span class="fl">3.85</span>, just <span class="op">=</span> <span class="fu"><a href="reference/c.html">c</a></span><span class="op">(</span><span class="st">"right"</span>, <span class="st">"top"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">## Hide page guides</span></span>
+<span><span class="fu"><a href="reference/pageGuideHide.html">pageGuideHide</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="a-word-of-caution">A word of caution<a class="anchor" aria-label="anchor" href="#a-word-of-caution"></a>
@@ -374,7 +374,7 @@
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
 </div>
 
       </footer>

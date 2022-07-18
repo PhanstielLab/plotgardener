@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">plotgardener</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.2.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.2.8</span>
       </span>
     </div>
 
@@ -96,30 +96,30 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">plotHicRectangle</span><span class="op">(</span>
-    <span class="va">data</span>,
-    resolution <span class="op">=</span> <span class="st">"auto"</span>,
-    zrange <span class="op">=</span> <span class="cn">NULL</span>,
-    norm <span class="op">=</span> <span class="st">"KR"</span>,
-    matrix <span class="op">=</span> <span class="st">"observed"</span>,
-    <span class="va">chrom</span>,
-    chromstart <span class="op">=</span> <span class="cn">NULL</span>,
-    chromend <span class="op">=</span> <span class="cn">NULL</span>,
-    assembly <span class="op">=</span> <span class="st">"hg38"</span>,
-    palette <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grDevices/colorRamp.html" class="external-link">colorRampPalette</a></span><span class="op">(</span><span class="fu">brewer.pal</span><span class="op">(</span>n <span class="op">=</span> <span class="fl">9</span>, <span class="st">"YlGnBu"</span><span class="op">)</span><span class="op">)</span>,
-    colorTrans <span class="op">=</span> <span class="st">"linear"</span>,
-    flip <span class="op">=</span> <span class="cn">FALSE</span>,
-    bg <span class="op">=</span> <span class="cn">NA</span>,
-    x <span class="op">=</span> <span class="cn">NULL</span>,
-    y <span class="op">=</span> <span class="cn">NULL</span>,
-    width <span class="op">=</span> <span class="cn">NULL</span>,
-    height <span class="op">=</span> <span class="cn">NULL</span>,
-    just <span class="op">=</span> <span class="fu"><a href="c.html">c</a></span><span class="op">(</span><span class="st">"left"</span>, <span class="st">"top"</span><span class="op">)</span>,
-    default.units <span class="op">=</span> <span class="st">"inches"</span>,
-    draw <span class="op">=</span> <span class="cn">TRUE</span>,
-    params <span class="op">=</span> <span class="cn">NULL</span>,
-    quiet <span class="op">=</span> <span class="cn">FALSE</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">plotHicRectangle</span><span class="op">(</span></span>
+<span>    <span class="va">data</span>,</span>
+<span>    resolution <span class="op">=</span> <span class="st">"auto"</span>,</span>
+<span>    zrange <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>    norm <span class="op">=</span> <span class="st">"KR"</span>,</span>
+<span>    matrix <span class="op">=</span> <span class="st">"observed"</span>,</span>
+<span>    <span class="va">chrom</span>,</span>
+<span>    chromstart <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>    chromend <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>    assembly <span class="op">=</span> <span class="st">"hg38"</span>,</span>
+<span>    palette <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grDevices/colorRamp.html" class="external-link">colorRampPalette</a></span><span class="op">(</span><span class="fu">brewer.pal</span><span class="op">(</span>n <span class="op">=</span> <span class="fl">9</span>, <span class="st">"YlGnBu"</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>    colorTrans <span class="op">=</span> <span class="st">"linear"</span>,</span>
+<span>    flip <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>    bg <span class="op">=</span> <span class="cn">NA</span>,</span>
+<span>    x <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>    y <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>    width <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>    height <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>    just <span class="op">=</span> <span class="fu"><a href="c.html">c</a></span><span class="op">(</span><span class="st">"left"</span>, <span class="st">"top"</span><span class="op">)</span>,</span>
+<span>    default.units <span class="op">=</span> <span class="st">"inches"</span>,</span>
+<span>    draw <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>    params <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>    quiet <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -127,65 +127,99 @@
     <dl><dt>data</dt>
 <dd><p>Path to .hic file as a string or a 3-column dataframe of
 interaction counts in sparse upper triangular format.</p></dd>
+
+
 <dt>resolution</dt>
 <dd><p>A numeric specifying the width in basepairs
 of each pixel. For hic files, "auto" will attempt to choose a
 resolution based on the size of the region. For
 dataframes, "auto" will attempt to detect the resolution the
 dataframe contains.</p></dd>
+
+
 <dt>zrange</dt>
 <dd><p>A numeric vector of length 2 specifying the range of
 interaction scores to plot, where extreme values will be set to the
 max or min.</p></dd>
+
+
 <dt>norm</dt>
 <dd><p>Character value specifying hic data normalization method,
 if giving .hic file. This value must be found in the .hic file.
 Default value is <code>norm = "KR"</code>.</p></dd>
+
+
 <dt>matrix</dt>
 <dd><p>Character value indicating the type of matrix to output.
 Default value is <code>matrix = "observed"</code>. Options are:</p><ul><li><p><code>"observed"</code>: Observed counts.</p></li>
 <li><p><code>"oe"</code>: Observed/expected counts.</p></li>
 <li><p><code>"log2oe"</code>: Log2 transformed observed/expected counts.</p></li>
 </ul></dd>
+
+
 <dt>chrom</dt>
 <dd><p>Chromosome of region to be plotted, as a string.</p></dd>
+
+
 <dt>chromstart</dt>
 <dd><p>Integer start position on chromosome to be plotted.</p></dd>
+
+
 <dt>chromend</dt>
 <dd><p>Integer end position on chromosome to be plotted.</p></dd>
+
+
 <dt>assembly</dt>
 <dd><p>Default genome assembly as a string or a
 <a href="assembly.html">assembly</a> object.
 Default value is <code>assembly = "hg38"</code>.</p></dd>
+
+
 <dt>palette</dt>
 <dd><p>A function describing the color palette to use for
 representing scale of interaction scores. Default value is
 <code>palette =  colorRampPalette(brewer.pal(n = 9, "YlGnBu"))</code>.</p></dd>
+
+
 <dt>colorTrans</dt>
 <dd><p>A string specifying how to scale Hi-C colors.
 Options are "linear", "log", "log2", or "log10".
 Default value is <code>colorTrans = "linear"</code>.</p></dd>
+
+
 <dt>flip</dt>
 <dd><p>A logical indicating whether to flip the orientation of
 the Hi-C matrix over the x-axis. Default value is <code>flip = FALSE</code>.</p></dd>
+
+
 <dt>bg</dt>
 <dd><p>Character value indicating background color.
 Default value is <code>bg = NA</code>.</p></dd>
+
+
 <dt>x</dt>
 <dd><p>A numeric or unit object specifying rectangle
 Hi-C plot x-location.</p></dd>
+
+
 <dt>y</dt>
 <dd><p>A numeric, unit object, or character containing a "b" combined
 with a numeric value specifying rectangle Hi-C plot y-location.
 The character value will
 place the rectangle Hi-C plot y relative to the bottom of the most
 recently plotted plot according to the units of the plotgardener page.</p></dd>
+
+
 <dt>width</dt>
 <dd><p>A numeric or unit object specifying the width of the
 Hi-C plot rectangle.</p></dd>
+
+
 <dt>height</dt>
 <dd><p>A numeric or unit object specifying the height of the
 Hi-C plot rectangle.</p></dd>
+
+
 <dt>just</dt>
 <dd><p>Justification of rectangle Hi-C plot relative to
 its (x, y) location. If there are two values, the first value
@@ -194,22 +228,33 @@ vertical justification.
 Possible string values are: <code>"left"</code>, <code>"right"</code>,
 <code>"centre"</code>, <code>"center"</code>, <code>"bottom"</code>, and <code>"top"</code>.
 Default value is <code>just = c("left", "top")</code>.</p></dd>
+
+
 <dt>default.units</dt>
 <dd><p>A string indicating the default units to use
 if <code>x</code>, <code>y</code>, <code>width</code>, or <code>height</code> are only given
 as numerics. Default value is <code>default.units = "inches"</code>.</p></dd>
+
+
 <dt>draw</dt>
 <dd><p>A logical value indicating whether graphics output should
 be produced. Default value is <code>draw = TRUE</code>.</p></dd>
+
+
 <dt>params</dt>
 <dd><p>An optional <a href="pgParams.html">pgParams</a> object containing
 relevant function parameters.</p></dd>
+
+
 <dt>quiet</dt>
 <dd><p>A logical indicating whether or not to print messages.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>Returns a <code>hicRectangle</code> object containing
+    
+
+<p>Returns a <code>hicRectangle</code> object containing
 relevant genomic region, Hi-C data, placement,
 and <a href="https://rdrr.io/r/grid/grid.grob.html" class="external-link">grob</a> information.</p>
     </div>
@@ -219,12 +264,14 @@ and <a href="https://rdrr.io/r/grid/grid.grob.html" class="external-link">grob</
 will fill in additional pixels around the
 the triangular portion of the plot to make a rectangle.</p>
 <p>A rectangle Hi-C plot can be placed on a plotgardener coordinate
-page by providing plot placement parameters:</p><div class="sourceCode"><pre><code><span class="fu"><a href="../reference/plotHicRectangle.html">plotHicRectangle</a></span><span class="op">(</span><span class="va">data</span>, <span class="va">chrom</span>,
-                    chromstart <span class="op">=</span> <span class="cn">NULL</span>, chromend <span class="op">=</span> <span class="cn">NULL</span>,
-                    <span class="va">x</span>, <span class="va">y</span>, <span class="va">width</span>, <span class="va">height</span>, just <span class="op">=</span> <span class="fu"><a href="../reference/c.html">c</a></span><span class="op">(</span><span class="st">"left"</span>, <span class="st">"top"</span><span class="op">)</span>,
-                    default.units <span class="op">=</span> <span class="st">"inches"</span><span class="op">)</span></code></pre></div><p>This function can also be used to quickly plot an unannotated
-rectangle Hi-C plot by ignoring plot placement parameters:</p><div class="sourceCode"><pre><code><span class="fu"><a href="../reference/plotHicRectangle.html">plotHicRectangle</a></span><span class="op">(</span><span class="va">data</span>, <span class="va">chrom</span>,
-                    chromstart <span class="op">=</span> <span class="cn">NULL</span>, chromend <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></code></pre></div>
+page by providing plot placement parameters:</p><div class="sourceCode"><pre><code><span></span>
+<span><span class="fu"><a href="../reference/plotHicRectangle.html">plotHicRectangle</a></span><span class="op">(</span><span class="va">data</span>, <span class="va">chrom</span>,</span>
+<span>                    chromstart <span class="op">=</span> <span class="cn">NULL</span>, chromend <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>                    <span class="va">x</span>, <span class="va">y</span>, <span class="va">width</span>, <span class="va">height</span>, just <span class="op">=</span> <span class="fu"><a href="../reference/c.html">c</a></span><span class="op">(</span><span class="st">"left"</span>, <span class="st">"top"</span><span class="op">)</span>,</span>
+<span>                    default.units <span class="op">=</span> <span class="st">"inches"</span><span class="op">)</span></span></code></pre></div><p>This function can also be used to quickly plot an unannotated
+rectangle Hi-C plot by ignoring plot placement parameters:</p><div class="sourceCode"><pre><code><span></span>
+<span><span class="fu"><a href="../reference/plotHicRectangle.html">plotHicRectangle</a></span><span class="op">(</span><span class="va">data</span>, <span class="va">chrom</span>,</span>
+<span>                    chromstart <span class="op">=</span> <span class="cn">NULL</span>, chromend <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div>
 
     </div>
     <div id="see-also">
@@ -234,45 +281,45 @@ rectangle Hi-C plot by ignoring plot placement parameters:</p><div class="source
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co">## Load Hi-C data</span></span>
-<span class="r-in"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/PhanstielLab/plotgardenerData" class="external-link">plotgardenerData</a></span><span class="op">)</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"IMR90_HiC_10kb"</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">## Create a page</span></span>
-<span class="r-in"><span class="fu"><a href="pageCreate.html">pageCreate</a></span><span class="op">(</span>width <span class="op">=</span> <span class="fl">6</span>, height <span class="op">=</span> <span class="fl">3.5</span>, default.units <span class="op">=</span> <span class="st">"inches"</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">## Plot and place rectangle Hi-C plot</span></span>
-<span class="r-in"><span class="va">hicPlot</span> <span class="op">&lt;-</span> <span class="fu">plotHicRectangle</span><span class="op">(</span></span>
-<span class="r-in">    data <span class="op">=</span> <span class="va">IMR90_HiC_10kb</span>, resolution <span class="op">=</span> <span class="fl">10000</span>,</span>
-<span class="r-in">    zrange <span class="op">=</span> <span class="fu"><a href="c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">70</span><span class="op">)</span>,</span>
-<span class="r-in">    chrom <span class="op">=</span> <span class="st">"chr21"</span>,</span>
-<span class="r-in">    chromstart <span class="op">=</span> <span class="fl">28950000</span>, chromend <span class="op">=</span> <span class="fl">29800000</span>,</span>
-<span class="r-in">    assembly <span class="op">=</span> <span class="st">"hg19"</span>,</span>
-<span class="r-in">    x <span class="op">=</span> <span class="fl">0.5</span>, y <span class="op">=</span> <span class="fl">0.5</span>, width <span class="op">=</span> <span class="fl">5</span>, height <span class="op">=</span> <span class="fl">2.5</span>,</span>
-<span class="r-in">    just <span class="op">=</span> <span class="fu"><a href="c.html">c</a></span><span class="op">(</span><span class="st">"left"</span>, <span class="st">"top"</span><span class="op">)</span>,</span>
-<span class="r-in">    default.units <span class="op">=</span> <span class="st">"inches"</span></span>
-<span class="r-in"><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co">## Load Hi-C data</span></span></span>
+<span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/PhanstielLab/plotgardenerData" class="external-link">plotgardenerData</a></span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"IMR90_HiC_10kb"</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## Create a page</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="pageCreate.html">pageCreate</a></span><span class="op">(</span>width <span class="op">=</span> <span class="fl">6</span>, height <span class="op">=</span> <span class="fl">3.5</span>, default.units <span class="op">=</span> <span class="st">"inches"</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## Plot and place rectangle Hi-C plot</span></span></span>
+<span class="r-in"><span><span class="va">hicPlot</span> <span class="op">&lt;-</span> <span class="fu">plotHicRectangle</span><span class="op">(</span></span></span>
+<span class="r-in"><span>    data <span class="op">=</span> <span class="va">IMR90_HiC_10kb</span>, resolution <span class="op">=</span> <span class="fl">10000</span>,</span></span>
+<span class="r-in"><span>    zrange <span class="op">=</span> <span class="fu"><a href="c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">70</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>    chrom <span class="op">=</span> <span class="st">"chr21"</span>,</span></span>
+<span class="r-in"><span>    chromstart <span class="op">=</span> <span class="fl">28950000</span>, chromend <span class="op">=</span> <span class="fl">29800000</span>,</span></span>
+<span class="r-in"><span>    assembly <span class="op">=</span> <span class="st">"hg19"</span>,</span></span>
+<span class="r-in"><span>    x <span class="op">=</span> <span class="fl">0.5</span>, y <span class="op">=</span> <span class="fl">0.5</span>, width <span class="op">=</span> <span class="fl">5</span>, height <span class="op">=</span> <span class="fl">2.5</span>,</span></span>
+<span class="r-in"><span>    just <span class="op">=</span> <span class="fu"><a href="c.html">c</a></span><span class="op">(</span><span class="st">"left"</span>, <span class="st">"top"</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>    default.units <span class="op">=</span> <span class="st">"inches"</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Read in dataframe.  Assuming 'chrom' in column1 and 'altchrom' in column2. 10000 BP resolution detected.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> hicRectangle[hicRectangle1]</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">## Annotate x-axis genome label</span></span>
-<span class="r-in"><span class="fu"><a href="annoGenomeLabel.html">annoGenomeLabel</a></span><span class="op">(</span></span>
-<span class="r-in">    plot <span class="op">=</span> <span class="va">hicPlot</span>, scale <span class="op">=</span> <span class="st">"Kb"</span>, x <span class="op">=</span> <span class="fl">0.5</span>, y <span class="op">=</span> <span class="fl">3.03</span>,</span>
-<span class="r-in">    just <span class="op">=</span> <span class="fu"><a href="c.html">c</a></span><span class="op">(</span><span class="st">"left"</span>, <span class="st">"top"</span><span class="op">)</span></span>
-<span class="r-in"><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## Annotate x-axis genome label</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="annoGenomeLabel.html">annoGenomeLabel</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>    plot <span class="op">=</span> <span class="va">hicPlot</span>, scale <span class="op">=</span> <span class="st">"Kb"</span>, x <span class="op">=</span> <span class="fl">0.5</span>, y <span class="op">=</span> <span class="fl">3.03</span>,</span></span>
+<span class="r-in"><span>    just <span class="op">=</span> <span class="fu"><a href="c.html">c</a></span><span class="op">(</span><span class="st">"left"</span>, <span class="st">"top"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> genomeLabel[genomeLabel1]</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">## Annotate heatmap legend</span></span>
-<span class="r-in"><span class="fu"><a href="annoHeatmapLegend.html">annoHeatmapLegend</a></span><span class="op">(</span></span>
-<span class="r-in">    plot <span class="op">=</span> <span class="va">hicPlot</span>, x <span class="op">=</span> <span class="fl">5.6</span>, y <span class="op">=</span> <span class="fl">0.5</span>,</span>
-<span class="r-in">    width <span class="op">=</span> <span class="fl">0.13</span>, height <span class="op">=</span> <span class="fl">1.5</span>,</span>
-<span class="r-in">    just <span class="op">=</span> <span class="fu"><a href="c.html">c</a></span><span class="op">(</span><span class="st">"left"</span>, <span class="st">"top"</span><span class="op">)</span></span>
-<span class="r-in"><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## Annotate heatmap legend</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="annoHeatmapLegend.html">annoHeatmapLegend</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>    plot <span class="op">=</span> <span class="va">hicPlot</span>, x <span class="op">=</span> <span class="fl">5.6</span>, y <span class="op">=</span> <span class="fl">0.5</span>,</span></span>
+<span class="r-in"><span>    width <span class="op">=</span> <span class="fl">0.13</span>, height <span class="op">=</span> <span class="fl">1.5</span>,</span></span>
+<span class="r-in"><span>    just <span class="op">=</span> <span class="fu"><a href="c.html">c</a></span><span class="op">(</span><span class="st">"left"</span>, <span class="st">"top"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> heatmapLegend[heatmapLegend1]</span>
 <span class="r-plt img"><img src="plotHicRectangle-1.png" alt="" width="1230" height="1050"></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">## Hide page guides</span></span>
-<span class="r-in"><span class="fu"><a href="pageGuideHide.html">pageGuideHide</a></span><span class="op">(</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## Hide page guides</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="pageGuideHide.html">pageGuideHide</a></span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="plotHicRectangle-2.png" alt="" width="1230" height="1050"></span>
 </code></pre></div>
     </div>
@@ -288,7 +335,7 @@ rectangle Hi-C plot by ignoring plot placement parameters:</p><div class="source
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
 </div>
 
       </footer></div>

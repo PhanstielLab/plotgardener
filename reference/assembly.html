@@ -20,7 +20,7 @@ genomic annotation packages"><meta property="og:image" content="https://phanstie
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">plotgardener</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.2.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.2.8</span>
       </span>
     </div>
 
@@ -101,38 +101,51 @@ genomic annotation packages</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">assembly</span><span class="op">(</span>
-    <span class="va">Genome</span>,
-    <span class="va">TxDb</span>,
-    <span class="va">OrgDb</span>,
-    gene.id.column <span class="op">=</span> <span class="st">"ENTREZID"</span>,
-    display.column <span class="op">=</span> <span class="st">"SYMBOL"</span>,
-    BSgenome <span class="op">=</span> <span class="cn">NULL</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">assembly</span><span class="op">(</span></span>
+<span>    <span class="va">Genome</span>,</span>
+<span>    <span class="va">TxDb</span>,</span>
+<span>    <span class="va">OrgDb</span>,</span>
+<span>    gene.id.column <span class="op">=</span> <span class="st">"ENTREZID"</span>,</span>
+<span>    display.column <span class="op">=</span> <span class="st">"SYMBOL"</span>,</span>
+<span>    BSgenome <span class="op">=</span> <span class="cn">NULL</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>Genome</dt>
 <dd><p>String indicating the name of the genome assembly.</p></dd>
+
+
 <dt>TxDb</dt>
 <dd><p>String of existing TxDb package name or a TxDb object.</p></dd>
+
+
 <dt>OrgDb</dt>
 <dd><p>String of the desired OrgDb package name.</p></dd>
+
+
 <dt>gene.id.column</dt>
 <dd><p>String of the TxDb column name that refers to
 the given TxDb gene IDs.
 Default value is <code>gene.id.column = "ENTREZID"</code>.</p></dd>
+
+
 <dt>display.column</dt>
 <dd><p>String of the OrgDb column name that refers to
 the type of gene symbol to be displayed in plots.
 Default value is <code>display.column = "SYMBOL"</code>.</p></dd>
+
+
 <dt>BSgenome</dt>
 <dd><p>String of the desired BSgenome package name.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>Returns a <code>assembly</code> object containing all input parameters.</p>
+    
+
+<p>Returns a <code>assembly</code> object containing all input parameters.</p>
     </div>
     <div id="see-also">
     <h2>See also</h2>
@@ -142,13 +155,13 @@ Default value is <code>display.column = "SYMBOL"</code>.</p></dd>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co">## Create a custom `assembly` object for hg38/GRCh38 packages</span></span>
-<span class="r-in"><span class="va">newAssembly</span> <span class="op">&lt;-</span> <span class="fu">assembly</span><span class="op">(</span></span>
-<span class="r-in">    Genome <span class="op">=</span> <span class="st">"hg38_GRCh38"</span>,</span>
-<span class="r-in">    TxDb <span class="op">=</span> <span class="st">"TxDb.Hsapiens.UCSC.hg38.knownGene"</span>,</span>
-<span class="r-in">    OrgDb <span class="op">=</span> <span class="st">"org.Hs.eg.db"</span>,</span>
-<span class="r-in">    BSgenome <span class="op">=</span> <span class="st">"BSgenome.Hsapiens.NCBI.GRCh38"</span></span>
-<span class="r-in"><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co">## Create a custom `assembly` object for hg38/GRCh38 packages</span></span></span>
+<span class="r-in"><span><span class="va">newAssembly</span> <span class="op">&lt;-</span> <span class="fu">assembly</span><span class="op">(</span></span></span>
+<span class="r-in"><span>    Genome <span class="op">=</span> <span class="st">"hg38_GRCh38"</span>,</span></span>
+<span class="r-in"><span>    TxDb <span class="op">=</span> <span class="st">"TxDb.Hsapiens.UCSC.hg38.knownGene"</span>,</span></span>
+<span class="r-in"><span>    OrgDb <span class="op">=</span> <span class="st">"org.Hs.eg.db"</span>,</span></span>
+<span class="r-in"><span>    BSgenome <span class="op">=</span> <span class="st">"BSgenome.Hsapiens.NCBI.GRCh38"</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -163,7 +176,7 @@ Default value is <code>display.column = "SYMBOL"</code>.</p></dd>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
 </div>
 
       </footer></div>

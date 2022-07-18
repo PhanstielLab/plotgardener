@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">plotgardener</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.2.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.2.8</span>
       </span>
     </div>
 
@@ -96,19 +96,19 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">plotCircle</span><span class="op">(</span>
-    <span class="va">x</span>,
-    <span class="va">y</span>,
-    <span class="va">r</span>,
-    default.units <span class="op">=</span> <span class="st">"inches"</span>,
-    linecolor <span class="op">=</span> <span class="st">"black"</span>,
-    lwd <span class="op">=</span> <span class="fl">1</span>,
-    lty <span class="op">=</span> <span class="fl">1</span>,
-    fill <span class="op">=</span> <span class="cn">NA</span>,
-    alpha <span class="op">=</span> <span class="fl">1</span>,
-    params <span class="op">=</span> <span class="cn">NULL</span>,
-    <span class="va">...</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">plotCircle</span><span class="op">(</span></span>
+<span>    <span class="va">x</span>,</span>
+<span>    <span class="va">y</span>,</span>
+<span>    <span class="va">r</span>,</span>
+<span>    default.units <span class="op">=</span> <span class="st">"inches"</span>,</span>
+<span>    linecolor <span class="op">=</span> <span class="st">"black"</span>,</span>
+<span>    lwd <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>    lty <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>    fill <span class="op">=</span> <span class="cn">NA</span>,</span>
+<span>    alpha <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>    params <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>    <span class="va">...</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -116,6 +116,8 @@
     <dl><dt>x</dt>
 <dd><p>A numeric vector or unit object specifying circle
 x-locations relative to center.</p></dd>
+
+
 <dt>y</dt>
 <dd><p>A numeric vector, unit object, or a character vector
 of values containing a "b" combined with a numeric value
@@ -123,36 +125,57 @@ specifying circle y-locations relative to center.
 The character vector will place circle y-locations relative to
 the bottom of the most recently plotted plot according
 to the units of the plotgardener page.</p></dd>
+
+
 <dt>r</dt>
 <dd><p>A numeric vector or unit object specifying radii.</p></dd>
+
+
 <dt>default.units</dt>
 <dd><p>A string indicating the default units to use
 if <code>r</code>, <code>x</code>, or <code>y</code> are only given as numerics or
 numeric vectors. Default value is <code>default.units = "inches"</code>.</p></dd>
+
+
 <dt>linecolor</dt>
 <dd><p>A character value specifying circle line color.
 Default value is <code>linecolor = "black"</code>.</p></dd>
+
+
 <dt>lwd</dt>
 <dd><p>A numeric specifying circle line width.
 Default value is <code>lwd = 1</code>.</p></dd>
+
+
 <dt>lty</dt>
 <dd><p>A numeric specifying circle line type.
 Default value is <code>lty = 1</code>.</p></dd>
+
+
 <dt>fill</dt>
 <dd><p>A character value specifying circle fill color.
 Default value is <code>fill = NA</code>.</p></dd>
+
+
 <dt>alpha</dt>
 <dd><p>Numeric value specifying color transparency.
 Default value is <code>alpha = 1</code>.</p></dd>
+
+
 <dt>params</dt>
 <dd><p>An optional <a href="pgParams.html">pgParams</a> object
 containing relevant function parameters.</p></dd>
+
+
 <dt>...</dt>
 <dd><p>Additional grid graphical parameters. See <a href="https://rdrr.io/r/grid/gpar.html" class="external-link">gpar</a>.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>Returns a <code>circle</code> object containing
+    
+
+<p>Returns a <code>circle</code> object containing
 relevant placement and <a href="https://rdrr.io/r/grid/grid.grob.html" class="external-link">grob</a> information.</p>
     </div>
     <div id="see-also">
@@ -162,30 +185,30 @@ relevant placement and <a href="https://rdrr.io/r/grid/grid.grob.html" class="ex
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co">## Create a page</span></span>
-<span class="r-in"><span class="fu"><a href="pageCreate.html">pageCreate</a></span><span class="op">(</span>width <span class="op">=</span> <span class="fl">2</span>, height <span class="op">=</span> <span class="fl">2</span>, default.units <span class="op">=</span> <span class="st">"inches"</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">## Plot two circles, one at a time</span></span>
-<span class="r-in"><span class="fu">plotCircle</span><span class="op">(</span></span>
-<span class="r-in">    x <span class="op">=</span> <span class="fl">0.6</span>, y <span class="op">=</span> <span class="fl">0.5</span>, r <span class="op">=</span> <span class="fl">0.1</span>, fill <span class="op">=</span> <span class="st">"black"</span>,</span>
-<span class="r-in">    default.units <span class="op">=</span> <span class="st">"inches"</span></span>
-<span class="r-in"><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co">## Create a page</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="pageCreate.html">pageCreate</a></span><span class="op">(</span>width <span class="op">=</span> <span class="fl">2</span>, height <span class="op">=</span> <span class="fl">2</span>, default.units <span class="op">=</span> <span class="st">"inches"</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## Plot two circles, one at a time</span></span></span>
+<span class="r-in"><span><span class="fu">plotCircle</span><span class="op">(</span></span></span>
+<span class="r-in"><span>    x <span class="op">=</span> <span class="fl">0.6</span>, y <span class="op">=</span> <span class="fl">0.5</span>, r <span class="op">=</span> <span class="fl">0.1</span>, fill <span class="op">=</span> <span class="st">"black"</span>,</span></span>
+<span class="r-in"><span>    default.units <span class="op">=</span> <span class="st">"inches"</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> circle[circle1]</span>
-<span class="r-in"><span class="fu">plotCircle</span><span class="op">(</span></span>
-<span class="r-in">    x <span class="op">=</span> <span class="fl">1.4</span>, y <span class="op">=</span> <span class="fl">0.5</span>, r <span class="op">=</span> <span class="fl">0.1</span>, fill <span class="op">=</span> <span class="st">"black"</span>,</span>
-<span class="r-in">    default.units <span class="op">=</span> <span class="st">"inches"</span></span>
-<span class="r-in"><span class="op">)</span></span>
+<span class="r-in"><span><span class="fu">plotCircle</span><span class="op">(</span></span></span>
+<span class="r-in"><span>    x <span class="op">=</span> <span class="fl">1.4</span>, y <span class="op">=</span> <span class="fl">0.5</span>, r <span class="op">=</span> <span class="fl">0.1</span>, fill <span class="op">=</span> <span class="st">"black"</span>,</span></span>
+<span class="r-in"><span>    default.units <span class="op">=</span> <span class="st">"inches"</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> circle[circle2]</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">## Plot a vector of circles</span></span>
-<span class="r-in"><span class="va">xVals</span> <span class="op">&lt;-</span> <span class="fl">1</span> <span class="op">+</span> <span class="op">(</span><span class="fl">0.5</span> <span class="op">*</span> <span class="fu"><a href="https://rdrr.io/r/base/Trig.html" class="external-link">cos</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">0</span>, <span class="va">pi</span>, <span class="va">pi</span> <span class="op">/</span> <span class="fl">8</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">yVals</span> <span class="op">&lt;-</span> <span class="fl">1</span> <span class="op">+</span> <span class="op">(</span><span class="fl">0.5</span> <span class="op">*</span> <span class="fu"><a href="https://rdrr.io/r/base/Trig.html" class="external-link">sin</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">0</span>, <span class="va">pi</span>, <span class="va">pi</span> <span class="op">/</span> <span class="fl">8</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu">plotCircle</span><span class="op">(</span>x <span class="op">=</span> <span class="va">xVals</span>, y <span class="op">=</span> <span class="va">yVals</span>, r <span class="op">=</span> <span class="fl">0.05</span>, default.units <span class="op">=</span> <span class="st">"inches"</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## Plot a vector of circles</span></span></span>
+<span class="r-in"><span><span class="va">xVals</span> <span class="op">&lt;-</span> <span class="fl">1</span> <span class="op">+</span> <span class="op">(</span><span class="fl">0.5</span> <span class="op">*</span> <span class="fu"><a href="https://rdrr.io/r/base/Trig.html" class="external-link">cos</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">0</span>, <span class="va">pi</span>, <span class="va">pi</span> <span class="op">/</span> <span class="fl">8</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">yVals</span> <span class="op">&lt;-</span> <span class="fl">1</span> <span class="op">+</span> <span class="op">(</span><span class="fl">0.5</span> <span class="op">*</span> <span class="fu"><a href="https://rdrr.io/r/base/Trig.html" class="external-link">sin</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">0</span>, <span class="va">pi</span>, <span class="va">pi</span> <span class="op">/</span> <span class="fl">8</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">plotCircle</span><span class="op">(</span>x <span class="op">=</span> <span class="va">xVals</span>, y <span class="op">=</span> <span class="va">yVals</span>, r <span class="op">=</span> <span class="fl">0.05</span>, default.units <span class="op">=</span> <span class="st">"inches"</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> circle[circle2]</span>
 <span class="r-plt img"><img src="plotCircle-1.png" alt="" width="1230" height="1050"></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">## Hide page guides</span></span>
-<span class="r-in"><span class="fu"><a href="pageGuideHide.html">pageGuideHide</a></span><span class="op">(</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## Hide page guides</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="pageGuideHide.html">pageGuideHide</a></span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="plotCircle-2.png" alt="" width="1230" height="1050"></span>
 </code></pre></div>
     </div>
@@ -201,7 +224,7 @@ relevant placement and <a href="https://rdrr.io/r/grid/grid.grob.html" class="ex
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
 </div>
 
       </footer></div>

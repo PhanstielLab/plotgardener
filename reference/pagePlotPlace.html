@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">plotgardener</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.2.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.2.8</span>
       </span>
     </div>
 
@@ -96,17 +96,17 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">pagePlotPlace</span><span class="op">(</span>
-    <span class="va">plot</span>,
-    x <span class="op">=</span> <span class="cn">NULL</span>,
-    y <span class="op">=</span> <span class="cn">NULL</span>,
-    width <span class="op">=</span> <span class="cn">NULL</span>,
-    height <span class="op">=</span> <span class="cn">NULL</span>,
-    just <span class="op">=</span> <span class="fu"><a href="c.html">c</a></span><span class="op">(</span><span class="st">"left"</span>, <span class="st">"top"</span><span class="op">)</span>,
-    default.units <span class="op">=</span> <span class="st">"inches"</span>,
-    draw <span class="op">=</span> <span class="cn">TRUE</span>,
-    params <span class="op">=</span> <span class="cn">NULL</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">pagePlotPlace</span><span class="op">(</span></span>
+<span>    <span class="va">plot</span>,</span>
+<span>    x <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>    y <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>    width <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>    height <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>    just <span class="op">=</span> <span class="fu"><a href="c.html">c</a></span><span class="op">(</span><span class="st">"left"</span>, <span class="st">"top"</span><span class="op">)</span>,</span>
+<span>    default.units <span class="op">=</span> <span class="st">"inches"</span>,</span>
+<span>    draw <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>    params <span class="op">=</span> <span class="cn">NULL</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -114,18 +114,28 @@
     <dl><dt>plot</dt>
 <dd><p>Plot object to be placed, defined by the
 output of a plotgardener plotting function.</p></dd>
+
+
 <dt>x</dt>
 <dd><p>A numeric or unit object specifying plot x-location.</p></dd>
+
+
 <dt>y</dt>
 <dd><p>A numeric, unit object, or character containing a "b" combined
 with a numeric value specifying plot y-location.
 The character value will place the plot y relative to the bottom
 of the most recently plotted plot according to the units
 of the plotgardener page.</p></dd>
+
+
 <dt>width</dt>
 <dd><p>A numeric or unit object specifying plot width.</p></dd>
+
+
 <dt>height</dt>
 <dd><p>A numeric or unit object specifying plot height.</p></dd>
+
+
 <dt>just</dt>
 <dd><p>Justification of plot relative to its (x, y) location.
 If there are two values, the first value specifies horizontal
@@ -133,63 +143,72 @@ justification and the second value specifies vertical justification.
 Possible string values are: <code>"left"</code>, <code>"right"</code>,
 <code>"centre"</code>, <code>"center"</code>, <code>"bottom"</code>, and <code>"top"</code>.
 Default value is <code>just = c("left", "top")</code>.</p></dd>
+
+
 <dt>default.units</dt>
 <dd><p>A string indicating the default units to use
 if <code>x</code>, <code>y</code>, <code>width</code>, or <code>height</code> are only
 given as numerics. Default value is <code>default.units = "inches"</code>.</p></dd>
+
+
 <dt>draw</dt>
 <dd><p>A logical value indicating whether graphics output
 should be produced. Default value is <code>draw = TRUE</code>.</p></dd>
+
+
 <dt>params</dt>
 <dd><p>An optional <a href="pgParams.html">pgParams</a> object
 containing relevant function parameters.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>Function will update dimensions of an input plot and
+    
+
+<p>Function will update dimensions of an input plot and
 return an updated plot object.</p>
     </div>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co">## Load Hi-C data</span></span>
-<span class="r-in"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/PhanstielLab/plotgardenerData" class="external-link">plotgardenerData</a></span><span class="op">)</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"IMR90_HiC_10kb"</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">## Create, but do not plot, square Hi-C plot</span></span>
-<span class="r-in"><span class="va">hicPlot</span> <span class="op">&lt;-</span> <span class="fu"><a href="plotHicSquare.html">plotHicSquare</a></span><span class="op">(</span></span>
-<span class="r-in">    data <span class="op">=</span> <span class="va">IMR90_HiC_10kb</span>, resolution <span class="op">=</span> <span class="fl">10000</span>,</span>
-<span class="r-in">    zrange <span class="op">=</span> <span class="fu"><a href="c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">70</span><span class="op">)</span>,</span>
-<span class="r-in">    chrom <span class="op">=</span> <span class="st">"chr21"</span>,</span>
-<span class="r-in">    chromstart <span class="op">=</span> <span class="fl">28000000</span>, chromend <span class="op">=</span> <span class="fl">30300000</span>,</span>
-<span class="r-in">    draw <span class="op">=</span> <span class="cn">FALSE</span></span>
-<span class="r-in"><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co">## Load Hi-C data</span></span></span>
+<span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/PhanstielLab/plotgardenerData" class="external-link">plotgardenerData</a></span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"IMR90_HiC_10kb"</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## Create, but do not plot, square Hi-C plot</span></span></span>
+<span class="r-in"><span><span class="va">hicPlot</span> <span class="op">&lt;-</span> <span class="fu"><a href="plotHicSquare.html">plotHicSquare</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>    data <span class="op">=</span> <span class="va">IMR90_HiC_10kb</span>, resolution <span class="op">=</span> <span class="fl">10000</span>,</span></span>
+<span class="r-in"><span>    zrange <span class="op">=</span> <span class="fu"><a href="c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">70</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>    chrom <span class="op">=</span> <span class="st">"chr21"</span>,</span></span>
+<span class="r-in"><span>    chromstart <span class="op">=</span> <span class="fl">28000000</span>, chromend <span class="op">=</span> <span class="fl">30300000</span>,</span></span>
+<span class="r-in"><span>    draw <span class="op">=</span> <span class="cn">FALSE</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Read in dataframe.  Assuming 'chrom' in column1 and 'altchrom' in column2. 10000 BP resolution detected.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> hicSquare[hicSquare1]</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">## Create page</span></span>
-<span class="r-in"><span class="fu"><a href="pageCreate.html">pageCreate</a></span><span class="op">(</span>width <span class="op">=</span> <span class="fl">3.75</span>, height <span class="op">=</span> <span class="fl">3.5</span>, default.units <span class="op">=</span> <span class="st">"inches"</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">## Place Hi-C plot on page</span></span>
-<span class="r-in"><span class="fu">pagePlotPlace</span><span class="op">(</span></span>
-<span class="r-in">    plot <span class="op">=</span> <span class="va">hicPlot</span>,</span>
-<span class="r-in">    x <span class="op">=</span> <span class="fl">0.25</span>, y <span class="op">=</span> <span class="fl">0.25</span>, width <span class="op">=</span> <span class="fl">3</span>, height <span class="op">=</span> <span class="fl">3</span>,</span>
-<span class="r-in">    just <span class="op">=</span> <span class="fu"><a href="c.html">c</a></span><span class="op">(</span><span class="st">"left"</span>, <span class="st">"top"</span><span class="op">)</span>,</span>
-<span class="r-in">    default.units <span class="op">=</span> <span class="st">"inches"</span>, draw <span class="op">=</span> <span class="cn">TRUE</span></span>
-<span class="r-in"><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## Create page</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="pageCreate.html">pageCreate</a></span><span class="op">(</span>width <span class="op">=</span> <span class="fl">3.75</span>, height <span class="op">=</span> <span class="fl">3.5</span>, default.units <span class="op">=</span> <span class="st">"inches"</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## Place Hi-C plot on page</span></span></span>
+<span class="r-in"><span><span class="fu">pagePlotPlace</span><span class="op">(</span></span></span>
+<span class="r-in"><span>    plot <span class="op">=</span> <span class="va">hicPlot</span>,</span></span>
+<span class="r-in"><span>    x <span class="op">=</span> <span class="fl">0.25</span>, y <span class="op">=</span> <span class="fl">0.25</span>, width <span class="op">=</span> <span class="fl">3</span>, height <span class="op">=</span> <span class="fl">3</span>,</span></span>
+<span class="r-in"><span>    just <span class="op">=</span> <span class="fu"><a href="c.html">c</a></span><span class="op">(</span><span class="st">"left"</span>, <span class="st">"top"</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>    default.units <span class="op">=</span> <span class="st">"inches"</span>, draw <span class="op">=</span> <span class="cn">TRUE</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> hicSquare[hicSquare1]</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">## Annotate heatmap legend</span></span>
-<span class="r-in"><span class="fu"><a href="annoHeatmapLegend.html">annoHeatmapLegend</a></span><span class="op">(</span></span>
-<span class="r-in">    plot <span class="op">=</span> <span class="va">hicPlot</span>,</span>
-<span class="r-in">    x <span class="op">=</span> <span class="fl">3.4</span>, y <span class="op">=</span> <span class="fl">0.25</span>, width <span class="op">=</span> <span class="fl">0.12</span>, height <span class="op">=</span> <span class="fl">1.2</span>,</span>
-<span class="r-in">    just <span class="op">=</span> <span class="fu"><a href="c.html">c</a></span><span class="op">(</span><span class="st">"left"</span>, <span class="st">"top"</span><span class="op">)</span>, default.units <span class="op">=</span> <span class="st">"inches"</span></span>
-<span class="r-in"><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## Annotate heatmap legend</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="annoHeatmapLegend.html">annoHeatmapLegend</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>    plot <span class="op">=</span> <span class="va">hicPlot</span>,</span></span>
+<span class="r-in"><span>    x <span class="op">=</span> <span class="fl">3.4</span>, y <span class="op">=</span> <span class="fl">0.25</span>, width <span class="op">=</span> <span class="fl">0.12</span>, height <span class="op">=</span> <span class="fl">1.2</span>,</span></span>
+<span class="r-in"><span>    just <span class="op">=</span> <span class="fu"><a href="c.html">c</a></span><span class="op">(</span><span class="st">"left"</span>, <span class="st">"top"</span><span class="op">)</span>, default.units <span class="op">=</span> <span class="st">"inches"</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> heatmapLegend[heatmapLegend1]</span>
 <span class="r-plt img"><img src="pagePlotPlace-1.png" alt="" width="1230" height="1050"></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">## Hide page guides</span></span>
-<span class="r-in"><span class="fu"><a href="pageGuideHide.html">pageGuideHide</a></span><span class="op">(</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## Hide page guides</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="pageGuideHide.html">pageGuideHide</a></span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="pagePlotPlace-2.png" alt="" width="1230" height="1050"></span>
 </code></pre></div>
     </div>
@@ -205,7 +224,7 @@ return an updated plot object.</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
 </div>
 
       </footer></div>

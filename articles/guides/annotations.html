@@ -41,7 +41,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../../index.html">plotgardener</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.2.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.2.8</span>
       </span>
     </div>
 
@@ -150,47 +150,47 @@ Kb, and bp) depending on the size of the region and the desired accuracy
 of the start and end labels. In the genomic region
 <code>chr21:28000000-30300000</code> we can use a Mb scale:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"IMR90_HiC_10kb"</span><span class="op">)</span>
-<span class="fu"><a href="../../reference/pageCreate.html">pageCreate</a></span><span class="op">(</span>
-    width <span class="op">=</span> <span class="fl">3</span>, height <span class="op">=</span> <span class="fl">3.25</span>, default.units <span class="op">=</span> <span class="st">"inches"</span>,
-    showGuides <span class="op">=</span> <span class="cn">FALSE</span>, xgrid <span class="op">=</span> <span class="fl">0</span>, ygrid <span class="op">=</span> <span class="fl">0</span>
-<span class="op">)</span>
-<span class="va">hicPlot</span> <span class="op">&lt;-</span> <span class="fu"><a href="../../reference/plotHicSquare.html">plotHicSquare</a></span><span class="op">(</span>
-    data <span class="op">=</span> <span class="va">IMR90_HiC_10kb</span>,
-    chrom <span class="op">=</span> <span class="st">"chr21"</span>, chromstart <span class="op">=</span> <span class="fl">28000000</span>, chromend <span class="op">=</span> <span class="fl">30300000</span>,
-    assembly <span class="op">=</span> <span class="st">"hg19"</span>,
-    x <span class="op">=</span> <span class="fl">0.25</span>, y <span class="op">=</span> <span class="fl">0.25</span>, width <span class="op">=</span> <span class="fl">2.5</span>, height <span class="op">=</span> <span class="fl">2.5</span>, default.units <span class="op">=</span> <span class="st">"inches"</span>
-<span class="op">)</span>
-
-<span class="fu"><a href="../../reference/annoGenomeLabel.html">annoGenomeLabel</a></span><span class="op">(</span>
-    plot <span class="op">=</span> <span class="va">hicPlot</span>, scale <span class="op">=</span> <span class="st">"Mb"</span>,
-    x <span class="op">=</span> <span class="fl">0.25</span>, y <span class="op">=</span> <span class="fl">2.76</span>
-<span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"IMR90_HiC_10kb"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="../../reference/pageCreate.html">pageCreate</a></span><span class="op">(</span></span>
+<span>    width <span class="op">=</span> <span class="fl">3</span>, height <span class="op">=</span> <span class="fl">3.25</span>, default.units <span class="op">=</span> <span class="st">"inches"</span>,</span>
+<span>    showGuides <span class="op">=</span> <span class="cn">FALSE</span>, xgrid <span class="op">=</span> <span class="fl">0</span>, ygrid <span class="op">=</span> <span class="fl">0</span></span>
+<span><span class="op">)</span></span>
+<span><span class="va">hicPlot</span> <span class="op">&lt;-</span> <span class="fu"><a href="../../reference/plotHicSquare.html">plotHicSquare</a></span><span class="op">(</span></span>
+<span>    data <span class="op">=</span> <span class="va">IMR90_HiC_10kb</span>,</span>
+<span>    chrom <span class="op">=</span> <span class="st">"chr21"</span>, chromstart <span class="op">=</span> <span class="fl">28000000</span>, chromend <span class="op">=</span> <span class="fl">30300000</span>,</span>
+<span>    assembly <span class="op">=</span> <span class="st">"hg19"</span>,</span>
+<span>    x <span class="op">=</span> <span class="fl">0.25</span>, y <span class="op">=</span> <span class="fl">0.25</span>, width <span class="op">=</span> <span class="fl">2.5</span>, height <span class="op">=</span> <span class="fl">2.5</span>, default.units <span class="op">=</span> <span class="st">"inches"</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="../../reference/annoGenomeLabel.html">annoGenomeLabel</a></span><span class="op">(</span></span>
+<span>    plot <span class="op">=</span> <span class="va">hicPlot</span>, scale <span class="op">=</span> <span class="st">"Mb"</span>,</span>
+<span>    x <span class="op">=</span> <span class="fl">0.25</span>, y <span class="op">=</span> <span class="fl">2.76</span></span>
+<span><span class="op">)</span></span></code></pre></div>
 <p><img src="annotations_files/figure-html/anno_01-1.png" width="900" style="display: block; margin: auto;"></p>
 <p>If we use a more specific genomic region like
 <code>chr21:28255554-29354665</code>, the Mb scale will be rounded and
 indicated with an approximation sign:</p>
-<pre><code><span class="co">#&gt; Warning: Start label is rounded.</span>
-<span class="co">#&gt; Warning: End label is rounded.</span></code></pre>
+<pre><code><span><span class="co">#&gt; Warning: Start label is rounded.</span></span>
+<span><span class="co">#&gt; Warning: End label is rounded.</span></span></code></pre>
 <p><img src="annotations_files/figure-html/anno_02-1.png" width="900" style="display: block; margin: auto;"></p>
 <p>Thus, it makes more sense to use the bp scale for ultimate
 accuracy:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"IMR90_HiC_10kb"</span><span class="op">)</span>
-<span class="fu"><a href="../../reference/pageCreate.html">pageCreate</a></span><span class="op">(</span>
-    width <span class="op">=</span> <span class="fl">3</span>, height <span class="op">=</span> <span class="fl">3.25</span>, default.units <span class="op">=</span> <span class="st">"inches"</span>,
-    showGuides <span class="op">=</span> <span class="cn">FALSE</span>, xgrid <span class="op">=</span> <span class="fl">0</span>, ygrid <span class="op">=</span> <span class="fl">0</span>
-<span class="op">)</span>
-<span class="va">hicPlot</span> <span class="op">&lt;-</span> <span class="fu"><a href="../../reference/plotHicSquare.html">plotHicSquare</a></span><span class="op">(</span>
-    data <span class="op">=</span> <span class="va">IMR90_HiC_10kb</span>,
-    chrom <span class="op">=</span> <span class="st">"chr21"</span>, chromstart <span class="op">=</span> <span class="fl">28255554</span>, chromend <span class="op">=</span> <span class="fl">29354665</span>,
-    assembly <span class="op">=</span> <span class="st">"hg19"</span>,
-    x <span class="op">=</span> <span class="fl">0.25</span>, y <span class="op">=</span> <span class="fl">0.25</span>, width <span class="op">=</span> <span class="fl">2.5</span>, height <span class="op">=</span> <span class="fl">2.5</span>, default.units <span class="op">=</span> <span class="st">"inches"</span>
-<span class="op">)</span>
-<span class="fu"><a href="../../reference/annoGenomeLabel.html">annoGenomeLabel</a></span><span class="op">(</span>
-    plot <span class="op">=</span> <span class="va">hicPlot</span>, scale <span class="op">=</span> <span class="st">"bp"</span>,
-    x <span class="op">=</span> <span class="fl">0.25</span>, y <span class="op">=</span> <span class="fl">2.76</span>
-<span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"IMR90_HiC_10kb"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="../../reference/pageCreate.html">pageCreate</a></span><span class="op">(</span></span>
+<span>    width <span class="op">=</span> <span class="fl">3</span>, height <span class="op">=</span> <span class="fl">3.25</span>, default.units <span class="op">=</span> <span class="st">"inches"</span>,</span>
+<span>    showGuides <span class="op">=</span> <span class="cn">FALSE</span>, xgrid <span class="op">=</span> <span class="fl">0</span>, ygrid <span class="op">=</span> <span class="fl">0</span></span>
+<span><span class="op">)</span></span>
+<span><span class="va">hicPlot</span> <span class="op">&lt;-</span> <span class="fu"><a href="../../reference/plotHicSquare.html">plotHicSquare</a></span><span class="op">(</span></span>
+<span>    data <span class="op">=</span> <span class="va">IMR90_HiC_10kb</span>,</span>
+<span>    chrom <span class="op">=</span> <span class="st">"chr21"</span>, chromstart <span class="op">=</span> <span class="fl">28255554</span>, chromend <span class="op">=</span> <span class="fl">29354665</span>,</span>
+<span>    assembly <span class="op">=</span> <span class="st">"hg19"</span>,</span>
+<span>    x <span class="op">=</span> <span class="fl">0.25</span>, y <span class="op">=</span> <span class="fl">0.25</span>, width <span class="op">=</span> <span class="fl">2.5</span>, height <span class="op">=</span> <span class="fl">2.5</span>, default.units <span class="op">=</span> <span class="st">"inches"</span></span>
+<span><span class="op">)</span></span>
+<span><span class="fu"><a href="../../reference/annoGenomeLabel.html">annoGenomeLabel</a></span><span class="op">(</span></span>
+<span>    plot <span class="op">=</span> <span class="va">hicPlot</span>, scale <span class="op">=</span> <span class="st">"bp"</span>,</span>
+<span>    x <span class="op">=</span> <span class="fl">0.25</span>, y <span class="op">=</span> <span class="fl">2.76</span></span>
+<span><span class="op">)</span></span></code></pre></div>
 <p><img src="annotations_files/figure-html/anno_03-1.png" width="900" style="display: block; margin: auto;"></p>
 <p>If our genomic region is small enough, <code><a href="../../reference/annoGenomeLabel.html">annoGenomeLabel()</a></code>
 can also be used to display the nucleotide sequence of that region.
@@ -204,23 +204,23 @@ represent nucleotides with colored letters:</p>
 objects), <code><a href="../../reference/annoGenomeLabel.html">annoGenomeLabel()</a></code> can annotate the genome label
 along the y-axis:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"IMR90_HiC_10kb"</span><span class="op">)</span>
-<span class="fu"><a href="../../reference/pageCreate.html">pageCreate</a></span><span class="op">(</span>
-    width <span class="op">=</span> <span class="fl">3.25</span>, height <span class="op">=</span> <span class="fl">3</span>, default.units <span class="op">=</span> <span class="st">"inches"</span>,
-    showGuides <span class="op">=</span> <span class="cn">FALSE</span>, xgrid <span class="op">=</span> <span class="fl">0</span>, ygrid <span class="op">=</span> <span class="fl">0</span>
-<span class="op">)</span>
-<span class="va">hicPlot</span> <span class="op">&lt;-</span> <span class="fu"><a href="../../reference/plotHicSquare.html">plotHicSquare</a></span><span class="op">(</span>
-    data <span class="op">=</span> <span class="va">IMR90_HiC_10kb</span>,
-    chrom <span class="op">=</span> <span class="st">"chr21"</span>, chromstart <span class="op">=</span> <span class="fl">28000000</span>, chromend <span class="op">=</span> <span class="fl">30300000</span>,
-    assembly <span class="op">=</span> <span class="st">"hg19"</span>,
-    x <span class="op">=</span> <span class="fl">0.5</span>, y <span class="op">=</span> <span class="fl">0.25</span>, width <span class="op">=</span> <span class="fl">2.5</span>, height <span class="op">=</span> <span class="fl">2.5</span>, default.units <span class="op">=</span> <span class="st">"inches"</span>
-<span class="op">)</span>
-<span class="fu"><a href="../../reference/annoGenomeLabel.html">annoGenomeLabel</a></span><span class="op">(</span>
-    plot <span class="op">=</span> <span class="va">hicPlot</span>, scale <span class="op">=</span> <span class="st">"Mb"</span>,
-    axis <span class="op">=</span> <span class="st">"y"</span>,
-    x <span class="op">=</span> <span class="fl">0.5</span>, y <span class="op">=</span> <span class="fl">0.25</span>,
-    just <span class="op">=</span> <span class="fu"><a href="../../reference/c.html">c</a></span><span class="op">(</span><span class="st">"right"</span>, <span class="st">"top"</span><span class="op">)</span>
-<span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"IMR90_HiC_10kb"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="../../reference/pageCreate.html">pageCreate</a></span><span class="op">(</span></span>
+<span>    width <span class="op">=</span> <span class="fl">3.25</span>, height <span class="op">=</span> <span class="fl">3</span>, default.units <span class="op">=</span> <span class="st">"inches"</span>,</span>
+<span>    showGuides <span class="op">=</span> <span class="cn">FALSE</span>, xgrid <span class="op">=</span> <span class="fl">0</span>, ygrid <span class="op">=</span> <span class="fl">0</span></span>
+<span><span class="op">)</span></span>
+<span><span class="va">hicPlot</span> <span class="op">&lt;-</span> <span class="fu"><a href="../../reference/plotHicSquare.html">plotHicSquare</a></span><span class="op">(</span></span>
+<span>    data <span class="op">=</span> <span class="va">IMR90_HiC_10kb</span>,</span>
+<span>    chrom <span class="op">=</span> <span class="st">"chr21"</span>, chromstart <span class="op">=</span> <span class="fl">28000000</span>, chromend <span class="op">=</span> <span class="fl">30300000</span>,</span>
+<span>    assembly <span class="op">=</span> <span class="st">"hg19"</span>,</span>
+<span>    x <span class="op">=</span> <span class="fl">0.5</span>, y <span class="op">=</span> <span class="fl">0.25</span>, width <span class="op">=</span> <span class="fl">2.5</span>, height <span class="op">=</span> <span class="fl">2.5</span>, default.units <span class="op">=</span> <span class="st">"inches"</span></span>
+<span><span class="op">)</span></span>
+<span><span class="fu"><a href="../../reference/annoGenomeLabel.html">annoGenomeLabel</a></span><span class="op">(</span></span>
+<span>    plot <span class="op">=</span> <span class="va">hicPlot</span>, scale <span class="op">=</span> <span class="st">"Mb"</span>,</span>
+<span>    axis <span class="op">=</span> <span class="st">"y"</span>,</span>
+<span>    x <span class="op">=</span> <span class="fl">0.5</span>, y <span class="op">=</span> <span class="fl">0.25</span>,</span>
+<span>    just <span class="op">=</span> <span class="fu"><a href="../../reference/c.html">c</a></span><span class="op">(</span><span class="st">"right"</span>, <span class="st">"top"</span><span class="op">)</span></span>
+<span><span class="op">)</span></span></code></pre></div>
 <p><img src="annotations_files/figure-html/anno_06-1.png" width="900" style="display: block; margin: auto;"></p>
 </div>
 <div class="section level3">
@@ -232,42 +232,42 @@ and y-axes for measures of scale. This functionality is provided by the
 example, a Manhattan plot requires a y-axis to indicate the range of
 p-values:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st">"TxDb.Hsapiens.UCSC.hg19.knownGene"</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"hg19_insulin_GWAS"</span><span class="op">)</span>
-
-<span class="fu"><a href="../../reference/pageCreate.html">pageCreate</a></span><span class="op">(</span>
-    width <span class="op">=</span> <span class="fl">7.5</span>, height <span class="op">=</span> <span class="fl">2.75</span>, default.units <span class="op">=</span> <span class="st">"inches"</span>,
-    showGuides <span class="op">=</span> <span class="cn">FALSE</span>, xgrid <span class="op">=</span> <span class="fl">0</span>, ygrid <span class="op">=</span> <span class="fl">0</span>
-<span class="op">)</span>
-<span class="va">manhattanPlot</span> <span class="op">&lt;-</span> <span class="fu"><a href="../../reference/plotManhattan.html">plotManhattan</a></span><span class="op">(</span>
-    data <span class="op">=</span> <span class="va">hg19_insulin_GWAS</span>, assembly <span class="op">=</span> <span class="st">"hg19"</span>,
-    fill <span class="op">=</span> <span class="fu"><a href="../../reference/c.html">c</a></span><span class="op">(</span><span class="st">"grey"</span>, <span class="st">"#37a7db"</span><span class="op">)</span>,
-    sigLine <span class="op">=</span> <span class="cn">TRUE</span>,
-    col <span class="op">=</span> <span class="st">"grey"</span>, lty <span class="op">=</span> <span class="fl">2</span>, range <span class="op">=</span> <span class="fu"><a href="../../reference/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">14</span><span class="op">)</span>,
-    x <span class="op">=</span> <span class="fl">0.5</span>, y <span class="op">=</span> <span class="fl">0.25</span>, width <span class="op">=</span> <span class="fl">6.5</span>, height <span class="op">=</span> <span class="fl">2</span>,
-    just <span class="op">=</span> <span class="fu"><a href="../../reference/c.html">c</a></span><span class="op">(</span><span class="st">"left"</span>, <span class="st">"top"</span><span class="op">)</span>,
-    default.units <span class="op">=</span> <span class="st">"inches"</span>
-<span class="op">)</span>
-<span class="fu"><a href="../../reference/annoGenomeLabel.html">annoGenomeLabel</a></span><span class="op">(</span>
-    plot <span class="op">=</span> <span class="va">manhattanPlot</span>, x <span class="op">=</span> <span class="fl">0.5</span>, y <span class="op">=</span> <span class="fl">2.25</span>, fontsize <span class="op">=</span> <span class="fl">8</span>,
-    just <span class="op">=</span> <span class="fu"><a href="../../reference/c.html">c</a></span><span class="op">(</span><span class="st">"left"</span>, <span class="st">"top"</span><span class="op">)</span>, default.units <span class="op">=</span> <span class="st">"inches"</span>
-<span class="op">)</span>
-<span class="fu"><a href="../../reference/plotText.html">plotText</a></span><span class="op">(</span>
-    label <span class="op">=</span> <span class="st">"Chromosome"</span>, fontsize <span class="op">=</span> <span class="fl">8</span>,
-    x <span class="op">=</span> <span class="fl">3.75</span>, y <span class="op">=</span> <span class="fl">2.45</span>, just <span class="op">=</span> <span class="st">"center"</span>, default.units <span class="op">=</span> <span class="st">"inches"</span>
-<span class="op">)</span>
-
-<span class="co">## Annotate y-axis</span>
-<span class="fu"><a href="../../reference/annoYaxis.html">annoYaxis</a></span><span class="op">(</span>
-    plot <span class="op">=</span> <span class="va">manhattanPlot</span>, at <span class="op">=</span> <span class="fu"><a href="../../reference/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">2</span>, <span class="fl">4</span>, <span class="fl">6</span>, <span class="fl">8</span>, <span class="fl">10</span>, <span class="fl">12</span>, <span class="fl">14</span><span class="op">)</span>,
-    axisLine <span class="op">=</span> <span class="cn">TRUE</span>, fontsize <span class="op">=</span> <span class="fl">8</span>
-<span class="op">)</span>
-<span class="co">## Plot y-axis label</span>
-<span class="fu"><a href="../../reference/plotText.html">plotText</a></span><span class="op">(</span>
-    label <span class="op">=</span> <span class="st">"-log10(p-value)"</span>, x <span class="op">=</span> <span class="fl">0.15</span>, y <span class="op">=</span> <span class="fl">1.25</span>, rot <span class="op">=</span> <span class="fl">90</span>,
-    fontsize <span class="op">=</span> <span class="fl">8</span>, fontface <span class="op">=</span> <span class="st">"bold"</span>, just <span class="op">=</span> <span class="st">"center"</span>,
-    default.units <span class="op">=</span> <span class="st">"inches"</span>
-<span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st">"TxDb.Hsapiens.UCSC.hg19.knownGene"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"hg19_insulin_GWAS"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="../../reference/pageCreate.html">pageCreate</a></span><span class="op">(</span></span>
+<span>    width <span class="op">=</span> <span class="fl">7.5</span>, height <span class="op">=</span> <span class="fl">2.75</span>, default.units <span class="op">=</span> <span class="st">"inches"</span>,</span>
+<span>    showGuides <span class="op">=</span> <span class="cn">FALSE</span>, xgrid <span class="op">=</span> <span class="fl">0</span>, ygrid <span class="op">=</span> <span class="fl">0</span></span>
+<span><span class="op">)</span></span>
+<span><span class="va">manhattanPlot</span> <span class="op">&lt;-</span> <span class="fu"><a href="../../reference/plotManhattan.html">plotManhattan</a></span><span class="op">(</span></span>
+<span>    data <span class="op">=</span> <span class="va">hg19_insulin_GWAS</span>, assembly <span class="op">=</span> <span class="st">"hg19"</span>,</span>
+<span>    fill <span class="op">=</span> <span class="fu"><a href="../../reference/c.html">c</a></span><span class="op">(</span><span class="st">"grey"</span>, <span class="st">"#37a7db"</span><span class="op">)</span>,</span>
+<span>    sigLine <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>    col <span class="op">=</span> <span class="st">"grey"</span>, lty <span class="op">=</span> <span class="fl">2</span>, range <span class="op">=</span> <span class="fu"><a href="../../reference/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">14</span><span class="op">)</span>,</span>
+<span>    x <span class="op">=</span> <span class="fl">0.5</span>, y <span class="op">=</span> <span class="fl">0.25</span>, width <span class="op">=</span> <span class="fl">6.5</span>, height <span class="op">=</span> <span class="fl">2</span>,</span>
+<span>    just <span class="op">=</span> <span class="fu"><a href="../../reference/c.html">c</a></span><span class="op">(</span><span class="st">"left"</span>, <span class="st">"top"</span><span class="op">)</span>,</span>
+<span>    default.units <span class="op">=</span> <span class="st">"inches"</span></span>
+<span><span class="op">)</span></span>
+<span><span class="fu"><a href="../../reference/annoGenomeLabel.html">annoGenomeLabel</a></span><span class="op">(</span></span>
+<span>    plot <span class="op">=</span> <span class="va">manhattanPlot</span>, x <span class="op">=</span> <span class="fl">0.5</span>, y <span class="op">=</span> <span class="fl">2.25</span>, fontsize <span class="op">=</span> <span class="fl">8</span>,</span>
+<span>    just <span class="op">=</span> <span class="fu"><a href="../../reference/c.html">c</a></span><span class="op">(</span><span class="st">"left"</span>, <span class="st">"top"</span><span class="op">)</span>, default.units <span class="op">=</span> <span class="st">"inches"</span></span>
+<span><span class="op">)</span></span>
+<span><span class="fu"><a href="../../reference/plotText.html">plotText</a></span><span class="op">(</span></span>
+<span>    label <span class="op">=</span> <span class="st">"Chromosome"</span>, fontsize <span class="op">=</span> <span class="fl">8</span>,</span>
+<span>    x <span class="op">=</span> <span class="fl">3.75</span>, y <span class="op">=</span> <span class="fl">2.45</span>, just <span class="op">=</span> <span class="st">"center"</span>, default.units <span class="op">=</span> <span class="st">"inches"</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="co">## Annotate y-axis</span></span>
+<span><span class="fu"><a href="../../reference/annoYaxis.html">annoYaxis</a></span><span class="op">(</span></span>
+<span>    plot <span class="op">=</span> <span class="va">manhattanPlot</span>, at <span class="op">=</span> <span class="fu"><a href="../../reference/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">2</span>, <span class="fl">4</span>, <span class="fl">6</span>, <span class="fl">8</span>, <span class="fl">10</span>, <span class="fl">12</span>, <span class="fl">14</span><span class="op">)</span>,</span>
+<span>    axisLine <span class="op">=</span> <span class="cn">TRUE</span>, fontsize <span class="op">=</span> <span class="fl">8</span></span>
+<span><span class="op">)</span></span>
+<span><span class="co">## Plot y-axis label</span></span>
+<span><span class="fu"><a href="../../reference/plotText.html">plotText</a></span><span class="op">(</span></span>
+<span>    label <span class="op">=</span> <span class="st">"-log10(p-value)"</span>, x <span class="op">=</span> <span class="fl">0.15</span>, y <span class="op">=</span> <span class="fl">1.25</span>, rot <span class="op">=</span> <span class="fl">90</span>,</span>
+<span>    fontsize <span class="op">=</span> <span class="fl">8</span>, fontface <span class="op">=</span> <span class="st">"bold"</span>, just <span class="op">=</span> <span class="st">"center"</span>,</span>
+<span>    default.units <span class="op">=</span> <span class="st">"inches"</span></span>
+<span><span class="op">)</span></span></code></pre></div>
 <p><img src="annotations_files/figure-html/anno_07-1.png" width="1425" style="display: block; margin: auto;"></p>
 <p><code><a href="../../reference/annoXaxis.html">annoXaxis()</a></code> and <code><a href="../../reference/annoYaxis.html">annoYaxis()</a></code> have similar
 usages and customizations.</p>
@@ -282,39 +282,39 @@ orientations. Genomic plots that typically require this annotation are
 Hi-C plots made with <code><a href="../../reference/plotHicRectangle.html">plotHicRectangle()</a></code>,
 <code><a href="../../reference/plotHicSquare.html">plotHicSquare()</a></code>, or <code><a href="../../reference/plotHicTriangle.html">plotHicTriangle()</a></code>.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"IMR90_HiC_10kb"</span><span class="op">)</span>
-
-<span class="fu"><a href="../../reference/pageCreate.html">pageCreate</a></span><span class="op">(</span>
-    width <span class="op">=</span> <span class="fl">3.25</span>, height <span class="op">=</span> <span class="fl">3.25</span>, default.units <span class="op">=</span> <span class="st">"inches"</span>,
-    showGuides <span class="op">=</span> <span class="cn">FALSE</span>, xgrid <span class="op">=</span> <span class="fl">0</span>, ygrid <span class="op">=</span> <span class="fl">0</span>
-<span class="op">)</span>
-<span class="va">params</span> <span class="op">&lt;-</span> <span class="fu"><a href="../../reference/pgParams.html">pgParams</a></span><span class="op">(</span>
-    chrom <span class="op">=</span> <span class="st">"chr21"</span>, chromstart <span class="op">=</span> <span class="fl">28000000</span>, chromend <span class="op">=</span> <span class="fl">30300000</span>,
-    assembly <span class="op">=</span> <span class="st">"hg19"</span>,
-    x <span class="op">=</span> <span class="fl">0.25</span>, width <span class="op">=</span> <span class="fl">2.75</span>, just <span class="op">=</span> <span class="fu"><a href="../../reference/c.html">c</a></span><span class="op">(</span><span class="st">"left"</span>, <span class="st">"top"</span><span class="op">)</span>, default.units <span class="op">=</span> <span class="st">"inches"</span>
-<span class="op">)</span>
-<span class="va">hicPlot</span> <span class="op">&lt;-</span> <span class="fu"><a href="../../reference/plotHicSquare.html">plotHicSquare</a></span><span class="op">(</span>
-    data <span class="op">=</span> <span class="va">IMR90_HiC_10kb</span>, params <span class="op">=</span> <span class="va">params</span>,
-    zrange <span class="op">=</span> <span class="fu"><a href="../../reference/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">70</span><span class="op">)</span>, resolution <span class="op">=</span> <span class="fl">10000</span>,
-    y <span class="op">=</span> <span class="fl">0.25</span>, height <span class="op">=</span> <span class="fl">2.75</span>
-<span class="op">)</span>
-
-<span class="co">## Annotate Hi-C heatmap legend</span>
-<span class="fu"><a href="../../reference/annoHeatmapLegend.html">annoHeatmapLegend</a></span><span class="op">(</span>
-    plot <span class="op">=</span> <span class="va">hicPlot</span>, fontsize <span class="op">=</span> <span class="fl">7</span>,
-    orientation <span class="op">=</span> <span class="st">"v"</span>,
-    x <span class="op">=</span> <span class="fl">0.125</span>, y <span class="op">=</span> <span class="fl">0.25</span>,
-    width <span class="op">=</span> <span class="fl">0.07</span>, height <span class="op">=</span> <span class="fl">0.5</span>, just <span class="op">=</span> <span class="fu"><a href="../../reference/c.html">c</a></span><span class="op">(</span><span class="st">"left"</span>, <span class="st">"top"</span><span class="op">)</span>,
-    default.units <span class="op">=</span> <span class="st">"inches"</span>
-<span class="op">)</span>
-
-<span class="fu"><a href="../../reference/annoHeatmapLegend.html">annoHeatmapLegend</a></span><span class="op">(</span>
-    plot <span class="op">=</span> <span class="va">hicPlot</span>, fontsize <span class="op">=</span> <span class="fl">7</span>,
-    orientation <span class="op">=</span> <span class="st">"h"</span>,
-    x <span class="op">=</span> <span class="fl">3</span>, y <span class="op">=</span> <span class="fl">3.055</span>,
-    width <span class="op">=</span> <span class="fl">0.5</span>, height <span class="op">=</span> <span class="fl">0.07</span>, just <span class="op">=</span> <span class="fu"><a href="../../reference/c.html">c</a></span><span class="op">(</span><span class="st">"right"</span>, <span class="st">"top"</span><span class="op">)</span>,
-    default.units <span class="op">=</span> <span class="st">"inches"</span>
-<span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"IMR90_HiC_10kb"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="../../reference/pageCreate.html">pageCreate</a></span><span class="op">(</span></span>
+<span>    width <span class="op">=</span> <span class="fl">3.25</span>, height <span class="op">=</span> <span class="fl">3.25</span>, default.units <span class="op">=</span> <span class="st">"inches"</span>,</span>
+<span>    showGuides <span class="op">=</span> <span class="cn">FALSE</span>, xgrid <span class="op">=</span> <span class="fl">0</span>, ygrid <span class="op">=</span> <span class="fl">0</span></span>
+<span><span class="op">)</span></span>
+<span><span class="va">params</span> <span class="op">&lt;-</span> <span class="fu"><a href="../../reference/pgParams.html">pgParams</a></span><span class="op">(</span></span>
+<span>    chrom <span class="op">=</span> <span class="st">"chr21"</span>, chromstart <span class="op">=</span> <span class="fl">28000000</span>, chromend <span class="op">=</span> <span class="fl">30300000</span>,</span>
+<span>    assembly <span class="op">=</span> <span class="st">"hg19"</span>,</span>
+<span>    x <span class="op">=</span> <span class="fl">0.25</span>, width <span class="op">=</span> <span class="fl">2.75</span>, just <span class="op">=</span> <span class="fu"><a href="../../reference/c.html">c</a></span><span class="op">(</span><span class="st">"left"</span>, <span class="st">"top"</span><span class="op">)</span>, default.units <span class="op">=</span> <span class="st">"inches"</span></span>
+<span><span class="op">)</span></span>
+<span><span class="va">hicPlot</span> <span class="op">&lt;-</span> <span class="fu"><a href="../../reference/plotHicSquare.html">plotHicSquare</a></span><span class="op">(</span></span>
+<span>    data <span class="op">=</span> <span class="va">IMR90_HiC_10kb</span>, params <span class="op">=</span> <span class="va">params</span>,</span>
+<span>    zrange <span class="op">=</span> <span class="fu"><a href="../../reference/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">70</span><span class="op">)</span>, resolution <span class="op">=</span> <span class="fl">10000</span>,</span>
+<span>    y <span class="op">=</span> <span class="fl">0.25</span>, height <span class="op">=</span> <span class="fl">2.75</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="co">## Annotate Hi-C heatmap legend</span></span>
+<span><span class="fu"><a href="../../reference/annoHeatmapLegend.html">annoHeatmapLegend</a></span><span class="op">(</span></span>
+<span>    plot <span class="op">=</span> <span class="va">hicPlot</span>, fontsize <span class="op">=</span> <span class="fl">7</span>,</span>
+<span>    orientation <span class="op">=</span> <span class="st">"v"</span>,</span>
+<span>    x <span class="op">=</span> <span class="fl">0.125</span>, y <span class="op">=</span> <span class="fl">0.25</span>,</span>
+<span>    width <span class="op">=</span> <span class="fl">0.07</span>, height <span class="op">=</span> <span class="fl">0.5</span>, just <span class="op">=</span> <span class="fu"><a href="../../reference/c.html">c</a></span><span class="op">(</span><span class="st">"left"</span>, <span class="st">"top"</span><span class="op">)</span>,</span>
+<span>    default.units <span class="op">=</span> <span class="st">"inches"</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="../../reference/annoHeatmapLegend.html">annoHeatmapLegend</a></span><span class="op">(</span></span>
+<span>    plot <span class="op">=</span> <span class="va">hicPlot</span>, fontsize <span class="op">=</span> <span class="fl">7</span>,</span>
+<span>    orientation <span class="op">=</span> <span class="st">"h"</span>,</span>
+<span>    x <span class="op">=</span> <span class="fl">3</span>, y <span class="op">=</span> <span class="fl">3.055</span>,</span>
+<span>    width <span class="op">=</span> <span class="fl">0.5</span>, height <span class="op">=</span> <span class="fl">0.07</span>, just <span class="op">=</span> <span class="fu"><a href="../../reference/c.html">c</a></span><span class="op">(</span><span class="st">"right"</span>, <span class="st">"top"</span><span class="op">)</span>,</span>
+<span>    default.units <span class="op">=</span> <span class="st">"inches"</span></span>
+<span><span class="op">)</span></span></code></pre></div>
 <p><img src="annotations_files/figure-html/anno_08-1.png" width="787.5" style="display: block; margin: auto;"></p>
 </div>
 <div class="section level3">
@@ -323,93 +323,93 @@ Hi-C plots made with <code><a href="../../reference/plotHicRectangle.html">plotH
 <p>It is possible to annotate the pixels on a Hi-C plot with provided
 BEDPE data. Pixels can be annotated with boxes, circles, or squares.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"IMR90_HiC_10kb"</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"IMR90_DNAloops_pairs"</span><span class="op">)</span>
-
-<span class="fu"><a href="../../reference/pageCreate.html">pageCreate</a></span><span class="op">(</span>
-    width <span class="op">=</span> <span class="fl">3.25</span>, height <span class="op">=</span> <span class="fl">3.24</span>, default.units <span class="op">=</span> <span class="st">"inches"</span>,
-    showGuides <span class="op">=</span> <span class="cn">FALSE</span>, xgrid <span class="op">=</span> <span class="fl">0</span>, ygrid <span class="op">=</span> <span class="fl">0</span>
-<span class="op">)</span>
-<span class="va">hicPlot</span> <span class="op">&lt;-</span> <span class="fu"><a href="../../reference/plotHicSquare.html">plotHicSquare</a></span><span class="op">(</span>
-    data <span class="op">=</span> <span class="va">IMR90_HiC_10kb</span>, resolution <span class="op">=</span> <span class="fl">10000</span>, zrange <span class="op">=</span> <span class="fu"><a href="../../reference/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">70</span><span class="op">)</span>,
-    chrom <span class="op">=</span> <span class="st">"chr21"</span>, chromstart <span class="op">=</span> <span class="fl">28000000</span>, chromend <span class="op">=</span> <span class="fl">30300000</span>,
-    assembly <span class="op">=</span> <span class="st">"hg19"</span>,
-    x <span class="op">=</span> <span class="fl">0.25</span>, y <span class="op">=</span> <span class="fl">0.25</span>, width <span class="op">=</span> <span class="fl">2.75</span>, height <span class="op">=</span> <span class="fl">2.75</span>,
-    just <span class="op">=</span> <span class="fu"><a href="../../reference/c.html">c</a></span><span class="op">(</span><span class="st">"left"</span>, <span class="st">"top"</span><span class="op">)</span>,
-    default.units <span class="op">=</span> <span class="st">"inches"</span>
-<span class="op">)</span>
-
-<span class="co">## Annotate pixels</span>
-<span class="va">pixels</span> <span class="op">&lt;-</span> <span class="fu"><a href="../../reference/annoPixels.html">annoPixels</a></span><span class="op">(</span>
-    plot <span class="op">=</span> <span class="va">hicPlot</span>, data <span class="op">=</span> <span class="va">IMR90_DNAloops_pairs</span>, type <span class="op">=</span> <span class="st">"box"</span>,
-    half <span class="op">=</span> <span class="st">"top"</span>
-<span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"IMR90_HiC_10kb"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"IMR90_DNAloops_pairs"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="../../reference/pageCreate.html">pageCreate</a></span><span class="op">(</span></span>
+<span>    width <span class="op">=</span> <span class="fl">3.25</span>, height <span class="op">=</span> <span class="fl">3.24</span>, default.units <span class="op">=</span> <span class="st">"inches"</span>,</span>
+<span>    showGuides <span class="op">=</span> <span class="cn">FALSE</span>, xgrid <span class="op">=</span> <span class="fl">0</span>, ygrid <span class="op">=</span> <span class="fl">0</span></span>
+<span><span class="op">)</span></span>
+<span><span class="va">hicPlot</span> <span class="op">&lt;-</span> <span class="fu"><a href="../../reference/plotHicSquare.html">plotHicSquare</a></span><span class="op">(</span></span>
+<span>    data <span class="op">=</span> <span class="va">IMR90_HiC_10kb</span>, resolution <span class="op">=</span> <span class="fl">10000</span>, zrange <span class="op">=</span> <span class="fu"><a href="../../reference/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">70</span><span class="op">)</span>,</span>
+<span>    chrom <span class="op">=</span> <span class="st">"chr21"</span>, chromstart <span class="op">=</span> <span class="fl">28000000</span>, chromend <span class="op">=</span> <span class="fl">30300000</span>,</span>
+<span>    assembly <span class="op">=</span> <span class="st">"hg19"</span>,</span>
+<span>    x <span class="op">=</span> <span class="fl">0.25</span>, y <span class="op">=</span> <span class="fl">0.25</span>, width <span class="op">=</span> <span class="fl">2.75</span>, height <span class="op">=</span> <span class="fl">2.75</span>,</span>
+<span>    just <span class="op">=</span> <span class="fu"><a href="../../reference/c.html">c</a></span><span class="op">(</span><span class="st">"left"</span>, <span class="st">"top"</span><span class="op">)</span>,</span>
+<span>    default.units <span class="op">=</span> <span class="st">"inches"</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="co">## Annotate pixels</span></span>
+<span><span class="va">pixels</span> <span class="op">&lt;-</span> <span class="fu"><a href="../../reference/annoPixels.html">annoPixels</a></span><span class="op">(</span></span>
+<span>    plot <span class="op">=</span> <span class="va">hicPlot</span>, data <span class="op">=</span> <span class="va">IMR90_DNAloops_pairs</span>, type <span class="op">=</span> <span class="st">"box"</span>,</span>
+<span>    half <span class="op">=</span> <span class="st">"top"</span></span>
+<span><span class="op">)</span></span></code></pre></div>
 <p><img src="annotations_files/figure-html/anno_09-1.png" width="787.5" style="display: block; margin: auto;"></p>
 <p>If we want to annotate one pixel of interest, we can subset our BEDPE
 data and <code><a href="../../reference/annoPixels.html">annoPixels()</a></code> will only annotate the specified
 pixels:</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"IMR90_HiC_10kb"</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"IMR90_DNAloops_pairs"</span><span class="op">)</span>
-
-<span class="co">## Subset BEDPE data</span>
-<span class="va">IMR90_DNAloops_pairs</span> <span class="op">&lt;-</span> <span class="va">IMR90_DNAloops_pairs</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/pkg/BiocGenerics/man/which.html" class="external-link">which</a></span><span class="op">(</span><span class="va">IMR90_DNAloops_pairs</span><span class="op">$</span><span class="va">start1</span> <span class="op">==</span> <span class="fl">28220000</span> <span class="op">&amp;</span>
-    <span class="va">IMR90_DNAloops_pairs</span><span class="op">$</span><span class="va">start2</span> <span class="op">==</span> <span class="fl">29070000</span><span class="op">)</span>, <span class="op">]</span>
-
-<span class="fu"><a href="../../reference/pageCreate.html">pageCreate</a></span><span class="op">(</span>
-    width <span class="op">=</span> <span class="fl">3.25</span>, height <span class="op">=</span> <span class="fl">3.24</span>, default.units <span class="op">=</span> <span class="st">"inches"</span>,
-    showGuides <span class="op">=</span> <span class="cn">FALSE</span>, xgrid <span class="op">=</span> <span class="fl">0</span>, ygrid <span class="op">=</span> <span class="fl">0</span>
-<span class="op">)</span>
-<span class="va">hicPlot</span> <span class="op">&lt;-</span> <span class="fu"><a href="../../reference/plotHicSquare.html">plotHicSquare</a></span><span class="op">(</span>
-    data <span class="op">=</span> <span class="va">IMR90_HiC_10kb</span>, resolution <span class="op">=</span> <span class="fl">10000</span>, zrange <span class="op">=</span> <span class="fu"><a href="../../reference/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">70</span><span class="op">)</span>,
-    chrom <span class="op">=</span> <span class="st">"chr21"</span>, chromstart <span class="op">=</span> <span class="fl">28000000</span>, chromend <span class="op">=</span> <span class="fl">30300000</span>,
-    x <span class="op">=</span> <span class="fl">0.25</span>, y <span class="op">=</span> <span class="fl">0.25</span>, width <span class="op">=</span> <span class="fl">2.75</span>, height <span class="op">=</span> <span class="fl">2.75</span>,
-    just <span class="op">=</span> <span class="fu"><a href="../../reference/c.html">c</a></span><span class="op">(</span><span class="st">"left"</span>, <span class="st">"top"</span><span class="op">)</span>,
-    default.units <span class="op">=</span> <span class="st">"inches"</span>
-<span class="op">)</span>
-
-<span class="co">## Annotate pixel</span>
-<span class="va">pixels</span> <span class="op">&lt;-</span> <span class="fu"><a href="../../reference/annoPixels.html">annoPixels</a></span><span class="op">(</span>
-    plot <span class="op">=</span> <span class="va">hicPlot</span>, data <span class="op">=</span> <span class="va">IMR90_DNAloops_pairs</span>, type <span class="op">=</span> <span class="st">"arrow"</span>,
-    half <span class="op">=</span> <span class="st">"bottom"</span>, shift <span class="op">=</span> <span class="fl">12</span>
-<span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"IMR90_HiC_10kb"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"IMR90_DNAloops_pairs"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co">## Subset BEDPE data</span></span>
+<span><span class="va">IMR90_DNAloops_pairs</span> <span class="op">&lt;-</span> <span class="va">IMR90_DNAloops_pairs</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/pkg/BiocGenerics/man/which.html" class="external-link">which</a></span><span class="op">(</span><span class="va">IMR90_DNAloops_pairs</span><span class="op">$</span><span class="va">start1</span> <span class="op">==</span> <span class="fl">28220000</span> <span class="op">&amp;</span></span>
+<span>    <span class="va">IMR90_DNAloops_pairs</span><span class="op">$</span><span class="va">start2</span> <span class="op">==</span> <span class="fl">29070000</span><span class="op">)</span>, <span class="op">]</span></span>
+<span></span>
+<span><span class="fu"><a href="../../reference/pageCreate.html">pageCreate</a></span><span class="op">(</span></span>
+<span>    width <span class="op">=</span> <span class="fl">3.25</span>, height <span class="op">=</span> <span class="fl">3.24</span>, default.units <span class="op">=</span> <span class="st">"inches"</span>,</span>
+<span>    showGuides <span class="op">=</span> <span class="cn">FALSE</span>, xgrid <span class="op">=</span> <span class="fl">0</span>, ygrid <span class="op">=</span> <span class="fl">0</span></span>
+<span><span class="op">)</span></span>
+<span><span class="va">hicPlot</span> <span class="op">&lt;-</span> <span class="fu"><a href="../../reference/plotHicSquare.html">plotHicSquare</a></span><span class="op">(</span></span>
+<span>    data <span class="op">=</span> <span class="va">IMR90_HiC_10kb</span>, resolution <span class="op">=</span> <span class="fl">10000</span>, zrange <span class="op">=</span> <span class="fu"><a href="../../reference/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">70</span><span class="op">)</span>,</span>
+<span>    chrom <span class="op">=</span> <span class="st">"chr21"</span>, chromstart <span class="op">=</span> <span class="fl">28000000</span>, chromend <span class="op">=</span> <span class="fl">30300000</span>,</span>
+<span>    x <span class="op">=</span> <span class="fl">0.25</span>, y <span class="op">=</span> <span class="fl">0.25</span>, width <span class="op">=</span> <span class="fl">2.75</span>, height <span class="op">=</span> <span class="fl">2.75</span>,</span>
+<span>    just <span class="op">=</span> <span class="fu"><a href="../../reference/c.html">c</a></span><span class="op">(</span><span class="st">"left"</span>, <span class="st">"top"</span><span class="op">)</span>,</span>
+<span>    default.units <span class="op">=</span> <span class="st">"inches"</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="co">## Annotate pixel</span></span>
+<span><span class="va">pixels</span> <span class="op">&lt;-</span> <span class="fu"><a href="../../reference/annoPixels.html">annoPixels</a></span><span class="op">(</span></span>
+<span>    plot <span class="op">=</span> <span class="va">hicPlot</span>, data <span class="op">=</span> <span class="va">IMR90_DNAloops_pairs</span>, type <span class="op">=</span> <span class="st">"arrow"</span>,</span>
+<span>    half <span class="op">=</span> <span class="st">"bottom"</span>, shift <span class="op">=</span> <span class="fl">12</span></span>
+<span><span class="op">)</span></span></code></pre></div>
 <p><img src="annotations_files/figure-html/anno_10-1.png" width="787.5" style="display: block; margin: auto;"></p>
 <p>For genomic ranges of domain data, we can annotate Hi-C domains with
 <code><a href="../../reference/annoDomains.html">annoDomains()</a></code>. For example, if we want to annotate the
 following domains</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">domains</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/GenomicRanges/man/GRanges-class.html" class="external-link">GRanges</a></span><span class="op">(</span><span class="st">"chr21"</span>,
-     ranges <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/IRanges/man/IRanges-constructor.html" class="external-link">IRanges</a></span><span class="op">(</span>
-         start <span class="op">=</span> <span class="fu"><a href="../../reference/c.html">c</a></span><span class="op">(</span><span class="fl">28210000</span>, <span class="fl">29085000</span>, <span class="fl">29430000</span>, <span class="fl">29700000</span><span class="op">)</span>,
-         end <span class="op">=</span> <span class="fu"><a href="../../reference/c.html">c</a></span><span class="op">(</span><span class="fl">29085000</span>, <span class="fl">29430000</span>, <span class="fl">29700000</span>, <span class="fl">30125000</span><span class="op">)</span>
-     <span class="op">)</span>
- <span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">domains</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/GenomicRanges/man/GRanges-class.html" class="external-link">GRanges</a></span><span class="op">(</span><span class="st">"chr21"</span>,</span>
+<span>     ranges <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/IRanges/man/IRanges-constructor.html" class="external-link">IRanges</a></span><span class="op">(</span></span>
+<span>         start <span class="op">=</span> <span class="fu"><a href="../../reference/c.html">c</a></span><span class="op">(</span><span class="fl">28210000</span>, <span class="fl">29085000</span>, <span class="fl">29430000</span>, <span class="fl">29700000</span><span class="op">)</span>,</span>
+<span>         end <span class="op">=</span> <span class="fu"><a href="../../reference/c.html">c</a></span><span class="op">(</span><span class="fl">29085000</span>, <span class="fl">29430000</span>, <span class="fl">29700000</span>, <span class="fl">30125000</span><span class="op">)</span></span>
+<span>     <span class="op">)</span></span>
+<span> <span class="op">)</span></span></code></pre></div>
 <p>in this Hi-C plot:</p>
 <p><img src="annotations_files/figure-html/anno_11-1.png" width="787.5" style="display: block; margin: auto;"></p>
 <p>We would use a similar workflow to how we annotated Hi-C pixels:</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../../reference/pageCreate.html">pageCreate</a></span><span class="op">(</span>
-    width <span class="op">=</span> <span class="fl">3.25</span>, height <span class="op">=</span> <span class="fl">3.24</span>, default.units <span class="op">=</span> <span class="st">"inches"</span>,
-    showGuides <span class="op">=</span> <span class="cn">FALSE</span>, xgrid <span class="op">=</span> <span class="fl">0</span>, ygrid <span class="op">=</span> <span class="fl">0</span>
-<span class="op">)</span>
-<span class="va">hicPlot</span> <span class="op">&lt;-</span> <span class="fu"><a href="../../reference/plotHicSquare.html">plotHicSquare</a></span><span class="op">(</span>
-    data <span class="op">=</span> <span class="va">IMR90_HiC_10kb</span>, resolution <span class="op">=</span> <span class="fl">10000</span>, zrange <span class="op">=</span> <span class="fu"><a href="../../reference/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">70</span><span class="op">)</span>,
-    chrom <span class="op">=</span> <span class="st">"chr21"</span>, chromstart <span class="op">=</span> <span class="fl">28000000</span>, chromend <span class="op">=</span> <span class="fl">30300000</span>,
-    x <span class="op">=</span> <span class="fl">0.25</span>, y <span class="op">=</span> <span class="fl">0.25</span>, width <span class="op">=</span> <span class="fl">2.75</span>, height <span class="op">=</span> <span class="fl">2.75</span>,
-    just <span class="op">=</span> <span class="fu"><a href="../../reference/c.html">c</a></span><span class="op">(</span><span class="st">"left"</span>, <span class="st">"top"</span><span class="op">)</span>,
-    default.units <span class="op">=</span> <span class="st">"inches"</span>
-<span class="op">)</span>
-
-<span class="co">## Annotate domains</span>
-<span class="va">domainAnno</span> <span class="op">&lt;-</span> <span class="fu"><a href="../../reference/annoDomains.html">annoDomains</a></span><span class="op">(</span>
-    plot <span class="op">=</span> <span class="va">hicPlot</span>, data <span class="op">=</span> <span class="va">domains</span>,
-    half <span class="op">=</span> <span class="st">"bottom"</span>, linecolor <span class="op">=</span> <span class="st">"red"</span>
-<span class="op">)</span>
-
-<span class="fu"><a href="../../reference/annoGenomeLabel.html">annoGenomeLabel</a></span><span class="op">(</span>
-    plot <span class="op">=</span> <span class="va">hicPlot</span>, 
-    x <span class="op">=</span> <span class="fl">0.25</span>, y <span class="op">=</span> <span class="fl">3.01</span>
-<span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="../../reference/pageCreate.html">pageCreate</a></span><span class="op">(</span></span>
+<span>    width <span class="op">=</span> <span class="fl">3.25</span>, height <span class="op">=</span> <span class="fl">3.24</span>, default.units <span class="op">=</span> <span class="st">"inches"</span>,</span>
+<span>    showGuides <span class="op">=</span> <span class="cn">FALSE</span>, xgrid <span class="op">=</span> <span class="fl">0</span>, ygrid <span class="op">=</span> <span class="fl">0</span></span>
+<span><span class="op">)</span></span>
+<span><span class="va">hicPlot</span> <span class="op">&lt;-</span> <span class="fu"><a href="../../reference/plotHicSquare.html">plotHicSquare</a></span><span class="op">(</span></span>
+<span>    data <span class="op">=</span> <span class="va">IMR90_HiC_10kb</span>, resolution <span class="op">=</span> <span class="fl">10000</span>, zrange <span class="op">=</span> <span class="fu"><a href="../../reference/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">70</span><span class="op">)</span>,</span>
+<span>    chrom <span class="op">=</span> <span class="st">"chr21"</span>, chromstart <span class="op">=</span> <span class="fl">28000000</span>, chromend <span class="op">=</span> <span class="fl">30300000</span>,</span>
+<span>    x <span class="op">=</span> <span class="fl">0.25</span>, y <span class="op">=</span> <span class="fl">0.25</span>, width <span class="op">=</span> <span class="fl">2.75</span>, height <span class="op">=</span> <span class="fl">2.75</span>,</span>
+<span>    just <span class="op">=</span> <span class="fu"><a href="../../reference/c.html">c</a></span><span class="op">(</span><span class="st">"left"</span>, <span class="st">"top"</span><span class="op">)</span>,</span>
+<span>    default.units <span class="op">=</span> <span class="st">"inches"</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="co">## Annotate domains</span></span>
+<span><span class="va">domainAnno</span> <span class="op">&lt;-</span> <span class="fu"><a href="../../reference/annoDomains.html">annoDomains</a></span><span class="op">(</span></span>
+<span>    plot <span class="op">=</span> <span class="va">hicPlot</span>, data <span class="op">=</span> <span class="va">domains</span>,</span>
+<span>    half <span class="op">=</span> <span class="st">"bottom"</span>, linecolor <span class="op">=</span> <span class="st">"red"</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="../../reference/annoGenomeLabel.html">annoGenomeLabel</a></span><span class="op">(</span></span>
+<span>    plot <span class="op">=</span> <span class="va">hicPlot</span>, </span>
+<span>    x <span class="op">=</span> <span class="fl">0.25</span>, y <span class="op">=</span> <span class="fl">3.01</span></span>
+<span><span class="op">)</span></span></code></pre></div>
 <p><img src="annotations_files/figure-html/anno_12-1.png" width="787.5" style="display: block; margin: auto;"></p>
 <p>We can either annotate single domains or multiple domains at once
 depending on the <code>data</code> input.</p>
@@ -425,38 +425,38 @@ plot an ideogram and highlight and zoom in on a genomic region of
 interest to see the signal track data in that region.</p>
 <p>First we can plot our ideogram:</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">AnnotationHub</span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">TxDb.Hsapiens.UCSC.hg19.knownGene</span><span class="op">)</span>
-
-<span class="fu"><a href="../../reference/pageCreate.html">pageCreate</a></span><span class="op">(</span>
-    width <span class="op">=</span> <span class="fl">6.25</span>, height <span class="op">=</span> <span class="fl">2.25</span>, default.units <span class="op">=</span> <span class="st">"inches"</span>,
-    showGuides <span class="op">=</span> <span class="cn">FALSE</span>, xgrid <span class="op">=</span> <span class="fl">0</span>, ygrid <span class="op">=</span> <span class="fl">0</span>
-<span class="op">)</span>
-<span class="va">ideogramPlot</span> <span class="op">&lt;-</span> <span class="fu"><a href="../../reference/plotIdeogram.html">plotIdeogram</a></span><span class="op">(</span>
-    chrom <span class="op">=</span> <span class="st">"chr21"</span>, assembly <span class="op">=</span> <span class="st">"hg19"</span>,
-    orientation <span class="op">=</span> <span class="st">"h"</span>,
-    x <span class="op">=</span> <span class="fl">0.25</span>, y <span class="op">=</span> <span class="fl">0.5</span>, width <span class="op">=</span> <span class="fl">5.75</span>, height <span class="op">=</span> <span class="fl">0.3</span>, just <span class="op">=</span> <span class="st">"left"</span>
-<span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">AnnotationHub</span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">TxDb.Hsapiens.UCSC.hg19.knownGene</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="../../reference/pageCreate.html">pageCreate</a></span><span class="op">(</span></span>
+<span>    width <span class="op">=</span> <span class="fl">6.25</span>, height <span class="op">=</span> <span class="fl">2.25</span>, default.units <span class="op">=</span> <span class="st">"inches"</span>,</span>
+<span>    showGuides <span class="op">=</span> <span class="cn">FALSE</span>, xgrid <span class="op">=</span> <span class="fl">0</span>, ygrid <span class="op">=</span> <span class="fl">0</span></span>
+<span><span class="op">)</span></span>
+<span><span class="va">ideogramPlot</span> <span class="op">&lt;-</span> <span class="fu"><a href="../../reference/plotIdeogram.html">plotIdeogram</a></span><span class="op">(</span></span>
+<span>    chrom <span class="op">=</span> <span class="st">"chr21"</span>, assembly <span class="op">=</span> <span class="st">"hg19"</span>,</span>
+<span>    orientation <span class="op">=</span> <span class="st">"h"</span>,</span>
+<span>    x <span class="op">=</span> <span class="fl">0.25</span>, y <span class="op">=</span> <span class="fl">0.5</span>, width <span class="op">=</span> <span class="fl">5.75</span>, height <span class="op">=</span> <span class="fl">0.3</span>, just <span class="op">=</span> <span class="st">"left"</span></span>
+<span><span class="op">)</span></span></code></pre></div>
 <p><img src="annotations_files/figure-html/anno_13-1.png" width="1237.5" style="display: block; margin: auto;"></p>
 <p>We can then use <code><a href="../../reference/annoHighlight.html">annoHighlight()</a></code> to highlight our genomic
 region of interest (<code>chr21:28000000-30300000</code>) with a box of
 our desired <code>height</code>:</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">region</span> <span class="op">&lt;-</span> <span class="fu"><a href="../../reference/pgParams.html">pgParams</a></span><span class="op">(</span>chrom <span class="op">=</span> <span class="st">"chr21"</span>, chromstart <span class="op">=</span> <span class="fl">28000000</span>, chromend <span class="op">=</span> <span class="fl">30300000</span><span class="op">)</span>
-<span class="fu"><a href="../../reference/annoHighlight.html">annoHighlight</a></span><span class="op">(</span>
-    plot <span class="op">=</span> <span class="va">ideogramPlot</span>, params <span class="op">=</span> <span class="va">region</span>,
-    fill <span class="op">=</span> <span class="st">"red"</span>,
-    y <span class="op">=</span> <span class="fl">0.25</span>, height <span class="op">=</span> <span class="fl">0.5</span>, just <span class="op">=</span> <span class="fu"><a href="../../reference/c.html">c</a></span><span class="op">(</span><span class="st">"left"</span>, <span class="st">"top"</span><span class="op">)</span>, default.units <span class="op">=</span> <span class="st">"inches"</span>
-<span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">region</span> <span class="op">&lt;-</span> <span class="fu"><a href="../../reference/pgParams.html">pgParams</a></span><span class="op">(</span>chrom <span class="op">=</span> <span class="st">"chr21"</span>, chromstart <span class="op">=</span> <span class="fl">28000000</span>, chromend <span class="op">=</span> <span class="fl">30300000</span><span class="op">)</span></span>
+<span><span class="fu"><a href="../../reference/annoHighlight.html">annoHighlight</a></span><span class="op">(</span></span>
+<span>    plot <span class="op">=</span> <span class="va">ideogramPlot</span>, params <span class="op">=</span> <span class="va">region</span>,</span>
+<span>    fill <span class="op">=</span> <span class="st">"red"</span>,</span>
+<span>    y <span class="op">=</span> <span class="fl">0.25</span>, height <span class="op">=</span> <span class="fl">0.5</span>, just <span class="op">=</span> <span class="fu"><a href="../../reference/c.html">c</a></span><span class="op">(</span><span class="st">"left"</span>, <span class="st">"top"</span><span class="op">)</span>, default.units <span class="op">=</span> <span class="st">"inches"</span></span>
+<span><span class="op">)</span></span></code></pre></div>
 <p><img src="annotations_files/figure-html/anno_14-1.png" width="1237.5" style="display: block; margin: auto;"></p>
 <p>To make it clearer that we are zooming in on a genomic region, we can
 then use <code><a href="../../reference/annoZoomLines.html">annoZoomLines()</a></code> to add zoom lines from the genomic
 region we highlighted:</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../../reference/annoZoomLines.html">annoZoomLines</a></span><span class="op">(</span>
-    plot <span class="op">=</span> <span class="va">ideogramPlot</span>, params <span class="op">=</span> <span class="va">region</span>,
-    y0 <span class="op">=</span> <span class="fl">0.75</span>, x1 <span class="op">=</span> <span class="fu"><a href="../../reference/c.html">c</a></span><span class="op">(</span><span class="fl">0.25</span>, <span class="fl">6</span><span class="op">)</span>, y1 <span class="op">=</span> <span class="fl">1.25</span>, default.units <span class="op">=</span> <span class="st">"inches"</span>
-<span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="../../reference/annoZoomLines.html">annoZoomLines</a></span><span class="op">(</span></span>
+<span>    plot <span class="op">=</span> <span class="va">ideogramPlot</span>, params <span class="op">=</span> <span class="va">region</span>,</span>
+<span>    y0 <span class="op">=</span> <span class="fl">0.75</span>, x1 <span class="op">=</span> <span class="fu"><a href="../../reference/c.html">c</a></span><span class="op">(</span><span class="fl">0.25</span>, <span class="fl">6</span><span class="op">)</span>, y1 <span class="op">=</span> <span class="fl">1.25</span>, default.units <span class="op">=</span> <span class="st">"inches"</span></span>
+<span><span class="op">)</span></span></code></pre></div>
 <p><img src="annotations_files/figure-html/anno_15-1.png" width="1237.5" style="display: block; margin: auto;"></p>
 <p>Finally, we can add our zoomed-in signal track data within the zoom
 lines:</p>
@@ -466,97 +466,101 @@ lines:</p>
 <h2 id="session-info">Session Info<a class="anchor" aria-label="anchor" href="#session-info"></a>
 </h2>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/sessionInfo.html" class="external-link">sessionInfo</a></span><span class="op">(</span><span class="op">)</span>
-<span class="co">#&gt; R version 4.2.0 (2022-04-22)</span>
-<span class="co">#&gt; Platform: x86_64-apple-darwin17.0 (64-bit)</span>
-<span class="co">#&gt; Running under: macOS Big Sur/Monterey 10.16</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Matrix products: default</span>
-<span class="co">#&gt; BLAS:   /Library/Frameworks/R.framework/Versions/4.2/Resources/lib/libRblas.0.dylib</span>
-<span class="co">#&gt; LAPACK: /Library/Frameworks/R.framework/Versions/4.2/Resources/lib/libRlapack.dylib</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; locale:</span>
-<span class="co">#&gt; [1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; attached base packages:</span>
-<span class="co">#&gt; [1] stats4    grid      stats     graphics  grDevices utils     datasets </span>
-<span class="co">#&gt; [8] methods   base     </span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; other attached packages:</span>
-<span class="co">#&gt;  [1] AnnotationHub_3.4.0                    </span>
-<span class="co">#&gt;  [2] BiocFileCache_2.4.0                    </span>
-<span class="co">#&gt;  [3] dbplyr_2.1.1                           </span>
-<span class="co">#&gt;  [4] BSgenome.Hsapiens.UCSC.hg19_1.4.3      </span>
-<span class="co">#&gt;  [5] BSgenome_1.64.0                        </span>
-<span class="co">#&gt;  [6] rtracklayer_1.56.0                     </span>
-<span class="co">#&gt;  [7] Biostrings_2.64.0                      </span>
-<span class="co">#&gt;  [8] XVector_0.36.0                         </span>
-<span class="co">#&gt;  [9] org.Hs.eg.db_3.15.0                    </span>
-<span class="co">#&gt; [10] TxDb.Hsapiens.UCSC.hg19.knownGene_3.2.2</span>
-<span class="co">#&gt; [11] GenomicFeatures_1.48.1                 </span>
-<span class="co">#&gt; [12] AnnotationDbi_1.58.0                   </span>
-<span class="co">#&gt; [13] Biobase_2.56.0                         </span>
-<span class="co">#&gt; [14] plotgardenerData_1.2.0                 </span>
-<span class="co">#&gt; [15] GenomicRanges_1.48.0                   </span>
-<span class="co">#&gt; [16] GenomeInfoDb_1.32.2                    </span>
-<span class="co">#&gt; [17] IRanges_2.30.0                         </span>
-<span class="co">#&gt; [18] S4Vectors_0.34.0                       </span>
-<span class="co">#&gt; [19] BiocGenerics_0.42.0                    </span>
-<span class="co">#&gt; [20] plotgardener_1.2.3                     </span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; loaded via a namespace (and not attached):</span>
-<span class="co">#&gt;   [1] colorspace_2.0-3              rjson_0.2.21                 </span>
-<span class="co">#&gt;   [3] ellipsis_0.3.2                rprojroot_2.0.3              </span>
-<span class="co">#&gt;   [5] fs_1.5.2                      rstudioapi_0.13              </span>
-<span class="co">#&gt;   [7] bit64_4.0.5                   interactiveDisplayBase_1.34.0</span>
-<span class="co">#&gt;   [9] fansi_1.0.3                   xml2_1.3.3                   </span>
-<span class="co">#&gt;  [11] cachem_1.0.6                  knitr_1.39                   </span>
-<span class="co">#&gt;  [13] jsonlite_1.8.0                Rsamtools_2.12.0             </span>
-<span class="co">#&gt;  [15] png_0.1-7                     shiny_1.7.1                  </span>
-<span class="co">#&gt;  [17] BiocManager_1.30.18           compiler_4.2.0               </span>
-<span class="co">#&gt;  [19] httr_1.4.3                    assertthat_0.2.1             </span>
-<span class="co">#&gt;  [21] Matrix_1.4-1                  fastmap_1.1.0                </span>
-<span class="co">#&gt;  [23] cli_3.3.0                     later_1.3.0                  </span>
-<span class="co">#&gt;  [25] htmltools_0.5.2               prettyunits_1.1.1            </span>
-<span class="co">#&gt;  [27] tools_4.2.0                   gtable_0.3.0                 </span>
-<span class="co">#&gt;  [29] glue_1.6.2                    GenomeInfoDbData_1.2.8       </span>
-<span class="co">#&gt;  [31] dplyr_1.0.9                   rappdirs_0.3.3               </span>
-<span class="co">#&gt;  [33] Rcpp_1.0.8.3                  jquerylib_0.1.4              </span>
-<span class="co">#&gt;  [35] pkgdown_2.0.3                 vctrs_0.4.1                  </span>
-<span class="co">#&gt;  [37] strawr_0.0.9                  xfun_0.31                    </span>
-<span class="co">#&gt;  [39] stringr_1.4.0                 plyranges_1.16.0             </span>
-<span class="co">#&gt;  [41] mime_0.12                     lifecycle_1.0.1              </span>
-<span class="co">#&gt;  [43] restfulr_0.0.13               XML_3.99-0.9                 </span>
-<span class="co">#&gt;  [45] zlibbioc_1.42.0               scales_1.2.0                 </span>
-<span class="co">#&gt;  [47] promises_1.2.0.1              ragg_1.2.2                   </span>
-<span class="co">#&gt;  [49] hms_1.1.1                     MatrixGenerics_1.8.0         </span>
-<span class="co">#&gt;  [51] parallel_4.2.0                SummarizedExperiment_1.26.1  </span>
-<span class="co">#&gt;  [53] RColorBrewer_1.1-3            yaml_2.3.5                   </span>
-<span class="co">#&gt;  [55] curl_4.3.2                    memoise_2.0.1                </span>
-<span class="co">#&gt;  [57] ggplot2_3.3.6                 yulab.utils_0.0.4            </span>
-<span class="co">#&gt;  [59] sass_0.4.1                    biomaRt_2.52.0               </span>
-<span class="co">#&gt;  [61] stringi_1.7.6                 RSQLite_2.2.14               </span>
-<span class="co">#&gt;  [63] BiocVersion_3.15.2            highr_0.9                    </span>
-<span class="co">#&gt;  [65] BiocIO_1.6.0                  desc_1.4.1                   </span>
-<span class="co">#&gt;  [67] filelock_1.0.2                BiocParallel_1.30.2          </span>
-<span class="co">#&gt;  [69] rlang_1.0.2                   pkgconfig_2.0.3              </span>
-<span class="co">#&gt;  [71] systemfonts_1.0.4             matrixStats_0.62.0           </span>
-<span class="co">#&gt;  [73] bitops_1.0-7                  evaluate_0.15                </span>
-<span class="co">#&gt;  [75] lattice_0.20-45               purrr_0.3.4                  </span>
-<span class="co">#&gt;  [77] GenomicAlignments_1.32.0      bit_4.0.4                    </span>
-<span class="co">#&gt;  [79] tidyselect_1.1.2              magrittr_2.0.3               </span>
-<span class="co">#&gt;  [81] R6_2.5.1                      generics_0.1.2               </span>
-<span class="co">#&gt;  [83] DelayedArray_0.22.0           DBI_1.1.2                    </span>
-<span class="co">#&gt;  [85] withr_2.5.0                   pillar_1.7.0                 </span>
-<span class="co">#&gt;  [87] KEGGREST_1.36.0               RCurl_1.98-1.6               </span>
-<span class="co">#&gt;  [89] tibble_3.1.7                  crayon_1.5.1                 </span>
-<span class="co">#&gt;  [91] utf8_1.2.2                    rmarkdown_2.14               </span>
-<span class="co">#&gt;  [93] progress_1.2.2                data.table_1.14.2            </span>
-<span class="co">#&gt;  [95] blob_1.2.3                    digest_0.6.29                </span>
-<span class="co">#&gt;  [97] xtable_1.8-4                  httpuv_1.6.5                 </span>
-<span class="co">#&gt;  [99] gridGraphics_0.5-1            textshaping_0.3.6            </span>
-<span class="co">#&gt; [101] munsell_0.5.0                 ggplotify_0.1.0              </span>
-<span class="co">#&gt; [103] bslib_0.3.1</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/sessionInfo.html" class="external-link">sessionInfo</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="co">#&gt; R version 4.2.0 (2022-04-22)</span></span>
+<span><span class="co">#&gt; Platform: x86_64-pc-linux-gnu (64-bit)</span></span>
+<span><span class="co">#&gt; Running under: Ubuntu 20.04.4 LTS</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Matrix products: default</span></span>
+<span><span class="co">#&gt; BLAS:   /usr/lib/x86_64-linux-gnu/openblas-pthread/libblas.so.3</span></span>
+<span><span class="co">#&gt; LAPACK: /usr/lib/x86_64-linux-gnu/openblas-pthread/liblapack.so.3</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; locale:</span></span>
+<span><span class="co">#&gt;  [1] LC_CTYPE=en_US.UTF-8       LC_NUMERIC=C              </span></span>
+<span><span class="co">#&gt;  [3] LC_TIME=en_US.UTF-8        LC_COLLATE=en_US.UTF-8    </span></span>
+<span><span class="co">#&gt;  [5] LC_MONETARY=en_US.UTF-8    LC_MESSAGES=en_US.UTF-8   </span></span>
+<span><span class="co">#&gt;  [7] LC_PAPER=en_US.UTF-8       LC_NAME=C                 </span></span>
+<span><span class="co">#&gt;  [9] LC_ADDRESS=C               LC_TELEPHONE=C            </span></span>
+<span><span class="co">#&gt; [11] LC_MEASUREMENT=en_US.UTF-8 LC_IDENTIFICATION=C       </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; attached base packages:</span></span>
+<span><span class="co">#&gt; [1] stats4    grid      stats     graphics  grDevices utils     datasets </span></span>
+<span><span class="co">#&gt; [8] methods   base     </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; other attached packages:</span></span>
+<span><span class="co">#&gt;  [1] AnnotationHub_3.4.0                    </span></span>
+<span><span class="co">#&gt;  [2] BiocFileCache_2.4.0                    </span></span>
+<span><span class="co">#&gt;  [3] dbplyr_2.2.1                           </span></span>
+<span><span class="co">#&gt;  [4] BSgenome.Hsapiens.UCSC.hg19_1.4.3      </span></span>
+<span><span class="co">#&gt;  [5] BSgenome_1.64.0                        </span></span>
+<span><span class="co">#&gt;  [6] rtracklayer_1.56.1                     </span></span>
+<span><span class="co">#&gt;  [7] Biostrings_2.64.0                      </span></span>
+<span><span class="co">#&gt;  [8] XVector_0.36.0                         </span></span>
+<span><span class="co">#&gt;  [9] org.Hs.eg.db_3.15.0                    </span></span>
+<span><span class="co">#&gt; [10] TxDb.Hsapiens.UCSC.hg19.knownGene_3.2.2</span></span>
+<span><span class="co">#&gt; [11] GenomicFeatures_1.48.3                 </span></span>
+<span><span class="co">#&gt; [12] AnnotationDbi_1.58.0                   </span></span>
+<span><span class="co">#&gt; [13] Biobase_2.56.0                         </span></span>
+<span><span class="co">#&gt; [14] plotgardenerData_1.2.0                 </span></span>
+<span><span class="co">#&gt; [15] GenomicRanges_1.48.0                   </span></span>
+<span><span class="co">#&gt; [16] GenomeInfoDb_1.32.2                    </span></span>
+<span><span class="co">#&gt; [17] IRanges_2.30.0                         </span></span>
+<span><span class="co">#&gt; [18] S4Vectors_0.34.0                       </span></span>
+<span><span class="co">#&gt; [19] BiocGenerics_0.42.0                    </span></span>
+<span><span class="co">#&gt; [20] plotgardener_1.2.8                     </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; loaded via a namespace (and not attached):</span></span>
+<span><span class="co">#&gt;   [1] colorspace_2.0-3              rjson_0.2.21                 </span></span>
+<span><span class="co">#&gt;   [3] ellipsis_0.3.2                rprojroot_2.0.3              </span></span>
+<span><span class="co">#&gt;   [5] fs_1.5.2                      bit64_4.0.5                  </span></span>
+<span><span class="co">#&gt;   [7] interactiveDisplayBase_1.34.0 fansi_1.0.3                  </span></span>
+<span><span class="co">#&gt;   [9] xml2_1.3.3                    codetools_0.2-18             </span></span>
+<span><span class="co">#&gt;  [11] cachem_1.0.6                  knitr_1.39                   </span></span>
+<span><span class="co">#&gt;  [13] jsonlite_1.8.0                Rsamtools_2.12.0             </span></span>
+<span><span class="co">#&gt;  [15] png_0.1-7                     shiny_1.7.1                  </span></span>
+<span><span class="co">#&gt;  [17] BiocManager_1.30.18           compiler_4.2.0               </span></span>
+<span><span class="co">#&gt;  [19] httr_1.4.3                    assertthat_0.2.1             </span></span>
+<span><span class="co">#&gt;  [21] Matrix_1.4-1                  fastmap_1.1.0                </span></span>
+<span><span class="co">#&gt;  [23] cli_3.3.0                     later_1.3.0                  </span></span>
+<span><span class="co">#&gt;  [25] htmltools_0.5.2               prettyunits_1.1.1            </span></span>
+<span><span class="co">#&gt;  [27] tools_4.2.0                   gtable_0.3.0                 </span></span>
+<span><span class="co">#&gt;  [29] glue_1.6.2                    GenomeInfoDbData_1.2.8       </span></span>
+<span><span class="co">#&gt;  [31] dplyr_1.0.9                   rappdirs_0.3.3               </span></span>
+<span><span class="co">#&gt;  [33] Rcpp_1.0.9                    jquerylib_0.1.4              </span></span>
+<span><span class="co">#&gt;  [35] pkgdown_2.0.5                 vctrs_0.4.1                  </span></span>
+<span><span class="co">#&gt;  [37] strawr_0.0.9                  xfun_0.31                    </span></span>
+<span><span class="co">#&gt;  [39] stringr_1.4.0                 plyranges_1.16.0             </span></span>
+<span><span class="co">#&gt;  [41] mime_0.12                     lifecycle_1.0.1              </span></span>
+<span><span class="co">#&gt;  [43] restfulr_0.0.15               XML_3.99-0.10                </span></span>
+<span><span class="co">#&gt;  [45] zlibbioc_1.42.0               scales_1.2.0                 </span></span>
+<span><span class="co">#&gt;  [47] promises_1.2.0.1              ragg_1.2.2                   </span></span>
+<span><span class="co">#&gt;  [49] hms_1.1.1                     MatrixGenerics_1.8.1         </span></span>
+<span><span class="co">#&gt;  [51] parallel_4.2.0                SummarizedExperiment_1.26.1  </span></span>
+<span><span class="co">#&gt;  [53] RColorBrewer_1.1-3            yaml_2.3.5                   </span></span>
+<span><span class="co">#&gt;  [55] curl_4.3.2                    memoise_2.0.1                </span></span>
+<span><span class="co">#&gt;  [57] ggplot2_3.3.6                 yulab.utils_0.0.5            </span></span>
+<span><span class="co">#&gt;  [59] sass_0.4.1                    biomaRt_2.52.0               </span></span>
+<span><span class="co">#&gt;  [61] stringi_1.7.8                 RSQLite_2.2.14               </span></span>
+<span><span class="co">#&gt;  [63] BiocVersion_3.15.2            highr_0.9                    </span></span>
+<span><span class="co">#&gt;  [65] BiocIO_1.6.0                  desc_1.4.1                   </span></span>
+<span><span class="co">#&gt;  [67] filelock_1.0.2                BiocParallel_1.30.3          </span></span>
+<span><span class="co">#&gt;  [69] rlang_1.0.4                   pkgconfig_2.0.3              </span></span>
+<span><span class="co">#&gt;  [71] systemfonts_1.0.4             matrixStats_0.62.0           </span></span>
+<span><span class="co">#&gt;  [73] bitops_1.0-7                  evaluate_0.15                </span></span>
+<span><span class="co">#&gt;  [75] lattice_0.20-45               purrr_0.3.4                  </span></span>
+<span><span class="co">#&gt;  [77] GenomicAlignments_1.32.0      bit_4.0.4                    </span></span>
+<span><span class="co">#&gt;  [79] tidyselect_1.1.2              magrittr_2.0.3               </span></span>
+<span><span class="co">#&gt;  [81] R6_2.5.1                      generics_0.1.3               </span></span>
+<span><span class="co">#&gt;  [83] DelayedArray_0.22.0           DBI_1.1.3                    </span></span>
+<span><span class="co">#&gt;  [85] pillar_1.7.0                  KEGGREST_1.36.3              </span></span>
+<span><span class="co">#&gt;  [87] RCurl_1.98-1.7                tibble_3.1.7                 </span></span>
+<span><span class="co">#&gt;  [89] crayon_1.5.1                  utf8_1.2.2                   </span></span>
+<span><span class="co">#&gt;  [91] rmarkdown_2.14                progress_1.2.2               </span></span>
+<span><span class="co">#&gt;  [93] data.table_1.14.2             blob_1.2.3                   </span></span>
+<span><span class="co">#&gt;  [95] digest_0.6.29                 xtable_1.8-4                 </span></span>
+<span><span class="co">#&gt;  [97] httpuv_1.6.5                  gridGraphics_0.5-1           </span></span>
+<span><span class="co">#&gt;  [99] textshaping_0.3.6             munsell_0.5.0                </span></span>
+<span><span class="co">#&gt; [101] ggplotify_0.1.0               bslib_0.3.1</span></span></code></pre></div>
 </div>
   </div>
 
@@ -577,7 +581,7 @@ lines:</p>
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
 </div>
 
       </footer>

@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">plotgardener</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.2.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.2.8</span>
       </span>
     </div>
 
@@ -96,79 +96,110 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">readHic</span><span class="op">(</span>
-    <span class="va">file</span>,
-    <span class="va">chrom</span>,
-    chromstart <span class="op">=</span> <span class="cn">NULL</span>,
-    chromend <span class="op">=</span> <span class="cn">NULL</span>,
-    altchrom <span class="op">=</span> <span class="cn">NULL</span>,
-    altchromstart <span class="op">=</span> <span class="cn">NULL</span>,
-    altchromend <span class="op">=</span> <span class="cn">NULL</span>,
-    assembly <span class="op">=</span> <span class="st">"hg38"</span>,
-    resolution <span class="op">=</span> <span class="st">"auto"</span>,
-    res_scale <span class="op">=</span> <span class="st">"BP"</span>,
-    zrange <span class="op">=</span> <span class="cn">NULL</span>,
-    norm <span class="op">=</span> <span class="st">"KR"</span>,
-    matrix <span class="op">=</span> <span class="st">"observed"</span>,
-    params <span class="op">=</span> <span class="cn">NULL</span>,
-    quiet <span class="op">=</span> <span class="cn">FALSE</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">readHic</span><span class="op">(</span></span>
+<span>    <span class="va">file</span>,</span>
+<span>    <span class="va">chrom</span>,</span>
+<span>    chromstart <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>    chromend <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>    altchrom <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>    altchromstart <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>    altchromend <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>    assembly <span class="op">=</span> <span class="st">"hg38"</span>,</span>
+<span>    resolution <span class="op">=</span> <span class="st">"auto"</span>,</span>
+<span>    res_scale <span class="op">=</span> <span class="st">"BP"</span>,</span>
+<span>    zrange <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>    norm <span class="op">=</span> <span class="st">"KR"</span>,</span>
+<span>    matrix <span class="op">=</span> <span class="st">"observed"</span>,</span>
+<span>    params <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>    quiet <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>file</dt>
 <dd><p>A character value specifying the path to the .hic file.</p></dd>
+
+
 <dt>chrom</dt>
 <dd><p>Chromosome of data, as a string.</p></dd>
+
+
 <dt>chromstart</dt>
 <dd><p>Integer start position on chromosome.</p></dd>
+
+
 <dt>chromend</dt>
 <dd><p>Integer end position on chromosome.</p></dd>
+
+
 <dt>altchrom</dt>
 <dd><p>Alternate chromosome for interchromosomal data,
 as a string.</p></dd>
+
+
 <dt>altchromstart</dt>
 <dd><p>Alternate chromosome integer start position
 for interchromosomal data.</p></dd>
+
+
 <dt>altchromend</dt>
 <dd><p>Alternate chromosome integer end position
 for interchromosomal data.</p></dd>
+
+
 <dt>assembly</dt>
 <dd><p>Default genome assembly as a string or a
 <a href="assembly.html">assembly</a> object.
 Default value is <code>assembly = "hg38"</code>.</p></dd>
+
+
 <dt>resolution</dt>
 <dd><p>A numeric specifying the width of each pixel.
 "auto" will attempt to choose a resolution in basepairs based on
 the size of the region.</p></dd>
+
+
 <dt>res_scale</dt>
 <dd><p>A character value specifying the resolution scale.
 Default value is <code>res_scale = "BP"</code>. Options are:</p><ul><li><p><code>"BP"</code>: Base pairs.</p></li>
 <li><p><code>"FRAG"</code>: Fragments.</p></li>
 </ul></dd>
+
+
 <dt>zrange</dt>
 <dd><p>A numeric vector of length 2 specifying the range of
 interaction scores, where extreme values will be set to the max or min.</p></dd>
+
+
 <dt>norm</dt>
 <dd><p>Character value specifying hic data normalization method.
 This value must be found in the .hic file.
 Default value is <code>norm = "KR"</code>.</p></dd>
+
+
 <dt>matrix</dt>
 <dd><p>Character value indicating the type of matrix to output.
 Default value is <code>matrix = "observed"</code>. Options are:</p><ul><li><p><code>"observed"</code>: Observed counts.</p></li>
 <li><p><code>"oe"</code>: Observed/expected counts.</p></li>
 <li><p><code>"log2oe"</code>: Log2 transformed observed/expected counts.</p></li>
 </ul></dd>
+
+
 <dt>params</dt>
 <dd><p>An optional <a href="pgParams.html">pgParams</a> object
 containing relevant function parameters.</p></dd>
+
+
 <dt>quiet</dt>
 <dd><p>A logical indicating whether or not to print messages.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>Returns a 3-column dataframe in sparse upper triangular
+    
+
+<p>Returns a 3-column dataframe in sparse upper triangular
 format with the following columns: <code>chrom</code>, <code>altchrom</code>,
 <code>counts</code>.</p>
     </div>
@@ -179,21 +210,21 @@ format with the following columns: <code>chrom</code>, <code>altchrom</code>,
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="va">hicFile</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata/test_chr22.hic"</span>, package<span class="op">=</span><span class="st">"plotgardenerData"</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">## Read in data for all chr22 file at 2.5Mb bp resolution</span></span>
-<span class="r-in"><span class="va">hicData</span> <span class="op">&lt;-</span> <span class="fu">readHic</span><span class="op">(</span>file <span class="op">=</span> <span class="va">hicFile</span>, chrom <span class="op">=</span> <span class="st">"22"</span>,</span>
-<span class="r-in">                    assembly <span class="op">=</span> <span class="st">"hg19"</span>,</span>
-<span class="r-in">                    resolution <span class="op">=</span> <span class="fl">2500000</span><span class="op">)</span> </span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">hicFile</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata/test_chr22.hic"</span>, package<span class="op">=</span><span class="st">"plotgardenerData"</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## Read in data for all chr22 file at 2.5Mb bp resolution</span></span></span>
+<span class="r-in"><span><span class="va">hicData</span> <span class="op">&lt;-</span> <span class="fu">readHic</span><span class="op">(</span>file <span class="op">=</span> <span class="va">hicFile</span>, chrom <span class="op">=</span> <span class="st">"22"</span>,</span></span>
+<span class="r-in"><span>                    assembly <span class="op">=</span> <span class="st">"hg19"</span>,</span></span>
+<span class="r-in"><span>                    resolution <span class="op">=</span> <span class="fl">2500000</span><span class="op">)</span> </span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Read in hic file with KR normalization at 2500000 BP resolution.</span>
-<span class="r-in">                        </span>
-<span class="r-in"><span class="co">## Read in region `chr22:20000000-47500000` at 100 Kb resolution</span></span>
-<span class="r-in"><span class="va">hicData10Kb</span> <span class="op">&lt;-</span> <span class="fu">readHic</span><span class="op">(</span>file <span class="op">=</span> <span class="va">hicFile</span>, chrom <span class="op">=</span> <span class="st">"22"</span>,</span>
-<span class="r-in">                        chromstart <span class="op">=</span> <span class="fl">20000000</span>, chromend <span class="op">=</span> <span class="fl">47500000</span>,</span>
-<span class="r-in">                        assembly <span class="op">=</span> <span class="st">"hg19"</span>,</span>
-<span class="r-in">                        resolution <span class="op">=</span> <span class="fl">100000</span><span class="op">)</span>                     </span>
+<span class="r-in"><span>                        </span></span>
+<span class="r-in"><span><span class="co">## Read in region `chr22:20000000-47500000` at 100 Kb resolution</span></span></span>
+<span class="r-in"><span><span class="va">hicData10Kb</span> <span class="op">&lt;-</span> <span class="fu">readHic</span><span class="op">(</span>file <span class="op">=</span> <span class="va">hicFile</span>, chrom <span class="op">=</span> <span class="st">"22"</span>,</span></span>
+<span class="r-in"><span>                        chromstart <span class="op">=</span> <span class="fl">20000000</span>, chromend <span class="op">=</span> <span class="fl">47500000</span>,</span></span>
+<span class="r-in"><span>                        assembly <span class="op">=</span> <span class="st">"hg19"</span>,</span></span>
+<span class="r-in"><span>                        resolution <span class="op">=</span> <span class="fl">100000</span><span class="op">)</span>                     </span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Read in hic file with KR normalization at 1e+05 BP resolution.</span>
-<span class="r-in"></span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -208,7 +239,7 @@ format with the following columns: <code>chrom</code>, <code>altchrom</code>,
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
 </div>
 
       </footer></div>

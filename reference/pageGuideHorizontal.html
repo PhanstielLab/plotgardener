@@ -20,7 +20,7 @@ on a plotgardener page"><meta property="og:image" content="https://phanstiellab.
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">plotgardener</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.2.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.2.8</span>
       </span>
     </div>
 
@@ -101,44 +101,55 @@ on a plotgardener page</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">pageGuideHorizontal</span><span class="op">(</span>
-    <span class="va">y</span>,
-    default.units <span class="op">=</span> <span class="st">"inches"</span>,
-    linecolor <span class="op">=</span> <span class="st">"grey55"</span>,
-    params <span class="op">=</span> <span class="cn">NULL</span>,
-    <span class="va">...</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">pageGuideHorizontal</span><span class="op">(</span></span>
+<span>    <span class="va">y</span>,</span>
+<span>    default.units <span class="op">=</span> <span class="st">"inches"</span>,</span>
+<span>    linecolor <span class="op">=</span> <span class="st">"grey55"</span>,</span>
+<span>    params <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>    <span class="va">...</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>y</dt>
 <dd><p>A numeric or unit object specifying y-coordinate of guide.</p></dd>
+
+
 <dt>default.units</dt>
 <dd><p>A string indicating the default units to use
 if <code>y</code> is only given as a numeric.
 Default value is <code>default.units = "inches"</code>.</p></dd>
+
+
 <dt>linecolor</dt>
 <dd><p>Character value indicating color of guideline.
 Default value is <code>linecolor = "grey55"</code>.</p></dd>
+
+
 <dt>params</dt>
 <dd><p>An optional <a href="pgParams.html">pgParams</a> object
 containing relevant function parameters.</p></dd>
+
+
 <dt>...</dt>
 <dd><p>Additional grid graphical parameters. See <a href="https://rdrr.io/r/grid/gpar.html" class="external-link">gpar</a>.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>None.</p>
+    
+
+<p>None.</p>
     </div>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co">## Create a page</span></span>
-<span class="r-in"><span class="fu"><a href="pageCreate.html">pageCreate</a></span><span class="op">(</span>width <span class="op">=</span> <span class="fl">6</span>, height <span class="op">=</span> <span class="fl">5</span>, default.units <span class="op">=</span> <span class="st">"inches"</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">## Add red horizontal guideline at y = 2.5 inches</span></span>
-<span class="r-in"><span class="fu">pageGuideHorizontal</span><span class="op">(</span>y <span class="op">=</span> <span class="fl">2.5</span>, linecolor <span class="op">=</span> <span class="st">"red"</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co">## Create a page</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="pageCreate.html">pageCreate</a></span><span class="op">(</span>width <span class="op">=</span> <span class="fl">6</span>, height <span class="op">=</span> <span class="fl">5</span>, default.units <span class="op">=</span> <span class="st">"inches"</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## Add red horizontal guideline at y = 2.5 inches</span></span></span>
+<span class="r-in"><span><span class="fu">pageGuideHorizontal</span><span class="op">(</span>y <span class="op">=</span> <span class="fl">2.5</span>, linecolor <span class="op">=</span> <span class="st">"red"</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="pageGuideHorizontal-1.png" alt="" width="1230" height="1050"></span>
 </code></pre></div>
     </div>
@@ -154,7 +165,7 @@ containing relevant function parameters.</p></dd>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
 </div>
 
       </footer></div>

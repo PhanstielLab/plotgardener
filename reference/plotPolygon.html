@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">plotgardener</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.2.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.2.8</span>
       </span>
     </div>
 
@@ -96,20 +96,20 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">plotPolygon</span><span class="op">(</span>
-    <span class="va">x</span>,
-    <span class="va">y</span>,
-    default.units <span class="op">=</span> <span class="st">"inches"</span>,
-    linecolor <span class="op">=</span> <span class="st">"black"</span>,
-    lwd <span class="op">=</span> <span class="fl">1</span>,
-    lty <span class="op">=</span> <span class="fl">1</span>,
-    fill <span class="op">=</span> <span class="cn">NA</span>,
-    alpha <span class="op">=</span> <span class="fl">1</span>,
-    id <span class="op">=</span> <span class="cn">NULL</span>,
-    id.lengths <span class="op">=</span> <span class="cn">NULL</span>,
-    params <span class="op">=</span> <span class="cn">NULL</span>,
-    <span class="va">...</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">plotPolygon</span><span class="op">(</span></span>
+<span>    <span class="va">x</span>,</span>
+<span>    <span class="va">y</span>,</span>
+<span>    default.units <span class="op">=</span> <span class="st">"inches"</span>,</span>
+<span>    linecolor <span class="op">=</span> <span class="st">"black"</span>,</span>
+<span>    lwd <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>    lty <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>    fill <span class="op">=</span> <span class="cn">NA</span>,</span>
+<span>    alpha <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>    id <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>    id.lengths <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>    params <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>    <span class="va">...</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -117,6 +117,8 @@
     <dl><dt>x</dt>
 <dd><p>A numeric vector or unit object specifying polygon
 vertex x-locations.</p></dd>
+
+
 <dt>y</dt>
 <dd><p>A numeric vector, unit object, or a character vector
 of values containing a "b" combined with a numeric value specifying
@@ -124,42 +126,65 @@ polygon vertex y-locations.
 The character vector will place polygon vertex y-locations relative
 to the bottom of the most recently plotted plot according
 to the units of the plotgardener page.</p></dd>
+
+
 <dt>default.units</dt>
 <dd><p>A string indicating the default units to use
 if <code>x</code> or <code>y</code> are only given as numeric vectors.
 Default value is <code>default.units = "inches"</code>.</p></dd>
+
+
 <dt>linecolor</dt>
 <dd><p>A character value specifying polygon line color.
 Default value is <code>linecolor = "black"</code>.</p></dd>
+
+
 <dt>lwd</dt>
 <dd><p>A numeric specifying polygon line width.
 Default value is <code>lwd = 1</code>.</p></dd>
+
+
 <dt>lty</dt>
 <dd><p>A numeric specifying polygon line type.
 Default value is <code>lty = 1</code>.</p></dd>
+
+
 <dt>fill</dt>
 <dd><p>A character value specifying polygon fill color.
 Default value is <code>fill = NA</code>.</p></dd>
+
+
 <dt>alpha</dt>
 <dd><p>Numeric value specifying color transparency.
 Default value is <code>alpha = 1</code>.</p></dd>
+
+
 <dt>id</dt>
 <dd><p>A numeric vector used to separate locations in <code>x</code> and
 <code>y</code> into multiple polygons. All locations with the same <code>id</code>
 belong to the same polygon.</p></dd>
+
+
 <dt>id.lengths</dt>
 <dd><p>A numeric vector used to separate locations in
 <code>x</code> and <code>y</code> into multiple polygons. Specifies consecutive
 blocks of locations which make up separate polygons.</p></dd>
+
+
 <dt>params</dt>
 <dd><p>An optional <a href="pgParams.html">pgParams</a> object containing
 relevant function parameters.</p></dd>
+
+
 <dt>...</dt>
 <dd><p>Additional grid graphical parameters. See <a href="https://rdrr.io/r/grid/gpar.html" class="external-link">gpar</a>.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>Returns a <code>polygon</code> object containing relevant
+    
+
+<p>Returns a <code>polygon</code> object containing relevant
 placement and <a href="https://rdrr.io/r/grid/grid.grob.html" class="external-link">grob</a> information.</p>
     </div>
     <div id="see-also">
@@ -169,46 +194,46 @@ placement and <a href="https://rdrr.io/r/grid/grid.grob.html" class="external-li
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co">## Create a page</span></span>
-<span class="r-in"><span class="fu"><a href="pageCreate.html">pageCreate</a></span><span class="op">(</span>width <span class="op">=</span> <span class="fl">7.5</span>, height <span class="op">=</span> <span class="fl">6</span>, default.units <span class="op">=</span> <span class="st">"inches"</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">## Plot complex polygons one at a time</span></span>
-<span class="r-in"><span class="fu">plotPolygon</span><span class="op">(</span></span>
-<span class="r-in">    x <span class="op">=</span> <span class="fu"><a href="c.html">c</a></span><span class="op">(</span><span class="fl">2.6</span>, <span class="fl">4.65</span>, <span class="fl">4.75</span>, <span class="fl">6.05</span>, <span class="fl">1.4</span>, <span class="fl">1.3</span><span class="op">)</span>,</span>
-<span class="r-in">    y <span class="op">=</span> <span class="fu"><a href="c.html">c</a></span><span class="op">(</span><span class="fl">2.5</span>, <span class="fl">3.1</span>, <span class="fl">3.5</span>, <span class="fl">4</span>, <span class="fl">3.15</span>, <span class="fl">2.8</span><span class="op">)</span>,</span>
-<span class="r-in">    fill <span class="op">=</span> <span class="st">"#4a168e"</span>, linecolor <span class="op">=</span> <span class="cn">NA</span></span>
-<span class="r-in"><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co">## Create a page</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="pageCreate.html">pageCreate</a></span><span class="op">(</span>width <span class="op">=</span> <span class="fl">7.5</span>, height <span class="op">=</span> <span class="fl">6</span>, default.units <span class="op">=</span> <span class="st">"inches"</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## Plot complex polygons one at a time</span></span></span>
+<span class="r-in"><span><span class="fu">plotPolygon</span><span class="op">(</span></span></span>
+<span class="r-in"><span>    x <span class="op">=</span> <span class="fu"><a href="c.html">c</a></span><span class="op">(</span><span class="fl">2.6</span>, <span class="fl">4.65</span>, <span class="fl">4.75</span>, <span class="fl">6.05</span>, <span class="fl">1.4</span>, <span class="fl">1.3</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>    y <span class="op">=</span> <span class="fu"><a href="c.html">c</a></span><span class="op">(</span><span class="fl">2.5</span>, <span class="fl">3.1</span>, <span class="fl">3.5</span>, <span class="fl">4</span>, <span class="fl">3.15</span>, <span class="fl">2.8</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>    fill <span class="op">=</span> <span class="st">"#4a168e"</span>, linecolor <span class="op">=</span> <span class="cn">NA</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> polygon[polygon1]</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="fu">plotPolygon</span><span class="op">(</span></span>
-<span class="r-in">    x <span class="op">=</span> <span class="fu"><a href="c.html">c</a></span><span class="op">(</span><span class="fl">4.65</span>, <span class="fl">4.75</span>, <span class="fl">6.05</span>, <span class="fl">5.05</span>, <span class="fl">4.4</span><span class="op">)</span>,</span>
-<span class="r-in">    y <span class="op">=</span> <span class="fu"><a href="c.html">c</a></span><span class="op">(</span><span class="fl">3.1</span>, <span class="fl">3.5</span>, <span class="fl">4</span>, <span class="fl">1.45</span>, <span class="fl">1.2</span><span class="op">)</span>,</span>
-<span class="r-in">    fill <span class="op">=</span> <span class="st">"#9d28b0"</span>, linecolor <span class="op">=</span> <span class="cn">NA</span></span>
-<span class="r-in"><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="fu">plotPolygon</span><span class="op">(</span></span></span>
+<span class="r-in"><span>    x <span class="op">=</span> <span class="fu"><a href="c.html">c</a></span><span class="op">(</span><span class="fl">4.65</span>, <span class="fl">4.75</span>, <span class="fl">6.05</span>, <span class="fl">5.05</span>, <span class="fl">4.4</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>    y <span class="op">=</span> <span class="fu"><a href="c.html">c</a></span><span class="op">(</span><span class="fl">3.1</span>, <span class="fl">3.5</span>, <span class="fl">4</span>, <span class="fl">1.45</span>, <span class="fl">1.2</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>    fill <span class="op">=</span> <span class="st">"#9d28b0"</span>, linecolor <span class="op">=</span> <span class="cn">NA</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> polygon[polygon2]</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">## Plot multiple triangles with different id's and colors</span></span>
-<span class="r-in"><span class="fu">plotPolygon</span><span class="op">(</span></span>
-<span class="r-in">    x <span class="op">=</span> <span class="fu"><a href="c.html">c</a></span><span class="op">(</span></span>
-<span class="r-in">        <span class="fl">0.45</span>, <span class="fl">6.05</span>, <span class="fl">3</span>, <span class="fl">3</span>, <span class="fl">6.05</span>, <span class="fl">5.25</span>, <span class="fl">4.4</span>, <span class="fl">5.05</span>, <span class="fl">4.95</span>,</span>
-<span class="r-in">        <span class="fl">1.3</span>, <span class="fl">2.6</span>, <span class="fl">1</span>, <span class="fl">4.4</span>, <span class="fl">4.95</span>, <span class="fl">5</span>, <span class="fl">4.95</span>, <span class="fl">5</span>, <span class="fl">6.25</span></span>
-<span class="r-in">    <span class="op">)</span>,</span>
-<span class="r-in">    y <span class="op">=</span> <span class="fu"><a href="c.html">c</a></span><span class="op">(</span></span>
-<span class="r-in">        <span class="fl">2.85</span>, <span class="fl">4</span>, <span class="fl">5.55</span>, <span class="fl">5.55</span>, <span class="fl">4</span>, <span class="fl">5.55</span>, <span class="fl">1.2</span>, <span class="fl">1.45</span>, <span class="fl">1.1</span>,</span>
-<span class="r-in">        <span class="fl">2.8</span>, <span class="fl">2.5</span>, <span class="fl">2.1</span>, <span class="fl">1.2</span>, <span class="fl">1.1</span>, <span class="fl">0.45</span>, <span class="fl">1.1</span>, <span class="fl">0.45</span>, <span class="fl">1.1</span></span>
-<span class="r-in">    <span class="op">)</span>,</span>
-<span class="r-in">    id <span class="op">=</span> <span class="fu"><a href="c.html">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">2</span>, <span class="fl">2</span>, <span class="fl">3</span>, <span class="fl">3</span>, <span class="fl">3</span>, <span class="fl">4</span>, <span class="fl">4</span>, <span class="fl">4</span>, <span class="fl">5</span>, <span class="fl">5</span>, <span class="fl">5</span>, <span class="fl">6</span>, <span class="fl">6</span>, <span class="fl">6</span><span class="op">)</span>,</span>
-<span class="r-in">    fill <span class="op">=</span> <span class="fu"><a href="c.html">c</a></span><span class="op">(</span></span>
-<span class="r-in">        <span class="st">"#ce93d9"</span>, <span class="st">"#bb6ac9"</span>, <span class="st">"#4a168e"</span>,</span>
-<span class="r-in">        <span class="st">"#7b1fa0"</span>, <span class="st">"#bb6ac9"</span>, <span class="st">"#ce93d9"</span></span>
-<span class="r-in">    <span class="op">)</span>,</span>
-<span class="r-in">    linecolor <span class="op">=</span> <span class="cn">NA</span></span>
-<span class="r-in"><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## Plot multiple triangles with different id's and colors</span></span></span>
+<span class="r-in"><span><span class="fu">plotPolygon</span><span class="op">(</span></span></span>
+<span class="r-in"><span>    x <span class="op">=</span> <span class="fu"><a href="c.html">c</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>        <span class="fl">0.45</span>, <span class="fl">6.05</span>, <span class="fl">3</span>, <span class="fl">3</span>, <span class="fl">6.05</span>, <span class="fl">5.25</span>, <span class="fl">4.4</span>, <span class="fl">5.05</span>, <span class="fl">4.95</span>,</span></span>
+<span class="r-in"><span>        <span class="fl">1.3</span>, <span class="fl">2.6</span>, <span class="fl">1</span>, <span class="fl">4.4</span>, <span class="fl">4.95</span>, <span class="fl">5</span>, <span class="fl">4.95</span>, <span class="fl">5</span>, <span class="fl">6.25</span></span></span>
+<span class="r-in"><span>    <span class="op">)</span>,</span></span>
+<span class="r-in"><span>    y <span class="op">=</span> <span class="fu"><a href="c.html">c</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>        <span class="fl">2.85</span>, <span class="fl">4</span>, <span class="fl">5.55</span>, <span class="fl">5.55</span>, <span class="fl">4</span>, <span class="fl">5.55</span>, <span class="fl">1.2</span>, <span class="fl">1.45</span>, <span class="fl">1.1</span>,</span></span>
+<span class="r-in"><span>        <span class="fl">2.8</span>, <span class="fl">2.5</span>, <span class="fl">2.1</span>, <span class="fl">1.2</span>, <span class="fl">1.1</span>, <span class="fl">0.45</span>, <span class="fl">1.1</span>, <span class="fl">0.45</span>, <span class="fl">1.1</span></span></span>
+<span class="r-in"><span>    <span class="op">)</span>,</span></span>
+<span class="r-in"><span>    id <span class="op">=</span> <span class="fu"><a href="c.html">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">2</span>, <span class="fl">2</span>, <span class="fl">3</span>, <span class="fl">3</span>, <span class="fl">3</span>, <span class="fl">4</span>, <span class="fl">4</span>, <span class="fl">4</span>, <span class="fl">5</span>, <span class="fl">5</span>, <span class="fl">5</span>, <span class="fl">6</span>, <span class="fl">6</span>, <span class="fl">6</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>    fill <span class="op">=</span> <span class="fu"><a href="c.html">c</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>        <span class="st">"#ce93d9"</span>, <span class="st">"#bb6ac9"</span>, <span class="st">"#4a168e"</span>,</span></span>
+<span class="r-in"><span>        <span class="st">"#7b1fa0"</span>, <span class="st">"#bb6ac9"</span>, <span class="st">"#ce93d9"</span></span></span>
+<span class="r-in"><span>    <span class="op">)</span>,</span></span>
+<span class="r-in"><span>    linecolor <span class="op">=</span> <span class="cn">NA</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> polygon[polygon2]</span>
 <span class="r-plt img"><img src="plotPolygon-1.png" alt="" width="1230" height="1050"></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">## Hide page guides</span></span>
-<span class="r-in"><span class="fu"><a href="pageGuideHide.html">pageGuideHide</a></span><span class="op">(</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## Hide page guides</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="pageGuideHide.html">pageGuideHide</a></span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="plotPolygon-2.png" alt="" width="1230" height="1050"></span>
 </code></pre></div>
     </div>
@@ -224,7 +249,7 @@ placement and <a href="https://rdrr.io/r/grid/grid.grob.html" class="external-li
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
 </div>
 
       </footer></div>

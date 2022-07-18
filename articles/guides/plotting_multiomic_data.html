@@ -41,7 +41,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../../index.html">plotgardener</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.2.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.2.8</span>
       </span>
     </div>
 
@@ -141,74 +141,74 @@ y-coordinate can facilitate this process.</p>
 loop annotations, signal track data, GWAS data, all along a common gene
 track and genome label axis:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co">## Load example data</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/PhanstielLab/plotgardenerData" class="external-link">plotgardenerData</a></span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"IMR90_HiC_10kb"</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"IMR90_DNAloops_pairs"</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"IMR90_ChIP_H3K27ac_signal"</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"hg19_insulin_GWAS"</span><span class="op">)</span>
-
-<span class="co">## Create a plotgardener page</span>
-<span class="fu"><a href="../../reference/pageCreate.html">pageCreate</a></span><span class="op">(</span>
-    width <span class="op">=</span> <span class="fl">3</span>, height <span class="op">=</span> <span class="fl">5</span>, default.units <span class="op">=</span> <span class="st">"inches"</span>,
-    showGuides <span class="op">=</span> <span class="cn">FALSE</span>, xgrid <span class="op">=</span> <span class="fl">0</span>, ygrid <span class="op">=</span> <span class="fl">0</span>
-<span class="op">)</span>
-
-<span class="co">## Plot Hi-C data in region</span>
-<span class="fu"><a href="../../reference/plotHicSquare.html">plotHicSquare</a></span><span class="op">(</span>
-    data <span class="op">=</span> <span class="va">IMR90_HiC_10kb</span>,
-    chrom <span class="op">=</span> <span class="st">"chr21"</span>, chromstart <span class="op">=</span> <span class="fl">28000000</span>, chromend <span class="op">=</span> <span class="fl">30300000</span>,
-    assembly <span class="op">=</span> <span class="st">"hg19"</span>,
-    x <span class="op">=</span> <span class="fl">0.5</span>, y <span class="op">=</span> <span class="fl">0.5</span>, width <span class="op">=</span> <span class="fl">2</span>, height <span class="op">=</span> <span class="fl">2</span>,
-    just <span class="op">=</span> <span class="fu"><a href="../../reference/c.html">c</a></span><span class="op">(</span><span class="st">"left"</span>, <span class="st">"top"</span><span class="op">)</span>, default.units <span class="op">=</span> <span class="st">"inches"</span>
-<span class="op">)</span>
-
-<span class="co">## Plot loop annotations</span>
-<span class="fu"><a href="../../reference/plotPairsArches.html">plotPairsArches</a></span><span class="op">(</span>
-    data <span class="op">=</span> <span class="va">IMR90_DNAloops_pairs</span>,
-    chrom <span class="op">=</span> <span class="st">"chr21"</span>, chromstart <span class="op">=</span> <span class="fl">28000000</span>, chromend <span class="op">=</span> <span class="fl">30300000</span>,
-    assembly <span class="op">=</span> <span class="st">"hg19"</span>,
-    x <span class="op">=</span> <span class="fl">0.5</span>, y <span class="op">=</span> <span class="fl">2.5</span>, width <span class="op">=</span> <span class="fl">2</span>, height <span class="op">=</span> <span class="fl">0.25</span>,
-    just <span class="op">=</span> <span class="fu"><a href="../../reference/c.html">c</a></span><span class="op">(</span><span class="st">"left"</span>, <span class="st">"top"</span><span class="op">)</span>, default.units <span class="op">=</span> <span class="st">"inches"</span>,
-    fill <span class="op">=</span> <span class="st">"black"</span>, linecolor <span class="op">=</span> <span class="st">"black"</span>, flip <span class="op">=</span> <span class="cn">TRUE</span>
-<span class="op">)</span>
-
-<span class="co">## Plot signal track data</span>
-<span class="fu"><a href="../../reference/plotSignal.html">plotSignal</a></span><span class="op">(</span>
-    data <span class="op">=</span> <span class="va">IMR90_ChIP_H3K27ac_signal</span>,
-    chrom <span class="op">=</span> <span class="st">"chr21"</span>, chromstart <span class="op">=</span> <span class="fl">28000000</span>, chromend <span class="op">=</span> <span class="fl">30300000</span>,
-    assembly <span class="op">=</span> <span class="st">"hg19"</span>,
-    x <span class="op">=</span> <span class="fl">0.5</span>, y <span class="op">=</span> <span class="fl">2.75</span>, width <span class="op">=</span> <span class="fl">2</span>, height <span class="op">=</span> <span class="fl">0.5</span>,
-    just <span class="op">=</span> <span class="fu"><a href="../../reference/c.html">c</a></span><span class="op">(</span><span class="st">"left"</span>, <span class="st">"top"</span><span class="op">)</span>, default.units <span class="op">=</span> <span class="st">"inches"</span>
-<span class="op">)</span>
-
-<span class="co">## Plot GWAS data</span>
-<span class="fu"><a href="../../reference/plotManhattan.html">plotManhattan</a></span><span class="op">(</span>
-    data <span class="op">=</span> <span class="va">hg19_insulin_GWAS</span>,
-    chrom <span class="op">=</span> <span class="st">"chr21"</span>, chromstart <span class="op">=</span> <span class="fl">28000000</span>, chromend <span class="op">=</span> <span class="fl">30300000</span>,
-    assembly <span class="op">=</span> <span class="st">"hg19"</span>,
-    ymax <span class="op">=</span> <span class="fl">1.1</span>, cex <span class="op">=</span> <span class="fl">0.20</span>,
-    x <span class="op">=</span> <span class="fl">0.5</span>, y <span class="op">=</span> <span class="fl">3.5</span>, width <span class="op">=</span> <span class="fl">2</span>, height <span class="op">=</span> <span class="fl">0.5</span>,
-    just <span class="op">=</span> <span class="fu"><a href="../../reference/c.html">c</a></span><span class="op">(</span><span class="st">"left"</span>, <span class="st">"top"</span><span class="op">)</span>, default.units <span class="op">=</span> <span class="st">"inches"</span>
-<span class="op">)</span>
-
-<span class="co">## Plot gene track</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">TxDb.Hsapiens.UCSC.hg19.knownGene</span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">org.Hs.eg.db</span><span class="op">)</span>
-<span class="fu"><a href="../../reference/plotGenes.html">plotGenes</a></span><span class="op">(</span>
-    chrom <span class="op">=</span> <span class="st">"chr21"</span>, chromstart <span class="op">=</span> <span class="fl">28000000</span>, chromend <span class="op">=</span> <span class="fl">30300000</span>,
-    assembly <span class="op">=</span> <span class="st">"hg19"</span>,
-    x <span class="op">=</span> <span class="fl">0.5</span>, y <span class="op">=</span> <span class="fl">4</span>, width <span class="op">=</span> <span class="fl">2</span>, height <span class="op">=</span> <span class="fl">0.5</span>,
-    just <span class="op">=</span> <span class="fu"><a href="../../reference/c.html">c</a></span><span class="op">(</span><span class="st">"left"</span>, <span class="st">"top"</span><span class="op">)</span>, default.units <span class="op">=</span> <span class="st">"inches"</span>
-<span class="op">)</span>
-
-<span class="co">## Plot genome label</span>
-<span class="fu"><a href="../../reference/plotGenomeLabel.html">plotGenomeLabel</a></span><span class="op">(</span>
-    chrom <span class="op">=</span> <span class="st">"chr21"</span>, chromstart <span class="op">=</span> <span class="fl">28000000</span>, chromend <span class="op">=</span> <span class="fl">30300000</span>,
-    assembly <span class="op">=</span> <span class="st">"hg19"</span>,
-    x <span class="op">=</span> <span class="fl">0.5</span>, y <span class="op">=</span> <span class="fl">4.5</span>, length <span class="op">=</span> <span class="fl">2</span>, scale <span class="op">=</span> <span class="st">"Mb"</span>,
-    just <span class="op">=</span> <span class="fu"><a href="../../reference/c.html">c</a></span><span class="op">(</span><span class="st">"left"</span>, <span class="st">"top"</span><span class="op">)</span>, default.units <span class="op">=</span> <span class="st">"inches"</span>
-<span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co">## Load example data</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/PhanstielLab/plotgardenerData" class="external-link">plotgardenerData</a></span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"IMR90_HiC_10kb"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"IMR90_DNAloops_pairs"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"IMR90_ChIP_H3K27ac_signal"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"hg19_insulin_GWAS"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co">## Create a plotgardener page</span></span>
+<span><span class="fu"><a href="../../reference/pageCreate.html">pageCreate</a></span><span class="op">(</span></span>
+<span>    width <span class="op">=</span> <span class="fl">3</span>, height <span class="op">=</span> <span class="fl">5</span>, default.units <span class="op">=</span> <span class="st">"inches"</span>,</span>
+<span>    showGuides <span class="op">=</span> <span class="cn">FALSE</span>, xgrid <span class="op">=</span> <span class="fl">0</span>, ygrid <span class="op">=</span> <span class="fl">0</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="co">## Plot Hi-C data in region</span></span>
+<span><span class="fu"><a href="../../reference/plotHicSquare.html">plotHicSquare</a></span><span class="op">(</span></span>
+<span>    data <span class="op">=</span> <span class="va">IMR90_HiC_10kb</span>,</span>
+<span>    chrom <span class="op">=</span> <span class="st">"chr21"</span>, chromstart <span class="op">=</span> <span class="fl">28000000</span>, chromend <span class="op">=</span> <span class="fl">30300000</span>,</span>
+<span>    assembly <span class="op">=</span> <span class="st">"hg19"</span>,</span>
+<span>    x <span class="op">=</span> <span class="fl">0.5</span>, y <span class="op">=</span> <span class="fl">0.5</span>, width <span class="op">=</span> <span class="fl">2</span>, height <span class="op">=</span> <span class="fl">2</span>,</span>
+<span>    just <span class="op">=</span> <span class="fu"><a href="../../reference/c.html">c</a></span><span class="op">(</span><span class="st">"left"</span>, <span class="st">"top"</span><span class="op">)</span>, default.units <span class="op">=</span> <span class="st">"inches"</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="co">## Plot loop annotations</span></span>
+<span><span class="fu"><a href="../../reference/plotPairsArches.html">plotPairsArches</a></span><span class="op">(</span></span>
+<span>    data <span class="op">=</span> <span class="va">IMR90_DNAloops_pairs</span>,</span>
+<span>    chrom <span class="op">=</span> <span class="st">"chr21"</span>, chromstart <span class="op">=</span> <span class="fl">28000000</span>, chromend <span class="op">=</span> <span class="fl">30300000</span>,</span>
+<span>    assembly <span class="op">=</span> <span class="st">"hg19"</span>,</span>
+<span>    x <span class="op">=</span> <span class="fl">0.5</span>, y <span class="op">=</span> <span class="fl">2.5</span>, width <span class="op">=</span> <span class="fl">2</span>, height <span class="op">=</span> <span class="fl">0.25</span>,</span>
+<span>    just <span class="op">=</span> <span class="fu"><a href="../../reference/c.html">c</a></span><span class="op">(</span><span class="st">"left"</span>, <span class="st">"top"</span><span class="op">)</span>, default.units <span class="op">=</span> <span class="st">"inches"</span>,</span>
+<span>    fill <span class="op">=</span> <span class="st">"black"</span>, linecolor <span class="op">=</span> <span class="st">"black"</span>, flip <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="co">## Plot signal track data</span></span>
+<span><span class="fu"><a href="../../reference/plotSignal.html">plotSignal</a></span><span class="op">(</span></span>
+<span>    data <span class="op">=</span> <span class="va">IMR90_ChIP_H3K27ac_signal</span>,</span>
+<span>    chrom <span class="op">=</span> <span class="st">"chr21"</span>, chromstart <span class="op">=</span> <span class="fl">28000000</span>, chromend <span class="op">=</span> <span class="fl">30300000</span>,</span>
+<span>    assembly <span class="op">=</span> <span class="st">"hg19"</span>,</span>
+<span>    x <span class="op">=</span> <span class="fl">0.5</span>, y <span class="op">=</span> <span class="fl">2.75</span>, width <span class="op">=</span> <span class="fl">2</span>, height <span class="op">=</span> <span class="fl">0.5</span>,</span>
+<span>    just <span class="op">=</span> <span class="fu"><a href="../../reference/c.html">c</a></span><span class="op">(</span><span class="st">"left"</span>, <span class="st">"top"</span><span class="op">)</span>, default.units <span class="op">=</span> <span class="st">"inches"</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="co">## Plot GWAS data</span></span>
+<span><span class="fu"><a href="../../reference/plotManhattan.html">plotManhattan</a></span><span class="op">(</span></span>
+<span>    data <span class="op">=</span> <span class="va">hg19_insulin_GWAS</span>,</span>
+<span>    chrom <span class="op">=</span> <span class="st">"chr21"</span>, chromstart <span class="op">=</span> <span class="fl">28000000</span>, chromend <span class="op">=</span> <span class="fl">30300000</span>,</span>
+<span>    assembly <span class="op">=</span> <span class="st">"hg19"</span>,</span>
+<span>    ymax <span class="op">=</span> <span class="fl">1.1</span>, cex <span class="op">=</span> <span class="fl">0.20</span>,</span>
+<span>    x <span class="op">=</span> <span class="fl">0.5</span>, y <span class="op">=</span> <span class="fl">3.5</span>, width <span class="op">=</span> <span class="fl">2</span>, height <span class="op">=</span> <span class="fl">0.5</span>,</span>
+<span>    just <span class="op">=</span> <span class="fu"><a href="../../reference/c.html">c</a></span><span class="op">(</span><span class="st">"left"</span>, <span class="st">"top"</span><span class="op">)</span>, default.units <span class="op">=</span> <span class="st">"inches"</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="co">## Plot gene track</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">TxDb.Hsapiens.UCSC.hg19.knownGene</span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">org.Hs.eg.db</span><span class="op">)</span></span>
+<span><span class="fu"><a href="../../reference/plotGenes.html">plotGenes</a></span><span class="op">(</span></span>
+<span>    chrom <span class="op">=</span> <span class="st">"chr21"</span>, chromstart <span class="op">=</span> <span class="fl">28000000</span>, chromend <span class="op">=</span> <span class="fl">30300000</span>,</span>
+<span>    assembly <span class="op">=</span> <span class="st">"hg19"</span>,</span>
+<span>    x <span class="op">=</span> <span class="fl">0.5</span>, y <span class="op">=</span> <span class="fl">4</span>, width <span class="op">=</span> <span class="fl">2</span>, height <span class="op">=</span> <span class="fl">0.5</span>,</span>
+<span>    just <span class="op">=</span> <span class="fu"><a href="../../reference/c.html">c</a></span><span class="op">(</span><span class="st">"left"</span>, <span class="st">"top"</span><span class="op">)</span>, default.units <span class="op">=</span> <span class="st">"inches"</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="co">## Plot genome label</span></span>
+<span><span class="fu"><a href="../../reference/plotGenomeLabel.html">plotGenomeLabel</a></span><span class="op">(</span></span>
+<span>    chrom <span class="op">=</span> <span class="st">"chr21"</span>, chromstart <span class="op">=</span> <span class="fl">28000000</span>, chromend <span class="op">=</span> <span class="fl">30300000</span>,</span>
+<span>    assembly <span class="op">=</span> <span class="st">"hg19"</span>,</span>
+<span>    x <span class="op">=</span> <span class="fl">0.5</span>, y <span class="op">=</span> <span class="fl">4.5</span>, length <span class="op">=</span> <span class="fl">2</span>, scale <span class="op">=</span> <span class="st">"Mb"</span>,</span>
+<span>    just <span class="op">=</span> <span class="fu"><a href="../../reference/c.html">c</a></span><span class="op">(</span><span class="st">"left"</span>, <span class="st">"top"</span><span class="op">)</span>, default.units <span class="op">=</span> <span class="st">"inches"</span></span>
+<span><span class="op">)</span></span></code></pre></div>
 <p><img src="plotting_multiomic_data_files/figure-html/plotting_example01-1.png" width="750" style="display: block; margin: auto;"></p>
 <div class="section level3">
 <h3 id="using-the-pgparams-object">Using the <code>pgParams</code> object<a class="anchor" aria-label="anchor" href="#using-the-pgparams-object"></a>
@@ -220,72 +220,72 @@ functions.</p>
 genomic region, left-based x-coordinate, and width into a
 <code>pgParams</code> object:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">params</span> <span class="op">&lt;-</span> <span class="fu"><a href="../../reference/pgParams.html">pgParams</a></span><span class="op">(</span>
-    chrom <span class="op">=</span> <span class="st">"chr21"</span>, chromstart <span class="op">=</span> <span class="fl">28000000</span>, chromend <span class="op">=</span> <span class="fl">30300000</span>,
-    assembly <span class="op">=</span> <span class="st">"hg19"</span>,
-    x <span class="op">=</span> <span class="fl">0.5</span>, just <span class="op">=</span> <span class="fu"><a href="../../reference/c.html">c</a></span><span class="op">(</span><span class="st">"left"</span>, <span class="st">"top"</span><span class="op">)</span>,
-    width <span class="op">=</span> <span class="fl">2</span>, length <span class="op">=</span> <span class="fl">2</span>, default.units <span class="op">=</span> <span class="st">"inches"</span>
-<span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">params</span> <span class="op">&lt;-</span> <span class="fu"><a href="../../reference/pgParams.html">pgParams</a></span><span class="op">(</span></span>
+<span>    chrom <span class="op">=</span> <span class="st">"chr21"</span>, chromstart <span class="op">=</span> <span class="fl">28000000</span>, chromend <span class="op">=</span> <span class="fl">30300000</span>,</span>
+<span>    assembly <span class="op">=</span> <span class="st">"hg19"</span>,</span>
+<span>    x <span class="op">=</span> <span class="fl">0.5</span>, just <span class="op">=</span> <span class="fu"><a href="../../reference/c.html">c</a></span><span class="op">(</span><span class="st">"left"</span>, <span class="st">"top"</span><span class="op">)</span>,</span>
+<span>    width <span class="op">=</span> <span class="fl">2</span>, length <span class="op">=</span> <span class="fl">2</span>, default.units <span class="op">=</span> <span class="st">"inches"</span></span>
+<span><span class="op">)</span></span></code></pre></div>
 <p>Since these values are the same for each of the functions we are
 using to build our multi-omic figure, we can now pass the
 <code>pgParams</code> object into our functions so we don’t need to
 write the same parameters over and over again:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co">## Load example data</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"IMR90_HiC_10kb"</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"IMR90_DNAloops_pairs"</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"IMR90_ChIP_H3K27ac_signal"</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"hg19_insulin_GWAS"</span><span class="op">)</span>
-
-<span class="co">## Create a plotgardener page</span>
-<span class="fu"><a href="../../reference/pageCreate.html">pageCreate</a></span><span class="op">(</span>
-    width <span class="op">=</span> <span class="fl">3</span>, height <span class="op">=</span> <span class="fl">5</span>, default.units <span class="op">=</span> <span class="st">"inches"</span>,
-    showGuides <span class="op">=</span> <span class="cn">FALSE</span>, xgrid <span class="op">=</span> <span class="fl">0</span>, ygrid <span class="op">=</span> <span class="fl">0</span>
-<span class="op">)</span>
-
-<span class="co">## Plot Hi-C data in region</span>
-<span class="fu"><a href="../../reference/plotHicSquare.html">plotHicSquare</a></span><span class="op">(</span>
-    data <span class="op">=</span> <span class="va">IMR90_HiC_10kb</span>,
-    params <span class="op">=</span> <span class="va">params</span>,
-    y <span class="op">=</span> <span class="fl">0.5</span>, height <span class="op">=</span> <span class="fl">2</span>
-<span class="op">)</span>
-
-<span class="co">## Plot loop annotations</span>
-<span class="fu"><a href="../../reference/plotPairsArches.html">plotPairsArches</a></span><span class="op">(</span>
-    data <span class="op">=</span> <span class="va">IMR90_DNAloops_pairs</span>,
-    params <span class="op">=</span> <span class="va">params</span>,
-    y <span class="op">=</span> <span class="fl">2.5</span>, height <span class="op">=</span> <span class="fl">0.25</span>,
-    fill <span class="op">=</span> <span class="st">"black"</span>, linecolor <span class="op">=</span> <span class="st">"black"</span>, flip <span class="op">=</span> <span class="cn">TRUE</span>
-<span class="op">)</span>
-
-<span class="co">## Plot signal track data</span>
-<span class="fu"><a href="../../reference/plotSignal.html">plotSignal</a></span><span class="op">(</span>
-    data <span class="op">=</span> <span class="va">IMR90_ChIP_H3K27ac_signal</span>,
-    params <span class="op">=</span> <span class="va">params</span>,
-    y <span class="op">=</span> <span class="fl">2.75</span>, height <span class="op">=</span> <span class="fl">0.5</span>
-<span class="op">)</span>
-
-<span class="co">## Plot GWAS data</span>
-<span class="fu"><a href="../../reference/plotManhattan.html">plotManhattan</a></span><span class="op">(</span>
-    data <span class="op">=</span> <span class="va">hg19_insulin_GWAS</span>,
-    params <span class="op">=</span> <span class="va">params</span>,
-    ymax <span class="op">=</span> <span class="fl">1.1</span>, cex <span class="op">=</span> <span class="fl">0.20</span>,
-    y <span class="op">=</span> <span class="fl">3.5</span>, height <span class="op">=</span> <span class="fl">0.5</span>
-<span class="op">)</span>
-
-<span class="co">## Plot gene track</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">TxDb.Hsapiens.UCSC.hg19.knownGene</span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">org.Hs.eg.db</span><span class="op">)</span>
-<span class="fu"><a href="../../reference/plotGenes.html">plotGenes</a></span><span class="op">(</span>
-    params <span class="op">=</span> <span class="va">params</span>,
-    y <span class="op">=</span> <span class="fl">4</span>, height <span class="op">=</span> <span class="fl">0.5</span>
-<span class="op">)</span>
-
-<span class="co">## Plot genome label</span>
-<span class="fu"><a href="../../reference/plotGenomeLabel.html">plotGenomeLabel</a></span><span class="op">(</span>
-    params <span class="op">=</span> <span class="va">params</span>,
-    y <span class="op">=</span> <span class="fl">4.5</span>, scale <span class="op">=</span> <span class="st">"Mb"</span>
-<span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co">## Load example data</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"IMR90_HiC_10kb"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"IMR90_DNAloops_pairs"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"IMR90_ChIP_H3K27ac_signal"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"hg19_insulin_GWAS"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co">## Create a plotgardener page</span></span>
+<span><span class="fu"><a href="../../reference/pageCreate.html">pageCreate</a></span><span class="op">(</span></span>
+<span>    width <span class="op">=</span> <span class="fl">3</span>, height <span class="op">=</span> <span class="fl">5</span>, default.units <span class="op">=</span> <span class="st">"inches"</span>,</span>
+<span>    showGuides <span class="op">=</span> <span class="cn">FALSE</span>, xgrid <span class="op">=</span> <span class="fl">0</span>, ygrid <span class="op">=</span> <span class="fl">0</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="co">## Plot Hi-C data in region</span></span>
+<span><span class="fu"><a href="../../reference/plotHicSquare.html">plotHicSquare</a></span><span class="op">(</span></span>
+<span>    data <span class="op">=</span> <span class="va">IMR90_HiC_10kb</span>,</span>
+<span>    params <span class="op">=</span> <span class="va">params</span>,</span>
+<span>    y <span class="op">=</span> <span class="fl">0.5</span>, height <span class="op">=</span> <span class="fl">2</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="co">## Plot loop annotations</span></span>
+<span><span class="fu"><a href="../../reference/plotPairsArches.html">plotPairsArches</a></span><span class="op">(</span></span>
+<span>    data <span class="op">=</span> <span class="va">IMR90_DNAloops_pairs</span>,</span>
+<span>    params <span class="op">=</span> <span class="va">params</span>,</span>
+<span>    y <span class="op">=</span> <span class="fl">2.5</span>, height <span class="op">=</span> <span class="fl">0.25</span>,</span>
+<span>    fill <span class="op">=</span> <span class="st">"black"</span>, linecolor <span class="op">=</span> <span class="st">"black"</span>, flip <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="co">## Plot signal track data</span></span>
+<span><span class="fu"><a href="../../reference/plotSignal.html">plotSignal</a></span><span class="op">(</span></span>
+<span>    data <span class="op">=</span> <span class="va">IMR90_ChIP_H3K27ac_signal</span>,</span>
+<span>    params <span class="op">=</span> <span class="va">params</span>,</span>
+<span>    y <span class="op">=</span> <span class="fl">2.75</span>, height <span class="op">=</span> <span class="fl">0.5</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="co">## Plot GWAS data</span></span>
+<span><span class="fu"><a href="../../reference/plotManhattan.html">plotManhattan</a></span><span class="op">(</span></span>
+<span>    data <span class="op">=</span> <span class="va">hg19_insulin_GWAS</span>,</span>
+<span>    params <span class="op">=</span> <span class="va">params</span>,</span>
+<span>    ymax <span class="op">=</span> <span class="fl">1.1</span>, cex <span class="op">=</span> <span class="fl">0.20</span>,</span>
+<span>    y <span class="op">=</span> <span class="fl">3.5</span>, height <span class="op">=</span> <span class="fl">0.5</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="co">## Plot gene track</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">TxDb.Hsapiens.UCSC.hg19.knownGene</span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">org.Hs.eg.db</span><span class="op">)</span></span>
+<span><span class="fu"><a href="../../reference/plotGenes.html">plotGenes</a></span><span class="op">(</span></span>
+<span>    params <span class="op">=</span> <span class="va">params</span>,</span>
+<span>    y <span class="op">=</span> <span class="fl">4</span>, height <span class="op">=</span> <span class="fl">0.5</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="co">## Plot genome label</span></span>
+<span><span class="fu"><a href="../../reference/plotGenomeLabel.html">plotGenomeLabel</a></span><span class="op">(</span></span>
+<span>    params <span class="op">=</span> <span class="va">params</span>,</span>
+<span>    y <span class="op">=</span> <span class="fl">4.5</span>, scale <span class="op">=</span> <span class="st">"Mb"</span></span>
+<span><span class="op">)</span></span></code></pre></div>
 <p><img src="plotting_multiomic_data_files/figure-html/plotting_example02-1.png" width="750" style="display: block; margin: auto;"></p>
 <p>The <code>pgParams</code> object also simplifies the code for making
 complex multi-omic figures when we want to change the genomic region of
@@ -293,12 +293,12 @@ our plots. If we want to change the region for the figure above, we can
 simply put it into the <code>pgParams</code> object and re-run the code
 to generate the figure:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">params</span> <span class="op">&lt;-</span> <span class="fu"><a href="../../reference/pgParams.html">pgParams</a></span><span class="op">(</span>
-    chrom <span class="op">=</span> <span class="st">"chr21"</span>, chromstart <span class="op">=</span> <span class="fl">29000000</span>, chromend <span class="op">=</span> <span class="fl">30000000</span>,
-    assembly <span class="op">=</span> <span class="st">"hg19"</span>,
-    x <span class="op">=</span> <span class="fl">0.5</span>, just <span class="op">=</span> <span class="fu"><a href="../../reference/c.html">c</a></span><span class="op">(</span><span class="st">"left"</span>, <span class="st">"top"</span><span class="op">)</span>,
-    width <span class="op">=</span> <span class="fl">2</span>, length <span class="op">=</span> <span class="fl">2</span>, default.units <span class="op">=</span> <span class="st">"inches"</span>
-<span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">params</span> <span class="op">&lt;-</span> <span class="fu"><a href="../../reference/pgParams.html">pgParams</a></span><span class="op">(</span></span>
+<span>    chrom <span class="op">=</span> <span class="st">"chr21"</span>, chromstart <span class="op">=</span> <span class="fl">29000000</span>, chromend <span class="op">=</span> <span class="fl">30000000</span>,</span>
+<span>    assembly <span class="op">=</span> <span class="st">"hg19"</span>,</span>
+<span>    x <span class="op">=</span> <span class="fl">0.5</span>, just <span class="op">=</span> <span class="fu"><a href="../../reference/c.html">c</a></span><span class="op">(</span><span class="st">"left"</span>, <span class="st">"top"</span><span class="op">)</span>,</span>
+<span>    width <span class="op">=</span> <span class="fl">2</span>, length <span class="op">=</span> <span class="fl">2</span>, default.units <span class="op">=</span> <span class="st">"inches"</span></span>
+<span><span class="op">)</span></span></code></pre></div>
 <p><img src="plotting_multiomic_data_files/figure-html/plotting_example03-1.png" width="750" style="display: block; margin: auto;"></p>
 <p>Alternatively, if we want to plot around a particular gene rather
 than a genomic region we can use <code><a href="../../reference/pgParams.html">pgParams()</a></code> to specify
@@ -307,11 +307,11 @@ than a genomic region we can use <code><a href="../../reference/pgParams.html">p
 <code>(gene length) / 2</code> base pairs to the ends of the gene
 coordinates.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">params</span> <span class="op">&lt;-</span> <span class="fu"><a href="../../reference/pgParams.html">pgParams</a></span><span class="op">(</span>
-    gene <span class="op">=</span> <span class="st">"LINC00113"</span>, geneBuffer <span class="op">=</span> <span class="fl">100000</span>, assembly <span class="op">=</span> <span class="st">"hg19"</span>,
-    x <span class="op">=</span> <span class="fl">0.5</span>, just <span class="op">=</span> <span class="fu"><a href="../../reference/c.html">c</a></span><span class="op">(</span><span class="st">"left"</span>, <span class="st">"top"</span><span class="op">)</span>,
-    width <span class="op">=</span> <span class="fl">2</span>, length <span class="op">=</span> <span class="fl">2</span>, default.units <span class="op">=</span> <span class="st">"inches"</span>
-<span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">params</span> <span class="op">&lt;-</span> <span class="fu"><a href="../../reference/pgParams.html">pgParams</a></span><span class="op">(</span></span>
+<span>    gene <span class="op">=</span> <span class="st">"LINC00113"</span>, geneBuffer <span class="op">=</span> <span class="fl">100000</span>, assembly <span class="op">=</span> <span class="st">"hg19"</span>,</span>
+<span>    x <span class="op">=</span> <span class="fl">0.5</span>, just <span class="op">=</span> <span class="fu"><a href="../../reference/c.html">c</a></span><span class="op">(</span><span class="st">"left"</span>, <span class="st">"top"</span><span class="op">)</span>,</span>
+<span>    width <span class="op">=</span> <span class="fl">2</span>, length <span class="op">=</span> <span class="fl">2</span>, default.units <span class="op">=</span> <span class="st">"inches"</span></span>
+<span><span class="op">)</span></span></code></pre></div>
 <p><img src="plotting_multiomic_data_files/figure-html/plotting_example04-1.png" width="750" style="display: block; margin: auto;"></p>
 </div>
 <div class="section level3">
@@ -329,74 +329,74 @@ last drawn plot.</p>
 <p>We can further simplify the placement code of our multi-omic figure
 above by using the “below” y-coordinate to easily stack our plots:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co">## Load example data</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"IMR90_HiC_10kb"</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"IMR90_DNAloops_pairs"</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"IMR90_ChIP_H3K27ac_signal"</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"hg19_insulin_GWAS"</span><span class="op">)</span>
-
-<span class="co">## pgParams</span>
-<span class="va">params</span> <span class="op">&lt;-</span> <span class="fu"><a href="../../reference/pgParams.html">pgParams</a></span><span class="op">(</span>
-    chrom <span class="op">=</span> <span class="st">"chr21"</span>, chromstart <span class="op">=</span> <span class="fl">28000000</span>, chromend <span class="op">=</span> <span class="fl">30300000</span>,
-    assembly <span class="op">=</span> <span class="st">"hg19"</span>,
-    x <span class="op">=</span> <span class="fl">0.5</span>, just <span class="op">=</span> <span class="fu"><a href="../../reference/c.html">c</a></span><span class="op">(</span><span class="st">"left"</span>, <span class="st">"top"</span><span class="op">)</span>,
-    width <span class="op">=</span> <span class="fl">2</span>, length <span class="op">=</span> <span class="fl">2</span>, default.units <span class="op">=</span> <span class="st">"inches"</span>
-<span class="op">)</span>
-
-<span class="co">## Create a plotgardener page</span>
-<span class="fu"><a href="../../reference/pageCreate.html">pageCreate</a></span><span class="op">(</span>
-    width <span class="op">=</span> <span class="fl">3</span>, height <span class="op">=</span> <span class="fl">5</span>, default.units <span class="op">=</span> <span class="st">"inches"</span>,
-    showGuides <span class="op">=</span> <span class="cn">FALSE</span>, xgrid <span class="op">=</span> <span class="fl">0</span>, ygrid <span class="op">=</span> <span class="fl">0</span>
-<span class="op">)</span>
-
-<span class="co">## Plot Hi-C data in region</span>
-<span class="fu"><a href="../../reference/plotHicSquare.html">plotHicSquare</a></span><span class="op">(</span>
-    data <span class="op">=</span> <span class="va">IMR90_HiC_10kb</span>,
-    params <span class="op">=</span> <span class="va">params</span>,
-    y <span class="op">=</span> <span class="fl">0.5</span>, height <span class="op">=</span> <span class="fl">2</span>
-<span class="op">)</span>
-
-<span class="co">## Plot loop annotations</span>
-<span class="fu"><a href="../../reference/plotPairsArches.html">plotPairsArches</a></span><span class="op">(</span>
-    data <span class="op">=</span> <span class="va">IMR90_DNAloops_pairs</span>,
-    params <span class="op">=</span> <span class="va">params</span>,
-    y <span class="op">=</span> <span class="st">"0b"</span>,
-    height <span class="op">=</span> <span class="fl">0.25</span>,
-    fill <span class="op">=</span> <span class="st">"black"</span>, linecolor <span class="op">=</span> <span class="st">"black"</span>, flip <span class="op">=</span> <span class="cn">TRUE</span>
-<span class="op">)</span>
-
-<span class="co">## Plot signal track data</span>
-<span class="fu"><a href="../../reference/plotSignal.html">plotSignal</a></span><span class="op">(</span>
-    data <span class="op">=</span> <span class="va">IMR90_ChIP_H3K27ac_signal</span>,
-    params <span class="op">=</span> <span class="va">params</span>,
-    y <span class="op">=</span> <span class="st">"0b"</span>,
-    height <span class="op">=</span> <span class="fl">0.5</span>
-<span class="op">)</span>
-
-<span class="co">## Plot GWAS data</span>
-<span class="fu"><a href="../../reference/plotManhattan.html">plotManhattan</a></span><span class="op">(</span>
-    data <span class="op">=</span> <span class="va">hg19_insulin_GWAS</span>,
-    params <span class="op">=</span> <span class="va">params</span>,
-    ymax <span class="op">=</span> <span class="fl">1.1</span>, cex <span class="op">=</span> <span class="fl">0.20</span>,
-    y <span class="op">=</span> <span class="st">"0.25b"</span>,
-    height <span class="op">=</span> <span class="fl">0.5</span>
-<span class="op">)</span>
-
-<span class="co">## Plot gene track</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">TxDb.Hsapiens.UCSC.hg19.knownGene</span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">org.Hs.eg.db</span><span class="op">)</span>
-<span class="fu"><a href="../../reference/plotGenes.html">plotGenes</a></span><span class="op">(</span>
-    params <span class="op">=</span> <span class="va">params</span>,
-    y <span class="op">=</span> <span class="st">"0b"</span>,
-    height <span class="op">=</span> <span class="fl">0.5</span>
-<span class="op">)</span>
-
-<span class="co">## Plot genome label</span>
-<span class="fu"><a href="../../reference/plotGenomeLabel.html">plotGenomeLabel</a></span><span class="op">(</span>
-    params <span class="op">=</span> <span class="va">params</span>,
-    y <span class="op">=</span> <span class="st">"0b"</span>,
-    scale <span class="op">=</span> <span class="st">"Mb"</span>
-<span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co">## Load example data</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"IMR90_HiC_10kb"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"IMR90_DNAloops_pairs"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"IMR90_ChIP_H3K27ac_signal"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"hg19_insulin_GWAS"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co">## pgParams</span></span>
+<span><span class="va">params</span> <span class="op">&lt;-</span> <span class="fu"><a href="../../reference/pgParams.html">pgParams</a></span><span class="op">(</span></span>
+<span>    chrom <span class="op">=</span> <span class="st">"chr21"</span>, chromstart <span class="op">=</span> <span class="fl">28000000</span>, chromend <span class="op">=</span> <span class="fl">30300000</span>,</span>
+<span>    assembly <span class="op">=</span> <span class="st">"hg19"</span>,</span>
+<span>    x <span class="op">=</span> <span class="fl">0.5</span>, just <span class="op">=</span> <span class="fu"><a href="../../reference/c.html">c</a></span><span class="op">(</span><span class="st">"left"</span>, <span class="st">"top"</span><span class="op">)</span>,</span>
+<span>    width <span class="op">=</span> <span class="fl">2</span>, length <span class="op">=</span> <span class="fl">2</span>, default.units <span class="op">=</span> <span class="st">"inches"</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="co">## Create a plotgardener page</span></span>
+<span><span class="fu"><a href="../../reference/pageCreate.html">pageCreate</a></span><span class="op">(</span></span>
+<span>    width <span class="op">=</span> <span class="fl">3</span>, height <span class="op">=</span> <span class="fl">5</span>, default.units <span class="op">=</span> <span class="st">"inches"</span>,</span>
+<span>    showGuides <span class="op">=</span> <span class="cn">FALSE</span>, xgrid <span class="op">=</span> <span class="fl">0</span>, ygrid <span class="op">=</span> <span class="fl">0</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="co">## Plot Hi-C data in region</span></span>
+<span><span class="fu"><a href="../../reference/plotHicSquare.html">plotHicSquare</a></span><span class="op">(</span></span>
+<span>    data <span class="op">=</span> <span class="va">IMR90_HiC_10kb</span>,</span>
+<span>    params <span class="op">=</span> <span class="va">params</span>,</span>
+<span>    y <span class="op">=</span> <span class="fl">0.5</span>, height <span class="op">=</span> <span class="fl">2</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="co">## Plot loop annotations</span></span>
+<span><span class="fu"><a href="../../reference/plotPairsArches.html">plotPairsArches</a></span><span class="op">(</span></span>
+<span>    data <span class="op">=</span> <span class="va">IMR90_DNAloops_pairs</span>,</span>
+<span>    params <span class="op">=</span> <span class="va">params</span>,</span>
+<span>    y <span class="op">=</span> <span class="st">"0b"</span>,</span>
+<span>    height <span class="op">=</span> <span class="fl">0.25</span>,</span>
+<span>    fill <span class="op">=</span> <span class="st">"black"</span>, linecolor <span class="op">=</span> <span class="st">"black"</span>, flip <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="co">## Plot signal track data</span></span>
+<span><span class="fu"><a href="../../reference/plotSignal.html">plotSignal</a></span><span class="op">(</span></span>
+<span>    data <span class="op">=</span> <span class="va">IMR90_ChIP_H3K27ac_signal</span>,</span>
+<span>    params <span class="op">=</span> <span class="va">params</span>,</span>
+<span>    y <span class="op">=</span> <span class="st">"0b"</span>,</span>
+<span>    height <span class="op">=</span> <span class="fl">0.5</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="co">## Plot GWAS data</span></span>
+<span><span class="fu"><a href="../../reference/plotManhattan.html">plotManhattan</a></span><span class="op">(</span></span>
+<span>    data <span class="op">=</span> <span class="va">hg19_insulin_GWAS</span>,</span>
+<span>    params <span class="op">=</span> <span class="va">params</span>,</span>
+<span>    ymax <span class="op">=</span> <span class="fl">1.1</span>, cex <span class="op">=</span> <span class="fl">0.20</span>,</span>
+<span>    y <span class="op">=</span> <span class="st">"0.25b"</span>,</span>
+<span>    height <span class="op">=</span> <span class="fl">0.5</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="co">## Plot gene track</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">TxDb.Hsapiens.UCSC.hg19.knownGene</span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">org.Hs.eg.db</span><span class="op">)</span></span>
+<span><span class="fu"><a href="../../reference/plotGenes.html">plotGenes</a></span><span class="op">(</span></span>
+<span>    params <span class="op">=</span> <span class="va">params</span>,</span>
+<span>    y <span class="op">=</span> <span class="st">"0b"</span>,</span>
+<span>    height <span class="op">=</span> <span class="fl">0.5</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="co">## Plot genome label</span></span>
+<span><span class="fu"><a href="../../reference/plotGenomeLabel.html">plotGenomeLabel</a></span><span class="op">(</span></span>
+<span>    params <span class="op">=</span> <span class="va">params</span>,</span>
+<span>    y <span class="op">=</span> <span class="st">"0b"</span>,</span>
+<span>    scale <span class="op">=</span> <span class="st">"Mb"</span></span>
+<span><span class="op">)</span></span></code></pre></div>
 <p><img src="plotting_multiomic_data_files/figure-html/below_y-1.png" width="750" style="display: block; margin: auto;"></p>
 </div>
 <div class="section level3">
@@ -411,152 +411,157 @@ depth</strong>, but it is possible to <strong>scale</strong>
 <p>To determine the appropriate y-axis range, we first must get the
 maximum signal score from all of our datasets to be compared:</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/PhanstielLab/plotgardenerData" class="external-link">plotgardenerData</a></span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"IMR90_ChIP_H3K27ac_signal"</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"GM12878_ChIP_H3K27ac_signal"</span><span class="op">)</span>
-
-<span class="va">maxScore</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">max</a></span><span class="op">(</span><span class="fu"><a href="../../reference/c.html">c</a></span><span class="op">(</span><span class="va">IMR90_ChIP_H3K27ac_signal</span><span class="op">$</span><span class="va">score</span>, 
-                    <span class="va">GM12878_ChIP_H3K27ac_signal</span><span class="op">$</span><span class="va">score</span><span class="op">)</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">maxScore</span><span class="op">)</span>
-<span class="co">#&gt; [1] 40.91454</span></code></pre></div>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/PhanstielLab/plotgardenerData" class="external-link">plotgardenerData</a></span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"IMR90_ChIP_H3K27ac_signal"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"GM12878_ChIP_H3K27ac_signal"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">maxScore</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">max</a></span><span class="op">(</span><span class="fu"><a href="../../reference/c.html">c</a></span><span class="op">(</span><span class="va">IMR90_ChIP_H3K27ac_signal</span><span class="op">$</span><span class="va">score</span>, </span>
+<span>                    <span class="va">GM12878_ChIP_H3K27ac_signal</span><span class="op">$</span><span class="va">score</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">maxScore</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] 40.91454</span></span></code></pre></div>
 <p>In each of our signal plotting calls, we will then use the
 <code>range</code> parameter to set the range of both our y-axes to
 <code>c(0, maxScore)</code>. Here we can do this with our
 <code>pgParams</code> object:</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">params</span> <span class="op">&lt;-</span> <span class="fu"><a href="../../reference/pgParams.html">pgParams</a></span><span class="op">(</span>
-    chrom <span class="op">=</span> <span class="st">"chr21"</span>,
-    chromstart <span class="op">=</span> <span class="fl">28000000</span>, chromend <span class="op">=</span> <span class="fl">30300000</span>,
-    assembly <span class="op">=</span> <span class="st">"hg19"</span>,
-    range <span class="op">=</span> <span class="fu"><a href="../../reference/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="va">maxScore</span><span class="op">)</span>
-<span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">params</span> <span class="op">&lt;-</span> <span class="fu"><a href="../../reference/pgParams.html">pgParams</a></span><span class="op">(</span></span>
+<span>    chrom <span class="op">=</span> <span class="st">"chr21"</span>,</span>
+<span>    chromstart <span class="op">=</span> <span class="fl">28000000</span>, chromend <span class="op">=</span> <span class="fl">30300000</span>,</span>
+<span>    assembly <span class="op">=</span> <span class="st">"hg19"</span>,</span>
+<span>    range <span class="op">=</span> <span class="fu"><a href="../../reference/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="va">maxScore</span><span class="op">)</span></span>
+<span><span class="op">)</span></span></code></pre></div>
 <p>We are now ready to plot, align, and compare our signal plots along
 the genomic x-axis and the score y-axis:</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co">## Create a page</span>
-<span class="fu"><a href="../../reference/pageCreate.html">pageCreate</a></span><span class="op">(</span>width <span class="op">=</span> <span class="fl">7.5</span>, height <span class="op">=</span> <span class="fl">2.1</span>, default.units <span class="op">=</span> <span class="st">"inches"</span>,
-            showGuides <span class="op">=</span> <span class="cn">FALSE</span>, xgrid <span class="op">=</span> <span class="fl">0</span>, ygrid <span class="op">=</span> <span class="fl">0</span><span class="op">)</span>
-
-<span class="co">## Plot and place signal plots</span>
-<span class="va">signal1</span> <span class="op">&lt;-</span> <span class="fu"><a href="../../reference/plotSignal.html">plotSignal</a></span><span class="op">(</span>
-    data <span class="op">=</span> <span class="va">IMR90_ChIP_H3K27ac_signal</span>, params <span class="op">=</span> <span class="va">params</span>,
-    x <span class="op">=</span> <span class="fl">0.5</span>, y <span class="op">=</span> <span class="fl">0.25</span>, width <span class="op">=</span> <span class="fl">6.5</span>, height <span class="op">=</span> <span class="fl">0.65</span>,
-    just <span class="op">=</span> <span class="fu"><a href="../../reference/c.html">c</a></span><span class="op">(</span><span class="st">"left"</span>, <span class="st">"top"</span><span class="op">)</span>, default.units <span class="op">=</span> <span class="st">"inches"</span>
-<span class="op">)</span>
-
-<span class="va">signal2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../../reference/plotSignal.html">plotSignal</a></span><span class="op">(</span>
-    data <span class="op">=</span> <span class="va">GM12878_ChIP_H3K27ac_signal</span>, params <span class="op">=</span> <span class="va">params</span>,
-    linecolor <span class="op">=</span> <span class="st">"#7ecdbb"</span>,
-    x <span class="op">=</span> <span class="fl">0.5</span>, y <span class="op">=</span> <span class="fl">1</span>, width <span class="op">=</span> <span class="fl">6.5</span>, height <span class="op">=</span> <span class="fl">0.65</span>,
-    just <span class="op">=</span> <span class="fu"><a href="../../reference/c.html">c</a></span><span class="op">(</span><span class="st">"left"</span>, <span class="st">"top"</span><span class="op">)</span>, default.units <span class="op">=</span> <span class="st">"inches"</span>
-<span class="op">)</span>
-
-<span class="co">## Plot genome label</span>
-<span class="fu"><a href="../../reference/plotGenomeLabel.html">plotGenomeLabel</a></span><span class="op">(</span>
-    chrom <span class="op">=</span> <span class="st">"chr21"</span>,
-    chromstart <span class="op">=</span> <span class="fl">28000000</span>, chromend <span class="op">=</span> <span class="fl">30300000</span>,
-    assembly <span class="op">=</span> <span class="st">"hg19"</span>,
-    x <span class="op">=</span> <span class="fl">0.5</span>, y <span class="op">=</span> <span class="fl">1.68</span>, length <span class="op">=</span> <span class="fl">6.5</span>,
-    default.units <span class="op">=</span> <span class="st">"inches"</span>
-<span class="op">)</span>
-
-<span class="co">## Add text labels</span>
-<span class="fu"><a href="../../reference/plotText.html">plotText</a></span><span class="op">(</span>
-    label <span class="op">=</span> <span class="st">"IMR90"</span>, fonsize <span class="op">=</span> <span class="fl">10</span>, fontcolor <span class="op">=</span> <span class="st">"#37a7db"</span>,
-    x <span class="op">=</span> <span class="fl">0.5</span>, y <span class="op">=</span> <span class="fl">0.25</span>, just <span class="op">=</span> <span class="fu"><a href="../../reference/c.html">c</a></span><span class="op">(</span><span class="st">"left"</span>, <span class="st">"top"</span><span class="op">)</span>,
-    default.units <span class="op">=</span> <span class="st">"inches"</span>
-<span class="op">)</span>
-<span class="fu"><a href="../../reference/plotText.html">plotText</a></span><span class="op">(</span>
-    label <span class="op">=</span> <span class="st">"GM12878"</span>, fonsize <span class="op">=</span> <span class="fl">10</span>, fontcolor <span class="op">=</span> <span class="st">"#7ecdbb"</span>,
-    x <span class="op">=</span> <span class="fl">0.5</span>, y <span class="op">=</span> <span class="fl">1</span>, just <span class="op">=</span> <span class="fu"><a href="../../reference/c.html">c</a></span><span class="op">(</span><span class="st">"left"</span>, <span class="st">"top"</span><span class="op">)</span>,
-    default.units <span class="op">=</span> <span class="st">"inches"</span>
-<span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co">## Create a page</span></span>
+<span><span class="fu"><a href="../../reference/pageCreate.html">pageCreate</a></span><span class="op">(</span>width <span class="op">=</span> <span class="fl">7.5</span>, height <span class="op">=</span> <span class="fl">2.1</span>, default.units <span class="op">=</span> <span class="st">"inches"</span>,</span>
+<span>            showGuides <span class="op">=</span> <span class="cn">FALSE</span>, xgrid <span class="op">=</span> <span class="fl">0</span>, ygrid <span class="op">=</span> <span class="fl">0</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co">## Plot and place signal plots</span></span>
+<span><span class="va">signal1</span> <span class="op">&lt;-</span> <span class="fu"><a href="../../reference/plotSignal.html">plotSignal</a></span><span class="op">(</span></span>
+<span>    data <span class="op">=</span> <span class="va">IMR90_ChIP_H3K27ac_signal</span>, params <span class="op">=</span> <span class="va">params</span>,</span>
+<span>    x <span class="op">=</span> <span class="fl">0.5</span>, y <span class="op">=</span> <span class="fl">0.25</span>, width <span class="op">=</span> <span class="fl">6.5</span>, height <span class="op">=</span> <span class="fl">0.65</span>,</span>
+<span>    just <span class="op">=</span> <span class="fu"><a href="../../reference/c.html">c</a></span><span class="op">(</span><span class="st">"left"</span>, <span class="st">"top"</span><span class="op">)</span>, default.units <span class="op">=</span> <span class="st">"inches"</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">signal2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../../reference/plotSignal.html">plotSignal</a></span><span class="op">(</span></span>
+<span>    data <span class="op">=</span> <span class="va">GM12878_ChIP_H3K27ac_signal</span>, params <span class="op">=</span> <span class="va">params</span>,</span>
+<span>    linecolor <span class="op">=</span> <span class="st">"#7ecdbb"</span>,</span>
+<span>    x <span class="op">=</span> <span class="fl">0.5</span>, y <span class="op">=</span> <span class="fl">1</span>, width <span class="op">=</span> <span class="fl">6.5</span>, height <span class="op">=</span> <span class="fl">0.65</span>,</span>
+<span>    just <span class="op">=</span> <span class="fu"><a href="../../reference/c.html">c</a></span><span class="op">(</span><span class="st">"left"</span>, <span class="st">"top"</span><span class="op">)</span>, default.units <span class="op">=</span> <span class="st">"inches"</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="co">## Plot genome label</span></span>
+<span><span class="fu"><a href="../../reference/plotGenomeLabel.html">plotGenomeLabel</a></span><span class="op">(</span></span>
+<span>    chrom <span class="op">=</span> <span class="st">"chr21"</span>,</span>
+<span>    chromstart <span class="op">=</span> <span class="fl">28000000</span>, chromend <span class="op">=</span> <span class="fl">30300000</span>,</span>
+<span>    assembly <span class="op">=</span> <span class="st">"hg19"</span>,</span>
+<span>    x <span class="op">=</span> <span class="fl">0.5</span>, y <span class="op">=</span> <span class="fl">1.68</span>, length <span class="op">=</span> <span class="fl">6.5</span>,</span>
+<span>    default.units <span class="op">=</span> <span class="st">"inches"</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="co">## Add text labels</span></span>
+<span><span class="fu"><a href="../../reference/plotText.html">plotText</a></span><span class="op">(</span></span>
+<span>    label <span class="op">=</span> <span class="st">"IMR90"</span>, fonsize <span class="op">=</span> <span class="fl">10</span>, fontcolor <span class="op">=</span> <span class="st">"#37a7db"</span>,</span>
+<span>    x <span class="op">=</span> <span class="fl">0.5</span>, y <span class="op">=</span> <span class="fl">0.25</span>, just <span class="op">=</span> <span class="fu"><a href="../../reference/c.html">c</a></span><span class="op">(</span><span class="st">"left"</span>, <span class="st">"top"</span><span class="op">)</span>,</span>
+<span>    default.units <span class="op">=</span> <span class="st">"inches"</span></span>
+<span><span class="op">)</span></span>
+<span><span class="fu"><a href="../../reference/plotText.html">plotText</a></span><span class="op">(</span></span>
+<span>    label <span class="op">=</span> <span class="st">"GM12878"</span>, fonsize <span class="op">=</span> <span class="fl">10</span>, fontcolor <span class="op">=</span> <span class="st">"#7ecdbb"</span>,</span>
+<span>    x <span class="op">=</span> <span class="fl">0.5</span>, y <span class="op">=</span> <span class="fl">1</span>, just <span class="op">=</span> <span class="fu"><a href="../../reference/c.html">c</a></span><span class="op">(</span><span class="st">"left"</span>, <span class="st">"top"</span><span class="op">)</span>,</span>
+<span>    default.units <span class="op">=</span> <span class="st">"inches"</span></span>
+<span><span class="op">)</span></span></code></pre></div>
 <p><img src="plotting_multiomic_data_files/figure-html/scale_signal-1.png" width="1125" style="display: block; margin: auto;"></p>
 </div>
 <div class="section level2">
 <h2 id="session-info">Session Info<a class="anchor" aria-label="anchor" href="#session-info"></a>
 </h2>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/sessionInfo.html" class="external-link">sessionInfo</a></span><span class="op">(</span><span class="op">)</span>
-<span class="co">#&gt; R version 4.2.0 (2022-04-22)</span>
-<span class="co">#&gt; Platform: x86_64-apple-darwin17.0 (64-bit)</span>
-<span class="co">#&gt; Running under: macOS Big Sur/Monterey 10.16</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Matrix products: default</span>
-<span class="co">#&gt; BLAS:   /Library/Frameworks/R.framework/Versions/4.2/Resources/lib/libRblas.0.dylib</span>
-<span class="co">#&gt; LAPACK: /Library/Frameworks/R.framework/Versions/4.2/Resources/lib/libRlapack.dylib</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; locale:</span>
-<span class="co">#&gt; [1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; attached base packages:</span>
-<span class="co">#&gt; [1] stats4    grid      stats     graphics  grDevices utils     datasets </span>
-<span class="co">#&gt; [8] methods   base     </span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; other attached packages:</span>
-<span class="co">#&gt;  [1] org.Hs.eg.db_3.15.0                    </span>
-<span class="co">#&gt;  [2] TxDb.Hsapiens.UCSC.hg19.knownGene_3.2.2</span>
-<span class="co">#&gt;  [3] GenomicFeatures_1.48.1                 </span>
-<span class="co">#&gt;  [4] AnnotationDbi_1.58.0                   </span>
-<span class="co">#&gt;  [5] Biobase_2.56.0                         </span>
-<span class="co">#&gt;  [6] GenomicRanges_1.48.0                   </span>
-<span class="co">#&gt;  [7] GenomeInfoDb_1.32.2                    </span>
-<span class="co">#&gt;  [8] IRanges_2.30.0                         </span>
-<span class="co">#&gt;  [9] S4Vectors_0.34.0                       </span>
-<span class="co">#&gt; [10] BiocGenerics_0.42.0                    </span>
-<span class="co">#&gt; [11] plotgardenerData_1.2.0                 </span>
-<span class="co">#&gt; [12] plotgardener_1.2.3                     </span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; loaded via a namespace (and not attached):</span>
-<span class="co">#&gt;  [1] bitops_1.0-7                matrixStats_0.62.0         </span>
-<span class="co">#&gt;  [3] fs_1.5.2                    bit64_4.0.5                </span>
-<span class="co">#&gt;  [5] filelock_1.0.2              progress_1.2.2             </span>
-<span class="co">#&gt;  [7] httr_1.4.3                  RColorBrewer_1.1-3         </span>
-<span class="co">#&gt;  [9] rprojroot_2.0.3             tools_4.2.0                </span>
-<span class="co">#&gt; [11] bslib_0.3.1                 utf8_1.2.2                 </span>
-<span class="co">#&gt; [13] R6_2.5.1                    DBI_1.1.2                  </span>
-<span class="co">#&gt; [15] colorspace_2.0-3            prettyunits_1.1.1          </span>
-<span class="co">#&gt; [17] tidyselect_1.1.2            bit_4.0.4                  </span>
-<span class="co">#&gt; [19] curl_4.3.2                  compiler_4.2.0             </span>
-<span class="co">#&gt; [21] textshaping_0.3.6           cli_3.3.0                  </span>
-<span class="co">#&gt; [23] xml2_1.3.3                  desc_1.4.1                 </span>
-<span class="co">#&gt; [25] DelayedArray_0.22.0         rtracklayer_1.56.0         </span>
-<span class="co">#&gt; [27] sass_0.4.1                  scales_1.2.0               </span>
-<span class="co">#&gt; [29] rappdirs_0.3.3              pkgdown_2.0.3              </span>
-<span class="co">#&gt; [31] systemfonts_1.0.4           stringr_1.4.0              </span>
-<span class="co">#&gt; [33] digest_0.6.29               Rsamtools_2.12.0           </span>
-<span class="co">#&gt; [35] yulab.utils_0.0.4           rmarkdown_2.14             </span>
-<span class="co">#&gt; [37] XVector_0.36.0              pkgconfig_2.0.3            </span>
-<span class="co">#&gt; [39] htmltools_0.5.2             MatrixGenerics_1.8.0       </span>
-<span class="co">#&gt; [41] highr_0.9                   dbplyr_2.1.1               </span>
-<span class="co">#&gt; [43] fastmap_1.1.0               rlang_1.0.2                </span>
-<span class="co">#&gt; [45] rstudioapi_0.13             RSQLite_2.2.14             </span>
-<span class="co">#&gt; [47] gridGraphics_0.5-1          jquerylib_0.1.4            </span>
-<span class="co">#&gt; [49] BiocIO_1.6.0                generics_0.1.2             </span>
-<span class="co">#&gt; [51] jsonlite_1.8.0              BiocParallel_1.30.2        </span>
-<span class="co">#&gt; [53] dplyr_1.0.9                 RCurl_1.98-1.6             </span>
-<span class="co">#&gt; [55] magrittr_2.0.3              ggplotify_0.1.0            </span>
-<span class="co">#&gt; [57] GenomeInfoDbData_1.2.8      Matrix_1.4-1               </span>
-<span class="co">#&gt; [59] Rcpp_1.0.8.3                munsell_0.5.0              </span>
-<span class="co">#&gt; [61] fansi_1.0.3                 lifecycle_1.0.1            </span>
-<span class="co">#&gt; [63] stringi_1.7.6               yaml_2.3.5                 </span>
-<span class="co">#&gt; [65] SummarizedExperiment_1.26.1 zlibbioc_1.42.0            </span>
-<span class="co">#&gt; [67] BiocFileCache_2.4.0         blob_1.2.3                 </span>
-<span class="co">#&gt; [69] parallel_4.2.0              crayon_1.5.1               </span>
-<span class="co">#&gt; [71] lattice_0.20-45             Biostrings_2.64.0          </span>
-<span class="co">#&gt; [73] hms_1.1.1                   KEGGREST_1.36.0            </span>
-<span class="co">#&gt; [75] knitr_1.39                  pillar_1.7.0               </span>
-<span class="co">#&gt; [77] rjson_0.2.21                biomaRt_2.52.0             </span>
-<span class="co">#&gt; [79] strawr_0.0.9                XML_3.99-0.9               </span>
-<span class="co">#&gt; [81] glue_1.6.2                  evaluate_0.15              </span>
-<span class="co">#&gt; [83] data.table_1.14.2           png_0.1-7                  </span>
-<span class="co">#&gt; [85] vctrs_0.4.1                 gtable_0.3.0               </span>
-<span class="co">#&gt; [87] purrr_0.3.4                 assertthat_0.2.1           </span>
-<span class="co">#&gt; [89] cachem_1.0.6                ggplot2_3.3.6              </span>
-<span class="co">#&gt; [91] xfun_0.31                   restfulr_0.0.13            </span>
-<span class="co">#&gt; [93] ragg_1.2.2                  tibble_3.1.7               </span>
-<span class="co">#&gt; [95] GenomicAlignments_1.32.0    plyranges_1.16.0           </span>
-<span class="co">#&gt; [97] memoise_2.0.1               ellipsis_0.3.2</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/sessionInfo.html" class="external-link">sessionInfo</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="co">#&gt; R version 4.2.0 (2022-04-22)</span></span>
+<span><span class="co">#&gt; Platform: x86_64-pc-linux-gnu (64-bit)</span></span>
+<span><span class="co">#&gt; Running under: Ubuntu 20.04.4 LTS</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Matrix products: default</span></span>
+<span><span class="co">#&gt; BLAS:   /usr/lib/x86_64-linux-gnu/openblas-pthread/libblas.so.3</span></span>
+<span><span class="co">#&gt; LAPACK: /usr/lib/x86_64-linux-gnu/openblas-pthread/liblapack.so.3</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; locale:</span></span>
+<span><span class="co">#&gt;  [1] LC_CTYPE=en_US.UTF-8       LC_NUMERIC=C              </span></span>
+<span><span class="co">#&gt;  [3] LC_TIME=en_US.UTF-8        LC_COLLATE=en_US.UTF-8    </span></span>
+<span><span class="co">#&gt;  [5] LC_MONETARY=en_US.UTF-8    LC_MESSAGES=en_US.UTF-8   </span></span>
+<span><span class="co">#&gt;  [7] LC_PAPER=en_US.UTF-8       LC_NAME=C                 </span></span>
+<span><span class="co">#&gt;  [9] LC_ADDRESS=C               LC_TELEPHONE=C            </span></span>
+<span><span class="co">#&gt; [11] LC_MEASUREMENT=en_US.UTF-8 LC_IDENTIFICATION=C       </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; attached base packages:</span></span>
+<span><span class="co">#&gt; [1] stats4    grid      stats     graphics  grDevices utils     datasets </span></span>
+<span><span class="co">#&gt; [8] methods   base     </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; other attached packages:</span></span>
+<span><span class="co">#&gt;  [1] org.Hs.eg.db_3.15.0                    </span></span>
+<span><span class="co">#&gt;  [2] TxDb.Hsapiens.UCSC.hg19.knownGene_3.2.2</span></span>
+<span><span class="co">#&gt;  [3] GenomicFeatures_1.48.3                 </span></span>
+<span><span class="co">#&gt;  [4] AnnotationDbi_1.58.0                   </span></span>
+<span><span class="co">#&gt;  [5] Biobase_2.56.0                         </span></span>
+<span><span class="co">#&gt;  [6] GenomicRanges_1.48.0                   </span></span>
+<span><span class="co">#&gt;  [7] GenomeInfoDb_1.32.2                    </span></span>
+<span><span class="co">#&gt;  [8] IRanges_2.30.0                         </span></span>
+<span><span class="co">#&gt;  [9] S4Vectors_0.34.0                       </span></span>
+<span><span class="co">#&gt; [10] BiocGenerics_0.42.0                    </span></span>
+<span><span class="co">#&gt; [11] plotgardenerData_1.2.0                 </span></span>
+<span><span class="co">#&gt; [12] plotgardener_1.2.8                     </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; loaded via a namespace (and not attached):</span></span>
+<span><span class="co">#&gt;  [1] bitops_1.0-7                matrixStats_0.62.0         </span></span>
+<span><span class="co">#&gt;  [3] fs_1.5.2                    bit64_4.0.5                </span></span>
+<span><span class="co">#&gt;  [5] filelock_1.0.2              progress_1.2.2             </span></span>
+<span><span class="co">#&gt;  [7] httr_1.4.3                  RColorBrewer_1.1-3         </span></span>
+<span><span class="co">#&gt;  [9] rprojroot_2.0.3             tools_4.2.0                </span></span>
+<span><span class="co">#&gt; [11] bslib_0.3.1                 utf8_1.2.2                 </span></span>
+<span><span class="co">#&gt; [13] R6_2.5.1                    DBI_1.1.3                  </span></span>
+<span><span class="co">#&gt; [15] colorspace_2.0-3            prettyunits_1.1.1          </span></span>
+<span><span class="co">#&gt; [17] tidyselect_1.1.2            bit_4.0.4                  </span></span>
+<span><span class="co">#&gt; [19] curl_4.3.2                  compiler_4.2.0             </span></span>
+<span><span class="co">#&gt; [21] textshaping_0.3.6           cli_3.3.0                  </span></span>
+<span><span class="co">#&gt; [23] xml2_1.3.3                  desc_1.4.1                 </span></span>
+<span><span class="co">#&gt; [25] DelayedArray_0.22.0         rtracklayer_1.56.1         </span></span>
+<span><span class="co">#&gt; [27] sass_0.4.1                  scales_1.2.0               </span></span>
+<span><span class="co">#&gt; [29] rappdirs_0.3.3              pkgdown_2.0.5              </span></span>
+<span><span class="co">#&gt; [31] systemfonts_1.0.4           stringr_1.4.0              </span></span>
+<span><span class="co">#&gt; [33] digest_0.6.29               Rsamtools_2.12.0           </span></span>
+<span><span class="co">#&gt; [35] yulab.utils_0.0.5           rmarkdown_2.14             </span></span>
+<span><span class="co">#&gt; [37] XVector_0.36.0              pkgconfig_2.0.3            </span></span>
+<span><span class="co">#&gt; [39] htmltools_0.5.2             MatrixGenerics_1.8.1       </span></span>
+<span><span class="co">#&gt; [41] highr_0.9                   dbplyr_2.2.1               </span></span>
+<span><span class="co">#&gt; [43] fastmap_1.1.0               rlang_1.0.4                </span></span>
+<span><span class="co">#&gt; [45] RSQLite_2.2.14              gridGraphics_0.5-1         </span></span>
+<span><span class="co">#&gt; [47] jquerylib_0.1.4             BiocIO_1.6.0               </span></span>
+<span><span class="co">#&gt; [49] generics_0.1.3              jsonlite_1.8.0             </span></span>
+<span><span class="co">#&gt; [51] BiocParallel_1.30.3         dplyr_1.0.9                </span></span>
+<span><span class="co">#&gt; [53] RCurl_1.98-1.7              magrittr_2.0.3             </span></span>
+<span><span class="co">#&gt; [55] ggplotify_0.1.0             GenomeInfoDbData_1.2.8     </span></span>
+<span><span class="co">#&gt; [57] Matrix_1.4-1                Rcpp_1.0.9                 </span></span>
+<span><span class="co">#&gt; [59] munsell_0.5.0               fansi_1.0.3                </span></span>
+<span><span class="co">#&gt; [61] lifecycle_1.0.1             stringi_1.7.8              </span></span>
+<span><span class="co">#&gt; [63] yaml_2.3.5                  SummarizedExperiment_1.26.1</span></span>
+<span><span class="co">#&gt; [65] zlibbioc_1.42.0             BiocFileCache_2.4.0        </span></span>
+<span><span class="co">#&gt; [67] blob_1.2.3                  parallel_4.2.0             </span></span>
+<span><span class="co">#&gt; [69] crayon_1.5.1                lattice_0.20-45            </span></span>
+<span><span class="co">#&gt; [71] Biostrings_2.64.0           hms_1.1.1                  </span></span>
+<span><span class="co">#&gt; [73] KEGGREST_1.36.3             knitr_1.39                 </span></span>
+<span><span class="co">#&gt; [75] pillar_1.7.0                rjson_0.2.21               </span></span>
+<span><span class="co">#&gt; [77] biomaRt_2.52.0              codetools_0.2-18           </span></span>
+<span><span class="co">#&gt; [79] strawr_0.0.9                XML_3.99-0.10              </span></span>
+<span><span class="co">#&gt; [81] glue_1.6.2                  evaluate_0.15              </span></span>
+<span><span class="co">#&gt; [83] data.table_1.14.2           png_0.1-7                  </span></span>
+<span><span class="co">#&gt; [85] vctrs_0.4.1                 gtable_0.3.0               </span></span>
+<span><span class="co">#&gt; [87] purrr_0.3.4                 assertthat_0.2.1           </span></span>
+<span><span class="co">#&gt; [89] cachem_1.0.6                ggplot2_3.3.6              </span></span>
+<span><span class="co">#&gt; [91] xfun_0.31                   restfulr_0.0.15            </span></span>
+<span><span class="co">#&gt; [93] ragg_1.2.2                  tibble_3.1.7               </span></span>
+<span><span class="co">#&gt; [95] GenomicAlignments_1.32.0    plyranges_1.16.0           </span></span>
+<span><span class="co">#&gt; [97] memoise_2.0.1               ellipsis_0.3.2</span></span></code></pre></div>
 </div>
   </div>
 
@@ -577,7 +582,7 @@ the genomic x-axis and the score y-axis:</p>
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
 </div>
 
       </footer>

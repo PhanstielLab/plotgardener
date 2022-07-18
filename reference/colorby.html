@@ -19,7 +19,7 @@ plotPairsArches, and plotRanges."><meta property="og:image" content="https://pha
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">plotgardener</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.2.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.2.8</span>
       </span>
     </div>
 
@@ -100,49 +100,58 @@ that specify color scaling for the functions <code>plotPairs</code>,
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">colorby</span><span class="op">(</span><span class="va">column</span>, palette <span class="op">=</span> <span class="cn">NULL</span>, range <span class="op">=</span> <span class="cn">NULL</span>, scalePerRegion <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">colorby</span><span class="op">(</span><span class="va">column</span>, palette <span class="op">=</span> <span class="cn">NULL</span>, range <span class="op">=</span> <span class="cn">NULL</span>, scalePerRegion <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>column</dt>
 <dd><p>String specifying name of data column to scale colors by.</p></dd>
+
+
 <dt>palette</dt>
 <dd><p>(optional) A function describing the color palette to use for
 color scaling.</p></dd>
+
+
 <dt>range</dt>
 <dd><p>(optional) A numeric vector specifying the range of values to
 apply a color scale to.</p></dd>
+
+
 <dt>scalePerRegion</dt>
 <dd><p>A logical value indicating whether to adjust 
 NULL range of numerical `colorby` values to subset of data in a plotted
 genomic regoin. Default value is <code>scalePerRegion = FALSE</code>.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>Returns a "<code>colorby</code>" object.</p>
+    
+
+<p>Returns a "<code>colorby</code>" object.</p>
     </div>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co">## Load paired ranges data in BEDPE format</span></span>
-<span class="r-in"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/PhanstielLab/plotgardenerData" class="external-link">plotgardenerData</a></span><span class="op">)</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"IMR90_DNAloops_pairs"</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">## Add a length column</span></span>
-<span class="r-in"><span class="va">IMR90_DNAloops_pairs</span><span class="op">$</span><span class="va">length</span> <span class="op">&lt;-</span> </span>
-<span class="r-in">        <span class="op">(</span><span class="va">IMR90_DNAloops_pairs</span><span class="op">$</span><span class="va">start2</span> <span class="op">-</span> <span class="va">IMR90_DNAloops_pairs</span><span class="op">$</span><span class="va">start1</span><span class="op">)</span> <span class="op">/</span> <span class="fl">1000</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">## Plot pairs with colorby object set for `length` column</span></span>
-<span class="r-in"><span class="va">bedpePlot</span> <span class="op">&lt;-</span> <span class="fu"><a href="plotPairs.html">plotPairs</a></span><span class="op">(</span></span>
-<span class="r-in">    data <span class="op">=</span> <span class="va">IMR90_DNAloops_pairs</span>,</span>
-<span class="r-in">    chrom <span class="op">=</span> <span class="st">"chr21"</span>,</span>
-<span class="r-in">    chromstart <span class="op">=</span> <span class="fl">27900000</span>, chromend <span class="op">=</span> <span class="fl">30700000</span>,</span>
-<span class="r-in">    assembly <span class="op">=</span> <span class="st">"hg19"</span>,</span>
-<span class="r-in">    fill <span class="op">=</span> <span class="fu">colorby</span><span class="op">(</span><span class="st">"length"</span>, palette <span class="op">=</span> </span>
-<span class="r-in">                <span class="fu"><a href="https://rdrr.io/r/grDevices/colorRamp.html" class="external-link">colorRampPalette</a></span><span class="op">(</span><span class="fu"><a href="c.html">c</a></span><span class="op">(</span><span class="st">"dodgerblue2"</span>, <span class="st">"firebrick2"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>,</span>
-<span class="r-in">    lwd <span class="op">=</span> <span class="fl">2</span>, spaceHeight <span class="op">=</span> <span class="fl">.7</span>,</span>
-<span class="r-in"><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co">## Load paired ranges data in BEDPE format</span></span></span>
+<span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/PhanstielLab/plotgardenerData" class="external-link">plotgardenerData</a></span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"IMR90_DNAloops_pairs"</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## Add a length column</span></span></span>
+<span class="r-in"><span><span class="va">IMR90_DNAloops_pairs</span><span class="op">$</span><span class="va">length</span> <span class="op">&lt;-</span> </span></span>
+<span class="r-in"><span>        <span class="op">(</span><span class="va">IMR90_DNAloops_pairs</span><span class="op">$</span><span class="va">start2</span> <span class="op">-</span> <span class="va">IMR90_DNAloops_pairs</span><span class="op">$</span><span class="va">start1</span><span class="op">)</span> <span class="op">/</span> <span class="fl">1000</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## Plot pairs with colorby object set for `length` column</span></span></span>
+<span class="r-in"><span><span class="va">bedpePlot</span> <span class="op">&lt;-</span> <span class="fu"><a href="plotPairs.html">plotPairs</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>    data <span class="op">=</span> <span class="va">IMR90_DNAloops_pairs</span>,</span></span>
+<span class="r-in"><span>    chrom <span class="op">=</span> <span class="st">"chr21"</span>,</span></span>
+<span class="r-in"><span>    chromstart <span class="op">=</span> <span class="fl">27900000</span>, chromend <span class="op">=</span> <span class="fl">30700000</span>,</span></span>
+<span class="r-in"><span>    assembly <span class="op">=</span> <span class="st">"hg19"</span>,</span></span>
+<span class="r-in"><span>    fill <span class="op">=</span> <span class="fu">colorby</span><span class="op">(</span><span class="st">"length"</span>, palette <span class="op">=</span> </span></span>
+<span class="r-in"><span>                <span class="fu"><a href="https://rdrr.io/r/grDevices/colorRamp.html" class="external-link">colorRampPalette</a></span><span class="op">(</span><span class="fu"><a href="c.html">c</a></span><span class="op">(</span><span class="st">"dodgerblue2"</span>, <span class="st">"firebrick2"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>    lwd <span class="op">=</span> <span class="fl">2</span>, spaceHeight <span class="op">=</span> <span class="fl">.7</span>,</span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> pairs[pairs1]</span>
 <span class="r-plt img"><img src="colorby-1.png" alt="" width="1230" height="1050"></span>
 </code></pre></div>
@@ -159,7 +168,7 @@ genomic regoin. Default value is <code>scalePerRegion = FALSE</code>.</p></dd>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
 </div>
 
       </footer></div>

@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">plotgardener</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.2.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.2.8</span>
       </span>
     </div>
 
@@ -96,16 +96,16 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">pageCreate</span><span class="op">(</span>
-    width <span class="op">=</span> <span class="fl">8.5</span>,
-    height <span class="op">=</span> <span class="fl">11</span>,
-    default.units <span class="op">=</span> <span class="st">"inches"</span>,
-    bg <span class="op">=</span> <span class="cn">NA</span>,
-    xgrid <span class="op">=</span> <span class="fl">0.5</span>,
-    ygrid <span class="op">=</span> <span class="fl">0.5</span>,
-    showGuides <span class="op">=</span> <span class="cn">TRUE</span>,
-    params <span class="op">=</span> <span class="cn">NULL</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">pageCreate</span><span class="op">(</span></span>
+<span>    width <span class="op">=</span> <span class="fl">8.5</span>,</span>
+<span>    height <span class="op">=</span> <span class="fl">11</span>,</span>
+<span>    default.units <span class="op">=</span> <span class="st">"inches"</span>,</span>
+<span>    bg <span class="op">=</span> <span class="cn">NA</span>,</span>
+<span>    xgrid <span class="op">=</span> <span class="fl">0.5</span>,</span>
+<span>    ygrid <span class="op">=</span> <span class="fl">0.5</span>,</span>
+<span>    showGuides <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>    params <span class="op">=</span> <span class="cn">NULL</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -113,33 +113,50 @@
     <dl><dt>width</dt>
 <dd><p>A numeric or unit object specifying page width.
 Default value is <code>width = 8</code>.</p></dd>
+
+
 <dt>height</dt>
 <dd><p>A numeric or unit object specifying page height.
 Default value is <code>height = 11</code>.</p></dd>
+
+
 <dt>default.units</dt>
 <dd><p>A string indicating the default units to use if
 <code>width</code> or <code>height</code> are only given as numerics.
 Default value is <code>default.units = "inches"</code>.</p></dd>
+
+
 <dt>bg</dt>
 <dd><p>Character value indicating page background color.
 Default value is <code>bg = NA</code>.</p></dd>
+
+
 <dt>xgrid</dt>
 <dd><p>A numeric indicating the increment by which to place
 vertical gridlines. Default value is <code>xgrid = 0.5</code>.</p></dd>
+
+
 <dt>ygrid</dt>
 <dd><p>A numeric indicating the increment by which to place
 horizontal gridlines. Default value is <code>ygrid = 0.5</code>.</p></dd>
+
+
 <dt>showGuides</dt>
 <dd><p>A logical value indicating whether to draw a
 black border around the entire page and guiding rulers along the top and
 left side of the page. Default value is <code>showOutline = TRUE</code>.</p></dd>
+
+
 <dt>params</dt>
 <dd><p>An optional <a href="pgParams.html">pgParams</a> object
 containing relevant function parameters.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>None.</p>
+    
+
+<p>None.</p>
     </div>
     <div id="details">
     <h2>Details</h2>
@@ -148,12 +165,12 @@ containing relevant function parameters.</p></dd>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co">## Create a 6-inch wide, 4.5-inch high page</span></span>
-<span class="r-in"><span class="fu">pageCreate</span><span class="op">(</span>width <span class="op">=</span> <span class="fl">6</span>, height <span class="op">=</span> <span class="fl">4.5</span>, default.units <span class="op">=</span> <span class="st">"inches"</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co">## Create a 6-inch wide, 4.5-inch high page</span></span></span>
+<span class="r-in"><span><span class="fu">pageCreate</span><span class="op">(</span>width <span class="op">=</span> <span class="fl">6</span>, height <span class="op">=</span> <span class="fl">4.5</span>, default.units <span class="op">=</span> <span class="st">"inches"</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="pageCreate-1.png" alt="" width="1230" height="1050"></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">## Create a 14-cm wide, 10-cm high page</span></span>
-<span class="r-in"><span class="fu">pageCreate</span><span class="op">(</span>width <span class="op">=</span> <span class="fl">14</span>, height <span class="op">=</span> <span class="fl">10</span>, default.units <span class="op">=</span> <span class="st">"cm"</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## Create a 14-cm wide, 10-cm high page</span></span></span>
+<span class="r-in"><span><span class="fu">pageCreate</span><span class="op">(</span>width <span class="op">=</span> <span class="fl">14</span>, height <span class="op">=</span> <span class="fl">10</span>, default.units <span class="op">=</span> <span class="st">"cm"</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="pageCreate-2.png" alt="" width="1230" height="1050"></span>
 </code></pre></div>
     </div>
@@ -169,7 +186,7 @@ containing relevant function parameters.</p></dd>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
 </div>
 
       </footer></div>

@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">plotgardener</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.2.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.2.8</span>
       </span>
     </div>
 
@@ -96,40 +96,53 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">readBigwig</span><span class="op">(</span>
-    <span class="va">file</span>,
-    chrom <span class="op">=</span> <span class="cn">NULL</span>,
-    chromstart <span class="op">=</span> <span class="fl">1</span>,
-    chromend <span class="op">=</span> <span class="va">.Machine</span><span class="op">$</span><span class="va">integer.max</span>,
-    strand <span class="op">=</span> <span class="st">"*"</span>,
-    params <span class="op">=</span> <span class="cn">NULL</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">readBigwig</span><span class="op">(</span></span>
+<span>    <span class="va">file</span>,</span>
+<span>    chrom <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>    chromstart <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>    chromend <span class="op">=</span> <span class="va">.Machine</span><span class="op">$</span><span class="va">integer.max</span>,</span>
+<span>    strand <span class="op">=</span> <span class="st">"*"</span>,</span>
+<span>    params <span class="op">=</span> <span class="cn">NULL</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>file</dt>
 <dd><p>A character value specifying the path to the bigwig file.</p></dd>
+
+
 <dt>chrom</dt>
 <dd><p>Chromosome of data as a string, if data for a specific
 chromosome is desired.</p></dd>
+
+
 <dt>chromstart</dt>
 <dd><p>Integer start position on chromosome.</p></dd>
+
+
 <dt>chromend</dt>
 <dd><p>Integer end position on chromosome.</p></dd>
+
+
 <dt>strand</dt>
 <dd><p>A character value specifying strand.
 Default value is <code>strand = "*"</code>. Options are:</p><ul><li><p><code>"+"</code>: Plus strand.</p></li>
 <li><p><code>"-"</code>: Minus strand.</p></li>
 <li><p><code>"*"</code>: Plus and minus strands.</p></li>
 </ul></dd>
+
+
 <dt>params</dt>
 <dd><p>An optional <a href="pgParams.html">pgParams</a> object
 containing relevant function parameters.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>Returns a 6-column dataframe of bigwig information.</p>
+    
+
+<p>Returns a 6-column dataframe of bigwig information.</p>
     </div>
     <div id="details">
     <h2>Details</h2>
@@ -142,19 +155,19 @@ containing relevant function parameters.</p></dd>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="va">.Platform</span><span class="op">$</span><span class="va">OS.type</span> <span class="op">!=</span> <span class="st">"windows"</span><span class="op">)</span><span class="op">{</span></span>
-<span class="r-in">    <span class="va">bwFile</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata/test.bw"</span>, package<span class="op">=</span><span class="st">"plotgardenerData"</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in">    <span class="co">## Read in entire file</span></span>
-<span class="r-in">    <span class="va">bwData</span> <span class="op">&lt;-</span> <span class="fu">readBigwig</span><span class="op">(</span>file <span class="op">=</span> <span class="va">bwFile</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in">    <span class="co">## Read in specified region</span></span>
-<span class="r-in">    <span class="va">bwRegion</span> <span class="op">&lt;-</span> <span class="fu">readBigwig</span><span class="op">(</span>file <span class="op">=</span> <span class="va">bwFile</span>,</span>
-<span class="r-in">                            chrom <span class="op">=</span> <span class="st">"chr2"</span>,</span>
-<span class="r-in">                            chromstart <span class="op">=</span> <span class="fl">1</span>,</span>
-<span class="r-in">                            chromend <span class="op">=</span> <span class="fl">1500</span><span class="op">)</span></span>
-<span class="r-in"><span class="op">}</span></span>
-<span class="r-in"></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="va">.Platform</span><span class="op">$</span><span class="va">OS.type</span> <span class="op">!=</span> <span class="st">"windows"</span><span class="op">)</span><span class="op">{</span></span></span>
+<span class="r-in"><span>    <span class="va">bwFile</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata/test.bw"</span>, package<span class="op">=</span><span class="st">"plotgardenerData"</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span>    <span class="co">## Read in entire file</span></span></span>
+<span class="r-in"><span>    <span class="va">bwData</span> <span class="op">&lt;-</span> <span class="fu">readBigwig</span><span class="op">(</span>file <span class="op">=</span> <span class="va">bwFile</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span>    <span class="co">## Read in specified region</span></span></span>
+<span class="r-in"><span>    <span class="va">bwRegion</span> <span class="op">&lt;-</span> <span class="fu">readBigwig</span><span class="op">(</span>file <span class="op">=</span> <span class="va">bwFile</span>,</span></span>
+<span class="r-in"><span>                            chrom <span class="op">=</span> <span class="st">"chr2"</span>,</span></span>
+<span class="r-in"><span>                            chromstart <span class="op">=</span> <span class="fl">1</span>,</span></span>
+<span class="r-in"><span>                            chromend <span class="op">=</span> <span class="fl">1500</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">}</span></span></span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -169,7 +182,7 @@ containing relevant function parameters.</p></dd>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
 </div>
 
       </footer></div>

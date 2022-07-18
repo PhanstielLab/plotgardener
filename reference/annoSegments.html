@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">plotgardener</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.2.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.2.8</span>
       </span>
     </div>
 
@@ -96,22 +96,22 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">annoSegments</span><span class="op">(</span>
-    <span class="va">x0</span>,
-    <span class="va">y0</span>,
-    <span class="va">x1</span>,
-    <span class="va">y1</span>,
-    <span class="va">plot</span>,
-    default.units <span class="op">=</span> <span class="st">"native"</span>,
-    linecolor <span class="op">=</span> <span class="st">"black"</span>,
-    lwd <span class="op">=</span> <span class="fl">1</span>,
-    lty <span class="op">=</span> <span class="fl">1</span>,
-    lineend <span class="op">=</span> <span class="st">"butt"</span>,
-    linejoin <span class="op">=</span> <span class="st">"mitre"</span>,
-    arrow <span class="op">=</span> <span class="cn">NULL</span>,
-    params <span class="op">=</span> <span class="cn">NULL</span>,
-    <span class="va">...</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">annoSegments</span><span class="op">(</span></span>
+<span>    <span class="va">x0</span>,</span>
+<span>    <span class="va">y0</span>,</span>
+<span>    <span class="va">x1</span>,</span>
+<span>    <span class="va">y1</span>,</span>
+<span>    <span class="va">plot</span>,</span>
+<span>    default.units <span class="op">=</span> <span class="st">"native"</span>,</span>
+<span>    linecolor <span class="op">=</span> <span class="st">"black"</span>,</span>
+<span>    lwd <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>    lty <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>    lineend <span class="op">=</span> <span class="st">"butt"</span>,</span>
+<span>    linejoin <span class="op">=</span> <span class="st">"mitre"</span>,</span>
+<span>    arrow <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>    params <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>    <span class="va">...</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -119,55 +119,84 @@
     <dl><dt>x0</dt>
 <dd><p>A numeric vector or unit object indicating the starting
 x-values of the line segments.</p></dd>
+
+
 <dt>y0</dt>
 <dd><p>A numeric vector or unit object indicating the starting
 y-values of the line segments.</p></dd>
+
+
 <dt>x1</dt>
 <dd><p>A numeric vector or unit object indicating the stopping
 x-values of the line segments.</p></dd>
+
+
 <dt>y1</dt>
 <dd><p>A numeric vector or unit object indicating the stopping
 y-values of the line segments.</p></dd>
+
+
 <dt>plot</dt>
 <dd><p>Input plotgardener plot to internally plot line segments
 relative to.</p></dd>
+
+
 <dt>default.units</dt>
 <dd><p>A string indicating the default units to use
 if <code>x0</code>, <code>y0</code>, <code>x1</code>, or <code>y1</code> are only given
 as numeric vectors. Default value is <code>default.units = "native"</code>.</p></dd>
+
+
 <dt>linecolor</dt>
 <dd><p>A character value specifying segment line color.
 Default value is <code>linecolor = "black"</code>.</p></dd>
+
+
 <dt>lwd</dt>
 <dd><p>A numeric specifying segment line width.
 Default value is <code>lwd = 1</code>.</p></dd>
+
+
 <dt>lty</dt>
 <dd><p>A numeric specifying segment line type.
 Default value is <code>lty = 1</code>.</p></dd>
+
+
 <dt>lineend</dt>
 <dd><p>A character value specifying line end style.
 Default value is <code>lineend = "butt"</code>. Options are:</p><ul><li><p><code>"round"</code>: Segment ends are rounded.</p></li>
 <li><p><code>"butt"</code>: Segment ends end exactly where ended.</p></li>
 <li><p><code>"square"</code>: Segment ends are squared.</p></li>
 </ul></dd>
+
+
 <dt>linejoin</dt>
 <dd><p>A character value specifying line join style.
 Default value is <code>linejoin = "mitre"</code>. Options are:</p><ul><li><p><code>"round"</code>: Line joins are rounded.</p></li>
 <li><p><code>"mitre"</code>: Line joins are sharp corners.</p></li>
 <li><p><code>"bevel"</code>: Line joins are flattened corners.</p></li>
 </ul></dd>
+
+
 <dt>arrow</dt>
 <dd><p>A list describing arrow heads to place at either
 end of the line segments, as produced by the <a href="https://rdrr.io/r/grid/arrow.html" class="external-link">arrow</a> function.</p></dd>
+
+
 <dt>params</dt>
 <dd><p>An optional <a href="pgParams.html">pgParams</a> object containing
 relevant function parameters.</p></dd>
+
+
 <dt>...</dt>
 <dd><p>Additional grid graphical parameters. See <a href="https://rdrr.io/r/grid/gpar.html" class="external-link">gpar</a>.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>Returns a <code>segments</code> object containing relevant
+    
+
+<p>Returns a <code>segments</code> object containing relevant
 placement and <a href="https://rdrr.io/r/grid/grid.grob.html" class="external-link">grob</a> information.</p>
     </div>
     <div id="see-also">
@@ -177,66 +206,66 @@ placement and <a href="https://rdrr.io/r/grid/grid.grob.html" class="external-li
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">grid</span><span class="op">)</span></span>
-<span class="r-in"><span class="co">## Create a page</span></span>
-<span class="r-in"><span class="fu"><a href="pageCreate.html">pageCreate</a></span><span class="op">(</span>width <span class="op">=</span> <span class="fl">7.5</span>, height <span class="op">=</span> <span class="fl">2.5</span>, default.units <span class="op">=</span> <span class="st">"inches"</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">## Plot a Manhattan plot</span></span>
-<span class="r-in"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/PhanstielLab/plotgardenerData" class="external-link">plotgardenerData</a></span><span class="op">)</span></span>
-<span class="r-in"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st">"TxDb.Hsapiens.UCSC.hg19.knownGene"</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"hg19_insulin_GWAS"</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">manhattanPlot</span> <span class="op">&lt;-</span> <span class="fu"><a href="plotManhattan.html">plotManhattan</a></span><span class="op">(</span></span>
-<span class="r-in">    data <span class="op">=</span> <span class="va">hg19_insulin_GWAS</span>, assembly <span class="op">=</span> <span class="st">"hg19"</span>,</span>
-<span class="r-in">    fill <span class="op">=</span> <span class="fu"><a href="c.html">c</a></span><span class="op">(</span><span class="st">"grey"</span>, <span class="st">"#37a7db"</span><span class="op">)</span>,</span>
-<span class="r-in">    sigLine <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span class="r-in">    col <span class="op">=</span> <span class="st">"grey"</span>, lty <span class="op">=</span> <span class="fl">2</span>, range <span class="op">=</span> <span class="fu"><a href="c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">14</span><span class="op">)</span>,</span>
-<span class="r-in">    x <span class="op">=</span> <span class="fl">0.5</span>, y <span class="op">=</span> <span class="fl">0</span>, width <span class="op">=</span> <span class="fl">6.5</span>, height <span class="op">=</span> <span class="fl">2</span>,</span>
-<span class="r-in">    just <span class="op">=</span> <span class="fu"><a href="c.html">c</a></span><span class="op">(</span><span class="st">"left"</span>, <span class="st">"top"</span><span class="op">)</span>,</span>
-<span class="r-in">    default.units <span class="op">=</span> <span class="st">"inches"</span></span>
-<span class="r-in"><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">grid</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="co">## Create a page</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="pageCreate.html">pageCreate</a></span><span class="op">(</span>width <span class="op">=</span> <span class="fl">7.5</span>, height <span class="op">=</span> <span class="fl">2.5</span>, default.units <span class="op">=</span> <span class="st">"inches"</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## Plot a Manhattan plot</span></span></span>
+<span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/PhanstielLab/plotgardenerData" class="external-link">plotgardenerData</a></span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st">"TxDb.Hsapiens.UCSC.hg19.knownGene"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"hg19_insulin_GWAS"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">manhattanPlot</span> <span class="op">&lt;-</span> <span class="fu"><a href="plotManhattan.html">plotManhattan</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>    data <span class="op">=</span> <span class="va">hg19_insulin_GWAS</span>, assembly <span class="op">=</span> <span class="st">"hg19"</span>,</span></span>
+<span class="r-in"><span>    fill <span class="op">=</span> <span class="fu"><a href="c.html">c</a></span><span class="op">(</span><span class="st">"grey"</span>, <span class="st">"#37a7db"</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>    sigLine <span class="op">=</span> <span class="cn">TRUE</span>,</span></span>
+<span class="r-in"><span>    col <span class="op">=</span> <span class="st">"grey"</span>, lty <span class="op">=</span> <span class="fl">2</span>, range <span class="op">=</span> <span class="fu"><a href="c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">14</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>    x <span class="op">=</span> <span class="fl">0.5</span>, y <span class="op">=</span> <span class="fl">0</span>, width <span class="op">=</span> <span class="fl">6.5</span>, height <span class="op">=</span> <span class="fl">2</span>,</span></span>
+<span class="r-in"><span>    just <span class="op">=</span> <span class="fu"><a href="c.html">c</a></span><span class="op">(</span><span class="st">"left"</span>, <span class="st">"top"</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>    default.units <span class="op">=</span> <span class="st">"inches"</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> manhattan[manhattan1]</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">## Annotate genome label</span></span>
-<span class="r-in"><span class="fu"><a href="annoGenomeLabel.html">annoGenomeLabel</a></span><span class="op">(</span></span>
-<span class="r-in">    plot <span class="op">=</span> <span class="va">manhattanPlot</span>, x <span class="op">=</span> <span class="fl">0.5</span>, y <span class="op">=</span> <span class="fl">2</span>, fontsize <span class="op">=</span> <span class="fl">8</span>,</span>
-<span class="r-in">    just <span class="op">=</span> <span class="fu"><a href="c.html">c</a></span><span class="op">(</span><span class="st">"left"</span>, <span class="st">"top"</span><span class="op">)</span>,</span>
-<span class="r-in">    default.units <span class="op">=</span> <span class="st">"inches"</span></span>
-<span class="r-in"><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## Annotate genome label</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="annoGenomeLabel.html">annoGenomeLabel</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>    plot <span class="op">=</span> <span class="va">manhattanPlot</span>, x <span class="op">=</span> <span class="fl">0.5</span>, y <span class="op">=</span> <span class="fl">2</span>, fontsize <span class="op">=</span> <span class="fl">8</span>,</span></span>
+<span class="r-in"><span>    just <span class="op">=</span> <span class="fu"><a href="c.html">c</a></span><span class="op">(</span><span class="st">"left"</span>, <span class="st">"top"</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>    default.units <span class="op">=</span> <span class="st">"inches"</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> genomeLabel[genomeLabel1]</span>
-<span class="r-in"><span class="fu"><a href="plotText.html">plotText</a></span><span class="op">(</span></span>
-<span class="r-in">    label <span class="op">=</span> <span class="st">"Chromosome"</span>, fontsize <span class="op">=</span> <span class="fl">8</span>,</span>
-<span class="r-in">    x <span class="op">=</span> <span class="fl">3.75</span>, y <span class="op">=</span> <span class="fl">2.20</span>, just <span class="op">=</span> <span class="st">"center"</span>, default.units <span class="op">=</span> <span class="st">"inches"</span></span>
-<span class="r-in"><span class="op">)</span></span>
+<span class="r-in"><span><span class="fu"><a href="plotText.html">plotText</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>    label <span class="op">=</span> <span class="st">"Chromosome"</span>, fontsize <span class="op">=</span> <span class="fl">8</span>,</span></span>
+<span class="r-in"><span>    x <span class="op">=</span> <span class="fl">3.75</span>, y <span class="op">=</span> <span class="fl">2.20</span>, just <span class="op">=</span> <span class="st">"center"</span>, default.units <span class="op">=</span> <span class="st">"inches"</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> text[text1]</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">## Annotate y-axis</span></span>
-<span class="r-in"><span class="fu"><a href="annoYaxis.html">annoYaxis</a></span><span class="op">(</span></span>
-<span class="r-in">    plot <span class="op">=</span> <span class="va">manhattanPlot</span>, at <span class="op">=</span> <span class="fu"><a href="c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">2</span>, <span class="fl">4</span>, <span class="fl">6</span>, <span class="fl">8</span>, <span class="fl">10</span>, <span class="fl">12</span>, <span class="fl">14</span><span class="op">)</span>,</span>
-<span class="r-in">    axisLine <span class="op">=</span> <span class="cn">TRUE</span>, fontsize <span class="op">=</span> <span class="fl">8</span></span>
-<span class="r-in"><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## Annotate y-axis</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="annoYaxis.html">annoYaxis</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>    plot <span class="op">=</span> <span class="va">manhattanPlot</span>, at <span class="op">=</span> <span class="fu"><a href="c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">2</span>, <span class="fl">4</span>, <span class="fl">6</span>, <span class="fl">8</span>, <span class="fl">10</span>, <span class="fl">12</span>, <span class="fl">14</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>    axisLine <span class="op">=</span> <span class="cn">TRUE</span>, fontsize <span class="op">=</span> <span class="fl">8</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> yaxis[yaxis1]</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">## Annotate a line segment for an additional significance line of</span></span>
-<span class="r-in"><span class="co">## the Manhattan plot</span></span>
-<span class="r-in"><span class="fu">annoSegments</span><span class="op">(</span></span>
-<span class="r-in">    x0 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grid/unit.html" class="external-link">unit</a></span><span class="op">(</span><span class="fl">0</span>, <span class="st">"npc"</span><span class="op">)</span>, y0 <span class="op">=</span> <span class="fl">10</span>,</span>
-<span class="r-in">    x1 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grid/unit.html" class="external-link">unit</a></span><span class="op">(</span><span class="fl">1</span>, <span class="st">"npc"</span><span class="op">)</span>, y1 <span class="op">=</span> <span class="fl">10</span>,</span>
-<span class="r-in">    plot <span class="op">=</span> <span class="va">manhattanPlot</span>, default.units <span class="op">=</span> <span class="st">"native"</span>,</span>
-<span class="r-in">    linecolor <span class="op">=</span> <span class="st">"red"</span>, lty <span class="op">=</span> <span class="fl">2</span></span>
-<span class="r-in"><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## Annotate a line segment for an additional significance line of</span></span></span>
+<span class="r-in"><span><span class="co">## the Manhattan plot</span></span></span>
+<span class="r-in"><span><span class="fu">annoSegments</span><span class="op">(</span></span></span>
+<span class="r-in"><span>    x0 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grid/unit.html" class="external-link">unit</a></span><span class="op">(</span><span class="fl">0</span>, <span class="st">"npc"</span><span class="op">)</span>, y0 <span class="op">=</span> <span class="fl">10</span>,</span></span>
+<span class="r-in"><span>    x1 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grid/unit.html" class="external-link">unit</a></span><span class="op">(</span><span class="fl">1</span>, <span class="st">"npc"</span><span class="op">)</span>, y1 <span class="op">=</span> <span class="fl">10</span>,</span></span>
+<span class="r-in"><span>    plot <span class="op">=</span> <span class="va">manhattanPlot</span>, default.units <span class="op">=</span> <span class="st">"native"</span>,</span></span>
+<span class="r-in"><span>    linecolor <span class="op">=</span> <span class="st">"red"</span>, lty <span class="op">=</span> <span class="fl">2</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> segments[segments1]</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">## Plot y-axis label</span></span>
-<span class="r-in"><span class="fu"><a href="plotText.html">plotText</a></span><span class="op">(</span></span>
-<span class="r-in">    label <span class="op">=</span> <span class="st">"-log10(p-value)"</span>, x <span class="op">=</span> <span class="fl">0.15</span>, y <span class="op">=</span> <span class="fl">1</span>, rot <span class="op">=</span> <span class="fl">90</span>,</span>
-<span class="r-in">    fontsize <span class="op">=</span> <span class="fl">8</span>, fontface <span class="op">=</span> <span class="st">"bold"</span>, just <span class="op">=</span> <span class="st">"center"</span>,</span>
-<span class="r-in">    default.units <span class="op">=</span> <span class="st">"inches"</span></span>
-<span class="r-in"><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## Plot y-axis label</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="plotText.html">plotText</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>    label <span class="op">=</span> <span class="st">"-log10(p-value)"</span>, x <span class="op">=</span> <span class="fl">0.15</span>, y <span class="op">=</span> <span class="fl">1</span>, rot <span class="op">=</span> <span class="fl">90</span>,</span></span>
+<span class="r-in"><span>    fontsize <span class="op">=</span> <span class="fl">8</span>, fontface <span class="op">=</span> <span class="st">"bold"</span>, just <span class="op">=</span> <span class="st">"center"</span>,</span></span>
+<span class="r-in"><span>    default.units <span class="op">=</span> <span class="st">"inches"</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> text[text2]</span>
 <span class="r-plt img"><img src="annoSegments-1.png" alt="" width="1230" height="1050"></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">## Hide page guides</span></span>
-<span class="r-in"><span class="fu"><a href="pageGuideHide.html">pageGuideHide</a></span><span class="op">(</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## Hide page guides</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="pageGuideHide.html">pageGuideHide</a></span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="annoSegments-2.png" alt="" width="1230" height="1050"></span>
 </code></pre></div>
     </div>
@@ -252,7 +281,7 @@ placement and <a href="https://rdrr.io/r/grid/grid.grob.html" class="external-li
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
 </div>
 
       </footer></div>

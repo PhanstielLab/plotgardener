@@ -41,7 +41,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../../index.html">plotgardener</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.2.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.2.8</span>
       </span>
     </div>
 
@@ -150,271 +150,271 @@ about COVID-19 data consisting of the following plots:</p>
 <li>A United States map depicting COVID-19 cases:</li>
 </ol>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://scales.r-lib.org" class="external-link">scales</a></span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"COVID_USA_cases"</span><span class="op">)</span>
-
-<span class="va">US_map</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">COVID_USA_cases</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">long</span>, <span class="va">lat</span>, group <span class="op">=</span> <span class="va">group</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
-    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_void</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
-    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_polygon.html" class="external-link">geom_polygon</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="va">cases_100K</span><span class="op">)</span>, color <span class="op">=</span> <span class="st">"white"</span>, size <span class="op">=</span> <span class="fl">0.3</span><span class="op">)</span> <span class="op">+</span>
-    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_brewer.html" class="external-link">scale_fill_distiller</a></span><span class="op">(</span>
-        palette <span class="op">=</span> <span class="st">"YlGnBu"</span>, direction <span class="op">=</span> <span class="fl">1</span>,
-        labels <span class="op">=</span> <span class="fu"><a href="https://scales.r-lib.org/reference/label_number.html" class="external-link">label_number</a></span><span class="op">(</span>suffix <span class="op">=</span> <span class="st">""</span>, scale <span class="op">=</span> <span class="fl">1e-3</span>, accuracy <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>
-    <span class="op">)</span> <span class="op">+</span>
-    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>
-        legend.position <span class="op">=</span> <span class="st">"left"</span>,
-        legend.justification <span class="op">=</span> <span class="fu"><a href="../../reference/c.html">c</a></span><span class="op">(</span><span class="fl">0.5</span>, <span class="fl">0.95</span><span class="op">)</span>,
-        legend.title <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_blank</a></span><span class="op">(</span><span class="op">)</span>,
-        legend.text <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_text</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">7</span><span class="op">)</span>,
-        legend.key.width <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grid/unit.html" class="external-link">unit</a></span><span class="op">(</span><span class="fl">0.3</span>, <span class="st">"cm"</span><span class="op">)</span>,
-        legend.key.height <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grid/unit.html" class="external-link">unit</a></span><span class="op">(</span><span class="fl">0.4</span>, <span class="st">"cm"</span><span class="op">)</span>,
-        plot.title <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_text</a></span><span class="op">(</span>
-            hjust <span class="op">=</span> <span class="fl">0</span>, vjust <span class="op">=</span> <span class="op">-</span><span class="fl">1</span>,
-            family <span class="op">=</span> <span class="st">"ProximaNova"</span>, face <span class="op">=</span> <span class="st">"bold"</span>,
-            size <span class="op">=</span> <span class="fl">12</span>
-        <span class="op">)</span>,
-        plot.title.position <span class="op">=</span> <span class="st">"plot"</span>
-    <span class="op">)</span> <span class="op">+</span>
-    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Thousands of COVID-19 Cases per 100,000 People"</span><span class="op">)</span> <span class="op">+</span>
-    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/coord_fixed.html" class="external-link">coord_fixed</a></span><span class="op">(</span><span class="fl">1.3</span><span class="op">)</span>
-
-<span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">US_map</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://scales.r-lib.org" class="external-link">scales</a></span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"COVID_USA_cases"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">US_map</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">COVID_USA_cases</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">long</span>, <span class="va">lat</span>, group <span class="op">=</span> <span class="va">group</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_void</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_polygon.html" class="external-link">geom_polygon</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="va">cases_100K</span><span class="op">)</span>, color <span class="op">=</span> <span class="st">"white"</span>, size <span class="op">=</span> <span class="fl">0.3</span><span class="op">)</span> <span class="op">+</span></span>
+<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_brewer.html" class="external-link">scale_fill_distiller</a></span><span class="op">(</span></span>
+<span>        palette <span class="op">=</span> <span class="st">"YlGnBu"</span>, direction <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>        labels <span class="op">=</span> <span class="fu"><a href="https://scales.r-lib.org/reference/label_number.html" class="external-link">label_number</a></span><span class="op">(</span>suffix <span class="op">=</span> <span class="st">""</span>, scale <span class="op">=</span> <span class="fl">1e-3</span>, accuracy <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
+<span>    <span class="op">)</span> <span class="op">+</span></span>
+<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span></span>
+<span>        legend.position <span class="op">=</span> <span class="st">"left"</span>,</span>
+<span>        legend.justification <span class="op">=</span> <span class="fu"><a href="../../reference/c.html">c</a></span><span class="op">(</span><span class="fl">0.5</span>, <span class="fl">0.95</span><span class="op">)</span>,</span>
+<span>        legend.title <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_blank</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>        legend.text <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_text</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">7</span><span class="op">)</span>,</span>
+<span>        legend.key.width <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grid/unit.html" class="external-link">unit</a></span><span class="op">(</span><span class="fl">0.3</span>, <span class="st">"cm"</span><span class="op">)</span>,</span>
+<span>        legend.key.height <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grid/unit.html" class="external-link">unit</a></span><span class="op">(</span><span class="fl">0.4</span>, <span class="st">"cm"</span><span class="op">)</span>,</span>
+<span>        plot.title <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_text</a></span><span class="op">(</span></span>
+<span>            hjust <span class="op">=</span> <span class="fl">0</span>, vjust <span class="op">=</span> <span class="op">-</span><span class="fl">1</span>,</span>
+<span>            family <span class="op">=</span> <span class="st">"ProximaNova"</span>, face <span class="op">=</span> <span class="st">"bold"</span>,</span>
+<span>            size <span class="op">=</span> <span class="fl">12</span></span>
+<span>        <span class="op">)</span>,</span>
+<span>        plot.title.position <span class="op">=</span> <span class="st">"plot"</span></span>
+<span>    <span class="op">)</span> <span class="op">+</span></span>
+<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Thousands of COVID-19 Cases per 100,000 People"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/coord_fixed.html" class="external-link">coord_fixed</a></span><span class="op">(</span><span class="fl">1.3</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">US_map</span><span class="op">)</span></span></code></pre></div>
 <p><img src="incorporating_ggplots_files/figure-html/ggplot_01-1.png" width="450" style="display: block; margin: auto;"></p>
 <ol start="2" style="list-style-type: decimal">
 <li>Line plots showing the accumulation of COVID-19 cases over
 time:</li>
 </ol>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"COVID_NY_FL_tracking"</span><span class="op">)</span>
-
-<span class="co"># Format y-labels</span>
-<span class="va">ylabels</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">2000000</span>, by <span class="op">=</span> <span class="fl">500000</span><span class="op">)</span> <span class="op">/</span> <span class="fl">1e6</span>
-<span class="va">ylabels</span><span class="op">[</span><span class="fu"><a href="../../reference/c.html">c</a></span><span class="op">(</span><span class="fl">3</span>, <span class="fl">5</span><span class="op">)</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">round</a></span><span class="op">(</span><span class="va">ylabels</span><span class="op">[</span><span class="fu"><a href="../../reference/c.html">c</a></span><span class="op">(</span><span class="fl">3</span>, <span class="fl">5</span><span class="op">)</span><span class="op">]</span>, digits <span class="op">=</span> <span class="fl">0</span><span class="op">)</span>
-<span class="va">ylabels</span><span class="op">[</span><span class="fu"><a href="../../reference/c.html">c</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fl">4</span><span class="op">)</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">round</a></span><span class="op">(</span><span class="va">ylabels</span><span class="op">[</span><span class="fu"><a href="../../reference/c.html">c</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fl">4</span><span class="op">)</span><span class="op">]</span>, digits <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>
-<span class="va">ylabels</span><span class="op">[</span><span class="fl">5</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="va">ylabels</span><span class="op">[</span><span class="fl">5</span><span class="op">]</span>, <span class="st">"M cases"</span><span class="op">)</span>
-<span class="va">ylabels</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="st">""</span>
-
-<span class="va">casesNY</span> <span class="op">&lt;-</span> <span class="va">COVID_NY_FL_tracking</span><span class="op">[</span><span class="va">COVID_NY_FL_tracking</span><span class="op">$</span><span class="va">state</span> <span class="op">==</span> <span class="st">"new york"</span>, <span class="op">]</span>
-<span class="va">casesNYpoly</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/BiocGenerics/man/cbind.html" class="external-link">rbind</a></span><span class="op">(</span>
-    <span class="va">casesNY</span>,
-    <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>
-        <span class="st">"date"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="st">"2021-03-07"</span><span class="op">)</span>,
-        <span class="st">"state"</span> <span class="op">=</span> <span class="st">"new york"</span>,
-        <span class="st">"caseIncrease"</span> <span class="op">=</span> <span class="op">-</span><span class="fl">1</span> <span class="op">*</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">casesNY</span><span class="op">$</span><span class="va">caseIncrease</span><span class="op">)</span>
-    <span class="op">)</span>
-<span class="op">)</span>
-
-<span class="va">cases_NYline</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span>
-    <span class="va">casesNY</span>,
-    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">date</span>, y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/cumsum.html" class="external-link">cumsum</a></span><span class="op">(</span><span class="va">caseIncrease</span><span class="op">)</span><span class="op">)</span>
-<span class="op">)</span> <span class="op">+</span>
-    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_polygon.html" class="external-link">geom_polygon</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">casesNYpoly</span>, fill <span class="op">=</span> <span class="st">"#B8E6E6"</span><span class="op">)</span> <span class="op">+</span>
-    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_date.html" class="external-link">scale_x_date</a></span><span class="op">(</span>
-        labels <span class="op">=</span> <span class="fu"><a href="https://scales.r-lib.org/reference/date_format.html" class="external-link">date_format</a></span><span class="op">(</span><span class="st">"%b '%y"</span><span class="op">)</span>,
-        breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="fu"><a href="../../reference/c.html">c</a></span><span class="op">(</span><span class="st">"2020-05-01"</span>, <span class="st">"2020-09-01"</span>, <span class="st">"2021-01-01"</span><span class="op">)</span><span class="op">)</span>,
-        limits <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="fu"><a href="../../reference/c.html">c</a></span><span class="op">(</span><span class="st">"2020-01-29"</span>, <span class="st">"2021-03-07"</span><span class="op">)</span><span class="op">)</span>,
-        expand <span class="op">=</span> <span class="fu"><a href="../../reference/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0</span><span class="op">)</span>
-    <span class="op">)</span> <span class="op">+</span>
-    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html" class="external-link">scale_y_continuous</a></span><span class="op">(</span>labels <span class="op">=</span> <span class="va">ylabels</span>, position <span class="op">=</span> <span class="st">"right"</span>, expand <span class="op">=</span> <span class="fu"><a href="../../reference/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
-    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_abline.html" class="external-link">geom_hline</a></span><span class="op">(</span>
-        yintercept <span class="op">=</span> <span class="fu"><a href="../../reference/c.html">c</a></span><span class="op">(</span><span class="fl">500000</span>, <span class="fl">1000000</span>, <span class="fl">1500000</span>, <span class="fl">2000000</span><span class="op">)</span>,
-        color <span class="op">=</span> <span class="st">"white"</span>, linetype <span class="op">=</span> <span class="st">"dashed"</span>, size <span class="op">=</span> <span class="fl">0.3</span>
-    <span class="op">)</span> <span class="op">+</span>
-    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/coord_cartesian.html" class="external-link">coord_cartesian</a></span><span class="op">(</span>ylim <span class="op">=</span> <span class="fu"><a href="../../reference/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">2000000</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
-    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>
-        panel.background <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_rect</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="st">"transparent"</span>, color <span class="op">=</span> <span class="cn">NA</span><span class="op">)</span>,
-        text <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_text</a></span><span class="op">(</span>family <span class="op">=</span> <span class="st">"ProximaNova"</span><span class="op">)</span>,
-        panel.grid <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_blank</a></span><span class="op">(</span><span class="op">)</span>,
-        panel.border <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_blank</a></span><span class="op">(</span><span class="op">)</span>,
-        plot.background <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_rect</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="st">"transparent"</span>, color <span class="op">=</span> <span class="cn">NA</span><span class="op">)</span>,
-        axis.line.x.bottom <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_blank</a></span><span class="op">(</span><span class="op">)</span>,
-        axis.line.y <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_line</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">0.1</span>, color <span class="op">=</span> <span class="st">"#8F9BB3"</span><span class="op">)</span>,
-        axis.text.x <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_text</a></span><span class="op">(</span>
-            size <span class="op">=</span> <span class="fl">7</span>, hjust <span class="op">=</span> <span class="fl">0.5</span>,
-            margin <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">margin</a></span><span class="op">(</span>t <span class="op">=</span> <span class="op">-</span><span class="fl">10</span><span class="op">)</span>, color <span class="op">=</span> <span class="st">"black"</span>
-        <span class="op">)</span>,
-        axis.title.x <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_blank</a></span><span class="op">(</span><span class="op">)</span>,
-        axis.ticks.x <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_line</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">0.2</span>, color <span class="op">=</span> <span class="st">"black"</span><span class="op">)</span>,
-        axis.title.y <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_blank</a></span><span class="op">(</span><span class="op">)</span>,
-        axis.text.y <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_text</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">7</span>, color <span class="op">=</span> <span class="st">"black"</span><span class="op">)</span>,
-        axis.ticks.y <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_blank</a></span><span class="op">(</span><span class="op">)</span>,
-        axis.ticks.length.x.bottom <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grid/unit.html" class="external-link">unit</a></span><span class="op">(</span><span class="op">-</span><span class="fl">0.1</span>, <span class="st">"cm"</span><span class="op">)</span>,
-        plot.title <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_text</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">8</span>, hjust <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>,
-        plot.title.position <span class="op">=</span> <span class="st">"plot"</span>
-    <span class="op">)</span>
-
-<span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">cases_NYline</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"COVID_NY_FL_tracking"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Format y-labels</span></span>
+<span><span class="va">ylabels</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">2000000</span>, by <span class="op">=</span> <span class="fl">500000</span><span class="op">)</span> <span class="op">/</span> <span class="fl">1e6</span></span>
+<span><span class="va">ylabels</span><span class="op">[</span><span class="fu"><a href="../../reference/c.html">c</a></span><span class="op">(</span><span class="fl">3</span>, <span class="fl">5</span><span class="op">)</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">round</a></span><span class="op">(</span><span class="va">ylabels</span><span class="op">[</span><span class="fu"><a href="../../reference/c.html">c</a></span><span class="op">(</span><span class="fl">3</span>, <span class="fl">5</span><span class="op">)</span><span class="op">]</span>, digits <span class="op">=</span> <span class="fl">0</span><span class="op">)</span></span>
+<span><span class="va">ylabels</span><span class="op">[</span><span class="fu"><a href="../../reference/c.html">c</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fl">4</span><span class="op">)</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">round</a></span><span class="op">(</span><span class="va">ylabels</span><span class="op">[</span><span class="fu"><a href="../../reference/c.html">c</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fl">4</span><span class="op">)</span><span class="op">]</span>, digits <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
+<span><span class="va">ylabels</span><span class="op">[</span><span class="fl">5</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="va">ylabels</span><span class="op">[</span><span class="fl">5</span><span class="op">]</span>, <span class="st">"M cases"</span><span class="op">)</span></span>
+<span><span class="va">ylabels</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="st">""</span></span>
+<span></span>
+<span><span class="va">casesNY</span> <span class="op">&lt;-</span> <span class="va">COVID_NY_FL_tracking</span><span class="op">[</span><span class="va">COVID_NY_FL_tracking</span><span class="op">$</span><span class="va">state</span> <span class="op">==</span> <span class="st">"new york"</span>, <span class="op">]</span></span>
+<span><span class="va">casesNYpoly</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/BiocGenerics/man/cbind.html" class="external-link">rbind</a></span><span class="op">(</span></span>
+<span>    <span class="va">casesNY</span>,</span>
+<span>    <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span>
+<span>        <span class="st">"date"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="st">"2021-03-07"</span><span class="op">)</span>,</span>
+<span>        <span class="st">"state"</span> <span class="op">=</span> <span class="st">"new york"</span>,</span>
+<span>        <span class="st">"caseIncrease"</span> <span class="op">=</span> <span class="op">-</span><span class="fl">1</span> <span class="op">*</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">casesNY</span><span class="op">$</span><span class="va">caseIncrease</span><span class="op">)</span></span>
+<span>    <span class="op">)</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">cases_NYline</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span></span>
+<span>    <span class="va">casesNY</span>,</span>
+<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">date</span>, y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/cumsum.html" class="external-link">cumsum</a></span><span class="op">(</span><span class="va">caseIncrease</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="op">)</span> <span class="op">+</span></span>
+<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_polygon.html" class="external-link">geom_polygon</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">casesNYpoly</span>, fill <span class="op">=</span> <span class="st">"#B8E6E6"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_date.html" class="external-link">scale_x_date</a></span><span class="op">(</span></span>
+<span>        labels <span class="op">=</span> <span class="fu"><a href="https://scales.r-lib.org/reference/date_format.html" class="external-link">date_format</a></span><span class="op">(</span><span class="st">"%b '%y"</span><span class="op">)</span>,</span>
+<span>        breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="fu"><a href="../../reference/c.html">c</a></span><span class="op">(</span><span class="st">"2020-05-01"</span>, <span class="st">"2020-09-01"</span>, <span class="st">"2021-01-01"</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>        limits <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="fu"><a href="../../reference/c.html">c</a></span><span class="op">(</span><span class="st">"2020-01-29"</span>, <span class="st">"2021-03-07"</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>        expand <span class="op">=</span> <span class="fu"><a href="../../reference/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0</span><span class="op">)</span></span>
+<span>    <span class="op">)</span> <span class="op">+</span></span>
+<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html" class="external-link">scale_y_continuous</a></span><span class="op">(</span>labels <span class="op">=</span> <span class="va">ylabels</span>, position <span class="op">=</span> <span class="st">"right"</span>, expand <span class="op">=</span> <span class="fu"><a href="../../reference/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_abline.html" class="external-link">geom_hline</a></span><span class="op">(</span></span>
+<span>        yintercept <span class="op">=</span> <span class="fu"><a href="../../reference/c.html">c</a></span><span class="op">(</span><span class="fl">500000</span>, <span class="fl">1000000</span>, <span class="fl">1500000</span>, <span class="fl">2000000</span><span class="op">)</span>,</span>
+<span>        color <span class="op">=</span> <span class="st">"white"</span>, linetype <span class="op">=</span> <span class="st">"dashed"</span>, size <span class="op">=</span> <span class="fl">0.3</span></span>
+<span>    <span class="op">)</span> <span class="op">+</span></span>
+<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/coord_cartesian.html" class="external-link">coord_cartesian</a></span><span class="op">(</span>ylim <span class="op">=</span> <span class="fu"><a href="../../reference/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">2000000</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span></span>
+<span>        panel.background <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_rect</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="st">"transparent"</span>, color <span class="op">=</span> <span class="cn">NA</span><span class="op">)</span>,</span>
+<span>        text <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_text</a></span><span class="op">(</span>family <span class="op">=</span> <span class="st">"ProximaNova"</span><span class="op">)</span>,</span>
+<span>        panel.grid <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_blank</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>        panel.border <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_blank</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>        plot.background <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_rect</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="st">"transparent"</span>, color <span class="op">=</span> <span class="cn">NA</span><span class="op">)</span>,</span>
+<span>        axis.line.x.bottom <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_blank</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>        axis.line.y <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_line</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">0.1</span>, color <span class="op">=</span> <span class="st">"#8F9BB3"</span><span class="op">)</span>,</span>
+<span>        axis.text.x <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_text</a></span><span class="op">(</span></span>
+<span>            size <span class="op">=</span> <span class="fl">7</span>, hjust <span class="op">=</span> <span class="fl">0.5</span>,</span>
+<span>            margin <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">margin</a></span><span class="op">(</span>t <span class="op">=</span> <span class="op">-</span><span class="fl">10</span><span class="op">)</span>, color <span class="op">=</span> <span class="st">"black"</span></span>
+<span>        <span class="op">)</span>,</span>
+<span>        axis.title.x <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_blank</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>        axis.ticks.x <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_line</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">0.2</span>, color <span class="op">=</span> <span class="st">"black"</span><span class="op">)</span>,</span>
+<span>        axis.title.y <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_blank</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>        axis.text.y <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_text</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">7</span>, color <span class="op">=</span> <span class="st">"black"</span><span class="op">)</span>,</span>
+<span>        axis.ticks.y <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_blank</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>        axis.ticks.length.x.bottom <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grid/unit.html" class="external-link">unit</a></span><span class="op">(</span><span class="op">-</span><span class="fl">0.1</span>, <span class="st">"cm"</span><span class="op">)</span>,</span>
+<span>        plot.title <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_text</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">8</span>, hjust <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>,</span>
+<span>        plot.title.position <span class="op">=</span> <span class="st">"plot"</span></span>
+<span>    <span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">cases_NYline</span><span class="op">)</span></span></code></pre></div>
 <p><img src="incorporating_ggplots_files/figure-html/ggplot_02-1.png" width="450" style="display: block; margin: auto;"></p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">casesFL</span> <span class="op">&lt;-</span> <span class="va">COVID_NY_FL_tracking</span><span class="op">[</span><span class="va">COVID_NY_FL_tracking</span><span class="op">$</span><span class="va">state</span> <span class="op">==</span> <span class="st">"florida"</span>, <span class="op">]</span>
-<span class="va">casesFLpoly</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/BiocGenerics/man/cbind.html" class="external-link">rbind</a></span><span class="op">(</span>
-    <span class="va">casesFL</span>,
-    <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>
-        <span class="st">"date"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="st">"2021-03-07"</span><span class="op">)</span>,
-        <span class="st">"state"</span> <span class="op">=</span> <span class="st">"florida"</span>,
-        <span class="st">"caseIncrease"</span> <span class="op">=</span> <span class="op">-</span><span class="fl">1</span> <span class="op">*</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">casesFL</span><span class="op">$</span><span class="va">caseIncrease</span><span class="op">)</span>
-    <span class="op">)</span>
-<span class="op">)</span>
-
-<span class="va">cases_FLline</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span>
-    <span class="va">casesFL</span>,
-    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">date</span>, y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/cumsum.html" class="external-link">cumsum</a></span><span class="op">(</span><span class="va">caseIncrease</span><span class="op">)</span><span class="op">)</span>
-<span class="op">)</span> <span class="op">+</span>
-    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_polygon.html" class="external-link">geom_polygon</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">casesFLpoly</span>, fill <span class="op">=</span> <span class="st">"#B8E6E6"</span><span class="op">)</span> <span class="op">+</span>
-    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_date.html" class="external-link">scale_x_date</a></span><span class="op">(</span>
-        labels <span class="op">=</span> <span class="fu"><a href="https://scales.r-lib.org/reference/date_format.html" class="external-link">date_format</a></span><span class="op">(</span><span class="st">"%b '%y"</span><span class="op">)</span>,
-        breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="fu"><a href="../../reference/c.html">c</a></span><span class="op">(</span><span class="st">"2020-05-01"</span>, <span class="st">"2020-09-01"</span>, <span class="st">"2021-01-01"</span><span class="op">)</span><span class="op">)</span>,
-        limits <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="fu"><a href="../../reference/c.html">c</a></span><span class="op">(</span><span class="st">"2020-01-29"</span>, <span class="st">"2021-03-07"</span><span class="op">)</span><span class="op">)</span>,
-        expand <span class="op">=</span> <span class="fu"><a href="../../reference/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0</span><span class="op">)</span>
-    <span class="op">)</span> <span class="op">+</span>
-    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html" class="external-link">scale_y_continuous</a></span><span class="op">(</span>labels <span class="op">=</span> <span class="va">ylabels</span>, position <span class="op">=</span> <span class="st">"right"</span>, expand <span class="op">=</span> <span class="fu"><a href="../../reference/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
-    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_abline.html" class="external-link">geom_hline</a></span><span class="op">(</span>
-        yintercept <span class="op">=</span> <span class="fu"><a href="../../reference/c.html">c</a></span><span class="op">(</span><span class="fl">500000</span>, <span class="fl">1000000</span>, <span class="fl">1500000</span>, <span class="fl">2000000</span><span class="op">)</span>,
-        color <span class="op">=</span> <span class="st">"white"</span>, linetype <span class="op">=</span> <span class="st">"dashed"</span>, size <span class="op">=</span> <span class="fl">0.3</span>
-    <span class="op">)</span> <span class="op">+</span>
-    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/coord_cartesian.html" class="external-link">coord_cartesian</a></span><span class="op">(</span>ylim <span class="op">=</span> <span class="fu"><a href="../../reference/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">2000000</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
-    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>
-        panel.background <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_rect</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="st">"transparent"</span>, color <span class="op">=</span> <span class="cn">NA</span><span class="op">)</span>,
-        plot.background <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_rect</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="st">"transparent"</span>, color <span class="op">=</span> <span class="cn">NA</span><span class="op">)</span>,
-        text <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_text</a></span><span class="op">(</span>family <span class="op">=</span> <span class="st">"ProximaNova"</span><span class="op">)</span>,
-        panel.grid <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_blank</a></span><span class="op">(</span><span class="op">)</span>,
-        panel.border <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_blank</a></span><span class="op">(</span><span class="op">)</span>,
-        axis.line.x.bottom <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_blank</a></span><span class="op">(</span><span class="op">)</span>,
-        axis.line.y <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_line</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">0.1</span>, color <span class="op">=</span> <span class="st">"#8F9BB3"</span><span class="op">)</span>,
-        axis.title <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_blank</a></span><span class="op">(</span><span class="op">)</span>,
-        axis.text.y <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_text</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">7</span>, color <span class="op">=</span> <span class="st">"black"</span><span class="op">)</span>,
-        axis.text.x <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_text</a></span><span class="op">(</span>
-            size <span class="op">=</span> <span class="fl">7</span>, hjust <span class="op">=</span> <span class="fl">0.5</span>,
-            margin <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">margin</a></span><span class="op">(</span>t <span class="op">=</span> <span class="op">-</span><span class="fl">10</span><span class="op">)</span>, color <span class="op">=</span> <span class="st">"black"</span>
-        <span class="op">)</span>,
-        axis.ticks <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_line</a></span><span class="op">(</span>color <span class="op">=</span> <span class="st">"black"</span>, size <span class="op">=</span> <span class="fl">0.2</span><span class="op">)</span>,
-        axis.ticks.y <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_blank</a></span><span class="op">(</span><span class="op">)</span>,
-        axis.ticks.length.x.bottom <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grid/unit.html" class="external-link">unit</a></span><span class="op">(</span><span class="op">-</span><span class="fl">0.1</span>, <span class="st">"cm"</span><span class="op">)</span>,
-        plot.title <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_text</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">8</span>, hjust <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>,
-        plot.title.position <span class="op">=</span> <span class="st">"plot"</span>
-    <span class="op">)</span>
-
-<span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">cases_FLline</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">casesFL</span> <span class="op">&lt;-</span> <span class="va">COVID_NY_FL_tracking</span><span class="op">[</span><span class="va">COVID_NY_FL_tracking</span><span class="op">$</span><span class="va">state</span> <span class="op">==</span> <span class="st">"florida"</span>, <span class="op">]</span></span>
+<span><span class="va">casesFLpoly</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/BiocGenerics/man/cbind.html" class="external-link">rbind</a></span><span class="op">(</span></span>
+<span>    <span class="va">casesFL</span>,</span>
+<span>    <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span>
+<span>        <span class="st">"date"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="st">"2021-03-07"</span><span class="op">)</span>,</span>
+<span>        <span class="st">"state"</span> <span class="op">=</span> <span class="st">"florida"</span>,</span>
+<span>        <span class="st">"caseIncrease"</span> <span class="op">=</span> <span class="op">-</span><span class="fl">1</span> <span class="op">*</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">casesFL</span><span class="op">$</span><span class="va">caseIncrease</span><span class="op">)</span></span>
+<span>    <span class="op">)</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">cases_FLline</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span></span>
+<span>    <span class="va">casesFL</span>,</span>
+<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">date</span>, y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/cumsum.html" class="external-link">cumsum</a></span><span class="op">(</span><span class="va">caseIncrease</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="op">)</span> <span class="op">+</span></span>
+<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_polygon.html" class="external-link">geom_polygon</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">casesFLpoly</span>, fill <span class="op">=</span> <span class="st">"#B8E6E6"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_date.html" class="external-link">scale_x_date</a></span><span class="op">(</span></span>
+<span>        labels <span class="op">=</span> <span class="fu"><a href="https://scales.r-lib.org/reference/date_format.html" class="external-link">date_format</a></span><span class="op">(</span><span class="st">"%b '%y"</span><span class="op">)</span>,</span>
+<span>        breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="fu"><a href="../../reference/c.html">c</a></span><span class="op">(</span><span class="st">"2020-05-01"</span>, <span class="st">"2020-09-01"</span>, <span class="st">"2021-01-01"</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>        limits <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="fu"><a href="../../reference/c.html">c</a></span><span class="op">(</span><span class="st">"2020-01-29"</span>, <span class="st">"2021-03-07"</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>        expand <span class="op">=</span> <span class="fu"><a href="../../reference/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0</span><span class="op">)</span></span>
+<span>    <span class="op">)</span> <span class="op">+</span></span>
+<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html" class="external-link">scale_y_continuous</a></span><span class="op">(</span>labels <span class="op">=</span> <span class="va">ylabels</span>, position <span class="op">=</span> <span class="st">"right"</span>, expand <span class="op">=</span> <span class="fu"><a href="../../reference/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_abline.html" class="external-link">geom_hline</a></span><span class="op">(</span></span>
+<span>        yintercept <span class="op">=</span> <span class="fu"><a href="../../reference/c.html">c</a></span><span class="op">(</span><span class="fl">500000</span>, <span class="fl">1000000</span>, <span class="fl">1500000</span>, <span class="fl">2000000</span><span class="op">)</span>,</span>
+<span>        color <span class="op">=</span> <span class="st">"white"</span>, linetype <span class="op">=</span> <span class="st">"dashed"</span>, size <span class="op">=</span> <span class="fl">0.3</span></span>
+<span>    <span class="op">)</span> <span class="op">+</span></span>
+<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/coord_cartesian.html" class="external-link">coord_cartesian</a></span><span class="op">(</span>ylim <span class="op">=</span> <span class="fu"><a href="../../reference/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">2000000</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span></span>
+<span>        panel.background <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_rect</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="st">"transparent"</span>, color <span class="op">=</span> <span class="cn">NA</span><span class="op">)</span>,</span>
+<span>        plot.background <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_rect</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="st">"transparent"</span>, color <span class="op">=</span> <span class="cn">NA</span><span class="op">)</span>,</span>
+<span>        text <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_text</a></span><span class="op">(</span>family <span class="op">=</span> <span class="st">"ProximaNova"</span><span class="op">)</span>,</span>
+<span>        panel.grid <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_blank</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>        panel.border <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_blank</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>        axis.line.x.bottom <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_blank</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>        axis.line.y <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_line</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">0.1</span>, color <span class="op">=</span> <span class="st">"#8F9BB3"</span><span class="op">)</span>,</span>
+<span>        axis.title <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_blank</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>        axis.text.y <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_text</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">7</span>, color <span class="op">=</span> <span class="st">"black"</span><span class="op">)</span>,</span>
+<span>        axis.text.x <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_text</a></span><span class="op">(</span></span>
+<span>            size <span class="op">=</span> <span class="fl">7</span>, hjust <span class="op">=</span> <span class="fl">0.5</span>,</span>
+<span>            margin <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">margin</a></span><span class="op">(</span>t <span class="op">=</span> <span class="op">-</span><span class="fl">10</span><span class="op">)</span>, color <span class="op">=</span> <span class="st">"black"</span></span>
+<span>        <span class="op">)</span>,</span>
+<span>        axis.ticks <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_line</a></span><span class="op">(</span>color <span class="op">=</span> <span class="st">"black"</span>, size <span class="op">=</span> <span class="fl">0.2</span><span class="op">)</span>,</span>
+<span>        axis.ticks.y <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_blank</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>        axis.ticks.length.x.bottom <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grid/unit.html" class="external-link">unit</a></span><span class="op">(</span><span class="op">-</span><span class="fl">0.1</span>, <span class="st">"cm"</span><span class="op">)</span>,</span>
+<span>        plot.title <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_text</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">8</span>, hjust <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>,</span>
+<span>        plot.title.position <span class="op">=</span> <span class="st">"plot"</span></span>
+<span>    <span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">cases_FLline</span><span class="op">)</span></span></code></pre></div>
 <p><img src="incorporating_ggplots_files/figure-html/ggplot_03-1.png" width="450" style="display: block; margin: auto;"></p>
 <ol start="3" style="list-style-type: decimal">
 <li>Pie charts of COVID-19 vaccination status:</li>
 </ol>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"COVID_NY_FL_vaccines"</span><span class="op">)</span>
-
-<span class="va">vaccines_NYpie</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span>
-    <span class="va">COVID_NY_FL_vaccines</span><span class="op">[</span><span class="va">COVID_NY_FL_vaccines</span><span class="op">$</span><span class="va">state</span> <span class="op">==</span> <span class="st">"new york"</span>, <span class="op">]</span>,
-    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="st">""</span>, y <span class="op">=</span> <span class="va">value</span>, fill <span class="op">=</span> <span class="va">vax_group</span><span class="op">)</span>
-<span class="op">)</span> <span class="op">+</span>
-    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html" class="external-link">geom_bar</a></span><span class="op">(</span>width <span class="op">=</span> <span class="fl">1</span>, stat <span class="op">=</span> <span class="st">"identity"</span><span class="op">)</span> <span class="op">+</span>
-    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_void</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
-    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_manual.html" class="external-link">scale_fill_manual</a></span><span class="op">(</span>values <span class="op">=</span> <span class="fu"><a href="../../reference/c.html">c</a></span><span class="op">(</span><span class="st">"#FBAA7E"</span>, <span class="st">"#F7EEBF"</span>, <span class="st">"#FBCB88"</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
-    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/coord_polar.html" class="external-link">coord_polar</a></span><span class="op">(</span>theta <span class="op">=</span> <span class="st">"y"</span>, start <span class="op">=</span> <span class="fl">2.125</span>, clip <span class="op">=</span> <span class="st">"off"</span><span class="op">)</span> <span class="op">+</span>
-    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_text.html" class="external-link">geom_text</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>
-        x <span class="op">=</span> <span class="fu"><a href="../../reference/c.html">c</a></span><span class="op">(</span><span class="fl">1.9</span>, <span class="fl">2</span>, <span class="fl">1.9</span><span class="op">)</span>,
-        y <span class="op">=</span> <span class="fu"><a href="../../reference/c.html">c</a></span><span class="op">(</span><span class="fl">1.65e7</span>, <span class="fl">1.3e6</span>, <span class="fl">7.8e6</span><span class="op">)</span>,
-        label <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="va">percent</span>, <span class="st">"%"</span><span class="op">)</span>
-    <span class="op">)</span>,
-    size <span class="op">=</span> <span class="fl">2.25</span>, color <span class="op">=</span> <span class="st">"black"</span>
-    <span class="op">)</span> <span class="op">+</span>
-    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>
-        legend.position <span class="op">=</span> <span class="st">"none"</span>,
-        plot.title <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_text</a></span><span class="op">(</span>
-            hjust <span class="op">=</span> <span class="fl">0.5</span>, vjust <span class="op">=</span> <span class="op">-</span><span class="fl">3.5</span>, size <span class="op">=</span> <span class="fl">10</span>,
-            family <span class="op">=</span> <span class="st">"ProximaNova"</span>, face <span class="op">=</span> <span class="st">"bold"</span>
-        <span class="op">)</span>,
-        text <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_text</a></span><span class="op">(</span>family <span class="op">=</span> <span class="st">"ProximaNova"</span><span class="op">)</span>
-    <span class="op">)</span> <span class="op">+</span>
-    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"New York"</span><span class="op">)</span>
-
-<span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">vaccines_NYpie</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"COVID_NY_FL_vaccines"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">vaccines_NYpie</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span></span>
+<span>    <span class="va">COVID_NY_FL_vaccines</span><span class="op">[</span><span class="va">COVID_NY_FL_vaccines</span><span class="op">$</span><span class="va">state</span> <span class="op">==</span> <span class="st">"new york"</span>, <span class="op">]</span>,</span>
+<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="st">""</span>, y <span class="op">=</span> <span class="va">value</span>, fill <span class="op">=</span> <span class="va">vax_group</span><span class="op">)</span></span>
+<span><span class="op">)</span> <span class="op">+</span></span>
+<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html" class="external-link">geom_bar</a></span><span class="op">(</span>width <span class="op">=</span> <span class="fl">1</span>, stat <span class="op">=</span> <span class="st">"identity"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_void</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_manual.html" class="external-link">scale_fill_manual</a></span><span class="op">(</span>values <span class="op">=</span> <span class="fu"><a href="../../reference/c.html">c</a></span><span class="op">(</span><span class="st">"#FBAA7E"</span>, <span class="st">"#F7EEBF"</span>, <span class="st">"#FBCB88"</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/coord_polar.html" class="external-link">coord_polar</a></span><span class="op">(</span>theta <span class="op">=</span> <span class="st">"y"</span>, start <span class="op">=</span> <span class="fl">2.125</span>, clip <span class="op">=</span> <span class="st">"off"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_text.html" class="external-link">geom_text</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span></span>
+<span>        x <span class="op">=</span> <span class="fu"><a href="../../reference/c.html">c</a></span><span class="op">(</span><span class="fl">1.9</span>, <span class="fl">2</span>, <span class="fl">1.9</span><span class="op">)</span>,</span>
+<span>        y <span class="op">=</span> <span class="fu"><a href="../../reference/c.html">c</a></span><span class="op">(</span><span class="fl">1.65e7</span>, <span class="fl">1.3e6</span>, <span class="fl">7.8e6</span><span class="op">)</span>,</span>
+<span>        label <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="va">percent</span>, <span class="st">"%"</span><span class="op">)</span></span>
+<span>    <span class="op">)</span>,</span>
+<span>    size <span class="op">=</span> <span class="fl">2.25</span>, color <span class="op">=</span> <span class="st">"black"</span></span>
+<span>    <span class="op">)</span> <span class="op">+</span></span>
+<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span></span>
+<span>        legend.position <span class="op">=</span> <span class="st">"none"</span>,</span>
+<span>        plot.title <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_text</a></span><span class="op">(</span></span>
+<span>            hjust <span class="op">=</span> <span class="fl">0.5</span>, vjust <span class="op">=</span> <span class="op">-</span><span class="fl">3.5</span>, size <span class="op">=</span> <span class="fl">10</span>,</span>
+<span>            family <span class="op">=</span> <span class="st">"ProximaNova"</span>, face <span class="op">=</span> <span class="st">"bold"</span></span>
+<span>        <span class="op">)</span>,</span>
+<span>        text <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_text</a></span><span class="op">(</span>family <span class="op">=</span> <span class="st">"ProximaNova"</span><span class="op">)</span></span>
+<span>    <span class="op">)</span> <span class="op">+</span></span>
+<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"New York"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">vaccines_NYpie</span><span class="op">)</span></span></code></pre></div>
 <p><img src="incorporating_ggplots_files/figure-html/ggplot_04-1.png" width="450" style="display: block; margin: auto;"></p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">vaccines_FLpie</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span>
-    <span class="va">COVID_NY_FL_vaccines</span><span class="op">[</span><span class="va">COVID_NY_FL_vaccines</span><span class="op">$</span><span class="va">state</span> <span class="op">==</span> <span class="st">"florida"</span>, <span class="op">]</span>,
-    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="st">""</span>, y <span class="op">=</span> <span class="va">value</span>, fill <span class="op">=</span> <span class="va">vax_group</span><span class="op">)</span>
-<span class="op">)</span> <span class="op">+</span>
-    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html" class="external-link">geom_bar</a></span><span class="op">(</span>width <span class="op">=</span> <span class="fl">1</span>, stat <span class="op">=</span> <span class="st">"identity"</span><span class="op">)</span> <span class="op">+</span>
-    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_manual.html" class="external-link">scale_fill_manual</a></span><span class="op">(</span>values <span class="op">=</span> <span class="fu"><a href="../../reference/c.html">c</a></span><span class="op">(</span><span class="st">"#FBAA7E"</span>, <span class="st">"#F7EEBF"</span>, <span class="st">"#FBCB88"</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
-    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_void</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
-    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/coord_polar.html" class="external-link">coord_polar</a></span><span class="op">(</span>theta <span class="op">=</span> <span class="st">"y"</span>, start <span class="op">=</span> <span class="va">pi</span> <span class="op">/</span> <span class="fl">1.78</span>, clip <span class="op">=</span> <span class="st">"off"</span><span class="op">)</span> <span class="op">+</span>
-    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_text.html" class="external-link">geom_text</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>
-        x <span class="op">=</span> <span class="fu"><a href="../../reference/c.html">c</a></span><span class="op">(</span><span class="fl">1.95</span>, <span class="fl">2</span>, <span class="fl">1.9</span><span class="op">)</span>,
-        y <span class="op">=</span> <span class="fu"><a href="../../reference/c.html">c</a></span><span class="op">(</span><span class="fl">1.9e7</span>, <span class="fl">1.83e6</span>, <span class="fl">9.6e6</span><span class="op">)</span>,
-        label <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="va">percent</span>, <span class="st">"%"</span><span class="op">)</span>
-    <span class="op">)</span>,
-    color <span class="op">=</span> <span class="st">"black"</span>,
-    size <span class="op">=</span> <span class="fl">2.25</span>
-    <span class="op">)</span> <span class="op">+</span>
-    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>
-        legend.position <span class="op">=</span> <span class="st">"none"</span>,
-        plot.title <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_text</a></span><span class="op">(</span>
-            hjust <span class="op">=</span> <span class="fl">0.5</span>, vjust <span class="op">=</span> <span class="op">-</span><span class="fl">4</span>, size <span class="op">=</span> <span class="fl">10</span>,
-            family <span class="op">=</span> <span class="st">"ProximaNova"</span>, face <span class="op">=</span> <span class="st">"bold"</span>
-        <span class="op">)</span>,
-        text <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_text</a></span><span class="op">(</span>family <span class="op">=</span> <span class="st">"ProximaNova"</span><span class="op">)</span>
-    <span class="op">)</span> <span class="op">+</span>
-    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Florida"</span><span class="op">)</span>
-
-<span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">vaccines_FLpie</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">vaccines_FLpie</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span></span>
+<span>    <span class="va">COVID_NY_FL_vaccines</span><span class="op">[</span><span class="va">COVID_NY_FL_vaccines</span><span class="op">$</span><span class="va">state</span> <span class="op">==</span> <span class="st">"florida"</span>, <span class="op">]</span>,</span>
+<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="st">""</span>, y <span class="op">=</span> <span class="va">value</span>, fill <span class="op">=</span> <span class="va">vax_group</span><span class="op">)</span></span>
+<span><span class="op">)</span> <span class="op">+</span></span>
+<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html" class="external-link">geom_bar</a></span><span class="op">(</span>width <span class="op">=</span> <span class="fl">1</span>, stat <span class="op">=</span> <span class="st">"identity"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_manual.html" class="external-link">scale_fill_manual</a></span><span class="op">(</span>values <span class="op">=</span> <span class="fu"><a href="../../reference/c.html">c</a></span><span class="op">(</span><span class="st">"#FBAA7E"</span>, <span class="st">"#F7EEBF"</span>, <span class="st">"#FBCB88"</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_void</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/coord_polar.html" class="external-link">coord_polar</a></span><span class="op">(</span>theta <span class="op">=</span> <span class="st">"y"</span>, start <span class="op">=</span> <span class="va">pi</span> <span class="op">/</span> <span class="fl">1.78</span>, clip <span class="op">=</span> <span class="st">"off"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_text.html" class="external-link">geom_text</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span></span>
+<span>        x <span class="op">=</span> <span class="fu"><a href="../../reference/c.html">c</a></span><span class="op">(</span><span class="fl">1.95</span>, <span class="fl">2</span>, <span class="fl">1.9</span><span class="op">)</span>,</span>
+<span>        y <span class="op">=</span> <span class="fu"><a href="../../reference/c.html">c</a></span><span class="op">(</span><span class="fl">1.9e7</span>, <span class="fl">1.83e6</span>, <span class="fl">9.6e6</span><span class="op">)</span>,</span>
+<span>        label <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="va">percent</span>, <span class="st">"%"</span><span class="op">)</span></span>
+<span>    <span class="op">)</span>,</span>
+<span>    color <span class="op">=</span> <span class="st">"black"</span>,</span>
+<span>    size <span class="op">=</span> <span class="fl">2.25</span></span>
+<span>    <span class="op">)</span> <span class="op">+</span></span>
+<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span></span>
+<span>        legend.position <span class="op">=</span> <span class="st">"none"</span>,</span>
+<span>        plot.title <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_text</a></span><span class="op">(</span></span>
+<span>            hjust <span class="op">=</span> <span class="fl">0.5</span>, vjust <span class="op">=</span> <span class="op">-</span><span class="fl">4</span>, size <span class="op">=</span> <span class="fl">10</span>,</span>
+<span>            family <span class="op">=</span> <span class="st">"ProximaNova"</span>, face <span class="op">=</span> <span class="st">"bold"</span></span>
+<span>        <span class="op">)</span>,</span>
+<span>        text <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_text</a></span><span class="op">(</span>family <span class="op">=</span> <span class="st">"ProximaNova"</span><span class="op">)</span></span>
+<span>    <span class="op">)</span> <span class="op">+</span></span>
+<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Florida"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">vaccines_FLpie</span><span class="op">)</span></span></code></pre></div>
 <p><img src="incorporating_ggplots_files/figure-html/ggplot_05-1.png" width="450" style="display: block; margin: auto;"></p>
 <p>We can now easily overlap and size all these <code>ggplots</code> by
 passing our saved plot objects into <code><a href="../../reference/plotGG.html">plotGG()</a></code>:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../../reference/pageCreate.html">pageCreate</a></span><span class="op">(</span>width <span class="op">=</span> <span class="fl">9.5</span>, height <span class="op">=</span> <span class="fl">3.5</span>, default.units <span class="op">=</span> <span class="st">"inches"</span><span class="op">)</span>
-
-<span class="fu"><a href="../../reference/plotGG.html">plotGG</a></span><span class="op">(</span>
-    plot <span class="op">=</span> <span class="va">US_map</span>,
-    x <span class="op">=</span> <span class="fl">0.1</span>, y <span class="op">=</span> <span class="fl">0</span>,
-    width <span class="op">=</span> <span class="fl">6.5</span>, height <span class="op">=</span> <span class="fl">3.5</span>, just <span class="op">=</span> <span class="fu"><a href="../../reference/c.html">c</a></span><span class="op">(</span><span class="st">"left"</span>, <span class="st">"top"</span><span class="op">)</span>
-<span class="op">)</span>
-<span class="fu"><a href="../../reference/plotGG.html">plotGG</a></span><span class="op">(</span>
-    plot <span class="op">=</span> <span class="va">cases_NYline</span>,
-    x <span class="op">=</span> <span class="fl">6.25</span>, y <span class="op">=</span> <span class="fl">1.8</span>,
-    width <span class="op">=</span> <span class="fl">3.025</span>, height <span class="op">=</span> <span class="fl">1.4</span>, just <span class="op">=</span> <span class="fu"><a href="../../reference/c.html">c</a></span><span class="op">(</span><span class="st">"left"</span>, <span class="st">"bottom"</span><span class="op">)</span>
-<span class="op">)</span>
-<span class="fu"><a href="../../reference/plotGG.html">plotGG</a></span><span class="op">(</span>
-    plot <span class="op">=</span> <span class="va">cases_FLline</span>,
-    x <span class="op">=</span> <span class="fl">6.25</span>, y <span class="op">=</span> <span class="fl">3.5</span>,
-    width <span class="op">=</span> <span class="fl">3.025</span>, height <span class="op">=</span> <span class="fl">1.4</span>, just <span class="op">=</span> <span class="fu"><a href="../../reference/c.html">c</a></span><span class="op">(</span><span class="st">"left"</span>, <span class="st">"bottom"</span><span class="op">)</span>
-<span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="../../reference/pageCreate.html">pageCreate</a></span><span class="op">(</span>width <span class="op">=</span> <span class="fl">9.5</span>, height <span class="op">=</span> <span class="fl">3.5</span>, default.units <span class="op">=</span> <span class="st">"inches"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="../../reference/plotGG.html">plotGG</a></span><span class="op">(</span></span>
+<span>    plot <span class="op">=</span> <span class="va">US_map</span>,</span>
+<span>    x <span class="op">=</span> <span class="fl">0.1</span>, y <span class="op">=</span> <span class="fl">0</span>,</span>
+<span>    width <span class="op">=</span> <span class="fl">6.5</span>, height <span class="op">=</span> <span class="fl">3.5</span>, just <span class="op">=</span> <span class="fu"><a href="../../reference/c.html">c</a></span><span class="op">(</span><span class="st">"left"</span>, <span class="st">"top"</span><span class="op">)</span></span>
+<span><span class="op">)</span></span>
+<span><span class="fu"><a href="../../reference/plotGG.html">plotGG</a></span><span class="op">(</span></span>
+<span>    plot <span class="op">=</span> <span class="va">cases_NYline</span>,</span>
+<span>    x <span class="op">=</span> <span class="fl">6.25</span>, y <span class="op">=</span> <span class="fl">1.8</span>,</span>
+<span>    width <span class="op">=</span> <span class="fl">3.025</span>, height <span class="op">=</span> <span class="fl">1.4</span>, just <span class="op">=</span> <span class="fu"><a href="../../reference/c.html">c</a></span><span class="op">(</span><span class="st">"left"</span>, <span class="st">"bottom"</span><span class="op">)</span></span>
+<span><span class="op">)</span></span>
+<span><span class="fu"><a href="../../reference/plotGG.html">plotGG</a></span><span class="op">(</span></span>
+<span>    plot <span class="op">=</span> <span class="va">cases_FLline</span>,</span>
+<span>    x <span class="op">=</span> <span class="fl">6.25</span>, y <span class="op">=</span> <span class="fl">3.5</span>,</span>
+<span>    width <span class="op">=</span> <span class="fl">3.025</span>, height <span class="op">=</span> <span class="fl">1.4</span>, just <span class="op">=</span> <span class="fu"><a href="../../reference/c.html">c</a></span><span class="op">(</span><span class="st">"left"</span>, <span class="st">"bottom"</span><span class="op">)</span></span>
+<span><span class="op">)</span></span></code></pre></div>
 <p><img src="incorporating_ggplots_files/figure-html/gg_plot05-1.png" width="1725" style="display: block; margin: auto;"></p>
 <p>In particular, <code>plotgardener</code> makes it easy to resize and
 place our pie charts in a layout that overlaps our line plots without it
 affecting the sizing of the other plots on the page:</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../../reference/plotGG.html">plotGG</a></span><span class="op">(</span>
-    plot <span class="op">=</span> <span class="va">vaccines_NYpie</span>,
-    x <span class="op">=</span> <span class="fl">6.37</span>, y <span class="op">=</span> <span class="op">-</span><span class="fl">0.05</span>,
-    width <span class="op">=</span> <span class="fl">1.45</span>, height <span class="op">=</span> <span class="fl">1.45</span>, just <span class="op">=</span> <span class="fu"><a href="../../reference/c.html">c</a></span><span class="op">(</span><span class="st">"left"</span>, <span class="st">"top"</span><span class="op">)</span>
-<span class="op">)</span>
-<span class="fu"><a href="../../reference/plotGG.html">plotGG</a></span><span class="op">(</span>
-    plot <span class="op">=</span> <span class="va">vaccines_FLpie</span>,
-    x <span class="op">=</span> <span class="fl">6.37</span>, y <span class="op">=</span> <span class="fl">1.67</span>,
-    width <span class="op">=</span> <span class="fl">1.45</span>, height <span class="op">=</span> <span class="fl">1.45</span>, just <span class="op">=</span> <span class="fu"><a href="../../reference/c.html">c</a></span><span class="op">(</span><span class="st">"left"</span>, <span class="st">"top"</span><span class="op">)</span>
-<span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="../../reference/plotGG.html">plotGG</a></span><span class="op">(</span></span>
+<span>    plot <span class="op">=</span> <span class="va">vaccines_NYpie</span>,</span>
+<span>    x <span class="op">=</span> <span class="fl">6.37</span>, y <span class="op">=</span> <span class="op">-</span><span class="fl">0.05</span>,</span>
+<span>    width <span class="op">=</span> <span class="fl">1.45</span>, height <span class="op">=</span> <span class="fl">1.45</span>, just <span class="op">=</span> <span class="fu"><a href="../../reference/c.html">c</a></span><span class="op">(</span><span class="st">"left"</span>, <span class="st">"top"</span><span class="op">)</span></span>
+<span><span class="op">)</span></span>
+<span><span class="fu"><a href="../../reference/plotGG.html">plotGG</a></span><span class="op">(</span></span>
+<span>    plot <span class="op">=</span> <span class="va">vaccines_FLpie</span>,</span>
+<span>    x <span class="op">=</span> <span class="fl">6.37</span>, y <span class="op">=</span> <span class="fl">1.67</span>,</span>
+<span>    width <span class="op">=</span> <span class="fl">1.45</span>, height <span class="op">=</span> <span class="fl">1.45</span>, just <span class="op">=</span> <span class="fu"><a href="../../reference/c.html">c</a></span><span class="op">(</span><span class="st">"left"</span>, <span class="st">"top"</span><span class="op">)</span></span>
+<span><span class="op">)</span></span></code></pre></div>
 <p><img src="incorporating_ggplots_files/figure-html/gg_plot06-1.png" width="1725" style="display: block; margin: auto;"></p>
 <p>We can also easily add additional elements to further enhance our
 complex <code>ggplot</code> arrangments, like a precise placement of
 text labels:</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../../reference/plotText.html">plotText</a></span><span class="op">(</span>
-    label <span class="op">=</span> <span class="fu"><a href="../../reference/c.html">c</a></span><span class="op">(</span><span class="st">"not"</span>, <span class="st">"partially"</span>, <span class="st">"fully vaccinated"</span><span class="op">)</span>,
-    fontfamily <span class="op">=</span> <span class="st">"ProximaNova"</span>, fontcolor <span class="op">=</span> <span class="st">"black"</span>, fontsize <span class="op">=</span> <span class="fl">7</span>,
-    x <span class="op">=</span> <span class="fu"><a href="../../reference/c.html">c</a></span><span class="op">(</span><span class="fl">6.58</span>, <span class="fl">7.3</span>, <span class="fl">7.435</span><span class="op">)</span>,
-    y <span class="op">=</span> <span class="fu"><a href="../../reference/c.html">c</a></span><span class="op">(</span><span class="fl">0.74</span>, <span class="fl">1.12</span>, <span class="fl">0.51</span><span class="op">)</span>, just <span class="op">=</span> <span class="fu"><a href="../../reference/c.html">c</a></span><span class="op">(</span><span class="st">"left"</span>, <span class="st">"bottom"</span><span class="op">)</span>
-<span class="op">)</span>
-<span class="fu"><a href="../../reference/plotText.html">plotText</a></span><span class="op">(</span>
-    label <span class="op">=</span> <span class="fu"><a href="../../reference/c.html">c</a></span><span class="op">(</span><span class="st">"not"</span>, <span class="st">"partially"</span>, <span class="st">"fully vaccinated"</span><span class="op">)</span>,
-    fontfamily <span class="op">=</span> <span class="st">"ProximaNova"</span>, fontcolor <span class="op">=</span> <span class="st">"black"</span>, fontsize <span class="op">=</span> <span class="fl">7</span>,
-    x <span class="op">=</span> <span class="fu"><a href="../../reference/c.html">c</a></span><span class="op">(</span><span class="fl">6.58</span>, <span class="fl">7.39</span>, <span class="fl">7.435</span><span class="op">)</span>,
-    y <span class="op">=</span> <span class="fu"><a href="../../reference/c.html">c</a></span><span class="op">(</span><span class="fl">2.47</span>, <span class="fl">2.75</span>, <span class="fl">2.2</span><span class="op">)</span>, just <span class="op">=</span> <span class="fu"><a href="../../reference/c.html">c</a></span><span class="op">(</span><span class="st">"left"</span>, <span class="st">"bottom"</span><span class="op">)</span>
-<span class="op">)</span>
-<span class="fu"><a href="../../reference/plotText.html">plotText</a></span><span class="op">(</span>label <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/BiocGenerics/man/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="st">"Sources: The COVID Tracking Project;"</span>,
-                        <span class="st">"Johns Hopkins Center for Civic Impact"</span><span class="op">)</span>,
-            fontfamily <span class="op">=</span> <span class="st">"ProximaNova"</span>, fontcolor <span class="op">=</span> <span class="st">"black"</span>,
-            fontsize <span class="op">=</span> <span class="fl">7</span>, fontface <span class="op">=</span> <span class="st">"italic"</span>,
-            x <span class="op">=</span> <span class="fl">0.15</span>, y <span class="op">=</span> <span class="fl">3.45</span>, just <span class="op">=</span> <span class="fu"><a href="../../reference/c.html">c</a></span><span class="op">(</span><span class="st">"left"</span>, <span class="st">"bottom"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="../../reference/plotText.html">plotText</a></span><span class="op">(</span></span>
+<span>    label <span class="op">=</span> <span class="fu"><a href="../../reference/c.html">c</a></span><span class="op">(</span><span class="st">"not"</span>, <span class="st">"partially"</span>, <span class="st">"fully vaccinated"</span><span class="op">)</span>,</span>
+<span>    fontfamily <span class="op">=</span> <span class="st">"ProximaNova"</span>, fontcolor <span class="op">=</span> <span class="st">"black"</span>, fontsize <span class="op">=</span> <span class="fl">7</span>,</span>
+<span>    x <span class="op">=</span> <span class="fu"><a href="../../reference/c.html">c</a></span><span class="op">(</span><span class="fl">6.58</span>, <span class="fl">7.3</span>, <span class="fl">7.435</span><span class="op">)</span>,</span>
+<span>    y <span class="op">=</span> <span class="fu"><a href="../../reference/c.html">c</a></span><span class="op">(</span><span class="fl">0.74</span>, <span class="fl">1.12</span>, <span class="fl">0.51</span><span class="op">)</span>, just <span class="op">=</span> <span class="fu"><a href="../../reference/c.html">c</a></span><span class="op">(</span><span class="st">"left"</span>, <span class="st">"bottom"</span><span class="op">)</span></span>
+<span><span class="op">)</span></span>
+<span><span class="fu"><a href="../../reference/plotText.html">plotText</a></span><span class="op">(</span></span>
+<span>    label <span class="op">=</span> <span class="fu"><a href="../../reference/c.html">c</a></span><span class="op">(</span><span class="st">"not"</span>, <span class="st">"partially"</span>, <span class="st">"fully vaccinated"</span><span class="op">)</span>,</span>
+<span>    fontfamily <span class="op">=</span> <span class="st">"ProximaNova"</span>, fontcolor <span class="op">=</span> <span class="st">"black"</span>, fontsize <span class="op">=</span> <span class="fl">7</span>,</span>
+<span>    x <span class="op">=</span> <span class="fu"><a href="../../reference/c.html">c</a></span><span class="op">(</span><span class="fl">6.58</span>, <span class="fl">7.39</span>, <span class="fl">7.435</span><span class="op">)</span>,</span>
+<span>    y <span class="op">=</span> <span class="fu"><a href="../../reference/c.html">c</a></span><span class="op">(</span><span class="fl">2.47</span>, <span class="fl">2.75</span>, <span class="fl">2.2</span><span class="op">)</span>, just <span class="op">=</span> <span class="fu"><a href="../../reference/c.html">c</a></span><span class="op">(</span><span class="st">"left"</span>, <span class="st">"bottom"</span><span class="op">)</span></span>
+<span><span class="op">)</span></span>
+<span><span class="fu"><a href="../../reference/plotText.html">plotText</a></span><span class="op">(</span>label <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/BiocGenerics/man/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="st">"Sources: The COVID Tracking Project;"</span>,</span>
+<span>                        <span class="st">"Johns Hopkins Center for Civic Impact"</span><span class="op">)</span>,</span>
+<span>            fontfamily <span class="op">=</span> <span class="st">"ProximaNova"</span>, fontcolor <span class="op">=</span> <span class="st">"black"</span>,</span>
+<span>            fontsize <span class="op">=</span> <span class="fl">7</span>, fontface <span class="op">=</span> <span class="st">"italic"</span>,</span>
+<span>            x <span class="op">=</span> <span class="fl">0.15</span>, y <span class="op">=</span> <span class="fl">3.45</span>, just <span class="op">=</span> <span class="fu"><a href="../../reference/c.html">c</a></span><span class="op">(</span><span class="st">"left"</span>, <span class="st">"bottom"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p>We are then left with a complex, precise, and elegant arrangement of
 <code>ggplots</code> as if we had arranged them together with graphic
 design software:</p>
@@ -433,196 +433,200 @@ graphics, it is possible to incorporate them into
 <p>For example, let’s say we made a heatmap representing the density of
 ChIP-seq data at a particular peak:</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/jokergoo/ComplexHeatmap" class="external-link">ComplexHeatmap</a></span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="http://purrr.tidyverse.org" class="external-link">purrr</a></span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">RColorBrewer</span><span class="op">)</span>
-
-<span class="co"># Simulated data</span>
-<span class="va">genmat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html" class="external-link">map</a></span><span class="op">(</span>
-    <span class="fl">1</span><span class="op">:</span><span class="fl">2000</span>,
-    <span class="kw">function</span><span class="op">(</span><span class="va">i</span><span class="op">)</span> <span class="op">{</span>
-        <span class="fu"><a href="../../reference/c.html">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/BiocGenerics/man/sort.html" class="external-link">sort</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">abs</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">50</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">25</span><span class="op">]</span>, <span class="fu"><a href="https://rdrr.io/pkg/S4Vectors/man/Vector-class.html" class="external-link">rev</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/BiocGenerics/man/sort.html" class="external-link">sort</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">abs</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">50</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">25</span><span class="op">]</span><span class="op">)</span><span class="op">)</span> <span class="op">*</span> <span class="va">i</span><span class="op">/</span><span class="fl">5000</span>
-    <span class="op">}</span>
-<span class="op">)</span> <span class="op"><a href="https://purrr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/pkg/BiocGenerics/man/do.call.html" class="external-link">do.call</a></span><span class="op">(</span><span class="va">rbind</span>, <span class="va">.</span><span class="op">)</span>
-<span class="va">genmat</span> <span class="op">&lt;-</span> <span class="va">genmat</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/pkg/BiocGenerics/man/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">genmat</span><span class="op">)</span><span class="op">:</span><span class="fl">1</span>,<span class="op">]</span>
-<span class="fu"><a href="https://rdrr.io/pkg/ComplexHeatmap/man/Heatmap.html" class="external-link">Heatmap</a></span><span class="op">(</span><span class="va">genmat</span>, col <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grDevices/colorRamp.html" class="external-link">colorRampPalette</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/RColorBrewer/man/ColorBrewer.html" class="external-link">brewer.pal</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fl">9</span>, <span class="st">"YlGnBu"</span><span class="op">)</span><span class="op">)</span><span class="op">(</span><span class="fl">9</span><span class="op">)</span>,
-        border <span class="op">=</span> <span class="st">"black"</span>,
-        border_gp <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grid/gpar.html" class="external-link">gpar</a></span><span class="op">(</span>lwd <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span>,
-        show_heatmap_legend <span class="op">=</span> <span class="cn">FALSE</span>, 
-        cluster_rows <span class="op">=</span> <span class="cn">FALSE</span>, cluster_columns <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/jokergoo/ComplexHeatmap" class="external-link">ComplexHeatmap</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="http://purrr.tidyverse.org" class="external-link">purrr</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">RColorBrewer</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Simulated data</span></span>
+<span><span class="va">genmat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html" class="external-link">map</a></span><span class="op">(</span></span>
+<span>    <span class="fl">1</span><span class="op">:</span><span class="fl">2000</span>,</span>
+<span>    <span class="kw">function</span><span class="op">(</span><span class="va">i</span><span class="op">)</span> <span class="op">{</span></span>
+<span>        <span class="fu"><a href="../../reference/c.html">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/BiocGenerics/man/sort.html" class="external-link">sort</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">abs</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">50</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">25</span><span class="op">]</span>, <span class="fu"><a href="https://rdrr.io/pkg/S4Vectors/man/Vector-class.html" class="external-link">rev</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/BiocGenerics/man/sort.html" class="external-link">sort</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">abs</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">50</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">25</span><span class="op">]</span><span class="op">)</span><span class="op">)</span> <span class="op">*</span> <span class="va">i</span><span class="op">/</span><span class="fl">5000</span></span>
+<span>    <span class="op">}</span></span>
+<span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/pkg/BiocGenerics/man/do.call.html" class="external-link">do.call</a></span><span class="op">(</span><span class="va">rbind</span>, <span class="va">.</span><span class="op">)</span></span>
+<span><span class="va">genmat</span> <span class="op">&lt;-</span> <span class="va">genmat</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/pkg/BiocGenerics/man/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">genmat</span><span class="op">)</span><span class="op">:</span><span class="fl">1</span>,<span class="op">]</span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/ComplexHeatmap/man/Heatmap.html" class="external-link">Heatmap</a></span><span class="op">(</span><span class="va">genmat</span>, col <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grDevices/colorRamp.html" class="external-link">colorRampPalette</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/RColorBrewer/man/ColorBrewer.html" class="external-link">brewer.pal</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fl">9</span>, <span class="st">"YlGnBu"</span><span class="op">)</span><span class="op">)</span><span class="op">(</span><span class="fl">9</span><span class="op">)</span>,</span>
+<span>        border <span class="op">=</span> <span class="st">"black"</span>,</span>
+<span>        border_gp <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grid/gpar.html" class="external-link">gpar</a></span><span class="op">(</span>lwd <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span>,</span>
+<span>        show_heatmap_legend <span class="op">=</span> <span class="cn">FALSE</span>, </span>
+<span>        cluster_rows <span class="op">=</span> <span class="cn">FALSE</span>, cluster_columns <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
 <p><img src="incorporating_ggplots_files/figure-html/gg_plot08-1.png" width="750" style="display: block; margin: auto;"></p>
 <p>We can capture this heatmap with the <code>grid</code> function
 <code><a href="https://rdrr.io/r/grid/grid.grab.html" class="external-link">grid.grabExpr()</a></code>:</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">grid</span><span class="op">)</span>
-<span class="va">heatmap</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/grid/grid.grab.html" class="external-link">grid.grabExpr</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/ComplexHeatmap/man/draw-dispatch.html" class="external-link">draw</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/ComplexHeatmap/man/Heatmap.html" class="external-link">Heatmap</a></span><span class="op">(</span><span class="va">genmat</span>, 
-                    col <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grDevices/colorRamp.html" class="external-link">colorRampPalette</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/RColorBrewer/man/ColorBrewer.html" class="external-link">brewer.pal</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fl">9</span>, <span class="st">"YlGnBu"</span><span class="op">)</span><span class="op">)</span><span class="op">(</span><span class="fl">9</span><span class="op">)</span>,
-                    border <span class="op">=</span> <span class="st">"black"</span>,
-                    border_gp <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grid/gpar.html" class="external-link">gpar</a></span><span class="op">(</span>lwd <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span>,
-                    show_heatmap_legend <span class="op">=</span> <span class="cn">FALSE</span>, 
-                    cluster_rows <span class="op">=</span> <span class="cn">FALSE</span>, cluster_columns <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">grid</span><span class="op">)</span></span>
+<span><span class="va">heatmap</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/grid/grid.grab.html" class="external-link">grid.grabExpr</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/ComplexHeatmap/man/draw-dispatch.html" class="external-link">draw</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/ComplexHeatmap/man/Heatmap.html" class="external-link">Heatmap</a></span><span class="op">(</span><span class="va">genmat</span>, </span>
+<span>                    col <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grDevices/colorRamp.html" class="external-link">colorRampPalette</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/RColorBrewer/man/ColorBrewer.html" class="external-link">brewer.pal</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fl">9</span>, <span class="st">"YlGnBu"</span><span class="op">)</span><span class="op">)</span><span class="op">(</span><span class="fl">9</span><span class="op">)</span>,</span>
+<span>                    border <span class="op">=</span> <span class="st">"black"</span>,</span>
+<span>                    border_gp <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grid/gpar.html" class="external-link">gpar</a></span><span class="op">(</span>lwd <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span>,</span>
+<span>                    show_heatmap_legend <span class="op">=</span> <span class="cn">FALSE</span>, </span>
+<span>                    cluster_rows <span class="op">=</span> <span class="cn">FALSE</span>, cluster_columns <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p>We can now pass this object into the <code>plotGG</code> function and
 incorporate the heatmap into a <code>plotgardener</code> layout with
 additional figure elements made by <code>plotgardener</code>:</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"GM12878_HiC_10kb"</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"GM12878_ChIP_CTCF_signal"</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"GM12878_ChIP_H3K27ac_signal"</span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st">"org.Hs.eg.db"</span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st">"TxDb.Hsapiens.UCSC.hg19.knownGene"</span><span class="op">)</span>
-
-<span class="co">## Create page</span>
-<span class="fu"><a href="../../reference/pageCreate.html">pageCreate</a></span><span class="op">(</span>
-    width <span class="op">=</span> <span class="fl">6</span>, height <span class="op">=</span> <span class="fl">4</span>, default.units <span class="op">=</span> <span class="st">"inches"</span><span class="op">)</span>
-
-<span class="va">params</span> <span class="op">&lt;-</span> <span class="fu"><a href="../../reference/pgParams.html">pgParams</a></span><span class="op">(</span>chrom <span class="op">=</span> <span class="st">"chr21"</span>, chromstart <span class="op">=</span> <span class="fl">28150000</span>, chromend <span class="op">=</span> <span class="fl">29150000</span>, 
-                   assembly <span class="op">=</span> <span class="st">"hg19"</span>,
-                   x <span class="op">=</span> <span class="fl">0.5</span>, width <span class="op">=</span> <span class="fl">2</span>, default.units <span class="op">=</span> <span class="st">"inches"</span><span class="op">)</span>
-<span class="va">ctcf_range</span> <span class="op">&lt;-</span> <span class="fu"><a href="../../reference/pgParams.html">pgParams</a></span><span class="op">(</span>range <span class="op">=</span> <span class="fu"><a href="../../reference/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">77</span><span class="op">)</span>,
-                       assembly <span class="op">=</span> <span class="st">"hg19"</span><span class="op">)</span>
-<span class="va">hk_range</span> <span class="op">&lt;-</span> <span class="fu"><a href="../../reference/pgParams.html">pgParams</a></span><span class="op">(</span>range <span class="op">=</span> <span class="fu"><a href="../../reference/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">32.6</span><span class="op">)</span>,
-                     assembly <span class="op">=</span> <span class="st">"hg19"</span><span class="op">)</span>
-<span class="va">hic_gm</span> <span class="op">&lt;-</span> <span class="fu"><a href="../../reference/plotHicTriangle.html">plotHicTriangle</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">GM12878_HiC_10kb</span>, params <span class="op">=</span> <span class="va">params</span>,
-                          zrange <span class="op">=</span> <span class="fu"><a href="../../reference/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">200</span><span class="op">)</span>, resolution <span class="op">=</span> <span class="fl">10000</span>,
-                          y <span class="op">=</span> <span class="fl">1.5</span>, height <span class="op">=</span> <span class="fl">1.25</span>, just <span class="op">=</span> <span class="fu"><a href="../../reference/c.html">c</a></span><span class="op">(</span><span class="st">"left"</span>, <span class="st">"bottom"</span><span class="op">)</span><span class="op">)</span>
-<span class="fu"><a href="../../reference/annoHeatmapLegend.html">annoHeatmapLegend</a></span><span class="op">(</span>plot <span class="op">=</span> <span class="va">hic_gm</span>, fontsize <span class="op">=</span> <span class="fl">7</span>, 
-                  x <span class="op">=</span> <span class="fl">2.5</span>, y <span class="op">=</span> <span class="fl">0.5</span>, width <span class="op">=</span> <span class="fl">0.07</span>, height <span class="op">=</span> <span class="fl">0.5</span>, 
-                  just <span class="op">=</span> <span class="fu"><a href="../../reference/c.html">c</a></span><span class="op">(</span><span class="st">"right"</span>, <span class="st">"top"</span><span class="op">)</span>, default.units <span class="op">=</span> <span class="st">"inches"</span><span class="op">)</span>
-<span class="va">ctcf_gm</span> <span class="op">&lt;-</span> <span class="fu"><a href="../../reference/plotSignal.html">plotSignal</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">GM12878_ChIP_CTCF_signal</span>, params <span class="op">=</span> <span class="fu"><a href="../../reference/c.html">c</a></span><span class="op">(</span><span class="va">params</span>, <span class="va">ctcf_range</span><span class="op">)</span>,
-                      fill <span class="op">=</span> <span class="st">"#253494"</span>, linecolor <span class="op">=</span> <span class="st">"#253494"</span>,
-                      y <span class="op">=</span> <span class="fl">1.6</span>, height <span class="op">=</span> <span class="fl">0.6</span><span class="op">)</span>
-<span class="fu"><a href="../../reference/plotText.html">plotText</a></span><span class="op">(</span>label <span class="op">=</span> <span class="st">"CTCF"</span>, fontcolor <span class="op">=</span> <span class="st">"#253494"</span>, fontsize <span class="op">=</span> <span class="fl">8</span>,
-         x <span class="op">=</span> <span class="fl">0.5</span>, y <span class="op">=</span> <span class="fl">1.6</span>, just <span class="op">=</span> <span class="fu"><a href="../../reference/c.html">c</a></span><span class="op">(</span><span class="st">"left"</span>,<span class="st">"top"</span><span class="op">)</span>, default.units <span class="op">=</span> <span class="st">"inches"</span><span class="op">)</span>
-<span class="va">hk_gm</span> <span class="op">&lt;-</span> <span class="fu"><a href="../../reference/plotSignal.html">plotSignal</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">GM12878_ChIP_H3K27ac_signal</span>, params <span class="op">=</span> <span class="fu"><a href="../../reference/c.html">c</a></span><span class="op">(</span><span class="va">params</span>, <span class="va">hk_range</span><span class="op">)</span>,
-                    fill <span class="op">=</span> <span class="st">"#37a7db"</span>, linecolor <span class="op">=</span> <span class="st">"#37a7db"</span>,
-                    y <span class="op">=</span> <span class="fl">2.3</span>, height <span class="op">=</span> <span class="fl">0.6</span>, just <span class="op">=</span> <span class="fu"><a href="../../reference/c.html">c</a></span><span class="op">(</span><span class="st">"left"</span>, <span class="st">"top"</span><span class="op">)</span><span class="op">)</span>
-<span class="fu"><a href="../../reference/plotText.html">plotText</a></span><span class="op">(</span>label <span class="op">=</span> <span class="st">"H3K27ac"</span>, fontcolor <span class="op">=</span> <span class="st">"#37a7db"</span>, fontsize <span class="op">=</span> <span class="fl">8</span>,
-         x <span class="op">=</span> <span class="fl">0.5</span>, y <span class="op">=</span> <span class="fl">2.4</span>, just <span class="op">=</span> <span class="fu"><a href="../../reference/c.html">c</a></span><span class="op">(</span><span class="st">"left"</span>,<span class="st">"bottom"</span><span class="op">)</span>, default.units <span class="op">=</span> <span class="st">"inches"</span><span class="op">)</span>
-<span class="va">genes_gm</span> <span class="op">&lt;-</span> <span class="fu"><a href="../../reference/plotGenes.html">plotGenes</a></span><span class="op">(</span>params <span class="op">=</span> <span class="va">params</span>, stroke <span class="op">=</span> <span class="fl">1</span>, fontsize <span class="op">=</span> <span class="fl">6</span>,
-                      strandLabels <span class="op">=</span> <span class="cn">FALSE</span>,
-                      y <span class="op">=</span> <span class="fl">3</span>, height <span class="op">=</span> <span class="fl">0.4</span><span class="op">)</span>
-<span class="fu"><a href="../../reference/annoGenomeLabel.html">annoGenomeLabel</a></span><span class="op">(</span>plot <span class="op">=</span> <span class="va">genes_gm</span>, params <span class="op">=</span> <span class="va">params</span>, 
-                scale <span class="op">=</span> <span class="st">"Kb"</span>, fontsize <span class="op">=</span> <span class="fl">7</span>,
-                y <span class="op">=</span> <span class="fl">3.5</span>, digits <span class="op">=</span> <span class="fl">0</span><span class="op">)</span>
-
-<span class="co">## Add ComplexHeatmap</span>
-<span class="va">gg_heatmap</span> <span class="op">&lt;-</span> <span class="fu"><a href="../../reference/plotGG.html">plotGG</a></span><span class="op">(</span>
-    plot <span class="op">=</span> <span class="va">heatmap</span>,
-    x <span class="op">=</span> <span class="fl">3</span>, y <span class="op">=</span> <span class="fl">0.5</span>,
-    width <span class="op">=</span> <span class="fl">2.5</span>, height <span class="op">=</span> <span class="fl">3</span>
-<span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/grid/viewports.html" class="external-link">seekViewport</a></span><span class="op">(</span>name <span class="op">=</span> <span class="st">"heatmap_matrix_2"</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/grid/grid.xaxis.html" class="external-link">grid.xaxis</a></span><span class="op">(</span>at <span class="op">=</span> <span class="fu"><a href="../../reference/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0.5</span>, <span class="fl">1</span><span class="op">)</span>, label <span class="op">=</span> <span class="cn">FALSE</span>, gp <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grid/gpar.html" class="external-link">gpar</a></span><span class="op">(</span>lwd <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/grid/viewports.html" class="external-link">seekViewport</a></span><span class="op">(</span>name <span class="op">=</span> <span class="st">"page"</span><span class="op">)</span>
-
-<span class="fu"><a href="../../reference/plotText.html">plotText</a></span><span class="op">(</span>label <span class="op">=</span> <span class="st">"Simulated Data"</span>, x <span class="op">=</span> <span class="fl">4.25</span>, y <span class="op">=</span> <span class="fl">0.5</span>,
-         fontsize <span class="op">=</span> <span class="fl">12</span>, just <span class="op">=</span> <span class="st">"bottom"</span><span class="op">)</span>
-<span class="fu"><a href="../../reference/plotText.html">plotText</a></span><span class="op">(</span>label <span class="op">=</span> <span class="fu"><a href="../../reference/c.html">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">2</span>, <span class="fl">0</span>, <span class="fl">2</span><span class="op">)</span>, x <span class="op">=</span> <span class="fu"><a href="../../reference/c.html">c</a></span><span class="op">(</span><span class="fl">3.065</span>, <span class="fl">4.255</span>, <span class="fl">5.425</span><span class="op">)</span>, 
-         y <span class="op">=</span> <span class="fl">3.6</span>, fontsize <span class="op">=</span> <span class="fl">7</span><span class="op">)</span>
-<span class="fu"><a href="../../reference/plotText.html">plotText</a></span><span class="op">(</span>label <span class="op">=</span> <span class="st">"Distance from center"</span>, x <span class="op">=</span> <span class="fl">4.25</span>, 
-         y <span class="op">=</span> <span class="fl">3.75</span>, fontsize <span class="op">=</span> <span class="fl">8</span><span class="op">)</span>
-
-<span class="co">## Hide page guides</span>
-<span class="fu"><a href="../../reference/pageGuideHide.html">pageGuideHide</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"GM12878_HiC_10kb"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"GM12878_ChIP_CTCF_signal"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"GM12878_ChIP_H3K27ac_signal"</span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st">"org.Hs.eg.db"</span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st">"TxDb.Hsapiens.UCSC.hg19.knownGene"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co">## Create page</span></span>
+<span><span class="fu"><a href="../../reference/pageCreate.html">pageCreate</a></span><span class="op">(</span></span>
+<span>    width <span class="op">=</span> <span class="fl">6</span>, height <span class="op">=</span> <span class="fl">4</span>, default.units <span class="op">=</span> <span class="st">"inches"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">params</span> <span class="op">&lt;-</span> <span class="fu"><a href="../../reference/pgParams.html">pgParams</a></span><span class="op">(</span>chrom <span class="op">=</span> <span class="st">"chr21"</span>, chromstart <span class="op">=</span> <span class="fl">28150000</span>, chromend <span class="op">=</span> <span class="fl">29150000</span>, </span>
+<span>                   assembly <span class="op">=</span> <span class="st">"hg19"</span>,</span>
+<span>                   x <span class="op">=</span> <span class="fl">0.5</span>, width <span class="op">=</span> <span class="fl">2</span>, default.units <span class="op">=</span> <span class="st">"inches"</span><span class="op">)</span></span>
+<span><span class="va">ctcf_range</span> <span class="op">&lt;-</span> <span class="fu"><a href="../../reference/pgParams.html">pgParams</a></span><span class="op">(</span>range <span class="op">=</span> <span class="fu"><a href="../../reference/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">77</span><span class="op">)</span>,</span>
+<span>                       assembly <span class="op">=</span> <span class="st">"hg19"</span><span class="op">)</span></span>
+<span><span class="va">hk_range</span> <span class="op">&lt;-</span> <span class="fu"><a href="../../reference/pgParams.html">pgParams</a></span><span class="op">(</span>range <span class="op">=</span> <span class="fu"><a href="../../reference/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">32.6</span><span class="op">)</span>,</span>
+<span>                     assembly <span class="op">=</span> <span class="st">"hg19"</span><span class="op">)</span></span>
+<span><span class="va">hic_gm</span> <span class="op">&lt;-</span> <span class="fu"><a href="../../reference/plotHicTriangle.html">plotHicTriangle</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">GM12878_HiC_10kb</span>, params <span class="op">=</span> <span class="va">params</span>,</span>
+<span>                          zrange <span class="op">=</span> <span class="fu"><a href="../../reference/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">200</span><span class="op">)</span>, resolution <span class="op">=</span> <span class="fl">10000</span>,</span>
+<span>                          y <span class="op">=</span> <span class="fl">1.5</span>, height <span class="op">=</span> <span class="fl">1.25</span>, just <span class="op">=</span> <span class="fu"><a href="../../reference/c.html">c</a></span><span class="op">(</span><span class="st">"left"</span>, <span class="st">"bottom"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="../../reference/annoHeatmapLegend.html">annoHeatmapLegend</a></span><span class="op">(</span>plot <span class="op">=</span> <span class="va">hic_gm</span>, fontsize <span class="op">=</span> <span class="fl">7</span>, </span>
+<span>                  x <span class="op">=</span> <span class="fl">2.5</span>, y <span class="op">=</span> <span class="fl">0.5</span>, width <span class="op">=</span> <span class="fl">0.07</span>, height <span class="op">=</span> <span class="fl">0.5</span>, </span>
+<span>                  just <span class="op">=</span> <span class="fu"><a href="../../reference/c.html">c</a></span><span class="op">(</span><span class="st">"right"</span>, <span class="st">"top"</span><span class="op">)</span>, default.units <span class="op">=</span> <span class="st">"inches"</span><span class="op">)</span></span>
+<span><span class="va">ctcf_gm</span> <span class="op">&lt;-</span> <span class="fu"><a href="../../reference/plotSignal.html">plotSignal</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">GM12878_ChIP_CTCF_signal</span>, params <span class="op">=</span> <span class="fu"><a href="../../reference/c.html">c</a></span><span class="op">(</span><span class="va">params</span>, <span class="va">ctcf_range</span><span class="op">)</span>,</span>
+<span>                      fill <span class="op">=</span> <span class="st">"#253494"</span>, linecolor <span class="op">=</span> <span class="st">"#253494"</span>,</span>
+<span>                      y <span class="op">=</span> <span class="fl">1.6</span>, height <span class="op">=</span> <span class="fl">0.6</span><span class="op">)</span></span>
+<span><span class="fu"><a href="../../reference/plotText.html">plotText</a></span><span class="op">(</span>label <span class="op">=</span> <span class="st">"CTCF"</span>, fontcolor <span class="op">=</span> <span class="st">"#253494"</span>, fontsize <span class="op">=</span> <span class="fl">8</span>,</span>
+<span>         x <span class="op">=</span> <span class="fl">0.5</span>, y <span class="op">=</span> <span class="fl">1.6</span>, just <span class="op">=</span> <span class="fu"><a href="../../reference/c.html">c</a></span><span class="op">(</span><span class="st">"left"</span>,<span class="st">"top"</span><span class="op">)</span>, default.units <span class="op">=</span> <span class="st">"inches"</span><span class="op">)</span></span>
+<span><span class="va">hk_gm</span> <span class="op">&lt;-</span> <span class="fu"><a href="../../reference/plotSignal.html">plotSignal</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">GM12878_ChIP_H3K27ac_signal</span>, params <span class="op">=</span> <span class="fu"><a href="../../reference/c.html">c</a></span><span class="op">(</span><span class="va">params</span>, <span class="va">hk_range</span><span class="op">)</span>,</span>
+<span>                    fill <span class="op">=</span> <span class="st">"#37a7db"</span>, linecolor <span class="op">=</span> <span class="st">"#37a7db"</span>,</span>
+<span>                    y <span class="op">=</span> <span class="fl">2.3</span>, height <span class="op">=</span> <span class="fl">0.6</span>, just <span class="op">=</span> <span class="fu"><a href="../../reference/c.html">c</a></span><span class="op">(</span><span class="st">"left"</span>, <span class="st">"top"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="../../reference/plotText.html">plotText</a></span><span class="op">(</span>label <span class="op">=</span> <span class="st">"H3K27ac"</span>, fontcolor <span class="op">=</span> <span class="st">"#37a7db"</span>, fontsize <span class="op">=</span> <span class="fl">8</span>,</span>
+<span>         x <span class="op">=</span> <span class="fl">0.5</span>, y <span class="op">=</span> <span class="fl">2.4</span>, just <span class="op">=</span> <span class="fu"><a href="../../reference/c.html">c</a></span><span class="op">(</span><span class="st">"left"</span>,<span class="st">"bottom"</span><span class="op">)</span>, default.units <span class="op">=</span> <span class="st">"inches"</span><span class="op">)</span></span>
+<span><span class="va">genes_gm</span> <span class="op">&lt;-</span> <span class="fu"><a href="../../reference/plotGenes.html">plotGenes</a></span><span class="op">(</span>params <span class="op">=</span> <span class="va">params</span>, stroke <span class="op">=</span> <span class="fl">1</span>, fontsize <span class="op">=</span> <span class="fl">6</span>,</span>
+<span>                      strandLabels <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>                      y <span class="op">=</span> <span class="fl">3</span>, height <span class="op">=</span> <span class="fl">0.4</span><span class="op">)</span></span>
+<span><span class="fu"><a href="../../reference/annoGenomeLabel.html">annoGenomeLabel</a></span><span class="op">(</span>plot <span class="op">=</span> <span class="va">genes_gm</span>, params <span class="op">=</span> <span class="va">params</span>, </span>
+<span>                scale <span class="op">=</span> <span class="st">"Kb"</span>, fontsize <span class="op">=</span> <span class="fl">7</span>,</span>
+<span>                y <span class="op">=</span> <span class="fl">3.5</span>, digits <span class="op">=</span> <span class="fl">0</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co">## Add ComplexHeatmap</span></span>
+<span><span class="va">gg_heatmap</span> <span class="op">&lt;-</span> <span class="fu"><a href="../../reference/plotGG.html">plotGG</a></span><span class="op">(</span></span>
+<span>    plot <span class="op">=</span> <span class="va">heatmap</span>,</span>
+<span>    x <span class="op">=</span> <span class="fl">3</span>, y <span class="op">=</span> <span class="fl">0.5</span>,</span>
+<span>    width <span class="op">=</span> <span class="fl">2.5</span>, height <span class="op">=</span> <span class="fl">3</span></span>
+<span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/grid/viewports.html" class="external-link">seekViewport</a></span><span class="op">(</span>name <span class="op">=</span> <span class="st">"heatmap_matrix_2"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/grid/grid.xaxis.html" class="external-link">grid.xaxis</a></span><span class="op">(</span>at <span class="op">=</span> <span class="fu"><a href="../../reference/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0.5</span>, <span class="fl">1</span><span class="op">)</span>, label <span class="op">=</span> <span class="cn">FALSE</span>, gp <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grid/gpar.html" class="external-link">gpar</a></span><span class="op">(</span>lwd <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/grid/viewports.html" class="external-link">seekViewport</a></span><span class="op">(</span>name <span class="op">=</span> <span class="st">"page"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="../../reference/plotText.html">plotText</a></span><span class="op">(</span>label <span class="op">=</span> <span class="st">"Simulated Data"</span>, x <span class="op">=</span> <span class="fl">4.25</span>, y <span class="op">=</span> <span class="fl">0.5</span>,</span>
+<span>         fontsize <span class="op">=</span> <span class="fl">12</span>, just <span class="op">=</span> <span class="st">"bottom"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="../../reference/plotText.html">plotText</a></span><span class="op">(</span>label <span class="op">=</span> <span class="fu"><a href="../../reference/c.html">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">2</span>, <span class="fl">0</span>, <span class="fl">2</span><span class="op">)</span>, x <span class="op">=</span> <span class="fu"><a href="../../reference/c.html">c</a></span><span class="op">(</span><span class="fl">3.065</span>, <span class="fl">4.255</span>, <span class="fl">5.425</span><span class="op">)</span>, </span>
+<span>         y <span class="op">=</span> <span class="fl">3.6</span>, fontsize <span class="op">=</span> <span class="fl">7</span><span class="op">)</span></span>
+<span><span class="fu"><a href="../../reference/plotText.html">plotText</a></span><span class="op">(</span>label <span class="op">=</span> <span class="st">"Distance from center"</span>, x <span class="op">=</span> <span class="fl">4.25</span>, </span>
+<span>         y <span class="op">=</span> <span class="fl">3.75</span>, fontsize <span class="op">=</span> <span class="fl">8</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co">## Hide page guides</span></span>
+<span><span class="fu"><a href="../../reference/pageGuideHide.html">pageGuideHide</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p><img src="incorporating_ggplots_files/figure-html/gg_plot09-1.png" width="1200" style="display: block; margin: auto;"></p>
 </div>
 <div class="section level2">
 <h2 id="session-info">Session Info<a class="anchor" aria-label="anchor" href="#session-info"></a>
 </h2>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/sessionInfo.html" class="external-link">sessionInfo</a></span><span class="op">(</span><span class="op">)</span>
-<span class="co">#&gt; R version 4.2.0 (2022-04-22)</span>
-<span class="co">#&gt; Platform: x86_64-apple-darwin17.0 (64-bit)</span>
-<span class="co">#&gt; Running under: macOS Big Sur/Monterey 10.16</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Matrix products: default</span>
-<span class="co">#&gt; BLAS:   /Library/Frameworks/R.framework/Versions/4.2/Resources/lib/libRblas.0.dylib</span>
-<span class="co">#&gt; LAPACK: /Library/Frameworks/R.framework/Versions/4.2/Resources/lib/libRlapack.dylib</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; locale:</span>
-<span class="co">#&gt; [1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; attached base packages:</span>
-<span class="co">#&gt; [1] stats4    grid      stats     graphics  grDevices utils     datasets </span>
-<span class="co">#&gt; [8] methods   base     </span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; other attached packages:</span>
-<span class="co">#&gt;  [1] TxDb.Hsapiens.UCSC.hg19.knownGene_3.2.2</span>
-<span class="co">#&gt;  [2] GenomicFeatures_1.48.1                 </span>
-<span class="co">#&gt;  [3] GenomicRanges_1.48.0                   </span>
-<span class="co">#&gt;  [4] GenomeInfoDb_1.32.2                    </span>
-<span class="co">#&gt;  [5] org.Hs.eg.db_3.15.0                    </span>
-<span class="co">#&gt;  [6] AnnotationDbi_1.58.0                   </span>
-<span class="co">#&gt;  [7] IRanges_2.30.0                         </span>
-<span class="co">#&gt;  [8] S4Vectors_0.34.0                       </span>
-<span class="co">#&gt;  [9] Biobase_2.56.0                         </span>
-<span class="co">#&gt; [10] BiocGenerics_0.42.0                    </span>
-<span class="co">#&gt; [11] RColorBrewer_1.1-3                     </span>
-<span class="co">#&gt; [12] purrr_0.3.4                            </span>
-<span class="co">#&gt; [13] ComplexHeatmap_2.12.0                  </span>
-<span class="co">#&gt; [14] scales_1.2.0                           </span>
-<span class="co">#&gt; [15] ggplot2_3.3.6                          </span>
-<span class="co">#&gt; [16] showtext_0.9-5                         </span>
-<span class="co">#&gt; [17] showtextdb_3.0                         </span>
-<span class="co">#&gt; [18] sysfonts_0.8.8                         </span>
-<span class="co">#&gt; [19] plotgardenerData_1.2.0                 </span>
-<span class="co">#&gt; [20] plotgardener_1.2.3                     </span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; loaded via a namespace (and not attached):</span>
-<span class="co">#&gt;   [1] colorspace_2.0-3            rjson_0.2.21               </span>
-<span class="co">#&gt;   [3] ellipsis_0.3.2              rprojroot_2.0.3            </span>
-<span class="co">#&gt;   [5] circlize_0.4.15             XVector_0.36.0             </span>
-<span class="co">#&gt;   [7] GlobalOptions_0.1.2         fs_1.5.2                   </span>
-<span class="co">#&gt;   [9] clue_0.3-60                 rstudioapi_0.13            </span>
-<span class="co">#&gt;  [11] farver_2.1.0                bit64_4.0.5                </span>
-<span class="co">#&gt;  [13] fansi_1.0.3                 xml2_1.3.3                 </span>
-<span class="co">#&gt;  [15] codetools_0.2-18            doParallel_1.0.17          </span>
-<span class="co">#&gt;  [17] cachem_1.0.6                knitr_1.39                 </span>
-<span class="co">#&gt;  [19] jsonlite_1.8.0              Rsamtools_2.12.0           </span>
-<span class="co">#&gt;  [21] dbplyr_2.1.1                cluster_2.1.3              </span>
-<span class="co">#&gt;  [23] png_0.1-7                   compiler_4.2.0             </span>
-<span class="co">#&gt;  [25] httr_1.4.3                  assertthat_0.2.1           </span>
-<span class="co">#&gt;  [27] Matrix_1.4-1                fastmap_1.1.0              </span>
-<span class="co">#&gt;  [29] cli_3.3.0                   prettyunits_1.1.1          </span>
-<span class="co">#&gt;  [31] htmltools_0.5.2             tools_4.2.0                </span>
-<span class="co">#&gt;  [33] gtable_0.3.0                glue_1.6.2                 </span>
-<span class="co">#&gt;  [35] GenomeInfoDbData_1.2.8      dplyr_1.0.9                </span>
-<span class="co">#&gt;  [37] rappdirs_0.3.3              Rcpp_1.0.8.3               </span>
-<span class="co">#&gt;  [39] jquerylib_0.1.4             pkgdown_2.0.3              </span>
-<span class="co">#&gt;  [41] vctrs_0.4.1                 Biostrings_2.64.0          </span>
-<span class="co">#&gt;  [43] strawr_0.0.9                rtracklayer_1.56.0         </span>
-<span class="co">#&gt;  [45] iterators_1.0.14            xfun_0.31                  </span>
-<span class="co">#&gt;  [47] stringr_1.4.0               plyranges_1.16.0           </span>
-<span class="co">#&gt;  [49] lifecycle_1.0.1             restfulr_0.0.13            </span>
-<span class="co">#&gt;  [51] XML_3.99-0.9                zlibbioc_1.42.0            </span>
-<span class="co">#&gt;  [53] hms_1.1.1                   ragg_1.2.2                 </span>
-<span class="co">#&gt;  [55] MatrixGenerics_1.8.0        parallel_4.2.0             </span>
-<span class="co">#&gt;  [57] SummarizedExperiment_1.26.1 yaml_2.3.5                 </span>
-<span class="co">#&gt;  [59] curl_4.3.2                  memoise_2.0.1              </span>
-<span class="co">#&gt;  [61] yulab.utils_0.0.4           sass_0.4.1                 </span>
-<span class="co">#&gt;  [63] biomaRt_2.52.0              stringi_1.7.6              </span>
-<span class="co">#&gt;  [65] RSQLite_2.2.14              highr_0.9                  </span>
-<span class="co">#&gt;  [67] BiocIO_1.6.0                desc_1.4.1                 </span>
-<span class="co">#&gt;  [69] foreach_1.5.2               filelock_1.0.2             </span>
-<span class="co">#&gt;  [71] BiocParallel_1.30.2         shape_1.4.6                </span>
-<span class="co">#&gt;  [73] rlang_1.0.2                 pkgconfig_2.0.3            </span>
-<span class="co">#&gt;  [75] systemfonts_1.0.4           matrixStats_0.62.0         </span>
-<span class="co">#&gt;  [77] bitops_1.0-7                evaluate_0.15              </span>
-<span class="co">#&gt;  [79] lattice_0.20-45             GenomicAlignments_1.32.0   </span>
-<span class="co">#&gt;  [81] labeling_0.4.2              bit_4.0.4                  </span>
-<span class="co">#&gt;  [83] tidyselect_1.1.2            magrittr_2.0.3             </span>
-<span class="co">#&gt;  [85] R6_2.5.1                    generics_0.1.2             </span>
-<span class="co">#&gt;  [87] DelayedArray_0.22.0         DBI_1.1.2                  </span>
-<span class="co">#&gt;  [89] pillar_1.7.0                withr_2.5.0                </span>
-<span class="co">#&gt;  [91] KEGGREST_1.36.0             RCurl_1.98-1.6             </span>
-<span class="co">#&gt;  [93] tibble_3.1.7                crayon_1.5.1               </span>
-<span class="co">#&gt;  [95] utf8_1.2.2                  BiocFileCache_2.4.0        </span>
-<span class="co">#&gt;  [97] rmarkdown_2.14              progress_1.2.2             </span>
-<span class="co">#&gt;  [99] GetoptLong_1.0.5            data.table_1.14.2          </span>
-<span class="co">#&gt; [101] blob_1.2.3                  digest_0.6.29              </span>
-<span class="co">#&gt; [103] gridGraphics_0.5-1          textshaping_0.3.6          </span>
-<span class="co">#&gt; [105] munsell_0.5.0               ggplotify_0.1.0            </span>
-<span class="co">#&gt; [107] bslib_0.3.1</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/sessionInfo.html" class="external-link">sessionInfo</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="co">#&gt; R version 4.2.0 (2022-04-22)</span></span>
+<span><span class="co">#&gt; Platform: x86_64-pc-linux-gnu (64-bit)</span></span>
+<span><span class="co">#&gt; Running under: Ubuntu 20.04.4 LTS</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Matrix products: default</span></span>
+<span><span class="co">#&gt; BLAS:   /usr/lib/x86_64-linux-gnu/openblas-pthread/libblas.so.3</span></span>
+<span><span class="co">#&gt; LAPACK: /usr/lib/x86_64-linux-gnu/openblas-pthread/liblapack.so.3</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; locale:</span></span>
+<span><span class="co">#&gt;  [1] LC_CTYPE=en_US.UTF-8       LC_NUMERIC=C              </span></span>
+<span><span class="co">#&gt;  [3] LC_TIME=en_US.UTF-8        LC_COLLATE=en_US.UTF-8    </span></span>
+<span><span class="co">#&gt;  [5] LC_MONETARY=en_US.UTF-8    LC_MESSAGES=en_US.UTF-8   </span></span>
+<span><span class="co">#&gt;  [7] LC_PAPER=en_US.UTF-8       LC_NAME=C                 </span></span>
+<span><span class="co">#&gt;  [9] LC_ADDRESS=C               LC_TELEPHONE=C            </span></span>
+<span><span class="co">#&gt; [11] LC_MEASUREMENT=en_US.UTF-8 LC_IDENTIFICATION=C       </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; attached base packages:</span></span>
+<span><span class="co">#&gt; [1] stats4    grid      stats     graphics  grDevices utils     datasets </span></span>
+<span><span class="co">#&gt; [8] methods   base     </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; other attached packages:</span></span>
+<span><span class="co">#&gt;  [1] TxDb.Hsapiens.UCSC.hg19.knownGene_3.2.2</span></span>
+<span><span class="co">#&gt;  [2] GenomicFeatures_1.48.3                 </span></span>
+<span><span class="co">#&gt;  [3] GenomicRanges_1.48.0                   </span></span>
+<span><span class="co">#&gt;  [4] GenomeInfoDb_1.32.2                    </span></span>
+<span><span class="co">#&gt;  [5] org.Hs.eg.db_3.15.0                    </span></span>
+<span><span class="co">#&gt;  [6] AnnotationDbi_1.58.0                   </span></span>
+<span><span class="co">#&gt;  [7] IRanges_2.30.0                         </span></span>
+<span><span class="co">#&gt;  [8] S4Vectors_0.34.0                       </span></span>
+<span><span class="co">#&gt;  [9] Biobase_2.56.0                         </span></span>
+<span><span class="co">#&gt; [10] BiocGenerics_0.42.0                    </span></span>
+<span><span class="co">#&gt; [11] RColorBrewer_1.1-3                     </span></span>
+<span><span class="co">#&gt; [12] purrr_0.3.4                            </span></span>
+<span><span class="co">#&gt; [13] ComplexHeatmap_2.12.0                  </span></span>
+<span><span class="co">#&gt; [14] scales_1.2.0                           </span></span>
+<span><span class="co">#&gt; [15] ggplot2_3.3.6                          </span></span>
+<span><span class="co">#&gt; [16] showtext_0.9-5                         </span></span>
+<span><span class="co">#&gt; [17] showtextdb_3.0                         </span></span>
+<span><span class="co">#&gt; [18] sysfonts_0.8.8                         </span></span>
+<span><span class="co">#&gt; [19] plotgardenerData_1.2.0                 </span></span>
+<span><span class="co">#&gt; [20] plotgardener_1.2.8                     </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; loaded via a namespace (and not attached):</span></span>
+<span><span class="co">#&gt;   [1] colorspace_2.0-3            rjson_0.2.21               </span></span>
+<span><span class="co">#&gt;   [3] ellipsis_0.3.2              rprojroot_2.0.3            </span></span>
+<span><span class="co">#&gt;   [5] circlize_0.4.15             XVector_0.36.0             </span></span>
+<span><span class="co">#&gt;   [7] GlobalOptions_0.1.2         fs_1.5.2                   </span></span>
+<span><span class="co">#&gt;   [9] clue_0.3-61                 farver_2.1.1               </span></span>
+<span><span class="co">#&gt;  [11] bit64_4.0.5                 fansi_1.0.3                </span></span>
+<span><span class="co">#&gt;  [13] xml2_1.3.3                  codetools_0.2-18           </span></span>
+<span><span class="co">#&gt;  [15] doParallel_1.0.17           cachem_1.0.6               </span></span>
+<span><span class="co">#&gt;  [17] knitr_1.39                  jsonlite_1.8.0             </span></span>
+<span><span class="co">#&gt;  [19] Rsamtools_2.12.0            dbplyr_2.2.1               </span></span>
+<span><span class="co">#&gt;  [21] cluster_2.1.3               png_0.1-7                  </span></span>
+<span><span class="co">#&gt;  [23] compiler_4.2.0              httr_1.4.3                 </span></span>
+<span><span class="co">#&gt;  [25] assertthat_0.2.1            Matrix_1.4-1               </span></span>
+<span><span class="co">#&gt;  [27] fastmap_1.1.0               cli_3.3.0                  </span></span>
+<span><span class="co">#&gt;  [29] prettyunits_1.1.1           htmltools_0.5.2            </span></span>
+<span><span class="co">#&gt;  [31] tools_4.2.0                 gtable_0.3.0               </span></span>
+<span><span class="co">#&gt;  [33] glue_1.6.2                  GenomeInfoDbData_1.2.8     </span></span>
+<span><span class="co">#&gt;  [35] dplyr_1.0.9                 rappdirs_0.3.3             </span></span>
+<span><span class="co">#&gt;  [37] Rcpp_1.0.9                  jquerylib_0.1.4            </span></span>
+<span><span class="co">#&gt;  [39] pkgdown_2.0.5               vctrs_0.4.1                </span></span>
+<span><span class="co">#&gt;  [41] Biostrings_2.64.0           strawr_0.0.9               </span></span>
+<span><span class="co">#&gt;  [43] rtracklayer_1.56.1          iterators_1.0.14           </span></span>
+<span><span class="co">#&gt;  [45] xfun_0.31                   stringr_1.4.0              </span></span>
+<span><span class="co">#&gt;  [47] plyranges_1.16.0            lifecycle_1.0.1            </span></span>
+<span><span class="co">#&gt;  [49] restfulr_0.0.15             XML_3.99-0.10              </span></span>
+<span><span class="co">#&gt;  [51] zlibbioc_1.42.0             hms_1.1.1                  </span></span>
+<span><span class="co">#&gt;  [53] ragg_1.2.2                  MatrixGenerics_1.8.1       </span></span>
+<span><span class="co">#&gt;  [55] parallel_4.2.0              SummarizedExperiment_1.26.1</span></span>
+<span><span class="co">#&gt;  [57] yaml_2.3.5                  curl_4.3.2                 </span></span>
+<span><span class="co">#&gt;  [59] memoise_2.0.1               yulab.utils_0.0.5          </span></span>
+<span><span class="co">#&gt;  [61] sass_0.4.1                  biomaRt_2.52.0             </span></span>
+<span><span class="co">#&gt;  [63] stringi_1.7.8               RSQLite_2.2.14             </span></span>
+<span><span class="co">#&gt;  [65] highr_0.9                   BiocIO_1.6.0               </span></span>
+<span><span class="co">#&gt;  [67] desc_1.4.1                  foreach_1.5.2              </span></span>
+<span><span class="co">#&gt;  [69] filelock_1.0.2              BiocParallel_1.30.3        </span></span>
+<span><span class="co">#&gt;  [71] shape_1.4.6                 rlang_1.0.4                </span></span>
+<span><span class="co">#&gt;  [73] pkgconfig_2.0.3             systemfonts_1.0.4          </span></span>
+<span><span class="co">#&gt;  [75] matrixStats_0.62.0          bitops_1.0-7               </span></span>
+<span><span class="co">#&gt;  [77] evaluate_0.15               lattice_0.20-45            </span></span>
+<span><span class="co">#&gt;  [79] GenomicAlignments_1.32.0    labeling_0.4.2             </span></span>
+<span><span class="co">#&gt;  [81] bit_4.0.4                   tidyselect_1.1.2           </span></span>
+<span><span class="co">#&gt;  [83] magrittr_2.0.3              R6_2.5.1                   </span></span>
+<span><span class="co">#&gt;  [85] generics_0.1.3              DelayedArray_0.22.0        </span></span>
+<span><span class="co">#&gt;  [87] DBI_1.1.3                   pillar_1.7.0               </span></span>
+<span><span class="co">#&gt;  [89] withr_2.5.0                 KEGGREST_1.36.3            </span></span>
+<span><span class="co">#&gt;  [91] RCurl_1.98-1.7              tibble_3.1.7               </span></span>
+<span><span class="co">#&gt;  [93] crayon_1.5.1                utf8_1.2.2                 </span></span>
+<span><span class="co">#&gt;  [95] BiocFileCache_2.4.0         rmarkdown_2.14             </span></span>
+<span><span class="co">#&gt;  [97] progress_1.2.2              GetoptLong_1.0.5           </span></span>
+<span><span class="co">#&gt;  [99] data.table_1.14.2           blob_1.2.3                 </span></span>
+<span><span class="co">#&gt; [101] digest_0.6.29               gridGraphics_0.5-1         </span></span>
+<span><span class="co">#&gt; [103] textshaping_0.3.6           munsell_0.5.0              </span></span>
+<span><span class="co">#&gt; [105] ggplotify_0.1.0             bslib_0.3.1</span></span></code></pre></div>
 </div>
   </div>
 
@@ -643,7 +647,7 @@ additional figure elements made by <code>plotgardener</code>:</p>
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
 </div>
 
       </footer>

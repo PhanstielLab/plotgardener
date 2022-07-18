@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">plotgardener</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.2.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.2.8</span>
       </span>
     </div>
 
@@ -96,63 +96,83 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">plotIdeogram</span><span class="op">(</span>
-    <span class="va">chrom</span>,
-    assembly <span class="op">=</span> <span class="st">"hg38"</span>,
-    data <span class="op">=</span> <span class="cn">NULL</span>,
-    orientation <span class="op">=</span> <span class="st">"h"</span>,
-    showBands <span class="op">=</span> <span class="cn">TRUE</span>,
-    fill <span class="op">=</span> <span class="cn">NULL</span>,
-    x <span class="op">=</span> <span class="cn">NULL</span>,
-    y <span class="op">=</span> <span class="cn">NULL</span>,
-    width <span class="op">=</span> <span class="cn">NULL</span>,
-    height <span class="op">=</span> <span class="cn">NULL</span>,
-    just <span class="op">=</span> <span class="fu"><a href="c.html">c</a></span><span class="op">(</span><span class="st">"left"</span>, <span class="st">"top"</span><span class="op">)</span>,
-    default.units <span class="op">=</span> <span class="st">"inches"</span>,
-    draw <span class="op">=</span> <span class="cn">TRUE</span>,
-    params <span class="op">=</span> <span class="cn">NULL</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">plotIdeogram</span><span class="op">(</span></span>
+<span>    <span class="va">chrom</span>,</span>
+<span>    assembly <span class="op">=</span> <span class="st">"hg38"</span>,</span>
+<span>    data <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>    orientation <span class="op">=</span> <span class="st">"h"</span>,</span>
+<span>    showBands <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>    fill <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>    x <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>    y <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>    width <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>    height <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>    just <span class="op">=</span> <span class="fu"><a href="c.html">c</a></span><span class="op">(</span><span class="st">"left"</span>, <span class="st">"top"</span><span class="op">)</span>,</span>
+<span>    default.units <span class="op">=</span> <span class="st">"inches"</span>,</span>
+<span>    draw <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>    params <span class="op">=</span> <span class="cn">NULL</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>chrom</dt>
 <dd><p>Chromosome to be plotted, as a string.</p></dd>
+
+
 <dt>assembly</dt>
 <dd><p>Default genome assembly as a string or a
 <a href="assembly.html">assembly</a> object.
 Default value is <code>assembly = "hg38"</code>.</p></dd>
+
+
 <dt>data</dt>
 <dd><p>Custom cytoband data, as a dataframe with the following
 columns: "seqnames", "start", "end", "width", "strand", 
 "name", "gieStain".</p></dd>
+
+
 <dt>orientation</dt>
 <dd><p>Character value indicating the orientation
 of the ideogram. Default value is <code>orientation = "h"</code>.
 Options are:</p><ul><li><p><code>"v"</code>: Vertical ideogram orientation.</p></li>
 <li><p><code>"h"</code>: Horizontal ideogram orientation.</p></li>
 </ul></dd>
+
+
 <dt>showBands</dt>
 <dd><p>Logical value indicating whether to draw
 colored cytobands within ideogram.
 Default value is <code>showBands = TRUE</code>.</p></dd>
+
+
 <dt>fill</dt>
 <dd><p>(optional) A vector specifying alternate colors for cytoband
 stains. To change specific gieStain values (i.e. gneg, gpos, etc.) to 
 specific colors, this vector can be named. This vector must have the same
 number of colors as there are gieStain values for each genome assembly.</p></dd>
+
+
 <dt>x</dt>
 <dd><p>A numeric or unit object specifying ideogram x-location.</p></dd>
+
+
 <dt>y</dt>
 <dd><p>A numeric, unit object, or character containing a "b"
 combined with a numeric value specifying ideogram y-location.
 The character value will
 place the ideogram y relative to the bottom of the most recently
 plotted plot according to the units of the plotgardener page.</p></dd>
+
+
 <dt>width</dt>
 <dd><p>A numeric or unit object specifying ideogram width.</p></dd>
+
+
 <dt>height</dt>
 <dd><p>A numeric or unit object specifying ideogram height.</p></dd>
+
+
 <dt>just</dt>
 <dd><p>Justification of ideogram relative to its (x, y) location.
 If there are two values, the first value specifies horizontal justification
@@ -160,29 +180,40 @@ and the second value specifies vertical justification.
 Possible string values are: <code>"left"</code>, <code>"right"</code>,
 <code>"centre"</code>, <code>"center"</code>, <code>"bottom"</code>, and <code>"top"</code>.
 Default value is <code>just = c("left", "top")</code>.</p></dd>
+
+
 <dt>default.units</dt>
 <dd><p>A string indicating the default units to use if
 <code>x</code>, <code>y</code>, <code>width</code>, or <code>height</code> are only given as
 numerics. Default value is <code>default.units = "inches"</code>.</p></dd>
+
+
 <dt>draw</dt>
 <dd><p>A logical value indicating whether graphics output should be
 produced. Default value is <code>draw = TRUE</code>.</p></dd>
+
+
 <dt>params</dt>
 <dd><p>An optional <a href="pgParams.html">pgParams</a> object containing
 relevant function parameters.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>Returns a <code>ideogram</code> object containing relevant
+    
+
+<p>Returns a <code>ideogram</code> object containing relevant
 genomic region, placement, and <a href="https://rdrr.io/r/grid/grid.grob.html" class="external-link">grob</a> information.</p>
     </div>
     <div id="details">
     <h2>Details</h2>
     <p>An ideogram can be placed on a plotgardener coordinate page by
-providing plot placement parameters:</p><div class="sourceCode"><pre><code><span class="fu"><a href="../reference/plotIdeogram.html">plotIdeogram</a></span><span class="op">(</span><span class="va">chrom</span>,
-                <span class="va">x</span>, <span class="va">y</span>, <span class="va">width</span>, <span class="va">height</span>, just <span class="op">=</span> <span class="fu"><a href="../reference/c.html">c</a></span><span class="op">(</span><span class="st">"left"</span>, <span class="st">"top"</span><span class="op">)</span>,
-                default.units <span class="op">=</span> <span class="st">"inches"</span><span class="op">)</span></code></pre></div><p>This function can also be used to quickly plot an unannotated ideogram
-by ignoring plot placement parameters:</p><div class="sourceCode"><pre><code><span class="fu"><a href="../reference/plotIdeogram.html">plotIdeogram</a></span><span class="op">(</span><span class="va">chrom</span><span class="op">)</span></code></pre></div><p>If no data is provided, Giemsa stain band data will first try to 
+providing plot placement parameters:</p><div class="sourceCode"><pre><code><span></span>
+<span><span class="fu"><a href="../reference/plotIdeogram.html">plotIdeogram</a></span><span class="op">(</span><span class="va">chrom</span>,</span>
+<span>                <span class="va">x</span>, <span class="va">y</span>, <span class="va">width</span>, <span class="va">height</span>, just <span class="op">=</span> <span class="fu"><a href="../reference/c.html">c</a></span><span class="op">(</span><span class="st">"left"</span>, <span class="st">"top"</span><span class="op">)</span>,</span>
+<span>                default.units <span class="op">=</span> <span class="st">"inches"</span><span class="op">)</span></span></code></pre></div><p>This function can also be used to quickly plot an unannotated ideogram
+by ignoring plot placement parameters:</p><div class="sourceCode"><pre><code><span></span>
+<span><span class="fu"><a href="../reference/plotIdeogram.html">plotIdeogram</a></span><span class="op">(</span><span class="va">chrom</span><span class="op">)</span></span></code></pre></div><p>If no data is provided, Giemsa stain band data will first try to 
 fetch UCSC with AnnotationHub. The results are cached for faster access, 
 but these cached items can be deleted. If no internet connection is 
 available and AnnotationHub has not previously cached the data, custom 
@@ -195,10 +226,10 @@ Giemsa stain band data can be loaded with the `data` parameter.</p>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co">## Load Giemsa stain band information and genomic</span></span>
-<span class="r-in"><span class="co">## annotation data for hg19 genome assembly</span></span>
-<span class="r-in"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">TxDb.Hsapiens.UCSC.hg19.knownGene</span><span class="op">)</span></span>
-<span class="r-in"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">AnnotationHub</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co">## Load Giemsa stain band information and genomic</span></span></span>
+<span class="r-in"><span><span class="co">## annotation data for hg19 genome assembly</span></span></span>
+<span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">TxDb.Hsapiens.UCSC.hg19.knownGene</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">AnnotationHub</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Loading required package: BiocFileCache</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Loading required package: dbplyr</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
@@ -209,29 +240,29 @@ Giemsa stain band data can be loaded with the `data` parameter.</p>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> The following object is masked from ‘package:Biobase’:</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>     cache</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">## Create page</span></span>
-<span class="r-in"><span class="fu"><a href="pageCreate.html">pageCreate</a></span><span class="op">(</span>width <span class="op">=</span> <span class="fl">4.5</span>, height <span class="op">=</span> <span class="fl">1</span>, default.units <span class="op">=</span> <span class="st">"inches"</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">## Plot and place ideogram</span></span>
-<span class="r-in"><span class="va">ideogramPlot</span> <span class="op">&lt;-</span> <span class="fu">plotIdeogram</span><span class="op">(</span></span>
-<span class="r-in">    chrom <span class="op">=</span> <span class="st">"chr2"</span>, assembly <span class="op">=</span> <span class="st">"hg19"</span>,</span>
-<span class="r-in">    x <span class="op">=</span> <span class="fl">0.25</span>, y <span class="op">=</span> <span class="fl">0.25</span>, width <span class="op">=</span> <span class="fl">4</span>, height <span class="op">=</span> <span class="fl">0.3</span>,</span>
-<span class="r-in">    just <span class="op">=</span> <span class="fu"><a href="c.html">c</a></span><span class="op">(</span><span class="st">"left"</span>, <span class="st">"top"</span><span class="op">)</span>,</span>
-<span class="r-in">    default.units <span class="op">=</span> <span class="st">"inches"</span></span>
-<span class="r-in"><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## Create page</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="pageCreate.html">pageCreate</a></span><span class="op">(</span>width <span class="op">=</span> <span class="fl">4.5</span>, height <span class="op">=</span> <span class="fl">1</span>, default.units <span class="op">=</span> <span class="st">"inches"</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## Plot and place ideogram</span></span></span>
+<span class="r-in"><span><span class="va">ideogramPlot</span> <span class="op">&lt;-</span> <span class="fu">plotIdeogram</span><span class="op">(</span></span></span>
+<span class="r-in"><span>    chrom <span class="op">=</span> <span class="st">"chr2"</span>, assembly <span class="op">=</span> <span class="st">"hg19"</span>,</span></span>
+<span class="r-in"><span>    x <span class="op">=</span> <span class="fl">0.25</span>, y <span class="op">=</span> <span class="fl">0.25</span>, width <span class="op">=</span> <span class="fl">4</span>, height <span class="op">=</span> <span class="fl">0.3</span>,</span></span>
+<span class="r-in"><span>    just <span class="op">=</span> <span class="fu"><a href="c.html">c</a></span><span class="op">(</span><span class="st">"left"</span>, <span class="st">"top"</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>    default.units <span class="op">=</span> <span class="st">"inches"</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> ideogram[ideogram1]</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">## Plot text</span></span>
-<span class="r-in"><span class="fu"><a href="plotText.html">plotText</a></span><span class="op">(</span></span>
-<span class="r-in">    label <span class="op">=</span> <span class="st">"Chromosome 2"</span>, fontcolor <span class="op">=</span> <span class="st">"dark grey"</span>,</span>
-<span class="r-in">    x <span class="op">=</span> <span class="fl">4.25</span>, y <span class="op">=</span> <span class="fl">0.65</span>, just <span class="op">=</span> <span class="st">"right"</span></span>
-<span class="r-in"><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## Plot text</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="plotText.html">plotText</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>    label <span class="op">=</span> <span class="st">"Chromosome 2"</span>, fontcolor <span class="op">=</span> <span class="st">"dark grey"</span>,</span></span>
+<span class="r-in"><span>    x <span class="op">=</span> <span class="fl">4.25</span>, y <span class="op">=</span> <span class="fl">0.65</span>, just <span class="op">=</span> <span class="st">"right"</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> text[text1]</span>
 <span class="r-plt img"><img src="plotIdeogram-1.png" alt="" width="1230" height="1050"></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">## Hide page guides</span></span>
-<span class="r-in"><span class="fu"><a href="pageGuideHide.html">pageGuideHide</a></span><span class="op">(</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## Hide page guides</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="pageGuideHide.html">pageGuideHide</a></span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="plotIdeogram-2.png" alt="" width="1230" height="1050"></span>
 </code></pre></div>
     </div>
@@ -247,7 +278,7 @@ Giemsa stain band data can be loaded with the `data` parameter.</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
 </div>
 
       </footer></div>

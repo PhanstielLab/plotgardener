@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">plotgardener</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.2.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.2.8</span>
       </span>
     </div>
 
@@ -96,93 +96,110 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">annoXaxis</span><span class="op">(</span>
-    <span class="va">plot</span>,
-    at <span class="op">=</span> <span class="cn">NULL</span>,
-    label <span class="op">=</span> <span class="cn">TRUE</span>,
-    main <span class="op">=</span> <span class="cn">TRUE</span>,
-    scipen <span class="op">=</span> <span class="fl">999</span>,
-    axisLine <span class="op">=</span> <span class="cn">FALSE</span>,
-    params <span class="op">=</span> <span class="cn">NULL</span>,
-    <span class="va">...</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">annoXaxis</span><span class="op">(</span></span>
+<span>    <span class="va">plot</span>,</span>
+<span>    at <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>    label <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>    main <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>    scipen <span class="op">=</span> <span class="fl">999</span>,</span>
+<span>    axisLine <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>    params <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>    <span class="va">...</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>plot</dt>
 <dd><p>Plot object to annotate with x-axis.</p></dd>
+
+
 <dt>at</dt>
 <dd><p>A numeric vector of x-value locations for tick marks.</p></dd>
+
+
 <dt>label</dt>
 <dd><p>A logical value indicating whether to draw the labels on
 the tick marks, or an expression or character vector which specify
 the labels to use.
 If not logical, must be the same length as the <code>at</code> argument.</p></dd>
+
+
 <dt>main</dt>
 <dd><p>A logical value indicating whether to draw the x-axis at the
 bottom of the plot. Default value is <code>main = TRUE</code>. Options are:</p><ul><li><p><code>TRUE</code>: x-axis is drawn at the bottom of the plot.</p></li>
 <li><p><code>FALSE</code>: x-axis is drawn at the top of the plot.</p></li>
 </ul></dd>
+
+
 <dt>scipen</dt>
 <dd><p>An integer indicating the penalty to be applied when
 deciding to print numeric values in fixed or exponential notation.
 Default value is <code>scipen = 999</code>.</p></dd>
+
+
 <dt>axisLine</dt>
 <dd><p>A logical value indicating whether to show the axis line.
 Default value is <code>axisLine = FALSE</code>.</p></dd>
+
+
 <dt>params</dt>
 <dd><p>An optional <a href="pgParams.html">pgParams</a> object
 containing relevant function parameters.</p></dd>
+
+
 <dt>...</dt>
 <dd><p>Additional grid graphical parameters. See <a href="https://rdrr.io/r/grid/gpar.html" class="external-link">gpar</a>.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>Returns a <code>xaxis</code> object containing
+    
+
+<p>Returns a <code>xaxis</code> object containing
 relevant <a href="https://rdrr.io/r/grid/grid.grob.html" class="external-link">grob</a> information.</p>
     </div>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co">## Load transcript information</span></span>
-<span class="r-in"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st">"TxDb.Hsapiens.UCSC.hg19.knownGene"</span><span class="op">)</span></span>
-<span class="r-in"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st">"org.Hs.eg.db"</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">## Create page</span></span>
-<span class="r-in"><span class="fu"><a href="pageCreate.html">pageCreate</a></span><span class="op">(</span>width <span class="op">=</span> <span class="fl">7.5</span>, height <span class="op">=</span> <span class="fl">4.5</span>, default.units <span class="op">=</span> <span class="st">"inches"</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">## Plot gene transcripts</span></span>
-<span class="r-in"><span class="va">transcriptPlot</span> <span class="op">&lt;-</span> <span class="fu"><a href="plotTranscripts.html">plotTranscripts</a></span><span class="op">(</span></span>
-<span class="r-in">    chrom <span class="op">=</span> <span class="st">"chr1"</span>,</span>
-<span class="r-in">    chromstart <span class="op">=</span> <span class="fl">1000000</span>,</span>
-<span class="r-in">    chromend <span class="op">=</span> <span class="fl">2000000</span>,</span>
-<span class="r-in">    assembly <span class="op">=</span> <span class="st">"hg19"</span>,</span>
-<span class="r-in">    x <span class="op">=</span> <span class="fl">0.5</span>, y <span class="op">=</span> <span class="fl">0</span>,</span>
-<span class="r-in">    width <span class="op">=</span> <span class="fl">6.5</span>, height <span class="op">=</span> <span class="fl">4</span>,</span>
-<span class="r-in">    just <span class="op">=</span> <span class="fu"><a href="c.html">c</a></span><span class="op">(</span><span class="st">"left"</span>, <span class="st">"top"</span><span class="op">)</span>,</span>
-<span class="r-in">    default.units <span class="op">=</span> <span class="st">"inches"</span></span>
-<span class="r-in"><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co">## Load transcript information</span></span></span>
+<span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st">"TxDb.Hsapiens.UCSC.hg19.knownGene"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st">"org.Hs.eg.db"</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## Create page</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="pageCreate.html">pageCreate</a></span><span class="op">(</span>width <span class="op">=</span> <span class="fl">7.5</span>, height <span class="op">=</span> <span class="fl">4.5</span>, default.units <span class="op">=</span> <span class="st">"inches"</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## Plot gene transcripts</span></span></span>
+<span class="r-in"><span><span class="va">transcriptPlot</span> <span class="op">&lt;-</span> <span class="fu"><a href="plotTranscripts.html">plotTranscripts</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>    chrom <span class="op">=</span> <span class="st">"chr1"</span>,</span></span>
+<span class="r-in"><span>    chromstart <span class="op">=</span> <span class="fl">1000000</span>,</span></span>
+<span class="r-in"><span>    chromend <span class="op">=</span> <span class="fl">2000000</span>,</span></span>
+<span class="r-in"><span>    assembly <span class="op">=</span> <span class="st">"hg19"</span>,</span></span>
+<span class="r-in"><span>    x <span class="op">=</span> <span class="fl">0.5</span>, y <span class="op">=</span> <span class="fl">0</span>,</span></span>
+<span class="r-in"><span>    width <span class="op">=</span> <span class="fl">6.5</span>, height <span class="op">=</span> <span class="fl">4</span>,</span></span>
+<span class="r-in"><span>    just <span class="op">=</span> <span class="fu"><a href="c.html">c</a></span><span class="op">(</span><span class="st">"left"</span>, <span class="st">"top"</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>    default.units <span class="op">=</span> <span class="st">"inches"</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Not enough plotting space for all provided elements. ('+' indicates elements not shown.)</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> transcripts[transcripts1]</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">## Add standard x-axis to transcript plot</span></span>
-<span class="r-in"><span class="fu">annoXaxis</span><span class="op">(</span></span>
-<span class="r-in">    plot <span class="op">=</span> <span class="va">transcriptPlot</span>,</span>
-<span class="r-in">    at <span class="op">=</span> <span class="fu"><a href="c.html">c</a></span><span class="op">(</span><span class="fl">1000000</span>, <span class="fl">1250000</span>, <span class="fl">1500000</span>, <span class="fl">1750000</span>, <span class="fl">2000000</span><span class="op">)</span>,</span>
-<span class="r-in">    fontsize <span class="op">=</span> <span class="fl">8</span></span>
-<span class="r-in"><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## Add standard x-axis to transcript plot</span></span></span>
+<span class="r-in"><span><span class="fu">annoXaxis</span><span class="op">(</span></span></span>
+<span class="r-in"><span>    plot <span class="op">=</span> <span class="va">transcriptPlot</span>,</span></span>
+<span class="r-in"><span>    at <span class="op">=</span> <span class="fu"><a href="c.html">c</a></span><span class="op">(</span><span class="fl">1000000</span>, <span class="fl">1250000</span>, <span class="fl">1500000</span>, <span class="fl">1750000</span>, <span class="fl">2000000</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>    fontsize <span class="op">=</span> <span class="fl">8</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="annoXaxis-1.png" alt="" width="1230" height="1050"></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> xaxis[xaxis1]</span>
-<span class="r-in"><span class="fu"><a href="plotText.html">plotText</a></span><span class="op">(</span></span>
-<span class="r-in">    label <span class="op">=</span> <span class="st">"Basepairs"</span>, fontsize <span class="op">=</span> <span class="fl">10</span>, fontface <span class="op">=</span> <span class="st">"bold"</span>,</span>
-<span class="r-in">    x <span class="op">=</span> <span class="fl">3.75</span>, y <span class="op">=</span> <span class="fl">4.3</span>, just <span class="op">=</span> <span class="st">"top"</span></span>
-<span class="r-in"><span class="op">)</span></span>
+<span class="r-in"><span><span class="fu"><a href="plotText.html">plotText</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>    label <span class="op">=</span> <span class="st">"Basepairs"</span>, fontsize <span class="op">=</span> <span class="fl">10</span>, fontface <span class="op">=</span> <span class="st">"bold"</span>,</span></span>
+<span class="r-in"><span>    x <span class="op">=</span> <span class="fl">3.75</span>, y <span class="op">=</span> <span class="fl">4.3</span>, just <span class="op">=</span> <span class="st">"top"</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> text[text1]</span>
 <span class="r-plt img"><img src="annoXaxis-2.png" alt="" width="1230" height="1050"></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">## Hide page guides</span></span>
-<span class="r-in"><span class="fu"><a href="pageGuideHide.html">pageGuideHide</a></span><span class="op">(</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## Hide page guides</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="pageGuideHide.html">pageGuideHide</a></span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="annoXaxis-3.png" alt="" width="1230" height="1050"></span>
 </code></pre></div>
     </div>
@@ -198,7 +215,7 @@ relevant <a href="https://rdrr.io/r/grid/grid.grob.html" class="external-link">g
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
 </div>
 
       </footer></div>

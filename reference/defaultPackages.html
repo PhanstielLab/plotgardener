@@ -20,7 +20,7 @@ genome build"><meta property="og:image" content="https://phanstiellab.github.io/
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">plotgardener</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.2.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.2.8</span>
       </span>
     </div>
 
@@ -101,23 +101,26 @@ genome build</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">defaultPackages</span><span class="op">(</span><span class="va">Genome</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">defaultPackages</span><span class="op">(</span><span class="va">Genome</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>Genome</dt>
 <dd><p>String indicating the name of the genome assembly.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>Returns a list of the default data packages for a genome build.</p>
+    
+
+<p>Returns a list of the default data packages for a genome build.</p>
     </div>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co">## View default genomic annotation packages associated with "hg19"</span></span>
-<span class="r-in"><span class="fu">defaultPackages</span><span class="op">(</span>Genome <span class="op">=</span> <span class="st">"hg19"</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co">## View default genomic annotation packages associated with "hg19"</span></span></span>
+<span class="r-in"><span><span class="fu">defaultPackages</span><span class="op">(</span>Genome <span class="op">=</span> <span class="st">"hg19"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 'data.frame':	1 obs. of  6 variables:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  $ Genome        : chr "hg19"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  $ TxDb          : chr "TxDb.Hsapiens.UCSC.hg19.knownGene"</span>
@@ -125,9 +128,9 @@ genome build</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  $ gene.id.column: chr "ENTREZID"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  $ display.column: chr "SYMBOL"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  $ BSgenome      : chr "BSgenome.Hsapiens.UCSC.hg19"</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">## View default genomic annotation packages associated with "mm9"</span></span>
-<span class="r-in"><span class="fu">defaultPackages</span><span class="op">(</span>Genome <span class="op">=</span> <span class="st">"mm9"</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## View default genomic annotation packages associated with "mm9"</span></span></span>
+<span class="r-in"><span><span class="fu">defaultPackages</span><span class="op">(</span>Genome <span class="op">=</span> <span class="st">"mm9"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 'data.frame':	1 obs. of  6 variables:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  $ Genome        : chr "mm9"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  $ TxDb          : chr "TxDb.Mmusculus.UCSC.mm9.knownGene"</span>
@@ -149,7 +152,7 @@ genome build</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
 </div>
 
       </footer></div>

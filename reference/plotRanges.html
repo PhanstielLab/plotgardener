@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">plotgardener</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.2.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.2.8</span>
       </span>
     </div>
 
@@ -96,34 +96,34 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">plotRanges</span><span class="op">(</span>
-    <span class="va">data</span>,
-    <span class="va">chrom</span>,
-    chromstart <span class="op">=</span> <span class="cn">NULL</span>,
-    chromend <span class="op">=</span> <span class="cn">NULL</span>,
-    assembly <span class="op">=</span> <span class="st">"hg38"</span>,
-    fill <span class="op">=</span> <span class="st">"#7ecdbb"</span>,
-    linecolor <span class="op">=</span> <span class="cn">NA</span>,
-    collapse <span class="op">=</span> <span class="cn">FALSE</span>,
-    boxHeight <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grid/unit.html" class="external-link">unit</a></span><span class="op">(</span><span class="fl">2</span>, <span class="st">"mm"</span><span class="op">)</span>,
-    spaceWidth <span class="op">=</span> <span class="fl">0.02</span>,
-    spaceHeight <span class="op">=</span> <span class="fl">0.3</span>,
-    limitLabel <span class="op">=</span> <span class="cn">TRUE</span>,
-    strandSplit <span class="op">=</span> <span class="cn">FALSE</span>,
-    bg <span class="op">=</span> <span class="cn">NA</span>,
-    baseline <span class="op">=</span> <span class="cn">FALSE</span>,
-    baseline.color <span class="op">=</span> <span class="st">"grey"</span>,
-    baseline.lwd <span class="op">=</span> <span class="fl">1</span>,
-    x <span class="op">=</span> <span class="cn">NULL</span>,
-    y <span class="op">=</span> <span class="cn">NULL</span>,
-    width <span class="op">=</span> <span class="cn">NULL</span>,
-    height <span class="op">=</span> <span class="cn">NULL</span>,
-    just <span class="op">=</span> <span class="fu"><a href="c.html">c</a></span><span class="op">(</span><span class="st">"left"</span>, <span class="st">"top"</span><span class="op">)</span>,
-    default.units <span class="op">=</span> <span class="st">"inches"</span>,
-    draw <span class="op">=</span> <span class="cn">TRUE</span>,
-    params <span class="op">=</span> <span class="cn">NULL</span>,
-    <span class="va">...</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">plotRanges</span><span class="op">(</span></span>
+<span>    <span class="va">data</span>,</span>
+<span>    <span class="va">chrom</span>,</span>
+<span>    chromstart <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>    chromend <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>    assembly <span class="op">=</span> <span class="st">"hg38"</span>,</span>
+<span>    fill <span class="op">=</span> <span class="st">"#7ecdbb"</span>,</span>
+<span>    linecolor <span class="op">=</span> <span class="cn">NA</span>,</span>
+<span>    collapse <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>    boxHeight <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grid/unit.html" class="external-link">unit</a></span><span class="op">(</span><span class="fl">2</span>, <span class="st">"mm"</span><span class="op">)</span>,</span>
+<span>    spaceWidth <span class="op">=</span> <span class="fl">0.02</span>,</span>
+<span>    spaceHeight <span class="op">=</span> <span class="fl">0.3</span>,</span>
+<span>    limitLabel <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>    strandSplit <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>    bg <span class="op">=</span> <span class="cn">NA</span>,</span>
+<span>    baseline <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>    baseline.color <span class="op">=</span> <span class="st">"grey"</span>,</span>
+<span>    baseline.lwd <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>    x <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>    y <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>    width <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>    height <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>    just <span class="op">=</span> <span class="fu"><a href="c.html">c</a></span><span class="op">(</span><span class="st">"left"</span>, <span class="st">"top"</span><span class="op">)</span>,</span>
+<span>    default.units <span class="op">=</span> <span class="st">"inches"</span>,</span>
+<span>    draw <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>    params <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>    <span class="va">...</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -133,20 +133,32 @@
 a BED file path, a data frame in BED format, a character value
 specifying a .bam file path where a bam index file (.bam.bai)
 is in the same directory, or a <a href="https://rdrr.io/pkg/GenomicRanges/man/GRanges-class.html" class="external-link">GRanges</a> object.</p></dd>
+
+
 <dt>chrom</dt>
 <dd><p>Chromosome of region to be plotted, as a string.</p></dd>
+
+
 <dt>chromstart</dt>
 <dd><p>Integer start position on chromosome to be plotted.</p></dd>
+
+
 <dt>chromend</dt>
 <dd><p>Integer end position on chromosome to be plotted.</p></dd>
+
+
 <dt>assembly</dt>
 <dd><p>Default genome assembly as a string or a
 <a href="assembly.html">assembly</a> object.
 Default value is <code>assembly = "hg38"</code>.</p></dd>
+
+
 <dt>fill</dt>
 <dd><p>A single character value, a vector, or a 
 <a href="colorby.html">colorby</a> object specifying fill colors of range elements.
 Default value is <code>fill = "#7ecdbb"</code>.</p></dd>
+
+
 <dt>linecolor</dt>
 <dd><p>A single character value, a vector, or a
 <a href="colorby.html">colorby</a> object specifying the color of the lines
@@ -154,6 +166,8 @@ outlining range elements. Default value is <code>linecolor = NA</code>.
 Special options include:</p><ul><li><p><code>NA</code>: No line color.</p></li>
 <li><p><code>"fill"</code>: Same color as <code>fill</code>.</p></li>
 </ul><p>.</p></dd>
+
+
 <dt>collapse</dt>
 <dd><p>A logical value indicating whether to collapse
 range elements into a single row, or into
@@ -162,50 +176,78 @@ If <code>collapse = TRUE</code>, <code>boxHeight</code> will be ignored and elem
 will be the height of the entire plot if <code>strandSplit = FALSE</code> or
 be the height of half of the entire plot if <code>strandSplit = TRUE</code>.
 Default value is <code>collapse = FALSE</code>.</p></dd>
+
+
 <dt>boxHeight</dt>
 <dd><p>A numeric or unit object specifying height of range element
 boxes. Default value is <code>boxHeight = unit(2, "mm")</code>.</p></dd>
+
+
 <dt>spaceWidth</dt>
 <dd><p>A numeric value specifying the width of minimum spacing
 between range element boxes, as a fraction of the plot's genomic range.
 Default value is <code>spaceWidth = 0.02</code>.</p></dd>
+
+
 <dt>spaceHeight</dt>
 <dd><p>A numeric value specifying the height of spacing between
 range element boxes on different rows, as a fraction of boxHeight.
 Default value is <code>spaceHeight = 0.3</code>.</p></dd>
+
+
 <dt>limitLabel</dt>
 <dd><p>A logical value indicating whether to draw a "+"
 when not all elements can be plotted in the plotting space. Default 
 value is <code>limitLabel = TRUE</code>.</p></dd>
+
+
 <dt>strandSplit</dt>
 <dd><p>A logical value indicating whether plus and
 minus-stranded elements should be separated. Elements can only be
 split by strand if a <code>strand</code> column is found in <code>data</code>.
 Default value is <code>strandSplit = FALSE</code>.</p></dd>
+
+
 <dt>bg</dt>
 <dd><p>Character value indicating background color.
 Default value is <code>bg = NA</code>.</p></dd>
+
+
 <dt>baseline</dt>
 <dd><p>Logical value indicating whether to include a
 baseline along the x-axis. Default value is <code>baseline = FALSE</code>.</p></dd>
+
+
 <dt>baseline.color</dt>
 <dd><p>Baseline color.
 Default value is <code>baseline.color = "grey"</code>.</p></dd>
+
+
 <dt>baseline.lwd</dt>
 <dd><p>Baseline line width.
 Default value is <code>baseline.lwd = 1</code>.</p></dd>
+
+
 <dt>x</dt>
 <dd><p>A numeric or unit object specifying ranges plot x-location.</p></dd>
+
+
 <dt>y</dt>
 <dd><p>A numeric, unit object, or character containing a "b"
 combined with a numeric value specifying ranges plot y-location.
 The character value will
 place the ranges plot y relative to the bottom of the most recently
 plotted plot according to the units of the plotgardener page.</p></dd>
+
+
 <dt>width</dt>
 <dd><p>A numeric or unit object specifying ranges plot width.</p></dd>
+
+
 <dt>height</dt>
 <dd><p>A numeric or unit object specifying ranges plot height.</p></dd>
+
+
 <dt>just</dt>
 <dd><p>Justification of ranges plot relative to its (x, y) location.
 If there are two values, the first value specifies horizontal
@@ -213,82 +255,95 @@ justification and the second value specifies vertical justification.
 Possible string values are: <code>"left"</code>, <code>"right"</code>,
 <code>"centre"</code>, <code>"center"</code>, <code>"bottom"</code>, and <code>"top"</code>.
 Default value is <code>just = c("left", "top")</code>.</p></dd>
+
+
 <dt>default.units</dt>
 <dd><p>A string indicating the default units to use
 if <code>x</code>, <code>y</code>, <code>width</code>, or <code>height</code> are only given
 as numerics. Default value is <code>default.units = "inches"</code>.</p></dd>
+
+
 <dt>draw</dt>
 <dd><p>A logical value indicating whether graphics output should
 be produced. Default value <code>draw = TRUE</code>.</p></dd>
+
+
 <dt>params</dt>
 <dd><p>An optional <a href="pgParams.html">pgParams</a> object
 containing relevant function parameters.</p></dd>
+
+
 <dt>...</dt>
 <dd><p>Additional grid graphical parameters. See <a href="https://rdrr.io/r/grid/gpar.html" class="external-link">gpar</a>.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>Returns a <code>ranges</code> object containing relevant
+    
+
+<p>Returns a <code>ranges</code> object containing relevant
 genomic region, coloring data, placement, and <a href="https://rdrr.io/r/grid/grid.grob.html" class="external-link">grob</a> information.</p>
     </div>
     <div id="details">
     <h2>Details</h2>
     <p>A ranges plot can be placed on a plotgardener coordinate page by providing
-plot placement parameters:</p><div class="sourceCode"><pre><code><span class="fu"><a href="../reference/plotRanges.html">plotRanges</a></span><span class="op">(</span><span class="va">data</span>, <span class="va">chrom</span>,
-            chromstart <span class="op">=</span> <span class="cn">NULL</span>, chromend <span class="op">=</span> <span class="cn">NULL</span>,
-            <span class="va">x</span>, <span class="va">y</span>, <span class="va">width</span>, <span class="va">height</span>, just <span class="op">=</span> <span class="fu"><a href="../reference/c.html">c</a></span><span class="op">(</span><span class="st">"left"</span>, <span class="st">"top"</span><span class="op">)</span>,
-            default.units <span class="op">=</span> <span class="st">"inches"</span><span class="op">)</span></code></pre></div><p>This function can also be used to quickly plot an unannotated BED plot
-by ignoring plot placement parameters:</p><div class="sourceCode"><pre><code><span class="fu"><a href="../reference/plotRanges.html">plotRanges</a></span><span class="op">(</span><span class="va">data</span>, <span class="va">chrom</span>,
-            chromstart <span class="op">=</span> <span class="cn">NULL</span>, chromend <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></code></pre></div>
+plot placement parameters:</p><div class="sourceCode"><pre><code><span></span>
+<span><span class="fu"><a href="../reference/plotRanges.html">plotRanges</a></span><span class="op">(</span><span class="va">data</span>, <span class="va">chrom</span>,</span>
+<span>            chromstart <span class="op">=</span> <span class="cn">NULL</span>, chromend <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>            <span class="va">x</span>, <span class="va">y</span>, <span class="va">width</span>, <span class="va">height</span>, just <span class="op">=</span> <span class="fu"><a href="../reference/c.html">c</a></span><span class="op">(</span><span class="st">"left"</span>, <span class="st">"top"</span><span class="op">)</span>,</span>
+<span>            default.units <span class="op">=</span> <span class="st">"inches"</span><span class="op">)</span></span></code></pre></div><p>This function can also be used to quickly plot an unannotated BED plot
+by ignoring plot placement parameters:</p><div class="sourceCode"><pre><code><span></span>
+<span><span class="fu"><a href="../reference/plotRanges.html">plotRanges</a></span><span class="op">(</span><span class="va">data</span>, <span class="va">chrom</span>,</span>
+<span>            chromstart <span class="op">=</span> <span class="cn">NULL</span>, chromend <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div>
 
     </div>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co">## Load ranges data in BED format</span></span>
-<span class="r-in"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/PhanstielLab/plotgardenerData" class="external-link">plotgardenerData</a></span><span class="op">)</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"IMR90_ChIP_CTCF_reads"</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">## Create page</span></span>
-<span class="r-in"><span class="fu"><a href="pageCreate.html">pageCreate</a></span><span class="op">(</span>width <span class="op">=</span> <span class="fl">7.5</span>, height <span class="op">=</span> <span class="fl">5</span>, default.units <span class="op">=</span> <span class="st">"inches"</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">## Plot and place a pileup ranges plot</span></span>
-<span class="r-in"><span class="va">pileupPlot</span> <span class="op">&lt;-</span> <span class="fu">plotRanges</span><span class="op">(</span></span>
-<span class="r-in">    data <span class="op">=</span> <span class="va">IMR90_ChIP_CTCF_reads</span>, chrom <span class="op">=</span> <span class="st">"chr21"</span>,</span>
-<span class="r-in">    chromstart <span class="op">=</span> <span class="fl">29073000</span>, chromend <span class="op">=</span> <span class="fl">29074000</span>,</span>
-<span class="r-in">    assembly <span class="op">=</span> <span class="st">"hg19"</span>,</span>
-<span class="r-in">    fill <span class="op">=</span> <span class="fu"><a href="colorby.html">colorby</a></span><span class="op">(</span><span class="st">"strand"</span>, palette <span class="op">=</span> </span>
-<span class="r-in">                <span class="fu"><a href="https://rdrr.io/r/grDevices/colorRamp.html" class="external-link">colorRampPalette</a></span><span class="op">(</span><span class="fu"><a href="c.html">c</a></span><span class="op">(</span><span class="st">"#7ecdbb"</span>, <span class="st">"#37a7db"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>,</span>
-<span class="r-in">    strandSplit <span class="op">=</span> <span class="cn">TRUE</span>, </span>
-<span class="r-in">    x <span class="op">=</span> <span class="fl">0.5</span>, y <span class="op">=</span> <span class="fl">0.25</span>, width <span class="op">=</span> <span class="fl">6.5</span>, height <span class="op">=</span> <span class="fl">4.25</span>,</span>
-<span class="r-in">    just <span class="op">=</span> <span class="fu"><a href="c.html">c</a></span><span class="op">(</span><span class="st">"left"</span>, <span class="st">"top"</span><span class="op">)</span>, default.units <span class="op">=</span> <span class="st">"inches"</span></span>
-<span class="r-in"><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co">## Load ranges data in BED format</span></span></span>
+<span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/PhanstielLab/plotgardenerData" class="external-link">plotgardenerData</a></span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"IMR90_ChIP_CTCF_reads"</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## Create page</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="pageCreate.html">pageCreate</a></span><span class="op">(</span>width <span class="op">=</span> <span class="fl">7.5</span>, height <span class="op">=</span> <span class="fl">5</span>, default.units <span class="op">=</span> <span class="st">"inches"</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## Plot and place a pileup ranges plot</span></span></span>
+<span class="r-in"><span><span class="va">pileupPlot</span> <span class="op">&lt;-</span> <span class="fu">plotRanges</span><span class="op">(</span></span></span>
+<span class="r-in"><span>    data <span class="op">=</span> <span class="va">IMR90_ChIP_CTCF_reads</span>, chrom <span class="op">=</span> <span class="st">"chr21"</span>,</span></span>
+<span class="r-in"><span>    chromstart <span class="op">=</span> <span class="fl">29073000</span>, chromend <span class="op">=</span> <span class="fl">29074000</span>,</span></span>
+<span class="r-in"><span>    assembly <span class="op">=</span> <span class="st">"hg19"</span>,</span></span>
+<span class="r-in"><span>    fill <span class="op">=</span> <span class="fu"><a href="colorby.html">colorby</a></span><span class="op">(</span><span class="st">"strand"</span>, palette <span class="op">=</span> </span></span>
+<span class="r-in"><span>                <span class="fu"><a href="https://rdrr.io/r/grDevices/colorRamp.html" class="external-link">colorRampPalette</a></span><span class="op">(</span><span class="fu"><a href="c.html">c</a></span><span class="op">(</span><span class="st">"#7ecdbb"</span>, <span class="st">"#37a7db"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>    strandSplit <span class="op">=</span> <span class="cn">TRUE</span>, </span></span>
+<span class="r-in"><span>    x <span class="op">=</span> <span class="fl">0.5</span>, y <span class="op">=</span> <span class="fl">0.25</span>, width <span class="op">=</span> <span class="fl">6.5</span>, height <span class="op">=</span> <span class="fl">4.25</span>,</span></span>
+<span class="r-in"><span>    just <span class="op">=</span> <span class="fu"><a href="c.html">c</a></span><span class="op">(</span><span class="st">"left"</span>, <span class="st">"top"</span><span class="op">)</span>, default.units <span class="op">=</span> <span class="st">"inches"</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Not enough plotting space for all provided elements. ('+' indicates elements not shown.)</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Not enough plotting space for all provided elements. ('+' indicates elements not shown.)</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> ranges[ranges1]</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">## Annotate genome label</span></span>
-<span class="r-in"><span class="fu"><a href="annoGenomeLabel.html">annoGenomeLabel</a></span><span class="op">(</span></span>
-<span class="r-in">    plot <span class="op">=</span> <span class="va">pileupPlot</span>, x <span class="op">=</span> <span class="fl">0.5</span>, y <span class="op">=</span> <span class="fl">4.5</span>,</span>
-<span class="r-in">    just <span class="op">=</span> <span class="fu"><a href="c.html">c</a></span><span class="op">(</span><span class="st">"left"</span>, <span class="st">"top"</span><span class="op">)</span></span>
-<span class="r-in"><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## Annotate genome label</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="annoGenomeLabel.html">annoGenomeLabel</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>    plot <span class="op">=</span> <span class="va">pileupPlot</span>, x <span class="op">=</span> <span class="fl">0.5</span>, y <span class="op">=</span> <span class="fl">4.5</span>,</span></span>
+<span class="r-in"><span>    just <span class="op">=</span> <span class="fu"><a href="c.html">c</a></span><span class="op">(</span><span class="st">"left"</span>, <span class="st">"top"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> genomeLabel[genomeLabel1]</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">## Add text labels</span></span>
-<span class="r-in"><span class="fu"><a href="plotText.html">plotText</a></span><span class="op">(</span></span>
-<span class="r-in">    label <span class="op">=</span> <span class="st">"+ strand"</span>, fontcolor <span class="op">=</span> <span class="st">"#37a7db"</span>, fontsize <span class="op">=</span> <span class="fl">12</span>,</span>
-<span class="r-in">    x <span class="op">=</span> <span class="fl">0.5</span>, y <span class="op">=</span> <span class="fl">1.25</span>, just <span class="op">=</span> <span class="st">"left"</span></span>
-<span class="r-in"><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## Add text labels</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="plotText.html">plotText</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>    label <span class="op">=</span> <span class="st">"+ strand"</span>, fontcolor <span class="op">=</span> <span class="st">"#37a7db"</span>, fontsize <span class="op">=</span> <span class="fl">12</span>,</span></span>
+<span class="r-in"><span>    x <span class="op">=</span> <span class="fl">0.5</span>, y <span class="op">=</span> <span class="fl">1.25</span>, just <span class="op">=</span> <span class="st">"left"</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> text[text1]</span>
-<span class="r-in"><span class="fu"><a href="plotText.html">plotText</a></span><span class="op">(</span></span>
-<span class="r-in">    label <span class="op">=</span> <span class="st">"- strand"</span>, fontcolor <span class="op">=</span> <span class="st">"#7ecdbb"</span>, fontsize <span class="op">=</span> <span class="fl">12</span>,</span>
-<span class="r-in">    x <span class="op">=</span> <span class="fl">0.5</span>, y <span class="op">=</span> <span class="fl">3.5</span>, just <span class="op">=</span> <span class="st">"left"</span></span>
-<span class="r-in"><span class="op">)</span></span>
+<span class="r-in"><span><span class="fu"><a href="plotText.html">plotText</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>    label <span class="op">=</span> <span class="st">"- strand"</span>, fontcolor <span class="op">=</span> <span class="st">"#7ecdbb"</span>, fontsize <span class="op">=</span> <span class="fl">12</span>,</span></span>
+<span class="r-in"><span>    x <span class="op">=</span> <span class="fl">0.5</span>, y <span class="op">=</span> <span class="fl">3.5</span>, just <span class="op">=</span> <span class="st">"left"</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> text[text2]</span>
 <span class="r-plt img"><img src="plotRanges-1.png" alt="" width="1230" height="1050"></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">## Hide page guides</span></span>
-<span class="r-in"><span class="fu"><a href="pageGuideHide.html">pageGuideHide</a></span><span class="op">(</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## Hide page guides</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="pageGuideHide.html">pageGuideHide</a></span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="plotRanges-2.png" alt="" width="1230" height="1050"></span>
 </code></pre></div>
     </div>
@@ -304,7 +359,7 @@ by ignoring plot placement parameters:</p><div class="sourceCode"><pre><code><sp
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
 </div>
 
       </footer></div>
