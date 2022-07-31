@@ -1,3 +1,8 @@
+# CHANGES IN VERSION 1.3.8
+## BUG FIXES
+
+* Fixed vignette links in "Introduction to plotgardener" vignette.
+
 # CHANGES IN VERSION 1.3.7
 ## BUG FIXES 
 
