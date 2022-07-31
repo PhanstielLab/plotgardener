@@ -135,8 +135,7 @@ Douglas H. Phanstiel</h4>
 <div class="section level2">
 <h2 id="overview">Overview<a class="anchor" aria-label="anchor" href="#overview"></a>
 </h2>
-<p><img src="../reference/figures/pg-hex-text.png" align="right" width="140px" style="padding-left:20px; background-color:white; border-color: transparent"></p>
-<p><code>plotgardener</code> is a coordinate-based, genomic
+<img src="../reference/figures/pg-hex-text.png" align="right" width="140px" style="padding-left:20px; background-color:white; border-color: transparent"><p><code>plotgardener</code> is a coordinate-based, genomic
 visualization package for R. Using <code>grid</code> graphics,
 <code>plotgardener</code> empowers users to programmatically and
 flexibly generate multi-panel figures. Tailored for genomics for a
@@ -150,30 +149,32 @@ categories:</p>
 </ul>
 <p>Functions for creating <code>plotgardener</code> page layouts,
 drawing, showing, and hiding guides, as well as placing plots on the
-page. See <a href="plotgardener_page.html">The plotgardener Page</a></p>
+page. See <a href="guides/plotgardener_page.html">The plotgardener
+Page</a></p>
 <ul>
 <li><strong>Reading functions:</strong></li>
 </ul>
-<p>Functions for quickly reading in large biological datasets. See <a href="reading_data_for_plotgardener.html">Reading Data for
+<p>Functions for quickly reading in large biological datasets. See <a href="guides/reading_data_for_plotgardener.html">Reading Data for
 plotgardener</a></p>
 <ul>
 <li><strong>Plotting functions:</strong></li>
 </ul>
 <p>Contains genomic plotting functions, functions for placing
 <code>ggplots</code> and <code>base</code> plots, as well as functions
-for drawing simple shapes. See <a href="plotting_multiomic_data.html">Plotting Multi-omic Data</a></p>
+for drawing simple shapes. See <a href="guides/plotting_multiomic_data.html">Plotting Multi-omic
+Data</a></p>
 <ul>
 <li><strong>Annotation functions:</strong></li>
 </ul>
 <p>Enables users to add annotations to their plots, such as legends,
-axes, and scales. See <a href="annotations.html">Plot
+axes, and scales. See <a href="guides/annotations.html">Plot
 Annotations</a></p>
 <ul>
 <li><strong>Meta functions:</strong></li>
 </ul>
 <p>Functions that display <code>plotgardener</code> properties or
 operate on other <code>plotgardener</code> functions, or constructors
-for <code>plotgardener</code> objects. See <a href="plotgardener_meta_functions.html">plotgardener Meta
+for <code>plotgardener</code> objects. See <a href="guides/plotgardener_meta_functions.html">plotgardener Meta
 Functions</a></p>
 <p>This vignette provides a quick start guide for utilizing
 <code>plotgardener</code>. For in-depth demonstrations of
@@ -436,7 +437,7 @@ improve <code>plotgardener</code>, please let us know!</p>
 <span><span class="co">##  [5] filelock_1.0.2              progress_1.2.2             </span></span>
 <span><span class="co">##  [7] httr_1.4.3                  RColorBrewer_1.1-3         </span></span>
 <span><span class="co">##  [9] rprojroot_2.0.3             tools_4.2.0                </span></span>
-<span><span class="co">## [11] bslib_0.3.1                 utf8_1.2.2                 </span></span>
+<span><span class="co">## [11] bslib_0.4.0                 utf8_1.2.2                 </span></span>
 <span><span class="co">## [13] R6_2.5.1                    DBI_1.1.3                  </span></span>
 <span><span class="co">## [15] colorspace_2.0-3            prettyunits_1.1.1          </span></span>
 <span><span class="co">## [17] tidyselect_1.1.2            bit_4.0.4                  </span></span>
@@ -444,16 +445,16 @@ improve <code>plotgardener</code>, please let us know!</p>
 <span><span class="co">## [21] textshaping_0.3.6           cli_3.3.0                  </span></span>
 <span><span class="co">## [23] xml2_1.3.3                  desc_1.4.1                 </span></span>
 <span><span class="co">## [25] DelayedArray_0.22.0         rtracklayer_1.56.1         </span></span>
-<span><span class="co">## [27] sass_0.4.1                  scales_1.2.0               </span></span>
-<span><span class="co">## [29] rappdirs_0.3.3              pkgdown_2.0.5              </span></span>
+<span><span class="co">## [27] sass_0.4.2                  scales_1.2.0               </span></span>
+<span><span class="co">## [29] rappdirs_0.3.3              pkgdown_2.0.6              </span></span>
 <span><span class="co">## [31] systemfonts_1.0.4           stringr_1.4.0              </span></span>
 <span><span class="co">## [33] digest_0.6.29               Rsamtools_2.12.0           </span></span>
 <span><span class="co">## [35] yulab.utils_0.0.5           rmarkdown_2.14             </span></span>
 <span><span class="co">## [37] XVector_0.36.0              pkgconfig_2.0.3            </span></span>
-<span><span class="co">## [39] htmltools_0.5.2             MatrixGenerics_1.8.1       </span></span>
+<span><span class="co">## [39] htmltools_0.5.3             MatrixGenerics_1.8.1       </span></span>
 <span><span class="co">## [41] dbplyr_2.2.1                fastmap_1.1.0              </span></span>
 <span><span class="co">## [43] highr_0.9                   rlang_1.0.4                </span></span>
-<span><span class="co">## [45] RSQLite_2.2.14              gridGraphics_0.5-1         </span></span>
+<span><span class="co">## [45] RSQLite_2.2.15              gridGraphics_0.5-1         </span></span>
 <span><span class="co">## [47] jquerylib_0.1.4             BiocIO_1.6.0               </span></span>
 <span><span class="co">## [49] generics_0.1.3              jsonlite_1.8.0             </span></span>
 <span><span class="co">## [51] BiocParallel_1.30.3         dplyr_1.0.9                </span></span>
@@ -468,7 +469,7 @@ improve <code>plotgardener</code>, please let us know!</p>
 <span><span class="co">## [69] crayon_1.5.1                lattice_0.20-45            </span></span>
 <span><span class="co">## [71] Biostrings_2.64.0           hms_1.1.1                  </span></span>
 <span><span class="co">## [73] KEGGREST_1.36.3             knitr_1.39                 </span></span>
-<span><span class="co">## [75] pillar_1.7.0                rjson_0.2.21               </span></span>
+<span><span class="co">## [75] pillar_1.8.0                rjson_0.2.21               </span></span>
 <span><span class="co">## [77] biomaRt_2.52.0              codetools_0.2-18           </span></span>
 <span><span class="co">## [79] strawr_0.0.9                XML_3.99-0.10              </span></span>
 <span><span class="co">## [81] glue_1.6.2                  evaluate_0.15              </span></span>
@@ -477,8 +478,8 @@ improve <code>plotgardener</code>, please let us know!</p>
 <span><span class="co">## [87] purrr_0.3.4                 assertthat_0.2.1           </span></span>
 <span><span class="co">## [89] cachem_1.0.6                ggplot2_3.3.6              </span></span>
 <span><span class="co">## [91] xfun_0.31                   restfulr_0.0.15            </span></span>
-<span><span class="co">## [93] ragg_1.2.2                  tibble_3.1.7               </span></span>
-<span><span class="co">## [95] GenomicAlignments_1.32.0    plyranges_1.16.0           </span></span>
+<span><span class="co">## [93] ragg_1.2.2                  tibble_3.1.8               </span></span>
+<span><span class="co">## [95] GenomicAlignments_1.32.1    plyranges_1.16.0           </span></span>
 <span><span class="co">## [97] memoise_2.0.1               ellipsis_0.3.2</span></span></code></pre></div>
 </div>
   </div>
@@ -500,7 +501,7 @@ improve <code>plotgardener</code>, please let us know!</p>
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer>

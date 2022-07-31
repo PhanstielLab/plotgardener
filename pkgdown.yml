@@ -1,5 +1,5 @@
 pandoc: 2.17.1.1
-pkgdown: 2.0.5
+pkgdown: 2.0.6
 pkgdown_sha: ~
 articles:
   aesthetics: guides/aesthetics.html
@@ -13,7 +13,7 @@ articles:
   plotting_multiomic_data: guides/plotting_multiomic_data.html
   reading_data_for_plotgardener: guides/reading_data_for_plotgardener.html
   introduction_to_plotgardener: introduction_to_plotgardener.html
-last_built: 2022-07-18T16:19Z
+last_built: 2022-07-31T18:21Z
 urls:
   reference: https://phanstiellab.github.io/plotgardener/reference
   article: https://phanstiellab.github.io/plotgardener/articles
