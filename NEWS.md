@@ -1,4 +1,9 @@
 # CHANGES IN VERSION 1.2.8
+## BUG FIXES
+
+* Fixed vignette links in "Introduction to plotgardener" vignette.
+
+# CHANGES IN VERSION 1.2.8
 ## BUG FIXES 
 
 * `getExon` will double-check for appropriate chromosome data to avoid incorrect 
