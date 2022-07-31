@@ -11,7 +11,6 @@ vignette: >
     %\VignetteEncoding{UTF-8}
 ---
 
-
 ```{r setup, include = FALSE}
 knitr::opts_chunk$set(
     fig.align = "center",
@@ -25,80 +24,79 @@ library(grid)
 library(plotgardener)
 library(plotgardenerData)
 ```
+
 # Overview
 
+```{=html}
 <img src="../man/figures/pg-hex-text.png" align="right" width="140px" 
 style="padding-left:20px; background-color:white; border-color: transparent" />
-
-`plotgardener` is a coordinate-based, genomic visualization package for R. 
-Using `grid` graphics, `plotgardener` empowers users to programmatically and 
-flexibly generate multi-panel figures. Tailored for genomics for a variety of
-genomic assemblies, `plotgardener` allows users to visualize large, complex 
-genomic datasets while providing exquisite control over the 
-arrangement of plots.
+```
+`plotgardener` is a coordinate-based, genomic visualization package for R. Using
+`grid` graphics, `plotgardener` empowers users to programmatically and flexibly
+generate multi-panel figures. Tailored for genomics for a variety of genomic
+assemblies, `plotgardener` allows users to visualize large, complex genomic
+datasets while providing exquisite control over the arrangement of plots.
 
 `plotgardener` functions can be grouped into the following categories:
 
-- **Page layout functions:**
-    
-Functions for creating `plotgardener` page layouts, drawing, 
-showing, and hiding guides, as well as placing plots on the page. 
-See [The plotgardener Page](plotgardener_page.html)
-    
-- **Reading functions:**
+-   **Page layout functions:**
 
-Functions for quickly reading in large biological datasets.
-See [Reading Data for plotgardener](reading_data_for_plotgardener.html)
-    
-- **Plotting functions:**
+Functions for creating `plotgardener` page layouts, drawing, showing, and hiding
+guides, as well as placing plots on the page. See [The plotgardener
+Page](guides/plotgardener_page.html)
 
-Contains genomic plotting functions, functions for placing `ggplots` 
-and `base` plots, as well as functions for drawing simple shapes.
-See [Plotting Multi-omic Data](plotting_multiomic_data.html)
-    
-- **Annotation functions:**
+-   **Reading functions:**
 
-Enables users to add annotations to their plots, such as legends, 
-axes, and scales.
-See [Plot Annotations](annotations.html)
+Functions for quickly reading in large biological datasets. See [Reading Data
+for plotgardener](guides/reading_data_for_plotgardener.html)
 
-- **Meta functions:**
+-   **Plotting functions:**
 
-Functions that display `plotgardener` properties or operate on other 
-`plotgardener` functions, or constructors for `plotgardener` objects.
-See [plotgardener Meta Functions](plotgardener_meta_functions.html)
+Contains genomic plotting functions, functions for placing `ggplots` and `base`
+plots, as well as functions for drawing simple shapes. See [Plotting Multi-omic
+Data](guides/plotting_multiomic_data.html)
 
-This vignette provides a quick start guide for utilizing `plotgardener`. 
-For in-depth demonstrations of `plotgardener`'s key features, see the 
-additional articles. For detailed usage of each function, see the 
-function-specific reference examples with `?function()` (e.g. `?plotPairs()`).
+-   **Annotation functions:**
 
-All the data included in this vignette can be found in the supplementary
-package `plotgardenerData`.
+Enables users to add annotations to their plots, such as legends, axes, and
+scales. See [Plot Annotations](guides/annotations.html)
+
+-   **Meta functions:**
+
+Functions that display `plotgardener` properties or operate on other
+`plotgardener` functions, or constructors for `plotgardener` objects. See
+[plotgardener Meta Functions](guides/plotgardener_meta_functions.html)
+
+This vignette provides a quick start guide for utilizing `plotgardener`. For
+in-depth demonstrations of `plotgardener`'s key features, see the additional
+articles. For detailed usage of each function, see the function-specific
+reference examples with `?function()` (e.g. `?plotPairs()`).
+
+All the data included in this vignette can be found in the supplementary package
+`plotgardenerData`.
 
 # Quick plotting
 
 `plotgardener` plotting functions contain 4 types of arguments:
 
-1. Data reading argument (`data`)
+1.  Data reading argument (`data`)
 
-2. Genomic locus arguments (`chrom`, `chromstart`, `chromend`, `assembly`)
+2.  Genomic locus arguments (`chrom`, `chromstart`, `chromend`, `assembly`)
 
-3. Placement arguments (`x`, `y`, `width`, `height`, `just`, 
-`default.units`, ...) that define where each plot resides on a `page`
+3.  Placement arguments (`x`, `y`, `width`, `height`, `just`, `default.units`,
+    ...) that define where each plot resides on a `page`
 
-4. Attribute arguments that affect the data being plotted or the style 
-of the plot (`norm`, `fill`, `fontcolor`, ...) that vary between functions
+4.  Attribute arguments that affect the data being plotted or the style of the
+    plot (`norm`, `fill`, `fontcolor`, ...) that vary between functions
 
-The quickest way to plot data is to omit the placement arguments. This will 
-generate a `plotgardener` plot that fills up the entire graphics window and 
-cannot be annotated. **These plots are only meant to be used for quick** 
-**genomic data inspection and not as final `plotgardener` plots.** The only 
-arguments that are required are the data arguments and locus arguments. 
-The examples below show how to quickly plot different types of genomic 
-data with plot defaults and included data types. To use your own data, 
-replace the `data` argument with either a path to the file or an R object 
-as described above.
+The quickest way to plot data is to omit the placement arguments. This will
+generate a `plotgardener` plot that fills up the entire graphics window and
+cannot be annotated. **These plots are only meant to be used for quick**
+**genomic data inspection and not as final `plotgardener` plots.** The only
+arguments that are required are the data arguments and locus arguments. The
+examples below show how to quickly plot different types of genomic data with
+plot defaults and included data types. To use your own data, replace the `data`
+argument with either a path to the file or an R object as described above.
 
 ## Hi-C matrices
 
@@ -118,7 +116,6 @@ plotHicSquare(
 )
 ```
 
-
 ## Signal tracks
 
 ```{r signal_quickplot, eval=TRUE, echo=TRUE, message=FALSE}
@@ -136,7 +133,6 @@ plotSignal(
     assembly = "hg19"
 )
 ```
-
 
 ## Gene tracks
 
@@ -181,15 +177,15 @@ plotManhattan(
 
 To build complex, multi-panel `plotgardener` figures with annotations, we must:
 
-1. Create a `plotgardener` coordinate page with `pageCreate()`.
+1.  Create a `plotgardener` coordinate page with `pageCreate()`.
 
 ```{r quickpage, echo=TRUE, fig.height=4, fig.width=4, message=FALSE}
 pageCreate(width = 3.25, height = 3.25, default.units = "inches")
 ```
 
-2. Provide values for the placement arguments (`x`, `y`, `width`, `height`, 
-`just`, `default.units`) in plotting functions and save the output of the
-plotting function.
+2.  Provide values for the placement arguments (`x`, `y`, `width`, `height`,
+    `just`, `default.units`) in plotting functions and save the output of the
+    plotting function.
 
 ```{r eval=FALSE, echo=TRUE, message=FALSE}
 data("IMR90_HiC_10kb")
@@ -200,6 +196,7 @@ hicPlot <- plotHicSquare(
     x = 0.25, y = 0.25, width = 2.5, height = 2.5, default.units = "inches"
 )
 ```
+
 ```{r quickpageHic, echo=FALSE, fig.height=4, fig.width=4, message=FALSE}
 pageCreate(width = 3.25, height = 3.25, default.units = "inches")
 data("IMR90_HiC_10kb")
@@ -211,8 +208,8 @@ hicPlot <- plotHicSquare(
 )
 ```
 
-3. Annotate `plotgardener` plot objects by passing them into the `plot` 
-argument of annotation functions.
+3.  Annotate `plotgardener` plot objects by passing them into the `plot`
+    argument of annotation functions.
 
 ```{r eval=FALSE, echo=TRUE, message=FALSE}
 annoHeatmapLegend(
@@ -225,6 +222,7 @@ annoGenomeLabel(
     x = 0.25, y = 2.75, width = 2.5, height = 0.25, default.units = "inches"
 )
 ```
+
 ```{r quickpageAnno, echo=FALSE, fig.height=4, fig.width=4, message=FALSE}
 pageCreate(width = 3.25, height = 3.25, default.units = "inches")
 data("IMR90_HiC_10kb")
@@ -245,18 +243,19 @@ annoGenomeLabel(
 )
 ```
 
-For more information about how to place plots and annotations on 
-a `plotgardener` page, check out the section [Working with plot 
+For more information about how to place plots and annotations on a
+`plotgardener` page, check out the section [Working with plot
 objects](introduction_to_plotgardener.html#working-with-plot-objects-1).
 
 # Exporting plots
 
-When a `plotgardener` plot is ready to be saved and exported, we can first 
+When a `plotgardener` plot is ready to be saved and exported, we can first
 remove all page guides that were made with `pageCreate()`:
 
 ```{r eval=FALSE, echo=TRUE, message=FALSE}
 pageGuideHide()
 ```
+
 ```{r quickpageHide, echo=FALSE, fig.height=4, fig.width=4, message=FALSE}
 pageCreate(
     width = 3.25, height = 3.25, default.units = "inches",
@@ -280,8 +279,8 @@ annoGenomeLabel(
 )
 ```
 
-We can then either use the **Export** toggle in the RStudio plot panel, 
-or save the plot within our R code as follows:
+We can then either use the **Export** toggle in the RStudio plot panel, or save
+the plot within our R code as follows:
 
 ```{r eval=FALSE, echo=TRUE, message=FALSE}
 pdf(width = 3.25, height = 3.25)
@@ -307,25 +306,24 @@ pageGuideHide()
 
 dev.off()
 ```
- 
+
 **Please note that due to the implementation of `grid` removal functions,**
-**using `pageGuideHide` within a `pdf` call will result in the rendering of a** 
+**using `pageGuideHide` within a `pdf` call will result in the rendering of a**
 **separate, new page with the plot guides removed. To avoid this artifact,**
 **hide guides in the `pageCreate` function call with `showGuides = FALSE`.**
-
 
 For more detailed usage and examples, please refer to the other available
 vignettes.
 
 # Future Directions
 
-We still have many ideas to add for a second version of `plotgardener` 
-including, but not limited to: grammar of graphics style plot arguments 
-and plot building, templates, themes, and multi-plotting functions. If 
-you have suggestions for ways we can improve `plotgardener`, 
-please let us know!
+We still have many ideas to add for a second version of `plotgardener`
+including, but not limited to: grammar of graphics style plot arguments and plot
+building, templates, themes, and multi-plotting functions. If you have
+suggestions for ways we can improve `plotgardener`, please let us know!
 
 # Session Info
+
 ```{r}
 sessionInfo()
 ```
