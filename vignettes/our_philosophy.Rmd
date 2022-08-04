@@ -20,7 +20,7 @@ library(grid)
 library(plotgardenerData)
 ```
 
-<img src="../../man/figures/logo.png" align="left" width="20px" 
+<img src="../man/figures/logo.png" align="left" width="20px" 
 style="vertical-align: middle; background-color:white; border-color: transparent; margin: 9px" />
 
 **`plotgardener` was developed to give users unparalleled control in plotting and**
