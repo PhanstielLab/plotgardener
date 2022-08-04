@@ -42,13 +42,13 @@ datasets while providing exquisite control over the arrangement of plots.
 -   **Page layout functions:**
 
 Functions for creating `plotgardener` page layouts, drawing, showing, and hiding
-guides, as well as placing plots on the page. See [The plotgardener
+guides, as well as placing plots on the page. See [The plotgardener 
 Page](https://phanstiellab.github.io/plotgardener/articles/guides/plotgardener_page.html)
 
 -   **Reading functions:**
 
-Functions for quickly reading in large biological datasets. See [Reading Data
-for plotgardener](https://phanstiellab.github.io/plotgardener/articles/guides/reading_data_for_plotgardener.html)
+Functions for quickly reading in large biological datasets. See [Reading Data for 
+plotgardener](https://phanstiellab.github.io/plotgardener/articles/guides/reading_data_for_plotgardener.html)
 
 -   **Plotting functions:**
 
