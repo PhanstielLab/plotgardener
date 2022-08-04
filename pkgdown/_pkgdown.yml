@@ -30,29 +30,29 @@ navbar:
     - icon: fa-home fa-lg
       href: index.html
     - text: Our Philosophy
-      href: articles/guides/our_philosophy.html
+      href: articles/our_philosophy.html
     - text: Introduction to plotgardener
       href: articles/introduction_to_plotgardener.html
     - text: Articles
       menu:
         - text: The plotgardener Page
-          href: articles/guides/plotgardener_page.html
+          href: articles/plotgardener_page.html
         - text: Reading Data for plotgardener
-          href: articles/guides/reading_data_for_plotgardener.html
+          href: articles/reading_data_for_plotgardener.html
         - text: Plotting Multi-omic Data  
-          href: articles/guides/plotting_multiomic_data.html
+          href: articles/plotting_multiomic_data.html
         - text: Plot Annotations
-          href: articles/guides/annotations.html  
+          href: articles/annotations.html  
         - text: plotgardener Meta Functions 
-          href: articles/guides/plotgardener_meta_functions.html
+          href: articles/plotgardener_meta_functions.html
         - text: Bioconductor Integration
-          href: articles/guides/bioconductor_integration.html
+          href: articles/bioconductor_integration.html
         - text: Incorporating ggplots and other grid-based Bioconductor visualizations
-          href: articles/guides/incorporating_ggplots.html
+          href: articles/incorporating_ggplots.html
         - text: Ideograms and Shapes
-          href: articles/guides/ideograms_and_shapes.html
+          href: articles/ideograms_and_shapes.html
         - text: Plot Aesthetics
-          href: articles/guides/aesthetics.html
+          href: articles/aesthetics.html
     - text: Reference
       href: reference/index.html
   right:
