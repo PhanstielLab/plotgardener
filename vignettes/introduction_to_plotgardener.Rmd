@@ -43,29 +43,29 @@ datasets while providing exquisite control over the arrangement of plots.
 
 Functions for creating `plotgardener` page layouts, drawing, showing, and hiding
 guides, as well as placing plots on the page. See [The plotgardener
-Page](guides/plotgardener_page.html)
+Page](https://phanstiellab.github.io/plotgardener/articles/guides/plotgardener_page.html)
 
 -   **Reading functions:**
 
 Functions for quickly reading in large biological datasets. See [Reading Data
-for plotgardener](guides/reading_data_for_plotgardener.html)
+for plotgardener](https://phanstiellab.github.io/plotgardener/articles/guides/reading_data_for_plotgardener.html)
 
 -   **Plotting functions:**
 
 Contains genomic plotting functions, functions for placing `ggplots` and `base`
 plots, as well as functions for drawing simple shapes. See [Plotting Multi-omic
-Data](guides/plotting_multiomic_data.html)
+Data](https://phanstiellab.github.io/plotgardener/articles/guides/plotting_multiomic_data.html)
 
 -   **Annotation functions:**
 
 Enables users to add annotations to their plots, such as legends, axes, and
-scales. See [Plot Annotations](guides/annotations.html)
+scales. See [Plot Annotations](https://phanstiellab.github.io/plotgardener/articles/guides/annotations.html)
 
 -   **Meta functions:**
 
 Functions that display `plotgardener` properties or operate on other
 `plotgardener` functions, or constructors for `plotgardener` objects. See
-[plotgardener Meta Functions](guides/plotgardener_meta_functions.html)
+[plotgardener Meta Functions](https://phanstiellab.github.io/plotgardener/articles/guides/plotgardener_meta_functions.html)
 
 This vignette provides a quick start guide for utilizing `plotgardener`. For
 in-depth demonstrations of `plotgardener`'s key features, see the additional
@@ -245,7 +245,7 @@ annoGenomeLabel(
 
 For more information about how to place plots and annotations on a
 `plotgardener` page, check out the section [Working with plot
-objects](introduction_to_plotgardener.html#working-with-plot-objects-1).
+objects](https://phanstiellab.github.io/plotgardener/articles/guides/plotgardener_page.html#working-with-plot-objects).
 
 # Exporting plots
 
