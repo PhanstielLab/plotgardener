@@ -1,3 +1,13 @@
+# CHANGES IN VERSION 1.5.1
+## BUG FIXES
+
+* yscales for `plotHicRectangle` and `plotHicTriangle` reflect distance in 
+Hi-C bins.
+
+# VERSION 1.5.0
+
+Version bump for Bioconductor 3.16 release.
+
 # CHANGES IN VERSION 1.3.8 AND 1.3.9
 ## BUG FIXES
 

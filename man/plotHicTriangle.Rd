@@ -121,6 +121,9 @@ genomic region, Hi-C data, placement, and \link[grid]{grob} information.
 Plot a Hi-C interaction matrix in a triangular format
 }
 \details{
+In this orientation, the x-axis represents the genomic coordinates and
+the y-axis corresponds to distance in Hi-C bins.
+
 A triangle Hi-C plot can be placed on a plotgardener coordinate page
 by providing plot placement parameters:
 \preformatted{
@@ -153,7 +156,7 @@ hicPlot <- plotHicTriangle(
     zrange = c(0, 70),
     chrom = "chr21",
     chromstart = 28000000, chromend = 30300000,
-    assembly = "hg19", bg = "black",
+    assembly = "hg19",
     x = 2, y = 0.5, width = 3, height = 1.5,
     just = "top", default.units = "inches"
 )

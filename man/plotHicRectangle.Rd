@@ -125,7 +125,9 @@ Plot a triangular Hi-C interaction matrix in a rectangular format
 \details{
 This function is similar is \link[plotgardener]{plotHicTriangle} but
 will fill in additional pixels around the
-the triangular portion of the plot to make a rectangle.
+the triangular portion of the plot to make a rectangle. The x-axis
+represents the genomic coordinates and the y-axis corresponds to distance in
+Hi-C bins.
 
 A rectangle Hi-C plot can be placed on a plotgardener coordinate
 page by providing plot placement parameters:

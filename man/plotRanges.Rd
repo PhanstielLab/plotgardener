@@ -178,6 +178,7 @@ pileupPlot <- plotRanges(
     data = IMR90_ChIP_CTCF_reads, chrom = "chr21",
     chromstart = 29073000, chromend = 29074000,
     assembly = "hg19",
+    order = "random",
     fill = colorby("strand", palette = 
                 colorRampPalette(c("#7ecdbb", "#37a7db"))),
     strandSplit = TRUE, 
