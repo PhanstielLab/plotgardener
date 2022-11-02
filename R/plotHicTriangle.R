@@ -104,7 +104,7 @@
 #'     zrange = c(0, 70),
 #'     chrom = "chr21",
 #'     chromstart = 28000000, chromend = 30300000,
-#'     assembly = "hg19", bg = "black",
+#'     assembly = "hg19",
 #'     x = 2, y = 0.5, width = 3, height = 1.5,
 #'     just = "top", default.units = "inches"
 #' )
@@ -125,6 +125,9 @@
 #' ## Hide page guides
 #' pageGuideHide()
 #' @details
+#' In this orientation, the x-axis represents the genomic coordinates and
+#' the y-axis corresponds to distance in Hi-C bins.
+#' 
 #' A triangle Hi-C plot can be placed on a plotgardener coordinate page
 #' by providing plot placement parameters:
 #' \preformatted{
@@ -609,6 +612,12 @@ plotHicTriangle <- function(data, resolution = "auto", zrange = NULL,
             name = paste0(vp_name, "_inside"),
             angle = -45
         )
+        
+        # Number of bins along yscale
+        num_pixelsWidth <- 
+            (thicInternal$chromend - thicInternal$chromstart)/hicPlot$resolution
+        per_pixel <- 1.5/num_pixelsWidth
+        num_pixelsHeight <- 0.75/per_pixel
 
         outside_vp <- viewport(
             height = unit(0.75, "snpc"),
@@ -616,6 +625,7 @@ plotHicTriangle <- function(data, resolution = "auto", zrange = NULL,
             x = unit(0.25, "npc"),
             y = unit(0.125, "npc"),
             xscale = thicInternal$xscale,
+            yscale = c(0, num_pixelsHeight),
             clip = "on",
             just = c("left", "bottom"),
             name = paste0(vp_name, "_outside")
@@ -665,6 +675,12 @@ plotHicTriangle <- function(data, resolution = "auto", zrange = NULL,
             name = paste0(vp_name, "_inside"),
             angle = -45
         )
+        
+        # Number of bins along yscale
+        num_pixelsWidth <- 
+            (thicInternal$chromend - thicInternal$chromstart)/hicPlot$resolution
+        per_pixel <- as.numeric(page_coords$width)/num_pixelsWidth
+        num_pixelsHeight <- as.numeric(page_coords$height)/per_pixel
 
         outside_vp <- viewport(
             height = page_coords$height,
@@ -678,6 +694,7 @@ plotHicTriangle <- function(data, resolution = "auto", zrange = NULL,
                 get("page_units", envir = pgEnv)
             ),
             xscale = thicInternal$xscale,
+            yscale = c(0, num_pixelsHeight),
             clip = "on",
             just = c("left", "bottom"),
             name = paste0(vp_name, "_outside")

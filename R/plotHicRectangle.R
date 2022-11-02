@@ -128,10 +128,11 @@
 #' ## Hide page guides
 #' pageGuideHide()
 #' @details
-#'
 #' This function is similar is \link[plotgardener]{plotHicTriangle} but
 #' will fill in additional pixels around the
-#' the triangular portion of the plot to make a rectangle.
+#' the triangular portion of the plot to make a rectangle. The x-axis
+#' represents the genomic coordinates and the y-axis corresponds to distance in
+#' Hi-C bins.
 #'
 #' A rectangle Hi-C plot can be placed on a plotgardener coordinate
 #' page by providing plot placement parameters:
@@ -474,6 +475,12 @@ plotHicRectangle <- function(data, resolution = "auto", zrange = NULL,
             name = paste0(vp_name, "_inside"),
             angle = -45
         )
+        
+        # Number of bins along yscale
+        num_pixelsWidth <- 
+            (rhicInternal$chromend - rhicInternal$chromstart)/hicPlot$resolution
+        per_pixel <- 1/num_pixelsWidth
+        num_pixelsHeight <- 0.5/per_pixel
 
         outside_vp <- viewport(
             height = unit(0.5, "snpc"),
@@ -481,6 +488,7 @@ plotHicRectangle <- function(data, resolution = "auto", zrange = NULL,
             x = unit(0.5, "npc"),
             y = unit(0.5, "npc"),
             xscale = scale[[2]],
+            yscale = c(0, num_pixelsHeight),
             clip = "on",
             just = "center",
             name = paste0(vp_name, "_outside")
@@ -519,13 +527,20 @@ plotHicRectangle <- function(data, resolution = "auto", zrange = NULL,
                 name = paste0(vp_name, "_inside"),
                 angle = -45
             )
-            
+        
+        # Number of bins along yscale
+        num_pixelsWidth <- 
+            (rhicInternal$chromend - rhicInternal$chromstart)/hicPlot$resolution
+        per_pixel <- as.numeric(page_coords$width)/num_pixelsWidth
+        num_pixelsHeight <- as.numeric(page_coords$height)/per_pixel
+        
         outside_vp <- viewport(
                 height = page_coords$height,
                 width = page_coords$width,
                 x = page_coords$x, y = page_coords$y,
                 just = hicPlot$just,
                 xscale = scale[[2]],
+                yscale = c(0, num_pixelsHeight),
                 clip = "on",
                 name = paste0(vp_name, "_outside")
             ) 
