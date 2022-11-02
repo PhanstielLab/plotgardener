@@ -86,6 +86,7 @@ reference:
       - plotPairsArches
       - plotRanges
       - plotSignal
+      - plotMultiSignal
       - plotTranscripts
   - subtitle: "Shapes and Basic Elements"
   - contents:
