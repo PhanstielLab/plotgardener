@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">plotgardener</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.2.10</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.4.1</span>
       </span>
     </div>
 
@@ -110,6 +110,7 @@
 <span>    ymax <span class="op">=</span> <span class="fl">1</span>,</span>
 <span>    range <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>    scale <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>    label <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>    bg <span class="op">=</span> <span class="cn">NA</span>,</span>
 <span>    baseline <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>    baseline.color <span class="op">=</span> <span class="st">"grey"</span>,</span>
@@ -134,7 +135,8 @@
 bigwig file path, a dataframe in BED format, or a
 <a href="https://rdrr.io/pkg/GenomicRanges/man/GRanges-class.html" class="external-link">GRanges</a> object with metadata column <code>score</code>.
 Either one <code>data</code> argument or a list of two can be provided, where
-the second <code>data</code> will be plotted below the x-axis.</p></dd>
+the second <code>data</code> will be plotted below the x-axis if positive.
+The second <code>data</code> can also be negative data.</p></dd>
 
 
 <dt>binSize</dt>
@@ -149,9 +151,8 @@ Default value is <code>binCap = TRUE</code>.</p></dd>
 
 
 <dt>negData</dt>
-<dd><p>A logical value indicating whether the data has both
-positive and negative scores and the y-axis should be split.
-Default value is <code>negData = FALSE</code>.</p></dd>
+<dd><p>A logical value indicating whether the provided data has 
+negative scores. Default value is <code>negData = FALSE</code>.</p></dd>
 
 
 <dt>chrom</dt>
@@ -197,6 +198,14 @@ of data to plot (c(min, max)).</p></dd>
 <dd><p>A logical value indicating whether to include a data
 scale label in the top left corner of the plot.
 Default value is <code>scale = FALSE</code>.</p></dd>
+
+
+<dt>label</dt>
+<dd><p>An optional character value to conveniently add a text label
+to the plot. If <code>scale = TRUE</code>, the label will be draw in the top right
+of the plot. Otherwise, the label will be drawn in the top left of the plot.
+For more customizable labels, use <a href="plotText.html">plotText</a>.
+Default value is <code>label = NULL</code>.</p></dd>
 
 
 <dt>bg</dt>

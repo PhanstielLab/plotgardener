@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">plotgardener</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.2.10</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.4.1</span>
       </span>
     </div>
 
@@ -91,56 +91,93 @@
     </div>
 
     <div class="section level2">
-<h2 class="page-header" data-toc-text="1.2.8" id="changes-in-version-128">CHANGES IN VERSION 1.2.8<a class="anchor" aria-label="anchor" href="#changes-in-version-128"></a></h2>
+<h2 class="page-header" data-toc-text="1.4.1" id="changes-in-version-141">CHANGES IN VERSION 1.4.1<a class="anchor" aria-label="anchor" href="#changes-in-version-141"></a></h2>
 <div class="section level3">
-<h3 id="bug-fixes-1-2-8">BUG FIXES<a class="anchor" aria-label="anchor" href="#bug-fixes-1-2-8"></a></h3>
-<ul><li>
-<code>getExon</code> will double-check for appropriate chromosome data to avoid incorrect plotting based on related chromosome contigs.</li>
+<h3 id="bug-fixes-1-4-1">BUG FIXES<a class="anchor" aria-label="anchor" href="#bug-fixes-1-4-1"></a></h3>
+<ul><li>yscales for <code>plotHicRectangle</code> and <code>plotHicTriangle</code> reflect distance in Hi-C bins.</li>
 </ul></div>
 </div>
     <div class="section level2">
-<h2 class="page-header" data-toc-text="1.2.7" id="changes-in-version-127">CHANGES IN VERSION 1.2.7<a class="anchor" aria-label="anchor" href="#changes-in-version-127"></a></h2>
+<h2 class="page-header" data-toc-text="1.4.0" id="version-140">VERSION 1.4.0<a class="anchor" aria-label="anchor" href="#version-140"></a></h2>
+<p>Version bump for Bioconductor 3.16 release.</p>
+</div>
+    <div class="section level2">
+<h2 class="page-header" data-toc-text="1.3.8" id="changes-in-version-138-and-139">CHANGES IN VERSION 1.3.8 AND 1.3.9<a class="anchor" aria-label="anchor" href="#changes-in-version-138-and-139"></a></h2>
 <div class="section level3">
-<h3 id="bug-fixes-1-2-7">BUG FIXES<a class="anchor" aria-label="anchor" href="#bug-fixes-1-2-7"></a></h3>
+<h3 id="bug-fixes-1-3-8">BUG FIXES<a class="anchor" aria-label="anchor" href="#bug-fixes-1-3-8"></a></h3>
+<ul><li>Fixed vignette links in “Introduction to plotgardener” vignette.</li>
+</ul></div>
+</div>
+    <div class="section level2">
+<h2 class="page-header" data-toc-text="1.3.7" id="changes-in-version-137">CHANGES IN VERSION 1.3.7<a class="anchor" aria-label="anchor" href="#changes-in-version-137"></a></h2>
+<div class="section level3">
+<h3 id="bug-fixes-1-3-7">BUG FIXES<a class="anchor" aria-label="anchor" href="#bug-fixes-1-3-7"></a></h3>
 <ul><li>
 <code>plotGenes</code> and related functions will appropriately check for and handle custom <code>OrgDb</code>s.</li>
+<li>
+<code>getExons</code> will double-check for appropriate chromosome data to avoid incorrect plotting based on related chromosome contigs.</li>
+</ul></div>
+<div class="section level3">
+<h3 id="new-features-1-3-7">NEW FEATURES<a class="anchor" aria-label="anchor" href="#new-features-1-3-7"></a></h3>
+<ul><li>
+<code>plotManhattan</code> p-value data can be scaled according to a custom transformation, rather than being limited to -log10.</li>
+<li>
+<code>plotRanges</code> elements can be ordered randomly or by decreasing width before plotted row assignment.</li>
 </ul></div>
 </div>
     <div class="section level2">
-<h2 class="page-header" data-toc-text="1.2.6" id="changes-in-version-126">CHANGES IN VERSION 1.2.6<a class="anchor" aria-label="anchor" href="#changes-in-version-126"></a></h2>
+<h2 class="page-header" data-toc-text="1.3.6" id="changes-in-version-136">CHANGES IN VERSION 1.3.6<a class="anchor" aria-label="anchor" href="#changes-in-version-136"></a></h2>
 <div class="section level3">
-<h3 id="bug-fixes-1-2-6">BUG FIXES<a class="anchor" aria-label="anchor" href="#bug-fixes-1-2-6"></a></h3>
+<h3 id="bug-fixes-1-3-6">BUG FIXES<a class="anchor" aria-label="anchor" href="#bug-fixes-1-3-6"></a></h3>
 <ul><li>
 <code>mapColors</code> can appropriately map colors to a numeric vector with the same values, so long as a range is provided.</li>
 </ul></div>
 </div>
     <div class="section level2">
-<h2 class="page-header" data-toc-text="1.2.5" id="changes-in-version-125">CHANGES IN VERSION 1.2.5<a class="anchor" aria-label="anchor" href="#changes-in-version-125"></a></h2>
+<h2 class="page-header" data-toc-text="1.3.5" id="changes-in-version-135">CHANGES IN VERSION 1.3.5<a class="anchor" aria-label="anchor" href="#changes-in-version-135"></a></h2>
 <div class="section level3">
-<h3 id="bug-fixes-1-2-5">BUG FIXES<a class="anchor" aria-label="anchor" href="#bug-fixes-1-2-5"></a></h3>
+<h3 id="new-features-1-3-5">NEW FEATURES<a class="anchor" aria-label="anchor" href="#new-features-1-3-5"></a></h3>
+<ul><li>
+<code>plotMultiSignal</code> function can plot multiple signal track data sets in line with each other.</li>
+<li>
+<code>calcSignalRange</code> helper function will calculate an appropriate range for multiple signal data sets.</li>
+<li>
+<code>pageLayoutRow</code> and <code>pageLayoutCol</code> functions for generating row and column positions for a number of plot elements.</li>
+<li>Gene transcripts can be highlighted by gene name or transcript name with the parameter <code>transcriptHighlights</code> in <code>plotTranscripts</code>.</li>
+</ul></div>
+</div>
+    <div class="section level2">
+<h2 class="page-header" data-toc-text="1.3.4" id="changes-in-version-134">CHANGES IN VERSION 1.3.4<a class="anchor" aria-label="anchor" href="#changes-in-version-134"></a></h2>
+<div class="section level3">
+<h3 id="bug-fixes-1-3-4">BUG FIXES<a class="anchor" aria-label="anchor" href="#bug-fixes-1-3-4"></a></h3>
 <ul><li>
 <code>plotPairsArches</code> Bezier curve height calculations were fixed for pairs with different sized anchors.</li>
 </ul></div>
 </div>
     <div class="section level2">
-<h2 class="page-header" data-toc-text="1.2.4" id="changes-in-version-124">CHANGES IN VERSION 1.2.4<a class="anchor" aria-label="anchor" href="#changes-in-version-124"></a></h2>
+<h2 class="page-header" data-toc-text="1.3.3" id="changes-in-version-133">CHANGES IN VERSION 1.3.3<a class="anchor" aria-label="anchor" href="#changes-in-version-133"></a></h2>
 <div class="section level3">
-<h3 id="bug-fixes-1-2-4">BUG FIXES<a class="anchor" aria-label="anchor" href="#bug-fixes-1-2-4"></a></h3>
+<h3 id="new-features-1-3-3">NEW FEATURES<a class="anchor" aria-label="anchor" href="#new-features-1-3-3"></a></h3>
 <ul><li>
-<code>plotSignal</code> range parsing bug fixes were resolved.</li>
+<code>plotSignal</code> can now plot negative signal data alone or listed as a second file.</li>
+<li>A <code>label</code> parameter has been added for <code>plotSignal</code> for convenient labeling.</li>
 </ul></div>
 </div>
     <div class="section level2">
-<h2 class="page-header" data-toc-text="1.2.2" id="changes-in-version-122">CHANGES IN VERSION 1.2.2<a class="anchor" aria-label="anchor" href="#changes-in-version-122"></a></h2>
-<ul><li>Note about double page rendering has been added to <code><a href="../reference/pageGuideHide.html">pageGuideHide()</a></code> documentation.</li>
+<h2 class="page-header" data-toc-text="1.3.2" id="changes-in-version-132">CHANGES IN VERSION 1.3.2<a class="anchor" aria-label="anchor" href="#changes-in-version-132"></a></h2>
+<div class="section level3">
+<h3 id="bug-fixes-1-3-2">BUG FIXES<a class="anchor" aria-label="anchor" href="#bug-fixes-1-3-2"></a></h3>
+<ul><li><p><code>plotSignal</code> range parsing bug fixes were resolved.</p></li>
+<li><p>Note about double page rendering has been added to <code><a href="../reference/pageGuideHide.html">pageGuideHide()</a></code> documentation.</p></li>
 </ul></div>
+</div>
     <div class="section level2">
-<h2 class="page-header" data-toc-text="1.2.1" id="changes-in-version-121">CHANGES IN VERSION 1.2.1<a class="anchor" aria-label="anchor" href="#changes-in-version-121"></a></h2>
+<h2 class="page-header" data-toc-text="1.3.1" id="changes-in-version-131">CHANGES IN VERSION 1.3.1<a class="anchor" aria-label="anchor" href="#changes-in-version-131"></a></h2>
 <ul><li><p><code>plotSignal</code> bug fixes related to function not finding posSignal2 and negSignal2 variables with insufficient data.</p></li>
 <li><p>Documentation to introduction vignette has been added to explain double page rendering when using any removal function, particularly <code><a href="../reference/pageGuideHide.html">pageGuideHide()</a></code>.</p></li>
 </ul></div>
     <div class="section level2">
-<h2 class="page-header" data-toc-text="1.2.0" id="version-120">VERSION 1.2.0<a class="anchor" aria-label="anchor" href="#version-120"></a></h2>
+<h2 class="page-header" data-toc-text="1.3.0" id="version-130">VERSION 1.3.0<a class="anchor" aria-label="anchor" href="#version-130"></a></h2>
 <p>Version bump for Bioconductor 3.15 release.</p>
 </div>
     <div class="section level2">

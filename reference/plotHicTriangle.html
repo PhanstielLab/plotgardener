@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">plotgardener</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.2.10</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.4.1</span>
       </span>
     </div>
 
@@ -258,7 +258,9 @@ genomic region, Hi-C data, placement, and <a href="https://rdrr.io/r/grid/grid.g
     </div>
     <div id="details">
     <h2>Details</h2>
-    <p>A triangle Hi-C plot can be placed on a plotgardener coordinate page
+    <p>In this orientation, the x-axis represents the genomic coordinates and
+the y-axis corresponds to distance in Hi-C bins.</p>
+<p>A triangle Hi-C plot can be placed on a plotgardener coordinate page
 by providing plot placement parameters:</p><div class="sourceCode"><pre><code><span></span>
 <span><span class="fu"><a href="../reference/plotHicTriangle.html">plotHicTriangle</a></span><span class="op">(</span><span class="va">data</span>, <span class="va">chrom</span>,</span>
 <span>                chromstart <span class="op">=</span> <span class="cn">NULL</span>, chromend <span class="op">=</span> <span class="cn">NULL</span>,</span>
@@ -291,7 +293,7 @@ will be cropped to the given <code>height</code>.</p>
 <span class="r-in"><span>    zrange <span class="op">=</span> <span class="fu"><a href="c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">70</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>    chrom <span class="op">=</span> <span class="st">"chr21"</span>,</span></span>
 <span class="r-in"><span>    chromstart <span class="op">=</span> <span class="fl">28000000</span>, chromend <span class="op">=</span> <span class="fl">30300000</span>,</span></span>
-<span class="r-in"><span>    assembly <span class="op">=</span> <span class="st">"hg19"</span>, bg <span class="op">=</span> <span class="st">"black"</span>,</span></span>
+<span class="r-in"><span>    assembly <span class="op">=</span> <span class="st">"hg19"</span>,</span></span>
 <span class="r-in"><span>    x <span class="op">=</span> <span class="fl">2</span>, y <span class="op">=</span> <span class="fl">0.5</span>, width <span class="op">=</span> <span class="fl">3</span>, height <span class="op">=</span> <span class="fl">1.5</span>,</span></span>
 <span class="r-in"><span>    just <span class="op">=</span> <span class="st">"top"</span>, default.units <span class="op">=</span> <span class="st">"inches"</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>

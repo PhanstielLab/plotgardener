@@ -91,6 +91,9 @@
     <loc>https://phanstiellab.github.io/plotgardener/reference/c.html</loc>
   </url>
   <url>
+    <loc>https://phanstiellab.github.io/plotgardener/reference/calcSignalRange.html</loc>
+  </url>
+  <url>
     <loc>https://phanstiellab.github.io/plotgardener/reference/colorby.html</loc>
   </url>
   <url>
@@ -119,6 +122,12 @@
   </url>
   <url>
     <loc>https://phanstiellab.github.io/plotgardener/reference/pageGuideVertical.html</loc>
+  </url>
+  <url>
+    <loc>https://phanstiellab.github.io/plotgardener/reference/pageLayoutCol.html</loc>
+  </url>
+  <url>
+    <loc>https://phanstiellab.github.io/plotgardener/reference/pageLayoutRow.html</loc>
   </url>
   <url>
     <loc>https://phanstiellab.github.io/plotgardener/reference/pagePlotPlace.html</loc>
@@ -158,6 +167,9 @@
   </url>
   <url>
     <loc>https://phanstiellab.github.io/plotgardener/reference/plotManhattan.html</loc>
+  </url>
+  <url>
+    <loc>https://phanstiellab.github.io/plotgardener/reference/plotMultiSignal.html</loc>
   </url>
   <url>
     <loc>https://phanstiellab.github.io/plotgardener/reference/plotPairs.html</loc>

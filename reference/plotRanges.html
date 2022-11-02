@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">plotgardener</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.2.10</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.4.1</span>
       </span>
     </div>
 
@@ -104,6 +104,7 @@
 <span>    assembly <span class="op">=</span> <span class="st">"hg38"</span>,</span>
 <span>    fill <span class="op">=</span> <span class="st">"#7ecdbb"</span>,</span>
 <span>    linecolor <span class="op">=</span> <span class="cn">NA</span>,</span>
+<span>    order <span class="op">=</span> <span class="st">"width"</span>,</span>
 <span>    collapse <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>    boxHeight <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grid/unit.html" class="external-link">unit</a></span><span class="op">(</span><span class="fl">2</span>, <span class="st">"mm"</span><span class="op">)</span>,</span>
 <span>    spaceWidth <span class="op">=</span> <span class="fl">0.02</span>,</span>
@@ -165,6 +166,14 @@ Default value is <code>fill = "#7ecdbb"</code>.</p></dd>
 outlining range elements. Default value is <code>linecolor = NA</code>.
 Special options include:</p><ul><li><p><code>NA</code>: No line color.</p></li>
 <li><p><code>"fill"</code>: Same color as <code>fill</code>.</p></li>
+</ul><p>.</p></dd>
+
+
+<dt>order</dt>
+<dd><p>A character value specifying how to order pileup data
+before assigning rows. Default value is <code>order = "width"</code>. Options 
+include:</p><ul><li><p><code>"width"</code>: Ordered by decreasing width of elements.</p></li>
+<li><p><code>"random"</code>: Ordered randomly in each function call.</p></li>
 </ul><p>.</p></dd>
 
 
@@ -312,6 +321,7 @@ by ignoring plot placement parameters:</p><div class="sourceCode"><pre><code><sp
 <span class="r-in"><span>    data <span class="op">=</span> <span class="va">IMR90_ChIP_CTCF_reads</span>, chrom <span class="op">=</span> <span class="st">"chr21"</span>,</span></span>
 <span class="r-in"><span>    chromstart <span class="op">=</span> <span class="fl">29073000</span>, chromend <span class="op">=</span> <span class="fl">29074000</span>,</span></span>
 <span class="r-in"><span>    assembly <span class="op">=</span> <span class="st">"hg19"</span>,</span></span>
+<span class="r-in"><span>    order <span class="op">=</span> <span class="st">"random"</span>,</span></span>
 <span class="r-in"><span>    fill <span class="op">=</span> <span class="fu"><a href="colorby.html">colorby</a></span><span class="op">(</span><span class="st">"strand"</span>, palette <span class="op">=</span> </span></span>
 <span class="r-in"><span>                <span class="fu"><a href="https://rdrr.io/r/grDevices/colorRamp.html" class="external-link">colorRampPalette</a></span><span class="op">(</span><span class="fu"><a href="c.html">c</a></span><span class="op">(</span><span class="st">"#7ecdbb"</span>, <span class="st">"#37a7db"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>    strandSplit <span class="op">=</span> <span class="cn">TRUE</span>, </span></span>
