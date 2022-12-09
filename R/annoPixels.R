@@ -216,12 +216,12 @@ annoPixels <- function(plot, data, type = "box", half = "inherit",
     }
 
     ## Define a function that subsets loop data for hic region
-    subset_loops <- function(hic, loopData, object) {
+    subset_loops <- function(hic, loopData, object, plotObject) {
 
         ## chrom always in col1
         ## altchrom always in col4
         ## triangle hic plots will not have altchrom parameters
-        if (is(hic, "hicTriangle") | is(hic, "hicRectangle")) {
+        if (is(hic, "hicTriangle")) {
             loops_subset <- loopData[which(
                 loopData[, "chrom1"] == object$chrom &
                 loopData[, "chrom2"] == object$chrom &
@@ -229,6 +229,14 @@ annoPixels <- function(plot, data, type = "box", half = "inherit",
                 loopData[, "end1"] <= object$chromend &
                 loopData[, "start2"] >= object$chromstart &
                 loopData[, "end2"] <= object$chromend), ]
+        } else if (is(hic, "hicRectangle")){
+            loops_subset <- loopData[which(
+                loopData[, "chrom1"] == object$chrom &
+                    loopData[, "chrom2"] == object$chrom &
+                    loopData[, "start1"] >= plotObject$chromstartAdjusted &
+                    loopData[, "end1"] <= plotObject$chromendAdjusted &
+                    loopData[, "start2"] >= plotObject$chromstartAdjusted &
+                    loopData[, "end2"] <= plotObject$chromendAdjusted), ]
         } else {
             loops_subset <- loopData[which(
                 loopData[, "chrom1"] == object$chrom &
@@ -630,7 +638,7 @@ annoPixels <- function(plot, data, type = "box", half = "inherit",
     # =========================================================================
     loops_subset <- subset_loops(
         hic = loopsInternal$plot, loopData = loopData,
-        object = loops
+        object = loops, plotObject = loopsInternal$plot
     )
     # =========================================================================
     # VIEWPORTS
@@ -660,25 +668,20 @@ annoPixels <- function(plot, data, type = "box", half = "inherit",
             name = vp_name
         )
     } else if (is(loopsInternal$plot, "hicTriangle")) {
-        width <- convertUnit(loopsInternal$plot$outsideVP$width,
-            unitTo = get("page_units", pgEnv), valueOnly = TRUE
-        )
-
         vp <- viewport(
-            height = unit(width / sqrt(2), get("page_units", pgEnv)),
-            width = unit(width / sqrt(2), get("page_units", pgEnv)),
-            x = loopsInternal$plot$outsideVP$x,
-            y = loopsInternal$plot$outsideVP$y,
+            height = loopsInternal$plot$grobs$vp$height,
+            width = loopsInternal$plot$grobs$vp$width,
+            x = unit(0, "npc"),
+            y =  unit(0, "npc"),
             xscale = loopsInternal$plot$grobs$vp$xscale,
             yscale = loopsInternal$plot$grobs$vp$yscale,
-            just = loopsInternal$plot$outsideVP$justification,
+            just = c("left", "bottom"),
             name = vp_name,
             angle = -45
         )
         
         if (loopsInternal$plot$flip == TRUE){
-            vp$y <- loopsInternal$plot$outsideVP$y + 
-                    loopsInternal$plot$outsideVP$height
+            vp$y <- unit(1, "npc")
 
         }
         
@@ -687,20 +690,10 @@ annoPixels <- function(plot, data, type = "box", half = "inherit",
             unitTo = get("page_units", pgEnv)
         )
 
-        ## Get bottom left coord of outsideVP
-        bottomLeft <- vp_bottomLeft(viewport = loopsInternal$plot$outsideVP)
-
-        ## Convert adjusted chromstart to page units within outsideVP
-        ## and add to bottomLeft x
-        seekViewport(name = loopsInternal$plot$outsideVP$name)
-        xCoord <- convertX(unit(loopsInternal$plot$grobs$vp$x),
-            unitTo = get("page_units", pgEnv)
-        ) + bottomLeft[[1]]
-        seekViewport(name = "page")
-
         vp <- viewport(
             height = side, width = side,
-            x = xCoord, y = bottomLeft[[2]],
+            x = unit(loopsInternal$plot$grobs$vp$xscale[1], "native"), 
+            y = unit(0, "npc"),
             xscale = loopsInternal$plot$grobs$vp$xscale,
             yscale = loopsInternal$plot$grobs$vp$yscale,
             just = c("left", "bottom"),
@@ -708,7 +701,7 @@ annoPixels <- function(plot, data, type = "box", half = "inherit",
             angle = -45
         )
         if (loopsInternal$plot$flip == TRUE){
-            vp$y <- bottomLeft[[2]] + loopsInternal$plot$outsideVP$height
+            vp$y <- unit(1, "npc")
             
         }
     }
@@ -761,8 +754,16 @@ annoPixels <- function(plot, data, type = "box", half = "inherit",
     # =========================================================================
 
     loops$grobs <- get("loop_grobs", envir = pgEnv)
-    grid.draw(loops$grobs)
-
+    
+    if (is(loopsInternal$plot, "hicRectangle") | 
+        is(loopsInternal$plot, "hicTriangle")){
+        seekViewport(name = loopsInternal$plot$outsideVP$name)
+        grid.draw(loops$grobs)
+        seekViewport("page")
+    } else {
+        grid.draw(loops$grobs)
+    }
+    
     # =========================================================================
     # RETURN OBJECT
     # =========================================================================
