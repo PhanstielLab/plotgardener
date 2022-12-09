@@ -607,6 +607,8 @@ plotHicRectangle <- function(data, resolution = "auto", zrange = NULL,
     # =========================================================================
 
     hicPlot$grobs <- get("hic_grobs3", envir = pgEnv)
+    hicPlot$chromstartAdjusted <- hicPlot$chromstart
+    hicPlot$chromendAdjusted <- hicPlot$chromend
     hicPlot$chromstart <- rhicInternal$chromstart
     hicPlot$chromend <- rhicInternal$chromend
 

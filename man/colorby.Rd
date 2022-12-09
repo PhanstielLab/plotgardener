@@ -17,7 +17,7 @@ apply a color scale to.}
 
 \item{scalePerRegion}{A logical value indicating whether to adjust 
 NULL range of numerical `colorby` values to subset of data in a plotted
-genomic regoin. Default value is \code{scalePerRegion = FALSE}.}
+genomic region. Default value is \code{scalePerRegion = FALSE}.}
 }
 \value{
 Returns a "\code{colorby}" object.

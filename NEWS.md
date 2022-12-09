@@ -1,3 +1,8 @@
+# CHANGES IN VERSION 1.5.2
+## BUG FIXES
+
+* `annoPixels` detects and annotates all pixels for `plotHicRectangle` plots.
+
 # CHANGES IN VERSION 1.5.1
 ## BUG FIXES
 
