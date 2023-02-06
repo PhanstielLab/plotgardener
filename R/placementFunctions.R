@@ -14,7 +14,7 @@ convert_gpath <- function(grob) {
 ## Define a function to make sure a bb_page viewport exists
 # @param error Error message if bb_page doesn't exist
 check_page <- function(error) {
-    if (!"page" %in% current.vpPath()) {
+    if (!"page" %in% as.character(current.vpPath())) {
         stop(error, call. = FALSE)
     }
 }
@@ -74,10 +74,10 @@ validUnits <- c(
 
 ## Define a function to assign rows for pileup-style data
 ## (plotPairs, plotRanges, plotTranscripts)
-# @param data The data to assign rows to, with start in col1 and 
+# @param data The data to assign rows to, with start in col1 and
 # end in col2. This can only be numeric values.
 # @param maxRows Maximum number of rows.
-# @param rowCol Number of column in `data` that corresponds to 
+# @param rowCol Number of column in `data` that corresponds to
 # the row column. This will depend on the number of columns included
 # in `data`. This is indexed from 0 for C++ syntax.
 # @param limitLabel Logical whether to plot '+' when some elements
@@ -91,17 +91,17 @@ validUnits <- c(
 # appropriate column naming after row assignment and data combining.
 assignRows <- function(data, maxRows, wiggle, rowCol, limitLabel, side = "top",
                     gTree, extraData = NULL, colNames = NULL){
-    
+
     if (nrow(data) > 0){
         ## Initialize a row column
         data$row <- 0
-        
+
         ## Convert to numeric matrix for Rcpp function parsing
         dataMatrix <- as.matrix(data)
-        
+
         ## Assign a row for each element
         rowData <- as.data.frame(checkRow(dataMatrix, maxRows, rowCol, wiggle))
-        
+
         ## Combine with extra data columns after row assignment
         if (!is.null(extraData)){
             rowData <- cbind(rowData, extraData)
@@ -109,20 +109,20 @@ assignRows <- function(data, maxRows, wiggle, rowCol, limitLabel, side = "top",
         } else {
             colNames <- colnames(data)
         }
-        
+
         ## Update column names
         colnames(rowData) <- colNames
-        
+
         ## Remove and warn if any data does not get assigned a row
         if (any(rowData$row == 0)){
             rowData <- rowData[which(rowData$row != 0), ]
             message <- "Not enough plotting space for all provided elements."
-            
+
             if (limitLabel == TRUE){
-                
+
                 message <- paste("Not enough plotting space for all provided",
                     "elements. ('+' indicates elements not shown.)")
-                
+
                 if (side == "top"){
                     y <- unit(1, "npc")
                     just <- c("right", "top")
@@ -130,7 +130,7 @@ assignRows <- function(data, maxRows, wiggle, rowCol, limitLabel, side = "top",
                     y <- unit(0, "npc")
                     just <- c("right", "bottom")
                 }
-                
+
                 limitGrob <- textGrob(
                     label = "+", x = unit(1, "npc"),
                     y = y,
@@ -144,20 +144,20 @@ assignRows <- function(data, maxRows, wiggle, rowCol, limitLabel, side = "top",
                         ),
                         envir = pgEnv
                 )
-                
+
             }
-            
-            
+
+
             warning(message, call. = FALSE)
-            
-            
+
+
         }
-        
+
         ## Change row index to 0 to calculate y
         rowData$row <- rowData$row - 1
     } else {
         rowData <- data.frame()
     }
-    
+
     return(rowData)
 }
