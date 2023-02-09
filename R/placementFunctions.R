@@ -11,10 +11,10 @@ convert_gpath <- function(grob) {
     return(gpath)
 }
 
-## Define a function to make sure a bb_page viewport exists
-# @param error Error message if bb_page doesn't exist
+## Define a function to make sure a page viewport exists
+# @param error Error message if page doesn't exist
 check_page <- function(error) {
-    if (!"page" %in% as.character(current.vpPath())) {
+    if (!grepl("page", as.character(current.vpPath()))){
         stop(error, call. = FALSE)
     }
 }
@@ -58,7 +58,7 @@ check_placement <- function(object) {
             }
 
 
-            ## 3. Need a bb_page
+            ## 3. Need a page
             check_page(error = paste("Must make a `plotgardener` page with",
                                     "`pageCreate()` before placing a plot."))
         }
