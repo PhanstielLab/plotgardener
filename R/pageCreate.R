@@ -243,17 +243,21 @@ pageCreate <- function(width = 8.5, height = 11, default.units = "inches",
                 y0 <- y1
                 y1 <- y1 + 1 / 32
                 v <- segmentsGrob(
-                    x0 = xsegs$x0[xsegs$x0 %in% seq(0, page_width, div)],
+                    x0 = xsegs$x0[xsegs$x0 %in% unit(seq(0, page_width, div), 
+                                                     page_units)],
                     y0 = y0,
-                    x1 = xsegs$x0[xsegs$x0 %in% seq(0, page_width, div)],
+                    x1 = xsegs$x0[xsegs$x0 %in% unit(seq(0, page_width, div),
+                                                     page_units)],
                     y1 = y1, default.units = page_units,
                     gp = gpar(col = "black")
                 )
                 h <- segmentsGrob(
                     x0 = x0,
-                    y0 = ysegs$y1[ysegs$y1 %in% seq(0, page_height, div)],
+                    y0 = ysegs$y1[ysegs$y1 %in% unit(seq(0, page_height, div),
+                                                     "native")],
                     x1 = x1,
-                    y1 = ysegs$y1[ysegs$y1 %in% seq(0, page_height, div)],
+                    y1 = ysegs$y1[ysegs$y1 %in% unit(seq(0, page_height, div),
+                                                     "native")],
                     default.units = "native",
                     gp = gpar(col = "black")
                 )
