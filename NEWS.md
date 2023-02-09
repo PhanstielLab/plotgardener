@@ -1,3 +1,8 @@
+# CHANGES IN VERSION 1.5.3
+## BUG FIXES
+
+* Fixed page viewport parsing bug fixes related to R version 4.3.0 updates.
+
 # CHANGES IN VERSION 1.5.2
 ## BUG FIXES
 
