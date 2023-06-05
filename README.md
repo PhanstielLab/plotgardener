@@ -24,7 +24,7 @@ and plot multi-omic data quickly and easily. These functions are
 integrated with Bioconductor packages to flexibly accommodate a large variety 
 of genomic assemblies. `plotgardener` can address an
 endless number of use cases, including: dynamic exploration of genomic
-data, arrangment into multi-omic layouts, and survey plotting for
+data, arrangement into multi-omic layouts, and survey plotting for
 quickly viewing data across the genome. Check out our `vignettes` for
 detailed examples and suggested use cases!
 
@@ -38,15 +38,15 @@ precise multi-panel figures in R, *Bioinformatics*, 2022.
 
 ## Installation
 
-plotgardener can be installed from Bioconductor version 3.16 
+plotgardener can be installed from Bioconductor version 3.17 
 
-(R version 4.2) as follows:
+(R version 4.3) as follows:
 
 ``` r
 if (!requireNamespace("BiocManager", quietly = TRUE))
     install.packages("BiocManager")
 
-BiocManager::install(version = "3.16")
+BiocManager::install(version = "3.17")
 
 BiocManager::install("plotgardener")
 
