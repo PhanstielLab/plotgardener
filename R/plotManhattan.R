@@ -15,6 +15,7 @@
 #'     sigCol = NULL,
 #'     trans = "-log10",
 #'     range = NULL,
+#'     yscale_reverse = FALSE,
 #'     space = 0.01,
 #'     bg = NA,
 #'     baseline = FALSE,
@@ -82,6 +83,8 @@
 #' empty character "". Default value is \code{trans = "-log10"}.
 #' @param range A numeric vector of length 2 specifying the y-range
 #' of p-values to plot (c(min, max)).
+#' @param yscale_reverse Logical value indicating whether to reverse the y-scale
+#' and order points from max to min.
 #' @param space A numeric value indicating the space between each
 #' chromosome as a fraction of the width of the plot, if plotting multiple
 #' chromosomes. Default value is \code{space = 0.01}.
@@ -271,7 +274,8 @@ plotManhattan <- function(data, sigVal = 5e-08, chrom = NULL,
                             cex = 0.25, leadSNP = NULL,
                             sigLine = FALSE, sigCol = NULL,
                             trans = "-log10",
-                            range = NULL, space = 0.01, bg = NA,
+                            range = NULL, yscale_reverse = FALSE,
+                            space = 0.01, bg = NA,
                             baseline = FALSE, baseline.color = "grey",
                             baseline.lwd = 1, x = NULL, y = NULL,
                             width = NULL, height = NULL,
@@ -399,13 +403,31 @@ plotManhattan <- function(data, sigVal = 5e-08, chrom = NULL,
     }
 
     ## Define a function that adjusts the yrange of the plot
-    manhattan_range <- function(bedData, object, trans) {
+    manhattan_range <- function(bedData, object, trans, yscale_reverse) {
         if (is.null(object$range)) {
             
-            object$range <- c(0, 
-                ceiling(max(unlist(lapply(parse(text = paste0(trans, "(", 
-                                                              bedData[, "p"], 
-                                                              ")")), eval)))))
+            if (yscale_reverse == TRUE){
+                object$range <- 
+                    c(ceiling(max(unlist(lapply(parse(text = 
+                                                          paste0(trans, "(",
+                                                                 bedData[, "p"], 
+                                                                 ")")), 
+                                                eval)))), 0)
+            } else {
+                
+                object$range <- 
+                    c(0,
+                      ceiling(max(unlist(lapply(parse(text = 
+                                                          paste0(trans, "(",
+                                                                 bedData[, "p"],
+                                                                 ")")), 
+                                                eval)))))
+            }
+            
+        } else {
+            if (yscale_reverse == TRUE){
+                object$range <- rev(object$range)
+            }
         }
 
         return(object)
@@ -497,7 +519,6 @@ plotManhattan <- function(data, sigVal = 5e-08, chrom = NULL,
         ymax = manInternal$ymax,
         space = manInternal$space,
         color_palette = NULL,
-        zrange = NULL,
         x = manInternal$x, y = manInternal$y,
         width = manInternal$width,
         height = manInternal$height,
@@ -744,7 +765,9 @@ plotManhattan <- function(data, sigVal = 5e-08, chrom = NULL,
             # =================================================================
 
             man_plot <- manhattan_range(bedData = bed_data, object = man_plot,
-                                        trans = manInternal$trans)
+                                        trans = manInternal$trans,
+                                        yscale_reverse = 
+                                            manInternal$yscale_reverse)
             
         } else {
             manInternal$xscale <- c(0, 1)
