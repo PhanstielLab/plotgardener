@@ -24,9 +24,8 @@ on:
   push:
     branches:
       - RELEASE_3_17
-
-  pull_request:
-
+  pull_request:    
+  
 name: R-CMD-check-bioc
 
 ## These environment variables control whether to run GHA code later on that is
@@ -60,7 +59,6 @@ jobs:
           - { os: windows-latest, r: '4.3', bioc: '3.17'}
           ## Check https://github.com/r-lib/actions/tree/master/examples
           ## for examples using the http-user-agent
-
     env:
       R_REMOTES_NO_ERRORS_FROM_WARNINGS: true
       RSPM: ${{ matrix.config.rspm }}
@@ -88,7 +86,7 @@ jobs:
       ## R is already included in the Bioconductor docker images
       - name: Setup R from r-lib
         if: runner.os != 'Linux'
-        uses: r-lib/actions/setup-r@v2
+        uses: r-lib/actions/setup-r@master
         with:
           r-version: ${{ matrix.config.r }}
           http-user-agent: ${{ matrix.config.http-user-agent }}
@@ -96,7 +94,7 @@ jobs:
       ## pandoc is already included in the Bioconductor docker images
       - name: Setup pandoc from r-lib
         if: runner.os != 'Linux'
-        uses: r-lib/actions/setup-pandoc@v2
+        uses: r-lib/actions/setup-pandoc@master
 
       - name: Query dependencies
         run: |
