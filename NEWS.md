@@ -1,3 +1,12 @@
+# CHANGES IN VERSION 1.7.1
+## NEW FEATURES
+
+* `plotManhattan` y-scales can be reversed for Miami plot-style layouts.
+
+# VERSION 1.7.0
+
+Version bump for Bioconductor 3.17 release.
+
 # CHANGES IN VERSION 1.5.3
 ## BUG FIXES
 
