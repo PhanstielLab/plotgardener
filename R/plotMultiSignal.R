@@ -354,13 +354,13 @@ plotMultiSignal<- function(data,
                             gapdistance = multisigInternal$gapdistance)
   
     if (multisigInternal$orientation == "h"){
-        height <- (multisigInternal$height - 
+        multisigInternal$height <- (multisigInternal$height - 
                     (multisigInternal$gapdistance * (nTracks-1)))/nTracks
     } else if (multisigInternal$orientation == "v"){
-        width <- (multisigInternal$width - 
+        multisigInternal$width <- (multisigInternal$width - 
                     (multisigInternal$gapdistance * (nTracks-1)))/nTracks
     }
-
+    
     linecolorList <- setColors(multisigInternal$linecolor, nTracks)
     fillList <- setColors(multisigInternal$fill, nTracks)
     
@@ -380,8 +380,8 @@ plotMultiSignal<- function(data,
         \(d, x, y, l, f, draw, lab){
             suppressMessages(plotSignal(data = d, x = x, y = y, 
                         linecolor = l,
-                        height = height, 
-                        width = width,
+                        height = multisigInternal$height, 
+                        width = multisigInternal$width,
                         range = range, 
                         orientation = multisigInternal$orientation, 
                         scale = multisigInternal$scale,
