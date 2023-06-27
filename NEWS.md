@@ -1,3 +1,12 @@
+# VERSION 1.6.1
+## BUG FIXES
+
+* Fixed `plotMultiSignal` width and height parsing bug.
+
+# VERSION 1.6.0
+
+Version bump for Bioconductor 3.17 release.
+
 # CHANGES IN VERSION 1.5.3
 ## BUG FIXES
 
