@@ -644,7 +644,6 @@ plotHicSquare <- function(data, resolution = "auto", zrange = NULL,
 
         if (hicInternal$draw == TRUE) {
             vp$name <- "hicSquare1"
-            grid.newpage()
         }
     } else {
         addViewport(vp_name)
