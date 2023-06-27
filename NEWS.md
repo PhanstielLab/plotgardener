@@ -1,3 +1,8 @@
+# VERSION 1.7.2
+## BUG FIXES
+
+* Fixed `plotMultiSignal` width and height parsing bug.
+
 # CHANGES IN VERSION 1.7.1
 ## NEW FEATURES
 
