@@ -582,16 +582,6 @@ plotHicTriangle <- function(data, resolution = "auto", zrange = NULL,
     # =========================================================================
     # VIEWPORTS
     # =========================================================================
-
-    ## Get viewport name
-    currentViewports <- current_viewports()
-    vp_name <- paste0(
-        "hicTriangle",
-        length(grep(
-            pattern = "hicTriangle",
-            x = currentViewports
-        )) + 1
-    )
     
     ## Inner viewport y-coordinate
     if (thicInternal$flip == TRUE){
@@ -609,7 +599,7 @@ plotHicTriangle <- function(data, resolution = "auto", zrange = NULL,
             xscale = thicInternal$xscale,
             yscale = thicInternal$xscale,
             just = c("left", "bottom"),
-            name = paste0(vp_name, "_inside"),
+            name = "hicTriangle1_inside",
             angle = -45
         )
         
@@ -628,16 +618,23 @@ plotHicTriangle <- function(data, resolution = "auto", zrange = NULL,
             yscale = c(0, num_pixelsHeight),
             clip = "on",
             just = c("left", "bottom"),
-            name = paste0(vp_name, "_outside")
+            name = "hicTriangle1_outside"
         )
 
         if (thicInternal$draw == TRUE) {
-            vp_name <- "hicTriangle1"
-            inside_vp$name <- "hicTriangle1_inside"
-            outside_vp$name <- "hicTriangle1_outside"
             grid.newpage()
         }
     } else {
+        
+        ## Get viewport name
+        currentViewports <- current_viewports()
+        vp_name <- paste0(
+            "hicTriangle",
+            length(grep(
+                pattern = "hicTriangle",
+                x = currentViewports
+            )) + 1
+        )
 
         ## Get sides of viewport based on input width
         vp_side <- (convertWidth(hicPlot$width,

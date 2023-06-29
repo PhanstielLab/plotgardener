@@ -367,16 +367,6 @@ plotPairs <- function(data, chrom, chromstart = NULL, chromend = NULL,
     # VIEWPORTS
     # =========================================================================
 
-    ## Get viewport name
-    currentViewports <- current_viewports()
-    vp_name <- paste0(
-        "pairs",
-        length(grep(
-            pattern = "pairs",
-            x = currentViewports
-        )) + 1
-    )
-
     ## If placing information is provided but plot == TRUE,
     ## set up it's own viewport separate
     ## Not translating into page_coordinates
@@ -388,14 +378,24 @@ plotPairs <- function(data, chrom, chromstart = NULL, chromend = NULL,
             xscale = bedpeInternal$xscale,
             yscale = c(0, 1),
             just = "center",
-            name = vp_name
+            name = "pairs1"
         )
 
         if (bedpeInternal$draw == TRUE) {
-            vp$name <- "pairs1"
             grid.newpage()
         }
     } else {
+        
+        ## Get viewport name
+        currentViewports <- current_viewports()
+        vp_name <- paste0(
+            "pairs",
+            length(grep(
+                pattern = "pairs",
+                x = currentViewports
+            )) + 1
+        )
+        
         addViewport(vp_name)
 
         ## Convert coordinates into same units as page

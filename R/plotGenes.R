@@ -394,23 +394,6 @@ plotGenes <- function(chrom, chromstart = NULL, chromend = NULL,
             genesInternal$fontsize
     ))
 
-    ## Name viewport
-    currentViewports <- current_viewports()
-    vp_name <- paste0(
-        "genes",
-        length(intersect(
-            grep(
-                pattern = "genes",
-                x = currentViewports
-            ),
-            grep(
-                pattern = "label",
-                x = currentViewports,
-                invert = TRUE
-            )
-        )) + 1
-    )
-
     if (is.null(genes$x) | is.null(genes$y)) {
         if (genesInternal$strandLabels == TRUE) {
 
@@ -422,7 +405,7 @@ plotGenes <- function(chrom, chromstart = NULL, chromend = NULL,
                 width = vp_labelW,
                 x = unit(0, "npc"), y = unit(0.5, "npc"),
                 just = "left",
-                name = paste0(vp_name, "_label")
+                name = "genes1_label"
             )
 
             vp_gene <- viewport(
@@ -432,7 +415,7 @@ plotGenes <- function(chrom, chromstart = NULL, chromend = NULL,
                 clip = "on",
                 xscale = genesInternal$xscale,
                 just = "left",
-                name = vp_name
+                name = "genes1"
             )
         } else {
             vp_gene <- viewport(
@@ -442,19 +425,32 @@ plotGenes <- function(chrom, chromstart = NULL, chromend = NULL,
                 clip = "on",
                 xscale = genesInternal$xscale,
                 just = "left",
-                name = vp_name
+                name = "genes1"
             )
         }
 
-
         if (genesInternal$draw == TRUE) {
-            vp_gene$name <- "genes1"
-            if (genesInternal$strandLabels == TRUE) {
-                vp_label$name <- "genes1_label"
-            }
             grid.newpage()
         }
     } else {
+        
+        ## Name viewport
+        currentViewports <- current_viewports()
+        vp_name <- paste0(
+            "genes",
+            length(intersect(
+                grep(
+                    pattern = "genes",
+                    x = currentViewports
+                ),
+                grep(
+                    pattern = "label",
+                    x = currentViewports,
+                    invert = TRUE
+                )
+            )) + 1
+        )
+        
         addViewport(vp_name)
 
         ## Convert coordinates into same units as page

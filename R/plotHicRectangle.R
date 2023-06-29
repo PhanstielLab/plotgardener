@@ -445,16 +445,6 @@ plotHicRectangle <- function(data, resolution = "auto", zrange = NULL,
         hicPlot = hicPlot,
         hicPlotInternal = rhicInternal
     )
-
-    ## Get viewport name
-    currentViewports <- current_viewports()
-    vp_name <- paste0(
-        "hicRectangle",
-        length(grep(
-            pattern = "hicRectangle",
-            x = currentViewports
-        )) + 1
-    )
     
     ## Inner viewport y-coordinate
     if (rhicInternal$flip == TRUE){
@@ -472,7 +462,7 @@ plotHicRectangle <- function(data, resolution = "auto", zrange = NULL,
             xscale = scale[[1]],
             yscale = scale[[1]],
             just = c("left", "bottom"),
-            name = paste0(vp_name, "_inside"),
+            name = "hicRectangle1_inside",
             angle = -45
         )
         
@@ -491,17 +481,24 @@ plotHicRectangle <- function(data, resolution = "auto", zrange = NULL,
             yscale = c(0, num_pixelsHeight),
             clip = "on",
             just = "center",
-            name = paste0(vp_name, "_outside")
+            name = "hicRectangle1_outside"
         )
 
 
         if (rhicInternal$draw == TRUE) {
-            vp_name <- "hicRectangle1"
-            inside_vp$name <- "hicRectangle1_inside"
-            outside_vp$name <- "hicRectangle1_outside"
             grid.newpage()
         }
     } else {
+        
+        ## Get viewport name
+        currentViewports <- current_viewports()
+        vp_name <- paste0(
+            "hicRectangle",
+            length(grep(
+                pattern = "hicRectangle",
+                x = currentViewports
+            )) + 1
+        )
 
         ## Convert coordinates into same units as page
         page_coords <- convert_page(object = hicPlot)

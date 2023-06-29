@@ -784,17 +784,7 @@ plotManhattan <- function(data, sigVal = 5e-08, chrom = NULL,
     # =========================================================================
     # VIEWPORTS
     # =========================================================================
-
-    ## Get viewport name
-    currentViewports <- current_viewports()
-    vp_name <- paste0(
-        "manhattan",
-        length(grep(
-            pattern = "manhattan",
-            x = currentViewports
-        )) + 1
-    )
-
+    
     ## y-scale
     yscale <- c(man_plot$range[1], man_plot$range[2])
     if (manInternal$flip == TRUE) {
@@ -811,14 +801,25 @@ plotManhattan <- function(data, sigVal = 5e-08, chrom = NULL,
             clip = "on",
             xscale = manInternal$xscale, yscale = yscale,
             just = "center",
-            name = vp_name
+            name = "manhattan1"
         )
 
         if (manInternal$draw == TRUE) {
-            vp$name <- "manhattan1"
             grid.newpage()
         }
+        
     } else {
+        
+        ## Get viewport name
+        currentViewports <- current_viewports()
+        vp_name <- paste0(
+            "manhattan",
+            length(grep(
+                pattern = "manhattan",
+                x = currentViewports
+            )) + 1
+        )
+        
         addViewport(vp_name)
 
         ## Convert coordinates into same units as page

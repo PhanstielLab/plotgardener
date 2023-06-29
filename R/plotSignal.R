@@ -821,16 +821,6 @@ plotSignal <- function(data, binSize = NA, binCap = TRUE, negData = FALSE,
     # VIEWPORTS
     # =========================================================================
 
-    ## Get viewport name
-    currentViewports <- current_viewports()
-    vp_name <- paste0(
-        "signal",
-        length(grep(
-            pattern = "signal",
-            x = currentViewports
-        )) + 1
-    )
-
     ## If placing information is provided but plot == TRUE,
     ## set up it's own viewport separate from bb_makepage
     ## Not translating into page_coordinates
@@ -845,7 +835,7 @@ plotSignal <- function(data, binSize = NA, binCap = TRUE, negData = FALSE,
                 xscale = sigInternal$xscale,
                 yscale = c(signal_track$range[1], signal_track$range[2]),
                 just = "center",
-                name = paste0(vp_name, "_h")
+                name = "signal1_h"
                 )
             } else if (sigInternal$orientation == "v"){
 
@@ -859,7 +849,7 @@ plotSignal <- function(data, binSize = NA, binCap = TRUE, negData = FALSE,
                     clip = "on",
                     xscale = c(signal_track$range[2], signal_track$range[1]),
                     yscale = sigInternal$xscale,
-                    name = paste0(vp_name, "_vClip")
+                    name = "signal1_vClip"
 
                 )
                 pushViewport(vpClip)
@@ -873,21 +863,23 @@ plotSignal <- function(data, binSize = NA, binCap = TRUE, negData = FALSE,
                     just = c("left", "bottom"),
                     xscale = sigInternal$xscale,
                     yscale = c(signal_track$range[1], signal_track$range[2]),
-                    name = paste0(vp_name, "_v"),
+                    name = "signal1_v",
                     angle = 90
                 )
             }
 
         if (sigInternal$draw == TRUE) {
-            vp$name <- "signal1"
-            if (sigInternal$orientation == "v"){
-                vpClip$name <- "signal1_Clip"
-            }
-
             grid.newpage()
         }
-        
         } else {
+            
+        ## Get viewport name
+        currentViewports <- current_viewports()
+        vp_name <- paste0(
+            "signal",
+            length(grep(pattern = "signal",
+                        x = currentViewports)) + 1
+            )
 
         ## Convert coordinates into same units as page
         page_coords <- convert_page(object = signal_track)

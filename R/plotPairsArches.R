@@ -521,16 +521,6 @@ plotPairsArches <- function(data, chrom, chromstart = NULL, chromend = NULL,
     # VIEWPORTS
     # =========================================================================
 
-    ## Get viewport name
-    currentViewports <- current_viewports()
-    vp_name <- paste0(
-        "arches",
-        length(grep(
-            pattern = "arches",
-            x = currentViewports
-        )) + 1
-    )
-
     ## If placing information is provided but plot == TRUE,
     ## set up it's own viewport separate from bb_makepage
     ## Not translating into page_coordinates
@@ -541,14 +531,25 @@ plotPairsArches <- function(data, chrom, chromstart = NULL, chromend = NULL,
             xscale = archInternal$xscale,
             clip = "on",
             just = "center",
-            name = vp_name
+            name = "arches1"
         )
 
         if (archInternal$draw == TRUE) {
-            vp$name <- "arches1"
             grid.newpage()
         }
+        
     } else {
+        
+        ## Get viewport name
+        currentViewports <- current_viewports()
+        vp_name <- paste0(
+            "arches",
+            length(grep(
+                pattern = "arches",
+                x = currentViewports
+            )) + 1
+        )
+        
         addViewport(vp_name)
 
         ## Convert coordinates into same units as page

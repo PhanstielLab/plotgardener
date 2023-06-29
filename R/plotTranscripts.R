@@ -360,16 +360,6 @@ plotTranscripts <- function(chrom, chromstart = NULL, chromend = NULL,
     # VIEWPORTS
     # =========================================================================
 
-    ## Name viewport
-    currentViewports <- current_viewports()
-    vp_name <- paste0(
-        "transcripts",
-        length(grep(
-            pattern = "transcripts",
-            x = currentViewports
-        )) + 1
-    )
-
     if (is.null(transcripts$x) | is.null(transcripts$y)) {
         height <- 0.5
         yscale <- strand_scale(
@@ -384,15 +374,23 @@ plotTranscripts <- function(chrom, chromstart = NULL, chromend = NULL,
             xscale = transcriptsInternal$xscale,
             yscale = yscale,
             just = "center",
-            name = vp_name
+            name = "transcripts1"
         )
 
-
         if (transcriptsInternal$draw == TRUE) {
-            vp$name <- "transcripts1"
             grid.newpage()
         }
     } else {
+        ## Name viewport
+        currentViewports <- current_viewports()
+        vp_name <- paste0(
+            "transcripts",
+            length(grep(
+                pattern = "transcripts",
+                x = currentViewports
+            )) + 1
+        )
+        
         addViewport(vp_name)
 
         ## Convert coordinates into same units as page
