@@ -172,7 +172,6 @@ plotGenes <- function(chrom, chromstart = NULL, chromend = NULL,
                         width = NULL, height = unit(0.6, "inches"),
                         just = c("left", "top"), default.units = "inches",
                         draw = TRUE, params = NULL) {
-
     # =========================================================================
     # FUNCTIONS
     # =========================================================================
@@ -398,8 +397,19 @@ plotGenes <- function(chrom, chromstart = NULL, chromend = NULL,
         if (genesInternal$strandLabels == TRUE) {
 
             ## Make viewport for "+" and "-" labels to the left of genetrack
-            vp_labelW <- convertWidth(widthDetails(tG) * 2, unitTo = "npc")
-
+            
+            # Calculate viewport with in temporary graphics device to avoid
+            # page
+            
+            file <- file.path(tempdir(), "tG.pdf")
+            on.exit(unlink(file))
+            vp_labelW <- with_pdf(file,
+                                  width = dev.size()[1],
+                                  height = dev.size()[2],
+                                  convertWidth(widthDetails(tG) * 2,
+                                               unitTo = "npc"))
+            
+            
             vp_label <- viewport(
                 height = unit(.12, "npc"),
                 width = vp_labelW,

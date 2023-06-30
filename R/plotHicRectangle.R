@@ -454,6 +454,7 @@ plotHicRectangle <- function(data, resolution = "auto", zrange = NULL,
     }
 
     if (is.null(hicPlot$x) | is.null(hicPlot$y)) {
+        vp_name <- "hicRectangle1"
         inside_vp <- viewport(
             height = unit(4 / sqrt(2), "npc"),
             width = unit(2 / sqrt(2), "npc"),

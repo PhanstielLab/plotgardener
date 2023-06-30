@@ -592,6 +592,7 @@ plotHicTriangle <- function(data, resolution = "auto", zrange = NULL,
     }
 
     if (is.null(hicPlot$x) | is.null(hicPlot$y)) {
+        vp_name <- "hicTriangle1"
         inside_vp <- viewport(
             height = unit(1, "npc"), width = unit(0.5, "npc"),
             x = unit(0, "npc"), 

@@ -1163,6 +1163,6 @@ plotSignal <- function(data, binSize = NA, binCap = TRUE, negData = FALSE,
     # RETURN OBJECT
     # =========================================================================
 
-    message("signal[", vp_name, "]")
+    message("signal[", vp$name, "]")
     invisible(signal_track)
 }

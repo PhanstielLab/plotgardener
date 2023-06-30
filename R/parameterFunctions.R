@@ -66,7 +66,9 @@ parseParams <- function(params = params,
 # @param params Internal function object
 # @param ... Additional arguments passed in from parent function call
 setGP <- function(gpList, params, ...) {
-    availGPs <- names(get.gpar())
+    availGPs <- c("fill", "col", "lty", "lwd", "cex", "fontsize", 
+                  "lineheight", "font", "fontfamily", "alpha", "lineend",
+                  "linejoin", "linemitre", "lex")
     gpMatches <- params[which(names(params) %in% availGPs)]
     gpList[names(gpMatches)] <- gpMatches
     gpList[names(list(...))] <- list(...)
