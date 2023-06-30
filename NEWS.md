@@ -1,14 +1,9 @@
-# VERSION 1.7.2
+# VERSION 1.6.1
 ## BUG FIXES
 
 * Fixed `plotMultiSignal` width and height parsing bug.
 
-# CHANGES IN VERSION 1.7.1
-## NEW FEATURES
-
-* `plotManhattan` y-scales can be reversed for Miami plot-style layouts.
-
-# VERSION 1.7.0
+# VERSION 1.6.0
 
 Version bump for Bioconductor 3.17 release.
 
