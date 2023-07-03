@@ -396,17 +396,6 @@ plotRanges <- function(data, chrom, chromstart = NULL, chromend = NULL,
     # VIEWPORTS
     # =========================================================================
 
-    ## Get viewport name
-    currentViewports <- current_viewports()
-    vp_name <- paste0(
-        "ranges",
-        length(grep(
-            pattern = "ranges",
-            x = currentViewports
-        )) + 1
-    )
-
-
     ## If placing information is provided but plot == TRUE,
     ## set up it's own viewport
     ## Not translating into page_coordinates
@@ -415,7 +404,7 @@ plotRanges <- function(data, chrom, chromstart = NULL, chromend = NULL,
             strandSplit = pileInternal$strandSplit,
             height = 0.5
         )
-
+        
         vp <- viewport(
             height = unit(0.5, "snpc"), width = unit(1, "snpc"),
             x = unit(0.5, "npc"), y = unit(0.5, "npc"),
@@ -423,14 +412,24 @@ plotRanges <- function(data, chrom, chromstart = NULL, chromend = NULL,
             xscale = pileInternal$xscale,
             yscale = yscale,
             just = "center",
-            name = vp_name
+            name = "ranges1"
         )
 
         if (pileInternal$draw == TRUE) {
-            vp$name <- "ranges1"
             grid.newpage()
         }
     } else {
+        
+        ## Get viewport name
+        currentViewports <- current_viewports()
+        vp_name <- paste0(
+            "ranges",
+            length(grep(
+                pattern = "ranges",
+                x = currentViewports
+            )) + 1
+        )
+        
         addViewport(vp_name)
 
         ## Convert coordinates into same units as page

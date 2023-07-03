@@ -38,6 +38,7 @@
 #' @name plotgardener
 #' @useDynLib plotgardener
 #' @importFrom grDevices colorRampPalette
+#' @importFrom grDevices dev.size
 #' @importFrom curl has_internet
 #' @importFrom methods hasArg
 #' @importFrom methods is
@@ -63,4 +64,5 @@
 #' @importFrom strawr readHicBpResolutions
 #' @importFrom IRanges IRanges
 #' @importFrom IRanges subsetByOverlaps
+#' @importFrom withr with_pdf
 "_PACKAGE"

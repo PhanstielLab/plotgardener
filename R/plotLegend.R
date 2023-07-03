@@ -113,7 +113,6 @@ plotLegend <- function(legend, fill = NULL, pch = NULL, lty = NULL,
                         height = NULL, just = c("left", "top"),
                         default.units = "inches", draw = TRUE,
                         params = NULL, ...) {
-
     # =========================================================================
     # PARSE PARAMETERS
     # =========================================================================
@@ -176,28 +175,28 @@ plotLegend <- function(legend, fill = NULL, pch = NULL, lty = NULL,
         default.units = legInternal$default.units
     )
 
-    textHeight <- heightDetails(textGrob(
-        label = "A",
-        gp = gpar(fontsize = legInternal$fontsize)
-    ))
+    textHeightfile <- file.path(tempdir(), "textHeight.pdf")
+    on.exit(unlink(textHeightfile))
+    textHeight <- with_pdf(textHeightfile, 
+                           width = dev.size()[1],
+                           height = dev.size()[2],
+                           heightDetails(textGrob(label = "A",
+                                gp = gpar(fontsize = legInternal$fontsize))))
+
     textGrobs <- lapply(legInternal$legend, textGrob,
         gp = gpar(fontsize = legInternal$fontsize)
     )
-    textWidths <- lapply(textGrobs, widthDetails)
-
+    textWidthsfile <- file.path(tempdir(), "textWidths.pdf")
+    on.exit(unlink(textWidthsfile))
+    
+    textWidths <- with_pdf(textWidthsfile, 
+                           width = dev.size()[1],
+                           height = dev.size()[2],
+                           lapply(textGrobs, widthDetails))
+    
     # =========================================================================
     # VIEWPORTS
     # =========================================================================
-
-    ## Get viewport name
-    currentViewports <- current_viewports()
-    vp_name <- paste0(
-        "legend",
-        length(grep(
-            pattern = "legend",
-            x = currentViewports
-        )) + 1
-    )
 
     ## If placing information is provided but plot == TRUE,
     ## set up it's own viewport separate
@@ -209,25 +208,47 @@ plotLegend <- function(legend, fill = NULL, pch = NULL, lty = NULL,
             just = "center",
             yscale = c(0, 0.125),
             xscale = c(0, 0.20),
-            name = vp_name
+            name = "legend1"
         )
-        pushViewport(vp)
-        textHeight <- convertHeight(textHeight,
-            unitTo = "native", valueOnly = TRUE
-        )
-        textWidths <- lapply(textWidths, convertWidth,
-            unitTo = "native", valueOnly = TRUE
-        )
-        upViewport()
-
+        
+        textHeightfile <- file.path(tempdir(), "textHeight.pdf")
+        on.exit(unlink(textHeightfile))
+        
+        textHeight <- with_pdf(textHeightfile, 
+                               width = dev.size()[1],
+                               height = dev.size()[2],{
+                     pushViewport(vp)
+                     convertHeight(textHeight, unitTo = "native", 
+                                   valueOnly = TRUE)
+                 })
+        
+        textWidthsfile <- file.path(tempdir(), "textWidths.pdf")
+        on.exit(unlink(textWidthsfile))
+        textWidths <- with_pdf(textWidthsfile,
+                               width = dev.size()[1],
+                               height = dev.size()[2],{
+                                   pushViewport(vp)
+                                   lapply(textWidths, 
+                                          convertWidth, 
+                                          unitTo = "native", valueOnly = TRUE)
+                               })
         height <- 0.125
         width <- 0.20
 
         if (legInternal$draw == TRUE) {
-            vp$name <- "legend1"
             grid.newpage()
         }
     } else {
+        
+        ## Get viewport name
+        currentViewports <- current_viewports()
+        vp_name <- paste0(
+            "legend",
+            length(grep(
+                pattern = "legend",
+                x = currentViewports
+            )) + 1
+        )
 
         ## Convert coordinates into same units as page
         page_coords <- convert_page(object = legendPlot)

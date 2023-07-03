@@ -179,7 +179,6 @@ plotHicSquare <- function(data, resolution = "auto", zrange = NULL,
                             height = NULL, just = c("left", "top"),
                             default.units = "inches",
                             draw = TRUE, params = NULL, quiet = FALSE) {
-
     # =========================================================================
     # FUNCTIONS
     # =========================================================================
@@ -619,16 +618,6 @@ plotHicSquare <- function(data, resolution = "auto", zrange = NULL,
     ## Get viewport xscale and yscale
     scale <- vp_scale(hicPlot = hicPlot)
 
-    ## Get viewport name
-    currentViewports <- current_viewports()
-    vp_name <- paste0(
-        "hicSquare",
-        length(grep(
-            pattern = "hicSquare",
-            x = currentViewports
-        )) + 1
-    )
-
     ## If placing information is provided but plot == TRUE, set up it's own
     ## viewport separate from bb_makepage
     ## Not translating into page_coordinates
@@ -639,14 +628,24 @@ plotHicSquare <- function(data, resolution = "auto", zrange = NULL,
             clip = "on",
             xscale = scale[[1]], yscale = scale[[2]],
             just = "center",
-            name = vp_name
+            name = "hicSquare1"
         )
 
         if (hicInternal$draw == TRUE) {
-            vp$name <- "hicSquare1"
             grid.newpage()
         }
     } else {
+        
+        ## Get viewport name
+        currentViewports <- current_viewports()
+        vp_name <- paste0(
+            "hicSquare",
+            length(grep(
+                pattern = "hicSquare",
+                x = currentViewports
+            )) + 1
+        )
+        
         addViewport(vp_name)
 
         ## Convert coordinates into same units as page
@@ -719,11 +718,11 @@ plotHicSquare <- function(data, resolution = "auto", zrange = NULL,
                 ))
             }
         } else {
-            
+
             if (!is.na(hicPlot$resolution)){
                 warning("No data found in region.", call. = FALSE)
             }
-            
+
         }
     }
 

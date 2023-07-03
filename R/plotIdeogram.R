@@ -442,13 +442,6 @@ plotIdeogram <- function(chrom, assembly = "hg38", data = NULL,
     # VIEWPORTS
     # =========================================================================
 
-    ## Get viewport name
-    currentViewports <- current_viewports()
-    vp_name <- paste0("ideogram", length(grep(
-        pattern = "ideogram",
-        x = currentViewports
-    )) + 1)
-
     ## If placing information is provided but plot == TRUE,
     ## set up it's own viewport separate from bb_makepage
     ## Not translating into page_coordinates
@@ -467,7 +460,7 @@ plotIdeogram <- function(chrom, assembly = "hg38", data = NULL,
                 xscale = c(0, chromLength),
                 yscale = c(0, yscale),
                 just = "center",
-                name = vp_name
+                name = "ideogram1"
             )
         } else {
             height <- 1
@@ -480,17 +473,22 @@ plotIdeogram <- function(chrom, assembly = "hg38", data = NULL,
                 yscale = c(0, yscale),
                 angle = -90,
                 just = "center",
-                name = vp_name
+                name = "ideogram1"
             )
         }
 
-
         if (ideoInternal$draw == TRUE) {
-            vp$name <- "ideogram1"
             grid.newpage()
         }
     } else {
-
+        
+        ## Get viewport name
+        currentViewports <- current_viewports()
+        vp_name <- paste0("ideogram", length(grep(
+            pattern = "ideogram",
+            x = currentViewports
+        )) + 1)
+        
         ## Convert coordinates into same units as page
         page_coords <- convert_page(object = ideogramPlot)
         addViewport(vp_name)
