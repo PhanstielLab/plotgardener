@@ -1,3 +1,8 @@
+# VERSION 1.6.2
+## BUG FIXES
+
+* Removed blank page creation with pdf() calls for all major plotting functions.
+
 # VERSION 1.6.1
 ## BUG FIXES
 
