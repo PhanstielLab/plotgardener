@@ -94,7 +94,7 @@ jobs:
       ## pandoc is already included in the Bioconductor docker images
       - name: Setup pandoc from r-lib
         if: runner.os != 'Linux'
-        uses: r-lib/actions/setup-pandoc@master
+        uses: r-lib/actions/setup-pandoc@v2
 
       - name: Query dependencies
         run: |
