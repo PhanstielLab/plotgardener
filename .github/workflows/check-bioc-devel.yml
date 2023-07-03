@@ -25,6 +25,8 @@ on:
     branches:
       - devel
   pull_request:
+    branches:
+      - devel
 
 name: R-CMD-check-bioc-devel
 

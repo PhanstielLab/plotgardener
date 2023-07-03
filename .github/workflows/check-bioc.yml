@@ -25,6 +25,8 @@ on:
     branches:
       - RELEASE_3_17
   pull_request:
+    branches:
+      - RELEASE_3_17
 
 name: R-CMD-check-bioc
 
