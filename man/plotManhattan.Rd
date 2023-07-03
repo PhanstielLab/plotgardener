@@ -19,6 +19,7 @@ plotManhattan(
     sigCol = NULL,
     trans = "-log10",
     range = NULL,
+    yscale_reverse = FALSE,
     space = 0.01,
     bg = NA,
     baseline = FALSE,
@@ -100,6 +101,9 @@ empty character "". Default value is \code{trans = "-log10"}.}
 
 \item{range}{A numeric vector of length 2 specifying the y-range
 of p-values to plot (c(min, max)).}
+
+\item{yscale_reverse}{Logical value indicating whether to reverse the y-scale
+and order points from max to min.}
 
 \item{space}{A numeric value indicating the space between each
 chromosome as a fraction of the width of the plot, if plotting multiple
