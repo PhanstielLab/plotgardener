@@ -1,43 +1,48 @@
-# VERSION 1.6.2
+# VERSION 1.7.3
 ## BUG FIXES
 
 * Removed blank page creation with pdf() calls for all major plotting functions.
 
-# VERSION 1.6.1
+# VERSION 1.7.2
 ## BUG FIXES
 
 * Fixed `plotMultiSignal` width and height parsing bug.
 
-# VERSION 1.6.0
+# CHANGES IN VERSION 1.7.1
+## NEW FEATURES
+
+* `plotManhattan` y-scales can be reversed for Miami plot-style layouts.
+
+# VERSION 1.7.0
 
 Version bump for Bioconductor 3.17 release.
 
-# CHANGES IN VERSION 1.4.3
+# CHANGES IN VERSION 1.5.3
 ## BUG FIXES
 
 * Fixed page viewport parsing bug fixes related to R version 4.3.0 updates.
 
-# CHANGES IN VERSION 1.4.2
+# CHANGES IN VERSION 1.5.2
 ## BUG FIXES
 
 * `annoPixels` detects and annotates all pixels for `plotHicRectangle` plots.
 
-# CHANGES IN VERSION 1.4.1
+# CHANGES IN VERSION 1.5.1
 ## BUG FIXES
 
 * yscales for `plotHicRectangle` and `plotHicTriangle` reflect distance in 
 Hi-C bins.
 
-# VERSION 1.4.0
+# VERSION 1.5.0
 
 Version bump for Bioconductor 3.16 release.
 
-# CHANGES IN VERSION 1.2.8 AND 1.2.9
+# CHANGES IN VERSION 1.3.8 AND 1.3.9
 ## BUG FIXES
 
 * Fixed vignette links in "Introduction to plotgardener" vignette.
 
-# CHANGES IN VERSION 1.2.7
+# CHANGES IN VERSION 1.3.7
 ## BUG FIXES 
 
 * `plotGenes` and related functions will appropriately check for and handle
@@ -52,13 +57,13 @@ transformation, rather than being limited to -log10.
 * `plotRanges` elements can be ordered randomly or by decreasing width before
 plotted row assignment.
 
-# CHANGES IN VERSION 1.2.6
+# CHANGES IN VERSION 1.3.6
 ## BUG FIXES 
 
 * `mapColors` can appropriately map colors to a numeric vector with the same 
 values, so long as a range is provided.
 
-# CHANGES IN VERSION 1.2.5
+# CHANGES IN VERSION 1.3.5
 ## NEW FEATURES
 
 * `plotMultiSignal` function can plot multiple signal track data sets in line
@@ -70,20 +75,20 @@ positions for a number of plot elements.
 * Gene transcripts can be highlighted by gene name or transcript name with the
 parameter `transcriptHighlights` in `plotTranscripts`.
 
-# CHANGES IN VERSION 1.2.4
+# CHANGES IN VERSION 1.3.4
 ## BUG FIXES
 
 * `plotPairsArches` Bezier curve height calculations were fixed for pairs
 with different sized anchors.
 
-# CHANGES IN VERSION 1.2.3
+# CHANGES IN VERSION 1.3.3
 ## NEW FEATURES
 
 * `plotSignal` can now plot negative signal data alone or listed as a second 
 file.
 * A `label` parameter has been added for `plotSignal` for convenient labeling. 
 
-# CHANGES IN VERSION 1.2.2
+# CHANGES IN VERSION 1.3.2
 ## BUG FIXES 
 
 * `plotSignal` range parsing bug fixes were resolved.
@@ -91,7 +96,7 @@ file.
 * Note about double page rendering has been added to `pageGuideHide()`
 documentation.
 
-# CHANGES IN VERSION 1.2.1
+# CHANGES IN VERSION 1.3.1
 
 * `plotSignal` bug fixes related to function not finding posSignal2 and 
 negSignal2 variables with insufficient data.
@@ -100,25 +105,25 @@ negSignal2 variables with insufficient data.
 page rendering when using any removal function, particularly `pageGuideHide()`.
 
 
-# VERSION 1.2.0
+# VERSION 1.3.0
 
 Version bump for Bioconductor 3.15 release.
 
-# CHANGES IN VERSION 1.0.18
+# CHANGES IN VERSION 1.1.18
 ## NEW FEATURES
 
 * `hicTriangles` and `hicRectangles` can now be annotated with `annoDomains`
 or `annoPixels` if they are flipped.
 
 
-# CHANGES IN VERSION 1.0.17
+# CHANGES IN VERSION 1.1.17
 ## NEW FEATURES
 
 * `plotIdeogram` can now accept custom colors with a `fill` parameter. Colors
 can be specified with a named or unnamed vector. To see which stains are being
 assigned which colors, look inside the `ideogram` object.
 
-# CHANGES IN VERSION 1.0.16
+# CHANGES IN VERSION 1.1.16
 
 ## BUG FIXES 
 
@@ -129,25 +134,25 @@ incompatible types error.
 carried out only if there is a non-zero number of that strand's 
 genes.
 
-# CHANGES IN VERSION 1.0.15
+# CHANGES IN VERSION 1.1.15
 
 * Citation linked for `plotgardener` publication in Bioinformatics.
 
-# CHANGES IN VERSION 1.0.14
+# CHANGES IN VERSION 1.1.14
 
 ## BUG FIXES 
 
 * `plotSignal` yrange parsing for negative scores now has fixed the typo on
 line 418 from "score2" to "score".
 
-# CHANGES IN VERSION 1.0.13
+# CHANGES IN VERSION 1.1.13
 
 ## BUG FIXES 
 
 * `plotSignal` default yrange parsing now catches the invalid 0,0 range and no
 longer throws a viewport related error.
 
-# CHANGES IN VERSION 1.0.12
+# CHANGES IN VERSION 1.1.12
 
 ## BUG FIXES 
 
@@ -156,7 +161,7 @@ chromosome input formatted as is (e.g. "chr1" and "1"). Functions will throw an
 error if the input chromosome is not found in the chromosomes listed in 
 the .hic file.
 
-# CHANGES IN VERSION 1.0.11
+# CHANGES IN VERSION 1.1.11
 
 ## BUG FIXES 
 
