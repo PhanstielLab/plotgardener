@@ -177,12 +177,18 @@ annoYaxis <- function(plot, at = NULL, label = TRUE, main = TRUE,
     # PLOT
     # =========================================================================
 
-    yGrob <- grid.yaxis(
+    yGrob <- yaxisGrob(
         at = yInternal$at, label = yInternal$label,
         main = yInternal$main, gp = yInternal$gp,
         vp = vp
     )
-    if (!yInternal$axisLine) grid.remove(paste0(yGrob$name, "::major"))
+    
+    if (!yInternal$axisLine){
+        yGrob <- removeGrob(yGrob, "major")
+    } 
+    
+    grid.draw(yGrob)
+    
     yaxis_grobs <- gTree(vp = vp, children = gList(yGrob))
     yAxis$grobs <- yaxis_grobs
 
