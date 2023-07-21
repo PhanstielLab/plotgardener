@@ -1,3 +1,8 @@
+# VERSION 1.6.3
+## BUG FIXES
+
+* Removed extra page creation with `annoYaxis` `axisLine = FALSE`.
+
 # VERSION 1.6.2
 ## BUG FIXES
 
