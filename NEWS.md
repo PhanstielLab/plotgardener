@@ -1,3 +1,8 @@
+# VERSION 1.7.5
+## NEW FEATURES
+
+* `plotPairs`, `plotPairsArches`, and `plotRanges` allow `NA` fill.
+
 # VERSION 1.7.4
 ## BUG FIXES
 
