@@ -443,7 +443,7 @@ checkColorby <- function(fill, colorby = TRUE, data = NULL){
     } else {
         ## If colorby allowed, check for appropriate colorby class,
         ## column in data, and number of colorby column in data
-        if (!is(fill, "character") & !is(fill, "factor")){
+        if (!is(fill, "character") & !is(fill, "factor") & !is.na(fill)){
             
             if (!is(fill, "colorby")){
                 stop("`colorby` not of class \"colorby\". Input colorby ",
