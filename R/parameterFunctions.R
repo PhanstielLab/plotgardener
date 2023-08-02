@@ -433,7 +433,6 @@ misc_defaultUnits <- function(value, name, default.units,
 ## Define a function to catch errors for functions that don't handle
 ## colorby and for colorby related errors
 checkColorby <- function(fill, colorby = TRUE, data = NULL){
-    
     ## colorby not allowed for some functions
     if (colorby == FALSE){
         if (is(fill, "colorby")){
@@ -443,7 +442,7 @@ checkColorby <- function(fill, colorby = TRUE, data = NULL){
     } else {
         ## If colorby allowed, check for appropriate colorby class,
         ## column in data, and number of colorby column in data
-        if (!is(fill, "character") & !is(fill, "factor") & !is.na(fill)){
+        if (all(c(!is(fill, "character"), !is(fill, "factor"), !is.na(fill)))){
             
             if (!is(fill, "colorby")){
                 stop("`colorby` not of class \"colorby\". Input colorby ",
