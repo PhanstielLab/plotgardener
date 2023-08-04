@@ -18,7 +18,7 @@ test_that("plotGenes_pdf", {
               assembly = "hg19"))
     dev.off()
     
-    expect_equal(pdf_length(temp_pdf), 1)
+    expect_equal(pdf_info(temp_pdf)$pages, 1)
     
 })
 
@@ -37,7 +37,7 @@ test_that("plotHicRectangle_pdf", {
                      assembly = "hg19"))
     dev.off()
 
-    expect_equal(pdf_length(temp_pdf), 1)
+    expect_equal(pdf_info(temp_pdf)$pages, 1)
 
 })
 
@@ -56,7 +56,7 @@ test_that("plotHicSquare_pdf", {
                   assembly = "hg19"))
     dev.off()
 
-    expect_equal(pdf_length(temp_pdf), 1)
+    expect_equal(pdf_info(temp_pdf)$pages, 1)
 
 })
 
@@ -75,7 +75,7 @@ test_that("plotHicTriangle_pdf", {
                     assembly = "hg19"))
     dev.off()
 
-    expect_equal(pdf_length(temp_pdf), 1)
+    expect_equal(pdf_info(temp_pdf)$pages, 1)
 
 })
 
@@ -89,7 +89,7 @@ test_that("plotIdeogram_pdf", {
     suppressMessages(plotIdeogram(chrom = "chr2", assembly = "hg19"))
     dev.off()
 
-    expect_equal(pdf_length(temp_pdf), 1)
+    expect_equal(pdf_info(temp_pdf)$pages, 1)
 
 })
 
@@ -104,7 +104,7 @@ test_that("plotLegend_pdf", {
                border = FALSE))
     dev.off()
 
-    expect_equal(pdf_length(temp_pdf), 1)
+    expect_equal(pdf_info(temp_pdf)$pages, 1)
 })
 
 test_that("plotManhattan_pdf", {
@@ -120,7 +120,7 @@ test_that("plotManhattan_pdf", {
                   sigLine = TRUE, col = "grey", range = c(0, 14)))
     dev.off()
 
-    expect_equal(pdf_length(temp_pdf), 1)
+    expect_equal(pdf_info(temp_pdf)$pages, 1)
 
 })
 
@@ -138,7 +138,7 @@ test_that("plotPairs_pdf", {
               assembly = "hg19"))
     dev.off()
 
-    expect_equal(pdf_length(temp_pdf), 1)
+    expect_equal(pdf_info(temp_pdf)$pages, 1)
 
 })
 
@@ -156,7 +156,7 @@ test_that("plotPairsArches_pdf", {
                     assembly = "hg19"))
     dev.off()
 
-    expect_equal(pdf_length(temp_pdf), 1)
+    expect_equal(pdf_info(temp_pdf)$pages, 1)
 
 })
 
@@ -174,7 +174,7 @@ test_that("plotRanges_pdf", {
                assembly = "hg19"))
     dev.off()
 
-    expect_equal(pdf_length(temp_pdf), 1)
+    expect_equal(pdf_info(temp_pdf)$pages, 1)
 
 })
 
@@ -193,7 +193,7 @@ test_that("plotSignal_pdf", {
                range = c(0, 45)))
     dev.off()
 
-    expect_equal(pdf_length(temp_pdf), 1)
+    expect_equal(pdf_info(temp_pdf)$pages, 1)
 
 })
 
@@ -209,6 +209,6 @@ test_that("plotTranscripts_pdf", {
                     assembly = "hg19"))
     dev.off()
 
-    expect_equal(pdf_length(temp_pdf), 1)
+    expect_equal(pdf_info(temp_pdf)$pages, 1)
 
 })
