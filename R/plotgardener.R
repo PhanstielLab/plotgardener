@@ -65,4 +65,6 @@
 #' @importFrom IRanges IRanges
 #' @importFrom IRanges subsetByOverlaps
 #' @importFrom withr with_pdf
+#' @importFrom GenomeInfoDb keepStandardChromosomes
+#' @importFrom GenomicRanges makeGRangesFromDataFrame
 "_PACKAGE"

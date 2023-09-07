@@ -73,6 +73,8 @@
                                         as.name(assembly$OrgDb))))
             }
 
+        ## Filter TxDb for standard chromosomes
+        tx_db <- keepStandardChromosomes(tx_db, pruning.mode = 'coarse')
         
         chromSizes <- GenomeInfoDb::seqlengths(tx_db)
         idCol <- assembly$gene.id.column
@@ -89,7 +91,22 @@
         geneData <- suppressMessages(AnnotationDbi::select(tx_db,
         keys = geneID[[idCol]], columns = AnnotationDbi::columns(tx_db),
         keytype = 'GENEID'))
-
+    
+        ## Temporarily convert geneData to GRanges
+        geneData_GRanges <- makeGRangesFromDataFrame(geneData, 
+        keep.extra.columns = TRUE, seqnames.field = 'TXCHROM', 
+        start.field = 'TXSTART', end.field = 'TXEND')
+    
+        ## Filter non-standard chromosomes from geneData GRanges
+        geneData_GRanges <- keepStandardChromosomes(geneData_GRanges, 
+                                                    pruning.mode = 'coarse')
+        
+        ## Convert back to original format
+        geneData <- as.data.frame(geneData_GRanges)
+        geneData <- subset(geneData, select = -c(width, strand))
+        colnames(geneData)[colnames(geneData) == 'seqnames'] <- 'TXCHROM'
+        colnames(geneData)[colnames(geneData) == 'start'] <- 'TXSTART'
+        colnames(geneData)[colnames(geneData) == 'end'] <- 'TXEND'
 
         ## Check that user has not supplied both gene and chrom/start/end
         chrom <- object$chrom
