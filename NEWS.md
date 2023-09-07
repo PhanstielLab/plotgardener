@@ -1,3 +1,10 @@
+# VERSION 1.7.7
+## BUG FIXES
+
+* `params` parsing removes non-standard chromosomes when identifying gene 
+transcripts
+
+
 # VERSION 1.7.6
 ## BUG FIXES
 
