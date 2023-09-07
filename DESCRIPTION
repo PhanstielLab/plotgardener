@@ -40,6 +40,8 @@ Imports:
     curl,
     data.table,
     dplyr,
+    GenomeInfoDb,
+    GenomicRanges,
     grDevices,
     grid,
     ggplotify,
