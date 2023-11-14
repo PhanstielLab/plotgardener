@@ -46,7 +46,7 @@ plotgardener can be installed from Bioconductor version 3.17
 if (!requireNamespace("BiocManager", quietly = TRUE))
     install.packages("BiocManager")
 
-BiocManager::install(version = "3.17")
+BiocManager::install(version = "3.18")
 
 BiocManager::install("plotgardener")
 

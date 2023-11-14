@@ -478,7 +478,7 @@ plotManhattan <- function(data, sigVal = 5e-08, chrom = NULL,
         pch <- rep(pch,
                     ceiling(length(levels(pchCol)) / length(pch))
         )[seq(1, length(pchCol))]
-        names(pch) <- levels(pchCol)
+        names(pch) <- levels(pchCol)[seq(1, length(pchCol))]
         bedData$pch <- pch[pchCol]
         
         return(bedData)
