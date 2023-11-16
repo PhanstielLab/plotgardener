@@ -1,3 +1,19 @@
+# VERSION 1.9.1
+## NEW FEATURES
+
+* `plotIdeogram` has added `flip` parameter to allow for
+flipping the ideogram so the end can be before/above the start.
+
+## BUG FIXES
+
+* `plotManhattan` pch mapping is compatible when number of data 
+points is less than the number of levels of a `colorby` column.
+
+
+# VERSION 1.9.0
+
+Version bump for Bioconductor 3.18 release.
+
 # VERSION 1.7.7
 ## BUG FIXES
 
