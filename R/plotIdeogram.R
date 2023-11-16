@@ -1,10 +1,11 @@
 #' Plot a chromosome ideogram with or without cytobands
-#' 
+#'
 #' @usage plotIdeogram(
 #'     chrom,
 #'     assembly = "hg38",
 #'     data = NULL,
 #'     orientation = "h",
+#'     flip = FALSE,
 #'     showBands = TRUE,
 #'     fill = NULL,
 #'     x = NULL,
@@ -22,7 +23,7 @@
 #' \link[plotgardener]{assembly} object.
 #' Default value is \code{assembly = "hg38"}.
 #' @param data Custom cytoband data, as a dataframe with the following
-#' columns: "seqnames", "start", "end", "width", "strand", 
+#' columns: "seqnames", "start", "end", "width", "strand",
 #' "name", "gieStain".
 #' @param orientation Character value indicating the orientation
 #' of the ideogram. Default value is \code{orientation = "h"}.
@@ -31,11 +32,13 @@
 #' \item{\code{"v"}: }{Vertical ideogram orientation.}
 #' \item{\code{"h"}: }{Horizontal ideogram orientation.}
 #' }
+#' @param flip Logical value indicating whether to flip the ideogram so that
+#' the end is above or before the start of the chromosome.
 #' @param showBands Logical value indicating whether to draw
 #' colored cytobands within ideogram.
 #' Default value is \code{showBands = TRUE}.
 #' @param fill (optional) A vector specifying alternate colors for cytoband
-#' stains. To change specific gieStain values (i.e. gneg, gpos, etc.) to 
+#' stains. To change specific gieStain values (i.e. gneg, gpos, etc.) to
 #' specific colors, this vector can be named. This vector must have the same
 #' number of colors as there are gieStain values for each genome assembly.
 #' @param x A numeric or unit object specifying ideogram x-location.
@@ -101,17 +104,18 @@
 #' \preformatted{
 #' plotIdeogram(chrom)
 #' }
-#' If no data is provided, Giemsa stain band data will first try to 
-#' fetch UCSC with AnnotationHub. The results are cached for faster access, 
-#' but these cached items can be deleted. If no internet connection is 
-#' available and AnnotationHub has not previously cached the data, custom 
+#' If no data is provided, Giemsa stain band data will first try to
+#' fetch UCSC with AnnotationHub. The results are cached for faster access,
+#' but these cached items can be deleted. If no internet connection is
+#' available and AnnotationHub has not previously cached the data, custom
 #' Giemsa stain band data can be loaded with the `data` parameter.
 #'
 #' @seealso \link[AnnotationHub]{AnnotationHub}
-#' 
+#'
 #' @export
 plotIdeogram <- function(chrom, assembly = "hg38", data = NULL,
-                            orientation = "h", showBands = TRUE, fill = NULL,
+                            orientation = "h", flip = FALSE,
+                            showBands = TRUE, fill = NULL,
                             x = NULL, y = NULL,
                             width = NULL, height = NULL,
                             just = c("left", "top"), default.units = "inches",
@@ -132,47 +136,47 @@ plotIdeogram <- function(chrom, assembly = "hg38", data = NULL,
 
     ## Define a function to get cytoBand data for a genome assembly
     cytoAssembly <- function(assembly) {
-    
+
         ## Get string assembly name
         assemblyName <- assembly$Genome
-        
+
         ## Check in defaults for data
         if(!any(cytoband_AH_assembly$assembly %in% assemblyName)){
             warning("UCSC cytoBand data not available for the given genome",
-                    " assembly. Default data can only be found for the", 
+                    " assembly. Default data can only be found for the",
                     " following assemblies:",
-                    cat(cytoband_AH_assembly$assembly, sep = ", "), 
+                    cat(cytoband_AH_assembly$assembly, sep = ", "),
                     ". Please provide custom data for input assembly.",
                     call. = FALSE)
-            
+
             cytoData <- NULL
         } else {
-            
+
             # Load data from AHCytoBands
-            if (!requireNamespace("AnnotationHub", 
+            if (!requireNamespace("AnnotationHub",
                     quietly = TRUE)){
-                
+
                 warning("Please install `AnnotationHub` ",
                         "to plot an ideogram for a default",
                         " genome assembly.", call. = FALSE)
                 cytoData <- NULL
-                
+
             } else {
-                
+
                 assemblyName <- cytoband_AH_assembly[
                     cytoband_AH_assembly$assembly%in% assemblyName,]$assembly
-                
+
                 # Get name of AH object for assembly
-                AH_id <- cytoband_AH_assembly[cytoband_AH_assembly$assembly == 
+                AH_id <- cytoband_AH_assembly[cytoband_AH_assembly$assembly ==
                                                 assemblyName,]$AH
-                
+
                 # Check for internet
                 if (has_internet()){
 
                     # Load AHCytoBands data
                     cytobands <- suppressMessages(AnnotationHub::query(
                         AnnotationHub::AnnotationHub(), "AHCytoBands"))
-                    
+
                     # Grab data for assembly
                     cytoData <- as.data.frame(
                         suppressMessages(cytobands[[AH_id]]))
@@ -181,26 +185,26 @@ plotIdeogram <- function(chrom, assembly = "hg38", data = NULL,
                     errorFunction <- function(c){
                         return(NULL)
                     }
-                    
-                    cytobands <- 
+
+                    cytobands <-
                         tryCatch(
                             suppressMessages(
         AnnotationHub::query(AnnotationHub::AnnotationHub(localHub = TRUE),
                         "AHCytoBands")),
                     error = errorFunction
                         )
-                    
+
                     if (!is.null(cytobands)){
                         cytoData <- as.data.frame(
                             suppressMessages(cytobands[[AH_id]]))
                     } else {
                         cytoData <- NULL
                     }
-                    
+
                 }
-                
+
             }
-            
+
         }
 
         return(cytoData)
@@ -211,7 +215,7 @@ plotIdeogram <- function(chrom, assembly = "hg38", data = NULL,
         if (is(txdb, "TxDb")) {
             tx_db <- txdb
         } else {
-            tx_db <- eval(parse(text = paste0(as.name(txdb), "::", 
+            tx_db <- eval(parse(text = paste0(as.name(txdb), "::",
                                             as.name(txdb))))
         }
 
@@ -296,7 +300,7 @@ plotIdeogram <- function(chrom, assembly = "hg38", data = NULL,
         declaredArgs = lapply(match.call()[-1], eval.parent, n = 2),
         class = "ideoInternal"
     )
-    
+
     ## Justification
     ideoInternal$just <- justConversion(just = ideoInternal$just)
 
@@ -356,7 +360,7 @@ plotIdeogram <- function(chrom, assembly = "hg38", data = NULL,
         colnames(data) <- c("seqnames", "start", "end", "width", "strand",
                             "name", "gieStain")
     }
-    
+
     ## TxDb data
     if (is(ideogramPlot$assembly$TxDb, "TxDb")){
         genome <- ideogramPlot$assembly$TxDb
@@ -366,26 +370,26 @@ plotIdeogram <- function(chrom, assembly = "hg38", data = NULL,
             "Please install to plot ideogram.", call. = FALSE)
             genome <- NULL
         } else {
-            genome <- eval(parse(text = 
+            genome <- eval(parse(text =
                         paste0(as.name(ideogramPlot$assembly$TxDb), "::",
                         as.name(ideogramPlot$assembly$TxDb))))
         }
     }
-    
+
     chromLength <- 1
     if (!is.null(data) & !is.null(genome)) {
-        
-        chromCheck <- checkChroms(chrom = ideoInternal$chrom, 
+
+        chromCheck <- checkChroms(chrom = ideoInternal$chrom,
                                 txdb = ideogramPlot$assembly$TxDb)
-        
+
         if (chromCheck == TRUE) {
-            
+
             # =================================================================
             # ADD COLORS
             # =================================================================
-            
+
             if (!is.null(ideoInternal$fill)){
-                
+
                 ## Check that length of fill vector is the same length as the
                 ## of gieStain values in the data
                 if (length(unique(data$gieStain)) != length(ideoInternal$fill)){
@@ -393,36 +397,36 @@ plotIdeogram <- function(chrom, assembly = "hg38", data = NULL,
                             " number of gieStain values. Using default colors.")
                     colors <- cytobandColors
                 } else {
-                    
+
                     if (is.null(names(ideoInternal$fill))){
-                        
-                        ## No names, assign in order of levels  
+
+                        ## No names, assign in order of levels
                         data$gieStain <- as.factor(data$gieStain)
-                        
+
                         colors <- data.frame("gieStain" = levels(data$gieStain),
                                              "color" = ideoInternal$fill)
-                        
+
                     } else {
-                        
+
                         ## Assign colors based on names
-                        colors$gieStain <- 
+                        colors$gieStain <-
                             data.frame("gieStain" = names(ideoInternal$fill),
                                        "color" = ideoInternal$fill)
                     }
-                    
-                } 
-                
+
+                }
+
             } else {
                 colors <- cytobandColors
             }
-            
+
             data <- dplyr::left_join(data, colors, by = "gieStain")
-            
+
             ## Add stains/colors to object
             objectCols <- unique(data[,c("gieStain", "color")])
             row.names(objectCols) <- NULL
             ideogramPlot$colors <- objectCols
-            
+
             # =================================================================
             # SUBSET FOR CHROMOSOME
             # =================================================================
@@ -452,6 +456,8 @@ plotIdeogram <- function(chrom, assembly = "hg38", data = NULL,
         scaleRatio <- width / height
         yscale <- chromLength / scaleRatio
 
+        angleAdjust <- ifelse(ideoInternal$flip, yes = 180, no = 0)
+
         if (ideoInternal$orientation == "h") {
             vp <- viewport(
                 height = unit(height, "snpc"),
@@ -459,6 +465,7 @@ plotIdeogram <- function(chrom, assembly = "hg38", data = NULL,
                 x = unit(0.5, "npc"), y = unit(0.5, "npc"),
                 xscale = c(0, chromLength),
                 yscale = c(0, yscale),
+                angle = 0 + angleAdjust,
                 just = "center",
                 name = "ideogram1"
             )
@@ -471,7 +478,7 @@ plotIdeogram <- function(chrom, assembly = "hg38", data = NULL,
                 x = unit(0.5, "npc"), y = unit(0.5, "npc"),
                 xscale = c(0, chromLength),
                 yscale = c(0, yscale),
-                angle = -90,
+                angle = -90 + angleAdjust,
                 just = "center",
                 name = "ideogram1"
             )
@@ -481,14 +488,14 @@ plotIdeogram <- function(chrom, assembly = "hg38", data = NULL,
             grid.newpage()
         }
     } else {
-        
+
         ## Get viewport name
         currentViewports <- current_viewports()
         vp_name <- paste0("ideogram", length(grep(
             pattern = "ideogram",
             x = currentViewports
         )) + 1)
-        
+
         ## Convert coordinates into same units as page
         page_coords <- convert_page(object = ideogramPlot)
         addViewport(vp_name)
@@ -505,6 +512,7 @@ plotIdeogram <- function(chrom, assembly = "hg38", data = NULL,
         yscale <- chromLength / scaleRatio
 
         if (ideoInternal$orientation == "h") {
+            ## Make viewport based on user inputs
             vp <- viewport(
                 height = page_coords$height,
                 width = page_coords$width,
@@ -512,8 +520,22 @@ plotIdeogram <- function(chrom, assembly = "hg38", data = NULL,
                 xscale = c(0, chromLength),
                 yscale = c(0, yscale),
                 just = ideoInternal$just,
-                name = vp_name
-            )
+                name = vp_name)
+
+            ## Convert viewport to bottom left (bottom left of horizontal)
+            if(ideoInternal$flip) {
+                vp_br <- vp_bottomRight(viewport = vp)
+                vp <- viewport(
+                    height = page_coords$height,
+                    width = page_coords$width,
+                    x = vp_br[[1]], y = vp_br[[2]],
+                    xscale = c(0, chromLength),
+                    yscale = c(0, yscale),
+                    angle = 180,
+                    just = c("left", "top"),
+                    name = vp_name
+                ) }
+
         } else {
             ## Make viewport based on user inputs
             vpOG <- viewport(
@@ -523,18 +545,36 @@ plotIdeogram <- function(chrom, assembly = "hg38", data = NULL,
                 just = ideoInternal$just
             )
 
+            ## Convert viewport to bottom left (bottom left of horizontal)
+            ## if flip == TRUE
+            if(ideoInternal$flip) {
+                vp_bl <- vp_bottomLeft(viewport = vpOG)
+                vp <- viewport(
+                    height = page_coords$width,
+                    width = page_coords$height,
+                    x = vp_bl[[1]], y = vp_bl[[2]],
+                    xscale = c(0, chromLength),
+                    yscale = c(0, yscale),
+                    angle = 90,
+                    just = c("left", "top"),
+                    name = vp_name
+                )
+            }
             ## Convert viewport to top right (top right of horizontal)
-            vp_tr <- vp_topRight(viewport = vpOG)
-            vp <- viewport(
-                height = page_coords$width,
-                width = page_coords$height,
-                x = vp_tr[[1]], y = vp_tr[[2]],
-                xscale = c(0, chromLength),
-                yscale = c(0, yscale),
-                angle = -90,
-                just = c("left", "top"),
-                name = vp_name
-            )
+            ## if flip == FALSE
+            else{
+                vp_tr <- vp_topRight(viewport = vpOG)
+                vp <- viewport(
+                    height = page_coords$width,
+                    width = page_coords$height,
+                    x = vp_tr[[1]], y = vp_tr[[2]],
+                    xscale = c(0, chromLength),
+                    yscale = c(0, yscale),
+                    angle = -90,
+                    just = c("left", "top"),
+                    name = vp_name
+                )
+            }
         }
     }
 
