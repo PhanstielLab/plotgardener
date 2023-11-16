@@ -32,8 +32,11 @@
 #' \item{\code{"v"}: }{Vertical ideogram orientation.}
 #' \item{\code{"h"}: }{Horizontal ideogram orientation.}
 #' }
-#' @param flip Logical value indicating whether to flip the ideogram so that
-#' the end is above or before the start of the chromosome.
+#' @param flip Logical value indicating whether to reverse the start and end
+#' positions of the ideogram. If \code{flip = FALSE} (default), the ideogram
+#' starts at the top/left and ends at the bottom/right. If \code{flip = TRUE},
+#' the start and end positions are reversed, meaning the ideogram starts at the
+#' bottom/right and ends at the top/left.
 #' @param showBands Logical value indicating whether to draw
 #' colored cytobands within ideogram.
 #' Default value is \code{showBands = TRUE}.
