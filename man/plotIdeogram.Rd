@@ -9,6 +9,7 @@ plotIdeogram(
     assembly = "hg38",
     data = NULL,
     orientation = "h",
+    flip = FALSE,
     showBands = TRUE,
     fill = NULL,
     x = NULL,
@@ -29,7 +30,7 @@ plotIdeogram(
 Default value is \code{assembly = "hg38"}.}
 
 \item{data}{Custom cytoband data, as a dataframe with the following
-columns: "seqnames", "start", "end", "width", "strand", 
+columns: "seqnames", "start", "end", "width", "strand",
 "name", "gieStain".}
 
 \item{orientation}{Character value indicating the orientation
@@ -40,12 +41,18 @@ Options are:
 \item{\code{"h"}: }{Horizontal ideogram orientation.}
 }}
 
+\item{flip}{Logical value indicating whether to reverse the start and end
+positions of the ideogram. If \code{flip = FALSE} (default), the ideogram
+starts at the top/left and ends at the bottom/right. If \code{flip = TRUE},
+the start and end positions are reversed, meaning the ideogram starts at the
+bottom/right and ends at the top/left.}
+
 \item{showBands}{Logical value indicating whether to draw
 colored cytobands within ideogram.
 Default value is \code{showBands = TRUE}.}
 
 \item{fill}{(optional) A vector specifying alternate colors for cytoband
-stains. To change specific gieStain values (i.e. gneg, gpos, etc.) to 
+stains. To change specific gieStain values (i.e. gneg, gpos, etc.) to
 specific colors, this vector can be named. This vector must have the same
 number of colors as there are gieStain values for each genome assembly.}
 
@@ -98,10 +105,10 @@ by ignoring plot placement parameters:
 \preformatted{
 plotIdeogram(chrom)
 }
-If no data is provided, Giemsa stain band data will first try to 
-fetch UCSC with AnnotationHub. The results are cached for faster access, 
-but these cached items can be deleted. If no internet connection is 
-available and AnnotationHub has not previously cached the data, custom 
+If no data is provided, Giemsa stain band data will first try to
+fetch UCSC with AnnotationHub. The results are cached for faster access,
+but these cached items can be deleted. If no internet connection is
+available and AnnotationHub has not previously cached the data, custom
 Giemsa stain band data can be loaded with the `data` parameter.
 }
 \examples{
