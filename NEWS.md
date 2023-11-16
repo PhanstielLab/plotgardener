@@ -1,3 +1,13 @@
+# VERSION 1.8.1
+## BUG FIXES
+
+* `plotManhattan` pch mapping is compatible when number of data 
+points is less than the number of levels of a `colorby` column.
+
+# VERSION 1.8.0
+
+Version bump for Bioconductor 3.18 release.
+
 # VERSION 1.7.7
 ## BUG FIXES
 
