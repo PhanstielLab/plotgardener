@@ -271,7 +271,7 @@
 plotManhattan <- function(data, sigVal = 5e-08, chrom = NULL,
                             chromstart = NULL, chromend = NULL,
                             assembly = "hg38", fill = "black", pch = 19,
-                            cex = 0.25, leadSNP = NULL,
+                            cex = 0.25, snpHighlights = NULL,
                             sigLine = FALSE, sigCol = NULL,
                             trans = "-log10",
                             range = NULL, yscale_reverse = FALSE,
@@ -290,7 +290,7 @@ plotManhattan <- function(data, sigVal = 5e-08, chrom = NULL,
     ## Define a function that checks for errors in plotManhattan
     errorcheck_plotManhattan <- function(bedfile, chrom, chromstart,
                                             chromend, object,
-                                            leadSNP, fill) {
+                                            snpHighlights, fill) {
 
         ## check bedfile columns
         if (!"chrom" %in% colnames(bedfile)) {
@@ -337,21 +337,28 @@ plotManhattan <- function(data, sigVal = 5e-08, chrom = NULL,
         ## range
         rangeErrors(range = object$range)
 
-        ## lead SNP
-        if (!is.null(leadSNP)) {
-            if (!is(leadSNP, "list")) {
-                stop("\'leadSNP\' must be a list with a \'snp\' name ",
-                "slot and any other aesthetic options for that SNP, ",
+        ## snpHighlights
+        if (!is.null(snpHighlights)) {
+            if (!is(snpHighlights, "data.frame")) {
+                stop("\'snpHighlights\' must be a dataframe with a \'snp\' column ",
+                "and columns for any other aesthetic options for those SNPs, ",
                 "like \'fill\', \'pch\', \'cex\', \'fontcolor\', ",
                 "and \'fontsize\'.", call. = FALSE)
             }
 
-            if (!"snp" %in% names(leadSNP)) {
-                stop("\'leadSNP\' must be a list with a \'snp\' name ",
-                "slot and any other aesthetic options for that SNP, ",
+            if (!"snp" %in% colnames(snpHighlights)) {
+                stop("\'snpHighlights\' must be a dataframe with a \'snp\' column ",
+                "and columns for any other aesthetic options for those SNPs, ",
                 "like \'fill\', \'pch\', \'cex\', \'fontcolor\', ",
                 "and \'fontsize\'.", call. = FALSE)
             }
+            
+            # Check that `snp` column is in input data
+            if (!"snp" %in% colnames(bedfile)){
+                stop("\'snpHighlights\' specified but no \'snp\' column ",
+                     "found in data.", call. = FALSE)
+            }
+            
         }
         
         ## Colorby
@@ -408,20 +415,20 @@ plotManhattan <- function(data, sigVal = 5e-08, chrom = NULL,
             
             if (yscale_reverse == TRUE){
                 object$range <- 
-                    c(ceiling(max(unlist(lapply(parse(text = 
+                    c(max(unlist(lapply(parse(text = 
                                                           paste0(trans, "(",
                                                                  bedData[, "p"], 
                                                                  ")")), 
-                                                eval)))), 0)
+                                                eval))) + 1, 0)
             } else {
                 
                 object$range <- 
                     c(0,
-                      ceiling(max(unlist(lapply(parse(text = 
+                      max(unlist(lapply(parse(text = 
                                                           paste0(trans, "(",
                                                                  bedData[, "p"],
                                                                  ")")), 
-                                                eval)))))
+                                                eval))) + 1)
             }
             
         } else {
@@ -560,7 +567,7 @@ plotManhattan <- function(data, sigVal = 5e-08, chrom = NULL,
         chromstart = man_plot$chromstart,
         chromend = man_plot$chromend,
         object = man_plot,
-        leadSNP = manInternal$leadSNP,
+        snpHighlights = manInternal$snpHighlights,
         fill = manInternal$fill
     )
 
@@ -850,23 +857,26 @@ plotManhattan <- function(data, sigVal = 5e-08, chrom = NULL,
     if (nrow(bed_data) > 0 & manInternal$txdbChecks == TRUE) {
 
         # =====================================================================
-        # SUBSET DATA FOR LEAD SNP
+        # SUBSET DATA FOR SNP HIGHLIGHTS
         # =====================================================================
-        leadSNP_row <- data.frame(matrix(nrow = 0, ncol = 1))
-        if (!is.null(manInternal$leadSNP)) {
+
+        if (!is.null(manInternal$snpHighlights)) {
             if ("snp" %in% colnames(bed_data)) {
-                # Find index SNP in data
-                leadSNP_row <- bed_data[which(
-                    bed_data$snp == manInternal$leadSNP$snp
-                ), ]
-                if (nrow(leadSNP_row) > 0) {
+                
+                highlightSNPs <- bed_data[which(bed_data$snp %in% 
+                                                manInternal$snpHighlights$snp),] %>% 
+                    suppressMessages(left_join(manInternal$snpHighlights))
+                if (nrow(highlightSNPs) > 0) {
 
                     ## Remove from data to plot separately
                     bed_data <- suppressMessages(dplyr::anti_join(
-                        bed_data, leadSNP_row
+                        bed_data, highlightSNPs
                     ))
+                } else if (nrow(highlightSNPs) != nrow(manInternal$snpHighlights)) {
+                    warning("Not all `'snpHighlight'` SNPs found in data.",
+                            call. = FALSE)
                 } else {
-                    warning("Specified lead SNP not found in data.",
+                    warning("Specified SNPs to highlight not found in data.",
                         call. = FALSE
                     )
                 }
@@ -906,51 +916,44 @@ plotManhattan <- function(data, sigVal = 5e-08, chrom = NULL,
         )
 
         # =====================================================================
-        # LEAD SNP
+        # SNP HIGHLIGHTS
         # =====================================================================
 
-        if (nrow(leadSNP_row) > 0) {
-            manInternal$gp$col <- manInternal$leadSNP$fill
-            manInternal$gp$cex <- manInternal$leadSNP$cex
-            if (is.null(manInternal$leadSNP$pch)) {
-                manInternal$leadSNP$pch <- manInternal$pch[1]
-            }
-            if (is.null(manInternal$leadSNP$cex)) {
-                manInternal$gp$cex <- manInternal$cex
+        if (nrow(highlightSNPs) > 0) {
+            
+            if (!"pch" %in% colnames(highlightSNPs)){
+                highlightSNPs$pch <- manInternal$pch[1]
             }
 
-            point <- pointsGrob(
-                x = leadSNP_row$pos, 
-                y = eval(parse(text = paste0(manInternal$trans, 
-                                             "(", leadSNP_row$p, ")"))),
-                pch = manInternal$leadSNP$pch,
-                gp = manInternal$gp,
-                default.units = "native"
-            )
-            snp <- textGrob(
-                label = leadSNP_row$snp, x = leadSNP_row$pos,
-                y = unit(eval(parse(text = paste0(manInternal$trans, 
-                                                  "(", leadSNP_row$p, 
-                                                  ")"))), 
-                         "native") + unit(1.5, "mm"),
-                just = "bottom",
+            if (!"cex" %in% colnames(highlightSNPs)){
+                highlightSNPs$cex <- manInternal$cex
+            }
+            
+            if (!"alpha" %in% colnames(highlightSNPs)){
+                highlightSNPs$alpha <- 1
+            }
+            
+            highlightPoints <- pointsGrob(
+                x = highlightSNPs$pos, 
+                y = unlist(lapply(parse(text = paste0(manInternal$trans, 
+                                                      "(", highlightSNPs$p, 
+                                                      ")")), eval)),
+                pch = highlightSNPs$pch,
                 gp = gpar(
-                    fontsize = manInternal$leadSNP$fontsize,
-                    col = manInternal$leadSNP$fontcolor
+                    col = highlightSNPs$color,
+                    pch = highlightSNPs$pch,
+                    cex = highlightSNPs$cex,
+                    alpha = highlightSNPs$alpha
                 ),
                 default.units = "native"
             )
+            
+            ## Note: removed text labeling; maybe add as later enhancement
+            
             assign("manhattan_grobs",
                 addGrob(
                     gTree = get("manhattan_grobs", envir = pgEnv),
-                    child = point
-                ),
-                envir = pgEnv
-            )
-            assign("manhattan_grobs",
-                addGrob(
-                    gTree = get("manhattan_grobs", envir = pgEnv),
-                    child = snp
+                    child = highlightPoints
                 ),
                 envir = pgEnv
             )
