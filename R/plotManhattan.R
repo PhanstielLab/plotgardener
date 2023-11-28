@@ -949,7 +949,7 @@ plotManhattan <- function(data, sigVal = 5e-08, chrom = NULL,
             }
             
             # Put back in original order
-            highlightSNPs <- highlightSNPs[match(manInternal$snpHighlights$snp, highlightSNPs$snp)]
+            highlightSNPs <- highlightSNPs[match(manInternal$snpHighlights$snp, highlightSNPs$snp),]
             
             assign("highlightSNPs", highlightSNPs, envir = globalenv())
             
