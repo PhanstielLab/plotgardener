@@ -920,6 +920,7 @@ plotManhattan <- function(data, sigVal = 5e-08, chrom = NULL,
         # =====================================================================
 
         if (nrow(highlightSNPs) > 0) {
+            print("here")
             
             if (!"pch" %in% colnames(highlightSNPs)){
                 highlightSNPs$pch <- manInternal$pch[1]
@@ -932,7 +933,7 @@ plotManhattan <- function(data, sigVal = 5e-08, chrom = NULL,
             if (!"alpha" %in% colnames(highlightSNPs)){
                 highlightSNPs$alpha <- 1
             }
-            
+            assign("highlightSNPs", highlightSNPs, envir = globalenv())
             highlightPoints <- pointsGrob(
                 x = highlightSNPs$pos, 
                 y = unlist(lapply(parse(text = paste0(manInternal$trans, 
