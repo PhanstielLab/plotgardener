@@ -951,8 +951,6 @@ plotManhattan <- function(data, sigVal = 5e-08, chrom = NULL,
             # Put back in original order
             highlightSNPs <- highlightSNPs[match(manInternal$snpHighlights$snp, highlightSNPs$snp),]
             
-            assign("highlightSNPs", highlightSNPs, envir = globalenv())
-            
             highlightPoints <- pointsGrob(
                 x = highlightSNPs$pos, 
                 y = unlist(lapply(parse(text = paste0(manInternal$trans, 
