@@ -920,8 +920,7 @@ plotManhattan <- function(data, sigVal = 5e-08, chrom = NULL,
         # =====================================================================
 
         if (nrow(highlightSNPs) > 0) {
-            print("here")
-            
+            assign("highlightSNPs_before", highlightSNPs, envir = globalenv())
             if (!"pch" %in% colnames(highlightSNPs)){
                 highlightSNPs$pch <- manInternal$pch[1]
             }
