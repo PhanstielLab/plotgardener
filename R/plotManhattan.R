@@ -937,7 +937,10 @@ plotManhattan <- function(data, sigVal = 5e-08, chrom = NULL,
                 highlightSNPs$alpha <- 1
             }
             
-            assign("highlightSNPs", highlightSNPs, envir = globalenv())
+            if ("fill" %in% colnames(manInternal$snpHighlights)){
+                highlightSNPs$color <-  manInternal$snpHighlights$fill[match(highlightSNPs$snp, manInternal$snpHighlights$snp)]
+            }
+            
             highlightPoints <- pointsGrob(
                 x = highlightSNPs$pos, 
                 y = unlist(lapply(parse(text = paste0(manInternal$trans, 
