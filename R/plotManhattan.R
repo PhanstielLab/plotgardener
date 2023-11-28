@@ -947,7 +947,7 @@ plotManhattan <- function(data, sigVal = 5e-08, chrom = NULL,
             } else {
                 highlightSNPs$col <- highlightSNPs$color
             }
-            
+            assign("highlightSNPs", highlightSNPs, envir = globalenv())
             
             highlightPoints <- pointsGrob(
                 x = highlightSNPs$pos, 
