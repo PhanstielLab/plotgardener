@@ -937,9 +937,17 @@ plotManhattan <- function(data, sigVal = 5e-08, chrom = NULL,
                 highlightSNPs$alpha <- 1
             }
             
+            
             if ("fill" %in% colnames(manInternal$snpHighlights)){
                 highlightSNPs$color <-  manInternal$snpHighlights$fill[match(highlightSNPs$snp, manInternal$snpHighlights$snp)]
             }
+            
+            if ("col" %in% colnames(manInternal$snpHighlights)){
+                highlightSNPs$col <-  manInternal$snpHighlights$col[match(highlightSNPs$snp, manInternal$snpHighlights$snp)]
+            } else {
+                highlightSNPs$col <- highlightSNPs$color
+            }
+            
             
             highlightPoints <- pointsGrob(
                 x = highlightSNPs$pos, 
@@ -948,8 +956,8 @@ plotManhattan <- function(data, sigVal = 5e-08, chrom = NULL,
                                                       ")")), eval)),
                 pch = highlightSNPs$pch,
                 gp = gpar(
-                    col = highlightSNPs$color,
-                    pch = highlightSNPs$pch,
+                    fill = highlightSNPs$color
+                    col = highlightSNPs$col,
                     cex = highlightSNPs$cex,
                     alpha = highlightSNPs$alpha
                 ),
