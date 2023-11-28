@@ -920,18 +920,23 @@ plotManhattan <- function(data, sigVal = 5e-08, chrom = NULL,
         # =====================================================================
 
         if (nrow(highlightSNPs) > 0) {
-            assign("highlightSNPs_before", highlightSNPs, envir = globalenv())
-            if (!"pch" %in% colnames(highlightSNPs)){
-                highlightSNPs$pch <- manInternal$pch[1]
+            
+            if ("pch" %in% colnames(manInternal$snpHighlights)){
+                highlightSNPs$pch <- manInternal$snpHighlights$pch[match(highlightSNPs$snp, manInternal$snpHighlights$snp)]
             }
 
-            if (!"cex" %in% colnames(highlightSNPs)){
+            if ("cex" %in% colnames(manInternal$snpHighlights)){
+                highlightSNPs$cex <- manInternal$snpHighlights$cex[match(highlightSNPs$snp, manInternal$snpHighlights$snp)]
+            } else {
                 highlightSNPs$cex <- manInternal$cex
             }
             
-            if (!"alpha" %in% colnames(highlightSNPs)){
+            if ("alpha" %in% colnames(manInternal$snpHighlights)){
+                highlightSNPs$alpha <- manInternal$snpHighlights$alpha[match(highlightSNPs$snp, manInternal$snpHighlights$snp)]
+            } else {
                 highlightSNPs$alpha <- 1
             }
+            
             assign("highlightSNPs", highlightSNPs, envir = globalenv())
             highlightPoints <- pointsGrob(
                 x = highlightSNPs$pos, 
