@@ -956,7 +956,7 @@ plotManhattan <- function(data, sigVal = 5e-08, chrom = NULL,
                                                       ")")), eval)),
                 pch = highlightSNPs$pch,
                 gp = gpar(
-                    fill = highlightSNPs$color
+                    fill = highlightSNPs$color,
                     col = highlightSNPs$col,
                     cex = highlightSNPs$cex,
                     alpha = highlightSNPs$alpha
