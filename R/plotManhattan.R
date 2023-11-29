@@ -866,7 +866,6 @@ plotManhattan <- function(data, sigVal = 5e-08, chrom = NULL,
                 highlightSNPs <- bed_data[which(bed_data$snp %in% 
                                                 manInternal$snpHighlights$snp),] %>% 
                     suppressMessages(left_join(manInternal$snpHighlights))
-                assign("highlightSNPs", highlightSNPs, envir = globalenv())
                 if (nrow(highlightSNPs) > 0) {
 
                     ## Remove from data to plot separately
@@ -874,6 +873,7 @@ plotManhattan <- function(data, sigVal = 5e-08, chrom = NULL,
                         bed_data, highlightSNPs
                     ))
                 } else if (nrow(highlightSNPs) != nrow(manInternal$snpHighlights)) {
+                    print("here")
                     warning("Not all `'snpHighlight'` SNPs found in data.",
                             call. = FALSE)
                 } else {
@@ -928,8 +928,10 @@ plotManhattan <- function(data, sigVal = 5e-08, chrom = NULL,
                 }
                 
                 if ("cex" %in% colnames(manInternal$snpHighlights)){
+                    print("cex1")
                     highlightSNPs$cex <- manInternal$snpHighlights$cex[match(highlightSNPs$snp, manInternal$snpHighlights$snp)]
                 } else {
+                    print("cex2")
                     highlightSNPs$cex <- manInternal$cex
                 }
                 
