@@ -897,7 +897,7 @@ plotManhattan <- function(data, sigVal = 5e-08, chrom = NULL,
         ## Remove any additional lty information for point plotting
         manInternal$gp$linetype <- manInternal$gp$lty
         manInternal$gp$lty <- NULL
-
+        assign("bed_data", bed_data, envir = globalenv())
         points <- pointsGrob(
             x = bed_data$pos, 
             y = unlist(lapply(parse(text = paste0(manInternal$trans, 
@@ -951,8 +951,8 @@ plotManhattan <- function(data, sigVal = 5e-08, chrom = NULL,
                 }
                 
                 # Put back in original order
-                highlightSNPs <- highlightSNPs[match(manInternal$snpHighlights$snp, highlightSNPs$snp),]
-                assign("highlightSNPs", highlightSNPs, envir = globalenv())
+                highlightSNPs <- na.omit(highlightSNPs[match(manInternal$snpHighlights$snp, highlightSNPs$snp),])
+                
                 highlightPoints <- pointsGrob(
                     x = highlightSNPs$pos, 
                     y = unlist(lapply(parse(text = paste0(manInternal$trans, 
