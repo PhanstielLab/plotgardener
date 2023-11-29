@@ -866,6 +866,7 @@ plotManhattan <- function(data, sigVal = 5e-08, chrom = NULL,
                 highlightSNPs <- bed_data[which(bed_data$snp %in% 
                                                 manInternal$snpHighlights$snp),] %>% 
                     suppressMessages(left_join(manInternal$snpHighlights))
+                assign("highlightSNPs", highlightSNPs, envir = globalenv())
                 if (nrow(highlightSNPs) > 0) {
 
                     ## Remove from data to plot separately
@@ -918,65 +919,67 @@ plotManhattan <- function(data, sigVal = 5e-08, chrom = NULL,
         # =====================================================================
         # SNP HIGHLIGHTS
         # =====================================================================
-
-        if (nrow(highlightSNPs) > 0) {
+        if (!is.null(manInternal$snpHighlights)) {
             
-            if ("pch" %in% colnames(manInternal$snpHighlights)){
-                highlightSNPs$pch <- manInternal$snpHighlights$pch[match(highlightSNPs$snp, manInternal$snpHighlights$snp)]
+            if (nrow(highlightSNPs) > 0) {
+                
+                if ("pch" %in% colnames(manInternal$snpHighlights)){
+                    highlightSNPs$pch <- manInternal$snpHighlights$pch[match(highlightSNPs$snp, manInternal$snpHighlights$snp)]
+                }
+                
+                if ("cex" %in% colnames(manInternal$snpHighlights)){
+                    highlightSNPs$cex <- manInternal$snpHighlights$cex[match(highlightSNPs$snp, manInternal$snpHighlights$snp)]
+                } else {
+                    highlightSNPs$cex <- manInternal$cex
+                }
+                
+                if ("alpha" %in% colnames(manInternal$snpHighlights)){
+                    highlightSNPs$alpha <- manInternal$snpHighlights$alpha[match(highlightSNPs$snp, manInternal$snpHighlights$snp)]
+                } else {
+                    highlightSNPs$alpha <- 1
+                }
+                
+                
+                if ("fill" %in% colnames(manInternal$snpHighlights)){
+                    highlightSNPs$color <-  manInternal$snpHighlights$fill[match(highlightSNPs$snp, manInternal$snpHighlights$snp)]
+                }
+                
+                if ("col" %in% colnames(manInternal$snpHighlights)){
+                    highlightSNPs$col <-  manInternal$snpHighlights$col[match(highlightSNPs$snp, manInternal$snpHighlights$snp)]
+                } else {
+                    highlightSNPs$col <- highlightSNPs$color
+                }
+                
+                # Put back in original order
+                highlightSNPs <- highlightSNPs[match(manInternal$snpHighlights$snp, highlightSNPs$snp),]
+                
+                highlightPoints <- pointsGrob(
+                    x = highlightSNPs$pos, 
+                    y = unlist(lapply(parse(text = paste0(manInternal$trans, 
+                                                          "(", highlightSNPs$p, 
+                                                          ")")), eval)),
+                    pch = highlightSNPs$pch,
+                    gp = gpar(
+                        fill = highlightSNPs$color,
+                        col = highlightSNPs$col,
+                        cex = highlightSNPs$cex,
+                        alpha = highlightSNPs$alpha
+                    ),
+                    default.units = "native"
+                )
+                
+                ## Note: removed text labeling; maybe add as later enhancement
+                
+                assign("manhattan_grobs",
+                       addGrob(
+                           gTree = get("manhattan_grobs", envir = pgEnv),
+                           child = highlightPoints
+                       ),
+                       envir = pgEnv
+                )
             }
-
-            if ("cex" %in% colnames(manInternal$snpHighlights)){
-                highlightSNPs$cex <- manInternal$snpHighlights$cex[match(highlightSNPs$snp, manInternal$snpHighlights$snp)]
-            } else {
-                highlightSNPs$cex <- manInternal$cex
-            }
-            
-            if ("alpha" %in% colnames(manInternal$snpHighlights)){
-                highlightSNPs$alpha <- manInternal$snpHighlights$alpha[match(highlightSNPs$snp, manInternal$snpHighlights$snp)]
-            } else {
-                highlightSNPs$alpha <- 1
-            }
-            
-            
-            if ("fill" %in% colnames(manInternal$snpHighlights)){
-                highlightSNPs$color <-  manInternal$snpHighlights$fill[match(highlightSNPs$snp, manInternal$snpHighlights$snp)]
-            }
-            
-            if ("col" %in% colnames(manInternal$snpHighlights)){
-                highlightSNPs$col <-  manInternal$snpHighlights$col[match(highlightSNPs$snp, manInternal$snpHighlights$snp)]
-            } else {
-                highlightSNPs$col <- highlightSNPs$color
-            }
-            
-            # Put back in original order
-            highlightSNPs <- highlightSNPs[match(manInternal$snpHighlights$snp, highlightSNPs$snp),]
-            
-            highlightPoints <- pointsGrob(
-                x = highlightSNPs$pos, 
-                y = unlist(lapply(parse(text = paste0(manInternal$trans, 
-                                                      "(", highlightSNPs$p, 
-                                                      ")")), eval)),
-                pch = highlightSNPs$pch,
-                gp = gpar(
-                    fill = highlightSNPs$color,
-                    col = highlightSNPs$col,
-                    cex = highlightSNPs$cex,
-                    alpha = highlightSNPs$alpha
-                ),
-                default.units = "native"
-            )
-            
-            ## Note: removed text labeling; maybe add as later enhancement
-            
-            assign("manhattan_grobs",
-                addGrob(
-                    gTree = get("manhattan_grobs", envir = pgEnv),
-                    child = highlightPoints
-                ),
-                envir = pgEnv
-            )
         }
-
+        
         # =====================================================================
         # SIGLINE
         # =====================================================================
