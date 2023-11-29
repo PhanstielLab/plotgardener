@@ -928,11 +928,8 @@ plotManhattan <- function(data, sigVal = 5e-08, chrom = NULL,
                 }
                 
                 if ("cex" %in% colnames(manInternal$snpHighlights)){
-                    print("cex1")
                     highlightSNPs$cex <- manInternal$snpHighlights$cex[match(highlightSNPs$snp, manInternal$snpHighlights$snp)]
-                    assign("highlightSNPs", highlightSNPs, envir = globalenv())
                 } else {
-                    print("cex2")
                     highlightSNPs$cex <- manInternal$cex
                 }
                 
@@ -955,7 +952,7 @@ plotManhattan <- function(data, sigVal = 5e-08, chrom = NULL,
                 
                 # Put back in original order
                 highlightSNPs <- highlightSNPs[match(manInternal$snpHighlights$snp, highlightSNPs$snp),]
-                
+                assign("highlightSNPs", highlightSNPs, envir = globalenv())
                 highlightPoints <- pointsGrob(
                     x = highlightSNPs$pos, 
                     y = unlist(lapply(parse(text = paste0(manInternal$trans, 
