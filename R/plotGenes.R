@@ -334,16 +334,16 @@ plotGenes <- function(chrom, chromstart = NULL, chromend = NULL,
 
         plusHighlight <- plus_genes[which(plus_genes[[displayCol]] %in%
             genesInternal$geneHighlights
-            [, displayCol]), ]
+            [[displayCol]]), ]
         minusHighlight <- minus_genes[which(minus_genes[[displayCol]] %in%
             genesInternal$geneHighlights
-            [, displayCol]), ]
+            [[displayCol]]), ]
         plusBackground <- plus_genes[which(!plus_genes[[displayCol]] %in%
             genesInternal$geneHighlights
-            [, displayCol]), ]
+            [[displayCol]]), ]
         minusBackground <- minus_genes[which(!minus_genes[[displayCol]] %in%
             genesInternal$geneHighlights
-            [, displayCol]), ]
+            [[displayCol]]), ]
 
         # Change highlight genes to highlight color
         plusHighlight <- merge(plusHighlight, genesInternal$geneHighlights,
@@ -1003,3 +1003,4 @@ cutoffLabel <- function(df, fontsize, xscale, vp, unit) {
         return(label)
     }
 }
+

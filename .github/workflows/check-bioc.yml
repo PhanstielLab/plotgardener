@@ -22,7 +22,11 @@
 
 on:
   push:
+    branches:
+     - RELEASE_3_18
   pull_request:
+    branches:
+      - RELEASE_3_18
 
 name: R-CMD-check-bioc
 

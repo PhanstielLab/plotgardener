@@ -1,3 +1,8 @@
+# VERSION 1.9.3
+## BUG FIXES
+
+* `plotGenes` appropriately handles `tibble` input for `geneHighlights`.
+
 # VERSION 1.9.1
 ## NEW FEATURES
 
