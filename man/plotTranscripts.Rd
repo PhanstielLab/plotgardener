@@ -17,6 +17,7 @@ plotTranscripts(
     spaceHeight = 0.3,
     limitLabel = TRUE,
     transcriptHighlights = NULL,
+    transcriptFilter = NULL,
     fontsize = 8,
     labels = "transcript",
     stroke = 0.1,
@@ -77,6 +78,9 @@ value is \code{limitLabel = TRUE}.}
 "transcript" or "gene" containing transcript names or their associated gene 
 names as strings to highlight and a column named "color" containing 
 corresponding highlight colors.}
+
+\item{transcriptFilter}{A character vector of the names of transcripts to 
+display (default is \code{NULL}, no filtering)}
 
 \item{fontsize}{A numeric specifying text fontsize in points.
 Default value is \code{fontsize = 8}.}
