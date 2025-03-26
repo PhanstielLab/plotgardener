@@ -56,9 +56,9 @@ jobs:
       fail-fast: false
       matrix:
         config:
-          - { os: ubuntu-latest, r: 'devel', bioc: '3.19', cont: "bioconductor/bioconductor_docker:devel", rspm: "https://packagemanager.rstudio.com/cran/__linux__/jammy/latest" }
-          - { os: macOS-latest, r: 'devel', bioc: '3.19'}
-          - { os: windows-latest, r: 'devel', bioc: '3.19'}
+          - { os: ubuntu-latest, r: 'devel', bioc: '3.21', cont: "bioconductor/bioconductor_docker:devel", rspm: "https://packagemanager.rstudio.com/cran/__linux__/jammy/latest" }
+          - { os: macOS-latest, r: 'devel', bioc: '3.21'}
+          - { os: windows-latest, r: 'devel', bioc: '3.21'}
           ## Check https://github.com/r-lib/actions/tree/master/examples
           ## for examples using the http-user-agent
     env:
@@ -180,7 +180,7 @@ jobs:
           gha_repos <- if(
               .Platform$OS.type == "unix" && Sys.info()["sysname"] != "Darwin"
           ) c(
-              "AnVIL" = "https://bioconductordocker.blob.core.windows.net/packages/3.19/bioc",
+              "AnVIL" = "https://bioconductordocker.blob.core.windows.net/packages/3.21/bioc",
               BiocManager::repositories()
               ) else BiocManager::repositories()
 
