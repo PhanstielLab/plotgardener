@@ -67,7 +67,7 @@ Suggests:
     scales,
     showtext,
     testthat (>= 3.0.0),
-    TxDb.Hsapiens.UCSC.hg19.knownGene
+    TxDb.Hsapiens.UCSC.hg19.knownGene,
     TxDb.Hsapiens.UCSC.hg38.knownGene
 VignetteBuilder: knitr
 Config/testthat/edition: 3
