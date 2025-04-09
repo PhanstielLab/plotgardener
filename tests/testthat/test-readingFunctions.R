@@ -85,7 +85,7 @@ test_that("readCool", {
     ## .cool file
     coolFile <- file.path(tempdir(), "Rao2014-IMR90-MboI-allreps-filtered.1000kb.cool")
     download.file(url = "https://usgs2.osn.mghpcc.org/cooler01/examples/hg19/Rao2014-IMR90-MboI-allreps-filtered.1000kb.cool",
-                            destfile = coolFile)
+                            destfile = coolFile, mode = "wb")
     on.exit(unlink(coolFile))
     
     # File type
@@ -113,7 +113,7 @@ test_that("readCool", {
     ## .mcool file
     mcoolFile <- file.path(tempdir(), "LEUK_HEK_PJA27_inter_30.mcool")
     download.file(url = "https://zenodo.org/records/10906240/files/LEUK_HEK_PJA27_inter_30.mcool?download=1",
-                  destfile = mcoolFile)
+                  destfile = mcoolFile, mode = "wb")
     on.exit(unlink(mcoolFile))
     
     # File type
