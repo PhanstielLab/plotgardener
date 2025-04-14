@@ -498,7 +498,7 @@ readCoolChroms <- function(file, resolution = NULL){
 #' ## .cool file
 #' coolFile <- file.path(tempdir(), "Rao2014-IMR90-MboI-allreps-filtered.1000kb.cool")
 #' download.file(url = "https://usgs2.osn.mghpcc.org/cooler01/examples/hg19/Rao2014-IMR90-MboI-allreps-filtered.1000kb.cool",
-#'     destfile = coolFile)
+#'     destfile = coolFile, mode = "wb")
 #' 
 #' ## Read in region `chr2:10000000-22000000` at 1000Kb cool file resolution
 #' coolData <- readCool(file = coolFile, chrom = "chr2", chromstart = 10000000,
@@ -508,7 +508,7 @@ readCoolChroms <- function(file, resolution = NULL){
 #' ## .mcool file
 #' mcoolFile <- file.path(tempdir(), "LEUK_HEK_PJA27_inter_30.mcool")
 #' download.file(url = "https://zenodo.org/records/10906240/files/LEUK_HEK_PJA27_inter_30.mcool?download=1",
-#'     destfile = mcoolFile)
+#'     destfile = mcoolFile, mode = "wb")
 #'
 #' ## Read in region `chr2:1000000-5000000` at 100Kb resolution
 #' mcoolData_100Kb <- readCool(file = mcoolFile, chrom = "2",
