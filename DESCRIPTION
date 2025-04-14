@@ -1,6 +1,6 @@
 Package: plotgardener
 Title: Coordinate-Based Genomic Visualization Package for R
-Version: 1.11.5
+Version: 1.13.1
 Date: 2024-06-28
 Author: Nicole Kramer [aut, cre], Eric S. Davis [aut], Craig Wenger [aut],
     Sarah Parker [ctb], Erika Deoudes [art], Michael Love [ctb],
