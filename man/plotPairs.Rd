@@ -33,14 +33,13 @@ plotPairs(
 }
 \arguments{
 \item{data}{A string specifying the BEDPE file path, a dataframe
-in BEDPE format specifying data to be plotted, or a
-\link[InteractionSet]{GInteractions} object. Class: Data.}
+in BEDPE format specifying data to be plotted, or txt file in BEDPE format. Class: Data.}
 
 \item{chrom}{A string representing the chromosome of region to be plotted. Class: Data.}
 
-\item{chromstart}{An integer start position on chromosome to be plotted. Default value is \code{chromstart = NULL}. Class: Data.}
+\item{chromstart}{An integer start position on chromosome to be plotted. Class: Data.}
 
-\item{chromend}{An integer end position on chromosome to be plotted. Default value is \code{chromend = NULL}. Class: Data.}
+\item{chromend}{An integer end position on chromosome to be plotted. Class: Data.}
 
 \item{assembly}{A string specifying the default genome assembly or a
 \link[plotgardener]{assembly} object.

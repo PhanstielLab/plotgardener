@@ -38,7 +38,7 @@ or a character vector of chromosomes for a whole genome Manhattan plot. Class: D
 \item{chromend}{An integer end of genome label. Default value is \code{chromend = NULL}. Class: Data.}
 
 \item{assembly}{A string specifying the default genome assembly or a
-\link[plotgardener]{assembly} object. Class: Data.}
+\link[plotgardener]{assembly} object. Default value is \code{assembly = "hg38"}. Class: Data.}
 
 \item{fontsize}{A numeric specifying text fontsize in points.
 Default value is \code{fontsize = 10}. Class: Aesthetic.}
@@ -83,7 +83,7 @@ This is typically used for a square Hi-C plot made with
 \code{plotHicSquare}.}
 }}
 
-\item{at}{A numeric vector of x-value locations for tick marks. Class: Positional.}
+\item{at}{A numeric vector of x-value locations for tick marks. Default value is \code{at = NULL}. Class: Positional.}
 
 \item{tcl}{A numeric specifying the length of tickmarks as a
 fraction of text height. Default value is \code{tcl = 0.5}. Class: Positional.}

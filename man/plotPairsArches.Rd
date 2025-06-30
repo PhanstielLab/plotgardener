@@ -42,9 +42,9 @@ in BEDPE format specifying data to be plotted, or a
 
 \item{chrom}{A string specifying the chromosome of region to be plotted. Class: Data.}
 
-\item{chromstart}{An integer start position on chromosome to be plotted. Default value is \code{chromstart = NULL}. Class: Data.}
+\item{chromstart}{An integer start position on chromosome to be plotted. Class: Data.}
 
-\item{chromend}{An integer end position on chromosome to be plotted. Default value is \code{chromend = NULL}. Class: Data.}
+\item{chromend}{An integer end position on chromosome to be plotted. Class: Data.}
 
 \item{assembly}{A string specifying the default genome assembly or a
 \link[plotgardener]{assembly} object.
@@ -63,9 +63,9 @@ the x-axis. Default value is \code{flip = FALSE}. Options include: TRUE, FALSE. 
 \item{curvature}{A numeric indicating the number of points along the
 arch curvature. Default value is \code{curvature = 5}. Class: Aesthetic.}
 
-\item{archHeight}{A numeric value, numeric vector, or column name 
+\item{archHeight}{A numeric value, numeric vector, or a string column name 
 in data specifying the arch heights. When NULL, all arches will be the 
-same height, filling up the given plot area. Class: Aesthetic.}
+same height, filling up the given plot area. Default value is \code{archHeight = NULL}. Class: Aesthetic.}
 
 \item{fill}{A character value, a vector, or a 
 \link[plotgardener]{colorby} object specifying fill colors of arches.
@@ -95,7 +95,7 @@ any arches that overlap the given genomic region but do not
 have an anchor in that region. Default value is \code{clip.noAnchor = TRUE}. Options include: TRUE, FALSE. Class: Aesthetic.}
 
 \item{range}{A numeric vector of length 2 specifying the y-range
-of \code{archHeight} to plot (c(min, max)). Class: Aesthetic.}
+of \code{archHeight} to plot (c(min, max)). Default value is \code{range = c(0,1)}. Class: Aesthetic.}
 
 \item{baseline}{A logical value indicating whether to include
 a baseline along the x-axis. Default value is \code{baseline = FALSE}. Options include: TRUE, FALSE. Class: Aesthetic.}

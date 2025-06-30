@@ -73,7 +73,7 @@ the fill color(s) of the signal track(s). Default value is \code{fill = NA}. Cla
 to set as the height of the plot. Default value is \code{ymax = 1}. Class: Aesthetic.}
 
 \item{range}{A numeric vector of length 2 specifying the y-range
-of data to plot (c(min, max)). Class: Aesthetic.}
+of data to plot (c(min, max)). Default value is \code{range = c(0,1)}. Class: Aesthetic.}
 
 \item{scale}{A logical value indicating whether to include a data
 scale label in the top left corner of the plot. Class: Aesthetic.
