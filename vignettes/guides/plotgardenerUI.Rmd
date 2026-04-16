@@ -29,6 +29,8 @@ of their figure as they work. When the figure is ready, the app displays the
 underlying R script so that advanced users can copy and extend it further in
 any IDE.
 
+![](../../man/figures/plotgardenerUI-Figure.png)
+
 ## Installation
 
 plotgardenerUI is distributed as a single installer file that bundles all
