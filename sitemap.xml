@@ -1,213 +1,83 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url>
-    <loc>https://phanstiellab.github.io/plotgardener/404.html</loc>
-  </url>
-  <url>
-    <loc>https://phanstiellab.github.io/plotgardener/LICENSE-text.html</loc>
-  </url>
-  <url>
-    <loc>https://phanstiellab.github.io/plotgardener/LICENSE.html</loc>
-  </url>
-  <url>
-    <loc>https://phanstiellab.github.io/plotgardener/articles/guides/aesthetics.html</loc>
-  </url>
-  <url>
-    <loc>https://phanstiellab.github.io/plotgardener/articles/guides/annotations.html</loc>
-  </url>
-  <url>
-    <loc>https://phanstiellab.github.io/plotgardener/articles/guides/bioconductor_integration.html</loc>
-  </url>
-  <url>
-    <loc>https://phanstiellab.github.io/plotgardener/articles/guides/ideograms_and_shapes.html</loc>
-  </url>
-  <url>
-    <loc>https://phanstiellab.github.io/plotgardener/articles/guides/incorporating_ggplots.html</loc>
-  </url>
-  <url>
-    <loc>https://phanstiellab.github.io/plotgardener/articles/guides/our_philosophy.html</loc>
-  </url>
-  <url>
-    <loc>https://phanstiellab.github.io/plotgardener/articles/guides/plotgardener_meta_functions.html</loc>
-  </url>
-  <url>
-    <loc>https://phanstiellab.github.io/plotgardener/articles/guides/plotgardener_page.html</loc>
-  </url>
-  <url>
-    <loc>https://phanstiellab.github.io/plotgardener/articles/guides/plotting_multiomic_data.html</loc>
-  </url>
-  <url>
-    <loc>https://phanstiellab.github.io/plotgardener/articles/guides/reading_data_for_plotgardener.html</loc>
-  </url>
-  <url>
-    <loc>https://phanstiellab.github.io/plotgardener/articles/index.html</loc>
-  </url>
-  <url>
-    <loc>https://phanstiellab.github.io/plotgardener/articles/introduction_to_plotgardener.html</loc>
-  </url>
-  <url>
-    <loc>https://phanstiellab.github.io/plotgardener/authors.html</loc>
-  </url>
-  <url>
-    <loc>https://phanstiellab.github.io/plotgardener/index.html</loc>
-  </url>
-  <url>
-    <loc>https://phanstiellab.github.io/plotgardener/news/index.html</loc>
-  </url>
-  <url>
-    <loc>https://phanstiellab.github.io/plotgardener/reference/annoDomains.html</loc>
-  </url>
-  <url>
-    <loc>https://phanstiellab.github.io/plotgardener/reference/annoGenomeLabel.html</loc>
-  </url>
-  <url>
-    <loc>https://phanstiellab.github.io/plotgardener/reference/annoHeatmapLegend.html</loc>
-  </url>
-  <url>
-    <loc>https://phanstiellab.github.io/plotgardener/reference/annoHighlight.html</loc>
-  </url>
-  <url>
-    <loc>https://phanstiellab.github.io/plotgardener/reference/annoPixels.html</loc>
-  </url>
-  <url>
-    <loc>https://phanstiellab.github.io/plotgardener/reference/annoSegments.html</loc>
-  </url>
-  <url>
-    <loc>https://phanstiellab.github.io/plotgardener/reference/annoText.html</loc>
-  </url>
-  <url>
-    <loc>https://phanstiellab.github.io/plotgardener/reference/annoXaxis.html</loc>
-  </url>
-  <url>
-    <loc>https://phanstiellab.github.io/plotgardener/reference/annoYaxis.html</loc>
-  </url>
-  <url>
-    <loc>https://phanstiellab.github.io/plotgardener/reference/annoZoomLines.html</loc>
-  </url>
-  <url>
-    <loc>https://phanstiellab.github.io/plotgardener/reference/assembly.html</loc>
-  </url>
-  <url>
-    <loc>https://phanstiellab.github.io/plotgardener/reference/c.html</loc>
-  </url>
-  <url>
-    <loc>https://phanstiellab.github.io/plotgardener/reference/calcSignalRange.html</loc>
-  </url>
-  <url>
-    <loc>https://phanstiellab.github.io/plotgardener/reference/colorby.html</loc>
-  </url>
-  <url>
-    <loc>https://phanstiellab.github.io/plotgardener/reference/defaultPackages.html</loc>
-  </url>
-  <url>
-    <loc>https://phanstiellab.github.io/plotgardener/reference/genomes.html</loc>
-  </url>
-  <url>
-    <loc>https://phanstiellab.github.io/plotgardener/reference/index.html</loc>
-  </url>
-  <url>
-    <loc>https://phanstiellab.github.io/plotgardener/reference/mapColors.html</loc>
-  </url>
-  <url>
-    <loc>https://phanstiellab.github.io/plotgardener/reference/pageCreate.html</loc>
-  </url>
-  <url>
-    <loc>https://phanstiellab.github.io/plotgardener/reference/pageGuideHide.html</loc>
-  </url>
-  <url>
-    <loc>https://phanstiellab.github.io/plotgardener/reference/pageGuideHorizontal.html</loc>
-  </url>
-  <url>
-    <loc>https://phanstiellab.github.io/plotgardener/reference/pageGuideShow.html</loc>
-  </url>
-  <url>
-    <loc>https://phanstiellab.github.io/plotgardener/reference/pageGuideVertical.html</loc>
-  </url>
-  <url>
-    <loc>https://phanstiellab.github.io/plotgardener/reference/pageLayoutCol.html</loc>
-  </url>
-  <url>
-    <loc>https://phanstiellab.github.io/plotgardener/reference/pageLayoutRow.html</loc>
-  </url>
-  <url>
-    <loc>https://phanstiellab.github.io/plotgardener/reference/pagePlotPlace.html</loc>
-  </url>
-  <url>
-    <loc>https://phanstiellab.github.io/plotgardener/reference/pagePlotRemove.html</loc>
-  </url>
-  <url>
-    <loc>https://phanstiellab.github.io/plotgardener/reference/pgParams.html</loc>
-  </url>
-  <url>
-    <loc>https://phanstiellab.github.io/plotgardener/reference/plotCircle.html</loc>
-  </url>
-  <url>
-    <loc>https://phanstiellab.github.io/plotgardener/reference/plotGG.html</loc>
-  </url>
-  <url>
-    <loc>https://phanstiellab.github.io/plotgardener/reference/plotGenes.html</loc>
-  </url>
-  <url>
-    <loc>https://phanstiellab.github.io/plotgardener/reference/plotGenomeLabel.html</loc>
-  </url>
-  <url>
-    <loc>https://phanstiellab.github.io/plotgardener/reference/plotHicRectangle.html</loc>
-  </url>
-  <url>
-    <loc>https://phanstiellab.github.io/plotgardener/reference/plotHicSquare.html</loc>
-  </url>
-  <url>
-    <loc>https://phanstiellab.github.io/plotgardener/reference/plotHicTriangle.html</loc>
-  </url>
-  <url>
-    <loc>https://phanstiellab.github.io/plotgardener/reference/plotIdeogram.html</loc>
-  </url>
-  <url>
-    <loc>https://phanstiellab.github.io/plotgardener/reference/plotLegend.html</loc>
-  </url>
-  <url>
-    <loc>https://phanstiellab.github.io/plotgardener/reference/plotManhattan.html</loc>
-  </url>
-  <url>
-    <loc>https://phanstiellab.github.io/plotgardener/reference/plotMultiSignal.html</loc>
-  </url>
-  <url>
-    <loc>https://phanstiellab.github.io/plotgardener/reference/plotPairs.html</loc>
-  </url>
-  <url>
-    <loc>https://phanstiellab.github.io/plotgardener/reference/plotPairsArches.html</loc>
-  </url>
-  <url>
-    <loc>https://phanstiellab.github.io/plotgardener/reference/plotPolygon.html</loc>
-  </url>
-  <url>
-    <loc>https://phanstiellab.github.io/plotgardener/reference/plotRanges.html</loc>
-  </url>
-  <url>
-    <loc>https://phanstiellab.github.io/plotgardener/reference/plotRaster.html</loc>
-  </url>
-  <url>
-    <loc>https://phanstiellab.github.io/plotgardener/reference/plotRect.html</loc>
-  </url>
-  <url>
-    <loc>https://phanstiellab.github.io/plotgardener/reference/plotSegments.html</loc>
-  </url>
-  <url>
-    <loc>https://phanstiellab.github.io/plotgardener/reference/plotSignal.html</loc>
-  </url>
-  <url>
-    <loc>https://phanstiellab.github.io/plotgardener/reference/plotText.html</loc>
-  </url>
-  <url>
-    <loc>https://phanstiellab.github.io/plotgardener/reference/plotTranscripts.html</loc>
-  </url>
-  <url>
-    <loc>https://phanstiellab.github.io/plotgardener/reference/plotgardener.html</loc>
-  </url>
-  <url>
-    <loc>https://phanstiellab.github.io/plotgardener/reference/readBigwig.html</loc>
-  </url>
-  <url>
-    <loc>https://phanstiellab.github.io/plotgardener/reference/readHic.html</loc>
-  </url>
+<urlset xmlns = 'http://www.sitemaps.org/schemas/sitemap/0.9'>
+<url><loc>https://phanstiellab.github.io/plotgardener/404.html</loc></url>
+<url><loc>https://phanstiellab.github.io/plotgardener/LICENSE-text.html</loc></url>
+<url><loc>https://phanstiellab.github.io/plotgardener/LICENSE.html</loc></url>
+<url><loc>https://phanstiellab.github.io/plotgardener/articles/guides/aesthetics.html</loc></url>
+<url><loc>https://phanstiellab.github.io/plotgardener/articles/guides/annotations.html</loc></url>
+<url><loc>https://phanstiellab.github.io/plotgardener/articles/guides/bioconductor_integration.html</loc></url>
+<url><loc>https://phanstiellab.github.io/plotgardener/articles/guides/ideograms_and_shapes.html</loc></url>
+<url><loc>https://phanstiellab.github.io/plotgardener/articles/guides/incorporating_ggplots.html</loc></url>
+<url><loc>https://phanstiellab.github.io/plotgardener/articles/guides/our_philosophy.html</loc></url>
+<url><loc>https://phanstiellab.github.io/plotgardener/articles/guides/plotgardenerUI.html</loc></url>
+<url><loc>https://phanstiellab.github.io/plotgardener/articles/guides/plotgardener_meta_functions.html</loc></url>
+<url><loc>https://phanstiellab.github.io/plotgardener/articles/guides/plotgardener_page.html</loc></url>
+<url><loc>https://phanstiellab.github.io/plotgardener/articles/guides/plotting_multiomic_data.html</loc></url>
+<url><loc>https://phanstiellab.github.io/plotgardener/articles/guides/reading_data_for_plotgardener.html</loc></url>
+<url><loc>https://phanstiellab.github.io/plotgardener/articles/index.html</loc></url>
+<url><loc>https://phanstiellab.github.io/plotgardener/articles/introduction_to_plotgardener.html</loc></url>
+<url><loc>https://phanstiellab.github.io/plotgardener/authors.html</loc></url>
+<url><loc>https://phanstiellab.github.io/plotgardener/index.html</loc></url>
+<url><loc>https://phanstiellab.github.io/plotgardener/news/index.html</loc></url>
+<url><loc>https://phanstiellab.github.io/plotgardener/reference/annoDomains.html</loc></url>
+<url><loc>https://phanstiellab.github.io/plotgardener/reference/annoGenomeLabel.html</loc></url>
+<url><loc>https://phanstiellab.github.io/plotgardener/reference/annoHeatmapLegend.html</loc></url>
+<url><loc>https://phanstiellab.github.io/plotgardener/reference/annoHighlight.html</loc></url>
+<url><loc>https://phanstiellab.github.io/plotgardener/reference/annoPixels.html</loc></url>
+<url><loc>https://phanstiellab.github.io/plotgardener/reference/annoSegments.html</loc></url>
+<url><loc>https://phanstiellab.github.io/plotgardener/reference/annoText.html</loc></url>
+<url><loc>https://phanstiellab.github.io/plotgardener/reference/annoXaxis.html</loc></url>
+<url><loc>https://phanstiellab.github.io/plotgardener/reference/annoYaxis.html</loc></url>
+<url><loc>https://phanstiellab.github.io/plotgardener/reference/annoZoomLines.html</loc></url>
+<url><loc>https://phanstiellab.github.io/plotgardener/reference/assembly.html</loc></url>
+<url><loc>https://phanstiellab.github.io/plotgardener/reference/c.html</loc></url>
+<url><loc>https://phanstiellab.github.io/plotgardener/reference/calcSignalRange.html</loc></url>
+<url><loc>https://phanstiellab.github.io/plotgardener/reference/colorby.html</loc></url>
+<url><loc>https://phanstiellab.github.io/plotgardener/reference/defaultPackages.html</loc></url>
+<url><loc>https://phanstiellab.github.io/plotgardener/reference/dot-checkCool.html</loc></url>
+<url><loc>https://phanstiellab.github.io/plotgardener/reference/dot-checkCoolErrors.html</loc></url>
+<url><loc>https://phanstiellab.github.io/plotgardener/reference/dot-coolAutoResolution.html</loc></url>
+<url><loc>https://phanstiellab.github.io/plotgardener/reference/dot-coolRegion.html</loc></url>
+<url><loc>https://phanstiellab.github.io/plotgardener/reference/dot-pullBinChunks.html</loc></url>
+<url><loc>https://phanstiellab.github.io/plotgardener/reference/genomes.html</loc></url>
+<url><loc>https://phanstiellab.github.io/plotgardener/reference/index.html</loc></url>
+<url><loc>https://phanstiellab.github.io/plotgardener/reference/mapColors.html</loc></url>
+<url><loc>https://phanstiellab.github.io/plotgardener/reference/pageCreate.html</loc></url>
+<url><loc>https://phanstiellab.github.io/plotgardener/reference/pageGuideHide.html</loc></url>
+<url><loc>https://phanstiellab.github.io/plotgardener/reference/pageGuideHorizontal.html</loc></url>
+<url><loc>https://phanstiellab.github.io/plotgardener/reference/pageGuideShow.html</loc></url>
+<url><loc>https://phanstiellab.github.io/plotgardener/reference/pageGuideVertical.html</loc></url>
+<url><loc>https://phanstiellab.github.io/plotgardener/reference/pageLayoutCol.html</loc></url>
+<url><loc>https://phanstiellab.github.io/plotgardener/reference/pageLayoutRow.html</loc></url>
+<url><loc>https://phanstiellab.github.io/plotgardener/reference/pagePlotPlace.html</loc></url>
+<url><loc>https://phanstiellab.github.io/plotgardener/reference/pagePlotRemove.html</loc></url>
+<url><loc>https://phanstiellab.github.io/plotgardener/reference/pgParams.html</loc></url>
+<url><loc>https://phanstiellab.github.io/plotgardener/reference/plotCircle.html</loc></url>
+<url><loc>https://phanstiellab.github.io/plotgardener/reference/plotGG.html</loc></url>
+<url><loc>https://phanstiellab.github.io/plotgardener/reference/plotGenes.html</loc></url>
+<url><loc>https://phanstiellab.github.io/plotgardener/reference/plotGenomeLabel.html</loc></url>
+<url><loc>https://phanstiellab.github.io/plotgardener/reference/plotHicRectangle.html</loc></url>
+<url><loc>https://phanstiellab.github.io/plotgardener/reference/plotHicSquare.html</loc></url>
+<url><loc>https://phanstiellab.github.io/plotgardener/reference/plotHicTriangle.html</loc></url>
+<url><loc>https://phanstiellab.github.io/plotgardener/reference/plotIdeogram.html</loc></url>
+<url><loc>https://phanstiellab.github.io/plotgardener/reference/plotLegend.html</loc></url>
+<url><loc>https://phanstiellab.github.io/plotgardener/reference/plotManhattan.html</loc></url>
+<url><loc>https://phanstiellab.github.io/plotgardener/reference/plotMultiSignal.html</loc></url>
+<url><loc>https://phanstiellab.github.io/plotgardener/reference/plotPairs.html</loc></url>
+<url><loc>https://phanstiellab.github.io/plotgardener/reference/plotPairsArches.html</loc></url>
+<url><loc>https://phanstiellab.github.io/plotgardener/reference/plotPolygon.html</loc></url>
+<url><loc>https://phanstiellab.github.io/plotgardener/reference/plotRanges.html</loc></url>
+<url><loc>https://phanstiellab.github.io/plotgardener/reference/plotRaster.html</loc></url>
+<url><loc>https://phanstiellab.github.io/plotgardener/reference/plotRect.html</loc></url>
+<url><loc>https://phanstiellab.github.io/plotgardener/reference/plotSegments.html</loc></url>
+<url><loc>https://phanstiellab.github.io/plotgardener/reference/plotSignal.html</loc></url>
+<url><loc>https://phanstiellab.github.io/plotgardener/reference/plotText.html</loc></url>
+<url><loc>https://phanstiellab.github.io/plotgardener/reference/plotTranscripts.html</loc></url>
+<url><loc>https://phanstiellab.github.io/plotgardener/reference/plotgardener.html</loc></url>
+<url><loc>https://phanstiellab.github.io/plotgardener/reference/readBigwig.html</loc></url>
+<url><loc>https://phanstiellab.github.io/plotgardener/reference/readCool.html</loc></url>
+<url><loc>https://phanstiellab.github.io/plotgardener/reference/readCoolBpResolutions.html</loc></url>
+<url><loc>https://phanstiellab.github.io/plotgardener/reference/readCoolChroms.html</loc></url>
+<url><loc>https://phanstiellab.github.io/plotgardener/reference/readCoolNorms.html</loc></url>
+<url><loc>https://phanstiellab.github.io/plotgardener/reference/readHic.html</loc></url>
 </urlset>
+
