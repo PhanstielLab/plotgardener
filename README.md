@@ -28,6 +28,15 @@ data, arrangement into multi-omic layouts, and survey plotting for
 quickly viewing data across the genome. Check out our `vignettes` for
 detailed examples and suggested use cases!
 
+## ✨ New: plotgardenerUI
+
+**No R required.** [plotgardenerUI](https://github.com/rishabhsvemuri/pgUI)
+is a cross-platform desktop app that brings `plotgardener`'s full
+functionality to a point-and-click interface — no programming experience
+needed. Build, preview, and export publication-quality genomic figures, then
+copy the generated R script into any IDE to keep going.
+[Learn more →](articles/guides/plotgardenerUI.html)
+
 ## Citation
 
 To cite `plotgardener` in publications use:
