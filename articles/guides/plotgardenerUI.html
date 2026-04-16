@@ -129,20 +129,20 @@
 
     
     
-<p>Introducing plotgardenerUI. We’re excited to announce our new graphic
-user interface (GUI) for plotgardener. plotgardenerUI is our new
+<p>We’re excited to announce our new graphic user interface (GUI) for
+<code>plotgardener</code>! <code>plotgardenerUI</code> is our new
 cross-platform desktop app that brings the full functionality of
-plotgardener to a point-and-click interface, so researchers and
-clinicians can build publication-quality genomic figures with zero
-programming experience. Powered by Electron, React, and a live parser
-that stays in sync with the R package automatically.</p>
+<code>plotgardener</code> to a point-and-click interface, so researchers
+can build publication-quality genomic figures with zero programming
+experience. Powered by <code>Electron</code>, <code>React</code>, and a
+live parser that stays in sync with the R package automatically.</p>
 <div class="section level2">
 <h2 id="publication-quality-genomic-figures--no-code-required-">Publication-quality genomic figures. No code required.<a class="anchor" aria-label="anchor" href="#publication-quality-genomic-figures--no-code-required-"></a>
 </h2>
 <p><img src="../../reference/figures/plotgardenerUI-Figure.png"></p>
 </div>
 <div class="section level2">
-<h2 id="what-is-plotgardenerui">What is plotgardenerUI?<a class="anchor" aria-label="anchor" href="#what-is-plotgardenerui"></a>
+<h2 id="what-is-plotgardenerui">What is <code>plotgardenerUI</code>?<a class="anchor" aria-label="anchor" href="#what-is-plotgardenerui"></a>
 </h2>
 <p><code>plotgardener</code> is an R/Bioconductor package for building
 flexible, multi-panel, publication-quality genomic visualizations. It
@@ -150,21 +150,23 @@ has been downloaded over a thousand times and cited in over 100 papers,
 but using it requires proficiency in R, package management, and the
 command line. For many biologists, that can be a significant
 barrier.</p>
-<p>plotgardenerUI is a cross-platform desktop application that wraps the
-plotgardener R package in a graphical interface, making its full feature
-set available in a no-code environment. Users can add and configure Hi-C
-contact maps, signal tracks, gene models, genome labels, and more, all
-through point-and-click menus. Users can preview a live rendering of
-their figure as they work, and when the figure is ready, the app
-displays the underlying R script so that advanced users can copy and
-extend it further in any IDE.</p>
+<p><code>plotgardenerUI</code> is a cross-platform desktop application
+that wraps the <code>plotgardener</code> R package in a graphical
+interface, making its full feature set available in a no-code
+environment. Users can add and configure Hi-C contact maps, signal
+tracks, gene models, genome labels, and more, all through
+point-and-click menus. Users can preview a live rendering of their
+figure as they work, and when the figure is ready, the app displays the
+underlying R script so that advanced users can copy and extend it
+further in any IDE.</p>
 </div>
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
-<p>plotgardenerUI is distributed as a single <code>.dmg</code> file that
-bundles all prerequisites in one desktop application, no R installation
-or terminal setup required. To get started:</p>
+<p><code>plotgardenerUI</code> is distributed as a single
+<code>.dmg</code> file that bundles all prerequisites in one desktop
+application, no R installation or terminal setup required. To get
+started:</p>
 <ol style="list-style-type: decimal">
 <li>Download the latest <code>.dmg</code> from <a href="https://github.com/rishabhsvemuri/pgUI" class="external-link">GitHub</a> (Windows,
 Mac)</li>
@@ -196,17 +198,19 @@ in the always-open preview pane.</p>
 <div class="section level2">
 <h2 id="under-the-hood">Under the hood<a class="anchor" aria-label="anchor" href="#under-the-hood"></a>
 </h2>
-<p>plotgardenerUI is built on Electron and comprises three layers:</p>
+<p><code>plotgardenerUI</code> is built on <code>Electron</code> and
+comprises three layers:</p>
 <ul>
-<li><p><strong>Frontend (React):</strong> Renders all user-facing tabs
-and form elements, dynamically populated based on the selected
-plotgardener function.</p></li>
-<li><p><strong>Backend (Node.js):</strong> Manages all parameter inputs,
-maintains panel state across additions and edits, compiles the final R
-script, and returns the PDF output to the preview pane.</p></li>
-<li><p><strong>Parser (Python):</strong> Parses the live plotgardener R
-package source (functions, parameters, and documentation) into
-structured JSON. This means the interface stays automatically
+<li><p><strong>Frontend (<code>React</code>):</strong> Renders all
+user-facing tabs and form elements, dynamically populated based on the
+selected plotgardener function.</p></li>
+<li><p><strong>Backend (<code>Node.js</code>):</strong> Manages all
+parameter inputs, maintains panel state across additions and edits,
+compiles the final R script, and returns the PDF output to the preview
+pane.</p></li>
+<li><p><strong>Parser (<code>Python</code>):</strong> Parses the live
+plotgardener R package source (functions, parameters, and documentation)
+into structured JSON. This means the interface stays automatically
 synchronized with any updates to the package, with no manual maintenance
 required.</p></li>
 </ul>
@@ -215,9 +219,11 @@ required.</p></li>
 <h2 id="source-code-documentation">Source code &amp; documentation<a class="anchor" aria-label="anchor" href="#source-code-documentation"></a>
 </h2>
 <ul>
-<li>plotgardenerUI source: <a href="https://github.com/rishabhsvemuri/pgUI" class="external-link">github.com/rishabhsvemuri/pgUI</a>
+<li>
+<code>plotgardenerUI</code> source: <a href="https://github.com/rishabhsvemuri/pgUI" class="external-link">github.com/rishabhsvemuri/pgUI</a>
 </li>
-<li>plotgardener R package docs: <a href="https://phanstiellab.github.io/plotgardener">phanstiellab.github.io/plotgardener</a>
+<li>
+<code>plotgardener</code> R package docs: <a href="https://phanstiellab.github.io/plotgardener">phanstiellab.github.io/plotgardener</a>
 </li>
 </ul>
 </div>
