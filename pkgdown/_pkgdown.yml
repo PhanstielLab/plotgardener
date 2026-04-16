@@ -102,7 +102,13 @@ reference:
   - subtitle: "External"
   - contents:
       - plotGG
-
+  - title: "Internal"
+    contents:
+      - .checkCool
+      - .checkCoolErrors
+      - .coolAutoResolution
+      - .coolRegion
+      - .pullBinChunks    
   - title: "Annotation functions"
     contents:
       - starts_with("anno")
