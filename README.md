@@ -35,7 +35,7 @@ is a cross-platform desktop app that brings `plotgardener`'s full
 functionality to a point-and-click interface — no programming experience
 needed. Build, preview, and export publication-quality genomic figures, then
 copy the generated R script into any IDE to keep going.
-[Learn more →](articles/guides/plotgardenerUI.html)
+[Learn more →](vignettes/guides/plotgardenerUI.html)
 
 ## Citation
 
