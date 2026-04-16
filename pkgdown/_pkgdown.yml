@@ -55,6 +55,8 @@ navbar:
           href: articles/guides/aesthetics.html
     - text: Reference
       href: reference/index.html
+    - text: plotgardenerUI
+      href: articles/guides/plotgardenerUI.html
   right:
     - icon: fab fa-github fa-lg
       href: https://github.com/PhanstielLab/plotgardener
