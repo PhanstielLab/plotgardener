@@ -217,20 +217,17 @@ format with the following columns: <code>chrom</code>, <code>altchrom</code>,
 <span class="r-in"><span><span class="va">mcoolFile</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">"LEUK_HEK_PJA27_inter_30.mcool"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/download.file.html" class="external-link">download.file</a></span><span class="op">(</span>url <span class="op">=</span> <span class="st">"https://zenodo.org/records/10906240/files/LEUK_HEK_PJA27_inter_30.mcool?download=1"</span>,</span></span>
 <span class="r-in"><span>    destfile <span class="op">=</span> <span class="va">mcoolFile</span>, mode <span class="op">=</span> <span class="st">"wb"</span><span class="op">)</span></span></span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>downloaded length 46507016 != reported length 55194561</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>URL 'https://zenodo.org/records/10906240/files/LEUK_HEK_PJA27_inter_30.mcool?download=1': Timeout of 60 seconds was reached</span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in .rs.downloadFile(url = "https://zenodo.org/records/10906240/files/LEUK_HEK_PJA27_inter_30.mcool?download=1",     destfile = mcoolFile, mode = "wb"):</span> download from 'https://zenodo.org/records/10906240/files/LEUK_HEK_PJA27_inter_30.mcool?download=1' failed</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">## Read in region `chr2:1000000-5000000` at 100Kb resolution</span></span></span>
 <span class="r-in"><span><span class="va">mcoolData_100Kb</span> <span class="op">&lt;-</span> <span class="fu">readCool</span><span class="op">(</span>file <span class="op">=</span> <span class="va">mcoolFile</span>, chrom <span class="op">=</span> <span class="st">"2"</span>,</span></span>
 <span class="r-in"><span>                            chromstart <span class="op">=</span> <span class="fl">1000000</span>, chromend <span class="op">=</span> <span class="fl">5000000</span>,</span></span>
 <span class="r-in"><span>                            resolution <span class="op">=</span> <span class="fl">100000</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in H5Fopen(file, flags = flags, fapl = fapl, native = native):</span> HDF5. File accessibility. Unable to open file.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Read in .mcool file with NONE normalization at 1e+05 BP resolution.</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">## Read in data for chr2 at 2500Kb resolution </span></span></span>
 <span class="r-in"><span><span class="va">mcoolData_2500Kb</span> <span class="op">&lt;-</span> <span class="fu">readCool</span><span class="op">(</span>file <span class="op">=</span> <span class="va">mcoolFile</span>, chrom <span class="op">=</span> <span class="st">"2"</span>,</span></span>
 <span class="r-in"><span>                             resolution <span class="op">=</span> <span class="fl">2500000</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in H5Fopen(file, flags = flags, fapl = fapl, native = native):</span> HDF5. File accessibility. Unable to open file.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Read in .mcool file with NONE normalization at 2500000 BP resolution.</span>
 </code></pre></div>
     </div>
   </div>
