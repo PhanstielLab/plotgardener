@@ -57,7 +57,7 @@
   <a href="../../articles/introduction_to_plotgardener.html">Introduction to plotgardener</a>
 </li>
 <li>
-  <a href="../../articles/guides/plotgardenerApp.html">Plotgardener App</a>
+  <a href="../../articles/guides/plotgardenerApp.html">The Plotgardener App</a>
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -144,7 +144,7 @@ synchronized with the underlying R package.</p>
 <p><img src="../../reference/figures/plotgardenerApp-Figure.png"></p>
 </div>
 <div class="section level2">
-<h2 id="what-is-the-plotgardener-app">What is <code>The Plotgardener App</code>?<a class="anchor" aria-label="anchor" href="#what-is-the-plotgardener-app"></a>
+<h2 id="what-is-the-plotgardener-app">What is the Plotgardener App?<a class="anchor" aria-label="anchor" href="#what-is-the-plotgardener-app"></a>
 </h2>
 <p><code>plotgardener</code> is an R/Bioconductor package for building
 flexible, multi-panel, publication-quality genomic visualizations. It
@@ -152,24 +152,28 @@ has been downloaded over a thousand times and cited in over 100 papers,
 but using it requires proficiency in R, package management, and the
 command line. For many biologists, that can be a significant
 barrier.</p>
-<p><code>The Plotgardener App</code> is a macOS desktop application that
-wraps the <code>plotgardener</code> R package in a graphical interface,
-making its full feature set available in a no-code environment. Users
-can add and configure Hi-C contact maps, signal tracks, gene models,
-genome labels, and more, all through point-and-click menus. Users can
-preview a live rendering of their figure as they work, and when the
-figure is ready, the app displays the underlying R script so that
-advanced users can copy and extend it further in any IDE.</p>
+<p>The Plotgardener App is a macOS desktop application that wraps the
+<code>plotgardener</code> R package in a graphical interface, making its
+full feature set available in a no-code environment. Users can add and
+configure Hi-C contact maps, signal tracks, gene models, genome labels,
+and more, all through point-and-click menus. Users can preview a live
+rendering of their figure as they work, and when the figure is ready,
+the app displays the underlying R script so that advanced users can copy
+and extend it further in any IDE.</p>
 </div>
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
-<p><code>The Plotgardener App</code> is distributed as a single
-<code>.dmg</code> file that bundles all prerequisites in one desktop
-application for simple installation and usage. To get started:</p>
-<p>1.  Download the latest <code>.dmg</code>     <a href="https://github.com/rishabhsvemuri/pgUI/releases/download/v1.0.0/plotgardener-1.0.0.dmg" class="external-link">here</a>
-2.  Open the .dmg file and move the application into the Applications
-folder 3.  Open the app and start building</p>
+<p>The Plotgardener App is distributed as a single <code>.dmg</code>
+file that bundles all prerequisites in one desktop application for
+simple installation and usage. To get started:</p>
+<ol style="list-style-type: decimal">
+<li>Download the latest <code>.dmg</code> <a href="https://github.com/rishabhsvemuri/pgUI/releases/download/v1.0.0/plotgardener-1.0.0.dmg" class="external-link">here</a>
+</li>
+<li>Open the .dmg file and move the application into the Applications
+folder</li>
+<li>Open the app and start building</li>
+</ol>
 <p>The source code is open and available at: <a href="https://github.com/rishabhsvemuri/pgUI" class="external-link">github.com/rishabhsvemuri/pgUI</a></p>
 </div>
 <div class="section level2">
@@ -195,8 +199,8 @@ in the always-open preview pane.</p>
 <div class="section level2">
 <h2 id="under-the-hood">Under the hood<a class="anchor" aria-label="anchor" href="#under-the-hood"></a>
 </h2>
-<p><code>The Plotgardener App</code> is built on <code>Electron</code>
-and comprises three layers:</p>
+<p>The Plotgardener App is built on <code>Electron</code> and comprises
+three layers:</p>
 <ul>
 <li><p><strong>Frontend (<code>React</code>):</strong> Renders all
 user-facing tabs and form elements, dynamically populated based on the
@@ -206,18 +210,17 @@ parameter inputs, maintains panel state across additions and edits,
 compiles the final R script, and returns the PDF output to the preview
 pane.</p></li>
 <li><p><strong>Parser (<code>Python</code>):</strong> Parses the live
-plotgardener R package source (functions, parameters, and documentation)
-into structured JSON. This means the interface stays automatically
-synchronized with any updates to the package, with no manual maintenance
-required.</p></li>
+<code>plotgardener</code> R package source (functions, parameters, and
+documentation) into structured JSON. This means the interface stays
+automatically synchronized with any updates to the package, with no
+manual maintenance required.</p></li>
 </ul>
 </div>
 <div class="section level2">
 <h2 id="source-code-documentation">Source code &amp; documentation<a class="anchor" aria-label="anchor" href="#source-code-documentation"></a>
 </h2>
 <ul>
-<li>
-<code>The Plotgardener App</code> source: <a href="https://github.com/rishabhsvemuri/pgUI" class="external-link">github.com/rishabhsvemuri/pgUI</a>
+<li>The Plotgardener App source: <a href="https://github.com/rishabhsvemuri/pgUI" class="external-link">github.com/rishabhsvemuri/pgUI</a>
 </li>
 <li>
 <code>plotgardener</code> R package docs: <a href="https://phanstiellab.github.io/plotgardener">phanstiellab.github.io/plotgardener</a>
