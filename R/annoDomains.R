@@ -17,7 +17,7 @@
 #' @param half Character value specifying which half of hic plots
 #' to annotate. Triangle Hi-C plots will always default to the entirety of
 #' the triangular plot. Default value is \code{half = "inherit"}. Options are:
-#' \itemize{
+#' \describe{
 #' \item{\code{"inherit"}: }{Domains will be annotated on the \code{half}
 #' inherited by the input Hi-C plot.}
 #' \item{\code{"both"}: }{Domains will be annotated on both halves of the

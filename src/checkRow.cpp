@@ -16,10 +16,10 @@ int rowNum(NumericVector v, NumericMatrix x, int maxRows, int rowCol, double wig
     for (int row = 0; row < dfRows; row++){
       NumericVector v = x(row,_);
 
-      if (((v[rowCol] == j) &
-          (((start >= v[0]) & (start <= v[1])) |
-          ((stop >= v[0]) & (stop <= v[1])) |
-          ((start <= v[0]) & (stop >= v[1]))))){
+      if (((v[rowCol] == j) &&
+          (((start >= v[0]) && (start <= v[1])) ||
+          ((stop >= v[0]) && (stop <= v[1])) ||
+          ((start <= v[0]) && (stop >= v[1]))))){
 
         rowCounter++;
       }
