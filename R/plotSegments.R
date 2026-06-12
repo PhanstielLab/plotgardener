@@ -44,9 +44,9 @@
 #' @param lineend A character value specifying line end style.
 #' Default value is \code{lineend = "butt"}. Options are:
 #' \describe{
-#' \item{\code{"round"}: Segment ends are rounded.}
-#' \item{\code{"butt"}: Segment ends end exactly where ended.}
-#' \item{\code{"square"}: Segment ends are squared.}
+#' \item{\code{"round"}: }{Segment ends are rounded.}
+#' \item{\code{"butt"}: }{Segment ends end exactly where ended.}
+#' \item{\code{"square"}: }{Segment ends are squared.}
 #' }
 #' @param linejoin A character value specifying line join style.
 #' Default value is \code{linejoin = "mitre"}. Options are:

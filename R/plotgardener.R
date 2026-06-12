@@ -68,3 +68,5 @@
 #' @importFrom GenomeInfoDb keepStandardChromosomes
 #' @importFrom GenomicRanges makeGRangesFromDataFrame
 "_PACKAGE"
+
+utils::globalVariables(c("name", "width", "strand"))
