@@ -81,7 +81,7 @@ test_that("readHic", {
 })
 
 test_that("readCool", {
-    skip_if_offline()
+    skip_on_ci()
 
     ## .cool file
     coolFile <- file.path(tempdir(), "Rao2014-IMR90-MboI-allreps-filtered.1000kb.cool")
