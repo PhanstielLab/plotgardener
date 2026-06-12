@@ -3,6 +3,7 @@
 <!-- badges: start -->
 ![GitHub R package version](https://img.shields.io/github/r-package/v/PhanstielLab/plotgardener?style=plastic)
 [![Bioc release status](http://www.bioconductor.org/shields/build/release/bioc/plotgardener.svg)](https://bioconductor.org/checkResults/release/bioc-LATEST/plotgardener/)
+[![R-CMD-check-bioc-devel](https://github.com/PhanstielLab/plotgardener/actions/workflows/check-bioc-devel.yml/badge.svg)](https://github.com/PhanstielLab/plotgardener/actions/workflows/check-bioc-devel.yml)
 <!-- badges: end -->
 
 ## Overview
