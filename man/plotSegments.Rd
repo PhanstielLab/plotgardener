@@ -56,7 +56,7 @@ Default value is \code{lty = 1}.}
 
 \item{lineend}{A character value specifying line end style.
 Default value is \code{lineend = "butt"}. Options are:
-\itemize{
+\describe{
 \item{\code{"round"}: Segment ends are rounded.}
 \item{\code{"butt"}: Segment ends end exactly where ended.}
 \item{\code{"square"}: Segment ends are squared.}
@@ -64,7 +64,7 @@ Default value is \code{lineend = "butt"}. Options are:
 
 \item{linejoin}{A character value specifying line join style.
 Default value is \code{linejoin = "mitre"}. Options are:
-\itemize{
+\describe{
 \item{\code{"round"}: }{Line joins are rounded.}
 \item{\code{"mitre"}: }{Line joins are sharp corners.}
 \item{\code{"bevel"}: }{Line joins are flattened corners.}

@@ -26,7 +26,7 @@ positions.}
 
 \item{type}{Character value specifying type of annotation.
 Default value is \code{type = "box"}. Options are:
-\itemize{
+\describe{
 \item{\code{"box"}: }{Boxes are drawn around each pixel.}
 \item{\code{"circle"}: }{Circles are drawn around each pixel.}
 \item{\code{"arrow"}: }{Arrows are drawn pointing to each pixel.}
@@ -35,7 +35,7 @@ Default value is \code{type = "box"}. Options are:
 \item{half}{Character value specifying which half of hic plots
 to annotate. Triangle Hi-C plots will always default to the entirety of
 the triangular plot. Default value is \code{half = "inherit"}. Options are:
-\itemize{
+\describe{
 \item{\code{"inherit"}: }{Pixels will be annotated on the \code{half}
 inherited by the input Hi-C plot.}
 \item{\code{"both"}: }{Pixels will be annotated on both halves of the

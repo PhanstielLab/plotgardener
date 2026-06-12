@@ -27,7 +27,7 @@ If not logical, must be the same length as the \code{at} argument.}
 
 \item{main}{A logical value indicating whether to draw the y-axis at
 the left of the plot. Default value is \code{main = TRUE}. Options are:
-\itemize{
+\describe{
 \item{\code{TRUE}: }{y-axis is drawn at the left of the plot.}
 \item{\code{FALSE}: }{y-axis is drawn at the right of the plot.}
 }}

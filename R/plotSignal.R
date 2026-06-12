@@ -77,7 +77,7 @@
 #' Default value is \code{baseline.lwd = 1}.
 #' @param orientation A string specifying signal track orientation.
 #' Default value is \code{orientation = "h"}. Options are:
-#' \itemize{
+#' \describe{
 #' \item{\code{"v"}: }{Vertical signal track orientation.}
 #' \item{\code{"h"}: }{Horizontal signal track orientation.}
 #' }

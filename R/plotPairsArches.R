@@ -42,7 +42,7 @@
 #' Default value is \code{assembly = "hg38"}.
 #' @param style Character value describing the style of arches.
 #' Default value is \code{style = "2D"}. Options are:
-#' \itemize{
+#' \describe{
 #' \item{\code{"2D"}: }{Arches will be drawn in a 2-dimensional style.}
 #' \item{\code{"3D"}: }{Arches will be drawn in a 3-dimensional style.}
 #' }
@@ -60,7 +60,7 @@
 #' \link[plotgardener]{colorby} object specifying the color of the lines
 #' outlining arches. Default value is \code{linecolor = NA}.
 #' Special options include:
-#' \itemize{
+#' \describe{
 #' \item{\code{NA}: }{No line color.}
 #' \item{\code{"fill"}: }{Same color as \code{fill}.}
 #' }

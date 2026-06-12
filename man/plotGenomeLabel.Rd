@@ -54,7 +54,7 @@ and coordinate labels. Default value is \code{margin = unit(1, "mm")},}
 
 \item{scale}{A character value indicating the scale of the coordinates
 along the genome label. Default value is \code{scale = "bp"}. Options are:
-\itemize{
+\describe{
 \item{\code{"bp"}: }{base pairs.}
 \item{\code{"Kb"}: }{kilobase pairs. 1 kilobase pair is equal to
 1000 base pairs.}
@@ -76,7 +76,7 @@ Default value is \code{boxWidth = 0.5}.}
 add genome label. Sequence information will not be displayed along a y-axis.
 Default value is \code{axis = "x"}.
 Options are:
-\itemize{
+\describe{
 \item{\code{"x"}: }{Genome label will be plotted along the x-axis.}
 \item{\code{"y"}: }{Genome label will be plotted along the y-axis.
 This is typically used for a square Hi-C plot made with

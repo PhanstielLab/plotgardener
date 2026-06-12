@@ -54,7 +54,7 @@ paired range elements. Default value is \code{fill = "#1f4297"}.}
 \link[plotgardener]{colorby} object specifying the color of the lines
 outlining paired range elements. Default value is \code{linecolor = NA}.
 Special options include:
-\itemize{
+\describe{
 \item{\code{NA}: }{No line color.}
 \item{\code{"fill"}: }{Same color as \code{fill}.}
 }}

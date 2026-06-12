@@ -41,7 +41,7 @@ plotManhattan(
 \item{data}{Data to be plotted, as a character value specifying a
 file path of GWAS data, a dataframe, or a \link[GenomicRanges]{GRanges}
 object. Each of these data types must have the following columns:
-\itemize{
+\describe{
 \item{\code{"chrom"}: }{Chromosome names. This column must be a character.}
 \item{\code{"pos"}: }{Chromosomal position. This column must be
 an integer or numeric.}

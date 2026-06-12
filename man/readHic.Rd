@@ -50,7 +50,7 @@ the size of the region.}
 
 \item{res_scale}{A character value specifying the resolution scale.
 Default value is \code{res_scale = "BP"}. Options are:
-\itemize{
+\describe{
 \item{\code{"BP"}: }{Base pairs.}
 \item{\code{"FRAG"}: }{Fragments.}
 }}
@@ -64,7 +64,7 @@ Default value is \code{norm = "KR"}.}
 
 \item{matrix}{Character value indicating the type of matrix to output.
 Default value is \code{matrix = "observed"}. Options are:
-\itemize{
+\describe{
 \item{\code{"observed"}: }{Observed counts.}
 \item{\code{"oe"}: }{Observed/expected counts.}
 \item{\code{"log2oe"}: }{Log2 transformed observed/expected counts.}
