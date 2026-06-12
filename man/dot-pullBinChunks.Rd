@@ -38,5 +38,5 @@ Read in data for a bin chunk
 }
 
 \value{
-An integer vector of pixel indices corresponding to interactions within the specified bin chunk, or \\code{NA} if none are found.
+An integer vector of pixel indices corresponding to interactions within the specified bin chunk, or \code{NA} if none are found.
 }
