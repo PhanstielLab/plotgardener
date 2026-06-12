@@ -28,7 +28,7 @@
 #' @param orientation Character value indicating the orientation
 #' of the ideogram. Default value is \code{orientation = "h"}.
 #' Options are:
-#' \itemize{
+#' \describe{
 #' \item{\code{"v"}: }{Vertical ideogram orientation.}
 #' \item{\code{"h"}: }{Horizontal ideogram orientation.}
 #' }

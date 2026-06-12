@@ -69,7 +69,7 @@
 #' @param labels A character value describing the format of
 #' transcript text labels. Default value is \code{labels = "trancript"}.
 #' Options are:
-#' \itemize{
+#' \describe{
 #' \item{\code{NULL}: }{No labels.}
 #' \item{\code{"transcript"}: }{Transcript name labels.}
 #' \item{\code{"gene"}: }{Gene name labels.}

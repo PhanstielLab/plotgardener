@@ -58,7 +58,7 @@ Default value is \code{fill = "#7ecdbb"}.}
 \link[plotgardener]{colorby} object specifying the color of the lines
 outlining range elements. Default value is \code{linecolor = NA}.
 Special options include:
-\itemize{
+\describe{
 \item{\code{NA}: }{No line color.}
 \item{\code{"fill"}: }{Same color as \code{fill}.}
 } .}
@@ -66,7 +66,7 @@ Special options include:
 \item{order}{A character value specifying how to order pileup data
 before assigning rows. Default value is \code{order = "width"}. Options 
 include:
-\itemize{
+\describe{
 \item{\code{"width"}: }{Ordered by decreasing width of elements.}
 \item{\code{"random"}: }{Ordered randomly in each function call.}
 } .}

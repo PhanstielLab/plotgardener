@@ -54,7 +54,7 @@ if giving .hic or .(m)cool file. This value must be found in the .hic or
 \item{matrix}{Character value indicating the type of matrix to output for
 .hic files.
 Default value is \code{matrix = "observed"}. Options are:
-\itemize{
+\describe{
 \item{\code{"observed"}: }{Observed counts.}
 \item{\code{"oe"}: }{Observed/expected counts.}
 \item{\code{"log2oe"}: }{Log2 transformed observed/expected counts.}
@@ -93,7 +93,7 @@ For intrachromosomal plotting, options are \code{"both"}, \code{"top"},
 or \code{"bottom"}. For off-diagonal or interchromosomal plotting,
 options are \code{"top"} or \code{"bottom"}.
 Default value is \code{half = "both"}.
-\itemize{
+\describe{
 \item{\code{"both"}: }{Both diagonal halves.}
 \item{\code{"top"}: }{Half above the diagonal.}
 \item{\code{"bottom"}: }{Half below the diagonal.}

@@ -25,7 +25,7 @@ chromosome is desired.}
 
 \item{strand}{A character value specifying strand.
 Default value is \code{strand = "*"}. Options are:
-\itemize{
+\describe{
 \item{\code{"+"}: }{Plus strand.}
 \item{\code{"-"}: }{Minus strand.}
 \item{\code{"*"}: }{Plus and minus strands.}

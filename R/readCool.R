@@ -1,8 +1,12 @@
 #' Check for .(m)cool file and contents
 #' @author Sarah Parker
-#' 
+#'
 #' @param file Path to .(m)cool file
-#' 
+#'
+#' @return A character string, either \code{".cool"} or \code{".mcool"},
+#'   indicating the file type. Aborts with an error if the file is not a
+#'   valid .(m)cool file.
+#'
 #' @importFrom glue glue glue_collapse
 #' @importFrom rlang abort
 #' @importFrom rhdf5 H5Fis_hdf5 h5ls
@@ -236,6 +240,9 @@ readCoolChroms <- function(file, resolution = NULL){
 #' @param file Path to .(m)cool file
 #' @param chromstart Chromstart of region
 #' @param chromend Chromend of region
+#'
+#' @return A numeric value specifying the automatically determined resolution
+#'   in base pairs.
 .coolAutoResolution <- function(file, chromstart, chromend){
     
     fileResolutions <- readCoolBpResolutions(file)
@@ -300,6 +307,9 @@ readCoolChroms <- function(file, resolution = NULL){
 #' @param file Path to .(m)cool file
 #' @param chrom Chromosome of region; can also be altchromosome
 #' @param resolution Resolution to read chromsome info from
+#'
+#' @return A list of length two containing the chromosome start position (1)
+#'   and the chromosome length.
 .coolRegion <- function(file, chrom, resolution){
     
     chromInfo <- readCoolChroms(file, resolution = resolution)
@@ -319,7 +329,10 @@ readCoolChroms <- function(file, resolution = NULL){
 #' @param end1bin Bin where end1 starts
 #' @param start2bin Bin for chr2 starts
 #' @param end2bin Bin for end2 starts
-#' 
+#'
+#' @return An integer vector of pixel indices corresponding to interactions
+#'   within the specified bin chunk, or \code{NA} if none are found.
+#'
 #' @importFrom rhdf5 h5read
 .pullBinChunks <- function(binChunk, file, bin_offsets, binChunkSize,
                            datasetPath, end1bin,
@@ -357,7 +370,10 @@ readCoolChroms <- function(file, resolution = NULL){
 #' @param altchromend User-inputted alt chromend.
 #' @param norm User-inputted normalization.
 #' @param resolution Resolution, either user-inputted or determined by 'auto'.
-#' 
+#'
+#' @return Called for side effects (input validation). Aborts with an
+#'   informative error if any inputs are invalid.
+#'
 #' @importFrom glue glue
 #' @importFrom rlang abort
 .checkCoolErrors <- function(file, chrom, chromstart, chromend, zrange,

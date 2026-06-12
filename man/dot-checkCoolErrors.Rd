@@ -41,3 +41,7 @@
 \description{
 Error checking function for .(m)cool files
 }
+
+\value{
+Called for side effects (input validation). Aborts with an informative error if any inputs are invalid.
+}

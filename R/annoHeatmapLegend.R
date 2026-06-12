@@ -23,7 +23,7 @@
 #' @param plot Heatmap-style plot object to add heatmap legend for.
 #' @param orientation A string specifying legend orientation.
 #' Default value is \code{orientation = "v"}. Options are:
-#' \itemize{
+#' \describe{
 #' \item{\code{"v"}: }{Vertical legend orientation.}
 #' \item{\code{"h"}: }{Horizontal legend orientation.}
 #' }

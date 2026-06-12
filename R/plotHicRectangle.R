@@ -42,7 +42,7 @@
 #' @param matrix Character value indicating the type of matrix to output for 
 #' .hic files.
 #' Default value is \code{matrix = "observed"}. Options are:
-#' \itemize{
+#' \describe{
 #' \item{\code{"observed"}: }{Observed counts.}
 #' \item{\code{"oe"}: }{Observed/expected counts.}
 #' \item{\code{"log2oe"}: }{Log2 transformed observed/expected counts.}

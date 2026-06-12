@@ -99,7 +99,7 @@ Default value is \code{baseline.lwd = 1}.}
 
 \item{orientation}{A string specifying signal track orientations.
 Default value is \code{orientation = "h"}. Options are:
-\itemize{
+\describe{
 \item{\code{"v"}: }{Vertical signal track orientations, where signal tracks
 will be stacked from left to right.}
 \item{\code{"h"}: }{Horizontal signal track orientations, where signal tracks

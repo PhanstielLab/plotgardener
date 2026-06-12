@@ -15,3 +15,7 @@ Check for .(m)cool file and contents
 \author{
 Sarah Parker
 }
+
+\value{
+A character string, either \code{".cool"} or \code{".mcool"}, indicating the file type. Aborts with an error if the file is not a valid .(m)cool file.
+}
