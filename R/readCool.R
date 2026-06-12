@@ -521,7 +521,8 @@ readCoolChroms <- function(file, resolution = NULL){
 #'                      chromend = 22000000,
 #'                      resolution = 1000000)
 #' 
-#' ## .mcool file
+#' ## .mcool file (large download, skipped in automated checks)
+#' \dontrun{
 #' mcoolFile <- file.path(tempdir(), "LEUK_HEK_PJA27_inter_30.mcool")
 #' download.file(url = "https://zenodo.org/records/10906240/files/LEUK_HEK_PJA27_inter_30.mcool?download=1",
 #'     destfile = mcoolFile, mode = "wb")
@@ -530,10 +531,11 @@ readCoolChroms <- function(file, resolution = NULL){
 #' mcoolData_100Kb <- readCool(file = mcoolFile, chrom = "2",
 #'                             chromstart = 1000000, chromend = 5000000,
 #'                             resolution = 100000)
-#' 
-#' ## Read in data for chr2 at 2500Kb resolution 
+#'
+#' ## Read in data for chr2 at 2500Kb resolution
 #' mcoolData_2500Kb <- readCool(file = mcoolFile, chrom = "2",
 #'                              resolution = 2500000)
+#' }
 #' @seealso \link[plotgardener]{readHic}
 #'
 #' @importFrom rlang inform warn
