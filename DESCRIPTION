@@ -12,7 +12,7 @@ Description:
     the ability to programmatically produce complex, multi-paneled figures. Tailored for
     genomics, plotgardener allows users to visualize large complex genomic datasets and
     provides exquisite control over how plots are placed and arranged on a page. 
-Depends: R (>= 4.1.0)
+Depends: R (>= 4.2.0)
 License: MIT + file LICENSE
 URL: https://phanstiellab.github.io/plotgardener, https://github.com/PhanstielLab/plotgardener
 Encoding: UTF-8
