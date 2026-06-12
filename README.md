@@ -2,7 +2,8 @@
 
 <!-- badges: start -->
 ![GitHub R package version](https://img.shields.io/github/r-package/v/PhanstielLab/plotgardener?style=plastic)
-[![R build status](https://github.com/PhanstielLab/plotgardener/actions/workflows/check-bioc.yml/badge.svg)](https://github.com/PhanstielLab/plotgardener/actions)
+[![Bioc release status](http://www.bioconductor.org/shields/build/release/bioc/plotgardener.svg)](https://bioconductor.org/checkResults/release/bioc-LATEST/plotgardener/)
+[![R-CMD-check-bioc-devel](https://github.com/PhanstielLab/plotgardener/actions/workflows/check-bioc-devel.yml/badge.svg)](https://github.com/PhanstielLab/plotgardener/actions/workflows/check-bioc-devel.yml)
 <!-- badges: end -->
 
 ## Overview
@@ -28,7 +29,7 @@ data, arrangement into multi-omic layouts, and survey plotting for
 quickly viewing data across the genome. Check out our `vignettes` for
 detailed examples and suggested use cases!
 
-## ✨ New: plotgardenerUI
+## ✨ Desktop App Now Available!
 
 **No R required.** [plotgardenerUI](https://github.com/rishabhsvemuri/pgUI)
 is a cross-platform desktop app that brings `plotgardener`'s full

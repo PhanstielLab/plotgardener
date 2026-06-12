@@ -3,7 +3,7 @@ Title: Coordinate-Based Genomic Visualization Package for R
 Version: 1.15.1
 Date: 2024-06-28
 Author: Nicole Kramer [aut, cre], Eric S. Davis [aut], Craig Wenger [aut],
-    Sarah Parker [ctb], Erika Deoudes [art], Michael Love [ctb],
+    Sarah Parker [ctb], JP Flores [ctb], Erika Deoudes [art], Michael Love [ctb],
     Douglas H. Phanstiel [aut, cre, cph]
 Maintainer: Nicole Kramer <nekramer27@gmail.com>,
             Douglas Phanstiel <douglas_phanstiel@med.unc.edu>
