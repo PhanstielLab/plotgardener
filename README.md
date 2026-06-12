@@ -3,7 +3,6 @@
 <!-- badges: start -->
 ![GitHub R package version](https://img.shields.io/github/r-package/v/PhanstielLab/plotgardener?style=plastic)
 [![Bioc release status](http://www.bioconductor.org/shields/build/release/bioc/plotgardener.svg)](https://bioconductor.org/checkResults/release/bioc-LATEST/plotgardener/)
-[![Bioc devel status](http://www.bioconductor.org/shields/build/devel/bioc/plotgardener.svg)](https://bioconductor.org/checkResults/devel/bioc-LATEST/plotgardener/)
 <!-- badges: end -->
 
 ## Overview
