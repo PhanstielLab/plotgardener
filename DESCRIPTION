@@ -17,7 +17,7 @@ Authors@R: c(
     person("Erika", "Deoudes", email = "ed@erikadudes.com", role = "art"),
     person("Michael", "Love", email = "milove@email.unc.edu", role = "ctb"),
     person("Douglas H.", "Phanstiel", email = "douglas_phanstiel@med.unc.edu",
-           role = c("aut", "cre", "cph")))
+           role = c("aut", "cph")))
 Description: 
     Coordinate-based genomic visualization package for R. It grants users
     the ability to programmatically produce complex, multi-paneled figures. Tailored for
