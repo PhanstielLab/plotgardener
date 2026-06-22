@@ -34,9 +34,22 @@
 <li>
   <a href="../articles/introduction_to_plotgardener.html">Introduction to plotgardener</a>
 </li>
-<li>
-  <a href="../articles/guides/plotgardenerUI.html">plotgardenerUI</a>
-</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    The Plotgardener App
+
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu"><li>
+      <a href="../articles/guides/plotgardenerApp_getting_started.html">Getting Started</a>
+    </li>
+    <li>
+      <a href="../articles/guides/plotgardenerApp_installation.html">Install the Plotgardener App</a>
+    </li>
+    <li>
+      <a href="../articles/guides/plotgardenerApp_ui.html">User Interface</a>
+    </li>
+  </ul></li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
@@ -152,12 +165,19 @@ and coordinate labels. Default value is <code>margin = unit(1, "mm")</code>.</p>
 
 <dt id="arg-scale">scale<a class="anchor" aria-label="anchor" href="#arg-scale"></a></dt>
 <dd><p>A character value indicating the scale of the coordinates
-along the genome label. Default value is <code>scale = "bp"</code>. Options are:</p><ul><li><p><code>"bp"</code>: base pairs.</p></li>
-<li><p><code>"Kb"</code>: kilobase pairs. 1 kilobase pair is equal to
-1000 base pairs.</p></li>
-<li><p><code>"Mb"</code>: megabase pairs. 1 megabase pair is equal to
-1000000 base pairs.</p></li>
-</ul></dd>
+along the genome label. Default value is <code>scale = "bp"</code>. Options are:</p><dl><dt><code>"bp"</code>: </dt>
+<dd><p>base pairs.</p></dd>
+
+<dt><code>"Kb"</code>: </dt>
+<dd><p>kilobase pairs. 1 kilobase pair is equal to
+1000 base pairs.</p></dd>
+
+<dt><code>"Mb"</code>: </dt>
+<dd><p>megabase pairs. 1 megabase pair is equal to
+1000000 base pairs.</p></dd>
+
+
+</dl></dd>
 
 
 <dt id="arg-commas">commas<a class="anchor" aria-label="anchor" href="#arg-commas"></a></dt>
@@ -180,11 +200,16 @@ Default value is <code>boxWidth = 0.5</code>.</p></dd>
 <dd><p>A character value indicating along which axis to
 add genome label. Sequence information will not be displayed along a y-axis.
 Default value is <code>axis = "x"</code>.
-Options are:</p><ul><li><p><code>"x"</code>: Genome label will be plotted along the x-axis.</p></li>
-<li><p><code>"y"</code>: Genome label will be plotted along the y-axis.
+Options are:</p><dl><dt><code>"x"</code>: </dt>
+<dd><p>Genome label will be plotted along the x-axis.</p></dd>
+
+<dt><code>"y"</code>: </dt>
+<dd><p>Genome label will be plotted along the y-axis.
 This is typically used for a square Hi-C plot made with
-<code>plotHicSquare</code>.</p></li>
-</ul></dd>
+<code>plotHicSquare</code>.</p></dd>
+
+
+</dl></dd>
 
 
 <dt id="arg-at">at<a class="anchor" aria-label="anchor" href="#arg-at"></a></dt>
@@ -302,7 +327,7 @@ relevant genomic region, placement, and <a href="https://rdrr.io/r/grid/grid.gro
 
 
       <footer><div class="copyright">
-  <p></p><p>Developed by <a href="https://github.com/nekramer" class="external-link">Nicole Kramer</a>.</p>
+  <p></p><p>Developed by <a href="https://github.com/nekramer" class="external-link">Nicole Kramer</a>, <a href="https://github.com/EricSDavis" class="external-link">Eric S. Davis</a>, <a href="https://github.com/cwenger" class="external-link">Craig Wenger</a>, <a href="https://github.com/dphansti" class="external-link">Douglas H. Phanstiel</a>.</p>
 </div>
 
 <div class="pkgdown">

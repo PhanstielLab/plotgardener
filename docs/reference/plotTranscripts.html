@@ -34,9 +34,22 @@
 <li>
   <a href="../articles/introduction_to_plotgardener.html">Introduction to plotgardener</a>
 </li>
-<li>
-  <a href="../articles/guides/plotgardenerUI.html">plotgardenerUI</a>
-</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    The Plotgardener App
+
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu"><li>
+      <a href="../articles/guides/plotgardenerApp_getting_started.html">Getting Started</a>
+    </li>
+    <li>
+      <a href="../articles/guides/plotgardenerApp_installation.html">Install the Plotgardener App</a>
+    </li>
+    <li>
+      <a href="../articles/guides/plotgardenerApp_ui.html">User Interface</a>
+    </li>
+  </ul></li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
@@ -215,12 +228,21 @@ Default value is <code>fontsize = 8</code>.</p></dd>
 <dt id="arg-labels">labels<a class="anchor" aria-label="anchor" href="#arg-labels"></a></dt>
 <dd><p>A character value describing the format of
 transcript text labels. Default value is <code>labels = "trancript"</code>.
-Options are:</p><ul><li><p><code>NULL</code>: No labels.</p></li>
-<li><p><code>"transcript"</code>: Transcript name labels.</p></li>
-<li><p><code>"gene"</code>: Gene name labels.</p></li>
-<li><p><code>"both"</code>: Combined transcript and gene name labels with
-the format "gene name:transcript name".</p></li>
-</ul></dd>
+Options are:</p><dl><dt><code>NULL</code>: </dt>
+<dd><p>No labels.</p></dd>
+
+<dt><code>"transcript"</code>: </dt>
+<dd><p>Transcript name labels.</p></dd>
+
+<dt><code>"gene"</code>: </dt>
+<dd><p>Gene name labels.</p></dd>
+
+<dt><code>"both"</code>: </dt>
+<dd><p>Combined transcript and gene name labels with
+the format "gene name:transcript name".</p></dd>
+
+
+</dl></dd>
 
 
 <dt id="arg-stroke">stroke<a class="anchor" aria-label="anchor" href="#arg-stroke"></a></dt>
@@ -354,7 +376,7 @@ as determined through the <code>assembly</code> parameter.</p>
 
 
       <footer><div class="copyright">
-  <p></p><p>Developed by <a href="https://github.com/nekramer" class="external-link">Nicole Kramer</a>.</p>
+  <p></p><p>Developed by <a href="https://github.com/nekramer" class="external-link">Nicole Kramer</a>, <a href="https://github.com/EricSDavis" class="external-link">Eric S. Davis</a>, <a href="https://github.com/cwenger" class="external-link">Craig Wenger</a>, <a href="https://github.com/dphansti" class="external-link">Douglas H. Phanstiel</a>.</p>
 </div>
 
 <div class="pkgdown">

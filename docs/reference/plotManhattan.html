@@ -34,9 +34,22 @@
 <li>
   <a href="../articles/introduction_to_plotgardener.html">Introduction to plotgardener</a>
 </li>
-<li>
-  <a href="../articles/guides/plotgardenerUI.html">plotgardenerUI</a>
-</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    The Plotgardener App
+
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu"><li>
+      <a href="../articles/guides/plotgardenerApp_getting_started.html">Getting Started</a>
+    </li>
+    <li>
+      <a href="../articles/guides/plotgardenerApp_installation.html">Install the Plotgardener App</a>
+    </li>
+    <li>
+      <a href="../articles/guides/plotgardenerApp_ui.html">User Interface</a>
+    </li>
+  </ul></li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
@@ -140,14 +153,23 @@
 <dl><dt id="arg-data">data<a class="anchor" aria-label="anchor" href="#arg-data"></a></dt>
 <dd><p>Data to be plotted, as a character value specifying a
 file path of GWAS data, a dataframe, or a <a href="https://rdrr.io/pkg/GenomicRanges/man/GRanges-class.html" class="external-link">GRanges</a>
-object. Each of these data types must have the following columns:</p><ul><li><p><code>"chrom"</code>: Chromosome names. This column must be a character.</p></li>
-<li><p><code>"pos"</code>: Chromosomal position. This column must be
-an integer or numeric.</p></li>
-<li><p><code>"p"</code>: p-value or similar measure. This column must be numeric.
-Values will be converted according to the <code>trans</code> parameter.</p></li>
-<li><p><code>"snp"</code>(optional): SNP name or rsid.
-This column should be a character.</p></li>
-</ul></dd>
+object. Each of these data types must have the following columns:</p><dl><dt><code>"chrom"</code>: </dt>
+<dd><p>Chromosome names. This column must be a character.</p></dd>
+
+<dt><code>"pos"</code>: </dt>
+<dd><p>Chromosomal position. This column must be
+an integer or numeric.</p></dd>
+
+<dt><code>"p"</code>: </dt>
+<dd><p>p-value or similar measure. This column must be numeric.
+Values will be converted according to the <code>trans</code> parameter.</p></dd>
+
+<dt><code>"snp"</code>(optional): </dt>
+<dd><p>SNP name or rsid.
+This column should be a character.</p></dd>
+
+
+</dl></dd>
 
 
 <dt id="arg-sigval">sigVal<a class="anchor" aria-label="anchor" href="#arg-sigval"></a></dt>
@@ -389,7 +411,7 @@ Manhattan plot by ignoring plot placement parameters:</p><div class="sourceCode"
 <span class="r-in"><span><span class="co">## highlighting a lead SNP, and coloring by LD score</span></span></span>
 <span class="r-in"><span><span class="va">hg19_insulin_GWAS</span><span class="op">$</span><span class="va">LD</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="va">hg19_insulin_GWAS</span><span class="op">$</span><span class="va">LD</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="co">## Group LD column into LD ranges</span></span></span>
-<span class="r-in"><span><span class="va">hg19_insulin_GWAS</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/BiocGenerics/man/as.data.frame.html" class="external-link">as.data.frame</a></span><span class="op">(</span><span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">hg19_insulin_GWAS</span>,</span></span>
+<span class="r-in"><span><span class="va">hg19_insulin_GWAS</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/BiocGenerics/man/as.data.frame.html" class="external-link">as.data.frame</a></span><span class="op">(</span><span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/dplyr/man/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">hg19_insulin_GWAS</span>,</span></span>
 <span class="r-in"><span>                                        LDgrp <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/cut.html" class="external-link">cut</a></span><span class="op">(</span></span></span>
 <span class="r-in"><span>                                        <span class="va">hg19_insulin_GWAS</span><span class="op">$</span><span class="va">LD</span>,</span></span>
 <span class="r-in"><span>                                        <span class="fu"><a href="c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0.2</span>, <span class="fl">0.4</span>, <span class="fl">0.6</span>, <span class="fl">0.8</span>, <span class="fl">1</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></span>
@@ -481,7 +503,7 @@ Manhattan plot by ignoring plot placement parameters:</p><div class="sourceCode"
 
 
       <footer><div class="copyright">
-  <p></p><p>Developed by <a href="https://github.com/nekramer" class="external-link">Nicole Kramer</a>.</p>
+  <p></p><p>Developed by <a href="https://github.com/nekramer" class="external-link">Nicole Kramer</a>, <a href="https://github.com/EricSDavis" class="external-link">Eric S. Davis</a>, <a href="https://github.com/cwenger" class="external-link">Craig Wenger</a>, <a href="https://github.com/dphansti" class="external-link">Douglas H. Phanstiel</a>.</p>
 </div>
 
 <div class="pkgdown">

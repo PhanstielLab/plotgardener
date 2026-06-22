@@ -1,4 +1,4 @@
-pandoc: 3.6.3
+pandoc: 3.6.2
 pkgdown: 2.2.0
 pkgdown_sha: ~
 articles:
@@ -11,10 +11,13 @@ articles:
   guides/our_philosophy: guides/our_philosophy.html
   guides/plotgardener_meta_functions: guides/plotgardener_meta_functions.html
   guides/plotgardener_page: guides/plotgardener_page.html
-  guides/plotgardenerUI: guides/plotgardenerUI.html
+  guides/plotgardenerApp_getting_started: guides/plotgardenerApp_getting_started.html
+  guides/plotgardenerApp_installation: guides/plotgardenerApp_installation.html
+  guides/plotgardenerApp_ui: guides/plotgardenerApp_ui.html
+  guides/plotgardenerApp: guides/plotgardenerApp.html
   guides/plotting_multiomic_data: guides/plotting_multiomic_data.html
   guides/reading_data_for_plotgardener: guides/reading_data_for_plotgardener.html
-last_built: 2026-04-16T19:53Z
+last_built: 2026-06-22T20:22Z
 urls:
   reference: https://phanstiellab.github.io/plotgardener/reference
   article: https://phanstiellab.github.io/plotgardener/articles

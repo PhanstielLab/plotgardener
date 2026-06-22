@@ -33,8 +33,14 @@ navbar:
       href: articles/guides/our_philosophy.html
     - text: Introduction to plotgardener
       href: articles/introduction_to_plotgardener.html
-    - text: plotgardenerUI
-      href: articles/guides/plotgardenerUI.html
+    - text: The Plotgardener App
+      menu:
+        - text: Getting Started
+          href: articles/guides/plotgardenerApp_getting_started.html
+        - text: Install the Plotgardener App
+          href: articles/guides/plotgardenerApp_installation.html
+        - text: User Interface
+          href: articles/guides/plotgardenerApp_ui.html
     - text: Articles
       menu:
         - text: The plotgardener Page

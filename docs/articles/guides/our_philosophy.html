@@ -56,8 +56,23 @@
 <li>
   <a href="../../articles/introduction_to_plotgardener.html">Introduction to plotgardener</a>
 </li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    The Plotgardener App
+
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
 <li>
-  <a href="../../articles/guides/plotgardenerUI.html">plotgardenerUI</a>
+      <a href="../../articles/guides/plotgardenerApp_getting_started.html">Getting Started</a>
+    </li>
+    <li>
+      <a href="../../articles/guides/plotgardenerApp_installation.html">Install the Plotgardener App</a>
+    </li>
+    <li>
+      <a href="../../articles/guides/plotgardenerApp_ui.html">User Interface</a>
+    </li>
+  </ul>
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -329,8 +344,8 @@ This means that if users define the same data:</p>
 <span><span class="op">)</span></span>
 <span></span>
 <span><span class="co">## Create and place mtcars boxplot</span></span>
-<span><span class="va">boxPlot</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">mtcars</span><span class="op">)</span> <span class="op">+</span></span>
-<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_boxplot.html" class="external-link">geom_boxplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">gear</span>, <span class="va">disp</span>, group <span class="op">=</span> <span class="va">gear</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">boxPlot</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/ggplot2/man/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">mtcars</span><span class="op">)</span> <span class="op">+</span></span>
+<span>    <span class="fu"><a href="https://rdrr.io/pkg/ggplot2/man/geom_boxplot.html" class="external-link">geom_boxplot</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/ggplot2/man/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">gear</span>, <span class="va">disp</span>, group <span class="op">=</span> <span class="va">gear</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="fu"><a href="../../reference/plotGG.html">plotGG</a></span><span class="op">(</span></span>
 <span>    plot <span class="op">=</span> <span class="va">boxPlot</span>,</span>
 <span>    x <span class="op">=</span> <span class="fl">4</span>, y <span class="op">=</span> <span class="fl">0.5</span>, width <span class="op">=</span> <span class="fl">2.5</span>, height <span class="op">=</span> <span class="fl">2</span>,</span>
@@ -397,7 +412,7 @@ container and clip data to precise axis measurements.</p>
 
       <footer><div class="copyright">
   <p></p>
-<p>Developed by <a href="https://github.com/nekramer" class="external-link">Nicole Kramer</a>.</p>
+<p>Developed by <a href="https://github.com/nekramer" class="external-link">Nicole Kramer</a>, <a href="https://github.com/EricSDavis" class="external-link">Eric S. Davis</a>, <a href="https://github.com/cwenger" class="external-link">Craig Wenger</a>, <a href="https://github.com/dphansti" class="external-link">Douglas H. Phanstiel</a>.</p>
 </div>
 
 <div class="pkgdown">

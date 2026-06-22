@@ -31,12 +31,12 @@ detailed examples and suggested use cases!
 
 ## ✨ Desktop App Now Available!
 
-**No R required.** [plotgardenerUI](https://github.com/rishabhsvemuri/pgUI)
-is a cross-platform desktop app that brings `plotgardener`'s full
+**No R required.** [The Plotgardener App](https://github.com/rishabhsvemuri/ThePlotgardenerApp)
+is a desktop application that brings `plotgardener`'s full
 functionality to a point-and-click interface — no programming experience
 needed. Build, preview, and export publication-quality genomic figures, then
 copy the generated R script into any IDE to keep going.
-[Learn more →](vignettes/guides/plotgardenerUI.html)
+[Learn more →](https://phanstiellab.github.io/plotgardener/articles/guides/plotgardenerApp_getting_started.html)
 
 ## Citation
 

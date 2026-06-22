@@ -34,9 +34,22 @@
 <li>
   <a href="../articles/introduction_to_plotgardener.html">Introduction to plotgardener</a>
 </li>
-<li>
-  <a href="../articles/guides/plotgardenerUI.html">plotgardenerUI</a>
-</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    The Plotgardener App
+
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu"><li>
+      <a href="../articles/guides/plotgardenerApp_getting_started.html">Getting Started</a>
+    </li>
+    <li>
+      <a href="../articles/guides/plotgardenerApp_installation.html">Install the Plotgardener App</a>
+    </li>
+    <li>
+      <a href="../articles/guides/plotgardenerApp_ui.html">User Interface</a>
+    </li>
+  </ul></li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
@@ -169,17 +182,27 @@ Default value is <code>fill = "#7ecdbb"</code>.</p></dd>
 <dd><p>A single character value, a vector, or a
 <a href="colorby.html">colorby</a> object specifying the color of the lines
 outlining range elements. Default value is <code>linecolor = NA</code>.
-Special options include:</p><ul><li><p><code>NA</code>: No line color.</p></li>
-<li><p><code>"fill"</code>: Same color as <code>fill</code>.</p></li>
-</ul><p>.</p></dd>
+Special options include:</p><dl><dt><code>NA</code>: </dt>
+<dd><p>No line color.</p></dd>
+
+<dt><code>"fill"</code>: </dt>
+<dd><p>Same color as <code>fill</code>.</p></dd>
+
+
+</dl><p>.</p></dd>
 
 
 <dt id="arg-order">order<a class="anchor" aria-label="anchor" href="#arg-order"></a></dt>
 <dd><p>A character value specifying how to order pileup data
 before assigning rows. Default value is <code>order = "width"</code>. Options
-include:</p><ul><li><p><code>"width"</code>: Ordered by decreasing width of elements.</p></li>
-<li><p><code>"random"</code>: Ordered randomly in each function call.</p></li>
-</ul><p>.</p></dd>
+include:</p><dl><dt><code>"width"</code>: </dt>
+<dd><p>Ordered by decreasing width of elements.</p></dd>
+
+<dt><code>"random"</code>: </dt>
+<dd><p>Ordered randomly in each function call.</p></dd>
+
+
+</dl><p>.</p></dd>
 
 
 <dt id="arg-collapse">collapse<a class="anchor" aria-label="anchor" href="#arg-collapse"></a></dt>
@@ -368,7 +391,7 @@ by ignoring plot placement parameters:</p><div class="sourceCode"><pre><code><sp
 
 
       <footer><div class="copyright">
-  <p></p><p>Developed by <a href="https://github.com/nekramer" class="external-link">Nicole Kramer</a>.</p>
+  <p></p><p>Developed by <a href="https://github.com/nekramer" class="external-link">Nicole Kramer</a>, <a href="https://github.com/EricSDavis" class="external-link">Eric S. Davis</a>, <a href="https://github.com/cwenger" class="external-link">Craig Wenger</a>, <a href="https://github.com/dphansti" class="external-link">Douglas H. Phanstiel</a>.</p>
 </div>
 
 <div class="pkgdown">
