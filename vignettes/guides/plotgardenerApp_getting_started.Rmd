@@ -55,16 +55,9 @@ further in any IDE.
 
 ## Platform Support
 
-| Platform | Status |
-|---|---|
-| macOS (Apple Silicon — M1, M2, M3) | Supported |
-| macOS (Intel) | Known limitation — support in progress |
-| Windows | Supported |
-| Linux | Not yet supported |
-
-Support for Intel-based Mac systems is actively being developed. Windows
-users can download a `.exe` installer from the
-[releases page](https://github.com/rishabhsvemuri/ThePlotgardenerApp/releases).
+The Plotgardener App currently requires **macOS with Apple Silicon**
+(M1, M2, or M3). Intel-based Macs, Windows, and Linux are not supported
+at this time.
 
 ## Under the Hood
 

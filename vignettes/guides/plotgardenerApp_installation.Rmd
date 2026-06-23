@@ -17,23 +17,25 @@ knitr::opts_chunk$set(
 )
 ```
 
-The Plotgardener App is distributed as a single installer file that
-bundles all prerequisites — including a self-contained R environment —
-so no separate R or package installation is required.
+## Requirements
 
-<div style="display: flex; gap: 1em; flex-wrap: wrap; margin: 2em 0;">
+The Plotgardener App currently requires **macOS with Apple Silicon** (M1,
+M2, or M3). Intel-based Macs and other operating systems are not
+supported at this time.
+
+<div style="margin: 2em 0;">
   <a href="https://github.com/rishabhsvemuri/ThePlotgardenerApp/releases/download/v1.0.0/plotgardener-1.0.0.dmg"
      class="btn btn-primary btn-lg">
     <i class="fab fa-apple"></i>&nbsp; Download for macOS (Apple Silicon)
   </a>
-  <a href="https://github.com/rishabhsvemuri/ThePlotgardenerApp/releases"
-     class="btn btn-default btn-lg">
-    <i class="fab fa-windows"></i>&nbsp; Download for Windows
-  </a>
 </div>
 <p><a href="https://github.com/rishabhsvemuri/ThePlotgardenerApp/releases">View all releases →</a></p>
 
-## macOS (Apple Silicon)
+## Installation
+
+The Plotgardener App is distributed as a single `.dmg` file that bundles
+all prerequisites — including a self-contained R environment — so no
+separate R or package installation is required.
 
 1. Download the latest `.dmg` from the
    [releases page](https://github.com/rishabhsvemuri/ThePlotgardenerApp/releases/download/v1.0.0/plotgardener-1.0.0.dmg).
@@ -42,20 +44,6 @@ so no separate R or package installation is required.
 3. On first launch, macOS may display a security prompt. If so, go to
    **System Settings → Privacy & Security** and click **Open Anyway**.
 4. Open the app and start building.
-
-## Windows
-
-1. Download the latest `.exe` installer from the
-   [releases page](https://github.com/rishabhsvemuri/ThePlotgardenerApp/releases).
-2. Run the installer and follow the on-screen prompts.
-3. Launch the Plotgardener App from the Start Menu or desktop shortcut.
-
-## macOS (Intel)
-
-Support for Intel-based Mac systems is actively under development and is
-not yet available in the current release. Intel Mac users should check
-the [releases page](https://github.com/rishabhsvemuri/ThePlotgardenerApp/releases)
-for updates.
 
 ## Verifying Your Installation
 
