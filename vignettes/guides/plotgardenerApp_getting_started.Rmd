@@ -57,7 +57,8 @@ further in any IDE.
 
 The Plotgardener App currently requires **macOS with Apple Silicon**
 (M1, M2, or M3). Intel-based Macs, Windows, and Linux are not supported
-at this time.
+at this time. See [Install the Plotgardener App](plotgardenerApp_installation.html)
+for download and installation instructions.
 
 ## Under the Hood
 
@@ -73,6 +74,13 @@ The Plotgardener App is built on `Electron` and comprises three layers:
   — functions, parameters, and documentation — into structured JSON.
   This keeps the interface automatically synchronized with any updates to
   the package, with no manual maintenance required.
+
+## Next Steps
+
+- [Install the Plotgardener App](plotgardenerApp_installation.html) —
+  download and installation instructions for macOS
+- [User Interface](plotgardenerApp_ui.html) — a walkthrough of all four
+  sections and a typical figure-building workflow
 
 ## Source Code
 
