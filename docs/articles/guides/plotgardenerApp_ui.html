@@ -144,16 +144,23 @@
 
     
     
-<p>The Plotgardener App interface is organized into four tabs —
+<p>The Plotgardener App interface is divided into three regions: the
+<strong>Panel List</strong>, the <strong>Parameters Panel</strong>, and
+the <strong>Figure Preview</strong>. The <strong>Panel List</strong> on
+the left provides icon-based navigation between four sections —
 <strong>Page</strong>, <strong>Plots</strong>, <strong>Save</strong>,
-and <strong>Code</strong> — alongside an always-visible figure preview
-pane on the right. This guide walks through each tab and describes a
+and <strong>Code</strong>. The <strong>Parameters Panel</strong> in the
+center displays the relevant controls for whichever section is active.
+The <strong>Figure Preview</strong> on the right shows a live rendering
+of your figure. This guide walks through each section and describes a
 typical workflow for building a figure from start to finish.</p>
+<p><img src="../../reference/figures/plotgardenerApp-interface-overview.png" alt="The Plotgardener App interface, with three labeled regions: the Panel List on the far left (icon-based navigation bar), the Parameters Panel in the center (form fields for configuring the selected tab), and the Figure Preview on the right (live rendering of the current figure)." style="width: 100%; margin-top: 1em; margin-bottom: 2em;"></p>
 <div class="section level2">
 <h2 id="the-page-tab">The Page Tab<a class="anchor" aria-label="anchor" href="#the-page-tab"></a>
 </h2>
 <p>Before adding any plots, use the <strong>Page</strong> tab to set the
-overall canvas dimensions for your figure.</p>
+overall canvas dimensions for your figure. Its settings appear in the
+<strong>Parameters Panel</strong>.</p>
 <p><strong>Settings available:</strong></p>
 <ul>
 <li>
@@ -167,11 +174,11 @@ centimeters (<code>cm</code>), or millimeters (<code>mm</code>).</li>
 such as genome assembly or font size — that apply across all panels
 unless overridden at the panel level.</li>
 </ul>
-<p>Once you have configured the page, click <strong>Apply</strong>
-before moving to the Plots tab. Page dimensions directly determine the
-size of the exported PDF. If you are targeting a specific journal figure
-size (e.g., single-column = 3.5 in, double-column = 7 in), set those
-here.</p>
+<p>Once you have configured the page, click <strong>Run Script</strong>
+to render a blank page in the <strong>Figure Preview</strong>. Page
+dimensions directly determine the size of the exported PDF. If you are
+targeting a specific journal figure size (e.g., single-column = 3.5 in,
+double-column = 7 in), set those here.</p>
 <p>For more on how the <code>plotgardener</code> coordinate system
 works, see <a href="plotgardener_page.html">The plotgardener
 Page</a>.</p>
@@ -180,15 +187,17 @@ Page</a>.</p>
 <h2 id="the-plots-tab">The Plots Tab<a class="anchor" aria-label="anchor" href="#the-plots-tab"></a>
 </h2>
 <p>The <strong>Plots</strong> tab is where you add, configure, and
-arrange individual visualization panels.</p>
+arrange individual visualization panels. Select it from the
+<strong>Panel List</strong> to load its controls into the
+<strong>Parameters Panel</strong>.</p>
 <div class="section level3">
 <h3 id="adding-a-panel">Adding a Panel<a class="anchor" aria-label="anchor" href="#adding-a-panel"></a>
 </h3>
 <ol style="list-style-type: decimal">
 <li>Select a <code>plotgardener</code> function from the
-<strong>Function</strong> dropdown. All functions supported by the
-installed version of <code>plotgardener</code> are listed
-automatically.</li>
+<strong>Function</strong> dropdown in the <strong>Parameters
+Panel</strong>. All functions supported by the installed version of
+<code>plotgardener</code> are listed automatically.</li>
 <li>Give the panel a descriptive name in the <strong>Panel Name</strong>
 field.</li>
 <li>Upload your data file using the <strong>Browse</strong> button next
@@ -197,23 +206,25 @@ to the relevant data parameter.</li>
 Optional parameters can be left at their defaults.</li>
 <li>Click <strong>Add Plot</strong> to place the panel on the page.</li>
 <li>Click <strong>Run Script</strong> to render the updated figure in
-the preview pane.</li>
+the <strong>Figure Preview</strong>.</li>
 </ol>
 </div>
 <div class="section level3">
 <h3 id="editing-a-panel">Editing a Panel<a class="anchor" aria-label="anchor" href="#editing-a-panel"></a>
 </h3>
-<p>Select any existing panel from the panel list, adjust its parameters,
-and click <strong>Update Plot</strong>, then <strong>Run Script</strong>
-to re-render.</p>
+<p>Select any existing panel from the <strong>Panel List</strong>,
+adjust its parameters in the <strong>Parameters Panel</strong>, and
+click <strong>Update Plot</strong>, then <strong>Run Script</strong> to
+re-render.</p>
 </div>
 <div class="section level3">
 <h3 id="adding-annotations">Adding Annotations<a class="anchor" aria-label="anchor" href="#adding-annotations"></a>
 </h3>
 <p>To layer annotations onto an existing panel (e.g., a highlight box,
-genome axis, or domain boundary), select the target panel from the list,
-then choose an annotation function from the <strong>Annotations</strong>
-dropdown and configure its parameters. See <a href="annotations.html">Plot Annotations</a> for details on available
+genome axis, or domain boundary), select the target panel from the
+<strong>Panel List</strong>, then choose an annotation function from the
+<strong>Annotations</strong> dropdown and configure its parameters. See
+<a href="annotations.html">Plot Annotations</a> for details on available
 annotation types.</p>
 </div>
 <div class="section level3">
@@ -281,7 +292,8 @@ plotgardener</a>.</p>
 <h2 id="the-save-tab">The Save Tab<a class="anchor" aria-label="anchor" href="#the-save-tab"></a>
 </h2>
 <p>The <strong>Save</strong> tab lets you preserve and restore your
-entire figure session.</p>
+entire figure session. Select it from the <strong>Panel List</strong> to
+access its controls in the <strong>Parameters Panel</strong>.</p>
 <ul>
 <li>
 <strong>Save Session</strong>: Exports the current configuration —
@@ -300,7 +312,9 @@ different environment.</p>
 <h2 id="the-code-tab">The Code Tab<a class="anchor" aria-label="anchor" href="#the-code-tab"></a>
 </h2>
 <p>The <strong>Code</strong> tab displays the R script that the app
-generates from your current panel configuration.</p>
+generates from your current panel configuration. Select it from the
+<strong>Panel List</strong> to view the script in the <strong>Parameters
+Panel</strong>.</p>
 <ul>
 <li>The script updates in real time as you add, remove, or modify
 panels.</li>
@@ -312,8 +326,8 @@ palettes, looping over multiple regions, or integrating with other
 Bioconductor objects.</li>
 </ul>
 <p>This tab is particularly useful for learning: configure a plot in the
-GUI, then inspect the generated code to understand the equivalent
-<code>plotgardener</code> R function calls.</p>
+<strong>Plots</strong> tab, then switch to <strong>Code</strong> to
+inspect the equivalent <code>plotgardener</code> R function calls.</p>
 </div>
 <div class="section level2">
 <h2 id="typical-workflow">Typical Workflow<a class="anchor" aria-label="anchor" href="#typical-workflow"></a>
@@ -321,18 +335,19 @@ GUI, then inspect the generated code to understand the equivalent
 <p>A complete figure-building session follows this sequence:</p>
 <ol style="list-style-type: decimal">
 <li>
-<strong>Set the page</strong> — Open the <strong>Page</strong> tab,
-enter your figure dimensions and units, and click
-<strong>Apply</strong>.</li>
+<strong>Set the page</strong> — Select the <strong>Page</strong> tab
+from the <strong>Panel List</strong>, enter your figure dimensions and
+units in the <strong>Parameters Panel</strong>, and click <strong>Run
+Script</strong>.</li>
 <li>
-<strong>Add your first panel</strong> — Go to
-<strong>Plots</strong>, select a function, upload your data, enter the
-genomic coordinates (chromosome, start, end) and any required
+<strong>Add your first panel</strong> — Select the
+<strong>Plots</strong> tab, choose a function, upload your data, and
+enter the genomic coordinates (chromosome, start, end) and any required
 parameters.</li>
 <li>
 <strong>Preview the figure</strong> — Click <strong>Run
-Script</strong>. The preview pane on the right renders the current
-figure.</li>
+Script</strong>. The <strong>Figure Preview</strong> on the right
+renders the current figure.</li>
 <li>
 <strong>Add more panels</strong> — Repeat steps 2–3 for each
 additional track or panel, positioning them on the page using the x, y,
@@ -342,11 +357,11 @@ width, and height parameters.</li>
 highlight regions, domain boundaries, or other annotations onto existing
 panels.</li>
 <li>
-<strong>Save your session</strong> — Use the <strong>Save</strong>
-tab to export the session as a <code>.json</code> file for later use or
-sharing.</li>
+<strong>Save your session</strong> — Select the
+<strong>Save</strong> tab and export the session as a <code>.json</code>
+file for later use or sharing.</li>
 <li>
-<strong>Export the R script</strong> — Open the
+<strong>Export the R script</strong> — Select the
 <strong>Code</strong> tab and copy the generated script for archiving,
 further customization, or reproducibility.</li>
 </ol>
