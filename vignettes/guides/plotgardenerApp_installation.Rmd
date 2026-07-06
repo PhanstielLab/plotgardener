@@ -1,0 +1,63 @@
+---
+title: "Install the Plotgardener App"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Install the Plotgardener App}
+  %\VignetteEncoding{UTF-8}
+  %\VignetteEngine{knitr::rmarkdown}
+editor_options:
+  markdown:
+    wrap: 72
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+## Requirements
+
+The Plotgardener App currently requires **macOS with Apple Silicon** (M1,
+M2, or M3). Intel-based Macs and other operating systems are not
+supported at this time.
+
+<div style="margin: 2em 0;">
+  <a href="https://github.com/rishabhsvemuri/ThePlotgardenerApp/releases/download/v1.0.0/plotgardener-1.0.0.dmg"
+     class="btn btn-primary btn-lg">
+    <i class="fab fa-apple"></i>&nbsp; Download for macOS (Apple Silicon)
+  </a>
+</div>
+<p><a href="https://github.com/rishabhsvemuri/ThePlotgardenerApp/releases">View all releases →</a></p>
+
+## Installation
+
+The Plotgardener App is distributed as a single `.dmg` file that bundles
+all prerequisites — including a self-contained R environment — so no
+separate R or package installation is required.
+
+1. Download the latest `.dmg` from the
+   [releases page](https://github.com/rishabhsvemuri/ThePlotgardenerApp/releases/download/v1.0.0/plotgardener-1.0.0.dmg).
+2. Open the `.dmg` file and drag the Plotgardener App into your
+   **Applications** folder.
+3. On first launch, macOS may display a security prompt. If so, go to
+   **System Settings → Privacy & Security** and click **Open Anyway**.
+4. Open the app and start building.
+
+## Verifying Your Installation
+
+Once the app is open, you should see the four-tab interface (Page,
+Plots, Save, Code) alongside a figure preview pane. To confirm
+everything is working:
+
+1. Click the **Page** tab and enter a page width and height (e.g.,
+   5 x 5 inches).
+2. Click the **Plots** tab, select a function from the dropdown (e.g.,
+   `plotRect`), and confirm that parameter fields populate automatically.
+3. Fill in the required parameters and click **Add Plot**.
+4. Click **Run Script** — the preview pane should render the figure.
+
+If the preview renders successfully, the app is installed and working
+correctly. For a full walkthrough of each tab, see the
+[User Interface](plotgardenerApp_ui.html) guide.

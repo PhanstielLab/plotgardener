@@ -34,9 +34,22 @@
 <li>
   <a href="../articles/introduction_to_plotgardener.html">Introduction to plotgardener</a>
 </li>
-<li>
-  <a href="../articles/guides/plotgardenerUI.html">plotgardenerUI</a>
-</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    The Plotgardener App
+
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu"><li>
+      <a href="../articles/guides/plotgardenerApp_getting_started.html">Getting Started</a>
+    </li>
+    <li>
+      <a href="../articles/guides/plotgardenerApp_installation.html">Install the Plotgardener App</a>
+    </li>
+    <li>
+      <a href="../articles/guides/plotgardenerApp_ui.html">User Interface</a>
+    </li>
+  </ul></li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
@@ -167,9 +180,14 @@ the size of the region.</p></dd>
 
 <dt id="arg-res-scale">res_scale<a class="anchor" aria-label="anchor" href="#arg-res-scale"></a></dt>
 <dd><p>A character value specifying the resolution scale.
-Default value is <code>res_scale = "BP"</code>. Options are:</p><ul><li><p><code>"BP"</code>: Base pairs.</p></li>
-<li><p><code>"FRAG"</code>: Fragments.</p></li>
-</ul></dd>
+Default value is <code>res_scale = "BP"</code>. Options are:</p><dl><dt><code>"BP"</code>: </dt>
+<dd><p>Base pairs.</p></dd>
+
+<dt><code>"FRAG"</code>: </dt>
+<dd><p>Fragments.</p></dd>
+
+
+</dl></dd>
 
 
 <dt id="arg-zrange">zrange<a class="anchor" aria-label="anchor" href="#arg-zrange"></a></dt>
@@ -185,10 +203,17 @@ Default value is <code>norm = "KR"</code>.</p></dd>
 
 <dt id="arg-matrix">matrix<a class="anchor" aria-label="anchor" href="#arg-matrix"></a></dt>
 <dd><p>Character value indicating the type of matrix to output.
-Default value is <code>matrix = "observed"</code>. Options are:</p><ul><li><p><code>"observed"</code>: Observed counts.</p></li>
-<li><p><code>"oe"</code>: Observed/expected counts.</p></li>
-<li><p><code>"log2oe"</code>: Log2 transformed observed/expected counts.</p></li>
-</ul></dd>
+Default value is <code>matrix = "observed"</code>. Options are:</p><dl><dt><code>"observed"</code>: </dt>
+<dd><p>Observed counts.</p></dd>
+
+<dt><code>"oe"</code>: </dt>
+<dd><p>Observed/expected counts.</p></dd>
+
+<dt><code>"log2oe"</code>: </dt>
+<dd><p>Log2 transformed observed/expected counts.</p></dd>
+
+
+</dl></dd>
 
 
 <dt id="arg-params">params<a class="anchor" aria-label="anchor" href="#arg-params"></a></dt>
@@ -238,7 +263,7 @@ format with the following columns: <code>chrom</code>, <code>altchrom</code>,
 
 
       <footer><div class="copyright">
-  <p></p><p>Developed by <a href="https://github.com/nekramer" class="external-link">Nicole Kramer</a>.</p>
+  <p></p><p>Developed by <a href="https://github.com/nekramer" class="external-link">Nicole Kramer</a>, <a href="https://github.com/EricSDavis" class="external-link">Eric S. Davis</a>, <a href="https://github.com/cwenger" class="external-link">Craig Wenger</a>, <a href="https://github.com/dphansti" class="external-link">Douglas H. Phanstiel</a>.</p>
 </div>
 
 <div class="pkgdown">

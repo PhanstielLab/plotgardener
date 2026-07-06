@@ -5,7 +5,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>plotgardenerUI • plotgardener</title>
+<title>The Plotgardener App • plotgardener</title>
 <!-- favicons --><link rel="icon" type="image/png" sizes="48x48" href="../../favicon-48x48.png">
 <link rel="icon" type="”image/svg+xml”" href="../../favicon.svg">
 <link rel="apple-touch-icon" sizes="180x180" href="../../apple-touch-icon.png">
@@ -17,7 +17,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../../pkgdown.css" rel="stylesheet">
 <script src="../../pkgdown.js"></script><link href="../../extra.css" rel="stylesheet">
-<meta property="og:title" content="plotgardenerUI">
+<meta property="og:title" content="The Plotgardener App">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
@@ -56,8 +56,23 @@
 <li>
   <a href="../../articles/introduction_to_plotgardener.html">Introduction to plotgardener</a>
 </li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    The Plotgardener App
+
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
 <li>
-  <a href="../../articles/guides/plotgardenerUI.html">plotgardenerUI</a>
+      <a href="../../articles/guides/plotgardenerApp_getting_started.html">Getting Started</a>
+    </li>
+    <li>
+      <a href="../../articles/guides/plotgardenerApp_installation.html">Install the Plotgardener App</a>
+    </li>
+    <li>
+      <a href="../../articles/guides/plotgardenerApp_ui.html">User Interface</a>
+    </li>
+  </ul>
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -119,97 +134,30 @@
       </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
-      <h1 data-toc-skip>plotgardenerUI</h1>
+      <h1 data-toc-skip>The Plotgardener App</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/PhanstielLab/plotgardener/blob/HEAD/vignettes/guides/plotgardenerUI.Rmd" class="external-link"><code>vignettes/guides/plotgardenerUI.Rmd</code></a></small>
-      <div class="hidden name"><code>plotgardenerUI.Rmd</code></div>
+      <small class="dont-index">Source: <a href="https://github.com/PhanstielLab/plotgardener/blob/HEAD/vignettes/guides/plotgardenerApp.Rmd" class="external-link"><code>vignettes/guides/plotgardenerApp.Rmd</code></a></small>
+      <div class="hidden name"><code>plotgardenerApp.Rmd</code></div>
 
     </div>
 
     
     
-<div class="section level2">
-<h2 id="publication-quality-genomic-figures--no-code-required-">Publication-quality genomic figures. No code required.<a class="anchor" aria-label="anchor" href="#publication-quality-genomic-figures--no-code-required-"></a>
-</h2>
-<p><code>plotgardener</code> is powerful, but using it requires
-proficiency in R, package management, and the command line. For many
-biologists, that can be a significant barrier.</p>
-<p><strong>plotgardenerUI</strong> is a cross-platform desktop
-application that wraps the full <code>plotgardener</code> R package in a
-graphical interface, making its complete feature set available in a
-no-code, point-and-click environment. Users can add and configure Hi-C
-contact maps, signal tracks, gene models, genome labels, and more — all
-through menus and form inputs — while previewing a live rendering of
-their figure as they work. When the figure is ready, the app displays
-the underlying R script so that advanced users can copy and extend it
-further in any IDE.</p>
-<p><img src="../../reference/figures/plotgardenerUI-Figure.png"></p>
-</div>
-<div class="section level2">
-<h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
-</h2>
-<p>plotgardenerUI is distributed as a single installer file that bundles
-all prerequisites — <strong>no R installation or terminal setup
-required</strong>.</p>
-<ol style="list-style-type: decimal">
-<li>Download the latest release from <a href="https://github.com/rishabhsvemuri/pgUI" class="external-link">GitHub</a> (available for
-Windows and macOS)</li>
-<li>Double-click the installer to install</li>
-<li>Open the app and start building</li>
-</ol>
-</div>
-<div class="section level2">
-<h2 id="how-it-works">How it works<a class="anchor" aria-label="anchor" href="#how-it-works"></a>
-</h2>
-<p>The interface is organized into four tabs:</p>
-<p><strong>Page</strong> — Set page dimensions and units before adding
-any plots.</p>
-<p><strong>Plots</strong> — Add, name, and configure as many plot panels
-as needed, chosen from a dropdown of all supported
-<code>plotgardener</code> functions. Each panel includes data upload via
-browse buttons, text parameter fields, and automatic validation of
-required inputs. Annotations can be layered on top of any plot
-panel.</p>
-<p><strong>Save</strong> — Save and reload your entire session as a
-structured JSON file, enabling figure templates and easy sharing between
-collaborators across machines.</p>
-<p><strong>Code</strong> — View the R script the app generates in real
-time. Copy it directly into an IDE for further customization.</p>
-<p>Clicking <strong>Run Script</strong> compiles all panel inputs,
-executes the R script in a background session, and displays the rendered
-figure in the always-open preview pane.</p>
-</div>
-<div class="section level2">
-<h2 id="under-the-hood">Under the hood<a class="anchor" aria-label="anchor" href="#under-the-hood"></a>
-</h2>
-<p>plotgardenerUI is built on <a href="https://www.electronjs.org/" class="external-link">Electron</a> and comprises three
-layers:</p>
+<p>The Plotgardener App documentation is organized into the following
+sections:</p>
 <ul>
-<li><p><strong>Frontend (React):</strong> Renders all user-facing tabs
-and form elements, dynamically populated based on the selected
-<code>plotgardener</code> function.</p></li>
-<li><p><strong>Backend (Node.js):</strong> Manages all parameter inputs,
-maintains panel state across additions and edits, compiles the final R
-script, and returns the PDF output to the preview pane.</p></li>
-<li><p><strong>Parser (Python):</strong> Parses the live
-<code>plotgardener</code> R package source (functions, parameters, and
-documentation) into structured JSON. This means the interface stays
-automatically synchronized with any updates to the package, with no
-manual maintenance required.</p></li>
+<li>
+<a href="plotgardenerApp_getting_started.html">Getting Started</a> —
+what the app is, key features, and platform support</li>
+<li>
+<a href="plotgardenerApp_installation.html">Install the Plotgardener
+App</a> — download and installation instructions</li>
+<li>
+<a href="plotgardenerApp_ui.html">User Interface</a> — a structured
+walkthrough of all four tabs and a typical workflow</li>
 </ul>
 </div>
-<div class="section level2">
-<h2 id="source-code-documentation">Source code &amp; documentation<a class="anchor" aria-label="anchor" href="#source-code-documentation"></a>
-</h2>
-<ul>
-<li>plotgardenerUI source: <a href="https://github.com/rishabhsvemuri/pgUI" class="external-link">github.com/rishabhsvemuri/pgUI</a>
-</li>
-<li>plotgardener R package docs: <a href="https://phanstiellab.github.io/plotgardener">phanstiellab.github.io/plotgardener</a>
-</li>
-</ul>
-</div>
-  </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
 
@@ -221,7 +169,7 @@ manual maintenance required.</p></li>
 
       <footer><div class="copyright">
   <p></p>
-<p>Developed by <a href="https://github.com/nekramer" class="external-link">Nicole Kramer</a>.</p>
+<p>Developed by <a href="https://github.com/nekramer" class="external-link">Nicole Kramer</a>, <a href="https://github.com/EricSDavis" class="external-link">Eric S. Davis</a>, <a href="https://github.com/cwenger" class="external-link">Craig Wenger</a>, <a href="https://github.com/dphansti" class="external-link">Douglas H. Phanstiel</a>.</p>
 </div>
 
 <div class="pkgdown">

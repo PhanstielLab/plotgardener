@@ -1,0 +1,28 @@
+---
+title: "The Plotgardener App"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{The Plotgardener App}
+  %\VignetteEncoding{UTF-8}
+  %\VignetteEngine{knitr::rmarkdown}
+editor_options:
+  markdown:
+    wrap: 72
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+The Plotgardener App documentation is organized into the following
+sections:
+
+- [Getting Started](plotgardenerApp_getting_started.html) — what the
+  app is, key features, and platform support
+- [Install the Plotgardener App](plotgardenerApp_installation.html) —
+  download and installation instructions
+- [User Interface](plotgardenerApp_ui.html) — a structured walkthrough
+  of all four tabs and a typical workflow

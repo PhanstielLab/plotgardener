@@ -58,8 +58,23 @@
 <li>
   <a href="articles/introduction_to_plotgardener.html">Introduction to plotgardener</a>
 </li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    The Plotgardener App
+
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
 <li>
-  <a href="articles/guides/plotgardenerUI.html">plotgardenerUI</a>
+      <a href="articles/guides/plotgardenerApp_getting_started.html">Getting Started</a>
+    </li>
+    <li>
+      <a href="articles/guides/plotgardenerApp_installation.html">Install the Plotgardener App</a>
+    </li>
+    <li>
+      <a href="articles/guides/plotgardenerApp_ui.html">User Interface</a>
+    </li>
+  </ul>
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -133,9 +148,9 @@
 <p>Specialized for genomic data, <code>plotgardener</code> also contains functions to read and plot multi-omic data quickly and easily. These functions are integrated with Bioconductor packages to flexibly accommodate a large variety of genomic assemblies. <code>plotgardener</code> can address an endless number of use cases, including: dynamic exploration of genomic data, arrangement into multi-omic layouts, and survey plotting for quickly viewing data across the genome. Check out our <code>vignettes</code> for detailed examples and suggested use cases!</p>
 </div>
 <div class="section level2">
-<h2 id="sparkles-new-plotgardenerui">✨ New: plotgardenerUI<a class="anchor" aria-label="anchor" href="#sparkles-new-plotgardenerui"></a>
+<h2 id="sparkles-desktop-app-now-available">✨ Desktop App Now Available!<a class="anchor" aria-label="anchor" href="#sparkles-desktop-app-now-available"></a>
 </h2>
-<p><strong>No R required.</strong> <a href="https://github.com/rishabhsvemuri/pgUI" class="external-link">plotgardenerUI</a> is a cross-platform desktop app that brings <code>plotgardener</code>’s full functionality to a point-and-click interface — no programming experience needed. Build, preview, and export publication-quality genomic figures, then copy the generated R script into any IDE to keep going. <a href="articles/guides/plotgardenerUI.html">Learn more →</a></p>
+<p><strong>No R required.</strong> <a href="https://github.com/rishabhsvemuri/ThePlotgardenerApp" class="external-link">The Plotgardener App</a> is a desktop application that brings <code>plotgardener</code>’s full functionality to a point-and-click interface — no programming experience needed. Build, preview, and export publication-quality genomic figures, then copy the generated R script into any IDE to keep going. <a href="https://phanstiellab.github.io/plotgardener/articles/guides/plotgardenerApp_getting_started.html">Learn more →</a></p>
 </div>
 <div class="section level2">
 <h2 id="citation">Citation<a class="anchor" aria-label="anchor" href="#citation"></a>
@@ -348,7 +363,13 @@
 <h2 data-toc-skip>Developers</h2>
 <ul class="list-unstyled">
 <li>
-<a href="https://github.com/nekramer" class="external-link">Nicole Kramer</a> <br><small class="roles"> Maintainer </small>   </li>
+<a href="https://github.com/nekramer" class="external-link">Nicole Kramer</a> <br><small class="roles"> Author, maintainer </small> <a href="https://orcid.org/0000-0001-9617-9671" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a>  </li>
+<li>
+<a href="https://github.com/EricSDavis" class="external-link">Eric S. Davis</a> <br><small class="roles"> Author </small> <a href="https://orcid.org/0000-0003-4051-3217" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a>  </li>
+<li>
+<a href="https://github.com/cwenger" class="external-link">Craig Wenger</a> <br><small class="roles"> Author </small> <a href="https://orcid.org/0000-0002-7361-8456" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a>  </li>
+<li>
+<a href="https://github.com/dphansti" class="external-link">Douglas H. Phanstiel</a> <br><small class="roles"> Author, copyright holder </small>   </li>
 <li><a href="authors.html">More about authors...</a></li>
 </ul>
 </div>
@@ -356,7 +377,8 @@
 <div class="dev-status">
 <h2 data-toc-skip>Dev status</h2>
 <ul class="list-unstyled">
-<li><a href="https://github.com/PhanstielLab/plotgardener/actions" class="external-link"><img src="https://github.com/PhanstielLab/plotgardener/actions/workflows/check-bioc.yml/badge.svg" alt="R build status"></a></li>
+<li><a href="https://bioconductor.org/checkResults/release/bioc-LATEST/plotgardener/" class="external-link"><img src="http://www.bioconductor.org/shields/build/release/bioc/plotgardener.svg" alt="Bioc release status"></a></li>
+<li><a href="https://github.com/PhanstielLab/plotgardener/actions/workflows/check-bioc-devel.yml" class="external-link"><img src="https://github.com/PhanstielLab/plotgardener/actions/workflows/check-bioc-devel.yml/badge.svg" alt="R-CMD-check-bioc-devel"></a></li>
 </ul>
 </div>
 
@@ -366,7 +388,7 @@
 
       <footer><div class="copyright">
   <p></p>
-<p>Developed by <a href="https://github.com/nekramer" class="external-link">Nicole Kramer</a>.</p>
+<p>Developed by <a href="https://github.com/nekramer" class="external-link">Nicole Kramer</a>, <a href="https://github.com/EricSDavis" class="external-link">Eric S. Davis</a>, <a href="https://github.com/cwenger" class="external-link">Craig Wenger</a>, <a href="https://github.com/dphansti" class="external-link">Douglas H. Phanstiel</a>.</p>
 </div>
 
 <div class="pkgdown">
