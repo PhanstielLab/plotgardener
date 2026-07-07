@@ -34,9 +34,22 @@
 <li>
   <a href="../articles/introduction_to_plotgardener.html">Introduction to plotgardener</a>
 </li>
-<li>
-  <a href="../articles/guides/plotgardenerApp.html">The Plotgardener App</a>
-</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    The Plotgardener App
+
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu"><li>
+      <a href="../articles/guides/plotgardenerApp_getting_started.html">Getting Started</a>
+    </li>
+    <li>
+      <a href="../articles/guides/plotgardenerApp_installation.html">Install the Plotgardener App</a>
+    </li>
+    <li>
+      <a href="../articles/guides/plotgardenerApp_ui.html">User Interface</a>
+    </li>
+  </ul></li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
@@ -213,7 +226,8 @@ format with the following columns: <code>chrom</code>, <code>altchrom</code>,
 <span class="r-in"><span>                     resolution <span class="op">=</span> <span class="fl">1000000</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Read in .cool file with NONE normalization at 1e+06 BP resolution.</span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co">## .mcool file</span></span></span>
+<span class="r-in"><span><span class="co">## .mcool file (large download, skipped in automated checks)</span></span></span>
+<span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span> <span class="co"># \dontrun{</span></span></span>
 <span class="r-in"><span><span class="va">mcoolFile</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">"LEUK_HEK_PJA27_inter_30.mcool"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/download.file.html" class="external-link">download.file</a></span><span class="op">(</span>url <span class="op">=</span> <span class="st">"https://zenodo.org/records/10906240/files/LEUK_HEK_PJA27_inter_30.mcool?download=1"</span>,</span></span>
 <span class="r-in"><span>    destfile <span class="op">=</span> <span class="va">mcoolFile</span>, mode <span class="op">=</span> <span class="st">"wb"</span><span class="op">)</span></span></span>
@@ -222,12 +236,11 @@ format with the following columns: <code>chrom</code>, <code>altchrom</code>,
 <span class="r-in"><span><span class="va">mcoolData_100Kb</span> <span class="op">&lt;-</span> <span class="fu">readCool</span><span class="op">(</span>file <span class="op">=</span> <span class="va">mcoolFile</span>, chrom <span class="op">=</span> <span class="st">"2"</span>,</span></span>
 <span class="r-in"><span>                            chromstart <span class="op">=</span> <span class="fl">1000000</span>, chromend <span class="op">=</span> <span class="fl">5000000</span>,</span></span>
 <span class="r-in"><span>                            resolution <span class="op">=</span> <span class="fl">100000</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Read in .mcool file with NONE normalization at 1e+05 BP resolution.</span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co">## Read in data for chr2 at 2500Kb resolution </span></span></span>
+<span class="r-in"><span><span class="co">## Read in data for chr2 at 2500Kb resolution</span></span></span>
 <span class="r-in"><span><span class="va">mcoolData_2500Kb</span> <span class="op">&lt;-</span> <span class="fu">readCool</span><span class="op">(</span>file <span class="op">=</span> <span class="va">mcoolFile</span>, chrom <span class="op">=</span> <span class="st">"2"</span>,</span></span>
 <span class="r-in"><span>                             resolution <span class="op">=</span> <span class="fl">2500000</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Read in .mcool file with NONE normalization at 2500000 BP resolution.</span>
+<span class="r-in"><span><span class="op">}</span> <span class="co"># }</span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -238,7 +251,7 @@ format with the following columns: <code>chrom</code>, <code>altchrom</code>,
 
 
       <footer><div class="copyright">
-  <p></p><p>Developed by <a href="https://github.com/nekramer" class="external-link">Nicole Kramer</a>.</p>
+  <p></p><p>Developed by <a href="https://github.com/nekramer" class="external-link">Nicole Kramer</a>, <a href="https://github.com/EricSDavis" class="external-link">Eric S. Davis</a>, <a href="https://github.com/cwenger" class="external-link">Craig Wenger</a>, <a href="https://github.com/dphansti" class="external-link">Douglas H. Phanstiel</a>.</p>
 </div>
 
 <div class="pkgdown">

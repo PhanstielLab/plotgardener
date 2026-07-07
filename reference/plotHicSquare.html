@@ -34,9 +34,22 @@
 <li>
   <a href="../articles/introduction_to_plotgardener.html">Introduction to plotgardener</a>
 </li>
-<li>
-  <a href="../articles/guides/plotgardenerApp.html">The Plotgardener App</a>
-</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    The Plotgardener App
+
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu"><li>
+      <a href="../articles/guides/plotgardenerApp_getting_started.html">Getting Started</a>
+    </li>
+    <li>
+      <a href="../articles/guides/plotgardenerApp_installation.html">Install the Plotgardener App</a>
+    </li>
+    <li>
+      <a href="../articles/guides/plotgardenerApp_ui.html">User Interface</a>
+    </li>
+  </ul></li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
@@ -161,10 +174,17 @@ if giving .hic or .(m)cool file. This value must be found in the .hic or
 <dt id="arg-matrix">matrix<a class="anchor" aria-label="anchor" href="#arg-matrix"></a></dt>
 <dd><p>Character value indicating the type of matrix to output for
 .hic files.
-Default value is <code>matrix = "observed"</code>. Options are:</p><ul><li><p><code>"observed"</code>: Observed counts.</p></li>
-<li><p><code>"oe"</code>: Observed/expected counts.</p></li>
-<li><p><code>"log2oe"</code>: Log2 transformed observed/expected counts.</p></li>
-</ul></dd>
+Default value is <code>matrix = "observed"</code>. Options are:</p><dl><dt><code>"observed"</code>: </dt>
+<dd><p>Observed counts.</p></dd>
+
+<dt><code>"oe"</code>: </dt>
+<dd><p>Observed/expected counts.</p></dd>
+
+<dt><code>"log2oe"</code>: </dt>
+<dd><p>Log2 transformed observed/expected counts.</p></dd>
+
+
+</dl></dd>
 
 
 <dt id="arg-chrom">chrom<a class="anchor" aria-label="anchor" href="#arg-chrom"></a></dt>
@@ -218,10 +238,17 @@ Default value is <code>colorTrans = "linear"</code>.</p></dd>
 For intrachromosomal plotting, options are <code>"both"</code>, <code>"top"</code>,
 or <code>"bottom"</code>. For off-diagonal or interchromosomal plotting,
 options are <code>"top"</code> or <code>"bottom"</code>.
-Default value is <code>half = "both"</code>.</p><ul><li><p><code>"both"</code>: Both diagonal halves.</p></li>
-<li><p><code>"top"</code>: Half above the diagonal.</p></li>
-<li><p><code>"bottom"</code>: Half below the diagonal.</p></li>
-</ul></dd>
+Default value is <code>half = "both"</code>.</p><dl><dt><code>"both"</code>: </dt>
+<dd><p>Both diagonal halves.</p></dd>
+
+<dt><code>"top"</code>: </dt>
+<dd><p>Half above the diagonal.</p></dd>
+
+<dt><code>"bottom"</code>: </dt>
+<dd><p>Half below the diagonal.</p></dd>
+
+
+</dl></dd>
 
 
 <dt id="arg-yaxisdir">yaxisDir<a class="anchor" aria-label="anchor" href="#arg-yaxisdir"></a></dt>
@@ -368,7 +395,7 @@ square Hi-C plot by ignoring plot placement parameters:</p><div class="sourceCod
 
 
       <footer><div class="copyright">
-  <p></p><p>Developed by <a href="https://github.com/nekramer" class="external-link">Nicole Kramer</a>.</p>
+  <p></p><p>Developed by <a href="https://github.com/nekramer" class="external-link">Nicole Kramer</a>, <a href="https://github.com/EricSDavis" class="external-link">Eric S. Davis</a>, <a href="https://github.com/cwenger" class="external-link">Craig Wenger</a>, <a href="https://github.com/dphansti" class="external-link">Douglas H. Phanstiel</a>.</p>
 </div>
 
 <div class="pkgdown">

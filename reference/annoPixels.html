@@ -34,9 +34,22 @@
 <li>
   <a href="../articles/introduction_to_plotgardener.html">Introduction to plotgardener</a>
 </li>
-<li>
-  <a href="../articles/guides/plotgardenerApp.html">The Plotgardener App</a>
-</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    The Plotgardener App
+
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu"><li>
+      <a href="../articles/guides/plotgardenerApp_getting_started.html">Getting Started</a>
+    </li>
+    <li>
+      <a href="../articles/guides/plotgardenerApp_installation.html">Install the Plotgardener App</a>
+    </li>
+    <li>
+      <a href="../articles/guides/plotgardenerApp_ui.html">User Interface</a>
+    </li>
+  </ul></li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
@@ -129,24 +142,40 @@ positions.</p></dd>
 
 <dt id="arg-type">type<a class="anchor" aria-label="anchor" href="#arg-type"></a></dt>
 <dd><p>Character value specifying type of annotation.
-Default value is <code>type = "box"</code>. Options are:</p><ul><li><p><code>"box"</code>: Boxes are drawn around each pixel.</p></li>
-<li><p><code>"circle"</code>: Circles are drawn around each pixel.</p></li>
-<li><p><code>"arrow"</code>: Arrows are drawn pointing to each pixel.</p></li>
-</ul></dd>
+Default value is <code>type = "box"</code>. Options are:</p><dl><dt><code>"box"</code>: </dt>
+<dd><p>Boxes are drawn around each pixel.</p></dd>
+
+<dt><code>"circle"</code>: </dt>
+<dd><p>Circles are drawn around each pixel.</p></dd>
+
+<dt><code>"arrow"</code>: </dt>
+<dd><p>Arrows are drawn pointing to each pixel.</p></dd>
+
+
+</dl></dd>
 
 
 <dt id="arg-half">half<a class="anchor" aria-label="anchor" href="#arg-half"></a></dt>
 <dd><p>Character value specifying which half of hic plots
 to annotate. Triangle Hi-C plots will always default to the entirety of
-the triangular plot. Default value is <code>half = "inherit"</code>. Options are:</p><ul><li><p><code>"inherit"</code>: Pixels will be annotated on the <code>half</code>
-inherited by the input Hi-C plot.</p></li>
-<li><p><code>"both"</code>: Pixels will be annotated on both halves of the
-diagonal of a square Hi-C plot.</p></li>
-<li><p><code>"top"</code>: Pixels will be annotated on the upper diagonal
-half of a square Hi-C plot.</p></li>
-<li><p><code>"bottom"</code>: Pixels will be annotated on the bottom diagonal
-half of a square Hi-C plot.</p></li>
-</ul></dd>
+the triangular plot. Default value is <code>half = "inherit"</code>. Options are:</p><dl><dt><code>"inherit"</code>: </dt>
+<dd><p>Pixels will be annotated on the <code>half</code>
+inherited by the input Hi-C plot.</p></dd>
+
+<dt><code>"both"</code>: </dt>
+<dd><p>Pixels will be annotated on both halves of the
+diagonal of a square Hi-C plot.</p></dd>
+
+<dt><code>"top"</code>: </dt>
+<dd><p>Pixels will be annotated on the upper diagonal
+half of a square Hi-C plot.</p></dd>
+
+<dt><code>"bottom"</code>: </dt>
+<dd><p>Pixels will be annotated on the bottom diagonal
+half of a square Hi-C plot.</p></dd>
+
+
+</dl></dd>
 
 
 <dt id="arg-shift">shift<a class="anchor" aria-label="anchor" href="#arg-shift"></a></dt>
@@ -249,7 +278,7 @@ genomic region, placement, and <a href="https://rdrr.io/r/grid/grid.grob.html" c
 
 
       <footer><div class="copyright">
-  <p></p><p>Developed by <a href="https://github.com/nekramer" class="external-link">Nicole Kramer</a>.</p>
+  <p></p><p>Developed by <a href="https://github.com/nekramer" class="external-link">Nicole Kramer</a>, <a href="https://github.com/EricSDavis" class="external-link">Eric S. Davis</a>, <a href="https://github.com/cwenger" class="external-link">Craig Wenger</a>, <a href="https://github.com/dphansti" class="external-link">Douglas H. Phanstiel</a>.</p>
 </div>
 
 <div class="pkgdown">
