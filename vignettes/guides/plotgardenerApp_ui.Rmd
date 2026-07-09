@@ -31,7 +31,11 @@ finish.
      alt="The Plotgardener App interface, with three labeled regions: the Panel List on the far left (icon-based navigation bar), the Parameters Panel in the center (form fields for configuring the selected tab), and the Figure Preview on the right (live rendering of the current figure)."
      style="width: 100%; margin-top: 1em; margin-bottom: 2em;" />
 
+<img style="float: left; margin-right: 20px;" src="../../man/figures/pg-app-icons-01-page.png" width="50">
+
 ## The Page Tab
+
+---
 
 Before adding any plots, use the **Page** tab to set the overall canvas
 dimensions for your figure. Its settings appear in the **Parameters Panel**.
@@ -54,13 +58,19 @@ size (e.g., single-column = 3.5 in, double-column = 7 in), set those here.
 For more on how the `plotgardener` coordinate system works, see
 [The plotgardener Page](plotgardener_page.html).
 
+<img style="float: left; margin-right: 20px;" src="../../man/figures/pg-app-icons-02-plots.png" width="50">
+
 ## The Plots Tab
+
+---
 
 The **Plots** tab is where you add, configure, and arrange individual
 visualization panels. Select it from the **Panel List** to load its
 controls into the **Parameters Panel**.
 
-### Adding a Panel
+### Adding a Plot
+
+<img style="float: right;" src="../../man/figures/pgApp/adding_a_plot.png" width="200">
 
 1. Select a `plotgardener` function from the **Function** dropdown in the
    **Parameters Panel**. All functions supported by the installed version
@@ -68,42 +78,44 @@ controls into the **Parameters Panel**.
 2. Give the panel a descriptive name in the **Panel Name** field.
 3. Upload your data file using the **Browse** button next to the
    relevant data parameter.
-4. Fill in the required parameters (clearly labeled in the interface).
+4. Fill in the required parameters (denoted by `*` in the interface).
    Optional parameters can be left at their defaults.
-5. Click **Add Plot** to place the panel on the page.
-6. Click **Run Script** to render the updated figure in the **Figure Preview**.
+5. Click **Run Script** to render the updated figure in the **Figure Preview**.
 
-### Editing a Panel
+For more information on each type of plot and their input requirements, see [Plot Types](plotgardenerApp_plotTypes.html)
 
-Select any existing panel from the **Panel List**, adjust its parameters
-in the **Parameters Panel**, and click **Update Plot**, then **Run Script**
-to re-render.
+<div style="margin-bottom:100px;"></div>
+
+
+### Editing a Plot
+
+1. Select any existing panel from the **Plot List**
+2. Adjust its parameters in the **Parameters Panel**
+3. Click **Run Script** to re-render.
 
 ### Adding Annotations
 
-To layer annotations onto an existing panel (e.g., a highlight box,
-genome axis, or domain boundary), select the target panel from the
-**Panel List**, then choose an annotation function from the **Annotations**
-dropdown and configure its parameters. See [Plot Annotations](annotations.html)
-for details on available annotation types.
+<img style="float: right;" src="../../man/figures/pgApp/annotate_a_plot.png" width="200">
 
-### Supported Input Formats
+To layer annotations onto an existing plot (e.g., a highlight box,
+genome axis, or domain boundary):
 
-The app accepts the same data formats as the `plotgardener` R package:
+1. Select the target plot from the **Plot List**, in the **Parameters Panel**. 
+2. Click the **Add Annotation +** button at the bottom of the plot's parameters. 
+3. Choose an annotation function from the **Annotations** dropdown.
+4. Configure its parameters.
+5. Click the **Run Script** button.
 
-| Plot Function | Accepted Formats |
-|---|---|
-| `plotSignal` | `.bigWig`, `.bw` |
-| `plotHicSquare`, `plotHicRectangle`, `plotHicTriangle` | `.hic`, `.cool`, `.mcool` |
-| `plotGenes`, `plotTranscripts` | Bioconductor annotation packages (e.g., `TxDb.*`) |
-| `plotPairs`, `plotPairsArches` | `.bedpe` |
-| `plotRanges` | `.bed`, `.narrowPeak`, `.broadPeak` |
-| `plotManhattan` | Data frame with `chrom`, `pos`, `p` columns |
+See [Plot Types and Annotations](plotgardenerApp_plotTypes.html) for details on available 
+annotation types.
 
-For a full description of data formats and how to prepare your files,
-see [Reading Data for plotgardener](reading_data_for_plotgardener.html).
+<div style="margin-bottom:100px;"></div>
+
+<img style="float: left; margin-right: 20px;" src="../../man/figures/pg-app-icons-03-save.png" width="50">
 
 ## The Save Tab
+
+---
 
 The **Save** tab lets you preserve and restore your entire figure
 session. Select it from the **Panel List** to access its controls in
@@ -119,7 +131,11 @@ Sessions are portable across machines, making it straightforward to
 share figure templates with collaborators or reproduce figures in a
 different environment.
 
+<img style="float: left; margin-right: 20px;" src="../../man/figures/pg-app-icons-04-code.png" width="50">
+
 ## The Code Tab
+
+---
 
 The **Code** tab displays the R script that the app generates from your
 current panel configuration. Select it from the **Panel List** to view
@@ -162,12 +178,7 @@ A complete figure-building session follows this sequence:
 
 ## Further Resources
 
-- [Reading Data for plotgardener](reading_data_for_plotgardener.html) —
-  data format details and loading functions
-- [Plot Annotations](annotations.html) — all available annotation
-  functions
+- [Plot Types and Annotations](plotgardenerApp_plotTypes.html) — descriptions and examples of available plotting and annotation functions
 - [The plotgardener Page](plotgardener_page.html) — coordinate system
   and page layout
-- [plotgardener Meta Functions](plotgardener_meta_functions.html) —
-  `pgParams`, assemblies, and color utilities
 - [`plotgardener` R package documentation](https://phanstiellab.github.io/plotgardener)

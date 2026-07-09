@@ -26,3 +26,5 @@ sections:
   download and installation instructions
 - [User Interface](plotgardenerApp_ui.html) — a structured walkthrough
   of all four tabs and a typical workflow
+- [Plot Types](plotgardenerApp_plotTypes.html) — explaination of plot types,
+  their inputs and outputs
