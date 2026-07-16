@@ -7,11 +7,23 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-# Plotgardener App Tutorial
-
 Let's recreate this figure using the Plotgardener App!
 
 ![](tutorial_images/1_figure.png)
+
+## Download Sample Data
+To plot this figure you will need to download the HiC and bigWig data. To download the data click the links below.
+These files were created to practice with the tutorial and only contain data for chromosome 21 (and thus are very small files). If you're interested in plotting other regions in different chromosomes you can provide your own data or download larger publicly available datasets to plot! 
+
+(right-click and select "Save link as..." to download)
+
+[Download HiC_IMR90.hic](http://phanstiel-lab.med.unc.edu/data/HiC_IMR90.hic)
+
+[Download HiC_GM12878.hic](http://phanstiel-lab.med.unc.edu/data/HiC_GM12878.hic) 
+
+[Download CTCF.bw](http://phanstiel-lab.med.unc.edu/data/CTCF.bw) 
+
+[Download H3k27ac.bw](http://phanstiel-lab.med.unc.edu/data/H3k27ac.bw) 
 
 ## Getting Started
 

@@ -67,6 +67,8 @@ navbar:
           href: articles/guides/plotgardenerApp_plotTypes.html
         - text: Tutorial
           href: articles/guides/plotgardenerApp_tutorial.html
+        - text: Sample Data
+          href: articles/guides/sample_data.html
   right:
     - icon: fab fa-github fa-lg
       href: https://github.com/PhanstielLab/plotgardener
