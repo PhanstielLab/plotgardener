@@ -158,46 +158,63 @@
 <div class="section level3">
 <h3 id="getting-started">Getting Started<a class="anchor" aria-label="anchor" href="#getting-started"></a>
 </h3>
-<p>First, open the Plotgardener App. It should be installed and available as an application on your computer. For installation help, see the <a href="https://phanstiellab.github.io/plotgardener/articles/guides/plotgardenerApp_installation.html">installation guide</a>.</p>
+<p>First, open the Plotgardener App. It should be installed and
+available as an application on your computer. For installation help, see
+the <a href="https://phanstiellab.github.io/plotgardener/articles/guides/plotgardenerApp_installation.html">installation
+guide</a>.</p>
 <p><img src="tutorial_images/2_app.png"></p>
-<p>After opening the app, you will see the default page. For an overview of all the tabs, see the <a href="https://phanstiellab.github.io/plotgardener/articles/guides/plotgardenerApp_ui.html">User Interface guide</a>.</p>
+<p>After opening the app, you will see the default page. For an overview
+of all the tabs, see the <a href="https://phanstiellab.github.io/plotgardener/articles/guides/plotgardenerApp_ui.html">User
+Interface guide</a>.</p>
 <p><img src="tutorial_images/3_defaultpage.png"></p>
 </div>
 <div class="section level3">
 <h3 id="create-a-custom-page">Create a Custom Page<a class="anchor" aria-label="anchor" href="#create-a-custom-page"></a>
 </h3>
-<p>We will start by creating a custom-sized page. Leave <strong>Show Guides</strong> set to <code>TRUE</code> so we can map out where we want our plots.</p>
+<p>We will start by creating a custom-sized page. Leave <strong>Show
+Guides</strong> set to <code>TRUE</code> so we can map out where we want
+our plots.</p>
 <p>Set the following values and click <strong>Run Script</strong>:</p>
 <p><img src="tutorial_images/4_custompage.png"></p>
 </div>
 <div class="section level3">
 <h3 id="add-panel-a-hic-square-plot-top-half">Add Panel A — HiC Square Plot (Top Half)<a class="anchor" aria-label="anchor" href="#add-panel-a-hic-square-plot-top-half"></a>
 </h3>
-<p>Navigate to the <strong>Plots</strong> tab (shovel icon) to begin adding plots to the figure.</p>
+<p>Navigate to the <strong>Plots</strong> tab (shovel icon) to begin
+adding plots to the figure.</p>
 <div class="section level4">
 <h4 id="add-the-plot">Add the plot<a class="anchor" aria-label="anchor" href="#add-the-plot"></a>
 </h4>
-<p>Click <strong>Add Plot</strong> and give your plot a name, here we’ve named the plot after the file. Select <strong>plotHicSquare</strong> as the plot type. For an overview of all plot types and their required inputs, see the <a href="https://phanstiellab.github.io/plotgardener/articles/guides/plotgardenerApp_plotTypes.html">Plot Types and Annotations guide</a>.</p>
+<p>Click <strong>Add Plot</strong> and give your plot a name, here we’ve
+named the plot after the file. Select <strong>plotHicSquare</strong> as
+the plot type. For an overview of all plot types and their required
+inputs, see the <a href="https://phanstiellab.github.io/plotgardener/articles/guides/plotgardenerApp_plotTypes.html">Plot
+Types and Annotations guide</a>.</p>
 <p><img src="tutorial_images/5_addplot.png"><img src="tutorial_images/6_selectplot.png"></p>
 </div>
 <div class="section level4">
 <h4 id="data-parameters">Data parameters<a class="anchor" aria-label="anchor" href="#data-parameters"></a>
 </h4>
-<p>Select the IMR90 HiC file as the input data. <!-- TODO: Add link to example data --> Then enter the following data parameters:</p>
+<p>Select the IMR90 HiC file as the input data.
+<!-- TODO: Add link to example data --> Then enter the following data
+parameters:</p>
 <p><img src="tutorial_images/7_dataparameters.png"></p>
-<p>Set the <strong>Assembly</strong> to <code>hg19</code>, which indicated which build of the genome our data was aligned to.</p>
+<p>Set the <strong>Assembly</strong> to <code>hg19</code>, which
+indicated which build of the genome our data was aligned to.</p>
 <p><img src="tutorial_images/8_assembly.png"></p>
 </div>
 <div class="section level4">
 <h4 id="positional-parameters">Positional parameters<a class="anchor" aria-label="anchor" href="#positional-parameters"></a>
 </h4>
-<p>Enter the following positional parameters to place the plot on the page:</p>
+<p>Enter the following positional parameters to place the plot on the
+page:</p>
 <p><img src="tutorial_images/9_positionparameters.png"></p>
 </div>
 <div class="section level4">
 <h4 id="half">Half<a class="anchor" aria-label="anchor" href="#half"></a>
 </h4>
-<p>Since we are plotting only the top half of the square, set <strong>Half</strong> to <code>top</code>.</p>
+<p>Since we are plotting only the top half of the square, set
+<strong>Half</strong> to <code>top</code>.</p>
 <p><img src="tutorial_images/10_tophalf.png"></p>
 <p>Click <strong>Run Script</strong> to render the plot.</p>
 <p><img src="tutorial_images/11_tophalfplot.png"></p>
@@ -205,9 +222,14 @@
 <div class="section level4">
 <h4 id="annotations">Annotations<a class="anchor" aria-label="anchor" href="#annotations"></a>
 </h4>
-<p><strong>Genome label:</strong> Click <strong>Add Annotation</strong> at the bottom of the HicSquare plot and select <strong>annoGenomeLabel</strong>. Enter the x and y positions for the label.</p>
+<p><strong>Genome label:</strong> Click <strong>Add Annotation</strong>
+at the bottom of the HicSquare plot and select
+<strong>annoGenomeLabel</strong>. Enter the x and y positions for the
+label.</p>
 <p><img src="tutorial_images/12_addannotation.png"><img src="tutorial_images/13_selectannotation.png"><img src="tutorial_images/14_annoparameters.png"></p>
-<p><strong>Heatmap scale bar:</strong> Click <strong>Add Annotation</strong> again and select <strong>annoHeatmapLegend</strong>. Enter the following position and size values:</p>
+<p><strong>Heatmap scale bar:</strong> Click <strong>Add
+Annotation</strong> again and select <strong>annoHeatmapLegend</strong>.
+Enter the following position and size values:</p>
 <p><img src="tutorial_images/15_heatmapanno.png"><img src="tutorial_images/16_heatmapparms.png"></p>
 <p>Click <strong>Run Script</strong> to see the annotations added.</p>
 <p><img src="tutorial_images/17_viewanno.png"></p>
@@ -216,14 +238,21 @@
 <div class="section level3">
 <h3 id="add-panel-a-hic-square-plot-bottom-half">Add Panel A — HiC Square Plot (Bottom Half)<a class="anchor" aria-label="anchor" href="#add-panel-a-hic-square-plot-bottom-half"></a>
 </h3>
-<p>Click <strong>Add Plot</strong> and add another <strong>plotHicSquare</strong>. This time, select the GM12878 HiC file as the input data file. Enter the same data parameters as before, but set <strong>Half</strong> to <code>bottom</code>.</p>
-<p>Click <strong>Run Script</strong> to render the bottom half of the square.</p>
+<p>Click <strong>Add Plot</strong> and add another
+<strong>plotHicSquare</strong>. This time, select the GM12878 HiC file
+as the input data file. Enter the same data parameters as before, but
+set <strong>Half</strong> to <code>bottom</code>.</p>
+<p>Click <strong>Run Script</strong> to render the bottom half of the
+square.</p>
 <p><img src="tutorial_images/18_bottomhalfplot.png"></p>
 </div>
 <div class="section level3">
 <h3 id="add-panel-b-hic-rectangle">Add Panel B — HiC Rectangle<a class="anchor" aria-label="anchor" href="#add-panel-b-hic-rectangle"></a>
 </h3>
-<p>Click <strong>Add Plot</strong> and select <strong>plotHicRectangle</strong>. Choose the GM12878 HiC file as the input data. Enter the same data parameters as before, then add the positional parameters below:</p>
+<p>Click <strong>Add Plot</strong> and select
+<strong>plotHicRectangle</strong>. Choose the GM12878 HiC file as the
+input data. Enter the same data parameters as before, then add the
+positional parameters below:</p>
 <p><img src="tutorial_images/19_hicrectdata.png"><img src="tutorial_images/20_hicrectpos.png"></p>
 <p>Click <strong>Run Script</strong>.</p>
 <p><img src="tutorial_images/21_hicrectplot.png"></p>
@@ -233,43 +262,55 @@
 <div class="section level3">
 <h3 id="add-signal-tracks">Add Signal Tracks<a class="anchor" aria-label="anchor" href="#add-signal-tracks"></a>
 </h3>
-<p>Now we will add signal tracks showing ChIP-seq data for two proteins of interest: CTCF and H3K27ac.</p>
+<p>Now we will add signal tracks showing ChIP-seq data for two proteins
+of interest: CTCF and H3K27ac.</p>
 <div class="section level4">
 <h4 id="ctcf">CTCF<a class="anchor" aria-label="anchor" href="#ctcf"></a>
 </h4>
-<p>Click <strong>Add Plot</strong> and select <strong>plotSignal</strong>. Choose <code>CTCF.bw</code> as the data file. Enter the data parameters:</p>
+<p>Click <strong>Add Plot</strong> and select
+<strong>plotSignal</strong>. Choose <code>CTCF.bw</code> as the data
+file. Enter the data parameters:</p>
 <p><img src="tutorial_images/23_addsignal.png"><img src="tutorial_images/24_signaldata.png"></p>
 <p>Then enter the positional parameters:</p>
 <p><img src="tutorial_images/25_signalpos.png"></p>
 <p>Click <strong>Run Script</strong>.</p>
 <p><img src="tutorial_images/26_rendersignal.png"></p>
-<p>To label the track, type <code>CTCF</code> in the <strong>Label</strong> box and click <strong>Run Script</strong> again.</p>
+<p>To label the track, type <code>CTCF</code> in the
+<strong>Label</strong> box and click <strong>Run Script</strong>
+again.</p>
 <p><img src="tutorial_images/27_labelsignal.png"><img src="tutorial_images/28_rerendersingal.png"></p>
 </div>
 <div class="section level4">
 <h4 id="h3k27ac">H3K27ac<a class="anchor" aria-label="anchor" href="#h3k27ac"></a>
 </h4>
-<p>Repeat the steps above for H3K27ac. This time, change the track color by entering the hex code “#00008B”in the linecolor and fill field:</p>
+<p>Repeat the steps above for H3K27ac. This time, change the track color
+by entering the hex code “#00008B”in the linecolor and fill field:</p>
 <p><img src="tutorial_images/29_acsingalplot.png"></p>
 </div>
 </div>
 <div class="section level3">
 <h3 id="add-gene-annotations">Add Gene Annotations<a class="anchor" aria-label="anchor" href="#add-gene-annotations"></a>
 </h3>
-<p>Click <strong>Add Plot</strong> and select <strong>plotGenes</strong>. Enter the positional parameters:</p>
+<p>Click <strong>Add Plot</strong> and select
+<strong>plotGenes</strong>. Enter the positional parameters:</p>
 <p><img src="tutorial_images/30_genesplot.png"></p>
 <p>Click <strong>Run Script</strong>.</p>
 </div>
 <div class="section level3">
 <h3 id="add-a-genome-label-to-panel-b">Add a Genome Label to Panel B<a class="anchor" aria-label="anchor" href="#add-a-genome-label-to-panel-b"></a>
 </h3>
-<p>Return to the <strong>plotHicRectangle</strong> plot and click <strong>Add Annotation</strong>. Select <strong>annoGenomeLabel</strong> and enter the position as shown below and click <strong>Run Script</strong>.</p>
+<p>Return to the <strong>plotHicRectangle</strong> plot and click
+<strong>Add Annotation</strong>. Select <strong>annoGenomeLabel</strong>
+and enter the position as shown below and click <strong>Run
+Script</strong>.</p>
 <p><img src="tutorial_images/31_annogenome.png"></p>
 </div>
 <div class="section level3">
 <h3 id="add-panel-labels">Add Panel Labels<a class="anchor" aria-label="anchor" href="#add-panel-labels"></a>
 </h3>
-<p>To label the panels, click <strong>Add Plot</strong> and select <strong>plotText</strong>. Add the label <code>A</code> at the following position:</p>
+<p>To label the panels, click <strong>Add Plot</strong> and select
+<strong>plotText</strong>. Add the label <code>A</code> at the following
+position:</p>
 <p><img src="tutorial_images/32_addtextA.png"><img src="tutorial_images/33_plottextA.png"></p>
 <p>Repeat to add the label <code>B</code>:</p>
 <p><img src="tutorial_images/34_addtextB.png"></p>
@@ -278,9 +319,13 @@
 <div class="section level3">
 <h3 id="finalize-and-export">Finalize and Export<a class="anchor" aria-label="anchor" href="#finalize-and-export"></a>
 </h3>
-<p>Once everything looks good, return to the <strong>Page</strong> tab and set <strong>Show Guides</strong> to <code>FALSE</code>. Click <strong>Run Script</strong> to hide the guides.</p>
+<p>Once everything looks good, return to the <strong>Page</strong> tab
+and set <strong>Show Guides</strong> to <code>FALSE</code>. Click
+<strong>Run Script</strong> to hide the guides.</p>
 <p><img src="tutorial_images/36_removeguides.png"></p>
-<p>When you are happy with the figure, click the <strong>Download</strong> button at the top to export it. You can then open the PDF in any PDF viewer.</p>
+<p>When you are happy with the figure, click the
+<strong>Download</strong> button at the top to export it. You can then
+open the PDF in any PDF viewer.</p>
 </div>
 </div>
   </div>
@@ -300,7 +345,7 @@
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.3.</p>
 </div>
 
       </footer>

@@ -58,24 +58,6 @@
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-    The Plotgardener App
-
-    <span class="caret"></span>
-  </a>
-  <ul class="dropdown-menu" role="menu">
-<li>
-      <a href="../../articles/guides/plotgardenerApp_getting_started.html">Getting Started</a>
-    </li>
-    <li>
-      <a href="../../articles/guides/plotgardenerApp_installation.html">Install the Plotgardener App</a>
-    </li>
-    <li>
-      <a href="../../articles/guides/plotgardenerApp_ui.html">User Interface</a>
-    </li>
-  </ul>
-</li>
-<li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
 
     <span class="caret"></span>
@@ -112,6 +94,30 @@
 </li>
 <li>
   <a href="../../reference/index.html">Reference</a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    The Plotgardener App
+
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+<li>
+      <a href="../../articles/guides/plotgardenerApp_getting_started.html">Getting Started</a>
+    </li>
+    <li>
+      <a href="../../articles/guides/plotgardenerApp_installation.html">Install the Plotgardener App</a>
+    </li>
+    <li>
+      <a href="../../articles/guides/plotgardenerApp_ui.html">User Interface</a>
+    </li>
+    <li>
+      <a href="../../articles/guides/plotgardenerApp_plotTypes.html">Plot Types and Annotations</a>
+    </li>
+    <li>
+      <a href="../../articles/guides/plotgardenerApp_tutorial.html">Tutorial</a>
+    </li>
+  </ul>
 </li>
       </ul>
 <ul class="nav navbar-nav navbar-right">
@@ -162,13 +168,13 @@ meaning that plots cannot be squished and stretched based on their
 preferred size and unit of measurement:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../../reference/pageCreate.html">pageCreate</a></span><span class="op">(</span>width <span class="op">=</span> <span class="fl">3</span>, height <span class="op">=</span> <span class="fl">3</span>, default.units <span class="op">=</span> <span class="st">"inches"</span><span class="op">)</span></span></code></pre></div>
-<p><img src="our_philosophy_files/figure-html/philosophy_1-1.png" class="r-plt" alt="" width="900" style="display: block; margin: auto;"></p>
+<p><img src="our_philosophy_files/figure-html/philosophy_1-1.png" width="900" style="display: block; margin: auto;"></p>
 <p>and then make and precisely arrange plots within this defined
 landscape. If users want the top, left corner of their plot to be 0.5
 inches down from the top of this page and 0.5 inches from the left:</p>
-<p><img src="our_philosophy_files/figure-html/philosphy_2-1.png" class="r-plt" alt="" width="900" style="display: block; margin: auto;"></p>
+<p><img src="our_philosophy_files/figure-html/philosphy_2-1.png" width="900" style="display: block; margin: auto;"></p>
 <p>and users want their plot be 2 inches wide and 1 inch tall:</p>
-<p><img src="our_philosophy_files/figure-html/philosphy_3-1.png" class="r-plt" alt="" width="900" style="display: block; margin: auto;"></p>
+<p><img src="our_philosophy_files/figure-html/philosphy_3-1.png" width="900" style="display: block; margin: auto;"></p>
 <p><code>plotgardener</code> can make the plot with these exact
 parameters:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
@@ -185,7 +191,7 @@ parameters:</p>
 <span>    x <span class="op">=</span> <span class="fl">0.5</span>, y <span class="op">=</span> <span class="fl">0.5</span>, width <span class="op">=</span> <span class="fl">2</span>, height <span class="op">=</span> <span class="fl">1</span>,</span>
 <span>    just <span class="op">=</span> <span class="fu"><a href="../../reference/c.html">c</a></span><span class="op">(</span><span class="st">"left"</span>, <span class="st">"top"</span><span class="op">)</span>, default.units <span class="op">=</span> <span class="st">"inches"</span></span>
 <span><span class="op">)</span></span></code></pre></div>
-<p><img src="our_philosophy_files/figure-html/philosophy_4-1.png" class="r-plt" alt="" width="900" style="display: block; margin: auto;"></p>
+<p><img src="our_philosophy_files/figure-html/philosophy_4-1.png" width="900" style="display: block; margin: auto;"></p>
 <p>This exact plot sizing and placement is particularly important and
 useful for standardized and accurate data comparisons along the x and
 y-axes.</p>
@@ -226,7 +232,7 @@ region will exactly span the 2 inch width:</p>
 <span>    x <span class="op">=</span> <span class="fl">0.5</span>, y <span class="op">=</span> <span class="fl">1.5</span>,</span>
 <span>    just <span class="op">=</span> <span class="fu"><a href="../../reference/c.html">c</a></span><span class="op">(</span><span class="st">"left"</span>, <span class="st">"top"</span><span class="op">)</span>, default.units <span class="op">=</span> <span class="st">"inches"</span></span>
 <span><span class="op">)</span></span></code></pre></div>
-<p><img src="our_philosophy_files/figure-html/philosphy_5-1.png" class="r-plt" alt="" width="900" style="display: block; margin: auto;"></p>
+<p><img src="our_philosophy_files/figure-html/philosphy_5-1.png" width="900" style="display: block; margin: auto;"></p>
 <p>When it’s time to stack various data types along the same genomic
 region, users can be confident in accurately aligning containers of the
 same width:</p>
@@ -278,7 +284,7 @@ same width:</p>
 <span>    params <span class="op">=</span> <span class="va">params</span>, scale <span class="op">=</span> <span class="st">"Mb"</span>,</span>
 <span>    y <span class="op">=</span> <span class="fl">3.57</span>, just <span class="op">=</span> <span class="fu"><a href="../../reference/c.html">c</a></span><span class="op">(</span><span class="st">"left"</span>, <span class="st">"top"</span><span class="op">)</span>, default.units <span class="op">=</span> <span class="st">"inches"</span></span>
 <span><span class="op">)</span></span></code></pre></div>
-<p><img src="our_philosophy_files/figure-html/philosphy_6-1.png" class="r-plt" alt="" width="900" style="display: block; margin: auto;"></p>
+<p><img src="our_philosophy_files/figure-html/philosphy_6-1.png" width="900" style="display: block; margin: auto;"></p>
 </div>
 <div class="section level2">
 <h2 id="programmatic-and-reproducible-multi-panel-figures">Programmatic and reproducible multi-panel figures<a class="anchor" aria-label="anchor" href="#programmatic-and-reproducible-multi-panel-figures"></a>
@@ -366,7 +372,7 @@ This means that if users define the same data:</p>
 <span><span class="fu"><a href="../../reference/pageGuideHide.html">pageGuideHide</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p>they will generate the <strong>exact same</strong> multi-panel
 visualization:</p>
-<p><img src="our_philosophy_files/figure-html/philosophy_7-1.png" class="r-plt" alt="" width="1200" style="display: block; margin: auto;"></p>
+<p><img src="our_philosophy_files/figure-html/philosophy_7-1.png" width="1200" style="display: block; margin: auto;"></p>
 <p>Not only does this make visualizations entirely reproducible with
 code, but it also makes it easy to change data ranges and aesthetics
 with simple pieces of code:</p>
@@ -386,7 +392,7 @@ with simple pieces of code:</p>
 <span>    x <span class="op">=</span> <span class="fl">0.5</span>, y <span class="op">=</span> <span class="fl">2.25</span>, width <span class="op">=</span> <span class="fl">3</span>, height <span class="op">=</span> <span class="fl">0.5</span>,</span>
 <span>    just <span class="op">=</span> <span class="fu"><a href="../../reference/c.html">c</a></span><span class="op">(</span><span class="st">"left"</span>, <span class="st">"top"</span><span class="op">)</span>, default.units <span class="op">=</span> <span class="st">"inches"</span></span>
 <span><span class="op">)</span></span></code></pre></div>
-<p><img src="our_philosophy_files/figure-html/philosophy_8-1.png" class="r-plt" alt="" width="1200" style="display: block; margin: auto;"></p>
+<p><img src="our_philosophy_files/figure-html/philosophy_8-1.png" width="1200" style="display: block; margin: auto;"></p>
 </div>
 <div class="section level2">
 <h2 id="utilizing-grid-graphics-viewports">Utilizing <code>grid</code> graphics <code>viewports</code><a class="anchor" aria-label="anchor" href="#utilizing-grid-graphics-viewports"></a>
@@ -417,7 +423,7 @@ container and clip data to precise axis measurements.</p>
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.3.</p>
 </div>
 
       </footer>
