@@ -20,7 +20,7 @@ articles:
   guides/plotting_multiomic_data: guides/plotting_multiomic_data.html
   guides/reading_data_for_plotgardener: guides/reading_data_for_plotgardener.html
   guides/sample_data: guides/sample_data.html
-last_built: 2026-07-18T04:35Z
+last_built: 2026-07-18T11:13Z
 urls:
   reference: https://phanstiellab.github.io/plotgardener/reference
   article: https://phanstiellab.github.io/plotgardener/articles
