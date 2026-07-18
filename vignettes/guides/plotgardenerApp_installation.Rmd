@@ -19,14 +19,13 @@ knitr::opts_chunk$set(
 
 ## Requirements
 
-The Plotgardener App currently requires **macOS with Apple Silicon** (M1,
-M2, or M3). Intel-based Macs and other operating systems are not
-supported at this time.
+The Plotgardener App requires **macOS** (Apple Silicon M1/M2/M3 or
+Intel). Windows and Linux are not supported at this time.
 
 <div style="margin: 2em 0;">
   <a href="https://github.com/rishabhsvemuri/ThePlotgardenerApp/releases/download/v1.0.0/plotgardener-1.0.0.dmg"
      class="btn btn-primary btn-lg">
-    <i class="fab fa-apple"></i>&nbsp; Download for macOS (Apple Silicon)
+    <i class="fab fa-apple"></i>&nbsp; Download for macOS
   </a>
 </div>
 <p><a href="https://github.com/rishabhsvemuri/ThePlotgardenerApp/releases">View all releases →</a></p>

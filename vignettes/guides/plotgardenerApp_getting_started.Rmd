@@ -55,10 +55,10 @@ further in any IDE.
 
 ## Platform Support
 
-The Plotgardener App currently requires **macOS with Apple Silicon**
-(M1, M2, or M3). Intel-based Macs, Windows, and Linux are not supported
-at this time. See [Install the Plotgardener App](plotgardenerApp_installation.html)
-for download and installation instructions.
+The Plotgardener App requires **macOS** (Apple Silicon M1/M2/M3 or
+Intel). Windows and Linux are not supported at this time. See
+[Install the Plotgardener App](plotgardenerApp_installation.html) for
+download and installation instructions.
 
 ## Under the Hood
 
