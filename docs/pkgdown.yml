@@ -1,5 +1,5 @@
-pandoc: 3.8.3
-pkgdown: 2.2.0
+pandoc: '3.4'
+pkgdown: 2.1.3
 pkgdown_sha: ~
 articles:
   guides/aesthetics: guides/aesthetics.html
@@ -13,11 +13,14 @@ articles:
   guides/plotgardener_page: guides/plotgardener_page.html
   guides/plotgardenerApp_getting_started: guides/plotgardenerApp_getting_started.html
   guides/plotgardenerApp_installation: guides/plotgardenerApp_installation.html
+  guides/plotgardenerApp_plotTypes: guides/plotgardenerApp_plotTypes.html
+  guides/plotgardenerApp_tutorial: guides/plotgardenerApp_tutorial.html
   guides/plotgardenerApp_ui: guides/plotgardenerApp_ui.html
   guides/plotgardenerApp: guides/plotgardenerApp.html
   guides/plotting_multiomic_data: guides/plotting_multiomic_data.html
   guides/reading_data_for_plotgardener: guides/reading_data_for_plotgardener.html
-last_built: 2026-07-18T04:15Z
+  guides/sample_data: guides/sample_data.html
+last_built: 2026-07-16T19:53Z
 urls:
   reference: https://phanstiellab.github.io/plotgardener/reference
   article: https://phanstiellab.github.io/plotgardener/articles

@@ -33,14 +33,6 @@ navbar:
       href: articles/guides/our_philosophy.html
     - text: Introduction to plotgardener
       href: articles/introduction_to_plotgardener.html
-    - text: The Plotgardener App
-      menu:
-        - text: Getting Started
-          href: articles/guides/plotgardenerApp_getting_started.html
-        - text: Install the Plotgardener App
-          href: articles/guides/plotgardenerApp_installation.html
-        - text: User Interface
-          href: articles/guides/plotgardenerApp_ui.html
     - text: Articles
       menu:
         - text: The plotgardener Page
@@ -63,6 +55,20 @@ navbar:
           href: articles/guides/aesthetics.html
     - text: Reference
       href: reference/index.html
+    - text: The Plotgardener App
+      menu:
+        - text: Getting Started
+          href: articles/guides/plotgardenerApp_getting_started.html
+        - text: Install the Plotgardener App
+          href: articles/guides/plotgardenerApp_installation.html
+        - text: User Interface
+          href: articles/guides/plotgardenerApp_ui.html
+        - text: Plot Types and Annotations
+          href: articles/guides/plotgardenerApp_plotTypes.html
+        - text: Tutorial
+          href: articles/guides/plotgardenerApp_tutorial.html
+        - text: Sample Data
+          href: articles/guides/sample_data.html
   right:
     - icon: fab fa-github fa-lg
       href: https://github.com/PhanstielLab/plotgardener

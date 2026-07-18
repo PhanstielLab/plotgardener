@@ -1,0 +1,56 @@
+---
+title: "Plot Types"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Plot Types}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+editor_options:
+  markdown:
+    wrap: 72
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+
+Plotgardener App supports several different types of plots for visualizing genomic data. See the table below for a brief description of each function, it's inputs and outputs. For more information and description of the parameters for each plot, see the info and question icons within the plotgardnerApp.
+
+To learn more about each of the input file types, please see the [UCSC's FAQ for Data File Formats](genome.ucsc.edu/FAQ/FAQformat.html).
+
+| Plot Function | Description | Input File | Plot |
+|---|---|---|---|
+| `plotSignal` | Plot any kind of signal track data for a single chromosome | `.bigWig`, `.bw` | <img style="float: left;" src="../../man/figures/pgApp/signal_quickplot-1.png" width="300"> |
+| `plotHicSquare`, `plotHicRectangle`, `plotHicTriangle` | Plot a Hi-C interaction matrix in a square, rectangle, or triangle format | `.hic`, `.cool`, `.mcool` | <img style="float: left;" src="../../man/figures/pgApp/hics_quickplot-1.png" width="80"> <img style="float: left;" src="../../man/figures/pgApp/hicr_quickplot-1.png" width="80"> <img style="float: left;" src="../../man/figures/pgApp/hict_quickplot-1.png" width="80"> |
+| `plotPairs`, `plotPairsArches` | Plot paired-end genomic range elements in line or arch format | `.bedpe` | <img style="float: left;" src="../../man/figures/pgApp/pairs_quickplot-1.png" width="300"> <img style="float: left;" src="../../man/figures/pgApp/arches_quickplot-1.png" width="300"> |
+| `plotRanges` | Plot genomic range elements in a pileup or collapsed format | `.bed`, `.narrowPeak`, `.broadPeak` | <img style="float: left;" src="../../man/figures/pgApp/ranges_quickplot-1.png" width="300"> |
+| `plotManhattan` | Plot a Manhattan plot | A `.csv` file with `chrom`, `pos`, `p` columns | <img style="float: left;" src="../../man/figures/pgApp/man_quickplot-1.png" width="300"> |
+| `plotGenes`, `plotTranscripts` | Plot a gene or transcript track for a specified genomic region | None | <img style="float: left;" src="../../man/figures/pgApp/gene_quickplot-1.png" width="300"> |
+| `plotGenomeLabel` | Plot genomic coordinates along the x or y-axis of a plotgardener plot | None | <img style="float: left;" src="../../man/figures/pgApp/label_quickplot-1.png" width="300"> |
+| `plotIdeogram` | Plot a chromosome ideogram with or without cytobands | None | <img style="float: left;" src="../../man/figures/pgApp/ideo_quickplot-1.png" width="300"> |
+| `plotCircle`, `plotRect` | Add a circle or rectangle to the plot area | None | <img style="float: left;" src="../../man/figures/pgApp/plotCircle.png" width="50"> <img style="float: left;" src="../../man/figures/pgApp/plotRect.png" width="50"> |
+| `plotText` | Add text annotations to the plot area | None | **Some Text** |
+
+
+
+# Annotations
+
+Annotations help you draw attention to certain areas of your plot. For more information and description of the parameters for each annotation, see the info and question icons within the plotgardnerApp.
+
+Annotations can be added to a plot at the bottom of the plot's parameter panel with the `Add Annotation +` button. This will produce a dropdown menu with available annotations. A short description of each annotation is listed in the table below along with an example of how they might be used with some plotgardener plots.
+
+| Annotation Function | Description | Example |
+|---|---|---|---|
+| `annoDomains` | Annotate domains in a Hi-C plot | <img style="float: left;" src="../../man/figures/pgApp/annoDomains.png" width="300"> |
+| `annoGenomeLabel` | Annotate genomic coordinates along the x or y-axis of a plot | <img style="float: left;" src="../../man/figures/pgApp/annoGenomeLabel.png" width="300"> |
+| `annoHeatmapLegend` | Add a color scale legend for heatmap-style plots | <img style="float: left;" src="../../man/figures/pgApp/annoHeatmapLegend.png" width="300"> |
+| `annoHighlight` | Annotates a highlight box around a specified genomic region of a plot | <img style="float: left;" src="../../man/figures/pgApp/annoHighlight.png" width="300"> |
+| `annoPixels` | Annotate pixels in a Hi-C plot | <img style="float: left;" src="../../man/figures/pgApp/annoPixels.png" width="300"> |
+| `annoSegments` | Annotates a line segment within a plot | <img style="float: left;" src="../../man/figures/pgApp/annoSegments.png" width="300"> |
+| `annoText` | Annotates text within a plot using the plot's genomic coordinates for positioning | <img style="float: left;" src="../../man/figures/pgApp/annoText.png" width="300"> |
+| `annoXaxis` | Add an x-axis to a plot | <img style="float: left;" src="../../man/figures/pgApp/annoXaxis.png" width="300"> |
+| `annoYaxis` | Add an y-axis to a plot | <img style="float: left;" src="../../man/figures/pgApp/annoYaxis.png" width="300"> |

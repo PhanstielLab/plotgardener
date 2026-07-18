@@ -1,0 +1,31 @@
+---
+title: "Sample Data"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Sample Data}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+These files were created to practice with the tutorial and only contain data for chromosome 21 (and thus are very small files). This data is originally from Rao et al 2014, A 3D map of the human genome at kilobase resolution reveals principles of chromatin looping (https://doi.org/10.1016/j.cell.2014.11.021) and the full files are available for download from GEO (https://www.ncbi.nlm.nih.gov/geo/) under accession number GSE63525  
+
+**Right-click the links below and select "Save link as..." to download**
+
+### HiC Data in the IMR90 cell line
+
+[Download HiC_IMR90.hic](http://phanstiel-lab.med.unc.edu/data/HiC_IMR90.hic)
+
+
+### HiC Data in the GM12878 cell line
+
+[Download HiC_GM12878.hic](http://phanstiel-lab.med.unc.edu/data/HiC_GM12878.hic) 
+
+
+### ChIP-seq Data for CTCF in the GM12878 cell line
+
+[Download CTCF.bw](http://phanstiel-lab.med.unc.edu/data/CTCF.bw) 
+
+
+### ChIP-seq Data for H3K27ac in the GM12878 cell line
+
+[Download H3k27ac.bw](http://phanstiel-lab.med.unc.edu/data/H3k27ac.bw) 

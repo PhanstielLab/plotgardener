@@ -58,24 +58,6 @@
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-    The Plotgardener App
-
-    <span class="caret"></span>
-  </a>
-  <ul class="dropdown-menu" role="menu">
-<li>
-      <a href="../../articles/guides/plotgardenerApp_getting_started.html">Getting Started</a>
-    </li>
-    <li>
-      <a href="../../articles/guides/plotgardenerApp_installation.html">Install the Plotgardener App</a>
-    </li>
-    <li>
-      <a href="../../articles/guides/plotgardenerApp_ui.html">User Interface</a>
-    </li>
-  </ul>
-</li>
-<li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
 
     <span class="caret"></span>
@@ -112,6 +94,33 @@
 </li>
 <li>
   <a href="../../reference/index.html">Reference</a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    The Plotgardener App
+
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+<li>
+      <a href="../../articles/guides/plotgardenerApp_getting_started.html">Getting Started</a>
+    </li>
+    <li>
+      <a href="../../articles/guides/plotgardenerApp_installation.html">Install the Plotgardener App</a>
+    </li>
+    <li>
+      <a href="../../articles/guides/plotgardenerApp_ui.html">User Interface</a>
+    </li>
+    <li>
+      <a href="../../articles/guides/plotgardenerApp_plotTypes.html">Plot Types and Annotations</a>
+    </li>
+    <li>
+      <a href="../../articles/guides/plotgardenerApp_tutorial.html">Tutorial</a>
+    </li>
+    <li>
+      <a href="../../articles/guides/sample_data.html">Sample Data</a>
+    </li>
+  </ul>
 </li>
       </ul>
 <ul class="nav navbar-nav navbar-right">
@@ -155,9 +164,11 @@ The <strong>Figure Preview</strong> on the right shows a live rendering
 of your figure. This guide walks through each section and describes a
 typical workflow for building a figure from start to finish.</p>
 <p><img src="../../reference/figures/plotgardenerApp-interface-overview.png" alt="The Plotgardener App interface, with three labeled regions: the Panel List on the far left (icon-based navigation bar), the Parameters Panel in the center (form fields for configuring the selected tab), and the Figure Preview on the right (live rendering of the current figure)." style="width: 100%; margin-top: 1em; margin-bottom: 2em;"></p>
+<p><img style="float: left; margin-right: 20px;" src="../../reference/figures/pg-app-icons-01-page.png" width="50"></p>
 <div class="section level2">
 <h2 id="the-page-tab">The Page Tab<a class="anchor" aria-label="anchor" href="#the-page-tab"></a>
 </h2>
+<hr>
 <p>Before adding any plots, use the <strong>Page</strong> tab to set the
 overall canvas dimensions for your figure. Its settings appear in the
 <strong>Parameters Panel</strong>.</p>
@@ -182,17 +193,20 @@ double-column = 7 in), set those here.</p>
 <p>For more on how the <code>plotgardener</code> coordinate system
 works, see <a href="plotgardener_page.html">The plotgardener
 Page</a>.</p>
+<p><img style="float: left; margin-right: 20px;" src="../../reference/figures/pg-app-icons-02-plots.png" width="50"></p>
 </div>
 <div class="section level2">
 <h2 id="the-plots-tab">The Plots Tab<a class="anchor" aria-label="anchor" href="#the-plots-tab"></a>
 </h2>
+<hr>
 <p>The <strong>Plots</strong> tab is where you add, configure, and
 arrange individual visualization panels. Select it from the
 <strong>Panel List</strong> to load its controls into the
 <strong>Parameters Panel</strong>.</p>
 <div class="section level3">
-<h3 id="adding-a-panel">Adding a Panel<a class="anchor" aria-label="anchor" href="#adding-a-panel"></a>
+<h3 id="adding-a-plot">Adding a Plot<a class="anchor" aria-label="anchor" href="#adding-a-plot"></a>
 </h3>
+<p><img style="float: right;" src="../../reference/figures/pgApp/adding_a_plot.png" width="200"></p>
 <ol style="list-style-type: decimal">
 <li>Select a <code>plotgardener</code> function from the
 <strong>Function</strong> dropdown in the <strong>Parameters
@@ -202,95 +216,57 @@ Panel</strong>. All functions supported by the installed version of
 field.</li>
 <li>Upload your data file using the <strong>Browse</strong> button next
 to the relevant data parameter.</li>
-<li>Fill in the required parameters (clearly labeled in the interface).
-Optional parameters can be left at their defaults.</li>
-<li>Click <strong>Add Plot</strong> to place the panel on the page.</li>
+<li>Fill in the required parameters (denoted by <code>*</code> in the
+interface). Optional parameters can be left at their defaults.</li>
 <li>Click <strong>Run Script</strong> to render the updated figure in
 the <strong>Figure Preview</strong>.</li>
 </ol>
+<p>For more information on each type of plot and their input
+requirements, see <a href="plotgardenerApp_plotTypes.html">Plot
+Types</a></p>
+<div style="margin-bottom:100px;">
+
+</div>
 </div>
 <div class="section level3">
-<h3 id="editing-a-panel">Editing a Panel<a class="anchor" aria-label="anchor" href="#editing-a-panel"></a>
+<h3 id="editing-a-plot">Editing a Plot<a class="anchor" aria-label="anchor" href="#editing-a-plot"></a>
 </h3>
-<p>Select any existing panel from the <strong>Panel List</strong>,
-adjust its parameters in the <strong>Parameters Panel</strong>, and
-click <strong>Update Plot</strong>, then <strong>Run Script</strong> to
-re-render.</p>
+<ol style="list-style-type: decimal">
+<li>Select any existing panel from the <strong>Plot List</strong>
+</li>
+<li>Adjust its parameters in the <strong>Parameters Panel</strong>
+</li>
+<li>Click <strong>Run Script</strong> to re-render.</li>
+</ol>
 </div>
 <div class="section level3">
 <h3 id="adding-annotations">Adding Annotations<a class="anchor" aria-label="anchor" href="#adding-annotations"></a>
 </h3>
-<p>To layer annotations onto an existing panel (e.g., a highlight box,
-genome axis, or domain boundary), select the target panel from the
-<strong>Panel List</strong>, then choose an annotation function from the
-<strong>Annotations</strong> dropdown and configure its parameters. See
-<a href="annotations.html">Plot Annotations</a> for details on available
-annotation types.</p>
+<p><img style="float: right;" src="../../reference/figures/pgApp/annotate_a_plot.png" width="200"></p>
+<p>To layer annotations onto an existing plot (e.g., a highlight box,
+genome axis, or domain boundary):</p>
+<ol style="list-style-type: decimal">
+<li>Select the target plot from the <strong>Plot List</strong>, in the
+<strong>Parameters Panel</strong>.</li>
+<li>Click the <strong>Add Annotation +</strong> button at the bottom of
+the plot’s parameters.</li>
+<li>Choose an annotation function from the <strong>Annotations</strong>
+dropdown.</li>
+<li>Configure its parameters.</li>
+<li>Click the <strong>Run Script</strong> button.</li>
+</ol>
+<p>See <a href="plotgardenerApp_plotTypes.html">Plot Types and
+Annotations</a> for details on available annotation types.</p>
+<div style="margin-bottom:100px;">
+
 </div>
-<div class="section level3">
-<h3 id="supported-input-formats">Supported Input Formats<a class="anchor" aria-label="anchor" href="#supported-input-formats"></a>
-</h3>
-<p>The app accepts the same data formats as the
-<code>plotgardener</code> R package:</p>
-<table class="table">
-<colgroup>
-<col width="50%">
-<col width="50%">
-</colgroup>
-<thead><tr class="header">
-<th>Plot Function</th>
-<th>Accepted Formats</th>
-</tr></thead>
-<tbody>
-<tr class="odd">
-<td><code>plotSignal</code></td>
-<td>
-<code>.bigWig</code>, <code>.bw</code>
-</td>
-</tr>
-<tr class="even">
-<td>
-<code>plotHicSquare</code>, <code>plotHicRectangle</code>,
-<code>plotHicTriangle</code>
-</td>
-<td>
-<code>.hic</code>, <code>.cool</code>, <code>.mcool</code>
-</td>
-</tr>
-<tr class="odd">
-<td>
-<code>plotGenes</code>, <code>plotTranscripts</code>
-</td>
-<td>Bioconductor annotation packages (e.g., <code>TxDb.*</code>)</td>
-</tr>
-<tr class="even">
-<td>
-<code>plotPairs</code>, <code>plotPairsArches</code>
-</td>
-<td><code>.bedpe</code></td>
-</tr>
-<tr class="odd">
-<td><code>plotRanges</code></td>
-<td>
-<code>.bed</code>, <code>.narrowPeak</code>,
-<code>.broadPeak</code>
-</td>
-</tr>
-<tr class="even">
-<td><code>plotManhattan</code></td>
-<td>Data frame with <code>chrom</code>, <code>pos</code>, <code>p</code>
-columns</td>
-</tr>
-</tbody>
-</table>
-<p>For a full description of data formats and how to prepare your files,
-see <a href="reading_data_for_plotgardener.html">Reading Data for
-plotgardener</a>.</p>
+<p><img style="float: left; margin-right: 20px;" src="../../reference/figures/pg-app-icons-03-save.png" width="50"></p>
 </div>
 </div>
 <div class="section level2">
 <h2 id="the-save-tab">The Save Tab<a class="anchor" aria-label="anchor" href="#the-save-tab"></a>
 </h2>
+<hr>
 <p>The <strong>Save</strong> tab lets you preserve and restore your
 entire figure session. Select it from the <strong>Panel List</strong> to
 access its controls in the <strong>Parameters Panel</strong>.</p>
@@ -307,10 +283,12 @@ all panels and their parameter values.</li>
 <p>Sessions are portable across machines, making it straightforward to
 share figure templates with collaborators or reproduce figures in a
 different environment.</p>
+<p><img style="float: left; margin-right: 20px;" src="../../reference/figures/pg-app-icons-04-code.png" width="50"></p>
 </div>
 <div class="section level2">
 <h2 id="the-code-tab">The Code Tab<a class="anchor" aria-label="anchor" href="#the-code-tab"></a>
 </h2>
+<hr>
 <p>The <strong>Code</strong> tab displays the R script that the app
 generates from your current panel configuration. Select it from the
 <strong>Panel List</strong> to view the script in the <strong>Parameters
@@ -371,18 +349,12 @@ further customization, or reproducibility.</li>
 </h2>
 <ul>
 <li>
-<a href="reading_data_for_plotgardener.html">Reading Data for
-plotgardener</a> — data format details and loading functions</li>
-<li>
-<a href="annotations.html">Plot Annotations</a> — all available
+<a href="plotgardenerApp_plotTypes.html">Plot Types and
+Annotations</a> — descriptions and examples of available plotting and
 annotation functions</li>
 <li>
 <a href="plotgardener_page.html">The plotgardener Page</a> —
 coordinate system and page layout</li>
-<li>
-<a href="plotgardener_meta_functions.html">plotgardener Meta
-Functions</a> — <code>pgParams</code>, assemblies, and color
-utilities</li>
 <li><a href="https://phanstiellab.github.io/plotgardener"><code>plotgardener</code>
 R package documentation</a></li>
 </ul>
@@ -404,7 +376,7 @@ R package documentation</a></li>
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.3.</p>
 </div>
 
       </footer>

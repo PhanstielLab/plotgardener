@@ -1,0 +1,187 @@
+---
+title: "Plotgardener App Tutorial"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Plotgardener App Tutorial}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+Let's recreate this figure using the Plotgardener App!
+
+![](tutorial_images/1_figure.png)
+
+## Download Sample Data
+To plot this figure you will need to download the HiC and bigWig data. To download the data click the links below.
+These files were created to practice with the tutorial and only contain data for chromosome 21 (and thus are very small files). If you're interested in plotting other regions in different chromosomes you can provide your own data or download larger publicly available datasets to plot! 
+
+(right-click and select "Save link as..." to download)
+
+[Download HiC_IMR90.hic](http://phanstiel-lab.med.unc.edu/data/HiC_IMR90.hic)
+
+[Download HiC_GM12878.hic](http://phanstiel-lab.med.unc.edu/data/HiC_GM12878.hic) 
+
+[Download CTCF.bw](http://phanstiel-lab.med.unc.edu/data/CTCF.bw) 
+
+[Download H3k27ac.bw](http://phanstiel-lab.med.unc.edu/data/H3k27ac.bw) 
+
+## Getting Started
+
+First, open the Plotgardener App. It should be installed and available as an application on your computer. For installation help, see the [installation guide](https://phanstiellab.github.io/plotgardener/articles/guides/plotgardenerApp_installation.html).
+
+![](tutorial_images/2_app.png)
+
+After opening the app, you will see the default page. For an overview of all the tabs, see the [User Interface guide](https://phanstiellab.github.io/plotgardener/articles/guides/plotgardenerApp_ui.html).
+
+![](tutorial_images/3_defaultpage.png)
+
+## Create a Custom Page
+
+We will start by creating a custom-sized page. Leave **Show Guides** set to `TRUE` so we can map out where we want our plots.
+
+Set the following values and click **Run Script**:
+
+![](tutorial_images/4_custompage.png)
+
+## Add Panel A — HiC Square Plot (Top Half)
+
+Navigate to the **Plots** tab (shovel icon) to begin adding plots to the figure.
+
+### Add the plot
+
+Click **Add Plot** and give your plot a name, here we've named the plot after the file. Select **plotHicSquare** as the plot type. For an overview of all plot types and their required inputs, see the [Plot Types and Annotations guide](https://phanstiellab.github.io/plotgardener/articles/guides/plotgardenerApp_plotTypes.html).
+
+![](tutorial_images/5_addplot.png)
+![](tutorial_images/6_selectplot.png)
+
+### Data parameters
+
+Select the IMR90 HiC file as the input data. <!-- TODO: Add link to example data --> Then enter the following data parameters:
+
+![](tutorial_images/7_dataparameters.png)
+
+Set the **Assembly** to `hg19`, which indicated which build of the genome our data was aligned to. 
+
+![](tutorial_images/8_assembly.png)
+
+### Positional parameters
+
+Enter the following positional parameters to place the plot on the page:
+
+![](tutorial_images/9_positionparameters.png)
+
+### Half
+
+Since we are plotting only the top half of the square, set **Half** to `top`.
+
+![](tutorial_images/10_tophalf.png)
+
+Click **Run Script** to render the plot.
+
+![](tutorial_images/11_tophalfplot.png)
+
+### Annotations
+
+**Genome label:** Click **Add Annotation** at the bottom of the HicSquare plot and select **annoGenomeLabel**. Enter the x and y positions for the label.
+
+![](tutorial_images/12_addannotation.png)
+![](tutorial_images/13_selectannotation.png)
+![](tutorial_images/14_annoparameters.png)
+
+**Heatmap scale bar:** Click **Add Annotation** again and select **annoHeatmapLegend**. Enter the following position and size values:
+
+![](tutorial_images/15_heatmapanno.png)
+![](tutorial_images/16_heatmapparms.png)
+
+Click **Run Script** to see the annotations added.
+
+![](tutorial_images/17_viewanno.png)
+
+## Add Panel A — HiC Square Plot (Bottom Half)
+
+Click **Add Plot** and add another **plotHicSquare**. This time, select the GM12878 HiC file as the input data file. Enter the same data parameters as before, but set **Half** to `bottom`.
+
+Click **Run Script** to render the bottom half of the square.
+
+![](tutorial_images/18_bottomhalfplot.png)
+
+## Add Panel B — HiC Rectangle
+
+Click **Add Plot** and select **plotHicRectangle**. Choose the GM12878 HiC file as the input data. Enter the same data parameters as before, then add the positional parameters below:
+
+![](tutorial_images/19_hicrectdata.png)
+![](tutorial_images/20_hicrectpos.png)
+
+Click **Run Script**.
+
+![](tutorial_images/21_hicrectplot.png)
+
+We can also add a scale bar annotation like before.
+
+![](tutorial_images/22_addheatmap.png)
+![](tutorial_images/22_heatmapplot.png)
+
+## Add Signal Tracks
+
+Now we will add signal tracks showing ChIP-seq data for two proteins of interest: CTCF and H3K27ac.
+
+### CTCF
+
+Click **Add Plot** and select **plotSignal**. Choose `CTCF.bw` as the data file. Enter the data parameters:
+
+![](tutorial_images/23_addsignal.png)
+![](tutorial_images/24_signaldata.png)
+
+Then enter the positional parameters:
+
+![](tutorial_images/25_signalpos.png)
+
+Click **Run Script**.
+
+![](tutorial_images/26_rendersignal.png)
+
+To label the track, type `CTCF` in the **Label** box and click **Run Script** again.
+
+![](tutorial_images/27_labelsignal.png)
+![](tutorial_images/28_rerendersingal.png)
+
+### H3K27ac
+
+Repeat the steps above for H3K27ac. This time, change the track color by entering the hex code "#00008B"in the linecolor and fill field:
+
+![](tutorial_images/29_acsingalplot.png)
+
+## Add Gene Annotations
+
+Click **Add Plot** and select **plotGenes**. Enter the positional parameters:
+
+![](tutorial_images/30_genesplot.png)
+
+Click **Run Script**.
+
+## Add a Genome Label to Panel B
+
+Return to the **plotHicRectangle** plot and click **Add Annotation**. Select **annoGenomeLabel** and enter the position as shown below and click **Run Script**.
+
+![](tutorial_images/31_annogenome.png)
+
+## Add Panel Labels
+
+To label the panels, click **Add Plot** and select **plotText**. Add the label `A` at the following position:
+
+![](tutorial_images/32_addtextA.png)
+![](tutorial_images/33_plottextA.png)
+
+Repeat to add the label `B`:
+
+![](tutorial_images/34_addtextB.png)
+
+![](tutorial_images/35_plottextB.png)
+
+## Finalize and Export
+
+Once everything looks good, return to the **Page** tab and set **Show Guides** to `FALSE`. Click **Run Script** to hide the guides.
+
+![](tutorial_images/36_removeguides.png)
+
+When you are happy with the figure, click the **Download** button at the top to export it. You can then open the PDF in any PDF viewer.
