@@ -233,7 +233,7 @@ track and genome label axis:</p>
 <span>    x <span class="op">=</span> <span class="fl">0.5</span>, y <span class="op">=</span> <span class="fl">4.5</span>, length <span class="op">=</span> <span class="fl">2</span>, scale <span class="op">=</span> <span class="st">"Mb"</span>,</span>
 <span>    just <span class="op">=</span> <span class="fu"><a href="../../reference/c.html">c</a></span><span class="op">(</span><span class="st">"left"</span>, <span class="st">"top"</span><span class="op">)</span>, default.units <span class="op">=</span> <span class="st">"inches"</span></span>
 <span><span class="op">)</span></span></code></pre></div>
-<p><img src="plotting_multiomic_data_files/figure-html/plotting_example01-1.png" width="750" style="display: block; margin: auto;"></p>
+<p><img src="plotting_multiomic_data_files/figure-html/plotting_example01-1.png" class="r-plt" alt="" width="750" style="display: block; margin: auto;"></p>
 <div class="section level3">
 <h3 id="using-the-pgparams-object">Using the <code>pgParams</code> object<a class="anchor" aria-label="anchor" href="#using-the-pgparams-object"></a>
 </h3>
@@ -310,7 +310,7 @@ write the same parameters over and over again:</p>
 <span>    params <span class="op">=</span> <span class="va">params</span>,</span>
 <span>    y <span class="op">=</span> <span class="fl">4.5</span>, scale <span class="op">=</span> <span class="st">"Mb"</span></span>
 <span><span class="op">)</span></span></code></pre></div>
-<p><img src="plotting_multiomic_data_files/figure-html/plotting_example02-1.png" width="750" style="display: block; margin: auto;"></p>
+<p><img src="plotting_multiomic_data_files/figure-html/plotting_example02-1.png" class="r-plt" alt="" width="750" style="display: block; margin: auto;"></p>
 <p>The <code>pgParams</code> object also simplifies the code for making
 complex multi-omic figures when we want to change the genomic region of
 our plots. If we want to change the region for the figure above, we can
@@ -323,7 +323,7 @@ to generate the figure:</p>
 <span>    x <span class="op">=</span> <span class="fl">0.5</span>, just <span class="op">=</span> <span class="fu"><a href="../../reference/c.html">c</a></span><span class="op">(</span><span class="st">"left"</span>, <span class="st">"top"</span><span class="op">)</span>,</span>
 <span>    width <span class="op">=</span> <span class="fl">2</span>, length <span class="op">=</span> <span class="fl">2</span>, default.units <span class="op">=</span> <span class="st">"inches"</span></span>
 <span><span class="op">)</span></span></code></pre></div>
-<p><img src="plotting_multiomic_data_files/figure-html/plotting_example03-1.png" width="750" style="display: block; margin: auto;"></p>
+<p><img src="plotting_multiomic_data_files/figure-html/plotting_example03-1.png" class="r-plt" alt="" width="750" style="display: block; margin: auto;"></p>
 <p>Alternatively, if we want to plot around a particular gene rather
 than a genomic region we can use <code><a href="../../reference/pgParams.html">pgParams()</a></code> to specify
 <code>gene</code> and <code>geneBuffer</code>. If
@@ -336,7 +336,7 @@ coordinates.</p>
 <span>    x <span class="op">=</span> <span class="fl">0.5</span>, just <span class="op">=</span> <span class="fu"><a href="../../reference/c.html">c</a></span><span class="op">(</span><span class="st">"left"</span>, <span class="st">"top"</span><span class="op">)</span>,</span>
 <span>    width <span class="op">=</span> <span class="fl">2</span>, length <span class="op">=</span> <span class="fl">2</span>, default.units <span class="op">=</span> <span class="st">"inches"</span></span>
 <span><span class="op">)</span></span></code></pre></div>
-<p><img src="plotting_multiomic_data_files/figure-html/plotting_example04-1.png" width="750" style="display: block; margin: auto;"></p>
+<p><img src="plotting_multiomic_data_files/figure-html/plotting_example04-1.png" class="r-plt" alt="" width="750" style="display: block; margin: auto;"></p>
 </div>
 <div class="section level3">
 <h3 id="the-below-y-coordinate">The “below” y-coordinate<a class="anchor" aria-label="anchor" href="#the-below-y-coordinate"></a>
@@ -421,7 +421,7 @@ above by using the “below” y-coordinate to easily stack our plots:</p>
 <span>    y <span class="op">=</span> <span class="st">"0b"</span>,</span>
 <span>    scale <span class="op">=</span> <span class="st">"Mb"</span></span>
 <span><span class="op">)</span></span></code></pre></div>
-<p><img src="plotting_multiomic_data_files/figure-html/below_y-1.png" width="750" style="display: block; margin: auto;"></p>
+<p><img src="plotting_multiomic_data_files/figure-html/below_y-1.png" class="r-plt" alt="" width="750" style="display: block; margin: auto;"></p>
 </div>
 <div class="section level3">
 <h3 id="plotting-and-comparing-multiple-signal-tracks">Plotting and comparing multiple signal tracks<a class="anchor" aria-label="anchor" href="#plotting-and-comparing-multiple-signal-tracks"></a>
@@ -495,96 +495,93 @@ the genomic x-axis and the score y-axis:</p>
 <span>    x <span class="op">=</span> <span class="fl">0.5</span>, y <span class="op">=</span> <span class="fl">1</span>, just <span class="op">=</span> <span class="fu"><a href="../../reference/c.html">c</a></span><span class="op">(</span><span class="st">"left"</span>, <span class="st">"top"</span><span class="op">)</span>,</span>
 <span>    default.units <span class="op">=</span> <span class="st">"inches"</span></span>
 <span><span class="op">)</span></span></code></pre></div>
-<p><img src="plotting_multiomic_data_files/figure-html/scale_signal-1.png" width="1125" style="display: block; margin: auto;"></p>
+<p><img src="plotting_multiomic_data_files/figure-html/scale_signal-1.png" class="r-plt" alt="" width="1125" style="display: block; margin: auto;"></p>
 </div>
 <div class="section level2">
 <h2 id="session-info">Session Info<a class="anchor" aria-label="anchor" href="#session-info"></a>
 </h2>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/sessionInfo.html" class="external-link">sessionInfo</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt; R version 4.4.0 (2024-04-24)</span></span>
-<span><span class="co">#&gt; Platform: x86_64-pc-linux-gnu</span></span>
-<span><span class="co">#&gt; Running under: Red Hat Enterprise Linux 9.7 (Plow)</span></span>
+<span><span class="co">#&gt; R version 4.6.0 (2026-04-24)</span></span>
+<span><span class="co">#&gt; Platform: aarch64-apple-darwin23</span></span>
+<span><span class="co">#&gt; Running under: macOS Tahoe 26.5.1</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Matrix products: default</span></span>
-<span><span class="co">#&gt; BLAS/LAPACK: /nas/longleaf/rhel9/apps/r/4.4.0/lib/libopenblas_haswellp-r0.3.27.so;  LAPACK version 3.12.0</span></span>
+<span><span class="co">#&gt; BLAS:   /Library/Frameworks/R.framework/Versions/4.6/Resources/lib/libRblas.0.dylib </span></span>
+<span><span class="co">#&gt; LAPACK: /Library/Frameworks/R.framework/Versions/4.6/Resources/lib/libRlapack.dylib;  LAPACK version 3.12.1</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; locale:</span></span>
-<span><span class="co">#&gt;  [1] LC_CTYPE=en_US.UTF-8       LC_NUMERIC=C              </span></span>
-<span><span class="co">#&gt;  [3] LC_TIME=en_US.UTF-8        LC_COLLATE=en_US.UTF-8    </span></span>
-<span><span class="co">#&gt;  [5] LC_MONETARY=en_US.UTF-8    LC_MESSAGES=en_US.UTF-8   </span></span>
-<span><span class="co">#&gt;  [7] LC_PAPER=en_US.UTF-8       LC_NAME=C                 </span></span>
-<span><span class="co">#&gt;  [9] LC_ADDRESS=C               LC_TELEPHONE=C            </span></span>
-<span><span class="co">#&gt; [11] LC_MEASUREMENT=en_US.UTF-8 LC_IDENTIFICATION=C       </span></span>
+<span><span class="co">#&gt; [1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; time zone: America/New_York</span></span>
-<span><span class="co">#&gt; tzcode source: system (glibc)</span></span>
+<span><span class="co">#&gt; tzcode source: internal</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; attached base packages:</span></span>
 <span><span class="co">#&gt; [1] stats4    grid      stats     graphics  grDevices utils     datasets </span></span>
 <span><span class="co">#&gt; [8] methods   base     </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; other attached packages:</span></span>
-<span><span class="co">#&gt;  [1] org.Hs.eg.db_3.20.0                    </span></span>
-<span><span class="co">#&gt;  [2] TxDb.Hsapiens.UCSC.hg19.knownGene_3.2.2</span></span>
-<span><span class="co">#&gt;  [3] GenomicFeatures_1.58.0                 </span></span>
-<span><span class="co">#&gt;  [4] AnnotationDbi_1.68.0                   </span></span>
-<span><span class="co">#&gt;  [5] Biobase_2.66.0                         </span></span>
-<span><span class="co">#&gt;  [6] GenomicRanges_1.58.0                   </span></span>
-<span><span class="co">#&gt;  [7] GenomeInfoDb_1.42.3                    </span></span>
-<span><span class="co">#&gt;  [8] IRanges_2.40.1                         </span></span>
-<span><span class="co">#&gt;  [9] S4Vectors_0.44.0                       </span></span>
-<span><span class="co">#&gt; [10] BiocGenerics_0.52.0                    </span></span>
-<span><span class="co">#&gt; [11] plotgardenerData_1.12.0                </span></span>
-<span><span class="co">#&gt; [12] plotgardener_1.15.1                    </span></span>
+<span><span class="co">#&gt;  [1] org.Hs.eg.db_3.23.1                     </span></span>
+<span><span class="co">#&gt;  [2] TxDb.Hsapiens.UCSC.hg19.knownGene_3.22.1</span></span>
+<span><span class="co">#&gt;  [3] GenomicFeatures_1.64.0                  </span></span>
+<span><span class="co">#&gt;  [4] AnnotationDbi_1.74.0                    </span></span>
+<span><span class="co">#&gt;  [5] Biobase_2.72.0                          </span></span>
+<span><span class="co">#&gt;  [6] GenomicRanges_1.64.0                    </span></span>
+<span><span class="co">#&gt;  [7] Seqinfo_1.2.0                           </span></span>
+<span><span class="co">#&gt;  [8] IRanges_2.46.0                          </span></span>
+<span><span class="co">#&gt;  [9] S4Vectors_0.50.1                        </span></span>
+<span><span class="co">#&gt; [10] BiocGenerics_0.58.1                     </span></span>
+<span><span class="co">#&gt; [11] generics_0.1.4                          </span></span>
+<span><span class="co">#&gt; [12] plotgardenerData_1.18.0                 </span></span>
+<span><span class="co">#&gt; [13] plotgardener_1.18.0                     </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; loaded via a namespace (and not attached):</span></span>
-<span><span class="co">#&gt;  [1] tidyselect_1.2.1            blob_1.2.4                 </span></span>
-<span><span class="co">#&gt;  [3] dplyr_1.1.4                 farver_2.1.2               </span></span>
-<span><span class="co">#&gt;  [5] Biostrings_2.74.1           bitops_1.0-9               </span></span>
-<span><span class="co">#&gt;  [7] fastmap_1.2.0               RCurl_1.98-1.17            </span></span>
-<span><span class="co">#&gt;  [9] GenomicAlignments_1.42.0    XML_3.99-0.18              </span></span>
-<span><span class="co">#&gt; [11] digest_0.6.37               lifecycle_1.0.4            </span></span>
-<span><span class="co">#&gt; [13] plyranges_1.26.0            KEGGREST_1.46.0            </span></span>
-<span><span class="co">#&gt; [15] RSQLite_2.3.11              magrittr_2.0.3             </span></span>
-<span><span class="co">#&gt; [17] compiler_4.4.0              rlang_1.1.6                </span></span>
-<span><span class="co">#&gt; [19] sass_0.4.10                 tools_4.4.0                </span></span>
-<span><span class="co">#&gt; [21] yaml_2.3.10                 data.table_1.17.4          </span></span>
-<span><span class="co">#&gt; [23] rtracklayer_1.66.0          knitr_1.50                 </span></span>
-<span><span class="co">#&gt; [25] S4Arrays_1.6.0              htmlwidgets_1.6.4          </span></span>
-<span><span class="co">#&gt; [27] bit_4.6.0                   curl_6.2.3                 </span></span>
-<span><span class="co">#&gt; [29] DelayedArray_0.32.0         RColorBrewer_1.1-3         </span></span>
-<span><span class="co">#&gt; [31] abind_1.4-8                 BiocParallel_1.40.2        </span></span>
-<span><span class="co">#&gt; [33] withr_3.0.2                 purrr_1.0.4                </span></span>
-<span><span class="co">#&gt; [35] desc_1.4.3                  Rhdf5lib_1.28.0            </span></span>
-<span><span class="co">#&gt; [37] ggplot2_3.5.2               scales_1.4.0               </span></span>
-<span><span class="co">#&gt; [39] dichromat_2.0-0.1           SummarizedExperiment_1.36.0</span></span>
-<span><span class="co">#&gt; [41] cli_3.6.5                   rmarkdown_2.29             </span></span>
-<span><span class="co">#&gt; [43] crayon_1.5.3                ragg_1.4.0                 </span></span>
-<span><span class="co">#&gt; [45] generics_0.1.4              rstudioapi_0.17.1          </span></span>
-<span><span class="co">#&gt; [47] httr_1.4.7                  rjson_0.2.23               </span></span>
-<span><span class="co">#&gt; [49] DBI_1.2.3                   cachem_1.1.0               </span></span>
-<span><span class="co">#&gt; [51] rhdf5_2.50.2                zlibbioc_1.52.0            </span></span>
-<span><span class="co">#&gt; [53] parallel_4.4.0              ggplotify_0.1.2            </span></span>
-<span><span class="co">#&gt; [55] XVector_0.46.0              restfulr_0.0.15            </span></span>
-<span><span class="co">#&gt; [57] matrixStats_1.5.0           yulab.utils_0.2.4          </span></span>
-<span><span class="co">#&gt; [59] vctrs_0.6.5                 Matrix_1.7-3               </span></span>
-<span><span class="co">#&gt; [61] jsonlite_2.0.0              gridGraphics_0.5-1         </span></span>
-<span><span class="co">#&gt; [63] bit64_4.6.0-1               systemfonts_1.2.3          </span></span>
-<span><span class="co">#&gt; [65] strawr_0.0.92               jquerylib_0.1.4            </span></span>
-<span><span class="co">#&gt; [67] glue_1.8.0                  pkgdown_2.1.3              </span></span>
-<span><span class="co">#&gt; [69] codetools_0.2-20            gtable_0.3.6               </span></span>
-<span><span class="co">#&gt; [71] BiocIO_1.16.0               UCSC.utils_1.2.0           </span></span>
-<span><span class="co">#&gt; [73] tibble_3.2.1                pillar_1.10.2              </span></span>
-<span><span class="co">#&gt; [75] rappdirs_0.3.3              htmltools_0.5.8.1          </span></span>
-<span><span class="co">#&gt; [77] rhdf5filters_1.18.1         GenomeInfoDbData_1.2.13    </span></span>
-<span><span class="co">#&gt; [79] R6_2.6.1                    textshaping_1.0.1          </span></span>
-<span><span class="co">#&gt; [81] evaluate_1.0.3              lattice_0.22-7             </span></span>
-<span><span class="co">#&gt; [83] png_0.1-8                   Rsamtools_2.22.0           </span></span>
-<span><span class="co">#&gt; [85] memoise_2.0.1               bslib_0.9.0                </span></span>
-<span><span class="co">#&gt; [87] Rcpp_1.1.1-1.1              SparseArray_1.6.2          </span></span>
-<span><span class="co">#&gt; [89] xfun_0.52                   fs_1.6.6                   </span></span>
-<span><span class="co">#&gt; [91] MatrixGenerics_1.18.1       pkgconfig_2.0.3</span></span></code></pre></div>
+<span><span class="co">#&gt;  [1] tidyselect_1.2.1            blob_1.3.0                 </span></span>
+<span><span class="co">#&gt;  [3] dplyr_1.2.1                 farver_2.1.2               </span></span>
+<span><span class="co">#&gt;  [5] Biostrings_2.80.1           S7_0.2.2                   </span></span>
+<span><span class="co">#&gt;  [7] bitops_1.0-9                fastmap_1.2.0              </span></span>
+<span><span class="co">#&gt;  [9] RCurl_1.98-1.19             GenomicAlignments_1.48.0   </span></span>
+<span><span class="co">#&gt; [11] XML_3.99-0.23               digest_0.6.39              </span></span>
+<span><span class="co">#&gt; [13] lifecycle_1.0.5             plyranges_1.32.0           </span></span>
+<span><span class="co">#&gt; [15] KEGGREST_1.52.0             RSQLite_3.53.2             </span></span>
+<span><span class="co">#&gt; [17] magrittr_2.0.5              compiler_4.6.0             </span></span>
+<span><span class="co">#&gt; [19] rlang_1.2.0                 sass_0.4.10                </span></span>
+<span><span class="co">#&gt; [21] tools_4.6.0                 yaml_2.3.12                </span></span>
+<span><span class="co">#&gt; [23] data.table_1.18.4           rtracklayer_1.72.0         </span></span>
+<span><span class="co">#&gt; [25] knitr_1.51                  S4Arrays_1.12.0            </span></span>
+<span><span class="co">#&gt; [27] htmlwidgets_1.6.4           bit_4.6.0                  </span></span>
+<span><span class="co">#&gt; [29] curl_7.1.0                  DelayedArray_0.38.2        </span></span>
+<span><span class="co">#&gt; [31] RColorBrewer_1.1-3          abind_1.4-8                </span></span>
+<span><span class="co">#&gt; [33] BiocParallel_1.46.0         withr_3.0.3                </span></span>
+<span><span class="co">#&gt; [35] purrr_1.2.2                 desc_1.4.3                 </span></span>
+<span><span class="co">#&gt; [37] Rhdf5lib_2.0.0              ggplot2_4.0.3              </span></span>
+<span><span class="co">#&gt; [39] scales_1.4.0                SummarizedExperiment_1.42.0</span></span>
+<span><span class="co">#&gt; [41] cli_3.6.6                   rmarkdown_2.31             </span></span>
+<span><span class="co">#&gt; [43] crayon_1.5.3                ragg_1.5.2                 </span></span>
+<span><span class="co">#&gt; [45] otel_0.2.0                  httr_1.4.8                 </span></span>
+<span><span class="co">#&gt; [47] rjson_0.2.23                DBI_1.3.0                  </span></span>
+<span><span class="co">#&gt; [49] cachem_1.1.0                rhdf5_2.56.0               </span></span>
+<span><span class="co">#&gt; [51] parallel_4.6.0              ggplotify_0.1.3            </span></span>
+<span><span class="co">#&gt; [53] XVector_0.52.0              restfulr_0.0.17            </span></span>
+<span><span class="co">#&gt; [55] matrixStats_1.5.0           yulab.utils_0.2.4          </span></span>
+<span><span class="co">#&gt; [57] vctrs_0.7.3                 Matrix_1.7-5               </span></span>
+<span><span class="co">#&gt; [59] jsonlite_2.0.0              gridGraphics_0.5-1         </span></span>
+<span><span class="co">#&gt; [61] bit64_4.8.2                 systemfonts_1.3.2          </span></span>
+<span><span class="co">#&gt; [63] strawr_0.0.92               jquerylib_0.1.4            </span></span>
+<span><span class="co">#&gt; [65] glue_1.8.1                  pkgdown_2.2.0              </span></span>
+<span><span class="co">#&gt; [67] codetools_0.2-20            gtable_0.3.6               </span></span>
+<span><span class="co">#&gt; [69] GenomeInfoDb_1.48.0         BiocIO_1.22.0              </span></span>
+<span><span class="co">#&gt; [71] UCSC.utils_1.8.0            tibble_3.3.1               </span></span>
+<span><span class="co">#&gt; [73] pillar_1.11.1               rappdirs_0.3.4             </span></span>
+<span><span class="co">#&gt; [75] htmltools_0.5.9             rhdf5filters_1.24.0        </span></span>
+<span><span class="co">#&gt; [77] R6_2.6.1                    textshaping_1.0.5          </span></span>
+<span><span class="co">#&gt; [79] evaluate_1.0.5              lattice_0.22-9             </span></span>
+<span><span class="co">#&gt; [81] png_0.1-9                   Rsamtools_2.28.0           </span></span>
+<span><span class="co">#&gt; [83] cigarillo_1.2.0             memoise_2.0.1              </span></span>
+<span><span class="co">#&gt; [85] bslib_0.11.0                Rcpp_1.1.1-1.1             </span></span>
+<span><span class="co">#&gt; [87] SparseArray_1.12.2          xfun_0.59                  </span></span>
+<span><span class="co">#&gt; [89] fs_2.1.0                    MatrixGenerics_1.24.0      </span></span>
+<span><span class="co">#&gt; [91] pkgconfig_2.0.3</span></span></code></pre></div>
 </div>
   </div>
 
@@ -603,7 +600,7 @@ the genomic x-axis and the score y-axis:</p>
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.3.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
 </div>
 
       </footer>
