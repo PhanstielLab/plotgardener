@@ -18,44 +18,14 @@
   `axisLine.lwd/col/lty`, and `tick.lwd/col/lty` for flexible axis styling.
   Default tick length is now shorter (`tcl = 0.25`) and default tick/axis
   line width is thinner (`0.5`).
-* `plotNeoGenes()` now uses IGV-style display modes. `displayMode = "auto"`
-  collapses genes to solid blocks at whole-chromosome scale and expands to
-  gene bodies, exon blocks, UTR/CDS heights, and strand arrows when zoomed
-  in. It supports `chromstart`/`chromend` neo-coordinate windows, arbitrary
-  GTF/GFF GENCODE versions, `TxDb`/`OrgDb` annotations, `geneOrder`,
-  `labelClusters`, `geneBackground`, configurable colors, gene highlights,
-  label collision suppression, row-overflow warnings, and `geneMode`
-  layouts: `"expand"` draws all genes normally, `"focus"` fades non-priority
-  genes with `focus.alpha`, and `"compact"` draws all genes on one line.
-  GTF/GFF files are read with `readGFF()` by default and can use an optional
-  disk cache.
-* Added `getNeoSignal()` and `getNeoV4C()` for mapping bigWig, GRanges,
-  data-frame, and virtual-4C signal tracks into neo-chromosome coordinates,
-  with optional binning and aggregation.
-* `plotNeoHic(flip = "horizontal")` reverses the x-axis for neo Hi-C plots.
-* `annoNeoDomains()` and `plotNeoAssembly()` expose separate seam color,
-  width, and line type, and `annoNeoFragmentLabels(label.colors=)` supports
-  per-fragment label colors.
 * Interchromosomal `plotHicSquare()` plots are no longer mirrored and store
   explicit x/y chromosome metadata for `annoGenomeLabel()`. Add
   `aspect = "fixed"` for equal basepairs-per-inch on unequal-length
   chromosomes.
-* Added SV-impacted neo-chromosome reconstruction helpers:
-  `readNeoAssembly()`, `mapNeoFeatures()`, `readNeoHic()`, `plotNeoHic()`,
-  `plotNeoAssembly()`, `annoNeoDomains()`, and `annoNeoFragmentLabels()`.
-  `readNeoHic()` stitches fragment-pair contacts from `.hic`, `.cool`, or
-  `.mcool` files into a concatenated neo-chromosome coordinate system.
-  `annoNeoDomains()` draws the solid outer neo-chromosome domain and dotted
-  internal fragment seams used in the neo-triangle examples.
-
 * `plotTranscripts()` adds `labelPriority` and centers labels on the
   in-bounds transcript portion.
 * `plotGenes()` adds `labelClusters`/`labelClusterRot` for dense gene
   clusters.
-* Added `plotNeoGenes()` for gene/transcript models mapped into neo
-  coordinates, including strand flips, gene highlights, and selected labels. `readNeoHic()` now reports
-  fragment-pair contact counts and warns when inter-fragment pairs have no
-  source contacts.
 * `assembly()` accepts an `EnsDb` object and converts it to a TxDb for
   plotting.
 * `read_rangeData()` respects named `chrom`/`start`/`end` or `chrom`/`pos`
