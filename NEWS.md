@@ -1,3 +1,61 @@
+# DEVELOPMENT VERSION
+## NEW FEATURES
+
+* Added `pageExport()` for writing the current page to PDF, PNG, TIFF, JPEG,
+  or SVG without a user `dev.off()` call.
+* `pageGuideHide()` and `pagePlotRemove()` now defer removals until
+  `pageExport()`/`pageRedraw()` instead of calling `grid.remove()` on the
+  active device, avoiding extra PDF pages.
+* `plotHicSquare()`, `plotHicRectangle()`, and `plotHicTriangle()` gain
+  `raster = c("auto", "never", "always")` and `raster.max` for rasterizing
+  large contact maps.
+* `plotSignal()` gains `label.position`, `label.offset`, numeric baselines,
+  and `baseline.lty`. Baselines are now drawn after signal/cutoff grobs so
+  filled tracks cannot cover them.
+* `plotMultiSignal()` now honors a user-supplied `range` and passes through
+  label/baseline styling parameters.
+* `annoYaxis()` and `annoXaxis()` gain `tcl`, `label.offset`,
+  `axisLine.lwd/col/lty`, and `tick.lwd/col/lty` for flexible axis styling.
+  Default tick length is now shorter (`tcl = 0.25`) and default tick/axis
+  line width is thinner (`0.5`).
+* Interchromosomal `plotHicSquare()` plots are no longer mirrored and store
+  explicit x/y chromosome metadata for `annoGenomeLabel()`. Add
+  `aspect = "fixed"` for equal basepairs-per-inch on unequal-length
+  chromosomes.
+* `plotTranscripts()` adds `labelPriority` and centers labels on the
+  in-bounds transcript portion.
+* `plotGenes()` adds `labelClusters`/`labelClusterRot` for dense gene
+  clusters.
+* `assembly()` accepts an `EnsDb` object and converts it to a TxDb for
+  plotting.
+* `read_rangeData()` respects named `chrom`/`start`/`end` or `chrom`/`pos`
+  columns in any order.
+* `annoPixels()` handles factor chromosome columns with different level sets.
+* `plotLegend()` documents the cairosvg/SVG rendering caveat.
+
+## BUG FIXES
+
+* `readCool()` now returns all pixels in the final bin of a region. The
+previous pixel-range calculation stopped at the first pixel of the last bin.
+* `readCool()` applies cooler balancing weights multiplicatively
+(`counts * weight1 * weight2`) instead of dividing by them. This also applies
+to `sweight`, `KR`, `VC`, and `VC_SQRT` weights.
+* `readCoolNorms()` now returns the exact column names stored in the file
+(for example `weight`, `sweight`, `KR`, or `obj_weight`) instead of mapping
+`weight` to `BALANCE`.
+* `readCool()` accepts chromosome names with or without a `chr` prefix and
+matches regions that do not start exactly on a bin boundary.
+* `readCool()` now reads interchromosomal mcool pixels when the requested
+`chrom` comes after `altchrom` in the file, and expands both coordinates for
+same-chromosome off-diagonal regions.
+* `readCool()` supports `norm = "auto"`, and `plotHicSquare()`,
+`plotHicRectangle()`, and `plotHicTriangle()` now use `norm = "auto"` by
+default. For `.hic` files this resolves to `"KR"`; for `.(m)cool` files it
+chooses an available weight.
+* Hi-C plotting no longer requests negative `chromstart` values from
+`.hic`/`.(m)cool` files when padding a region near the start of a chromosome.
+* `.checkCool()` recognizes `.mcool` files with extra root-level groups.
+
 # VERSION 1.11.2
 ## NEW FEATURES
 

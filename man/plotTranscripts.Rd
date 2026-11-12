@@ -20,6 +20,7 @@ plotTranscripts(
     transcriptFilter = NULL,
     fontsize = 8,
     labels = "transcript",
+    labelPriority = NULL,
     stroke = 0.1,
     bg = NA,
     x = NULL,
@@ -86,7 +87,11 @@ display (default is \code{NULL}, no filtering)}
 Default value is \code{fontsize = 8}.}
 
 \item{labels}{A character value describing the format of
-transcript text labels. Default value is \code{labels = "trancript"}.
+transcript text labels. Default value is \code{labels = "trancript"}.}
+
+\item{labelPriority}{Optional character vector of transcript or gene names
+to prioritize when labels overlap. Default value is
+\code{labelPriority = NULL}.
 Options are:
 \describe{
 \item{\code{NULL}: }{No labels.}

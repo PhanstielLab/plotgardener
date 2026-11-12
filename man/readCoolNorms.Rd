@@ -19,15 +19,20 @@ A vector or list of vectors of available normalizations
 Read normalizations included in .(m)cool files
 }
 \details{
-The "BALANCE" normalization refers to applying the pre-calculated matrix 
-balancing weights in the `weight` dataset of `file`, typically present
-in files created using cooler. VC is vanilla coverage, 
-VC_SQRT is square root of vanilla coverage, 
-and KR is Knight-Ruiz normalization.
+The `weight` column is the standard cooler balancing weight, typically
+present in files created using `cooler balance`.
+VC is vanilla coverage, VC_SQRT is square root of vanilla coverage,
+and KR is Knight-Ruiz normalization. Other columns such as `sweight`,
+`CNV`, or `obj_weight` are returned by their stored names. Use
+`readCoolNorms()` to see the exact column names available in a file.
+
+Cooler weights are multiplicative: balanced counts are calculated as
+\code{observed * weight1 * weight2}. Contacts involving bins with
+non-finite weights are dropped; the bins remain in the coordinate space.
 
 Please note that if using a file from HiC-Pro, ICE normalizations will come
 from files stored in a separate folder, and thus will not contain any 
-normalizations explicitly called "ICE" or "BALANCE" since values are 
+normalizations explicitly called "ICE" or "weight" since values are 
 included already normalized. This normalization can be specified as "NONE".
 }
 \author{

@@ -85,8 +85,12 @@ test_that("readCool", {
 
     ## .cool file
     coolFile <- file.path(tempdir(), "Rao2014-IMR90-MboI-allreps-filtered.1000kb.cool")
-    download.file(url = "https://usgs2.osn.mghpcc.org/cooler01/examples/hg19/Rao2014-IMR90-MboI-allreps-filtered.1000kb.cool",
-                            destfile = coolFile, mode = "wb")
+    downloaded <- tryCatch({
+        download.file(url = "https://usgs2.osn.mghpcc.org/cooler01/examples/hg19/Rao2014-IMR90-MboI-allreps-filtered.1000kb.cool",
+                      destfile = coolFile, mode = "wb")
+        TRUE
+    }, error = function(e) FALSE)
+    if (!downloaded) skip("Could not download the .cool test file.")
     on.exit(unlink(coolFile))
     
     # File type
@@ -98,13 +102,13 @@ test_that("readCool", {
     expect_error(readCoolChroms(file = coolFile, resolution = 5000), "resolution")
     
     # Norms
-    expect_equal(readCoolNorms(file = coolFile), c("BALANCE", "NONE"))
+    expect_equal(readCoolNorms(file = coolFile), c("weight", "NONE"))
     
     # Chroms
     cool_chroms <- readCoolChroms(file = coolFile) |>
         pull(name)
     expect_setequal(cool_chroms, paste0("chr", c(seq(1:22), "X", "Y", "M")))
-    expect_error(.checkCoolErrors(file = coolFile, chrom = "2",
+    expect_error(.checkCoolErrors(file = coolFile, chrom = "chrZZ",
                                   chromstart = NULL, chromend = NULL,
                                   zrange = NULL, altchrom = NULL,
                                   altchromstart = NULL, altchromend = NULL,
@@ -113,8 +117,12 @@ test_that("readCool", {
     
     ## .mcool file
     mcoolFile <- file.path(tempdir(), "LEUK_HEK_PJA27_inter_30.mcool")
-    download.file(url = "https://zenodo.org/records/10906240/files/LEUK_HEK_PJA27_inter_30.mcool?download=1",
-                  destfile = mcoolFile, mode = "wb")
+    downloaded <- tryCatch({
+        download.file(url = "https://zenodo.org/records/10906240/files/LEUK_HEK_PJA27_inter_30.mcool?download=1",
+                      destfile = mcoolFile, mode = "wb")
+        TRUE
+    }, error = function(e) FALSE)
+    if (!downloaded) skip("Could not download the .mcool test file.")
     on.exit(unlink(mcoolFile))
     
     # File type
@@ -136,7 +144,7 @@ test_that("readCool", {
     
     # Chroms
     expect_type(readCoolChroms(file = mcoolFile), "list")
-    expect_error(.checkCoolErrors(file = mcoolFile, chrom = "chr2",
+    expect_error(.checkCoolErrors(file = mcoolFile, chrom = "chrZZ",
                                   chromstart = NULL, chromend = NULL,
                                   zrange = NULL, altchrom = NULL,
                                   altchromstart = NULL, altchromend = NULL,

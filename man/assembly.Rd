@@ -17,7 +17,10 @@ assembly(
 \arguments{
 \item{Genome}{String indicating the name of the genome assembly.}
 
-\item{TxDb}{String of existing TxDb package name or a TxDb object.}
+\item{TxDb}{String of existing TxDb package name, a TxDb object, or an
+\link[ensembldb]{EnsDb} object. EnsDb objects are converted to a TxDb for
+plotting; provide \code{OrgDb} and set \code{gene.id.column = "ENSEMBL"}
+if gene symbols are desired.}
 
 \item{OrgDb}{String of the desired OrgDb package name.}
 
@@ -48,6 +51,6 @@ newAssembly <- assembly(
 )
 }
 \seealso{
-\link[GenomicFeatures]{TxDb}, \link[AnnotationDbi]{OrgDb-class},
-\link[BSgenome]{BSgenome}
+\link[GenomicFeatures]{TxDb}, \link[ensembldb]{EnsDb},
+\link[AnnotationDbi]{OrgDb-class}, \link[BSgenome]{BSgenome}
 }

@@ -15,10 +15,13 @@
 #'     range = NULL,
 #'     scale = FALSE,
 #'     label = NULL,
+#'     label.position = NULL,
+#'     label.offset = 0.01,
 #'     bg = NA,
 #'     baseline = TRUE,
 #'     baseline.color = "grey",
 #'     baseline.lwd = 1,
+#'     baseline.lty = 1,
 #'     orientation = "h",
 #'     x = NULL,
 #'     y = NULL,
@@ -67,14 +70,25 @@
 #' of the plot. Otherwise, the label will be drawn in the top left of the plot.
 #' For more customizable labels, use \link[plotgardener]{plotText}.
 #' Default value is \code{label = NULL}. 
+#' @param label.position Label position. Options are \code{"top-left"},
+#' \code{"top-right"}, \code{"bottom-left"}, \code{"bottom-right"},
+#' \code{"left"}, and \code{"right"}. If \code{NULL}, the historical
+#' behavior is used (\code{"top-right"} when \code{scale = TRUE},
+#' otherwise \code{"top-left"}). Default value is
+#' \code{label.position = NULL}.
+#' @param label.offset Offset from the plot edge in npc units.
+#' Default value is \code{label.offset = 0.01}.
 #' @param bg Character value indicating background color.
 #' Default value is \code{bg = NA}.
 #' @param baseline Logical value indicating whether to include a
-#' baseline along the x-axis. Default value is \code{baseline = TRUE}.
+#' baseline along the x-axis. A numeric value can be supplied to place the
+#' baseline at a specific y-value. Default value is \code{baseline = TRUE}.
 #' @param baseline.color Baseline color.
 #' Default value is \code{baseline.color = "grey"}.
 #' @param baseline.lwd Baseline line width.
 #' Default value is \code{baseline.lwd = 1}.
+#' @param baseline.lty Baseline line type.
+#' Default value is \code{baseline.lty = 1}.
 #' @param orientation A string specifying signal track orientation.
 #' Default value is \code{orientation = "h"}. Options are:
 #' \describe{
@@ -182,8 +196,10 @@ plotSignal <- function(data, binSize = NA, binCap = TRUE, negData = FALSE,
                         chrom, chromstart = NULL, chromend = NULL,
                         assembly = "hg38", linecolor = "#37a7db",
                         fill = NA, ymax = 1, range = NULL, scale = FALSE,
-                        label = NULL, bg = NA, baseline = TRUE, 
-                        baseline.color = "grey", baseline.lwd = 1, 
+                        label = NULL, label.position = NULL,
+                        label.offset = 0.01, bg = NA, baseline = TRUE, 
+                        baseline.color = "grey", baseline.lwd = 1,
+                        baseline.lty = 1,
                         orientation = "h", x = NULL, y = NULL, width = NULL,
                         height = NULL, just = c("left", "top"),
                         default.units = "inches", draw = TRUE,
@@ -1006,44 +1022,8 @@ plotSignal <- function(data, binSize = NA, binCap = TRUE, negData = FALSE,
             }
 
 
-            lineGrob <- segmentsGrob(
-                x0 = unit(0, "npc"), x1 = unit(1, "npc"),
-                y0 = 0, y1 = 0,
-                gp = gpar(
-                    col = sigInternal$baseline.color,
-                    lwd = sigInternal$baseline.lwd
-                ),
-                default.units = "native"
-            )
-            assign("signal_grobs",
-                addGrob(
-                    gTree = get("signal_grobs", envir = pgEnv),
-                    child = lineGrob
-                ),
-                envir = pgEnv
-            )
         } else {
             if (nrow(posSignal) >= 2) {
-                if (sigInternal$baseline == TRUE) {
-                    baselineGrob <- segmentsGrob(
-                        x0 = unit(0, "npc"),
-                        x1 = unit(1, "npc"),
-                        y0 = 0, y1 = 0,
-                        gp = gpar(
-                            col = sigInternal$baseline.color,
-                            lwd = sigInternal$baseline.lwd
-                        ),
-                        default.units = "native"
-                    )
-                    assign("signal_grobs",
-                        addGrob(
-                            gTree = get("signal_grobs", envir = pgEnv),
-                            child = baselineGrob
-                        ),
-                        envir = pgEnv
-                    )
-                }
-
                 sigGrob(
                     signal = posSignal2, fillCol = sigInternal$fill[1],
                     lineCol = sigInternal$linecolor[1],
@@ -1081,9 +1061,45 @@ plotSignal <- function(data, binSize = NA, binCap = TRUE, negData = FALSE,
                 warning("Not enough data within range to plot.", call. = FALSE)
             }
         }
-        # =====================================================================
-        # SCALE
-        # =====================================================================
+
+        ## Draw the baseline after all signal/cutoff grobs so fills do not
+        ## cover it. `baseline` may be logical or a numeric y-value.
+        drawBaseline <- FALSE
+        baselineValue <- sigInternal$baseline
+        baselineY <- 0
+        if (is.numeric(baselineValue) && length(baselineValue) == 1) {
+            drawBaseline <- TRUE
+            baselineY <- as.numeric(baselineValue)
+        } else if (isTRUE(baselineValue)) {
+            drawBaseline <- TRUE
+        }
+        if (drawBaseline &&
+            baselineY >= signal_track$range[1] &&
+            baselineY <= signal_track$range[2]) {
+            baselineGrob <- segmentsGrob(
+                x0 = unit(0, "npc"), x1 = unit(1, "npc"),
+                y0 = baselineY, y1 = baselineY,
+                gp = gpar(
+                    col = sigInternal$baseline.color,
+                    lwd = sigInternal$baseline.lwd,
+                    lty = sigInternal$baseline.lty
+                ),
+                default.units = "native"
+            )
+            assign("signal_grobs",
+                addGrob(
+                    gTree = get("signal_grobs", envir = pgEnv),
+                    child = baselineGrob
+                ),
+                envir = pgEnv
+            )
+        }
+
+    }
+
+    # =====================================================================
+    # SCALE
+    # =====================================================================
 
         ## Add scale of the range of data in the top left corner
         if (sigInternal$scale == TRUE) {
@@ -1109,34 +1125,51 @@ plotSignal <- function(data, binSize = NA, binCap = TRUE, negData = FALSE,
         # LABEL
         # =====================================================================
         
-        if (!is.null(sigInternal$label)){
-            if (sigInternal$scale == TRUE){
-                labelGrob <- textGrob(
-                    label = sigInternal$label,
-                    just = c("right", "top"), x = 1, y = 1,
-                    gp = sigInternal$gp
-                )
-            } else {
-                labelGrob <- textGrob(
-                    label = sigInternal$label,
-                    just = c("left", "top"), x = 0, y = 1,
-                    gp = sigInternal$gp
-                )
+        if (!is.null(sigInternal$label)) {
+            labelPosition <- sigInternal$label.position
+            if (is.null(labelPosition)) {
+                labelPosition <- if (sigInternal$scale == TRUE) {
+                    "top-right"
+                } else {
+                    "top-left"
+                }
             }
-            
-            ## Add grob to gtree
-            assign("signal_grobs",
-                   addGrob(
-                       gTree = get("signal_grobs", envir = pgEnv),
-                       child = labelGrob
-                   ),
-                   envir = pgEnv
+            labelPosition <- match.arg(
+                labelPosition,
+                c("top-left", "top-right", "bottom-left", "bottom-right",
+                  "left", "right")
             )
-    
+            offset <- sigInternal$label.offset
+            labelSpec <- switch(labelPosition,
+                "top-left" = list(x = offset, y = 1 - offset,
+                                  just = c("left", "top")),
+                "top-right" = list(x = 1 - offset, y = 1 - offset,
+                                   just = c("right", "top")),
+                "bottom-left" = list(x = offset, y = offset,
+                                     just = c("left", "bottom")),
+                "bottom-right" = list(x = 1 - offset, y = offset,
+                                      just = c("right", "bottom")),
+                "left" = list(x = offset, y = 0.5,
+                               just = c("left", "center")),
+                "right" = list(x = 1 - offset, y = 0.5,
+                                just = c("right", "center"))
+            )
+            labelGrob <- textGrob(
+                label = sigInternal$label,
+                x = labelSpec$x, y = labelSpec$y,
+                just = labelSpec$just,
+                gp = sigInternal$gp
+            )
+
+            assign("signal_grobs",
+                addGrob(
+                    gTree = get("signal_grobs", envir = pgEnv),
+                    child = labelGrob
+                ),
+                envir = pgEnv
+            )
         }
         
-    }
-
     # =========================================================================
     # IF PLOT == TRUE, DRAW GROBS
     # =========================================================================

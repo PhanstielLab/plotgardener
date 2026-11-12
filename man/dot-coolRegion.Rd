@@ -14,11 +14,11 @@
 
 \item{resolution}{Resolution to read chromsome info from}
 }
+\value{
+A list of length two containing the chromosome start position (1)
+  and the chromosome length.
+}
 \description{
 Add (alt)chromstart and (alt)chromend for NULL (alt)chrom region of 
 .(m)cool files
-}
-
-\value{
-A list of length two containing the chromosome start position (1) and the chromosome length.
 }

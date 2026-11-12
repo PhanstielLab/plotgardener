@@ -7,3 +7,7 @@
 ^LICENSE\.md$
 ^icons$
 ^\.github$
+^\.Rlib$
+^scripts$
+^DEV_PLAN\.md$
+^install_deps\.log$

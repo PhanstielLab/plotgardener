@@ -37,11 +37,13 @@
 #' @docType package
 #' @name plotgardener
 #' @useDynLib plotgardener
+#' @importFrom grDevices as.raster
 #' @importFrom grDevices colorRampPalette
 #' @importFrom grDevices dev.size
 #' @importFrom curl has_internet
 #' @importFrom methods hasArg
 #' @importFrom methods is
+#' @importFrom stats aggregate
 #' @importFrom stats na.omit
 #' @importFrom utils str
 #' @importFrom Rcpp sourceCpp

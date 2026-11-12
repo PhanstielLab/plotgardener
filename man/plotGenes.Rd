@@ -13,6 +13,8 @@ plotGenes(
     fontcolor = c("#669fd9", "#abcc8e"),
     fill = c("#669fd9", "#abcc8e"),
     geneOrder = NULL,
+    labelClusters = FALSE,
+    labelClusterRot = 45,
     geneHighlights = NULL,
     geneBackground = "grey",
     strandLabels = TRUE,
@@ -56,6 +58,14 @@ Default value is \code{fill = c("#669fd9", "#abcc8e")}.}
 
 \item{geneOrder}{An ordered character vector of gene names to
 prioritize when labeling genes.}
+
+\item{labelClusters}{A logical value indicating whether to draw all gene
+labels without overlap suppression. Useful for dense gene clusters;
+labels may be rotated with \code{labelClusterRot}.
+Default value is \code{labelClusters = FALSE}.}
+
+\item{labelClusterRot}{Rotation in degrees for labels when
+\code{labelClusters = TRUE}. Default value is \code{labelClusterRot = 45}.}
 
 \item{geneHighlights}{A two-column dataframe with a column named "gene"
 containing gene names as strings to highlight and a named column "color"

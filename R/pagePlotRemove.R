@@ -1,7 +1,14 @@
 #' Remove plotgardener plots and annotations
 #'
+#' Records a plot for deferred removal instead of calling `grid.remove()` on
+#' the active device. The removal is applied by \code{pageExport()} or
+#' \code{pageRedraw()}, avoiding extra pages in PDF output.
+#'
 #' @param plot Plot object to be removed, defined by the output
 #' of a plotgardener plotting function.
+#' @param redraw Logical value indicating whether to redraw immediately on a
+#' screen device. File devices defer the change to \code{pageExport()}.
+#' Default value is \code{redraw = TRUE}.
 #'
 #' @examples
 #' ## Load Hi-C data
@@ -27,19 +34,21 @@
 #' @return None.
 #'
 #' @export
-pagePlotRemove <- function(plot) {
-    
-    if (is(plot, "yaxis") | is(plot, "xaxis")){
-        grid.remove(gPath(plot$grobs$childrenOrder))
+pagePlotRemove <- function(plot, redraw = TRUE) {
+
+    removed <- get("removed_plots", envir = pgEnv)
+
+    if (is(plot, "yaxis") | is(plot, "xaxis")) {
+        removed <- c(removed, plot$grobs$childrenOrder)
     } else {
-        grid.remove(gPath(plot$grobs$name))
-        
+        removed <- c(removed, plot$grobs$name)
+
         pg_vpTree <- get("pg_vpTree", envir = pgEnv)
         pg_vpTree[grep(plot$grobs$name, pg_vpTree)] <- NULL
         assign("pg_vpTree", pg_vpTree, envir = pgEnv)
-        
-        ## Need to remove outer viewport of bb_hicTriangle/bb_hicRectangle plot
-        ## and domain Clips
+
+        ## Keep viewport bookkeeping compatible with the previous behavior,
+        ## but do not remove the plotted grob from the device.
         if (is(plot, "hicTriangle") |
             is(plot, "hicRectangle")) {
             vp_name <- plot$grobs$vp$name
@@ -53,14 +62,19 @@ pagePlotRemove <- function(plot) {
                 suppressMessages(seekViewport(vp_name))
                 suppressMessages(popViewport())
             }
-        } else if (is(plot, "signal")){
-            if (grepl("_v", plot$grobs$vp$name)){
+        } else if (is(plot, "signal")) {
+            if (grepl("_v", plot$grobs$vp$name)) {
                 vp_name <- plot$grobs$vp$name
                 vp_name <- gsub("_v", "_vClip", vp_name)
                 suppressMessages(seekViewport(vp_name))
                 suppressMessages(popViewport())
             }
-        } 
+        }
     }
 
+    assign("removed_plots", unique(removed), envir = pgEnv)
+    if (isTRUE(redraw) && !.isFileDevice()) {
+        pageRedraw()
+    }
+    invisible(NULL)
 }

@@ -4,17 +4,23 @@
 \alias{pagePlotRemove}
 \title{Remove plotgardener plots and annotations}
 \usage{
-pagePlotRemove(plot)
+pagePlotRemove(plot, redraw = TRUE)
 }
 \arguments{
 \item{plot}{Plot object to be removed, defined by the output
 of a plotgardener plotting function.}
+
+\item{redraw}{Logical value indicating whether to redraw immediately on a
+screen device. File devices defer the change to \code{pageExport()}.
+Default value is \code{redraw = TRUE}.}
 }
 \value{
 None.
 }
 \description{
-Remove plotgardener plots and annotations
+Records a plot for deferred removal instead of calling `grid.remove()` on
+the active device. The removal is applied by \code{pageExport()} or
+\code{pageRedraw()}, avoiding extra pages in PDF output.
 }
 \examples{
 ## Load Hi-C data

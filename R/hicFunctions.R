@@ -117,11 +117,15 @@ read_data <- function(hic, hicPlot, norm, assembly, type, quiet) {
     if (!("data.frame" %in% class(hic))) {
         # .hic file
         if (file_ext(hic) == "hic"){
+            if (identical(norm, "auto")){
+                norm <- "KR"
+            }
             if (!is.null(hicPlot$chromstart) & !is.null(hicPlot$chromend) &
                 !is.na(hicPlot$resolution)) {
-                readchromstart <- hicPlot$chromstart - hicPlot$resolution
+                readchromstart <- max(0, hicPlot$chromstart - hicPlot$resolution)
                 readchromend <- hicPlot$chromend + hicPlot$resolution
-                readaltchromstart <- hicPlot$altchromstart - hicPlot$resolution
+                readaltchromstart <- max(0, hicPlot$altchromstart -
+                                             hicPlot$resolution)
                 readaltchromend <- hicPlot$altchromend + hicPlot$resolution
                 hic <- suppressWarnings(readHic(
                     file = hic, chrom = hicPlot$chrom,
@@ -144,12 +148,18 @@ read_data <- function(hic, hicPlot, norm, assembly, type, quiet) {
             if (!is.null(hicPlot$chromstart) & !is.null(hicPlot$chromend) &
                 !is.na(hicPlot$resolution)){
                 
-                readchromstart <- hicPlot$chromstart - hicPlot$resolution
+                readchromstart <- max(0, hicPlot$chromstart - hicPlot$resolution)
                 readchromend <- hicPlot$chromend + hicPlot$resolution
-                readaltchromstart <- hicPlot$altchromstart - hicPlot$resolution
+                readaltchromstart <- max(0, hicPlot$altchromstart -
+                                             hicPlot$resolution)
                 readaltchromend <- hicPlot$altchromend + hicPlot$resolution
 
                 # .(m)cool file 
+                if (!identical(type, "observed")){
+                    warning("`matrix` types other than \"observed\" are not ",
+                            "supported for .(m)cool files. Using observed ",
+                            "counts.", call. = FALSE)
+                }
                 hic <- suppressWarnings(readCool(
                     file = hic, chrom = hicPlot$chrom,
                     chromstart = readchromstart,
@@ -253,4 +263,41 @@ scale_data <- function(upper, zrange) {
     }
     
     return(upper)
+}
+## Build a rasterGrob from sparse Hi-C pixel coordinates and colors.
+# @param squares data frame with x, y, and color columns
+# @param xmin,xmax,ymin,ymax native coordinate limits
+# @param resolution pixel size
+# @param maxDim maximum raster dimension; returns NULL if exceeded
+# @return rasterGrob or NULL
+.hicRasterGrob <- function(squares, xmin, xmax, ymin, ymax, resolution,
+                           maxDim = 2000) {
+    if (nrow(squares) == 0) {
+        return(NULL)
+    }
+    nx <- ceiling((xmax - xmin) / resolution)
+    ny <- ceiling((ymax - ymin) / resolution)
+    if (nx <= 0 || ny <= 0 || nx > maxDim || ny > maxDim) {
+        return(NULL)
+    }
+
+    colors <- matrix("#00000000", nrow = ny, ncol = nx)
+    ix <- floor((as.numeric(squares$x) - xmin) / resolution) + 1
+    iy <- floor((as.numeric(squares$y) - ymin) / resolution) + 1
+    keep <- ix >= 1 & ix <= nx & iy >= 1 & iy <= ny
+    if (!any(keep)) {
+        return(NULL)
+    }
+    colors[cbind(iy[keep], ix[keep])] <- as.character(squares$color[keep])
+
+    ## Raster row 1 is the top of the image, so flip matrix rows.
+    image <- as.raster(colors[rev(seq_len(ny)), , drop = FALSE])
+    rasterGrob(
+        image,
+        x = xmin, y = ymin,
+        width = nx * resolution, height = ny * resolution,
+        just = c("left", "bottom"),
+        default.units = "native",
+        interpolate = FALSE
+    )
 }

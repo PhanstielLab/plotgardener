@@ -13,10 +13,10 @@
 
 \item{chromend}{Chromend of region}
 }
+\value{
+A numeric value specifying the automatically determined resolution
+  in base pairs.
+}
 \description{
 Determine best resolution for size of region for .(m)cool files
-}
-
-\value{
-A numeric value specifying the automatically determined resolution in base pairs.
 }

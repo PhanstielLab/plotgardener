@@ -4,7 +4,7 @@
 #'     data,
 #'     resolution = "auto",
 #'     zrange = NULL,
-#'     norm = "KR",
+#'     norm = "auto",
 #'     matrix = "observed",
 #'     chrom,
 #'     chromstart = NULL,
@@ -21,6 +21,8 @@
 #'     just = c("left", "top"),
 #'     default.units = "inches",
 #'     draw = TRUE,
+#'     raster = c("auto", "never", "always"),
+#'     raster.max = 2000,
 #'     params = NULL,
 #'     quiet = FALSE
 #' )
@@ -37,8 +39,9 @@
 #' max or min.
 #' @param norm Character value specifying hic data normalization method,
 #' if giving .hic or .(m)cool file. This value must be found in the .hic 
-#' or .(m)cool file.
-#' Default value is \code{norm = "KR"}.
+#' or .(m)cool file. \code{"auto"} chooses \code{"KR"} for .hic files and an
+#' an available bins column for .(m)cool files (see \code{readCoolNorms()}).
+#' Default value is \code{norm = "auto"}.
 #' @param matrix Character value indicating the type of matrix to output for 
 #' .hic files.
 #' Default value is \code{matrix = "observed"}. Options are:
@@ -86,6 +89,11 @@
 #' as numerics. Default value is \code{default.units = "inches"}.
 #' @param draw A logical value indicating whether graphics output should
 #' be produced. Default value is \code{draw = TRUE}.
+#' @param raster Rasterization mode for Hi-C pixels. \code{"auto"} rasterizes
+#' large maps, \code{"never"} always uses vector rectangles, and
+#' \code{"always"} always rasterizes when possible.
+#' @param raster.max Maximum raster dimension. Default value is
+#' \code{raster.max = 2000}.
 #' @param params An optional \link[plotgardener]{pgParams} object containing
 #' relevant function parameters.
 #' @param quiet A logical indicating whether or not to print messages.
@@ -156,7 +164,7 @@
 #'
 #' @export
 plotHicRectangle <- function(data, resolution = "auto", zrange = NULL,
-                                norm = "KR", matrix = "observed", chrom,
+                                norm = "auto", matrix = "observed", chrom,
                                 chromstart = NULL, chromend = NULL,
                                 assembly = "hg38",
                                 palette = colorRampPalette(brewer.pal(
@@ -168,6 +176,8 @@ plotHicRectangle <- function(data, resolution = "auto", zrange = NULL,
                                 width = NULL, height = NULL,
                                 just = c("left", "top"),
                                 default.units = "inches", draw = TRUE,
+                                raster = c("auto", "never", "always"),
+                                raster.max = 2000,
                                 params = NULL, quiet = FALSE) {
 
     # =========================================================================
@@ -570,15 +580,36 @@ plotHicRectangle <- function(data, resolution = "auto", zrange = NULL,
 
     if (!is.null(hicPlot$chromstart) & !is.null(hicPlot$chromend)) {
         if (nrow(hic) > 0) {
-            hic_squares <- rectGrob(
-                x = hic$x,
-                y = hic$y,
-                just = c("left", "bottom"),
-                width = hicPlot$resolution,
-                height = hicPlot$resolution,
-                gp = gpar(col = NA, fill = hic$color),
-                default.units = "native"
+            rasterMode <- match.arg(
+                rhicInternal$raster,
+                c("auto", "never", "always")
             )
+            useRaster <- rasterMode == "always" ||
+                (rasterMode == "auto" && nrow(hic) > 5000)
+            rasterGrob <- NULL
+            if (useRaster) {
+                rasterGrob <- .hicRasterGrob(
+                    squares = hic,
+                    xmin = min(scale[[1]]), xmax = max(scale[[1]]),
+                    ymin = min(scale[[1]]), ymax = max(scale[[1]]),
+                    resolution = hicPlot$resolution,
+                    maxDim = rhicInternal$raster.max
+                )
+            }
+
+            if (!is.null(rasterGrob)) {
+                hic_squares <- rasterGrob
+            } else {
+                hic_squares <- rectGrob(
+                    x = hic$x,
+                    y = hic$y,
+                    just = c("left", "bottom"),
+                    width = hicPlot$resolution,
+                    height = hicPlot$resolution,
+                    gp = gpar(col = NA, fill = hic$color),
+                    default.units = "native"
+                )
+            }
 
             assign("hic_grobs3",
                 addGrob(
@@ -614,6 +645,13 @@ plotHicRectangle <- function(data, resolution = "auto", zrange = NULL,
     hicPlot$chromendAdjusted <- hicPlot$chromend
     hicPlot$chromstart <- rhicInternal$chromstart
     hicPlot$chromend <- rhicInternal$chromend
+
+    hicPlot$xchrom <- hicPlot$chrom
+    hicPlot$xchromstart <- hicPlot$chromstart
+    hicPlot$xchromend <- hicPlot$chromend
+    hicPlot$ychrom <- hicPlot$chrom
+    hicPlot$ychromstart <- hicPlot$chromstart
+    hicPlot$ychromend <- hicPlot$chromend
 
     # =========================================================================
     # RETURN OBJECT
