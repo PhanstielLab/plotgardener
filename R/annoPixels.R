@@ -218,29 +218,36 @@ annoPixels <- function(plot, data, type = "box", half = "inherit",
     ## Define a function that subsets loop data for hic region
     subset_loops <- function(hic, loopData, object, plotObject) {
 
+        ## Avoid factor-level mismatches when the plot chromosome came from
+        ## pgParams(gene=) and the loop data contains all chromosomes.
+        loopData[, "chrom1"] <- as.character(loopData[, "chrom1"])
+        loopData[, "chrom2"] <- as.character(loopData[, "chrom2"])
+        plotChrom <- as.character(object$chrom)
+        plotAltchrom <- as.character(object$altchrom)
+
         ## chrom always in col1
         ## altchrom always in col4
         ## triangle hic plots will not have altchrom parameters
         if (is(hic, "hicTriangle")) {
             loops_subset <- loopData[which(
-                loopData[, "chrom1"] == object$chrom &
-                loopData[, "chrom2"] == object$chrom &
+                loopData[, "chrom1"] == plotChrom &
+                loopData[, "chrom2"] == plotChrom &
                 loopData[, "start1"] >= object$chromstart &
                 loopData[, "end1"] <= object$chromend &
                 loopData[, "start2"] >= object$chromstart &
                 loopData[, "end2"] <= object$chromend), ]
         } else if (is(hic, "hicRectangle")){
             loops_subset <- loopData[which(
-                loopData[, "chrom1"] == object$chrom &
-                    loopData[, "chrom2"] == object$chrom &
+                loopData[, "chrom1"] == plotChrom &
+                    loopData[, "chrom2"] == plotChrom &
                     loopData[, "start1"] >= plotObject$chromstartAdjusted &
                     loopData[, "end1"] <= plotObject$chromendAdjusted &
                     loopData[, "start2"] >= plotObject$chromstartAdjusted &
                     loopData[, "end2"] <= plotObject$chromendAdjusted), ]
         } else {
             loops_subset <- loopData[which(
-                loopData[, "chrom1"] == object$chrom &
-                loopData[, "chrom2"] == object$altchrom &
+                loopData[, "chrom1"] == plotChrom &
+                loopData[, "chrom2"] == plotAltchrom &
                 loopData[, "start1"] >= object$chromstart &
                 loopData[, "end1"] <= object$chromend &
                 loopData[, "start2"] >= object$altchromstart &

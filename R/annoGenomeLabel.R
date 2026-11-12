@@ -172,20 +172,77 @@ annoGenomeLabel <- function(plot, fontsize = 10, fontcolor = "black",
     # ASSIGN PARAMETERS BASED ON PLOT INPUT
     # =========================================================================
 
-    chrom <- genomeLabelInternal$plot$chrom
-    chromstart <- genomeLabelInternal$plot$chromstart
-    chromend <- genomeLabelInternal$plot$chromend
-    assembly <- genomeLabelInternal$plot$assembly
+    plotObject <- genomeLabelInternal$plot
+    chrom <- if (!is.null(plotObject$xchrom)) {
+        plotObject$xchrom
+    } else {
+        plotObject$chrom
+    }
+    chromstart <- if (!is.null(plotObject$xchromstart)) {
+        plotObject$xchromstart
+    } else {
+        plotObject$chromstart
+    }
+    chromend <- if (!is.null(plotObject$xchromend)) {
+        plotObject$xchromend
+    } else {
+        plotObject$chromend
+    }
+    assembly <- plotObject$assembly
     x <- genomeLabelInternal$x
     y <- genomeLabelInternal$y
-    length <- genomeLabelInternal$plot$width
+    length <- plotObject$width
     if (genomeLabelInternal$axis == "y") {
-        length <- genomeLabelInternal$plot$height
-        chrom <- genomeLabelInternal$plot$altchrom
-        chromstart <- genomeLabelInternal$plot$grobs$vp$yscale[1]
-        chromend <- genomeLabelInternal$plot$grobs$vp$yscale[2]
+        length <- plotObject$height
+        chrom <- if (!is.null(plotObject$ychrom)) {
+            plotObject$ychrom
+        } else {
+            plotObject$altchrom
+        }
+        chromstart <- if (!is.null(plotObject$ychromstart)) {
+            plotObject$ychromstart
+        } else {
+            plotObject$grobs$vp$yscale[1]
+        }
+        chromend <- if (!is.null(plotObject$ychromend)) {
+            plotObject$ychromend
+        } else {
+            plotObject$grobs$vp$yscale[2]
+        }
     }
     
+    ## Account for padded axis ranges (for example interchromosomal
+    ## plotHicSquare(aspect = "fixed")).
+    if (genomeLabelInternal$axis == "x" &&
+        !is.null(plotObject$xaxisRange)) {
+        axisRange <- range(plotObject$xaxisRange)
+        actualRange <- range(c(chromstart, chromend))
+        if (diff(axisRange) > 0) {
+            fracStart <- (actualRange[1] - axisRange[1]) / diff(axisRange)
+            fracLength <- diff(actualRange) / diff(axisRange)
+            x <- misc_defaultUnits(x, "x", genomeLabelInternal$default.units) +
+                plotObject$width * fracStart
+            length <- plotObject$width * fracLength
+        }
+    }
+    if (genomeLabelInternal$axis == "y" &&
+        !is.null(plotObject$yaxisRange)) {
+        axisRange <- range(plotObject$yaxisRange)
+        actualRange <- range(c(chromstart, chromend))
+        if (diff(axisRange) > 0) {
+            if (plotObject$yaxisRange[1] < plotObject$yaxisRange[2]) {
+                offsetTop <- (axisRange[2] - actualRange[2]) / diff(axisRange)
+            } else {
+                offsetTop <- (actualRange[1] - axisRange[1]) / diff(axisRange)
+            }
+            fracLength <- diff(actualRange) / diff(axisRange)
+            y <- misc_defaultUnits(y, "y", genomeLabelInternal$default.units,
+                                   funName = "annoGenomeLabel") +
+                plotObject$height * offsetTop
+            length <- plotObject$height * fracLength
+        }
+    }
+
     just <- justConversion(just = genomeLabelInternal$just)
     
     ## Whole genome Manhattan plot spacing

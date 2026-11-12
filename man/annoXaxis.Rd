@@ -11,6 +11,14 @@ annoXaxis(
     main = TRUE,
     scipen = 999,
     axisLine = FALSE,
+    tcl = 0.25,
+    label.offset = 0.35,
+    axisLine.lwd = 0.5,
+    axisLine.col = NULL,
+    axisLine.lty = NULL,
+    tick.lwd = 0.5,
+    tick.col = NULL,
+    tick.lty = NULL,
     params = NULL,
     ...
 )
@@ -38,6 +46,25 @@ Default value is \code{scipen = 999}.}
 
 \item{axisLine}{A logical value indicating whether to show the axis line.
 Default value is \code{axisLine = FALSE}.}
+
+\item{tcl}{Tick length in lines. Default value is \code{tcl = 0.25}.}
+
+\item{label.offset}{Label offset from the tick ends in lines.
+Default value is \code{label.offset = 0.35}.}
+
+\item{axisLine.lwd}{Axis line width. Default value is
+\code{axisLine.lwd = 0.5}.}
+
+\item{axisLine.col}{Axis line color.}
+
+\item{axisLine.lty}{Axis line type.}
+
+\item{tick.lwd}{Tick line width. Default value is
+\code{tick.lwd = 0.5}.}
+
+\item{tick.col}{Tick line color.}
+
+\item{tick.lty}{Tick line type.}
 
 \item{params}{An optional \link[plotgardener]{pgParams} object
 containing relevant function parameters.}

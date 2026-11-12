@@ -8,7 +8,7 @@ plotHicRectangle(
     data,
     resolution = "auto",
     zrange = NULL,
-    norm = "KR",
+    norm = "auto",
     matrix = "observed",
     chrom,
     chromstart = NULL,
@@ -25,6 +25,8 @@ plotHicRectangle(
     just = c("left", "top"),
     default.units = "inches",
     draw = TRUE,
+    raster = c("auto", "never", "always"),
+    raster.max = 2000,
     params = NULL,
     quiet = FALSE
 )
@@ -45,8 +47,9 @@ max or min.}
 
 \item{norm}{Character value specifying hic data normalization method,
 if giving .hic or .(m)cool file. This value must be found in the .hic 
-or .(m)cool file.
-Default value is \code{norm = "KR"}.}
+or .(m)cool file. \code{"auto"} chooses \code{"KR"} for .hic files and an
+an available bins column for .(m)cool files (see \code{readCoolNorms()}).
+Default value is \code{norm = "auto"}.}
 
 \item{matrix}{Character value indicating the type of matrix to output for 
 .hic files.
@@ -110,6 +113,13 @@ as numerics. Default value is \code{default.units = "inches"}.}
 
 \item{draw}{A logical value indicating whether graphics output should
 be produced. Default value is \code{draw = TRUE}.}
+
+\item{raster}{Rasterization mode for Hi-C pixels. \code{"auto"} rasterizes
+large maps, \code{"never"} always uses vector rectangles, and
+\code{"always"} always rasterizes when possible.}
+
+\item{raster.max}{Maximum raster dimension. Default value is
+\code{raster.max = 2000}.}
 
 \item{params}{An optional \link[plotgardener]{pgParams} object containing
 relevant function parameters.}

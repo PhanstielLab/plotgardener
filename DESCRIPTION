@@ -1,6 +1,6 @@
 Package: plotgardener
 Title: Coordinate-Based Genomic Visualization Package for R
-Version: 1.15.1
+Version: 1.15.1.9000
 Date: 2024-06-28
 Authors@R: c(
     person("Nicole", "Kramer", email = "nekramer27@gmail.com",
@@ -65,12 +65,15 @@ Suggests:
     BSgenome,
     BSgenome.Hsapiens.UCSC.hg19,
     ComplexHeatmap,
+    digest,
+    ensembldb,
     GenomicFeatures,
     ggplot2,
     InteractionSet,
     knitr,
     org.Hs.eg.db,
     rtracklayer,
+    Rsamtools,
     plotgardenerData,
     pdftools,
     png,

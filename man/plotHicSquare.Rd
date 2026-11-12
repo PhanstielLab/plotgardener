@@ -8,7 +8,7 @@ plotHicSquare(
     data,
     resolution = "auto",
     zrange = NULL,
-    norm = "KR",
+    norm = "auto",
     matrix = "observed",
     chrom,
     chromstart = NULL,
@@ -21,6 +21,8 @@ plotHicSquare(
     colorTrans = "linear",
     half = "both",
     yaxisDir = "increase",
+    xaxisDir = "increase",
+    aspect = c("free", "fixed"),
     bg = NA,
     x = NULL,
     y = NULL,
@@ -29,6 +31,8 @@ plotHicSquare(
     just = c("left", "top"),
     default.units = "inches",
     draw = TRUE,
+    raster = c("auto", "never", "always"),
+    raster.max = 2000,
     params = NULL,
     quiet = FALSE
 )
@@ -49,7 +53,9 @@ to the max or min.}
 
 \item{norm}{Character value specifying hic data normalization method,
 if giving .hic or .(m)cool file. This value must be found in the .hic or
-.(m)cool file. Default value is \code{norm = "KR"}.}
+.(m)cool file. \code{"auto"} chooses \code{"KR"} for .hic files and an
+an available bins column for .(m)cool files (see \code{readCoolNorms()}).
+Default value is \code{norm = "auto"}.}
 
 \item{matrix}{Character value indicating the type of matrix to output for
 .hic files.
@@ -60,14 +66,16 @@ Default value is \code{matrix = "observed"}. Options are:
 \item{\code{"log2oe"}: }{Log2 transformed observed/expected counts.}
 }}
 
-\item{chrom}{Chromosome of region to be plotted, as a string.}
+\item{chrom}{Chromosome of region to be plotted, as a string. For
+interchromosomal plots this is the **x-axis** chromosome.}
 
 \item{chromstart}{Integer start position on chromosome to be plotted.}
 
 \item{chromend}{Integer end position on chromosome to be plotted.}
 
 \item{altchrom}{Alternate chromosome for off-diagonal plotting
-or interchromosomal plotting, as a string.}
+or interchromosomal plotting, as a string. For interchromosomal plots this
+is the **y-axis** chromosome.}
 
 \item{altchromstart}{Alternate chromosome integer start position
 for off-diagonal plotting or interchromosomal plotting.}
@@ -91,7 +99,10 @@ Default value is \code{colorTrans = "linear"}.}
 \item{half}{A character value indicating which diagonal regions to plot.
 For intrachromosomal plotting, options are \code{"both"}, \code{"top"},
 or \code{"bottom"}. For off-diagonal or interchromosomal plotting,
-options are \code{"top"} or \code{"bottom"}.
+options are \code{"top"} or \code{"bottom"}. For interchromosomal plots,
+\code{half} does not select a triangle; it controls the y-axis origin
+together with \code{yaxisDir}. See the interchromosomal orientation
+section below.
 Default value is \code{half = "both"}.
 \describe{
 \item{\code{"both"}: }{Both diagonal halves.}
@@ -103,8 +114,19 @@ Default value is \code{half = "both"}.
 Options are \code{"increase"}, where the bottom left corner of the Hi-C map
 indicates the origin, and \code{"decrease"}, where the top left corner of the
 Hi-C map indicates the origin. This will change the direction of the diagonal
-for intrachromosomal maps.
+for intrachromosomal maps. For interchromosomal maps, combine
+\code{yaxisDir} with \code{half} as described in the interchromosomal
+orientation section below.
 Default value is \code{yaxisDir = "increase"}.}
+
+\item{xaxisDir}{A string specifying the genomic direction of the x-axis.
+Options are \code{"increase"} or \code{"decrease"}.
+Default value is \code{xaxisDir = "increase"}.}
+
+\item{aspect}{Aspect mode for interchromosomal plots. \code{"free"}
+stretches each chromosome to fill its axis; \code{"fixed"} uses the same
+basepairs-per-inch on both axes, centering padding on the shorter
+chromosome. Default value is \code{aspect = "free"}.}
 
 \item{bg}{Character value indicating background color.
 Default value is \code{bg = NA}.}
@@ -136,6 +158,13 @@ numerics. Default value is \code{default.units = "inches"}.}
 \item{draw}{A logical value indicating whether graphics output should be
 produced. Default value is \code{draw = TRUE}.}
 
+\item{raster}{Rasterization mode for Hi-C pixels. \code{"auto"} rasterizes
+large maps, \code{"never"} always uses vector rectangles, and
+\code{"always"} always rasterizes when possible.}
+
+\item{raster.max}{Maximum number of raster rows/columns. Larger matrices
+fall back to vector rectangles. Default value is \code{raster.max = 2000}.}
+
 \item{params}{An optional \link[plotgardener]{pgParams} object containing
 relevant function parameters.}
 
@@ -164,6 +193,54 @@ plotHicSquare(data, chrom,
                 chromstart = NULL, chromend = NULL)
 }
 }
+\section{Interchromosomal orientation}{
+
+For an interchromosomal plot, \code{chrom} is always the x-axis and
+\code{altchrom} is always the y-axis:
+\preformatted{
+  x = chrom
+  y = altchrom
+}
+
+When building a grid of chromosomes, a cell at row \code{i} and column
+\code{j} must therefore use the column chromosome as \code{chrom} and
+the row chromosome as \code{altchrom}:
+\preformatted{
+  plotHicSquare(
+      data = hic,
+      chrom = chroms[j],     # x-axis: grid column
+      altchrom = chroms[i],  # y-axis: grid row
+      chromstart = 0, chromend = max_len,
+      altchromstart = 0, altchromend = max_len,
+      x = x0 + (j - 1) * cell,
+      y = y0 + (i - 1) * cell,
+      width = cell, height = cell,
+      half = "top", yaxisDir = "decrease",
+      just = c("left", "top")
+  )
+}
+Passing \code{chrom = chroms[i]} and \code{altchrom = chroms[j]} instead
+transposes every off-diagonal square.
+
+For interchromosomal plots, \code{half} controls the y-axis origin in
+combination with \code{yaxisDir}:
+\describe{
+\item{\code{half = "bottom"}, \code{yaxisDir = "decrease"}: }{
+  origin at the lower-left}
+\item{\code{half = "top"}, \code{yaxisDir = "decrease"}: }{
+  origin at the upper-left; y increases downward}
+\item{\code{half = "bottom"}, \code{yaxisDir = "increase"}: }{
+  origin at the upper-left}
+\item{\code{half = "top"}, \code{yaxisDir = "increase"}: }{
+  origin at the lower-left}
+}
+The combination \code{half = "top", yaxisDir = "decrease"} matches the
+orientation used by common 3D genome browsers, where the upper-left corner
+is the matrix origin and y increases downward. \code{xaxisDir} controls
+whether x increases to the right (\code{"increase"}) or to the left
+(\code{"decrease"}).
+}
+
 \examples{
 ## Load Hi-C data
 library(plotgardenerData)

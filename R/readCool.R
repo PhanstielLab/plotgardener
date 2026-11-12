@@ -23,26 +23,24 @@
     
     lvl1contents <- h5ls(file, recursive = 1)
     expectedContents <- c("bins", "chroms", "indexes", "pixels")
+    rootNames <- unique(lvl1contents$name)
     
-    ## Check if it is mcool or cool
-    if (nrow(lvl1contents) == 1){
-        ## mcool file has 1 row-resolutions    
-        
+    ## Check if it is mcool or cool. An mcool file has a root-level
+    ## `resolutions` group; it can contain additional root groups, so do not
+    ## rely on the number of root rows.
+    if ("resolutions" %in% rootNames){
         ## Get deeper contents of mcool
         lvl2contents <- h5ls(file, recursive = 3) |>
             pull(name) |>
             unique()
         
         ## Check for expected datasets and resolutions
-        
-        if (all(expectedContents %in% lvl2contents) & 
-           lvl1contents$name == "resolutions"){
+        if (all(expectedContents %in% lvl2contents)){
             return(".mcool")
-        } 
-        
+        }
     } else {
         ## check that cool file contains expected datasets
-        if (all(expectedContents %in% lvl1contents$name)){
+        if (all(expectedContents %in% rootNames)){
             return(".cool")
         } 
     }
@@ -92,15 +90,20 @@ readCoolBpResolutions <- function(file){
 #' @author Sarah Parker, Nicole Kramer
 #'
 #' @details
-#' The "BALANCE" normalization refers to applying the pre-calculated matrix 
-#' balancing weights in the `weight` dataset of `file`, typically present
-#' in files created using cooler. VC is vanilla coverage, 
-#' VC_SQRT is square root of vanilla coverage, 
-#' and KR is Knight-Ruiz normalization.
+#' The `weight` column is the standard cooler balancing weight, typically
+#' present in files created using `cooler balance`.
+#' VC is vanilla coverage, VC_SQRT is square root of vanilla coverage,
+#' and KR is Knight-Ruiz normalization. Other columns such as `sweight`,
+#' `CNV`, or `obj_weight` are returned by their stored names. Use
+#' `readCoolNorms()` to see the exact column names available in a file.
+#' 
+#' Cooler weights are multiplicative: balanced counts are calculated as
+#' \code{observed * weight1 * weight2}. Contacts involving bins with
+#' non-finite weights are dropped; the bins remain in the coordinate space.
 #' 
 #' Please note that if using a file from HiC-Pro, ICE normalizations will come
 #' from files stored in a separate folder, and thus will not contain any 
-#' normalizations explicitly called "ICE" or "BALANCE" since values are 
+#' normalizations explicitly called "ICE" or "weight" since values are 
 #' included already normalized. This normalization can be specified as "NONE".
 #' 
 #' @param file A character value specifying the path to the .(m)cool file
@@ -118,9 +121,8 @@ readCoolNorms <- function(file, resolution = NULL){
     readBpNorm <- function(resolutionPath, file){
         bpNorm <- h5read(file, name = paste0(resolutionPath, "/bins")) |>
             names()
-        bpNorm <- bpNorm[!(bpNorm %in% c("chrom", "start", "end"))] |>
-            gsub("weight","BALANCE", x = _) |> # replace "weight" with "BALANCE"
-            c("NONE") # add "NONE" for raw counts
+        bpNorm <- bpNorm[!(bpNorm %in% c("chrom", "start", "end"))]
+        bpNorm <- unique(c(bpNorm, "NONE")) # add "NONE" for raw counts
         
         return(bpNorm)
     }
@@ -235,6 +237,31 @@ readCoolChroms <- function(file, resolution = NULL){
 }
 
 
+#' Choose an available normalization from a .(m)cool file
+#'
+#' @param file Path to .(m)cool file
+#' @param resolution Resolution to inspect
+#'
+#' @return A character value naming an available normalization.
+.coolAutoNorm <- function(file, resolution = NULL){
+    fileNorms <- readCoolNorms(file, resolution = resolution)
+
+    if ("KR" %in% fileNorms){
+        return("KR")
+    }
+    if ("weight" %in% fileNorms){
+        return("weight")
+    }
+    if ("sweight" %in% fileNorms){
+        return("sweight")
+    }
+    available <- setdiff(fileNorms, "NONE")
+    if (length(available) > 0){
+        return(available[1])
+    }
+    return("NONE")
+}
+
 #' Determine best resolution for size of region for .(m)cool files
 #' 
 #' @param file Path to .(m)cool file
@@ -313,6 +340,7 @@ readCoolChroms <- function(file, resolution = NULL){
 .coolRegion <- function(file, chrom, resolution){
     
     chromInfo <- readCoolChroms(file, resolution = resolution)
+    chrom <- .coolMatchChrom(chrom, chromInfo)
     chromLength <- chromInfo[chromInfo$name == chrom, "length"]
     
     return(list(1, chromLength))
@@ -326,7 +354,7 @@ readCoolChroms <- function(file, resolution = NULL){
 #' @param binChunkSize Size of bin chunk, for comparison against the end of 
 #' the bin chunk
 #' @param datasetPath Dataset path, for specifying resolution in .mcool file
-#' @param end1bin Bin where end1 starts
+#' @param endPixel Last pixel index to read (1-based, inclusive)
 #' @param start2bin Bin for chr2 starts
 #' @param end2bin Bin for end2 starts
 #'
@@ -335,15 +363,12 @@ readCoolChroms <- function(file, resolution = NULL){
 #'
 #' @importFrom rhdf5 h5read
 .pullBinChunks <- function(binChunk, file, bin_offsets, binChunkSize,
-                           datasetPath, end1bin,
+                           datasetPath, endPixel,
                            start2bin, end2bin){
     
-    binChunkEnd <- binChunk + binChunkSize - 1
+    binChunkEnd <- min(binChunk + binChunkSize - 1, endPixel)
     
-    if (binChunkEnd > bin_offsets[end1bin+1]+1){
-        binChunkEnd <- bin_offsets[end1bin+1]+1
-    }
-    if (binChunkEnd > binChunk){
+    if (binChunkEnd >= binChunk){
         bin2s <- h5read(file, 
                         name = paste0(datasetPath,"/pixels/bin2_id"),
                         index = list(binChunk:binChunkEnd)) 
@@ -358,8 +383,35 @@ readCoolChroms <- function(file, resolution = NULL){
 }
 
 
-#' Error checking function for .(m)cool files
-#' 
+#' Match a user chromosome name to a chromosome name in a .(m)cool file
+#'
+#' @param chrom User-supplied chromosome name.
+#' @param chromInfo Chromosome data frame from \code{readCoolChroms()}.
+#'
+#' @return The matching chromosome name, or \code{NULL} if no match is found.
+.coolMatchChrom <- function(chrom, chromInfo){
+    if (is.null(chrom) || length(chrom) == 0){
+        return(NULL)
+    }
+    chrom <- as.character(chrom)
+    if (chrom %in% chromInfo$name){
+        return(chrom)
+    }
+
+    ## Accept `chr1` for files that use `1` and vice versa.
+    altChrom <- if (startsWith(chrom, "chr")){
+        sub("^chr", "", chrom)
+    } else {
+        paste0("chr", chrom)
+    }
+    if (altChrom %in% chromInfo$name){
+        return(altChrom)
+    }
+
+    return(NULL)
+}
+
+
 #' @param file Path to .(m)cool file
 #' @param chrom User-inputted chromosome
 #' @param chromstart User-inputted chromstart, can still be NULL at this point.
@@ -393,7 +445,7 @@ readCoolChroms <- function(file, resolution = NULL){
     ## Chroms
     chromInfo <- readCoolChroms(file, resolution = resolution)
     
-    if (!chrom %in% chromInfo$name){
+    if (is.null(.coolMatchChrom(chrom, chromInfo))){
         abort(c(
             glue("chrom={chrom} not found in {file}."),
             "i" = glue("Check file chromosome names with \\
@@ -406,7 +458,8 @@ readCoolChroms <- function(file, resolution = NULL){
     
     ## Check that chromstart is in bounds
     if (!is.null(chromstart)){
-        chromLength <- chromInfo[chromInfo$name == chrom, "length"]
+        fileChrom <- .coolMatchChrom(chrom, chromInfo)
+        chromLength <- chromInfo[chromInfo$name == fileChrom, "length"]
         if (chromstart < 0 | chromstart > chromLength){
             abort(c(glue("chromstart must be between 0 and chromosome end."),
                     "i" = "{chrom} length is {chromLength} bp."))
@@ -414,7 +467,7 @@ readCoolChroms <- function(file, resolution = NULL){
     }
     
     if (!is.null(altchrom)){
-        if (!altchrom %in% chromInfo$name){
+        if (is.null(.coolMatchChrom(altchrom, chromInfo))){
             abort(c(
                 glue("altchrom={altchrom} not found in {file}."),
                 "i" = glue("Check file chromosome names with \\
@@ -430,8 +483,10 @@ readCoolChroms <- function(file, resolution = NULL){
         regionErrors(chromstart = altchromstart,
                      chromend = altchromend)
         
-        altchromLength <- chromInfo[chromInfo$name == altchrom, "length"]
-        if (altchromstart < 0 | altchromstart > altchromLength){
+        fileAltchrom <- .coolMatchChrom(altchrom, chromInfo)
+        altchromLength <- chromInfo[chromInfo$name == fileAltchrom, "length"]
+        if (!is.null(altchromstart) &&
+            (altchromstart < 0 | altchromstart > altchromLength)){
             abort(c(glue("altchromstart must be between 0 and alt chromosome end."),
                     "i" = "{altchrom} length is {altchromLength} bp."))
         }
@@ -439,7 +494,8 @@ readCoolChroms <- function(file, resolution = NULL){
         ## If giving same chrom and altchrom, need to specify
         ## chromstart/chromend and altchromstart/altchromend
         
-        if (chrom == altchrom) {
+        if (.coolMatchChrom(chrom, chromInfo) ==
+            .coolMatchChrom(altchrom, chromInfo)) {
             if (is.null(chromstart) |
                 is.null(chromend) |
                 is.null(altchromstart) |
@@ -493,9 +549,18 @@ readCoolChroms <- function(file, resolution = NULL){
 #' the size of the region.
 #' @param zrange A numeric vector of length 2 specifying the range of
 #' interaction scores, where extreme values will be set to the max or min.
-#' @param norm Character value specifying hic data normalization method.
-#' This value must be found in the .(m)cool file.
+#' @param norm Character value specifying the exact name of a column in the
+#' `bins` group of the .(m)cool file (for example `"weight"`, `"sweight"`,
+#' `"KR"`, or `"NONE"`). Use \code{readCoolNorms()} to see the actual column
+#' names in a file. \code{"NONE"} returns raw counts; \code{"auto"} chooses
+#' \code{"KR"} if available, then \code{"weight"}, then \code{"sweight"}, then
+#' the first available weight, then \code{"NONE"}.
 #' Default value is \code{norm = "NONE"}.
+#' @details
+#' Cooler normalization weights are multiplicative:
+#' \code{balanced[i, j] = observed[i, j] * weight[i] * weight[j]}.
+#' Contacts involving bins with non-finite weights are dropped; the bins
+#' themselves remain in the coordinate space.
 #' @param binChunkSize A numeric specifying the number of bin indices to read 
 #' from a file for a given region at a given resolution. If the total amount of 
 #' data is larger than the \code{binChunkSize}, data will be read in multiple
@@ -573,6 +638,13 @@ readCool <- function(file, chrom, chromstart = NULL, chromend = NULL,
         )
     } 
 
+    if (identical(rcool$norm, "auto")) {
+        rcool$norm <- .coolAutoNorm(
+            file = rcool$file,
+            resolution = rcool$resolution
+        )
+    }
+
     # =========================================================================
     # CATCH ERRORS
     # =========================================================================
@@ -586,6 +658,21 @@ readCool <- function(file, chrom, chromstart = NULL, chromend = NULL,
         altchromend = rcool$altchromend, norm = rcool$norm,
         resolution = rcool$resolution
     )
+
+    # =========================================================================
+    # FILE TYPE AND CHROMOSOME NAMES
+    # =========================================================================
+
+    fileType <- .checkCool(rcool$file)
+    chrInfo <- readCoolChroms(rcool$file, rcool$resolution)
+
+    ## Match user chromosome names to the names used by the file. `.mcool`
+    ## files from some pipelines use `1` while plotgardener users often use
+    ## `chr1` (and vice versa).
+    rcool$chrom <- .coolMatchChrom(rcool$chrom, chrInfo)
+    if (!is.null(rcool$altchrom)){
+        rcool$altchrom <- .coolMatchChrom(rcool$altchrom, chrInfo)
+    }
 
     # =========================================================================
     # SET REGION PARAMETERS
@@ -614,8 +701,13 @@ readCool <- function(file, chrom, chromstart = NULL, chromend = NULL,
         
         
         if (rcool$chrom == rcool$altchrom) {
+            ## For same-chromosome off-diagonal regions, read the full
+            ## symmetric span on both coordinates. Otherwise bin1 spans the
+            ## full region while bin2 is restricted to the smaller region.
             rcool$chromstart <- min(rcool$chromstart, rcool$altchromstart)
             rcool$chromend <- max(rcool$chromend, rcool$altchromend)
+            rcool$altchromstart <- rcool$chromstart
+            rcool$altchromend <- rcool$chromend
         }
     } else {
         rcool$altchrom <- rcool$chrom
@@ -627,8 +719,6 @@ readCool <- function(file, chrom, chromstart = NULL, chromend = NULL,
     # EXTRACT SPARSE UPPER TRIANGULAR COUNT MATRIX
     # =========================================================================
 
-    fileType <- .checkCool(rcool$file)
-    chrInfo <- readCoolChroms(rcool$file, rcool$resolution)
     datasetPath <- ""
     if (fileType == ".mcool"){
         datasetPath <- paste0("/resolutions/", as.integer(rcool$resolution))
@@ -636,112 +726,165 @@ readCool <- function(file, chrom, chromstart = NULL, chromend = NULL,
 
     ## Find bin IDs for both chrom locations -----------------------------------
     ## adjust starts and ends to start of bins
-    
+
+    outputChrom <- rcool$chrom
+    outputAltchrom <- rcool$altchrom
+
+    ## Get vector of chromosome offsets
+    chrom_offsets <- h5read(rcool$file,
+                            name = paste0(datasetPath, "/indexes/chrom_offset"))
+
+    ## Cooler stores only the upper triangle, ordered by chromosome index.
+    ## When the requested `chrom` comes after `altchrom`, read the rectangle in
+    ## storage order and swap x/y back afterward. Without this, interchromosomal
+    ## queries in reverse chromosome order silently return zero pixels.
+    swappedChroms <- FALSE
+    if (rcool$chrom != rcool$altchrom) {
+        chr1Order <- chrom_offsets[chrInfo[chrInfo$name == rcool$chrom,
+                                           "index"]]
+        chr2Order <- chrom_offsets[chrInfo[chrInfo$name == rcool$altchrom,
+                                           "index"]]
+        if (chr1Order > chr2Order) {
+            swappedChroms <- TRUE
+            oldChrom <- rcool$chrom
+            oldStart <- rcool$chromstart
+            oldEnd <- rcool$chromend
+            rcool$chrom <- rcool$altchrom
+            rcool$chromstart <- rcool$altchromstart
+            rcool$chromend <- rcool$altchromend
+            rcool$altchrom <- oldChrom
+            rcool$altchromstart <- oldStart
+            rcool$altchromend <- oldEnd
+        }
+    }
+
     start1 <- (rcool$chromstart %/% rcool$resolution) * rcool$resolution
     start2 <- (rcool$altchromstart %/% rcool$resolution) * rcool$resolution
 
     end1 <- (rcool$chromend %/% rcool$resolution) * rcool$resolution
     end2 <- (rcool$altchromend %/% rcool$resolution) * rcool$resolution
-    
-    ## Get vector of chromosome offsets 
-    chrom_offsets <- h5read(rcool$file, 
-                            name = paste0(datasetPath, "/indexes/chrom_offset"))
+
+    ## Find the bin containing a coordinate. `findInterval()` is robust to
+    ## regions that do not start exactly on a bin boundary.
+    findBin <- function(coord, starts, chromOffset){
+        bin <- findInterval(coord, starts)
+        bin <- max(1L, min(bin, length(starts)))
+        return(as.integer(chromOffset + bin - 1))
+    }
     
     ## find bin id for chr1:start1:end1
     chr1indx <- chrInfo[chrInfo$name == rcool$chrom, "index"]
     
-    ## get start1 bin
+    ## get start1 and end1 bins
     chr1_starts <- h5read(rcool$file, name = paste0(datasetPath, "/bins/start"),
                           index = list((chrom_offsets[chr1indx]+1):
                                            chrom_offsets[chr1indx+1]))
-    start1bin <- which(chr1_starts == start1) + chrom_offsets[chr1indx] - 1
-    
-    ## get end1 bin (i.e. bin where end1 starts)
-    end1bin <- which(chr1_starts == end1) + chrom_offsets[chr1indx] - 1
+    start1bin <- findBin(start1, chr1_starts, chrom_offsets[chr1indx])
+    end1bin <- findBin(end1, chr1_starts, chrom_offsets[chr1indx])
+    if (end1bin < start1bin){
+        end1bin <- start1bin
+    }
     
     ## find bin id for chr2:start2:end2
     chr2indx <- chrInfo[chrInfo$name == rcool$altchrom, "index"]
     
-    ## get start2 bin
+    ## get start2 and end2 bins
     chr2_starts <- h5read(rcool$file, name = paste0(datasetPath,"/bins/start"),
                           index = list((chrom_offsets[chr2indx]+1):
                                            chrom_offsets[chr2indx+1]))
-    start2bin <- which(chr2_starts == start2) + chrom_offsets[chr2indx] - 1
-
-    ## get end2 bin
-    end2bin <- which(chr2_starts == end2) + chrom_offsets[chr2indx] - 1
+    start2bin <- findBin(start2, chr2_starts, chrom_offsets[chr2indx])
+    end2bin <- findBin(end2, chr2_starts, chrom_offsets[chr2indx])
+    if (end2bin < start2bin){
+        end2bin <- start2bin
+    }
     
     ## Extract counts and match locations --------------------------------------
     
-    ## Get bin offsets for counts
+    ## Get bin offsets for counts. `bin_offsets` has length nbins + 1; the
+    ## pixels for bin `b` (0-based) are `bin_offsets[b + 1] + 1` through
+    ## `bin_offsets[b + 2]`. The old code stopped one bin early and dropped
+    ## most of the last bin's pixels.
     bin_offsets <- h5read(rcool$file, 
                           name = paste0(datasetPath,"/indexes/bin1_offset"))
                           
-    ## Pull all bin2 ids for interactions with all bin1s between start1 and end1
-    ## Read 5 million indices at a time for more efficient calling
-    allBin1s <- (bin_offsets[start1bin+1]+1):(bin_offsets[end1bin+1]+1)
+    firstPixel <- bin_offsets[start1bin + 1] + 1
+    lastPixel <- bin_offsets[end1bin + 2]
     
-    if (length(allBin1s) > rcool$binChunkSize){
-        binChunks <- seq(bin_offsets[start1bin+1]+1,
-                         bin_offsets[end1bin+1]+1,
-                         binChunkSize)
-        
-        
-        count_idx <- na.omit(unlist(lapply(binChunks, .pullBinChunks, 
-                                           file = rcool$file,
-               bin_offsets = bin_offsets, binChunkSize = rcool$binChunkSize,
-               datasetPath = datasetPath, end1bin = end1bin,
-               start2bin = start2bin, end2bin = end2bin)))
-        
+    ## Pull all bin2 ids for interactions with all bin1s between start1 and end1
+    ## Read `binChunkSize` indices at a time for more efficient calling
+    if (lastPixel >= firstPixel) {
+        if ((lastPixel - firstPixel + 1) > rcool$binChunkSize){
+            binChunks <- seq(firstPixel, lastPixel, by = rcool$binChunkSize)
+            
+            count_idx <- na.omit(unlist(lapply(binChunks, .pullBinChunks, 
+                                               file = rcool$file,
+                   bin_offsets = bin_offsets, binChunkSize = rcool$binChunkSize,
+                   datasetPath = datasetPath, endPixel = lastPixel,
+                   start2bin = start2bin, end2bin = end2bin)))
+        } else {
+            bin2s <- h5read(rcool$file, 
+                            name = paste0(datasetPath,"/pixels/bin2_id"),
+                            index = list(firstPixel:lastPixel)) 
+            
+            ## Find indexes for interactions with all bin2s between start2 and end2
+            count_idx <- which(bin2s %in% start2bin:end2bin) + 
+                firstPixel - 1
+        }
     } else {
-        bin2s <- h5read(rcool$file, 
-                        name = paste0(datasetPath,"/pixels/bin2_id"),
-                        index = list(allBin1s)) 
-        
-        ## Find indexes for interactions with all bin2s between start2 and end2
-        count_idx <- which(bin2s %in% start2bin:end2bin) + 
-            bin_offsets[start1bin+1]
+        count_idx <- integer(0)
     }
     
     ## Pull out bin1 ids, bin2 ids, and counts for all interactions in slice
-    bin1ids <- h5read(rcool$file, name = paste0(datasetPath,"/pixels/bin1_id"), 
-                      index = list(count_idx))
+    if (length(count_idx) > 0){
+        bin1ids <- h5read(rcool$file, 
+                          name = paste0(datasetPath,"/pixels/bin1_id"), 
+                          index = list(count_idx))
+        
+        bin2ids <- h5read(rcool$file, 
+                          name = paste0(datasetPath,"/pixels/bin2_id"), 
+                          index = list(count_idx))
+        
+        counts <- h5read(rcool$file, 
+                         name = paste0(datasetPath,"/pixels/count"), 
+                         index = list(count_idx)) |>
+            #defaults to integer, needs to be numeric to convert to NA correctly
+            as.numeric()
+    } else {
+        bin1ids <- integer(0)
+        bin2ids <- integer(0)
+        counts <- numeric(0)
+    }
     
-    bin2ids <- h5read(rcool$file, name = paste0(datasetPath,"/pixels/bin2_id"), 
-                      index = list(count_idx))
-    
-    counts <- h5read(rcool$file, name = paste0(datasetPath,"/pixels/count"), 
-                     index = list(count_idx)) |>
-        #defaults to integer, needs to be numeric to convert to NA correctly
-        as.numeric()
-    
-    ## Multiply by normalization factors, if applicable
-    if (rcool$norm == "BALANCE"){
-        bin1norm <- h5read(rcool$file, 
-                           name = paste0(datasetPath,"/bins/weight"),
-                           list(as.numeric(bin1ids+1)))
-        bin2norm <- h5read(rcool$file, 
-                           name = paste0(datasetPath,"/bins/weight"),
-                           list(as.numeric(bin2ids+1)))
-        counts <- counts / (bin1norm * bin2norm)
-    } else if (rcool$norm != "NONE"){
-        bin1norm <- h5read(rcool$file, 
-                           name = paste0(datasetPath,"/bins/", rcool$norm),
-                           list(as.numeric(bin1ids+1)))
-        bin2norm <- h5read(rcool$file, 
-                           name = paste0(datasetPath,"/bins/", rcool$norm),
-                           list(as.numeric(bin2ids+1)))
-        counts <- counts / (bin1norm * bin2norm)
+    ## Multiply by normalization factors, if applicable. Cooler weights are
+    ## multiplicative: balanced = observed * weight_i * weight_j.
+    if (rcool$norm != "NONE" && length(counts) > 0){
+        weights <- h5read(rcool$file, 
+                          name = paste0(datasetPath,"/bins/", rcool$norm))
+        bin1norm <- weights[as.numeric(bin1ids) + 1]
+        bin2norm <- weights[as.numeric(bin2ids) + 1]
+        counts <- counts * bin1norm * bin2norm
+        counts[!is.finite(counts)] <- NA_real_
     }
     
     ## Get genomic locations for each bin id 
-    xs <- h5read(rcool$file, 
-                 name = paste0(datasetPath,"/bins/start"),
-                 index = list(as.numeric(bin1ids+1)))
-    ys <- h5read(rcool$file, 
-                 name = paste0(datasetPath,"/bins/start"),
-                 index = list(as.numeric(bin2ids+1)))
+    if (length(count_idx) > 0){
+        xs <- h5read(rcool$file, 
+                     name = paste0(datasetPath,"/bins/start"),
+                     index = list(as.numeric(bin1ids+1)))
+        ys <- h5read(rcool$file, 
+                     name = paste0(datasetPath,"/bins/start"),
+                     index = list(as.numeric(bin2ids+1)))
+    } else {
+        xs <- numeric(0)
+        ys <- numeric(0)
+    }
     
+    if (swappedChroms) {
+        tmp <- xs
+        xs <- ys
+        ys <- tmp
+    }
+
     ## create sparse upper triangular matrix
     upper <- data.frame(x = xs, y = ys, counts = counts)
     
@@ -754,13 +897,13 @@ readCool <- function(file, chrom, chromstart = NULL, chromend = NULL,
     # FORMAT DATA IN PROPER ORDER AND WITH LABELS
     # =========================================================================
     
-    ## Rename columns based on chrom/altchrom
-    if (rcool$chrom == rcool$altchrom){
-        colnames(upper) <- c(paste0(rcool$chrom, "_A"),
-                             paste0(rcool$altchrom, "_B"),
+    ## Rename columns based on original chrom/altchrom
+    if (outputChrom == outputAltchrom){
+        colnames(upper) <- c(paste0(outputChrom, "_A"),
+                             paste0(outputAltchrom, "_B"),
                              "counts")
     } else {
-        colnames(upper) <- c(rcool$chrom, rcool$altchrom, "counts")
+        colnames(upper) <- c(outputChrom, outputAltchrom, "counts")
     }
     
     # =========================================================================

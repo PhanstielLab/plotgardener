@@ -67,6 +67,10 @@
 #' @return Returns a \code{legend} object containing relevant
 #' placement and \link[grid]{grob} information.
 #'
+#' @note Some SVG renderers, notably cairosvg, may fail to render filled
+#' legend keys even though the grobs are present. Use the PDF/PNG device or
+#' an alternative SVG backend such as svglite if legend keys disappear.
+#'
 #' @examples
 #' ## Load BED data
 #' library(plotgardenerData)

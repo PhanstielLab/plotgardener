@@ -9,6 +9,8 @@
 #'     fontcolor = c("#669fd9", "#abcc8e"),
 #'     fill = c("#669fd9", "#abcc8e"),
 #'     geneOrder = NULL,
+#'     labelClusters = FALSE,
+#'     labelClusterRot = 45,
 #'     geneHighlights = NULL,
 #'     geneBackground = "grey",
 #'     strandLabels = TRUE,
@@ -42,6 +44,12 @@
 #' The first value will color the plus strand plot elements and
 #' the second label will color the minus strand plot elements.
 #' Default value is \code{fill = c("#669fd9", "#abcc8e")}.
+#' @param labelClusters A logical value indicating whether to draw all gene
+#' labels without overlap suppression. Useful for dense gene clusters;
+#' labels may be rotated with \code{labelClusterRot}.
+#' Default value is \code{labelClusters = FALSE}.
+#' @param labelClusterRot Rotation in degrees for labels when
+#' \code{labelClusters = TRUE}. Default value is \code{labelClusterRot = 45}.
 #' @param geneOrder An ordered character vector of gene names to
 #' prioritize when labeling genes.
 #' @param geneHighlights A two-column dataframe with a column named "gene"
@@ -166,7 +174,8 @@ plotGenes <- function(chrom, chromstart = NULL, chromend = NULL,
                         assembly = "hg38", fontsize = 8,
                         fontcolor = c("#669fd9", "#abcc8e"),
                         fill = c("#669fd9", "#abcc8e"),
-                        geneOrder = NULL, geneHighlights = NULL,
+                        geneOrder = NULL, labelClusters = FALSE,
+                        labelClusterRot = 45, geneHighlights = NULL,
                         geneBackground = "grey", strandLabels = TRUE,
                         stroke = 0.1, bg = NA, x = NULL, y = NULL,
                         width = NULL, height = unit(0.6, "inches"),
@@ -832,7 +841,12 @@ plotGenes <- function(chrom, chromstart = NULL, chromend = NULL,
                     ),
                     vp = vp_gene,
                     default.units = "native",
-                    check.overlap = TRUE
+                    rot = if (isTRUE(genesInternal$labelClusters)) {
+                        genesInternal$labelClusterRot
+                    } else {
+                        0
+                    },
+                    check.overlap = !isTRUE(genesInternal$labelClusters)
                 )
 
                 assign("gene_grobs",
@@ -890,7 +904,12 @@ plotGenes <- function(chrom, chromstart = NULL, chromend = NULL,
                     ),
                     vp = vp_gene,
                     default.units = "native",
-                    check.overlap = TRUE
+                    rot = if (isTRUE(genesInternal$labelClusters)) {
+                        genesInternal$labelClusterRot
+                    } else {
+                        0
+                    },
+                    check.overlap = !isTRUE(genesInternal$labelClusters)
                 )
                 assign("gene_grobs",
                     addGrob(get("gene_grobs", envir = pgEnv),

@@ -4,7 +4,7 @@
 #'     data,
 #'     resolution = "auto",
 #'     zrange = NULL,
-#'     norm = "KR",
+#'     norm = "auto",
 #'     matrix = "observed",
 #'     chrom,
 #'     chromstart = NULL,
@@ -17,6 +17,8 @@
 #'     colorTrans = "linear",
 #'     half = "both",
 #'     yaxisDir = "increase",
+#'     xaxisDir = "increase",
+#'     aspect = c("free", "fixed"),
 #'     bg = NA,
 #'     x = NULL,
 #'     y = NULL,
@@ -25,6 +27,8 @@
 #'     just = c("left", "top"),
 #'     default.units = "inches",
 #'     draw = TRUE,
+#'     raster = c("auto", "never", "always"),
+#'     raster.max = 2000,
 #'     params = NULL,
 #'     quiet = FALSE
 #' )
@@ -41,7 +45,9 @@
 #' to the max or min.
 #' @param norm Character value specifying hic data normalization method,
 #' if giving .hic or .(m)cool file. This value must be found in the .hic or
-#' .(m)cool file. Default value is \code{norm = "KR"}.
+#' .(m)cool file. \code{"auto"} chooses \code{"KR"} for .hic files and an
+#' an available bins column for .(m)cool files (see \code{readCoolNorms()}).
+#' Default value is \code{norm = "auto"}.
 #' @param matrix Character value indicating the type of matrix to output for
 #' .hic files.
 #' Default value is \code{matrix = "observed"}. Options are:
@@ -50,11 +56,13 @@
 #' \item{\code{"oe"}: }{Observed/expected counts.}
 #' \item{\code{"log2oe"}: }{Log2 transformed observed/expected counts.}
 #' }
-#' @param chrom Chromosome of region to be plotted, as a string.
+#' @param chrom Chromosome of region to be plotted, as a string. For
+#' interchromosomal plots this is the **x-axis** chromosome.
 #' @param chromstart Integer start position on chromosome to be plotted.
 #' @param chromend Integer end position on chromosome to be plotted.
 #' @param altchrom Alternate chromosome for off-diagonal plotting
-#' or interchromosomal plotting, as a string.
+#' or interchromosomal plotting, as a string. For interchromosomal plots this
+#' is the **y-axis** chromosome.
 #' @param altchromstart Alternate chromosome integer start position
 #' for off-diagonal plotting or interchromosomal plotting.
 #' @param altchromend Alternate chromosome integer end position
@@ -72,18 +80,30 @@
 #' @param half A character value indicating which diagonal regions to plot.
 #' For intrachromosomal plotting, options are \code{"both"}, \code{"top"},
 #' or \code{"bottom"}. For off-diagonal or interchromosomal plotting,
-#' options are \code{"top"} or \code{"bottom"}.
+#' options are \code{"top"} or \code{"bottom"}. For interchromosomal plots,
+#' \code{half} does not select a triangle; it controls the y-axis origin
+#' together with \code{yaxisDir}. See the interchromosomal orientation
+#' section below.
 #' Default value is \code{half = "both"}.
 #' \describe{
 #' \item{\code{"both"}: }{Both diagonal halves.}
 #' \item{\code{"top"}: }{Half above the diagonal.}
 #' \item{\code{"bottom"}: }{Half below the diagonal.}
 #' }
+#' @param xaxisDir A string specifying the genomic direction of the x-axis.
+#' Options are \code{"increase"} or \code{"decrease"}.
+#' Default value is \code{xaxisDir = "increase"}.
+#' @param aspect Aspect mode for interchromosomal plots. \code{"free"}
+#' stretches each chromosome to fill its axis; \code{"fixed"} uses the same
+#' basepairs-per-inch on both axes, centering padding on the shorter
+#' chromosome. Default value is \code{aspect = "free"}.
 #' @param yaxisDir A string specifying the genomic direction of the y-axis.
 #' Options are \code{"increase"}, where the bottom left corner of the Hi-C map
 #' indicates the origin, and \code{"decrease"}, where the top left corner of the
 #' Hi-C map indicates the origin. This will change the direction of the diagonal
-#' for intrachromosomal maps.
+#' for intrachromosomal maps. For interchromosomal maps, combine
+#' \code{yaxisDir} with \code{half} as described in the interchromosomal
+#' orientation section below.
 #' Default value is \code{yaxisDir = "increase"}.
 #' @param bg Character value indicating background color.
 #' Default value is \code{bg = NA}.
@@ -107,6 +127,11 @@
 #' numerics. Default value is \code{default.units = "inches"}.
 #' @param draw A logical value indicating whether graphics output should be
 #' produced. Default value is \code{draw = TRUE}.
+#' @param raster Rasterization mode for Hi-C pixels. \code{"auto"} rasterizes
+#' large maps, \code{"never"} always uses vector rectangles, and
+#' \code{"always"} always rasterizes when possible.
+#' @param raster.max Maximum number of raster rows/columns. Larger matrices
+#' fall back to vector rectangles. Default value is \code{raster.max = 2000}.
 #' @param params An optional \link[plotgardener]{pgParams} object containing
 #' relevant function parameters.
 #' @param quiet A logical indicating whether or not to print messages.
@@ -153,6 +178,52 @@
 #'
 #' ## Hide page guides
 #' pageGuideHide()
+#' @section Interchromosomal orientation:
+#' For an interchromosomal plot, \code{chrom} is always the x-axis and
+#' \code{altchrom} is always the y-axis:
+#' \preformatted{
+#'   x = chrom
+#'   y = altchrom
+#' }
+#'
+#' When building a grid of chromosomes, a cell at row \code{i} and column
+#' \code{j} must therefore use the column chromosome as \code{chrom} and
+#' the row chromosome as \code{altchrom}:
+#' \preformatted{
+#'   plotHicSquare(
+#'       data = hic,
+#'       chrom = chroms[j],     # x-axis: grid column
+#'       altchrom = chroms[i],  # y-axis: grid row
+#'       chromstart = 0, chromend = max_len,
+#'       altchromstart = 0, altchromend = max_len,
+#'       x = x0 + (j - 1) * cell,
+#'       y = y0 + (i - 1) * cell,
+#'       width = cell, height = cell,
+#'       half = "top", yaxisDir = "decrease",
+#'       just = c("left", "top")
+#'   )
+#' }
+#' Passing \code{chrom = chroms[i]} and \code{altchrom = chroms[j]} instead
+#' transposes every off-diagonal square.
+#'
+#' For interchromosomal plots, \code{half} controls the y-axis origin in
+#' combination with \code{yaxisDir}:
+#' \describe{
+#' \item{\code{half = "bottom"}, \code{yaxisDir = "decrease"}: }{
+#'   origin at the lower-left}
+#' \item{\code{half = "top"}, \code{yaxisDir = "decrease"}: }{
+#'   origin at the upper-left; y increases downward}
+#' \item{\code{half = "bottom"}, \code{yaxisDir = "increase"}: }{
+#'   origin at the upper-left}
+#' \item{\code{half = "top"}, \code{yaxisDir = "increase"}: }{
+#'   origin at the lower-left}
+#' }
+#' The combination \code{half = "top", yaxisDir = "decrease"} matches the
+#' orientation used by common 3D genome browsers, where the upper-left corner
+#' is the matrix origin and y increases downward. \code{xaxisDir} controls
+#' whether x increases to the right (\code{"increase"}) or to the left
+#' (\code{"decrease"}).
+#'
 #' @details
 #' A square Hi-C plot can be placed on a plotgardener coordinate page
 #' by providing plot placement parameters:
@@ -173,7 +244,7 @@
 #'
 #' @export
 plotHicSquare <- function(data, resolution = "auto", zrange = NULL,
-                            norm = "KR", matrix = "observed", chrom,
+                            norm = "auto", matrix = "observed", chrom,
                             chromstart = NULL, chromend = NULL,
                             altchrom = NULL,
                             altchromstart = NULL, altchromend = NULL,
@@ -182,17 +253,23 @@ plotHicSquare <- function(data, resolution = "auto", zrange = NULL,
                                 n = 9, "YlGnBu"
                             )),
                             colorTrans = "linear",
-                            half = "both", yaxisDir = "increase", bg = NA, 
+                            half = "both", yaxisDir = "increase",
+                            xaxisDir = "increase",
+                            aspect = c("free", "fixed"), bg = NA, 
                             x = NULL, y = NULL, width = NULL,
                             height = NULL, just = c("left", "top"),
                             default.units = "inches",
-                            draw = TRUE, params = NULL, quiet = FALSE) {
+                            draw = TRUE,
+                            raster = c("auto", "never", "always"),
+                            raster.max = 2000,
+                            params = NULL, quiet = FALSE) {
     # =========================================================================
     # FUNCTIONS
     # =========================================================================
 
     ## Define a function that catches errors for plotHicSquare
-    errorcheck_plotHicSquare <- function(hic, hicPlot, norm, yaxisDir) {
+    errorcheck_plotHicSquare <- function(hic, hicPlot, norm, yaxisDir,
+                                        aspect = "free") {
         
         ###### hic/cool/mcool/norm 
         hicErrors(hic = hic, norm = norm)
@@ -221,7 +298,8 @@ plotHicSquare <- function(data, resolution = "auto", zrange = NULL,
                 !is.null(hicPlot$altchromend)) {
 
                 ## Check to see if region is square
-                if ((hicPlot$chromend - hicPlot$chromstart) !=
+                if (!identical(aspect, "fixed") &&
+                    (hicPlot$chromend - hicPlot$chromstart) !=
                     (hicPlot$altchromend - hicPlot$altchromstart)) {
                     warning("Trying to plot non-square region.", call. = FALSE)
                 }
@@ -327,31 +405,45 @@ plotHicSquare <- function(data, resolution = "auto", zrange = NULL,
     }
 
     ## Define a function that sets viewport xscale and yscale
-    vp_scale <- function(hicPlot, yaxisDir) {
+    vp_scale <- function(hicPlot, yaxisDir, xaxisDir = "increase",
+                         aspect = "free") {
         if (!is.null(hicPlot$chromstart) & !is.null(hicPlot$chromend)) {
             if (is.null(hicPlot$altchrom)) {
                 xscale <- c(hicPlot$chromstart, hicPlot$chromend)
                 yscale <- xscale
+            } else if (hicPlot$chrom == hicPlot$altchrom) {
+                xscale <- c(hicPlot$chromstart, hicPlot$chromend)
+                yscale <- xscale
             } else {
+                ## Always x = chrom, y = altchrom for interchromosomal maps.
+                xscale <- c(hicPlot$chromstart, hicPlot$chromend)
+                yscale <- c(hicPlot$altchromstart, hicPlot$altchromend)
                 if (hicPlot$half == "bottom") {
-                    xscale <- c(hicPlot$chromstart, hicPlot$chromend)
-                    yscale <- c(hicPlot$altchromstart, hicPlot$altchromend)
+                    yscale <- rev(yscale)
                 }
-
-                if (hicPlot$half == "top") {
-                    xscale <- c(hicPlot$altchromstart, hicPlot$altchromend)
-                    yscale <- c(hicPlot$chromstart, hicPlot$chromend)
+                if (identical(aspect, "fixed")) {
+                    xRange <- diff(range(xscale))
+                    yRange <- diff(range(yscale))
+                    maxRange <- max(xRange, yRange)
+                    xCenter <- mean(range(xscale))
+                    yCenter <- mean(range(yscale))
+                    xscale <- c(xCenter - maxRange / 2,
+                                xCenter + maxRange / 2)
+                    yscale <- c(yCenter - maxRange / 2,
+                                yCenter + maxRange / 2)
                 }
             }
         } else {
             xscale <- c(0, 1)
             yscale <- c(0, 1)
         }
-        
-        if (yaxisDir == "decrease"){
+
+        if (yaxisDir == "decrease") {
             yscale <- rev(yscale)
         }
-        
+        if (xaxisDir == "decrease") {
+            xscale <- rev(xscale)
+        }
 
         return(list(xscale, yscale))
     }
@@ -487,7 +579,8 @@ plotHicSquare <- function(data, resolution = "auto", zrange = NULL,
         hic = hicInternal$data,
         hicPlot = hicPlot,
         norm = hicInternal$norm,
-        yaxisDir = hicInternal$yaxisDir
+        yaxisDir = hicInternal$yaxisDir,
+        aspect = match.arg(hicInternal$aspect, c("free", "fixed"))
     )
 
     # =========================================================================
@@ -589,9 +682,13 @@ plotHicSquare <- function(data, resolution = "auto", zrange = NULL,
     # MAKE SYMMETRIC
     # =========================================================================
 
-    hicFlip <- hic[, c("y", "x", "counts")]
-    colnames(hicFlip) <- c("x", "y", "counts")
-    hic <- unique(rbind(hic, hicFlip))
+    ## Only symmetrize intrachromosomal maps. An interchromosomal matrix
+    ## (chrom != altchrom) is a single rectangle, not two mirrored triangles.
+    if (is.null(hicPlot$altchrom) || hicPlot$chrom == hicPlot$altchrom) {
+        hicFlip <- hic[, c("y", "x", "counts")]
+        colnames(hicFlip) <- c("x", "y", "counts")
+        hic <- unique(rbind(hic, hicFlip))
+    }
     colnames(hic) <- c("x", "y", "counts")
 
     # =========================================================================
@@ -646,7 +743,10 @@ plotHicSquare <- function(data, resolution = "auto", zrange = NULL,
     # =========================================================================
 
     ## Get viewport xscale and yscale
-    scale <- vp_scale(hicPlot = hicPlot, yaxisDir = hicInternal$yaxisDir)
+    scale <- vp_scale(hicPlot = hicPlot, yaxisDir = hicInternal$yaxisDir,
+                      xaxisDir = hicInternal$xaxisDir,
+                      aspect = match.arg(hicInternal$aspect,
+                                        c("free", "fixed")))
 
     ## If placing information is provided but plot == TRUE, set up it's own
     ## viewport separate from bb_makepage
@@ -720,16 +820,40 @@ plotHicSquare <- function(data, resolution = "auto", zrange = NULL,
 
             if (!is.null(shapes[[1]])) {
 
-                ## Make square grobs and add to grob gTree
-                hic_squares <- rectGrob(
-                    x = shapes[[1]]$x,
-                    y = shapes[[1]]$y,
-                    just = c("left", "bottom"),
-                    width = hicPlot$resolution,
-                    height = hicPlot$resolution,
-                    gp = gpar(col = NA, fill = shapes[[1]]$color),
-                    default.units = "native"
+                rasterMode <- match.arg(
+                    hicInternal$raster,
+                    c("auto", "never", "always")
                 )
+                useRaster <- rasterMode == "always" ||
+                    (rasterMode == "auto" && nrow(shapes[[1]]) > 5000)
+                rasterGrob <- NULL
+                if (useRaster &&
+                    (is.null(hicPlot$altchrom) ||
+                     hicPlot$chrom == hicPlot$altchrom) &&
+                    hicInternal$yaxisDir == "increase") {
+                    rasterGrob <- .hicRasterGrob(
+                        squares = shapes[[1]],
+                        xmin = min(scale[[1]]), xmax = max(scale[[1]]),
+                        ymin = min(scale[[2]]), ymax = max(scale[[2]]),
+                        resolution = hicPlot$resolution,
+                        maxDim = hicInternal$raster.max
+                    )
+                }
+
+                if (!is.null(rasterGrob)) {
+                    hic_squares <- rasterGrob
+                } else {
+                    ## Make square grobs and add to grob gTree
+                    hic_squares <- rectGrob(
+                        x = shapes[[1]]$x,
+                        y = shapes[[1]]$y,
+                        just = c("left", "bottom"),
+                        width = hicPlot$resolution,
+                        height = hicPlot$resolution,
+                        gp = gpar(col = NA, fill = shapes[[1]]$color),
+                        default.units = "native"
+                    )
+                }
 
                 assign("hic_grobs",
                     addGrob(
@@ -779,6 +903,16 @@ plotHicSquare <- function(data, resolution = "auto", zrange = NULL,
         hicPlot$altchromstart <- hicPlot$chromstart
         hicPlot$altchromend <- hicPlot$chromend
     }
+
+    hicPlot$xchrom <- hicPlot$chrom
+    hicPlot$xchromstart <- hicPlot$chromstart
+    hicPlot$xchromend <- hicPlot$chromend
+    hicPlot$ychrom <- hicPlot$altchrom
+    hicPlot$ychromstart <- hicPlot$altchromstart
+    hicPlot$ychromend <- hicPlot$altchromend
+    hicPlot$xaxisDir <- hicInternal$xaxisDir
+    hicPlot$xaxisRange <- scale[[1]]
+    hicPlot$yaxisRange <- scale[[2]]
 
     message("hicSquare[", vp$name, "]")
     invisible(hicPlot)

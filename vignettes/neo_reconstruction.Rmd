@@ -1,0 +1,304 @@
+---
+title: "Reconstructing SV-impacted Hi-C maps with plotgardener"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Reconstructing SV-impacted Hi-C maps with plotgardener}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+    collapse = TRUE,
+    comment = "#>",
+    eval = FALSE
+)
+```
+
+This vignette describes how to go from structural variant (SV) assemblies to a
+reconstructed neo-chromosome Hi-C map. The assembly file format is the one
+produced by [NeoLoopFinder](https://github.com/XiaoTaoWang/NeoLoopFinder)
+`assemble-complexSVs`.
+
+## 1. Get SV assemblies from NeoLoopFinder
+
+NeoLoopFinder expects a six-column SV list:
+
+```text
+chr7    chr14   ++      14000000        37500000        translocation
+chr7    chr14   --      7901149 37573191        translocation
+```
+
+The columns are:
+
+1. `chrA`: chromosome of the first breakpoint.
+2. `chrB`: chromosome of the second breakpoint.
+3. `orientation`: `++`, `+-`, `-+`, or `--`.
+4. `b1`: first breakpoint position on `chrA`.
+5. `b2`: second breakpoint position on `chrB`.
+6. `type`: `deletion`, `inversion`, `duplication`, or `translocation`.
+
+Then run `assemble-complexSVs`, for example:
+
+```bash
+assemble-complexSVs \
+    -O SKNMC \
+    -B SKNMC-EagleC.SV.txt \
+    --balance-type CNV \
+    --protocol insitu \
+    --nproc 6 \
+    -H SKNMC-MboI-allReps-filtered.mcool::resolutions/25000 \
+       SKNMC-MboI-allReps-filtered.mcool::resolutions/10000 \
+       SKNMC-MboI-allReps-filtered.mcool::resolutions/5000
+```
+
+This produces `SKNMC.assemblies.txt`. A typical file looks like this:
+
+```text
+A0  inversion,8,132915000,+,8,130825000,+   deletion,8,130800000,-,8,129520000,+    8,132155000     8,129375000
+A1  inversion,11,84315000,-,11,83565000,-   inversion,11,84315000,+,11,83565000,+   11,85050000     11,82625000
+C0  translocation,1,10260000,+,X,21495000,- 1,9380000       X,22205000
+C1  translocation,1,10260000,-,X,21495000,+ 1,10630000      X,20080000
+```
+
+## 2. Understand the assembly file format
+
+Each non-empty line is one assembly:
+
+```text
+<assembly_id> <SV records...> <span1> <span2>
+```
+
+The fields are tab-separated:
+
+- `assembly_id`: a unique ID such as `C1`, `A0`, or `C16`.
+- `SV records`: zero or more SV records, each formatted as
+  `type,chrA,b1,strandA,chrB,b2,strandB`.
+- `span1`: the first assembled span, formatted as `chr,position`.
+- `span2`: the last assembled span, formatted as `chr,position`.
+
+The SV records and spans define the ordered nodes of the neo-chromosome:
+
+```text
+span1 position
+  -> SV1 chrA position
+  -> SV1 chrB position
+  -> SV2 chrA position
+  -> SV2 chrB position
+  -> ...
+  -> span2 position
+```
+
+Consecutive node pairs become fragments. A fragment is marked as flipped when
+its entry position is greater than its exit position. For example:
+
+```text
+C1  translocation,12,65690000,-,14,68280000,+   12,66455000   14,67645000
+```
+
+This gives:
+
+| fragment | chromosome | interval | orientation |
+|---|---|---|---|
+| 1 | chr12 | 65690000-66455000 | flipped |
+| 2 | chr14 | 67645000-68280000 | flipped |
+
+`readNeoAssembly()` reproduces this topology, applies optional end extension,
+and assigns cumulative `offset` and `length` values in the concatenated
+neo-chromosome.
+
+```{r read-assembly, eval=FALSE}
+library(plotgardener)
+
+neo <- readNeoAssembly(
+    file = "HM1_merged.assemblies.txt",
+    id = "C1",
+    assembly = "hg38",
+    extend = 200000
+)
+neo
+neo$fragments
+```
+
+### Custom assembly files
+
+You can also create an assembly file yourself. It must contain at least one
+tab-separated line with an ID, the SV record(s), and the two spans:
+
+```text
+C1  translocation,1,0,-,2,0,+   1,400   2,400
+```
+
+Here `chr1:0-400` is reverse-complemented and `chr2:0-400` is forward, giving a
+400 bp + 400 bp neo-chromosome.
+
+### Chromosome names and coordinates
+
+- `readNeoAssembly()` adds a `chr` prefix when it is missing. Set
+  `prefix = ""` if your data uses unprefixed names.
+- Positions are used as supplied. `.hic` readers are 1-based and `.cool`
+  readers use 0-based bin starts; plotgardener handles the source-specific
+  bin starts when mapping.
+- `extend` adds bases only to the first and last fragments, matching the
+  common NeoLoopFinder visualization convention.
+
+## 3. Reconstruct the neo-chromosome matrix
+
+`readNeoHic()` reads each fragment pair from a `.hic`, `.cool`, or `.mcool`
+file and maps the contacts into neo-chromosome coordinates.
+
+Use the exact normalization column stored in the file. For NeoLoopFinder
+workflows, this is often `sweight` (from `correct-cnv`) or `weight` (ICE):
+
+```{r read-neohic, eval=FALSE}
+neo <- readNeoAssembly(
+    file = "HM1_merged.assemblies.txt",
+    id = "C1",
+    extend = 200000
+)
+
+neoHic <- readNeoHic(
+    data = "HM1_merged-Arima-R1-filtered.mcool",
+    neo = neo,
+    resolution = 5000,
+    norm = "sweight"
+)
+
+neoHic
+head(neoHic$matrix)
+```
+
+You can also pass the assembly file and ID directly:
+
+```{r read-neohic-path, eval=FALSE}
+neoHic <- readNeoHic(
+    data = "HM1_merged-Arima-R1-filtered.mcool",
+    neo = "HM1_merged.assemblies.txt", id = "C1",
+    extend = 200000, resolution = 5000, norm = "sweight"
+)
+```
+
+`readNeoHic()` also accepts a precomputed genomic pair data frame with
+columns `chrom1`, `start1`, `chrom2`, `start2`, and `counts`:
+
+```{r read-neohic-df, eval=FALSE}
+neoHic <- readNeoHic(
+    data = pairData, neo = neo,
+    resolution = 5000
+)
+```
+
+Check the available columns with:
+
+```{r norms, eval=FALSE}
+readCoolNorms(
+    "HM1_merged-Arima-R1-filtered.mcool",
+    resolution = 5000
+)
+```
+
+The reconstruction keeps bins in the coordinate space but drops contacts whose
+normalization weight is missing or non-finite, matching the usual NeoLoopFinder
+visualization behavior.
+
+## 4. Plot the reconstruction
+
+```{r plot-neo, eval=FALSE}
+pageCreate(width = 5.5, height = 6, default.units = "inches",
+           showGuides = FALSE)
+
+hicPlot <- plotNeoHic(
+    neoHic,
+    type = "triangle",
+    x = 1, y = 0.9, width = 3.4, height = 1.9,
+    just = c("left", "top"),
+    zrange = c(0, 0.005),
+    palette = colorRampPalette(c("white", "#FFDFDF", "#FF7575",
+                                 "#FF2626", "#F70000"))
+)
+
+## Solid outer neo-chromosome domain + dotted internal seams
+annoNeoDomains(hicPlot, neo)
+
+## Fragment backbone with directional arrows
+plotNeoAssembly(
+    neo,
+    x = 1, y = 3.05, width = 3.4, height = 0.16,
+    just = c("left", "top"),
+    fill = "#D4EEF9",
+    labels = TRUE,
+    show.seams = TRUE
+)
+```
+
+For more control over fragment labels, turn labels off in the backbone and use
+`annoNeoFragmentLabels()`:
+
+```{r neo-labels, eval=FALSE}
+plotNeoAssembly(
+    neo,
+    x = 1, y = 3.05, width = 3.4, height = 0.16,
+    just = c("left", "top"),
+    labels = FALSE
+)
+annoNeoFragmentLabels(
+    neo,
+    x = 1, y = 3.3, width = 3.4,
+    label.style = "coordinate",
+    label.position = "below",
+    label.offset = 0.05,
+    label.fontsize = 7,
+    label.fontface = "italic",
+    label.fontcolor = "black",
+    show.inversion = TRUE,
+    inversion.color = "red"
+)
+```
+
+`annoNeoFragmentLabels()` supports chromosome, coordinate, or fragment-number
+labels, custom fonts/colors/rotation, vertical offsets, and inversion marking.
+
+`annoNeoDomains()` is the functional equivalent of the dotted seam/domain
+annotations in the NeoLoopFinder triangle examples:
+
+- outer domain outline: solid, controlled by `lty`
+- internal fragment seams: dotted, controlled by `seam.lty`
+
+## 5. Map genes and other features
+
+`mapNeoFeatures()` maps BED-like data or a `GRanges` object into the
+neo-chromosome coordinate system:
+
+```{r map-features, eval=FALSE}
+genes <- data.frame(
+    chrom = "chr12",
+    start = 65822483,
+    end = 65968291,
+    name = "HMGA2",
+    strand = "+"
+)
+
+mapNeoFeatures(genes, neo)
+```
+
+For features that span a fragment boundary, the feature is split across
+fragments. Strand is inverted for reverse-complemented fragments.
+
+## 6. Practical notes
+
+- Use a resolution that gives a reasonable number of bins across the
+  neo-chromosome. `resolution = "auto"` targets roughly 1,000 bins.
+- For NeoLoopFinder, run `correct-cnv` first if you want `sweight`
+  normalization.
+- If your `.cool`/`.mcool` chromosome names lack `chr`, either add the prefix
+  as recommended by NeoLoopFinder or let `readNeoAssembly()` add it to the
+  assembly side and use `readCoolNorms()` to verify the file side.
+- `readNeoHic()` uses the existing `readHic()`/`readCool()` readers, so the
+  raw contact extraction is the same as for ordinary plotgardener Hi-C plots.
+
+## References
+
+- Wang X, Xu J, Zhang B, Hou Y, Song F, Lyu H, Yue F. Genome-wide detection of
+  enhancer-hijacking events from chromatin interaction data in rearranged
+  genomes. *Nature Methods* (2021).
+- NeoLoopFinder: <https://github.com/XiaoTaoWang/NeoLoopFinder>

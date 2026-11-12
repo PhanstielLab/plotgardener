@@ -19,10 +19,13 @@ plotSignal(
     range = NULL,
     scale = FALSE,
     label = NULL,
+    label.position = NULL,
+    label.offset = 0.01,
     bg = NA,
     baseline = TRUE,
     baseline.color = "grey",
     baseline.lwd = 1,
+    baseline.lty = 1,
     orientation = "h",
     x = NULL,
     y = NULL,
@@ -86,17 +89,31 @@ of the plot. Otherwise, the label will be drawn in the top left of the plot.
 For more customizable labels, use \link[plotgardener]{plotText}.
 Default value is \code{label = NULL}.}
 
+\item{label.position}{Label position. Options are \code{"top-left"},
+\code{"top-right"}, \code{"bottom-left"}, \code{"bottom-right"},
+\code{"left"}, and \code{"right"}. If \code{NULL}, the historical
+behavior is used (\code{"top-right"} when \code{scale = TRUE},
+otherwise \code{"top-left"}). Default value is
+\code{label.position = NULL}.}
+
+\item{label.offset}{Offset from the plot edge in npc units.
+Default value is \code{label.offset = 0.01}.}
+
 \item{bg}{Character value indicating background color.
 Default value is \code{bg = NA}.}
 
 \item{baseline}{Logical value indicating whether to include a
-baseline along the x-axis. Default value is \code{baseline = TRUE}.}
+baseline along the x-axis. A numeric value can be supplied to place the
+baseline at a specific y-value. Default value is \code{baseline = TRUE}.}
 
 \item{baseline.color}{Baseline color.
 Default value is \code{baseline.color = "grey"}.}
 
 \item{baseline.lwd}{Baseline line width.
 Default value is \code{baseline.lwd = 1}.}
+
+\item{baseline.lty}{Baseline line type.
+Default value is \code{baseline.lty = 1}.}
 
 \item{orientation}{A string specifying signal track orientation.
 Default value is \code{orientation = "h"}. Options are:

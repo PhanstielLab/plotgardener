@@ -10,7 +10,7 @@
   bin_offsets,
   binChunkSize,
   datasetPath,
-  end1bin,
+  endPixel,
   start2bin,
   end2bin
 )
@@ -27,16 +27,16 @@ the bin chunk}
 
 \item{datasetPath}{Dataset path, for specifying resolution in .mcool file}
 
-\item{end1bin}{Bin where end1 starts}
+\item{endPixel}{Last pixel index to read (1-based, inclusive)}
 
 \item{start2bin}{Bin for chr2 starts}
 
 \item{end2bin}{Bin for end2 starts}
 }
+\value{
+An integer vector of pixel indices corresponding to interactions
+  within the specified bin chunk, or \code{NA} if none are found.
+}
 \description{
 Read in data for a bin chunk
-}
-
-\value{
-An integer vector of pixel indices corresponding to interactions within the specified bin chunk, or \code{NA} if none are found.
 }

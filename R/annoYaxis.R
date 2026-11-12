@@ -7,6 +7,14 @@
 #'     main = TRUE,
 #'     scipen = 999,
 #'     axisLine = FALSE,
+#'     tcl = 0.25,
+#'     label.offset = 0.35,
+#'     axisLine.lwd = 0.5,
+#'     axisLine.col = NULL,
+#'     axisLine.lty = NULL,
+#'     tick.lwd = 0.5,
+#'     tick.col = NULL,
+#'     tick.lty = NULL,
 #'     params = NULL,
 #'     ...
 #' )
@@ -28,6 +36,17 @@
 #' Default value is \code{scipen = 999}.
 #' @param axisLine A logical value indicating whether to show the axis line.
 #' Default value is \code{axisLine = FALSE}.
+#' @param tcl Tick length in lines. Default value is \code{tcl = 0.25}.
+#' @param label.offset Label offset from the tick ends in lines.
+#' Default value is \code{label.offset = 0.35}.
+#' @param axisLine.lwd Axis line width. Default value is
+#' \code{axisLine.lwd = 0.5}.
+#' @param axisLine.col Axis line color.
+#' @param axisLine.lty Axis line type.
+#' @param tick.lwd Tick line width. Default value is
+#' \code{tick.lwd = 0.5}.
+#' @param tick.col Tick line color.
+#' @param tick.lty Tick line type.
 #' @param params An optional \link[plotgardener]{pgParams} object
 #' containing relevant function parameters.
 #' @param ... Additional grid graphical parameters. See \link[grid]{gpar}.
@@ -74,7 +93,12 @@
 #' pageGuideHide()
 #' @export
 annoYaxis <- function(plot, at = NULL, label = TRUE, main = TRUE,
-                        scipen = 999, axisLine = FALSE, params = NULL, ...) {
+                        scipen = 999, axisLine = FALSE,
+                        tcl = 0.25, label.offset = 0.35,
+                        axisLine.lwd = 0.5, axisLine.col = NULL,
+                        axisLine.lty = NULL,
+                        tick.lwd = 0.5, tick.col = NULL, tick.lty = NULL,
+                        params = NULL, ...) {
 
     # =========================================================================
     # PARSE PARAMETERS
@@ -114,22 +138,12 @@ annoYaxis <- function(plot, at = NULL, label = TRUE, main = TRUE,
     yAxis <- structure(list(grobs = NULL), class = "yaxis")
 
     # =========================================================================
-    # CREATE GROB WITHOUT DRAWING
-    # =========================================================================
-
-    yGrob <- yaxisGrob(
-        at = yInternal$at, label = yInternal$label,
-        main = yInternal$main, gp = yInternal$gp,
-        vp = yInternal$plot$grobs$vp
-    )
-
-    # =========================================================================
     # GET CENTER OF INPUT PLOT VIEWPORT BASED ON INPUT PLOT TYPE AND JUST
     # =========================================================================
 
     # Get appropriate plot viewport
     plotVP <- getAnnoViewport(plot = yInternal$plot)
-    
+
     adjusted_vp <- adjust_vpCoords(viewport = plotVP)
 
     # =========================================================================
@@ -139,6 +153,26 @@ annoYaxis <- function(plot, at = NULL, label = TRUE, main = TRUE,
     if (is.null(yInternal$at)) {
         yInternal$at <- c(plotVP$yscale[1], plotVP$yscale[2])
     }
+
+    # =========================================================================
+    # CREATE GROB
+    # =========================================================================
+
+    yGrob <- yaxisGrob(
+        at = yInternal$at, label = yInternal$label,
+        main = yInternal$main, gp = yInternal$gp
+    )
+    yGrob <- .modifyAxisGrob(
+        axisGrob = yGrob, main = yInternal$main,
+        tcl = yInternal$tcl, label.offset = yInternal$label.offset,
+        axisLine = yInternal$axisLine,
+        axisLine.lwd = yInternal$axisLine.lwd,
+        axisLine.col = yInternal$axisLine.col,
+        axisLine.lty = yInternal$axisLine.lty,
+        tick.lwd = yInternal$tick.lwd,
+        tick.col = yInternal$tick.col,
+        tick.lty = yInternal$tick.lty
+    )
 
     # =========================================================================
     # VIEWPORTS
@@ -177,16 +211,7 @@ annoYaxis <- function(plot, at = NULL, label = TRUE, main = TRUE,
     # PLOT
     # =========================================================================
 
-    yGrob <- yaxisGrob(
-        at = yInternal$at, label = yInternal$label,
-        main = yInternal$main, gp = yInternal$gp,
-        vp = vp
-    )
-    
-    if (!yInternal$axisLine){
-        yGrob <- removeGrob(yGrob, "major")
-    } 
-    
+    yGrob$vp <- vp
     grid.draw(yGrob)
     
     yaxis_grobs <- gTree(vp = vp, children = gList(yGrob))

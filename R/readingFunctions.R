@@ -46,8 +46,14 @@ read_rangeData <- function(data, assembly, chrom = NULL,
     
     if (type == "range"){
         ## Rename columns if necessary
-        colnames(data)[seq(1, 3)] <- c("chrom", "start", "end")
-        
+        if (!all(c("chrom", "start", "end") %in% colnames(data))) {
+            colnames(data)[seq(1, 3)] <- c("chrom", "start", "end")
+        }
+        ## Put the expected columns first without changing other columns
+        data <- data[, c("chrom", "start", "end",
+                         setdiff(colnames(data),
+                                 c("chrom", "start", "end"))), drop = FALSE]
+
         ## Check column input types
         columnClasses <- list("start" = TRUE, "end" = TRUE)
         if (!is(data[, "start"], "integer") &
@@ -72,8 +78,13 @@ read_rangeData <- function(data, assembly, chrom = NULL,
         
     } else if (type == "GWAS") {
         
-        ## Rename chrom and position columns
-        colnames(data)[seq(1, 2)] <- c("chrom", "pos")
+        ## Rename chrom and position columns if necessary
+        if (!all(c("chrom", "pos") %in% colnames(data))) {
+            colnames(data)[seq(1, 2)] <- c("chrom", "pos")
+        }
+        data <- data[, c("chrom", "pos",
+                         setdiff(colnames(data),
+                                 c("chrom", "pos"))), drop = FALSE]
         ## column data types will be checked in plotManhattan errorchecks
         
     }

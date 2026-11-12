@@ -15,10 +15,13 @@
 #'    range = NULL, 
 #'    scale = FALSE,
 #'    label = NULL,
+#'    label.position = NULL,
+#'    label.offset = 0.01,
 #'    bg = NA, 
 #'    baseline = TRUE, 
 #'    baseline.color = "grey",
 #'    baseline.lwd = 1, 
+#'    baseline.lty = 1, 
 #'    orientation = "h", 
 #'    x = NULL, 
 #'    y = NULL,
@@ -66,14 +69,20 @@
 #' top right of the signal tracks. Otherwise, the label will be drawn in the 
 #' top left of the plot. For more customizable labels, 
 #' use \link[plotgardener]{plotText}.
+#' @param label.position Label position for each track. See
+#' \link[plotgardener]{plotSignal}.
+#' @param label.offset Offset from the plot edge in npc units.
 #' @param bg Character value indicating background color.
 #' Default value is \code{bg = NA}.
 #' @param baseline Logical value indicating whether to include a
-#' baseline along the x-axis. Default value is \code{baseline = TRUE}.
+#' baseline along the x-axis. A numeric value can be supplied to place the
+#' baseline at a specific y-value. Default value is \code{baseline = TRUE}.
 #' @param baseline.color Baseline color.
 #' Default value is \code{baseline.color = "grey"}.
 #' @param baseline.lwd Baseline line width.
 #' Default value is \code{baseline.lwd = 1}.
+#' @param baseline.lty Baseline line type.
+#' Default value is \code{baseline.lty = 1}.
 #' @param orientation A string specifying signal track orientations.
 #' Default value is \code{orientation = "h"}. Options are:
 #' \describe{
@@ -171,10 +180,13 @@ plotMultiSignal<- function(data,
                            range = NULL, 
                            scale = FALSE,
                            label = NULL,
+                           label.position = NULL,
+                           label.offset = 0.01,
                            bg = NA, 
                            baseline = TRUE, 
                            baseline.color = "grey",
                            baseline.lwd = 1, 
+                           baseline.lty = 1,
                            orientation = "h",
                            x = NULL, 
                            y = NULL, 
@@ -328,12 +340,16 @@ plotMultiSignal<- function(data,
                      end = multisigInternal$chromend)
     
     
-    range <- calcSignalRange(data = signal,
-                             chrom = multisigInternal$chrom,
-                             chromstart = multisigInternal$chromstart,
-                             chromend = multisigInternal$chromend,
-                             assembly = multisigInternal$assembly,
-                             negData = multisigInternal$negData)
+    if (is.null(multisigInternal$range)) {
+        range <- calcSignalRange(data = signal,
+                                 chrom = multisigInternal$chrom,
+                                 chromstart = multisigInternal$chromstart,
+                                 chromend = multisigInternal$chromend,
+                                 assembly = multisigInternal$assembly,
+                                 negData = multisigInternal$negData)
+    } else {
+        range <- multisigInternal$range
+    }
     
     # =========================================================================
     # SET PLACEMENT COORDINATES, COLORS, AND LABELS
@@ -386,6 +402,8 @@ plotMultiSignal<- function(data,
                         orientation = multisigInternal$orientation, 
                         scale = multisigInternal$scale,
                         label = lab,
+                        label.position = multisigInternal$label.position,
+                        label.offset = multisigInternal$label.offset,
                         binSize = multisigInternal$binSize, 
                         binCap = multisigInternal$binCap, 
                         negData = multisigInternal$negData,
@@ -398,7 +416,8 @@ plotMultiSignal<- function(data,
                         bg = multisigInternal$bg, 
                         baseline = multisigInternal$baseline,
                         baseline.color = multisigInternal$baseline.color, 
-                        baseline.lwd = multisigInternal$baseline.lwd, 
+                        baseline.lwd = multisigInternal$baseline.lwd,
+                        baseline.lty = multisigInternal$baseline.lty,
                         just = multisigInternal$just,
                         default.units = multisigInternal$default.units, 
                         draw = draw))

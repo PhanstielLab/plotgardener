@@ -16,6 +16,7 @@
 #'     transcriptFilter = NULL,
 #'     fontsize = 8,
 #'     labels = "transcript",
+#'     labelPriority = NULL,
 #'     stroke = 0.1,
 #'     bg = NA,
 #'     x = NULL,
@@ -68,6 +69,9 @@
 #' Default value is \code{fontsize = 8}.
 #' @param labels A character value describing the format of
 #' transcript text labels. Default value is \code{labels = "trancript"}.
+#' @param labelPriority Optional character vector of transcript or gene names
+#' to prioritize when labels overlap. Default value is
+#' \code{labelPriority = NULL}.
 #' Options are:
 #' \describe{
 #' \item{\code{NULL}: }{No labels.}
@@ -170,7 +174,8 @@ plotTranscripts <- function(chrom, chromstart = NULL, chromend = NULL,
                             transcriptHighlights = NULL,
                             transcriptFilter = NULL,
                             fontsize = 8,
-                            labels = "transcript", stroke = 0.1, bg = NA,
+                            labels = "transcript", labelPriority = NULL,
+                            stroke = 0.1, bg = NA,
                             x = NULL, y = NULL, width = NULL,
                             height = NULL, just = c("left", "top"),
                             default.units = "inches", draw = TRUE,
@@ -688,10 +693,12 @@ plotTranscripts <- function(chrom, chromstart = NULL, chromend = NULL,
             ## Get representative transcript names
             transcriptNames <- rowData[duplicated(rowData$TXNAME) == FALSE, ]
 
-            ## Add column with center location of each transcript label
-            transcriptNames$labelLoc <- rowMeans(
-                transcriptNames[c("TXSTART", "TXEND")]
-            )
+            ## Center labels on the in-bounds portion of each transcript
+            labelStart <- pmax(transcriptNames$TXSTART,
+                               transcriptsInternal$xscale[1])
+            labelEnd <- pmin(transcriptNames$TXEND,
+                             transcriptsInternal$xscale[2])
+            transcriptNames$labelLoc <- (labelStart + labelEnd) / 2
 
             if (transcriptsInternal$labels == "transcript") {
                 label <- transcriptNames$TXNAME
@@ -704,6 +711,15 @@ plotTranscripts <- function(chrom, chromstart = NULL, chromend = NULL,
                     transcripts$assembly$display.column]],
                     ":", transcriptNames$TXNAME
                 )
+            }
+
+            ## Draw user-prioritized labels first so they win overlap checks
+            if (!is.null(transcriptsInternal$labelPriority)) {
+                priority <- label %in%
+                    transcriptsInternal$labelPriority
+                labelOrder <- order(!priority)
+                transcriptNames <- transcriptNames[labelOrder, , drop = FALSE]
+                label <- label[labelOrder]
             }
 
             ## Get which names aren't cutoff

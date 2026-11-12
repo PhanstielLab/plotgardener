@@ -7,6 +7,14 @@
 #'     main = TRUE,
 #'     scipen = 999,
 #'     axisLine = FALSE,
+#'     tcl = 0.25,
+#'     label.offset = 0.35,
+#'     axisLine.lwd = 0.5,
+#'     axisLine.col = NULL,
+#'     axisLine.lty = NULL,
+#'     tick.lwd = 0.5,
+#'     tick.col = NULL,
+#'     tick.lty = NULL,
 #'     params = NULL,
 #'     ...
 #' )
@@ -28,6 +36,17 @@
 #' Default value is \code{scipen = 999}.
 #' @param axisLine A logical value indicating whether to show the axis line.
 #' Default value is \code{axisLine = FALSE}.
+#' @param tcl Tick length in lines. Default value is \code{tcl = 0.25}.
+#' @param label.offset Label offset from the tick ends in lines.
+#' Default value is \code{label.offset = 0.35}.
+#' @param axisLine.lwd Axis line width. Default value is
+#' \code{axisLine.lwd = 0.5}.
+#' @param axisLine.col Axis line color.
+#' @param axisLine.lty Axis line type.
+#' @param tick.lwd Tick line width. Default value is
+#' \code{tick.lwd = 0.5}.
+#' @param tick.col Tick line color.
+#' @param tick.lty Tick line type.
 #' @param params An optional \link[plotgardener]{pgParams} object
 #' containing relevant function parameters.
 #' @param ... Additional grid graphical parameters. See \link[grid]{gpar}.
@@ -70,7 +89,12 @@
 #' pageGuideHide()
 #' @export
 annoXaxis <- function(plot, at = NULL, label = TRUE, main = TRUE,
-                        scipen = 999, axisLine = FALSE, params = NULL, ...) {
+                        scipen = 999, axisLine = FALSE,
+                        tcl = 0.25, label.offset = 0.35,
+                        axisLine.lwd = 0.5, axisLine.col = NULL,
+                        axisLine.lty = NULL,
+                        tick.lwd = 0.5, tick.col = NULL, tick.lty = NULL,
+                        params = NULL, ...) {
 
     # =========================================================================
     # PARSE PARAMETERS
@@ -111,16 +135,6 @@ annoXaxis <- function(plot, at = NULL, label = TRUE, main = TRUE,
     xAxis <- structure(list(grobs = NULL), class = "xaxis")
 
     # =========================================================================
-    # CREATE GROB WITHOUT DRAWING
-    # =========================================================================
-
-    xGrob <- xaxisGrob(
-        at = xInternal$at, label = xInternal$label,
-        main = xInternal$main, gp = xInternal$gp,
-        vp = xInternal$plot$grobs$vp
-    )
-
-    # =========================================================================
     # GET CENTER OF INPUT PLOT VIEWPORT BASED ON INPUT PLOT TYPE AND JUST
     # =========================================================================
 
@@ -136,6 +150,26 @@ annoXaxis <- function(plot, at = NULL, label = TRUE, main = TRUE,
     if (is.null(xInternal$at)) {
         xInternal$at <- c(plotVP$xscale[1], plotVP$xscale[2])
     }
+
+    # =========================================================================
+    # CREATE GROB
+    # =========================================================================
+
+    xGrob <- xaxisGrob(
+        at = xInternal$at, label = xInternal$label,
+        main = xInternal$main, gp = xInternal$gp
+    )
+    xGrob <- .modifyAxisGrob(
+        axisGrob = xGrob, main = xInternal$main,
+        tcl = xInternal$tcl, label.offset = xInternal$label.offset,
+        axisLine = xInternal$axisLine,
+        axisLine.lwd = xInternal$axisLine.lwd,
+        axisLine.col = xInternal$axisLine.col,
+        axisLine.lty = xInternal$axisLine.lty,
+        tick.lwd = xInternal$tick.lwd,
+        tick.col = xInternal$tick.col,
+        tick.lty = xInternal$tick.lty
+    )
 
     # =========================================================================
     # VIEWPORTS
@@ -170,16 +204,12 @@ annoXaxis <- function(plot, at = NULL, label = TRUE, main = TRUE,
         )
     }
 
-
     # =========================================================================
     # PLOT
     # =========================================================================
 
-    xGrob <- grid.xaxis(
-        at = xInternal$at, label = xInternal$label,
-        main = xInternal$main, gp = xInternal$gp, vp = vp
-    )
-    if (!xInternal$axisLine) grid.remove(paste0(xGrob$name, "::major"))
+    xGrob$vp <- vp
+    grid.draw(xGrob)
     xaxis_grobs <- gTree(vp = vp, children = gList(xGrob))
     xAxis$grobs <- xaxis_grobs
 

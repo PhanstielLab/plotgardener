@@ -4,7 +4,7 @@
 #'     data,
 #'     resolution = "auto",
 #'     zrange = NULL,
-#'     norm = "KR",
+#'     norm = "auto",
 #'     matrix = "observed",
 #'     chrom,
 #'     chromstart = NULL,
@@ -13,6 +13,7 @@
 #'     palette = colorRampPalette(brewer.pal(n = 9, "YlGnBu")),
 #'     colorTrans = "linear",
 #'     flip = FALSE,
+#'     xaxisDir = "increase",
 #'     bg = NA,
 #'     x = NULL,
 #'     y = NULL,
@@ -21,6 +22,8 @@
 #'     just = c("left", "top"),
 #'     default.units = "inches",
 #'     draw = TRUE,
+#'     raster = c("auto", "never", "always"),
+#'     raster.max = 2000,
 #'     params = NULL,
 #'     quiet = FALSE
 #' )
@@ -37,7 +40,9 @@
 #' will be set to the max or min.
 #' @param norm Character value specifying hic data normalization method,
 #' if giving .hic or .(m)cool file. This value must be found in the .hic or
-#' .(m)cool file. Default value is \code{norm = "KR"}.
+#' .(m)cool file. \code{"auto"} chooses \code{"KR"} for .hic files and an
+#' an available bins column for .(m)cool files (see \code{readCoolNorms()}).
+#' Default value is \code{norm = "auto"}.
 #' @param matrix Character value indicating the type of matrix to output for
 #' .hic files.
 #' Default value is \code{matrix = "observed"}. Options are:
@@ -60,6 +65,10 @@
 #' Default value is \code{colorTrans = "linear"}.
 #' @param flip A logical indicating whether to flip the orientation of
 #' the Hi-C matrix over the x-axis. Default value is \code{flip = FALSE}.
+#' @param xaxisDir A string specifying the genomic direction of the x-axis.
+#' Options are \code{"increase"} or \code{"decrease"}. A value of
+#' \code{"decrease"} mirrors the triangle horizontally.
+#' Default value is \code{xaxisDir = "increase"}.
 #' @param bg Character value indicating background color.
 #' Default value is \code{bg = NA}.
 #' @param x A numeric or unit object specifying triangle Hi-C plot x-location.
@@ -84,6 +93,10 @@
 #' numerics. Default value is \code{default.units = "inches"}.
 #' @param draw A logical value indicating whether graphics output should
 #' be produced. Default value is \code{draw = TRUE}.
+#' @param raster Rasterization mode for regular Hi-C pixels. Edge-clipped
+#' pixels remain vector. \code{"auto"} rasterizes large maps.
+#' @param raster.max Maximum raster dimension. Default value is
+#' \code{raster.max = 2000}.
 #' @param params An optional \link[plotgardener]{pgParams} object containing
 #' relevant function parameters.
 #' @param quiet A logical indicating whether or not to print messages.
@@ -151,18 +164,20 @@
 #'
 #' @export
 plotHicTriangle <- function(data, resolution = "auto", zrange = NULL,
-                            norm = "KR", matrix = "observed", chrom,
+                            norm = "auto", matrix = "observed", chrom,
                             chromstart = NULL, chromend = NULL,
                             assembly = "hg38",
                             palette = colorRampPalette(brewer.pal(
                                 n = 9, "YlGnBu"
                             )),
                             colorTrans = "linear", flip = FALSE, 
-                            bg = NA,
+                            xaxisDir = "increase", bg = NA,
                             x = NULL, y = NULL,
                             width = NULL, height = NULL,
                             just = c("left", "top"),
                             default.units = "inches", draw = TRUE,
+                            raster = c("auto", "never", "always"),
+                            raster.max = 2000,
                             params = NULL, quiet = FALSE) {
 
     # =========================================================================
@@ -491,6 +506,10 @@ plotHicTriangle <- function(data, resolution = "auto", zrange = NULL,
                                 plotType = "triangle Hi-C plot")
     hicPlot <- scaleChecks[[1]]
     thicInternal <- scaleChecks[[2]]
+    ## NOTE: Horizontal flipping for triangles is implemented by mirroring
+    ## the pixel coordinates below, not by reversing the viewport xscale.
+    ## The rotated triangle viewport uses the x/y scales geometrically, so a
+    ## reversed scale would move the drawn triangle out of its clip region.
     
     # =========================================================================
     # ADJUST RESOLUTION
@@ -524,6 +543,22 @@ plotHicTriangle <- function(data, resolution = "auto", zrange = NULL,
     # =========================================================================
 
     hic <- subset_data(hic = hic, hicPlot = hicPlot)
+
+    # =========================================================================
+    # HORIZONTAL FLIP
+    # =========================================================================
+
+    ## Mirror each pixel across the vertical centre of the plot. For the
+    ## lower triangle this is (x, y) -> (L - y - res, L - x - res), which
+    ## maps the lower triangle onto itself while mirroring the signal.
+    if (identical(thicInternal$xaxisDir, "decrease") && nrow(hic) > 0) {
+        mirror <- hicPlot$chromstart + hicPlot$chromend -
+            hicPlot$resolution
+        oldX <- hic$x
+        oldY <- hic$y
+        hic$x <- mirror - oldY
+        hic$y <- mirror - oldX
+    }
     
     # =========================================================================
     # GET LOWER TRIANGULAR FOR FLIP
@@ -744,24 +779,62 @@ plotHicTriangle <- function(data, resolution = "auto", zrange = NULL,
             triangles <- hic[which(hic[, "y"] == hic[, "x"]), ]
 
             if (nrow(squares) > 0) {
+                rasterMode <- match.arg(
+                    thicInternal$raster,
+                    c("auto", "never", "always")
+                )
+                regular <- abs(as.numeric(squares$width) -
+                               hicPlot$resolution) < 1e-8 &
+                    abs(as.numeric(squares$height) -
+                        hicPlot$resolution) < 1e-8
+                regularSquares <- squares[regular, , drop = FALSE]
+                edgeSquares <- squares[!regular, , drop = FALSE]
 
-                ## Make square grobs and add to grob gTree
-                hic_squares <- rectGrob(
-                    x = squares$x,
-                    y = squares$y,
-                    just = c("left", "bottom"),
-                    width = squares$width,
-                    height = squares$height,
-                    gp = gpar(col = NA, fill = squares$color),
-                    default.units = "native"
-                )
-                assign("hic_grobs2",
-                    addGrob(
-                        gTree = get("hic_grobs2", envir = pgEnv),
-                        child = hic_squares
-                    ),
-                    envir = pgEnv
-                )
+                useRaster <- rasterMode == "always" ||
+                    (rasterMode == "auto" && nrow(regularSquares) > 5000)
+                rasterGrob <- NULL
+                if (useRaster && nrow(regularSquares) > 0) {
+                    rasterGrob <- .hicRasterGrob(
+                        squares = regularSquares,
+                        xmin = min(thicInternal$xscale),
+                        xmax = max(thicInternal$xscale),
+                        ymin = min(thicInternal$xscale),
+                        ymax = max(thicInternal$xscale),
+                        resolution = hicPlot$resolution,
+                        maxDim = thicInternal$raster.max
+                    )
+                }
+
+                if (!is.null(rasterGrob)) {
+                    assign("hic_grobs2",
+                        addGrob(
+                            gTree = get("hic_grobs2", envir = pgEnv),
+                            child = rasterGrob
+                        ),
+                        envir = pgEnv
+                    )
+                } else {
+                    edgeSquares <- squares
+                }
+
+                if (nrow(edgeSquares) > 0) {
+                    hic_squares <- rectGrob(
+                        x = edgeSquares$x,
+                        y = edgeSquares$y,
+                        just = c("left", "bottom"),
+                        width = edgeSquares$width,
+                        height = edgeSquares$height,
+                        gp = gpar(col = NA, fill = edgeSquares$color),
+                        default.units = "native"
+                    )
+                    assign("hic_grobs2",
+                        addGrob(
+                            gTree = get("hic_grobs2", envir = pgEnv),
+                            child = hic_squares
+                        ),
+                        envir = pgEnv
+                    )
+                }
             }
 
             if (nrow(triangles) > 0) {
@@ -801,6 +874,20 @@ plotHicTriangle <- function(data, resolution = "auto", zrange = NULL,
     # =========================================================================
 
     hicPlot$grobs <- get("hic_grobs2", envir = pgEnv)
+
+    hicPlot$xchrom <- hicPlot$chrom
+    hicPlot$xchromstart <- hicPlot$chromstart
+    hicPlot$xchromend <- hicPlot$chromend
+    hicPlot$ychrom <- hicPlot$chrom
+    hicPlot$ychromstart <- hicPlot$chromstart
+    hicPlot$ychromend <- hicPlot$chromend
+    hicPlot$xaxisDir <- thicInternal$xaxisDir
+    hicPlot$xaxisRange <- if (identical(thicInternal$xaxisDir, "decrease")) {
+        rev(thicInternal$xscale)
+    } else {
+        thicInternal$xscale
+    }
+    hicPlot$yaxisRange <- thicInternal$xscale
 
     # =========================================================================
     # RETURN OBJECT

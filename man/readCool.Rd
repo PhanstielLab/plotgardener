@@ -45,8 +45,12 @@ the size of the region.}
 \item{zrange}{A numeric vector of length 2 specifying the range of
 interaction scores, where extreme values will be set to the max or min.}
 
-\item{norm}{Character value specifying hic data normalization method.
-This value must be found in the .(m)cool file.
+\item{norm}{Character value specifying the exact name of a column in the
+`bins` group of the .(m)cool file (for example `"weight"`, `"sweight"`,
+`"KR"`, or `"NONE"`). Use \code{readCoolNorms()} to see the actual column
+names in a file. \code{"NONE"} returns raw counts; \code{"auto"} chooses
+\code{"KR"} if available, then \code{"weight"}, then \code{"sweight"}, then
+the first available weight, then \code{"NONE"}.
 Default value is \code{norm = "NONE"}.}
 
 \item{binChunkSize}{A numeric specifying the number of bin indices to read 
@@ -66,6 +70,12 @@ format with the following columns: \code{chrom}, \code{altchrom},
 }
 \description{
 Read a .(m)cool file and return Hi-C data as a dataframe
+}
+\details{
+Cooler normalization weights are multiplicative:
+\code{balanced[i, j] = observed[i, j] * weight[i] * weight[j]}.
+Contacts involving bins with non-finite weights are dropped; the bins
+themselves remain in the coordinate space.
 }
 \examples{
 

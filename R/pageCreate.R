@@ -91,6 +91,8 @@ pageCreate <- function(width = 8.5, height = 11, default.units = "inches",
 
     grid.newpage()
     assign("pg_vpTree", list(), envir = pgEnv)
+    assign("guides_hidden", FALSE, envir = pgEnv)
+    assign("removed_plots", character(0), envir = pgEnv)
 
     # =========================================================================
     # PARSE PARAMETERS
@@ -169,6 +171,7 @@ pageCreate <- function(width = 8.5, height = 11, default.units = "inches",
     assign("page_units", page_units, envir = pgEnv)
 
     page_width <- as.numeric(page$width)
+    assign("page_width", page_width, envir = pgEnv)
 
     # =========================================================================
     # VIEWPORT
